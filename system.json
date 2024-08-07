@@ -1,0 +1,55 @@
+{
+    "id": "cain",
+    "title": "Cain",
+    "description": "From Tom Bloom (Magnagothica Maleghast/Lancer RPG): a new narrative role playing game about playing psychic death soldiers hunting monstrosities made of human trauma. So it goes.",
+    "version": "1.0.0",
+    "compatibility": {
+      "minimum": 11,
+      "verified": 12
+    },
+    "authors": [{
+      "name": "Adam Kostandy",
+      "url": "https://github.com/diabeatz96",
+      "email": "adamkostandy@gmail.com",
+      "discord": "adamkostandy"
+    }],
+    "esmodules": ["cain.mjs"],
+    "styles": ["styles/cain-main.css"],
+    "packs": [{
+      "name": "sins",
+      "label": "My Monsters",
+      "type": "Actor"
+    },
+    {
+      "name": "items",
+      "label": "My Items",
+      "type": "Item"
+    }],
+    "languages": [{
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    }],
+    "documentTypes": {
+      "Actor": {
+        "hero": { "htmlFields": ["background.biography"] },
+        "villain": { "htmlFields": ["background.biography"] },
+        "pawn": {}
+      },
+      "Item": {
+        "weapon": {},
+        "spell": {}
+      }
+    },
+    "socket": false,
+    "initiative": "1d20",
+    "grid": {
+      "distance": 10,
+      "units": "ft"
+    },
+    "primaryTokenAttribute": "resources.health",
+    "secondaryTokenAttribute": "resources.power",
+    "url": "https://your/hosted/system/repo/",
+    "manifest": "https://your/hosted/system/repo/system.json",
+    "download": "https://your/packaged/download/archive.zip"
+  }
