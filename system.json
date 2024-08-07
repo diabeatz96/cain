@@ -1,55 +1,47 @@
 {
-    "id": "cain",
-    "title": "Cain",
-    "description": "From Tom Bloom (Magnagothica Maleghast/Lancer RPG): a new narrative role playing game about playing psychic death soldiers hunting monstrosities made of human trauma. So it goes.",
-    "version": "1.0.0",
-    "compatibility": {
-      "minimum": 11,
-      "verified": 12
-    },
-    "authors": [{
-      "name": "Adam Kostandy",
-      "url": "https://github.com/diabeatz96",
-      "email": "adamkostandy@gmail.com",
-      "discord": "adamkostandy"
-    }],
-    "esmodules": ["cain.mjs"],
-    "styles": ["styles/cain-main.css"],
-    "packs": [{
-      "name": "sins",
-      "label": "My Monsters",
-      "type": "Actor"
-    },
+  "id": "cain",
+  "title": "Cain",
+  "description": "The Cain system for FoundryVTT!",
+  "authors": [
     {
-      "name": "items",
-      "label": "My Items",
-      "type": "Item"
-    }],
-    "languages": [{
+      "name": "Adamkostandy",
+      "discord": "adamkostandy"
+    }
+  ],
+  "url": "https://github.com/diabeatz96/cain",
+  "license": "LICENSE.txt",
+  "readme": "README.md",
+  "bugs": "https://github.com/diabeatz96/cain/issues",
+  "changelog": "CHANGELOG.md",
+  "media": [
+    {
+      "type": "setup",
+      "url": "systems/cain/assets/anvil-impact.png",
+      "thumbnail": "systems/cain/assets/anvil-impact.png"
+    }
+  ],
+  "version": "2.0.0",
+  "compatibility": {
+    "minimum": 12,
+    "verified": "12"
+  },
+  "esmodules": ["module/cain.mjs"],
+  "styles": ["css/cain.css"],
+  "languages": [
+    {
       "lang": "en",
       "name": "English",
       "path": "lang/en.json"
-    }],
-    "documentTypes": {
-      "Actor": {
-        "hero": { "htmlFields": ["background.biography"] },
-        "villain": { "htmlFields": ["background.biography"] },
-        "pawn": {}
-      },
-      "Item": {
-        "weapon": {},
-        "spell": {}
-      }
-    },
-    "socket": false,
-    "initiative": "1d20",
-    "grid": {
-      "distance": 10,
-      "units": "ft"
-    },
-    "primaryTokenAttribute": "resources.health",
-    "secondaryTokenAttribute": "resources.power",
-    "url": "https://your/hosted/system/repo/",
-    "manifest": "https://your/hosted/system/repo/system.json",
-    "download": "https://your/packaged/download/archive.zip"
-  }
+    }
+  ],
+  "packs": [],
+  "packFolders": [],
+  "socket": false,
+  "manifest": "Replace this with a link to the /latest release system.json so people can receive updates after they've installed the system",
+  "download": "This must link to a .zip file of the current version",
+  "background": "systems/cain/assets/anvil-impact.png",
+  "gridDistance": 5,
+  "gridUnits": "ft",
+  "primaryTokenAttribute": "health",
+  "secondaryTokenAttribute": "power"
+}
