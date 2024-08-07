@@ -83,6 +83,9 @@ export class CainActorSheet extends ActorSheet {
       this.actor.allApplicableEffects()
     );
 
+    // Calculate ranges for items
+    this._calculateRanges(context);
+
     return context;
   }
 
@@ -141,6 +144,31 @@ export class CainActorSheet extends ActorSheet {
     context.gear = gear;
     context.features = features;
     context.spells = spells;
+  }
+
+  /**
+   * Calculate ranges for items and add to context
+   *
+   * @param {object} context The context object to mutate
+   */
+  _calculateRanges(context) {
+    context.items.forEach(item => {
+      if (item.system.range) {
+        item.system.rangeValue = this._parseRange(item.system.range);
+      }
+    });
+  }
+
+  /**
+   * Parse range string and return a numerical value
+   *
+   * @param {string} range The range string to parse
+   * @returns {number} The numerical value of the range
+   */
+  _parseRange(range) {
+    // Example logic to parse range, can be customized
+    const match = range.match(/(\d+)/);
+    return match ? parseInt(match[1]) : 0;
   }
 
   /* -------------------------------------------- */

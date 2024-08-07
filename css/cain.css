@@ -221,9 +221,9 @@
   height: 100px;
   margin-right: 10px;
 }
-.cain .sheet-header .header-fields {
+/* .cain .sheet-header .header-fields {
   flex: 1;
-}
+} */
 .cain .sheet-header h1.charname {
   height: 50px;
   padding: 0px;
@@ -363,4 +363,20 @@
 }
 .cain .effects .item .effect-controls {
   border: none;
+
+}
+.cain .width-50 {
+  width: 50%;
+}
+
+.cain .height-50 {
+  height: 50%;
+}
+
+.cain .flex-col {
+  flex-direction: column;
+}
+
+.cain .width-100-pixel {
+  width: 100px;
 }

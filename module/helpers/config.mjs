@@ -1,5 +1,12 @@
 export const CAIN = {};
 
+
+
+/**
+ * Registered Skills within the system.
+ * @type {Object}
+ * /
+
 /**
  * The set of Ability Scores used within the system.
  * @type {Object}

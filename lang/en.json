@@ -29,8 +29,8 @@
 
   "TYPES": {
     "Actor": {
-      "character": "Character",
-      "npc": "NPC"
+      "character": "Exorcist",
+      "npc": "Sin"
     },
     "Item": {
       "item": "Item",
