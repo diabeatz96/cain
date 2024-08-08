@@ -12,8 +12,8 @@ export class CainActorSheet extends ActorSheet {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ['cain', 'sheet', 'actor'],
-      width: 600,
-      height: 600,
+      width: 750,
+      height: 750,
       tabs: [
         {
           navSelector: '.sheet-tabs',
