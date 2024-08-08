@@ -365,20 +365,27 @@
   border: none;
 
 }
-.cain .width-50 {
-  width: 50%;
+/* New styles for checkbox group */
+.cain .checkbox-group_cat {
+  display: flex;
+  flex-direction: row;
+  gap: 10px; /* Adjust the gap between items as needed */
 }
 
-.cain .height-50 {
-  height: 50%;
-}
-
-.cain .flex-col {
+.cain .checkbox-item_cat {
+  display: flex;
   flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
-.cain .width-100-pixel {
-  width: 100px;
+.cain .checkbox-item img {
+  max-width: 50px; /* Adjust the image size as needed */
+  margin-bottom: 5px; /* Space between image and label */
+}
+
+.cain .checkbox-item_cat label {
+  margin-bottom: 5px; /* Space between label and checkbox */
 }
 
 /* Add these styles to your CSS file */
