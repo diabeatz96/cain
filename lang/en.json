@@ -1,5 +1,17 @@
 {
   "CAIN": {
+    "Skill" : {
+      "Force": { "long": "Force", "abbr": "force" },
+      "Conditioning": { "long": "Conditioning", "abbr": "conditioning" },
+      "Coordination": { "long": "Coordination", "abbr": "coordination" },
+      "Covert": { "long": "Covert", "abbr": "covert" },
+      "Interfacing": { "long": "Interfacing", "abbr": "interfacing" },
+      "Investigation": { "long": "Investigation", "abbr": "investigation" },
+      "Surveillance": { "long": "Surveillance", "abbr": "surveillance" },
+      "Negotiation": { "long": "Negotiation", "abbr": "negotiation" },
+      "Authority": { "long": "Authority", "abbr": "authority" },
+      "Connection": { "long": "Connection", "abbr": "connection" }
+    },
     "Ability": {
       "Str": { "long": "Strength", "abbr": "str" },
       "Con": { "long": "Constitution", "abbr": "con" },

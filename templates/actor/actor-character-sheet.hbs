@@ -63,9 +63,9 @@
     <a class="item" data-tab="features">Stats & Advancements</a>
     <a class="item" data-tab="description">Description</a>
     <a class="item" data-tab="items">Kit and Items</a>
-    <a class="item" data-tab="spells">Abilities</a>
-    <a class="item" data-tab="effects">Sin</a>
-    <a class="item" data-tab="effects">Talismans</a>
+    <a class="item" data-tab="abilities">Abilities</a>
+    <a class="item" data-tab="sin">Sin</a>
+    <a class="item" data-tab="talismans">Talismans</a>
   </nav>
 
   {{!-- Sheet Body --}}
@@ -73,21 +73,19 @@
 
     {{!-- Owned Features Tab --}}
     <div class="tab features" data-group="primary" data-tab="features">
+  
       <section class="grid grid-3col">
         <aside class="sidebar">
-
+        {{#each system.skills as |skill key|}}
+          <div class="ability flexrow flex-group-center">
+        <label for="system.skills.{{key}}.value" class="resource-label rollable flexlarge align-left" data-roll="{{#if (eq skill.value 0)}}2d6kl1cs>=4{{else}}{{skill.value}}d6cs>=4{{/if}}" data-label="{{localize (lookup @root.config.skills key)}}">{{localize (lookup @root.config.skills key)}}</label>
+        <input type="number" name="system.skills.{{key}}.value" value="{{skill.value}}" data-dtype="Number"/>
+        </div>
+        {{/each}}
           {{!-- The grid classes are defined in scss/global/_grid.scss. To use,
           use both the "grid" and "grid-Ncol" class where "N" can be any number
           from 1 to 12 and will create that number of columns.  --}}
-          <div class="abilities flexcol">
-            {{#each system.abilities as |ability key|}}
-            <div class="ability flexrow flex-group-center">
-              <label for="system.abilities.{{key}}.value" class="resource-label rollable flexlarge align-left" data-roll="d20+@abilities.{{key}}.mod" data-label="{{localize (lookup @root.config.abilities key)}}">{{localize (lookup @root.config.abilities key)}}</label>
-              <input type="text" name="system.abilities.{{key}}.value" value="{{ability.value}}" data-dtype="Number"/>
-              <span class="ability-mod rollable" data-roll="d20+@abilities.{{key}}.mod" data-label="{{localize (lookup @root.config.abilities key)}}">{{numberFormat ability.mod decimals=0 sign=true}}</span>
-            </div>
-            {{/each}}
-          </div>
+
         </aside>
 
         {{!-- For the main features list, span the right two columns --}}
@@ -102,7 +100,9 @@
     {{!-- Biography Tab --}}
     <div class="tab biography" data-group="primary" data-tab="description">
       {{!-- Editors must receive enriched text data from getData to properly handle rolls --}}
-      {{editor enrichedBiography target="system.biography" engine="prosemirror" button=true editable=editable}}
+      
+      {{editor enrichedBiography target="system.biography" button=True engine="prosemirror" button=true editable=editable}}
+      
     </div>
 
     {{!-- Owned Items Tab --}}
@@ -111,14 +111,20 @@
     </div>
 
     {{!-- Owned Spells Tab --}}
-    <div class="tab spells" data-group="primary" data-tab="spells">
-      {{> "systems/cain/templates/actor/parts/actor-spells.hbs"}}
+    <div class="tab spells" data-group="primary" data-tab="abilities">
+      {{> "systems/cain/templates/actor/parts/actor-abilities.hbs"}}
     </div>
 
     {{!-- Active Effects Tab --}}
-    <div class="tab effects flexcol" data-group="primary" data-tab="effects">
-      {{> "systems/cain/templates/actor/parts/actor-effects.hbs"}}
+    <div class="tab effects flexcol" data-group="primary" data-tab="sin">
+      {{> "systems/cain/templates/actor/parts/actor-sin.hbs"}}
     </div>
+
+    <div class="tab effects flexcol" data-group="primary" data-tab="talismans">
+      {{> "systems/cain/templates/actor/parts/actor-talismans.hbs"}}
+    </div>
+
+
 
   </section>
 </form>

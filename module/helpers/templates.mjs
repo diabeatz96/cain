@@ -8,8 +8,9 @@ export const preloadHandlebarsTemplates = async function () {
     // Actor partials.
     'systems/cain/templates/actor/parts/actor-features.hbs',
     'systems/cain/templates/actor/parts/actor-items.hbs',
-    'systems/cain/templates/actor/parts/actor-spells.hbs',
-    'systems/cain/templates/actor/parts/actor-effects.hbs',
+    'systems/cain/templates/actor/parts/actor-abilities.hbs',
+    'systems/cain/templates/actor/parts/actor-sin.hbs',
+    'systems/cain/templates/actor/parts/actor-talismans.hbs',
     // Item partials
     'systems/cain/templates/item/parts/item-effects.hbs',
   ]);

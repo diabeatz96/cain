@@ -15,9 +15,9 @@ export default class CainActorBase extends CainDataModel {
       value: new fields.NumberField({ ...requiredInteger, initial: 5, min: 0 }),
       max: new fields.NumberField({ ...requiredInteger, initial: 5 })
     });
-    schema.biography = new fields.StringField({ required: true, blank: true }); // equivalent to passing ({initial: ""}) for StringFields
-
+    schema.biography = new fields.StringField({ required: true, initial: "<b>QUESTIONNAIRE</b><ul><li>How did you first manifest your powers?</li><li>Is your sin-seed in your brain or in your heart?</li><li>What do you hide in the deepest parts of you?</li><li>Is your hand your hand?</li><li>Do you remember the face of your mother?</li></ul>" });  
+    
     return schema;
-  }
 
+  }
 }

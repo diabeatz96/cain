@@ -1,3 +1,40 @@
+<div class="flex-group-center">
+  <label for="system.xp.value" class="resource-label">XP</label> 
+  <output>{{system.xp.value}}</output>
+  <div class=" flexrow flex-center">
+    <input type="range" name="system.xp.value" value="{{system.xp.value}}" min="0" max="4" step="1" data-dtype="Number" oninput="this.nextElementSibling.value = this.value">
+  </div>
+</div>
+
+<div class="flex-group-center">
+  <label for="system.advancements.value" class="resource-label">Advancement</label>
+  <output>{{system.advancements.value}}</output>
+  <div class="resource-content flexrow flex-center">
+    <input type="range" name="system.advancements.value" value="{{system.advancements.value}}" min="0" max="4" step="1" data-dtype="Number" oninput="this.nextElementSibling.value = this.value">
+  </div>
+</div>
+
+<multi-checkbox name="check-many-boxes">
+  <optgroup label="Divine Agony">
+    <option value="foo"></option>
+    <option value="bar"></option>
+    <option value="baz"></option>
+  </optgroup>
+  <optgroup label="Injuries">
+   <option value="fizz"></option>
+   <option value="buzz"></option>
+   <option value="buzz"></option>
+  </optgroup>
+  <optgroup label="Stress">
+   <option value="fizz"></option>
+   <option value="buzz"></option>
+   <option value="buzz"></option>
+   <option value="fizz"></option>
+   <option value="buzz"></option>
+   <option value="buzz"></option>
+  </optgroup>
+</multi-checkbox>
+
 <ol class='items-list'>
   <li class='item flexrow items-header'>
     <div class='item-name'>{{localize 'Name'}}</div>

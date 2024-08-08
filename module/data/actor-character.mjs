@@ -21,6 +21,14 @@ export default class CainCharacter extends CainActorBase {
       return obj;
     }, {}));
 
+    schema.skills = new fields.SchemaField(Object.keys(CONFIG.CAIN.skills).reduce((obj, skill) => {
+      obj[skill] = new fields.SchemaField({
+        value: new fields.NumberField({ ...requiredInteger, initial: 0, min: 0, max: 3 }),
+        max: new fields.NumberField({ ...requiredInteger, initial: 3, min: 0, max: 3 }),
+      });
+      return obj;
+    }, {}));
+
       // Add new string fields
       schema.sex = new fields.StringField({ required: true, blank: true });
       schema.height = new fields.StringField({ required: true, blank: true });

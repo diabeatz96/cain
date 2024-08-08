@@ -259,7 +259,7 @@ export class CainActorSheet extends ActorSheet {
     event.preventDefault();
     const element = event.currentTarget;
     const dataset = element.dataset;
-
+  
     // Handle item rolls.
     if (dataset.rollType) {
       if (dataset.rollType == 'item') {
@@ -268,16 +268,30 @@ export class CainActorSheet extends ActorSheet {
         if (item) return item.roll();
       }
     }
-
+  
     // Handle rolls that supply the formula directly.
     if (dataset.roll) {
-      let label = dataset.label ? `[ability] ${dataset.label}` : '';
+      let label = dataset.label ? ` You rolled for ${dataset.label}` : '';
       let roll = new Roll(dataset.roll, this.actor.getRollData());
-      roll.toMessage({
-        speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-        flavor: label,
-        rollMode: game.settings.get('core', 'rollMode'),
+  
+      console.log(roll);
+      roll.roll().then(result => {
+        let rollTotal = result.total;
+        let message = '';
+  
+        if (rollTotal === 0) {
+          message = 'The roll failed.';
+        } else if (rollTotal >= 1) {
+          message = 'You succeeded!';
+        }
+  
+        result.toMessage({
+          speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+          flavor: `${label} ${message}`,
+          rollMode: game.settings.get('core', 'rollMode'),
+        });
       });
+  
       return roll;
     }
   }
