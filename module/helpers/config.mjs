@@ -21,6 +21,18 @@ CAIN.abilities = {
 };
 
 
+/** sin marks */
+
+CAIN.sinMarks = [
+  { name: 'Mark 1', abilities: ['Ability 1.1', 'Ability 1.2', 'Ability 1.3', 'Ability 1.4', 'Ability 1.5', 'Ability 1.6'] },
+  { name: 'Mark 2', abilities: ['Ability 2.1', 'Ability 2.2', 'Ability 2.3', 'Ability 2.4', 'Ability 2.5', 'Ability 2.6'] },
+  { name: 'Mark 3', abilities: ['Ability 3.1', 'Ability 3.2', 'Ability 3.3', 'Ability 3.4', 'Ability 3.5', 'Ability 3.6'] },
+  { name: 'Mark 4', abilities: ['Ability 4.1', 'Ability 4.2', 'Ability 4.3', 'Ability 4.4', 'Ability 4.5', 'Ability 4.6'] },
+  { name: 'Mark 5', abilities: ['Ability 5.1', 'Ability 5.2', 'Ability 5.3', 'Ability 5.4', 'Ability 5.5', 'Ability 5.6'] },
+  { name: 'Mark 6', abilities: ['Ability 6.1', 'Ability 6.2', 'Ability 6.3', 'Ability 6.4', 'Ability 6.5', 'Ability 6.6'] }
+]
+
+
 /**
  *       "Force": { "long": "Force", "abbr": "force" },
       "Conditioning": { "long": "Conditioning", "abbr": "conditioning" },

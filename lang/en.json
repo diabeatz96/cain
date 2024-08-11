@@ -47,7 +47,10 @@
     "Item": {
       "item": "Item",
       "feature": "Feature",
-      "spell": "Spell"
+      "spell": "Spell",
+      "agenda": "Agenda",
+      "blasphemy": "Blasphemy",
+      "sin": "Sins"
     }
   }
 }

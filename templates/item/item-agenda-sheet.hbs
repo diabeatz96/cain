@@ -1,0 +1,41 @@
+{{! This template is a fallback for when items don't have more specific templates. }}
+{{! Generally, you'll want to make more specific templates when possible. }}
+<form class='{{cssClass}}, agenda-background' autocomplete='off'>
+  <header class='sheet-header agenda-header '>
+    <img
+      class='profile-img'
+      src='{{item.img}}'
+      data-edit='img'
+      title='{{item.name}}'
+    />
+    <div class='header-fields'>
+      <h1 class='charname agenda-name'><input
+          name='name'
+          type='text'
+          value='{{item.name}}'
+          placeholder='Name'
+        /></h1>
+    </div>
+  </header>
+
+  {{! Sheet Tab Navigation }}
+  <nav class='sheet-tabs tabs agenda-tabs' data-group='primary'>
+    <a class='item' data-tab='description'>Description</a>
+  </nav>
+
+  {{! Sheet Body }}
+  <section class='sheet-body agenda-body'>
+
+    {{! Description Tab }}
+    <div class='tab agenda-text-color' data-group='primary' data-tab='description'>
+      {{! Editors must receive enriched text data from getData to properly handle rolls }}
+      {{editor
+        enrichedDescription
+        target='system.description'
+        engine='prosemirror'
+        button=true
+        editable=editable
+      }}
+    </div>
+  </section>
+</form>

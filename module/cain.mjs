@@ -49,7 +49,9 @@ Hooks.once('init', function () {
   CONFIG.Item.dataModels = {
     item: models.CainItem,
     feature: models.CainFeature,
-    spell: models.CainSpell
+    agenda: models.CainAgenda,
+    blasphemy: models.CainBlasphemy,
+    sin: models.CainSins,
   }
 
   // Active Effects are never copied to the Actor,

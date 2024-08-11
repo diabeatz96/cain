@@ -1,8 +1,27 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Metal+Mania&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&display=swap');
+/* 
+.unifrakturmaguntia-regular {
+  font-family: "UnifrakturMaguntia", cursive;
+  font-weight: 400;
+  font-style: normal;
+} 
+  
+
+*/
+
+
 /* Global styles */
 .window-app {
   font-family: "Roboto", sans-serif;
 }
+
+.window-app .window-content  {
+  padding: 5px;
+}
+
+/* Window Content Style */
 
 .rollable:hover, .rollable:focus {
   color: #000;
@@ -388,4 +407,490 @@
   margin-bottom: 5px; /* Space between label and checkbox */
 }
 
+.extra-dice-section {
+  background-color: #f0f0f0; /* Light grey background */
+  border: 1px solid #ccc;    /* Light grey border */
+  padding: 10px;             /* Padding around the section */
+  margin-top: 5px;
+  margin-bottom: 5px;          /* Space above the section */
+  border-radius: 5px;        /* Rounded corners */
+}
 /* Add these styles to your CSS file */
+
+
+/* Agenda styles */
+.agenda-size {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin: 0;
+  padding: 0;
+  height: 400px;
+}
+
+.agenda-name {
+  font-family: "Metal Mania", system-ui;
+  font-weight: 400;
+  font-style: normal;
+  font-weight: bold;
+  margin: 0;
+  padding: 0;
+}
+
+/* Agenda Header */
+.agenda-header {
+  background-color: #2b2b2b;
+  border-bottom: 2px solid #444;
+  padding: 1em;
+  display: flex;
+  align-items: center;
+}
+
+.agenda-header .profile-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 1em;
+  border: 2px solid #555;
+}
+
+.agenda-header .header-fields {
+  flex-grow: 1;
+}
+
+.agenda-header .charname input {
+  font-size: 1.5em;
+  width: 100%;
+  background-color: #333;
+  color: #e0e0e0;
+  border: 1px solid #555;
+  padding: 0.5em;
+  border-radius: 4px;
+}
+
+/* Agenda Tabs */
+.agenda-tabs {
+  background-color: #2b2b2b;
+  border-bottom: 2px solid #444;
+  display: flex;
+  justify-content: space-around;
+  padding: 0.5em 0;
+}
+
+.agenda-tabs .item {
+  color: #e0e0e0;
+  padding: 0.5em 1em;
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  transition: border-bottom 0.3s;
+}
+
+.agenda-tabs .item:hover,
+.agenda-tabs .item.active {
+  border-bottom: 2px solid #e0e0e0;
+}
+
+/* Agenda Body */
+.agenda-body {
+  background-color: #1a1a1a;
+  padding: 1em;
+}
+
+.agenda-body .tab {
+  display: none;
+}
+
+.agenda-body .tab.active {
+  display: block;
+}
+
+.agenda-body .form-group {
+  margin-bottom: 1em;
+}
+
+.agenda-body .form-group label {
+  display: block;
+  margin-bottom: 0.5em;
+  font-weight: bold;
+  color: #e0e0e0;
+}
+
+.agenda-body .form-group textarea {
+  width: 100%;
+  padding: 0.5em;
+  background-color: #333;
+  color: #e0e0e0;
+  border: 1px solid #555;
+  border-radius: 4px;
+  min-height: 100px;
+}
+
+.agenda-text-color {
+  color: #e0e0e0;
+}
+
+.agenda-background {
+  background-color: #1a1a1a;
+  box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.5), -10px -10px 0 rgba(0, 0, 0, 0.5), 10px -10px 0 rgba(0, 0, 0, 0.5), -10px 10px 0 rgba(0, 0, 0, 0.5);}
+
+/* end agenda styles */
+
+/* Character Sheet */
+
+.mob-psycho-theme {
+  /* General theme styles */
+  background-color: #0d0d0d;
+  color: #ffffff;
+  box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.5), -10px -10px 0 rgba(0, 0, 0, 0.5), 10px -10px 0 rgba(0, 0, 0, 0.5), -10px 10px 0 rgba(0, 0, 0, 0.5);
+  font-family: 'Courier New', Courier, monospace; /* Typewriter font */
+  padding: 20px;
+  border: 2px solid #00bfff; /* Jujutsu Kaisen inspired accent color */
+  background-image: url('https://images.thdstatic.com/productImages/bcbf4ea8-d0d4-4b36-9bfb-9fd05702d10e/svn/black-rust-oleum-stops-rust-texture-paint-7220830-76_600.jpg'); /* Paper-like background */
+  background-size: cover;
+}
+
+.prosemirror menu button {
+  background: #ffffff;
+}
+
+.mob-psycho-header {
+  background-color: #1a1a1a;
+  border-bottom: 2px solid #00bfff; /* Jujutsu Kaisen inspired accent color */
+  padding: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.mob-psycho-img {
+  border: 3px solid #00bfff; /* Jujutsu Kaisen inspired accent color */
+  border-radius: 50%;
+  margin: 10px 0;
+  filter: contrast(150%) saturate(120%) hue-rotate(10deg); /* Apply filters for a distorted effect */
+  transform: rotate(-5deg) scale(1.1); /* Slight rotation and scaling */
+  transition: transform 0.3s, filter 0.3s, box-shadow 0.3s; /* Smooth transition for hover effect */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Add shadow for depth */
+  position: relative; /* For pseudo-element positioning */
+}
+
+.mob-psycho-img::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.1);
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+.mob-psycho-img:hover::before {
+  opacity: 0.5;
+}
+
+.mob-psycho-img:hover {
+  filter: contrast(200%) saturate(150%) hue-rotate(20deg); /* More intense filters on hover */
+  transform: rotate(5deg) scale(1.2); /* More rotation and scaling on hover */
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.7); /* More intense shadow on hover */
+}
+
+.mob-psycho-img:hover::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 120%;
+  height: 120%;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  transform: translate(-50%, -50%) scale(1.2);
+  mix-blend-mode: screen;
+  pointer-events: none;
+  transition: transform 0.3s, opacity 0.3s;
+  opacity: 0.7;
+}
+
+.mob-psycho-header-fields {
+  background-color: #262626;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px dashed #00bfff; /* Dashed border for a report look */
+}
+
+.mob-psycho-charname input {
+  background-color: #333333;
+  color: #ffffff;
+  border: 1px solid #00bfff; /* Jujutsu Kaisen inspired accent color */
+  padding: 5px;
+}
+
+.mob-psycho-grid {
+  color: #ffffff;
+  gap: 10px;
+  border: 1px solid #00bfff; /* Jujutsu Kaisen inspired accent color */
+  padding: 10px;
+  margin: 10px 0;
+}
+
+.mob-psycho-flex-group {
+  background-color: #333333;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px dashed #00bfff; /* Dashed border for a report look */
+}
+
+.mob-psycho-label {
+  color: #00bfff; /* Jujutsu Kaisen inspired accent color */
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.mob-psycho-theme input[type="number"],
+.mob-psycho-theme input[type="text"] {
+  color: #ffffff;
+  background-color: #404040;
+  border: 1px solid #00bfff; /* Jujutsu Kaisen inspired accent color */
+  padding: 5px;
+}
+
+.mob-psycho-input {
+  background-color: #404040;
+  color: #ffffff;
+  border: 1px solid #00bfff; /* Jujutsu Kaisen inspired accent color */
+  padding: 5px;
+}
+
+.mob-psycho-resource-content {
+  background-color: #333333;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px dashed #00bfff; /* Dashed border for a report look */
+}
+
+.mob-psycho-tabs {
+  background-color: #1a1a1a;
+  border-bottom: 2px solid #00bfff; /* Jujutsu Kaisen inspired accent color */
+  padding: 5px;
+}
+
+.mob-psycho-tab-item {
+  color: #00bfff; /* Jujutsu Kaisen inspired accent color */
+  padding: 5px;
+  border-bottom: 1px solid #00bfff; /* Jujutsu Kaisen inspired accent color */
+  transition: background-color 0.3s, color 0.3s; /* Smooth transition for hover effect */
+}
+
+.mob-psycho-tab-item:hover {
+  background-color: #00bfff; /* Jujutsu Kaisen inspired accent color */
+  color: #0d0d0d; /* Invert colors on hover */
+}
+
+.mob-psycho-body {
+  background-color: #0d0d0d;
+  padding: 20px;
+  border: 2px solid #00bfff; /* Jujutsu Kaisen inspired accent color */
+}
+
+.mob-psycho-tab {
+  background-color: #0d0d0d;
+  padding: 10px;
+  border: 1px solid #00bfff; /* Jujutsu Kaisen inspired accent color */
+}
+
+.mob-psycho-sidebar {
+  background-color: #1a1a1a;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px dashed #00bfff; /* Dashed border for a report look */
+}
+
+.mob-psycho-heading {
+  color: #00bfff; /* Jujutsu Kaisen inspired accent color */
+  text-transform: uppercase;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.mob-psycho-ability {
+  background-color: #262626;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px dashed #00bfff; /* Dashed border for a report look */
+}
+
+.mob-psycho-extra-dice {
+  background-color: #262626;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px dashed #00bfff; /* Dashed border for a report look */
+}
+
+.mob-psycho-affliction {
+  background-color: #262626;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px dashed #00bfff; /* Dashed border for a report look */
+}
+
+.mob-psycho-main {
+  background-color: #1a1a1a;
+  padding: 10px;
+  border-radius: 5px;
+  border: 2px solid #00bfff; /* Jujutsu Kaisen inspired accent color */
+}
+
+.mob-psycho-editor {
+  background-color: #262626;
+  color: #ffffff;
+  border: 1px solid #00bfff; /* Jujutsu Kaisen inspired accent color */
+  padding: 10px;
+}
+
+/* end mob-psycho-theme.css */
+
+/* Rolls and chat message edits */
+
+/* Chat Message Styles */
+
+
+.chat-message {
+  background-color: #1a1a1a; /* Dark background */
+  color: #ffffff; /* White text */
+  border: 1e90ff 2px solid; /* Remove border */
+  padding: 0;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Add shadow for depth */
+  font-family: 'Courier New', Courier, monospace; /* Typewriter font */
+}
+
+.message-header {
+  background-color: #262626; /* Slightly lighter dark background */
+  padding: 5px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.message-sender {
+  color: #ffffff; /* White text */
+}
+
+.message-metadata {
+  color: #ffffff; /* White text */
+}
+
+.message-timestamp {
+  color: #999999; /* Grey text for timestamp */
+}
+
+.message-delete {
+  color: #ff4d4d; /* Red color for delete icon */
+}
+
+.flavor-text {
+  color: #ffffff; /* White text */
+  font-style: italic;
+}
+
+.message-content {
+  background-color: #1a1a1a; /* Dark background */
+  padding: 10px;
+}
+
+.dice-formula {
+  color: #ffffff; /* White text */
+}
+
+.dice-tooltip {
+  background-color: #1a1a1a; /* Dark background */
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.part-header {
+  background-color: #1a1a1a; /* Dark background */
+  padding: 5px;
+}
+
+.part-formula {
+  color: #ffffff; /* White text */
+}
+
+.part-total {
+  color: #ffffff; /* White text */
+}
+
+.dice-rolls {
+  list-style: none;
+  padding: 0;
+}
+
+.dice-total {
+  color: #ffffff; /* White text */
+  font-size: 1.5em;
+  text-align: center;
+}
+
+/* Talisman CSS */
+
+#talisman-management {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#add-talisman {
+  background-color: #262626;
+  padding: 20px;
+  border-radius: 10px;
+  color: #ffffff ;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.talisman-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+  width: 100%;
+  max-width: 1200px;
+  margin-bottom: 20px;
+}
+
+.talisman {
+  background-color: #262626;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.talisman input {
+  margin-bottom: 10px;
+  padding: 5px;
+  border: none;
+  border-radius: 5px;
+  background-color: #333333;
+  color: #ffffff;
+}
+
+.talisman button {
+  margin-top: 10px;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #1e90ff;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.talisman button.delete-talisman {
+  background-color: #ff4d4d;
+}
+
+.talisman button:hover {
+  opacity: 0.8;
+}

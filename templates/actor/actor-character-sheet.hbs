@@ -1,95 +1,111 @@
-<form class="{{cssClass}} {{actor.type}} flexcol" autocomplete="off">
+<form class="{{cssClass}} {{actor.type}} flexcol mob-psycho-theme" autocomplete="off">
 
   {{!-- Sheet Header --}}
-  <header class="sheet-header">
+  <header class="sheet-header mob-psycho-header">
 
-    <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="200" width="200"/>
+    <img class="profile-img mob-psycho-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="200" width="200"/>
                                    
-    <div class="header-fields">
-      <h1 class="charname"><input name="name" type="text" value="{{actor.name}}" placeholder="Name"/></h1>
+    <div class="header-fields mob-psycho-header-fields">
+      <h1 class="charname mob-psycho-charname"><input name="name" type="text" value="{{actor.name}}" placeholder="Name"/></h1>
 
-      <div class="grid grid-4col">
-        <div class="flex-group-center">
-          <label for="system.sex" class="resource-label">Sex</label>
-          <input type="text" name="system.sex" value="{{system.sex}}" data-dtype="String"/>
+      <div class="grid grid-4col mob-psycho-grid">
+        <div class="flex-group-center mob-psycho-flex-group">
+          <label for="system.sex" class="resource-label mob-psycho-label">Sex</label>
+          <input type="text" name="system.sex" value="{{system.sex}}" data-dtype="String" class="mob-psycho-input"/>
         </div>
         
-        <div class="flex-group-center">
-          <label for="system.height" class="resource-label">Height</label>
-          <input type="text" name="system.height" value="{{system.height}}" data-dtype="String"/>
+        <div class="flex-group-center mob-psycho-flex-group">
+          <label for="system.height" class="resource-label mob-psycho-label">Height</label>
+          <input type="text" name="system.height" value="{{system.height}}" data-dtype="String" class="mob-psycho-input"/>
         </div>
 
-        <div class="flex-group-center">
-          <label for="system.weight" class="resource-label">Weight</label>
-          <input type="text" name="system.weight" value="{{system.weight}}" data-dtype="String"/>
+        <div class="flex-group-center mob-psycho-flex-group">
+          <label for="system.weight" class="resource-label mob-psycho-label">Weight</label>
+          <input type="text" name="system.weight" value="{{system.weight}}" data-dtype="String" class="mob-psycho-input"/>
         </div>
 
-        <div class="flex-group-center">
-          <label for="system.hair" class="resource-label">Hair</label>
-          <input type="text" name="system.hair" value="{{system.hair}}" data-dtype="String"/>
+        <div class="flex-group-center mob-psycho-flex-group">
+          <label for="system.hair" class="resource-label mob-psycho-label">Hair</label>
+          <input type="text" name="system.hair" value="{{system.hair}}" data-dtype="String" class="mob-psycho-input"/>
         </div>
 
-        <div class="flex-group-center">
-          <label for="system.eyes" class="resource-label">Eyes</label>
-          <div class="resource-content flexrow flex-center flex-between">
-            <input type="text" name="system.eyes" value="{{system.eyes}}" data-dtype="String"/>
+        <div class="flex-group-center mob-psycho-flex-group">
+          <label for="system.eyes" class="resource-label mob-psycho-label">Eyes</label>
+          <div class="resource-content flexrow flex-center flex-between mob-psycho-resource-content">
+            <input type="text" name="system.eyes" value="{{system.eyes}}" data-dtype="String" class="mob-psycho-input"/>
           </div>
         </div>
 
-        <div class="flex-group-center">
-          <label for="system.agenda" class="resource-label">Agenda</label>
-          <div class="resource-content flexrow flex-center flex-between">
-            <input type="text" name="system.agenda" value="{{system.agenda}}" data-dtype="String"/>
+        <div class="flex-group-center mob-psycho-flex-group">
+          <label for="system.agenda" class="resource-label mob-psycho-label">Agenda</label>
+          <div class="resource-content flexrow flex-center flex-between mob-psycho-resource-content">
+            <input type="text" name="system.agenda" value="{{system.agenda}}" data-dtype="String" class="mob-psycho-input"/>
           </div>
         </div>
 
-        <div class="flex-group-center">
-          <label for="system.blasphemy" class="resource-label">Blasphemy</label>
-          <div class="resource-content flexrow flex-center flex-between">
-            <input type="text" name="system.blasphemy" value="{{system.blasphemy}}" data-dtype="String"/>
+        <div class="flex-group-center mob-psycho-flex-group">
+          <label for="system.blasphemy" class="resource-label mob-psycho-label">Blasphemy</label>
+          <div class="resource-content flexrow flex-center flex-between mob-psycho-resource-content">
+            <input type="text" name="system.blasphemy" value="{{system.blasphemy}}" data-dtype="String" class="mob-psycho-input"/>
           </div>
         </div>
 
-        <div class="flex-group-center">
-          <label for="system.XID" class="resource-label">XID</label>
-          <input type="text" name="system.XID" value="{{system.XID}}" data-dtype="Number"/>
+        <div class="flex-group-center mob-psycho-flex-group">
+          <label for="system.XID" class="resource-label mob-psycho-label">XID</label>
+          <input type="text" name="system.XID" value="{{system.XID}}" data-dtype="Number" class="mob-psycho-input"/>
         </div>
       </div>
   </header>
 
   {{!-- Sheet Tab Navigation --}}
-  <nav class="sheet-tabs tabs" data-group="primary">
+  <nav class="sheet-tabs tabs mob-psycho-tabs" data-group="primary">
     {{!-- Default tab is specified in actor-sheet.mjs --}}
-    <a class="item" data-tab="features">Stats & Advancements</a>
-    <a class="item" data-tab="description">Description</a>
-    <a class="item" data-tab="items">Kit and Items</a>
-    <a class="item" data-tab="abilities">Abilities</a>
-    <a class="item" data-tab="sin">Sin</a>
-    <a class="item" data-tab="talismans">Talismans</a>
+    <a class="item mob-psycho-tab-item" data-tab="features">Stats & Advancements</a>
+    <a class="item mob-psycho-tab-item" data-tab="description">Description</a>
+    <a class="item mob-psycho-tab-item" data-tab="items">Kit and Items</a>
+    <a class="item mob-psycho-tab-item" data-tab="abilities">Abilities</a>
+    <a class="item mob-psycho-tab-item" data-tab="sin">Sin</a>
+    <a class="item mob-psycho-tab-item" data-tab="talismans">Talismans</a>
   </nav>
 
   {{!-- Sheet Body --}}
-  <section class="sheet-body">
+  <section class="sheet-body mob-psycho-body">
 
     {{!-- Owned Features Tab --}}
-    <div class="tab features" data-group="primary" data-tab="features">
+    <div class="tab features mob-psycho-tab" data-group="primary" data-tab="features">
   
-      <section class="grid grid-3col">
-        <aside class="sidebar">
+      <section class="grid grid-3col mob-psycho-grid">
+        <aside class="sidebar mob-psycho-sidebar">
+        <h3 class="mob-psycho-heading">Skills</h3>
         {{#each system.skills as |skill key|}}
-          <div class="ability flexrow flex-group-center">
-        <label for="system.skills.{{key}}.value" class="resource-label rollable flexlarge align-left" data-roll="{{#if (eq skill.value 0)}}2d6kl1cs>=4{{else}}{{skill.value}}d6cs>=4{{/if}}" data-label="{{localize (lookup @root.config.skills key)}}">{{localize (lookup @root.config.skills key)}}</label>
-        <input type="number" name="system.skills.{{key}}.value" value="{{skill.value}}" data-dtype="Number"/>
+          <div class="ability flexrow flex-group-center mob-psycho-ability">
+          <label for="system.skills.{{key}}.value" class="resource-label rollable flexlarge align-left mob-psycho-label" 
+                data-roll="{{#if (eq skill.value 0)}}2d6kl1cs>=4{{else}}{{skill.value}}d6cs>=4{{#if (gt ../system.extraDice.value 0)}}+{{../system.extraDice.value}}d6cs>=4{{/if}}{{/if}}" 
+                data-label="{{localize (lookup @root.config.skills key)}}">
+            {{localize (lookup @root.config.skills key)}}
+          </label>        
+          <input type="number" name="system.skills.{{key}}.value" value="{{skill.value}}" data-dtype="Number" class="mob-psycho-input"/>
         </div>
         {{/each}}
+
+        <div class="extra-dice-section flexrow flex-group-center mob-psycho-extra-dice">
+          <label for="system.extraDice.value" class="resource-label flexlarge align-left mob-psycho-label">EXTRA d6 to ROLLS</label>
+          <input type="number" name="system.extraDice.value" value="{{system.extraDice.value}}" data-dtype="Number" min="0" max="6" class="mob-psycho-input"/>
+        </div>
           {{!-- The grid classes are defined in scss/global/_grid.scss. To use,
           use both the "grid" and "grid-Ncol" class where "N" can be any number
           from 1 to 12 and will create that number of columns.  --}}
-
+        <h3 class="mob-psycho-heading">Afflictions</h3>
+        {{#each system.afflictions as |affliction key|}}
+          <div class="affliction flexrow flex-group-center mob-psycho-affliction">
+            <label for="system.afflictions.{{key}}" class="resource-label flexlarge align-left mob-psycho-label">Affliction</label>
+            <input type="text" name="system.afflictions.{{key}}" value="{{affliction}}" data-dtype="String" class="mob-psycho-input"/>
+          </div>
+        {{/each}}
         </aside>
 
         {{!-- For the main features list, span the right two columns --}}
-        <section class="main grid-span-2">
+        <section class="main grid-span-2 mob-psycho-main">
           {{!-- This is a Handlebars partial. They're stored in the `/parts` folder next to this sheet, and defined in module/helpers/templates.mjs --}}
           {{> "systems/cain/templates/actor/parts/actor-features.hbs"}}
         </section>
@@ -98,33 +114,31 @@
     </div>
 
     {{!-- Biography Tab --}}
-    <div class="tab biography" data-group="primary" data-tab="description">
+    <div class="tab biography mob-psycho-tab" data-group="primary" data-tab="description">
       {{!-- Editors must receive enriched text data from getData to properly handle rolls --}}
       
-      {{editor enrichedBiography target="system.biography" button=True engine="prosemirror" button=true editable=editable}}
+      {{editor enrichedBiography target="system.biography" button=True engine="prosemirror" button=true editable=editable class="mob-psycho-editor"}}
       
     </div>
 
     {{!-- Owned Items Tab --}}
-    <div class="tab items" data-group="primary" data-tab="items">
+    <div class="tab items mob-psycho-tab" data-group="primary" data-tab="items">
        {{> "systems/cain/templates/actor/parts/actor-items.hbs"}}
     </div>
 
     {{!-- Owned Spells Tab --}}
-    <div class="tab spells" data-group="primary" data-tab="abilities">
+    <div class="tab spells mob-psycho-tab" data-group="primary" data-tab="abilities">
       {{> "systems/cain/templates/actor/parts/actor-abilities.hbs"}}
     </div>
 
     {{!-- Active Effects Tab --}}
-    <div class="tab effects flexcol" data-group="primary" data-tab="sin">
+    <div class="tab effects flexcol mob-psycho-tab" data-group="primary" data-tab="sin">
       {{> "systems/cain/templates/actor/parts/actor-sin.hbs"}}
     </div>
 
-    <div class="tab effects flexcol" data-group="primary" data-tab="talismans">
+    <div class="tab effects flexcol mob-psycho-tab" data-group="primary" data-tab="talismans">
       {{> "systems/cain/templates/actor/parts/actor-talismans.hbs"}}
     </div>
-
-
 
   </section>
 </form>

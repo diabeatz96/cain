@@ -56,6 +56,13 @@ export default class CainCharacter extends CainActorBase {
         value: new fields.NumberField({ required: true, initial: 0, min: 0, max: 7 }),
       });
 
+      schema.afflictions = new fields.SchemaField({
+        affliction1: new fields.StringField({ required: true, blank: true }),
+        affliction2: new fields.StringField({ required: true, blank: true }),
+        affliction3: new fields.StringField({ required: true, blank: true }),
+        affliction4: new fields.StringField({ required: true, blank: true }),
+        affliction5: new fields.StringField({ required: true, blank: true }),
+      });
       
       
       schema.divineAgony = new fields.SchemaField({
@@ -69,6 +76,22 @@ export default class CainCharacter extends CainActorBase {
       schema.stress = new fields.SchemaField({
         value: new fields.NumberField({ required: true, initial: 0, min: 0, max: 6 }),
       });
+
+      schema.extraDice = new fields.SchemaField({
+        value: new fields.NumberField({ required: true, initial: 0, min: 0, max: 6 }),
+      });
+
+      // Define the Talisman Schema
+      schema.talismans = new fields.ArrayField(
+         new fields.ObjectField({
+          name: new fields.StringField({ required: true }),
+          imagePath: new fields.StringField({ required: true }),
+          currMarkAmount: new fields.NumberField({ required: true, initial: 0, min: 0 }),
+          minMarkAmount: new fields.NumberField({ required: true, initial: 0, min:  0 }),
+          maxMarkAmount: new fields.NumberField({ required: true, initial: 6, min:  0}),
+        }),
+        { required: true, initial: [{name: "Execution", imagePath: "systems/cain/assets/Talismans/Talisman-A-0.png", currMarkAmount: 0, minMarkAmount: 0, maxMarkAmount: 6}] }
+      );
 
     return schema;
 

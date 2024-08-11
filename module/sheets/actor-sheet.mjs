@@ -123,24 +123,24 @@ export class CainActorSheet extends ActorSheet {
   /** @override */
   activateListeners(html) {
     super.activateListeners(html);
-
+  
     html.on('click', '.item-edit', (ev) => {
       const li = $(ev.currentTarget).parents('.item');
       const item = this.actor.items.get(li.data('itemId'));
       item.sheet.render(true);
     });
-
+  
     if (!this.isEditable) return;
-
+  
     html.on('click', '.item-create', this._onItemCreate.bind(this));
-
+  
     html.on('click', '.item-delete', (ev) => {
       const li = $(ev.currentTarget).parents('.item');
       const item = this.actor.items.get(li.data('itemId'));
       item.delete();
       li.slideUp(200, () => this.render(false));
     });
-
+  
     html.on('click', '.effect-control', (ev) => {
       const row = ev.currentTarget.closest('li');
       const document =
@@ -149,9 +149,9 @@ export class CainActorSheet extends ActorSheet {
           : this.actor.items.get(row.dataset.parentId);
       onManageActiveEffect(ev, document);
     });
-
+  
     html.on('click', '.rollable', this._onRoll.bind(this));
-
+  
     if (this.actor.isOwner) {
       let handler = (ev) => this._onDragStart(ev);
       html.find('li.item').each((i, li) => {
@@ -160,22 +160,142 @@ export class CainActorSheet extends ActorSheet {
         li.addEventListener('dragstart', handler, false);
       });
     }
-
+  
     // Checkbox logic
     html.find('.checkbox-group input[type="checkbox"]').on('change', (event) => {
       const field = event.currentTarget.closest('.checkbox-group').dataset.field;
       const checkboxes = html.find(`.checkbox-group[data-field="${field}"] input[type="checkbox"]`);
       let value = 0;
-
+  
       checkboxes.each((index, cb) => {
         if (cb.checked) value = index + 1;
       });
-
+  
       // Update the corresponding field value
       this.actor.update({ [`system.${field}.value`]: value });
     });
+  
+    // Talisman input changes
+    html.find('.talisman-name').change(this._onInputChange.bind(this));
+    html.find('.talisman-curr-mark-amount').change(this._onInputChange.bind(this));
+    html.find('.talisman-min-mark-amount').change(this._onInputChange.bind(this));
+    html.find('.talisman-max-mark-amount').change(this._onInputChange.bind(this));
+    html.find('.talisman-slider').on('input', this._onSliderChange.bind(this));
+    html.find('#add-talisman').click(this._onAddTalisman.bind(this));
+    html.find('.delete-talisman').click(this._onDeleteTalisman.bind(this));
+    html.find('.increase-marks').click(this._onIncreaseMarks.bind(this));
+    html.find('.change-image').click(this._onChangeImage.bind(this));
+    html.find('.talisman-image').click(this._onImageClick.bind(this));
+    html.find('.talisman-image').on('contextmenu', this._onDecreaseMarks.bind(this));
+  }
+  
+  _onInputChange(event) {
+    const index = event.currentTarget.dataset.index;
+    const field = event.currentTarget.className.split('-')[1];
+    const value = event.currentTarget.value;
+    const talismans = this.actor.system.talismans || [];
+    talismans[index][field] = value;
+    this.actor.update({ 'system.talismans': talismans }).then(() => {
+      this.render(false); // Re-render the sheet to reflect changes
+    });
+  }
+  _onDecreaseMarks(event) {
+    event.preventDefault();
+    const index = event.currentTarget.dataset.index;
+    const talismans = this.actor.system.talismans || [];
+  
+    // Change image similar to how the image change function works but in reverse
+    const imagePath = talismans[index].imagePath;
+    const imageNumber = parseInt(imagePath.match(/-(\d+)\.png$/)[1], 10);
+    if (imageNumber > 0 && talismans[index].currMarkAmount >= 0) {
+      talismans[index].currMarkAmount--;
+      talismans[index].imagePath = imagePath.replace(/-(\d+)\.png$/, `-${imageNumber - 1}.png`);
+    }
+  
+    this.actor.update({ 'system.talismans': talismans }).then(() => {
+      this.render(false); // Re-render the sheet to reflect changes
+    });
+  }
+  
+  _onSliderChange(event) {
+    const index = event.currentTarget.dataset.index;
+    const value = event.currentTarget.value;
+    const talismans = this.actor.system.talismans || [];
+    talismans[index].currMarkAmount = parseInt(value, 10);
+    const imagePath = talismans[index].imagePath;
+    talismans[index].imagePath = imagePath.replace(/-(\d+)\.png$/, `-${value}.png`);
+    this.actor.update({ 'system.talismans': talismans }).then(() => {
+      this.render(false); // Re-render the sheet to reflect changes
+    });
+  }
+  
+  _onAddTalisman(event) {
+    event.preventDefault();
+    const talismans = this.actor.system.talismans || [];
+    talismans.push({
+      name: 'test-talisman',
+      imagePath: 'systems/cain/assets/Talismans/Talisman-A-0.png',
+      currMarkAmount: 0,
+      minMarkAmount: 0,
+      maxMarkAmount: 6,
+    });
+    this.actor.update({ 'system.talismans': talismans }).then(() => {
+      this.render(false); // Re-render the sheet to reflect changes
+    });
+  }
+  
+  _onDeleteTalisman(event) {
+    event.preventDefault();
+    const index = event.currentTarget.dataset.index;
+    const talismans = this.actor.system.talismans || [];
+    talismans.splice(index, 1);
+    this.actor.update({ 'system.talismans': talismans }).then(() => {
+      this.render(false); // Re-render the sheet to reflect changes
+    });
+  }
+  
+  _onIncreaseMarks(event) {
+    event.preventDefault();
+    const index = event.currentTarget.dataset.index;
+    const talismans = this.actor.system.talismans || [];
+    if (talismans[index].currMarkAmount < talismans[index].maxMarkAmount) {
+      talismans[index].currMarkAmount++;
+      this.actor.update({ 'system.talismans': talismans }).then(() => {
+        this.render(false); // Re-render the sheet to reflect changes
+      });
+    }
+  }
+  
+  _onChangeImage(event) {
+    event.preventDefault();
+    const index = event.currentTarget.dataset.index;
+    const newPath = prompt('Enter new image path:');
+    if (newPath) {
+      const talismans = this.actor.system.talismans || [];
+      talismans[index].imagePath = newPath;
+      this.actor.update({ 'system.talismans': talismans }).then(() => {
+        this.render(false); // Re-render the sheet to reflect changes
+      });
+    }
+  }
+  
+  _onImageClick(event) {
+    const index = event.currentTarget.dataset.index;
+    const talismans = this.actor.system.talismans || [];
+    if (talismans[index].currMarkAmount < talismans[index].maxMarkAmount) {
+      talismans[index].currMarkAmount++;
+      const imagePath = talismans[index].imagePath;
+      const imageNumber = parseInt(imagePath.match(/-(\d+)\.png$/)[1], 10);
+      if (imageNumber < talismans[index].maxMarkAmount) {
+        talismans[index].imagePath = imagePath.replace(/-(\d+)\.png$/, `-${imageNumber + 1}.png`);
+      }
+      this.actor.update({ 'system.talismans': talismans }).then(() => {
+        this.render(false); // Re-render the sheet to reflect changes
+      });
+    }
   }
 
+  
   async _onItemCreate(event) {
     event.preventDefault();
     const header = event.currentTarget;
