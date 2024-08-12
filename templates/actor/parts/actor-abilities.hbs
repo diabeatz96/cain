@@ -1,49 +1,227 @@
-<ol class='items-list'>
-  {{#each spells as |spells spellLevel|}}
-    <li class='item flexrow items-header'>
-      <div class='item-name'>
-        {{localize 'CAIN.Item.Spell.SpellLVL' level=spellLevel}}
-      </div>
-      <div class='item-controls'>
-        <a
-          class='item-control item-create'
-          title='{{localize "DOCUMENT.Create" type='Spell'}}'
-          data-type='spell'
-          data-spell-level='{{spellLevel}}'
-        >
-          <i class='fas fa-plus'></i>
-          {{localize 'CAIN.Item.Spell.AddLVL' level=spellLevel}}
-        </a>
-      </div>
-    </li>
-    {{#each spells as |item id|}}
-      <li class='item flexrow' data-item-id='{{item._id}}'>
-        <div class='item-name flexrow'>
-          <div class='item-image'>
-            <a class='rollable' data-roll-type='item'><img
-                src='{{item.img}}'
-                title='{{item.name}}'
-                width='24'
-                height='24'
-              /></a>
-          </div>
-          <h4>{{item.name}}</h4>
-        </div>
-        <div class='item-controls'>
-          <a
-            class='item-control item-edit'
-            title='{{localize "DOCUMENT.Edit" type='spell'}}'
-          >
-            <i class='fas fa-edit'></i>
-          </a>
-          <a
-            class='item-control item-delete'
-            title='{{localize "DOCUMENT.Delete" type='spell'}}'
-          >
-            <i class='fas fa-trash'></i>
-          </a>
-        </div>
-      </li>
-    {{/each}}
-  {{/each}}
-</ol>
+<div class="abilities-page">
+  <!-- Psyche Section -->
+  <div class="psyche-section" style="text-align: center; margin-bottom: 20px;">
+    {{#if system.psyche}}
+      <button class="psyche-roll-button" style="margin-bottom: 10px;">
+        Roll Psyche ({{system.psyche}}d6)
+      </button>
+    {{else}}
+      <button class="psyche-roll-button" style="margin-bottom: 10px;" disabled>
+        Roll Psyche (N/A)
+      </button>
+    {{/if}}
+    <div class="psyche-burst-checkboxes" style="display: flex; justify-content: center;">
+      {{#if system.psycheBurst}}
+        {{#range 0 system.psycheBurst.max}}
+          <input type="checkbox" class="psyche-burst-checkbox" style="margin: 0 5px; transform: scale(1.5); accent-color: #ff00cc; border-radius: 50%; padding: 20px; background: url('systems/cain/assets/brain.png') no-repeat center center; background-size: cover;" {{#if (lt index ../system.psycheBurst.value)}}checked{{/if}} />
+        {{/range}}
+      {{else}}
+        <p>No Psyche Burst Data</p>
+      {{/if}}
+    </div>
+  </div>
+
+  <!-- Items Section -->
+  <div class="items-section" style="display: flex; justify-content: space-between;">
+    <!-- Agendas -->
+    <div class="agendas" style="width: 48%;">
+      <h2>Agendas</h2>
+      {{#each items as |item|}}
+        {{#if (eq item.type "agenda")}}
+          {{#unless agendaFound}}
+            {{#set this "agendaFound" true}}
+            <ol class='items-list'>
+          {{/set}}
+          {{/unless}}
+          <li class='item flexrow' data-item-id='{{item._id}}'>
+            <div class='item-name flexrow'>
+              <div class='item-image'>
+                <a class='rollable' data-roll-type='item'><img
+                    src='{{item.img}}'
+                    title='{{item.name}}'
+                    width='24'
+                    height='24'
+                  /></a>
+              </div>
+              <h4>{{item.name}}</h4>
+            </div>
+            <div class='item-controls'>
+              <a
+                class='item-control item-edit'
+                title='{{localize "DOCUMENT.Update" type='Item'}}'
+              >
+                <i class='fas fa-edit'></i>
+              </a>
+              <a
+                class='item-control item-delete'
+                title='{{localize "DOCUMENT.Delete" type='Item'}}'
+              >
+                <i class='fas fa-trash'></i>
+              </a>
+              <a
+                class='item-control item-description'
+                title='{{localize "DOCUMENT.Description" type='Item'}}'
+              >
+                <i class='fas fa-info-circle'></i>
+              </a>
+            </div>
+          </li>
+        {{/if}}
+      {{/each}}
+      {{#unless agendaFound}}
+        <p class="psychedelic-text">Please drag agenda onto sheet</p>
+      {{/unless}}
+      {{#if agendaFound}}
+        </ol>
+      {{/if}}
+    </div>
+
+    <!-- Blasphemy Powers -->
+    <div class="blasphemy-powers" style="width: 48%;">
+      <h2>Blasphemy Powers</h2>
+      {{#each items as |item|}}
+        {{#if (eq item.type "blasphemy")}}
+          {{#unless blasphemyFound}}
+            {{#set this "blasphemyFound" true}}
+            <ol class='items-list'>
+          {{/set}}
+          {{/unless}}
+          <li class='item flexrow' data-item-id='{{item._id}}'>
+            <div class='item-name flexrow'>
+              <div class='item-image'>
+                <a class='rollable' data-roll-type='item'><img
+                    src='{{item.img}}'
+                    title='{{item.name}}'
+                    width='24'
+                    height='24'
+                  /></a>
+              </div>
+              <h4>{{item.name}}</h4>
+            </div>
+            <div class='item-controls'>
+              <a
+                class='item-control item-edit'
+                title='{{localize "DOCUMENT.Update" type='Item'}}'
+              >
+                <i class='fas fa-edit'></i>
+              </a>
+              <a
+                class='item-control item-delete'
+                title='{{localize "DOCUMENT.Delete" type='Item'}}'
+              >
+                <i class='fas fa-trash'></i>
+              </a>
+              <a
+                class='item-control item-description'
+                title='{{localize "DOCUMENT.Description" type='Item'}}'
+              >
+                <i class='fas fa-info-circle'></i>
+              </a>
+            </div>
+          </li>
+        {{/if}}
+      {{/each}}
+      {{#unless blasphemyFound}}
+        <p class="psychedelic-text">Please drag blasphemy power onto sheet</p>
+      {{/unless}}
+      {{#if blasphemyFound}}
+        </ol>
+      {{/if}}
+    </div>
+  </div>
+</div>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Lacquer&display=swap');
+
+  .abilities-page {
+    padding: 20px;
+  }
+
+  .psyche-roll-button {
+    background: linear-gradient(45deg, #ff00cc, #3333ff);
+    color: #fff;
+    border: 2px solid #ff00cc;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-family: "Lacquer", system-ui;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 16px;
+    text-shadow: 1px 1px 2px #000;
+    transition: background 0.3s;
+  }
+
+  .psyche-roll-button:hover {
+    background: linear-gradient(45deg, #3333ff, #ff00cc);
+  }
+
+  .psyche-burst-checkboxes input[type="checkbox"] {
+    margin: 0 5px;
+    transform: scale(1.5);
+    accent-color: #ff00cc;
+    border-radius: 50%;
+    padding: 20px;
+    background: url('systems/cain/assets/brain.png') no-repeat center center;
+    background-size: cover;
+  }
+
+  .items-section {
+    margin-top: 20px;
+  }
+
+  .items-list {
+    background-color: #1a1a1a;
+    color: #e0e0e0;
+    font-family: 'Courier New', Courier, monospace;
+    padding: 20px;
+    border: 1px solid #444;
+  }
+
+  .item-name h4 {
+    color: #ff0000;
+  }
+
+  .item-controls a {
+    color: #e0e0e0;
+    margin-left: 5px;
+  }
+
+  .item-controls a:hover {
+    color: #ff0000;
+  }
+
+  .create-agenda-button, .create-blasphemy-button {
+    background-color: #1a1a1a;
+    color: #e0e0e0;
+    border: 1px solid #444;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+
+  .create-agenda-button:hover, .create-blasphemy-button:hover {
+    background-color: #444;
+  }
+
+  .psychedelic-text {
+    color: #9933ff;
+    font-family: "Lacquer", system-ui;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 18px;
+    text-shadow: 2px 2px 4px #000;
+    animation: psychedelic-animation 1s infinite alternate;
+    font-weight: calc(100 + (900 - 100) * random());
+    font-size: calc(16px + (32px - 16px) * random());
+  }
+
+  @keyframes psychedelic-animation {
+    from {
+      color: #ff00cc;
+    }
+    to {
+      color: #3333ff;
+    }
+  }
+</style>

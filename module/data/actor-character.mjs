@@ -29,85 +29,91 @@ export default class CainCharacter extends CainActorBase {
       return obj;
     }, {}));
 
-      // Add new string fields
-      schema.sex = new fields.StringField({ required: true, blank: true });
-      schema.height = new fields.StringField({ required: true, blank: true });
-      schema.weight = new fields.StringField({ required: true, blank: true });
-      schema.hair = new fields.StringField({ required: true, blank: true });
-      schema.eyes = new fields.StringField({ required: true, blank: true });
-      schema.agenda = new fields.StringField({ required: true, blank: true });
-      schema.blasphemy = new fields.StringField({ required: true, blank: true });
-      schema.XID = new fields.StringField({ required: true, blank: true });
+    // Add new string fields
+    schema.sex = new fields.StringField({ required: true, blank: true });
+    schema.height = new fields.StringField({ required: true, blank: true });
+    schema.weight = new fields.StringField({ required: true, blank: true });
+    schema.hair = new fields.StringField({ required: true, blank: true });
+    schema.eyes = new fields.StringField({ required: true, blank: true });
+    schema.agenda = new fields.StringField({ required: true, blank: true });
+    schema.blasphemy = new fields.StringField({ required: true, blank: true });
+    schema.XID = new fields.StringField({ required: true, blank: true });
 
-          // Add XP and advancements fields
-      schema.xp = new fields.SchemaField({
-        value: new fields.NumberField({ required: true, initial: 0, min: 0, max: 4 }),
-        max: new fields.NumberField({ required: true, initial: 4, min: 4, max: 4 }),
-      });
+    // Add XP and advancements fields
+    schema.xp = new fields.SchemaField({
+      value: new fields.NumberField({ required: true, initial: 0, min: 0, max: 4 }),
+      max: new fields.NumberField({ required: true, initial: 4, min: 4, max: 4 }),
+    });
 
-      schema.advancements = new fields.SchemaField({
-        value: new fields.NumberField({ required: true, initial: 0, max: 4 }),
-        max: new fields.NumberField({ required: true, initial: 0, max: 4 }),
-      });
+    schema.advancements = new fields.SchemaField({
+      value: new fields.NumberField({ required: true, initial: 0, max: 4 }),
+      max: new fields.NumberField({ required: true, initial: 0, max: 4 }),
+    });
 
-      schema.scrip = new fields.NumberField({ required: true, initial: 0, min: 0, max: 1000 });
-      
-      schema.CATLEVEL = new fields.SchemaField({
-        value: new fields.NumberField({ required: true, initial: 0, min: 0, max: 7 }),
-      });
+    schema.scrip = new fields.NumberField({ required: true, initial: 0, min: 0, max: 1000 });
+    
+    schema.CATLEVEL = new fields.SchemaField({
+      value: new fields.NumberField({ required: true, initial: 0, min: 0, max: 7 }),
+    });
 
-      schema.afflictions = new fields.SchemaField({
-        affliction1: new fields.StringField({ required: true, blank: true }),
-        affliction2: new fields.StringField({ required: true, blank: true }),
-        affliction3: new fields.StringField({ required: true, blank: true }),
-        affliction4: new fields.StringField({ required: true, blank: true }),
-        affliction5: new fields.StringField({ required: true, blank: true }),
-      });
-      
-      
-      schema.divineAgony = new fields.SchemaField({
-        value: new fields.NumberField({ required: true, initial: 0, min: 0, max: 3 }),
-      });
-      
-      schema.injuries = new fields.SchemaField({
-        value: new fields.NumberField({ required: true, initial: 0, min: 0, max: 3 }),
-      });
-      
-      schema.stress = new fields.SchemaField({
-        value: new fields.NumberField({ required: true, initial: 0, min: 0, max: 6 }),
-      });
+    schema.afflictions = new fields.SchemaField({
+      affliction1: new fields.StringField({ required: true, blank: true }),
+      affliction2: new fields.StringField({ required: true, blank: true }),
+      affliction3: new fields.StringField({ required: true, blank: true }),
+      affliction4: new fields.StringField({ required: true, blank: true }),
+      affliction5: new fields.StringField({ required: true, blank: true }),
+    });
+    
+    schema.divineAgony = new fields.SchemaField({
+      value: new fields.NumberField({ required: true, initial: 0, min: 0, max: 3 }),
+    });
+    
+    schema.injuries = new fields.SchemaField({
+      value: new fields.NumberField({ required: true, initial: 0, min: 0, max: 3 }),
+    });
+    
+    schema.stress = new fields.SchemaField({
+      value: new fields.NumberField({ required: true, initial: 0, min: 0, max: 6 }),
+    });
 
-      schema.extraDice = new fields.SchemaField({
-        value: new fields.NumberField({ required: true, initial: 0, min: 0, max: 6 }),
-      });
+    schema.extraDice = new fields.SchemaField({
+      value: new fields.NumberField({ required: true, initial: 0, min: 0, max: 6 }),
+    });
 
-      // Define the Talisman Schema
-      schema.talismans = new fields.ArrayField(
-         new fields.ObjectField({
-          name: new fields.StringField({ required: true }),
-          imagePath: new fields.StringField({ required: true }),
-          currMarkAmount: new fields.NumberField({ required: true, initial: 0, min: 0 }),
-          minMarkAmount: new fields.NumberField({ required: true, initial: 0, min:  0 }),
-          maxMarkAmount: new fields.NumberField({ required: true, initial: 6, min:  0}),
-        }),
-        { required: true, initial: [{name: "Execution", imagePath: "systems/cain/assets/Talismans/Talisman-A-0.png", currMarkAmount: 0, minMarkAmount: 0, maxMarkAmount: 6}] }
-      );
+    // Define the Talisman Schema
+    schema.talismans = new fields.ArrayField(
+       new fields.ObjectField({
+        name: new fields.StringField({ required: true }),
+        imagePath: new fields.StringField({ required: true }),
+        currMarkAmount: new fields.NumberField({ required: true, initial: 0, min: 0 }),
+        minMarkAmount: new fields.NumberField({ required: true, initial: 0, min:  0 }),
+        maxMarkAmount: new fields.NumberField({ required: true, initial: 6, min:  0}),
+      }),
+      { required: true, initial: [{name: "Execution", imagePath: "systems/cain/assets/Talismans/Talisman-A-0.png", currMarkAmount: 0, minMarkAmount: 0, maxMarkAmount: 6}] }
+    );
 
-      schema.currentSinMarks = new fields.ArrayField(new fields.StringField({ required: true, initial: " " }), { required: true, initial: [] });
+    schema.currentSinMarks = new fields.ArrayField(new fields.StringField({ required: true, initial: " " }), { required: true, initial: [] });
 
-      schema.sinOverflow = new fields.SchemaField({
-        value: new fields.NumberField({ required: true, initial: 0, min: 0, max: 10 }),
-        max: new fields.NumberField({ required: true, initial: 10, min: 0, max: 10 }),
-        min : new fields.NumberField({ required: true, initial: 0, min: 0, max: 10 }),
-      });
+    schema.sinOverflow = new fields.SchemaField({
+      value: new fields.NumberField({ required: true, initial: 0, min: 0, max: 10 }),
+      max: new fields.NumberField({ required: true, initial: 10, min: 0, max: 10 }),
+      min : new fields.NumberField({ required: true, initial: 0, min: 0, max: 10 }),
+    });
 
-      schema.kitPoints = new fields.SchemaField({
-        value: new fields.NumberField({ required: true, initial: 5, min: 0, max: 10 }),
-        max: new fields.NumberField({ required: true, initial: 10, min: 0, max: 10 }),
-      });
+    schema.kitPoints = new fields.SchemaField({
+      value: new fields.NumberField({ required: true, initial: 5, min: 0, max: 10 }),
+      max: new fields.NumberField({ required: true, initial: 10, min: 0, max: 10 }),
+    });
+
+    // Add psyche field
+    schema.psyche = new fields.NumberField({ required: true, initial: 1, min: 1 });
+
+    schema.psycheBurst = new fields.SchemaField({
+      value: new fields.NumberField({ required: true, initial: 0, min: 0, max: 3 }),
+      max: new fields.NumberField({ required: true, initial: 3, min: 0, max: 3 }),
+    });
+    
     return schema;
-
-
   }
 
   prepareDerivedData() {
@@ -118,6 +124,9 @@ export default class CainCharacter extends CainActorBase {
       // Handle ability label localization.
       this.abilities[key].label = game.i18n.localize(CONFIG.CAIN.abilities[key]) ?? key;
     }
+
+    // Calculate psyche based on CAT level
+    this.psyche = Math.ceil(this.CATLEVEL.value / 2) || 1;
   }
 
   getRollData() {
@@ -136,12 +145,11 @@ export default class CainCharacter extends CainActorBase {
     return data
   }
 
-    // Method to handle XP and advancements
-    handleXP() {
-      if (this.xp >= 4) {
-        this.xp = 0;
-        this.advancements += 1;
-      }
+  // Method to handle XP and advancements
+  handleXP() {
+    if (this.xp >= 4) {
+      this.xp = 0;
+      this.advancements += 1;
     }
-
+  }
 }

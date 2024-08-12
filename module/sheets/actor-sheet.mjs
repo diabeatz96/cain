@@ -135,7 +135,9 @@ export class CainActorSheet extends ActorSheet {
     if (!this.isEditable) return;
   
     html.on('click', '.item-create', this._onItemCreate.bind(this));
-  
+    html.on('click', '.create-agenda-button', this._onItemCreate.bind(this));    
+    html.on('click', '.create-blasphemy-button', this._onItemCreate.bind(this));
+    
     html.on('click', '.item-delete', (ev) => {
       const li = $(ev.currentTarget).parents('.item');
       const item = this.actor.items.get(li.data('itemId'));
@@ -178,6 +180,7 @@ export class CainActorSheet extends ActorSheet {
     });
   
     // Talisman input changes
+    html.find('.item-description').click(this._onItemDescription.bind(this));
     html.find('.sinOverflow-checkbox').change(this._onOverflowChange.bind(this));
     html.find('.kit-points-checkbox').change(this._onKitPointsChange.bind(this));
     html.find('.clear-sin-marks').click(this._clearSinMarks.bind(this));
@@ -206,6 +209,7 @@ export class CainActorSheet extends ActorSheet {
       this.render(false); // Re-render the sheet to reflect changes
     });
   }
+  
 
   _onOverflowChange(event) {
     const checkboxes = document.querySelectorAll('.sinOverflow-checkbox');
@@ -244,7 +248,7 @@ export class CainActorSheet extends ActorSheet {
       this.render(false); // Re-render the sheet to reflect changes
     });
   }
-  
+
   
   _onDecreaseMarks(event) {
     event.preventDefault();
@@ -460,6 +464,18 @@ export class CainActorSheet extends ActorSheet {
     delete itemData.system['type'];
 
     return await Item.create(itemData, { parent: this.actor });
+  }
+
+  async _onItemDescription(event) {
+    event.preventDefault();
+    const itemId = event.currentTarget.closest('.item').dataset.itemId;
+    const item = this.actor.items.get(itemId);
+    if (item) {
+      ChatMessage.create({
+        content: `<h2>${item.name}</h2><p>${item.system.description}</p>`,
+        speaker: ChatMessage.getSpeaker({ actor: item.actor })
+      });
+    }
   }
 
 

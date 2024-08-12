@@ -93,6 +93,19 @@ Handlebars.registerHelper('range', function(start, end, options) {
   return accum;
 });
 
+Handlebars.registerHelper('filter', function(items, type) {
+  return items.filter(item => item.type === type);
+});
+
+Handlebars.registerHelper('hasItemsOfType', function(items, type, options) {
+  const hasItems = items.some(item => item.type === type);
+  return hasItems ? options.fn(this) : options.inverse(this);
+});
+
+Handlebars.registerHelper('set', function(context, key, value, options) {
+  context[key] = value;
+});
+
 /* -------------------------------------------- */
 /*  Ready Hook                                  */
 /* -------------------------------------------- */

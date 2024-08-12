@@ -18,10 +18,9 @@ export default class CainItem extends CainItemBase {
     })
 
     schema.formula = new fields.StringField({ blank: true });
-
     schema.kitPoint = new fields.NumberField({ required: true, nullable: false, initial: 0, min: 0 });
     schema.scripValue = new fields.NumberField({ required: true, nullable: false, initial: 0, min: 0 });
-    
+    schema.type = new fields.StringField({ required: true, nullable: false, initial: "Aesthetics" });
 
     return schema;
   }
