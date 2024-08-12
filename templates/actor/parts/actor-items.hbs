@@ -1,3 +1,12 @@
+<div class="kit-points">
+    <div id="kit-points" style="display: flex; justify-content: center; margin-top:10px;">
+        {{#range 0 system.kitPoints.max}}
+          <input type="checkbox" class="kit-points-checkbox" {{#if (lt @index system.kitPoints.value)}}checked{{/if}} />
+        {{/range}}
+    </div>    
+</div>
+
+
 <ol class='items-list'>
   <li class='item flexrow items-header'>
     <div class='item-name'>{{localize 'Name'}}</div>

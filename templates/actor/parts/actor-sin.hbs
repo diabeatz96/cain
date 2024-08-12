@@ -1,1 +1,46 @@
-<h2>Sin</h2>
+<div class="sin-overflow">
+  <h3>Sin Overflow</h3>
+  <div class="sin-overflow-controls" style="display: flex; flex-direction: column; align-items: center;">
+    <label for="sinOverflow-max">Maximum Value:</label>
+    <input type="number" id="sinOverflow-max" name="system.sinOverflow.max" value="{{system.sinOverflow.max}}" min="{{system.sinOverflow.min}}" max="10" style="width: 100px;" />
+    <div id="sinOverflow-checkboxes" style="display: flex; justify-content: center; margin-top: 10px;">
+      {{#range 0 system.sinOverflow.max}}
+        <input type="checkbox" class="sinOverflow-checkbox" data-index="{{index}}" {{#if (lt index ../system.sinOverflow.value)}}checked{{/if}} />
+      {{/range}}
+    </div>
+    <div style="display: flex; justify-content: center; margin-top: 10px;">
+      <label for="roll-sin" class="resource-label rollable flexlarge align-left mob-psycho-label" 
+             data-roll="1d3" 
+             data-label="{{localize 'Roll Sin (1d3)'}}" 
+             style="text-align: center;">
+        Roll Sin (1d3)
+      </label>
+      <label for="resist-roll" class="resource-label rollable flexlarge align-left mob-psycho-label" 
+             data-roll="1d6+{{system.currentSinMarks.length}}" 
+             data-label="{{localize 'Resist Roll (1d6 + Sin Marks)'}}" 
+             style="text-align: center;">
+        Resist Roll (1d6 + Sin Marks)
+      </label>
+    </div>
+  </div>
+</div>
+
+<div class="sin-marks">
+  <h3>Sin Marks</h3>
+  {{#if system.currentSinMarks.length}}
+    <ul>
+      {{#each system.currentSinMarks}}
+        <li>{{this}}</li>
+      {{/each}}
+    </ul>
+  {{else}}
+    <p class="no-sin-marks">
+      A sin mark is a physical manifestation of wild power overflow on your body, evidence of your partial transformation into a sin. You can find a list of sin marks, their effects, and their table, on pg. 86. A sin mark is a new, permanent part of your character. It grants new, beneficial power, and grants you new abilities.
+    </p>
+  {{/if}}
+  <div class="button-row">
+    <button class="roll-sin-mark">Roll Sin Marks</button>
+    <button class="clear-sin-marks">Clear Sin Marks</button>
+    <button class="delete-sin-mark">Delete Sin Mark</button>
+  </div>
+</div>

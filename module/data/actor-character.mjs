@@ -93,6 +93,18 @@ export default class CainCharacter extends CainActorBase {
         { required: true, initial: [{name: "Execution", imagePath: "systems/cain/assets/Talismans/Talisman-A-0.png", currMarkAmount: 0, minMarkAmount: 0, maxMarkAmount: 6}] }
       );
 
+      schema.currentSinMarks = new fields.ArrayField(new fields.StringField({ required: true, initial: " " }), { required: true, initial: [] });
+
+      schema.sinOverflow = new fields.SchemaField({
+        value: new fields.NumberField({ required: true, initial: 0, min: 0, max: 10 }),
+        max: new fields.NumberField({ required: true, initial: 10, min: 0, max: 10 }),
+        min : new fields.NumberField({ required: true, initial: 0, min: 0, max: 10 }),
+      });
+
+      schema.kitPoints = new fields.SchemaField({
+        value: new fields.NumberField({ required: true, initial: 5, min: 0, max: 10 }),
+        max: new fields.NumberField({ required: true, initial: 10, min: 0, max: 10 }),
+      });
     return schema;
 
 

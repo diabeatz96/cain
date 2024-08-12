@@ -3,6 +3,8 @@ import {
   prepareActiveEffectCategories,
 } from '../helpers/effects.mjs';
 
+import { CAIN } from '../helpers/config.mjs';
+
 /**
  * Extend the basic ActorSheet with some very simple modifications
  * @extends {ActorSheet}
@@ -176,6 +178,11 @@ export class CainActorSheet extends ActorSheet {
     });
   
     // Talisman input changes
+    html.find('.sinOverflow-checkbox').change(this._onOverflowChange.bind(this));
+    html.find('.kit-points-checkbox').change(this._onKitPointsChange.bind(this));
+    html.find('.clear-sin-marks').click(this._clearSinMarks.bind(this));
+    html.find('.delete-sin-mark').click(this._deleteSinMark.bind(this));
+    html.find('.roll-sin-mark').click(this._rollSinMark.bind(this));
     html.find('.talisman-name').change(this._onInputChange.bind(this));
     html.find('.talisman-curr-mark-amount').change(this._onInputChange.bind(this));
     html.find('.talisman-min-mark-amount').change(this._onInputChange.bind(this));
@@ -199,6 +206,46 @@ export class CainActorSheet extends ActorSheet {
       this.render(false); // Re-render the sheet to reflect changes
     });
   }
+
+  _onOverflowChange(event) {
+    const checkboxes = document.querySelectorAll('.sinOverflow-checkbox');
+    const isChecked = event.currentTarget.checked;
+    let newValue = 0;
+  
+    checkboxes.forEach(checkbox => {
+      if (checkbox.checked) {
+        newValue++;
+      }
+    });
+  
+    console.log(isChecked);
+    console.log(newValue);
+  
+    this.actor.update({ 'system.sinOverflow.value': newValue }).then(() => {
+      this.render(false); // Re-render the sheet to reflect changes
+    });
+  }
+
+  _onKitPointsChange(event) {
+    const checkboxes = document.querySelectorAll('.kit-points-checkbox');
+    const isChecked = event.currentTarget.checked;
+    let newValue = 0;
+
+    checkboxes.forEach(checkbox => {
+      if (checkbox.checked) {
+        newValue++;
+      }
+    });
+
+    console.log(isChecked);
+    console.log(newValue);
+    
+    this.actor.update({ 'system.kitPoints.value': newValue }).then(() => {
+      this.render(false); // Re-render the sheet to reflect changes
+    });
+  }
+  
+  
   _onDecreaseMarks(event) {
     event.preventDefault();
     const index = event.currentTarget.dataset.index;
@@ -295,12 +342,115 @@ export class CainActorSheet extends ActorSheet {
     }
   }
 
+  async _rollSinMark(event) {
+    event.preventDefault();
+    
+    // Manually roll 1d6 for the mark
+    const TWIST = new foundry.dice.MersenneTwister(Date.now());
+    const roll = new Roll('1d6');
+    roll.evaluateSync({strict: false});
+    let markRoll = Array(roll.dice[0].number).fill(roll.dice[0].faces).reduce((acc, f) => acc + Math.ceil(TWIST.random() * f), roll.total);
+    let markIndex = markRoll - 1;
+    
+    console.log(markRoll);
+    console.log(markIndex);
+  
+    // If rolled a 6, allow the user to choose the mark
+    if (markRoll === 6) {
+      markIndex = await this._chooseMark();
+    }
+  
+    const sinMarks = this.actor.system.currentSinMarks || [];
+    const sinMark = CAIN.sinMarks[markIndex];
+  
+    // Check if the mark already exists
+    const existingMark = sinMarks.find(mark => mark.startsWith(sinMark.name));
+    if (existingMark) {
+      // Manually roll 1d6 for the ability
+      let abilityRoll;
+      let newAbility;
+      do {
+        let abilityRoll = new Roll('1d6');
+        abilityRoll.evaluateSync({strict: false});
+        abilityRoll = Array(abilityRoll.dice[0].number).fill(abilityRoll.dice[0].faces).reduce((acc, f) => acc + Math.ceil(TWIST.random() * f), abilityRoll.total);
+        newAbility = sinMark.abilities[abilityRoll - 1];
+      } while (existingMark.includes(newAbility));
+  
+      // Add the new ability to the existing mark
+      sinMarks[sinMarks.indexOf(existingMark)] += `, ${newAbility}`;
+    } else {
+      // Manually roll 1d6 for the ability
+      let abilityRoll = new Roll('1d6');
+      abilityRoll.evaluateSync({strict: false});
+      abilityRoll = Array(abilityRoll.dice[0].number).fill(abilityRoll.dice[0].faces).reduce((acc, f) => acc + Math.ceil(TWIST.random() * f), abilityRoll.total);
+      console.log(sinMark);
+      const newAbility = sinMark.abilities[abilityRoll - 1];
+  
+      // Format the sinMark as "Name - Ability"
+      const formattedSinMark = `${sinMark.name} - ${newAbility}`;
+  
+      // Add the new mark to the sinMarks array
+      sinMarks.push(formattedSinMark);
+    }
+  
+    // Update the actor with the new sinMarks array
+    this.actor.update({ 'system.currentSinMarks': sinMarks }).then(() => {
+      this.render(false); // Re-render the sheet to reflect changes
+    });
+  }
+
+  async _deleteSinMark(event) {
+    event.preventDefault();
+    const index = event.currentTarget.dataset.index;
+    const sinMarks = this.actor.system.currentSinMarks || [];
+    sinMarks.splice(index, 1);
+    this.actor.update({ 'system.currentSinMarks': sinMarks }).then(() => {
+      this.render(false); // Re-render the sheet to reflect changes
+    });
+  }
+
+  async _clearSinMarks(event) {
+    event.preventDefault();
+    this.actor.update({ 'system.currentSinMarks': [] }).then(() => {
+      this.render(false); // Re-render the sheet to reflect changes
+    });
+  }
+  
+  async _chooseMark() {
+    return new Promise((resolve) => {
+      const options = CAIN.sinMarks.map((mark, index) => `<option value="${index}">${mark.name}</option>`).join('');
+      const content = `
+        <form>
+          <div class="form-group">
+            <label>Choose a Sin Mark:</label>
+            <select id="mark-select">${options}</select>
+          </div>
+        </form>
+      `;
+  
+      new Dialog({
+        title: "Choose Sin Mark",
+        content: content,
+        buttons: {
+          choose: {
+            label: "Choose",
+            callback: (html) => {
+              const selectedIndex = parseInt(html.find('#mark-select').val());
+              resolve(selectedIndex);
+            }
+          }
+        },
+        default: "choose",
+        close: () => resolve(0) // Default to the first mark if the dialog is closed
+      }).render(true);
+    });
+  }
   
   async _onItemCreate(event) {
     event.preventDefault();
     const header = event.currentTarget;
     const type = header.dataset.type;
-    const data = duplicate(header.dataset);
+    const data = foundry.utils.duplicate(header.dataset);
     const name = `New ${type.capitalize()}`;
     const itemData = {
       name: name,
@@ -311,6 +461,7 @@ export class CainActorSheet extends ActorSheet {
 
     return await Item.create(itemData, { parent: this.actor });
   }
+
 
   _onRoll(event) {
     event.preventDefault();
@@ -333,12 +484,6 @@ export class CainActorSheet extends ActorSheet {
       roll.roll().then(result => {
         let rollTotal = result.total;
         let message = '';
-
-        if (rollTotal === 0) {
-          message = 'The roll failed.';
-        } else if (rollTotal >= 1) {
-          message = 'You succeeded!';
-        }
 
         result.toMessage({
           speaker: ChatMessage.getSpeaker({ actor: this.actor }),

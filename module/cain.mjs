@@ -43,7 +43,8 @@ Hooks.once('init', function () {
   // with the Character/NPC as part of super.defineSchema()
   CONFIG.Actor.dataModels = {
     character: models.CainCharacter,
-    npc: models.CainNPC
+    npc: models.CainNPC,
+    mundane: models.CainMundane,
   }
   CONFIG.Item.documentClass = CainItem;
   CONFIG.Item.dataModels = {
@@ -82,6 +83,14 @@ Hooks.once('init', function () {
 // If you need to add Handlebars helpers, here is a useful example:
 Handlebars.registerHelper('toLowerCase', function (str) {
   return str.toLowerCase();
+});
+
+Handlebars.registerHelper('range', function(start, end, options) {
+  let accum = '';
+  for (let i = start; i < end; ++i) {
+    accum += options.fn({ index: i });
+  }
+  return accum;
 });
 
 /* -------------------------------------------- */
