@@ -1175,3 +1175,38 @@
   border: 1px solid #444;
   background-color: #2c2c2c;
 }
+
+.talisman-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px; /* Adjust as needed */
+  z-index: 1000; /* Ensure it is above other elements */
+  position: relative;
+}
+
+.talisman-button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  width: 64px; /* Adjust the size as needed */
+  height: 64px; /* Adjust the size as needed */
+  display: inline-block;
+  position: relative;
+  vertical-align: middle;
+}
+
+.talisman-button img {
+  border: none;
+  width: 100%;
+  height: auto;
+  transition: filter 0.3s ease;
+}
+
+.talisman-button img:hover {
+  filter: brightness(1.2); /* Adjust the brightness to highlight the icon */
+}
+
+.talisman-button.clicked img {
+  filter: brightness(0.8); /* Adjust the brightness to indicate the button has been clicked */
+}

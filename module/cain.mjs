@@ -1,6 +1,7 @@
 // Import document classes.
 import { CainActor } from './documents/actor.mjs';
 import { CainItem } from './documents/item.mjs';
+import { TalismanWindow } from './documents/talisman-window.mjs';
 // Import sheet classes.
 import { CainActorSheet } from './sheets/actor-sheet.mjs';
 import { CainItemSheet } from './sheets/item-sheet.mjs';
@@ -72,6 +73,22 @@ Hooks.once('init', function () {
     label: 'CAIN.SheetLabels.Item',
   });
 
+  game.settings.register('cain', 'globalTalismans', {
+    name: 'Global Talismans',
+    scope: 'world',
+    config: false,
+    type: Array,
+    default: [
+      {
+        name: 'Execution',
+        imagePath: 'systems/cain/assets/Talismans/Talisman-A-0.png',
+        currMarkAmount: 0,
+        minMarkAmount: 0,
+        maxMarkAmount: 6,
+      },
+    ],
+  });
+
   // Preload Handlebars templates.
   return preloadHandlebarsTemplates();
 });
@@ -118,6 +135,34 @@ Hooks.once('ready', function () {
 /* -------------------------------------------- */
 /*  Hotbar Macros                               */
 /* -------------------------------------------- */
+Hooks.once('ready', function () {
+  // Create the button element with the talisman icon
+  const button = $('<button class="talisman-button"><img src="systems/cain/assets/talisman-icon.png" alt="Talisman Icon"></button>');
+  
+  // Add click event to open the TalismanWindow
+  button.on('click', () => {
+    new TalismanWindow().render(true);
+  });
+
+  // Create an aside element and append the button to it
+  const aside = $('<aside class="talisman-container"></aside>').append(button);
+
+  // Create a nav element and append the aside element to it
+  const nav = $('<nav class="talisman-nav"></nav>').append(aside);
+
+  // Insert the nav element above the players element
+  const playersElement = $('#action-bar');
+  if (playersElement.length) {
+    playersElement.append(nav);
+    console.log('Button inserted successfully.');
+  } else {
+    console.error('Players element not found.');
+  }
+
+  // Register hotbar drop hook
+  Hooks.on('hotbarDrop', (bar, data, slot) => createItemMacro(data, slot));
+});
+
 
 /**
  * Create a Macro from an Item drop.

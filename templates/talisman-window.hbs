@@ -1,0 +1,17 @@
+<div class="talisman-window">
+  <h2>Talismans</h2>
+  <ul>
+    {{#each talismans}}
+      <li>
+        <img src="{{this.imagePath}}" alt="{{this.name}}">
+        <span>{{this.name}}</span>
+        {{#if ../isGM}}
+          <button class="delete-talisman" data-index="{{@index}}">Delete</button>
+        {{/if}}
+      </li>
+    {{/each}}
+  </ul>
+  {{#if isGM}}
+    <button class="add-talisman">Add Talisman</button>
+  {{/if}}
+</div>

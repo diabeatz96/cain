@@ -5,6 +5,8 @@
  */
 export const preloadHandlebarsTemplates = async function () {
   return loadTemplates([
+    // Talismans
+    'systems/cain/templates/talisman-window.hbs',
     // Actor partials.
     'systems/cain/templates/actor/parts/actor-features.hbs',
     'systems/cain/templates/actor/parts/actor-items.hbs',
@@ -13,5 +15,6 @@ export const preloadHandlebarsTemplates = async function () {
     'systems/cain/templates/actor/parts/actor-talismans.hbs',
     // Item partials
     'systems/cain/templates/item/parts/item-effects.hbs',
+    
   ]);
 };
