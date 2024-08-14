@@ -4,8 +4,8 @@ export class TalismanWindow extends Application {
       id: 'talisman-window',
       title: 'Talismans',
       template: 'systems/cain/templates/talisman-window.hbs',
-      width: 600,
-      height: 400,
+      width: 1000,
+      height: 600,
       resizable: true,
     });
   }
@@ -20,14 +20,22 @@ export class TalismanWindow extends Application {
   activateListeners(html) {
     super.activateListeners(html);
     if (game.user.isGM) {
-      html.find('.add-talisman').on('click', this._onAddTalisman.bind(this));
+      html.find('#add-talisman').on('click', this._onAddTalisman.bind(this));
+      html.find('.talisman-name').on('change', this._onNameChange.bind(this));
       html.find('.delete-talisman').on('click', this._onDeleteTalisman.bind(this));
-      html.find('.decrease-marks').on('click', this._onDecreaseMarks.bind(this));
-      html.find('.increase-marks').on('click', this._onIncreaseMarks.bind(this));
-      html.find('.slider-change').on('input', this._onSliderChange.bind(this));
-      html.find('.change-image').on('click', this._onChangeImage.bind(this));
-      html.find('.image-click').on('click', this._onImageClick.bind(this));
+      html.find('.talisman-slider').on('input', this._onSliderChange.bind(this));
+      html.find('.talisman-image').on('click', this._onImageClick.bind(this));
+      html.find('.talisman-image').on('contextmenu', this._onDecreaseMarks.bind(this));
     }
+  }
+
+  async _onNameChange(event) {
+    const index = event.currentTarget.dataset.index;
+    const value = event.currentTarget.value;
+    const talismans = game.settings.get('cain', 'globalTalismans');
+    talismans[index].name = value;
+    await game.settings.set('cain', 'globalTalismans', talismans);
+    this.render();
   }
 
   async _onAddTalisman(event) {
@@ -35,7 +43,7 @@ export class TalismanWindow extends Application {
     const talismans = game.settings.get('cain', 'globalTalismans');
     talismans.push({
       name: 'New Talisman',
-      imagePath: '',
+      imagePath: 'systems/cain/assets/Talismans/Talisman-A-0.png',
       currMarkAmount: 0,
       minMarkAmount: 0,
       maxMarkAmount: 6,
@@ -53,20 +61,6 @@ export class TalismanWindow extends Application {
     this.render();
   }
 
-  async _onDecreaseMarks(event) {
-    event.preventDefault();
-    const index = event.currentTarget.dataset.index;
-    const talismans = game.settings.get('cain', 'globalTalismans');
-    const imagePath = talismans[index].imagePath;
-    const imageNumber = parseInt(imagePath.match(/-(\d+)\.png$/)[1], 10);
-    if (imageNumber > 0 && talismans[index].currMarkAmount >= 0) {
-      talismans[index].currMarkAmount--;
-      talismans[index].imagePath = imagePath.replace(/-(\d+)\.png$/, `-${imageNumber - 1}.png`);
-    }
-    await game.settings.set('cain', 'globalTalismans', talismans);
-    this.render();
-  }
-
   async _onSliderChange(event) {
     const index = event.currentTarget.dataset.index;
     const value = event.currentTarget.value;
@@ -76,29 +70,6 @@ export class TalismanWindow extends Application {
     talismans[index].imagePath = imagePath.replace(/-(\d+)\.png$/, `-${value}.png`);
     await game.settings.set('cain', 'globalTalismans', talismans);
     this.render();
-  }
-
-  async _onIncreaseMarks(event) {
-    event.preventDefault();
-    const index = event.currentTarget.dataset.index;
-    const talismans = game.settings.get('cain', 'globalTalismans');
-    if (talismans[index].currMarkAmount < talismans[index].maxMarkAmount) {
-      talismans[index].currMarkAmount++;
-      await game.settings.set('cain', 'globalTalismans', talismans);
-      this.render();
-    }
-  }
-
-  async _onChangeImage(event) {
-    event.preventDefault();
-    const index = event.currentTarget.dataset.index;
-    const newPath = prompt('Enter new image path:');
-    if (newPath) {
-      const talismans = game.settings.get('cain', 'globalTalismans');
-      talismans[index].imagePath = newPath;
-      await game.settings.set('cain', 'globalTalismans', talismans);
-      this.render();
-    }
   }
 
   async _onImageClick(event) {
@@ -114,5 +85,22 @@ export class TalismanWindow extends Application {
       await game.settings.set('cain', 'globalTalismans', talismans);
       this.render();
     }
+  }
+
+  async _onDecreaseMarks(event) {
+    event.preventDefault();
+    const index = event.currentTarget.dataset.index;
+    const talismans = game.settings.get('cain', 'globalTalismans');
+  
+    // Change image similar to how the image change function works but in reverse
+    const imagePath = talismans[index].imagePath;
+    const imageNumber = parseInt(imagePath.match(/-(\d+)\.png$/)[1], 10);
+    if (imageNumber > 0 && talismans[index].currMarkAmount > 0) {
+      talismans[index].currMarkAmount--;
+      talismans[index].imagePath = imagePath.replace(/-(\d+)\.png$/, `-${imageNumber - 1}.png`);
+    }
+  
+    await game.settings.set('cain', 'globalTalismans', talismans);
+    this.render();
   }
 }

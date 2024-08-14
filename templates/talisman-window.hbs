@@ -1,17 +1,110 @@
 <div class="talisman-window">
-  <h2>Talismans</h2>
-  <ul>
-    {{#each talismans}}
-      <li>
-        <img src="{{this.imagePath}}" alt="{{this.name}}">
-        <span>{{this.name}}</span>
-        {{#if ../isGM}}
-          <button class="delete-talisman" data-index="{{@index}}">Delete</button>
-        {{/if}}
-      </li>
-    {{/each}}
-  </ul>
-  {{#if isGM}}
-    <button class="add-talisman">Add Talisman</button>
-  {{/if}}
+  <h1 class="talisman-header">Global Talismans</h1>
+  <div id="talisman-management">
+    <div id="talisman-list" class="talisman-grid">
+      {{#each talismans}}
+      <div class="talisman">
+        <input type="text" placeholder="Name" class="talisman-name" value="{{this.name}}" data-index="{{@index}}">
+        <img src="{{this.imagePath}}" alt="{{this.name}}" class="talisman-image" data-index="{{@index}}">
+        <div class="talisman-controls">
+          {{#if ../isGM}}
+            <button class="delete-talisman" data-index="{{@index}}">Delete</button>
+          {{/if}}
+          <input type="range" min="0" max="{{this.maxMarkAmount}}" value="{{this.currMarkAmount}}" class="talisman-slider" data-index="{{@index}}">
+        </div>
+      </div>
+      {{/each}}
+    </div>
+    {{#if isGM}}
+      <button id="add-talisman">Add Talisman</button>
+    {{/if}}
+  </div>
 </div>
+
+<style>
+.talisman-window {
+  background: #1a1a1a; /* Dark background */
+  padding: 20px;
+  border-radius: 10px;
+  color: #fff; /* White text */
+  box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.5), -10px -10px 0 rgba(0, 0, 0, 0.5), 10px -10px 0 rgba(0, 0, 0, 0.5), -10px 10px 0 rgba(0, 0, 0, 0.5);
+}
+
+.talisman-header {
+  font-family: 'Lacquer', sans-serif; /* Custom font for Jujutsu Kaisen feel */
+  font-size: 2em;
+  color: #ff4500; /* Bright orange-red color */
+  text-shadow: 2px 2px 4px #000; /* Shadow for a dramatic effect */
+  margin-bottom: 20px;
+  text-align: center; /* Center the header */
+  animation: demon-glow 1s infinite alternate; /* Apply the demon glow animation continuously */
+}
+
+@keyframes demon-glow {
+  0% {
+    text-shadow: 2px 2px 4px #000, 0 0 10px #ff4500, 0 0 20px #ff4500, 0 0 30px #ff4500, 0 0 40px #ff4500, 0 0 50px #ff4500, 0 0 60px #ff4500;
+  }
+  50% {
+    text-shadow: 2px 2px 4px #000, 0 0 20px #ff4500, 0 0 30px #ff4500, 0 0 40px #ff4500, 0 0 50px #ff4500, 0 0 60px #ff4500, 0 0 70px #ff4500;
+  }
+  100% {
+    text-shadow: 2px 2px 4px #000, 0 0 10px #ff4500, 0 0 20px #ff4500, 0 0 30px #ff4500, 0 0 40px #ff4500, 0 0 50px #ff4500, 0 0 60px #ff4500;
+  }
+}
+
+.talisman-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 20px;
+}
+
+.talisman {
+  background: #2a2a2a; /* Slightly lighter background for contrast */
+  padding: 10px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.talisman-name {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 5px;
+  border: none;
+  border-radius: 5px;
+  background: #3a3a3a;
+  color: #fff;
+}
+
+.talisman-image {
+  width: 200px; /* Fixed width */
+  height: 200px; /* Fixed height */
+  object-fit: cover; /* Ensure the image covers the area without distortion */
+  border: none;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.talisman-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.delete-talisman {
+  background: #ff4500;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.delete-talisman:hover {
+  background: #ff6347; /* Slightly lighter on hover */
+}
+
+.talisman-slider {
+  width: 100%;
+}
+</style>
