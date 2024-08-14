@@ -1,11 +1,11 @@
 <p align="center">
-  <img src="https://img.itch.zone/aW1nLzE3MTg0NDA0LnBuZw==/original/UyMCiP.png" width="200" alt="project-logo">
+  <img src="https://img.itch.zone/aW1nLzE3MTg0NDA0LnBuZw==/original/UyMCiP.png" width="400" alt="project-logo">
 </p>
 <p align="center">
     <h1 align="center">CAIN</h1>
 </p>
 <p align="center">
-    <em>Empowering your RPG journey, one system at a time.</em>
+    <em>A foundry alternative playing system for CAIN, created by Tom Bloom. Code created by Adam Kostandy</em>
 </p>
 <p align="center">
 	<img src="https://img.shields.io/github/license/diabeatz96/cain?style=default&logo=opensourceinitiative&logoColor=white&color=0080ff" alt="license">
