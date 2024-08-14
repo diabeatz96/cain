@@ -36,9 +36,14 @@
 </details>
 <hr>
 
+## CREDITS
+    - Myco from the Pilot.NET/CAIN Discord for providing icon assets
+    - Tom Bloom Creator of Cain
+    - My sunday DND group
+
 ##  Overview
 
-Cain is an open-source project designed to streamline RPG system management within FoundryVTT. By leveraging SASS for CSS compilation and employing a modular architecture, Cain enhances user experiences through customizable actors, items, and effects. The projects core functionalities, encapsulated in the `cain` module, facilitate dynamic talisman management, item roll logic, and interactive character sheet customization. Cains value proposition lies in its ability to empower game masters with a comprehensive system that ensures efficient data organization and seamless gameplay customization.
+Cain is an open-source project designed to streamline CAIN RPG system management within FoundryVTT. Cain enhances user experiences through customizable actors, items, and effects. The projects core functionalities, encapsulated in the `cain` module, facilitate dynamic talisman management, item roll logic, and interactive character sheet customization. Cains value proposition lies in its ability to empower game masters with a comprehensive system that ensures efficient data organization and seamless gameplay customization.
 
 ---
 

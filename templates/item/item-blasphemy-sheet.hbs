@@ -1,36 +1,393 @@
-<form class="{{cssClass}}" autocomplete="off">
+<form class="{{cssClass}} form-blasphemy {{system.classType}}-theme" autocomplete="off">
   <header class="sheet-header">
     <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}"/>
     <div class="header-fields">
       <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Name"/></h1>
+      <div class="form-group">
+        <label for="classType">Type</label>
+        <select name="system.classType" value="{{system.classType}}">
+          <option value="tension" {{#if (eq system.classType "tension")}}selected{{/if}}>Tension</option>
+          <option value="ardence" {{#if (eq system.classType "ardence")}}selected{{/if}}>Ardence</option>
+          <option value="flux" {{#if (eq system.classType "flux")}}selected{{/if}}>Flux</option>
+          <option value="vector" {{#if (eq system.classType "vector")}}selected{{/if}}>Vector</option>
+          <option value="gate" {{#if (eq system.classType "gate")}}selected{{/if}}>Gate</option>
+          <option value="smother" {{#if (eq system.classType "smother")}}selected{{/if}}>Smother</option>
+          <option value="whisper" {{#if (eq system.classType "whisper")}}selected{{/if}}>Whisper</option>
+          <option value="edit" {{#if (eq system.classType "edit")}}selected{{/if}}>Edit</option>
+          <option value="bind" {{#if (eq system.classType "bind")}}selected{{/if}}>Bind</option>
+          <option value="jaunt" {{#if (eq system.classType "jaunt")}}selected{{/if}}>Jaunt</option>
+          <option value="palace" {{#if (eq system.classType "palace")}}selected{{/if}}>Palace</option>
+          <option value="sympathy" {{#if (eq system.classType "sympathy")}}selected{{/if}}>Sympathy</option>
+          <option value="default" {{#if (eq system.classType "default")}}selected{{/if}}>Default</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="isPassive">Is Passive</label>
+        <input type="checkbox" name="system.isPassive" {{#if system.isPassive}}checked{{/if}}/>
+      </div>
+      <div class="form-group">
+        <label for="keywords">Keywords</label>
+        <input type="text" name="system.keywords" value="{{system.keywords}}"/>
+      </div>
     </div>
   </header>
 
   {{!-- Sheet Tab Navigation --}}
   <nav class="sheet-tabs tabs" data-group="primary">
     <a class="item" data-tab="description">Description</a>
-    <a class="item" data-tab="attributes">Attributes</a>
-    <a class="item" data-tab="effects">Effects</a>
   </nav>
 
   {{!-- Sheet Body --}}
-  <section class="sheet-body">
+  {{! Sheet Body }}
+  <section class='sheet-body'>
 
-    {{!-- Description Tab --}}
-    <div class="tab" data-group="primary" data-tab="description">
-      {{!-- Editors must receive enriched text data from getData to properly handle rolls --}}
-      {{editor enrichedDescription target="system.description" engine="prosemirror" button=true editable=editable}}
+    {{! Description Tab }}
+    <div class='tab' data-group='primary' data-tab='description'>
+      {{! Editors must receive enriched text data from getData to properly handle rolls }}
+      {{editor
+        enrichedDescription
+        target='system.description'
+        engine='prosemirror'
+        button=true
+        editable=editable
+      }}
     </div>
 
-    {{!-- Attributes Tab --}}
-    <div class="tab attributes" data-group="primary" data-tab="attributes">
-      {{!-- As you add new fields, add them in here! --}}
-    </div>
+    {{! Attributes Tab }}
+    <div class='tab attributes' data-group='primary' data-tab='attributes'>
+      {{! As you add new fields, add them in here! }}
+      <div class='resource'>
+        <label class='resource-label'>Roll Formula:</label>
+        <span>{{system.formula}}</span>
+        <div class='grid grid-4col'>
+          <div class='grid-span-1'>
+            <label class='resource-label'>Number of Dice</label>
+            <input
+              type='text'
+              name='system.roll.diceNum'
+              value='{{system.roll.diceNum}}'
+              data-dtype='Number'
+            />
+          </div>
+          <div class='grid-span-1'>
+            <label class='resource-label'>Die Size</label>
+            <input
+              type='text'
+              name='system.roll.diceSize'
+              value='{{system.roll.diceSize}}'
+              data-dtype='String'
+            />
+          </div>
+          <div class='grid-span-2'>
+            <label class='resource-label'>Roll Modifier</label>
+            <input
+              type='text'
+              name='system.roll.diceBonus'
+              value='{{system.roll.diceBonus}}'
+              data-dtype='String'
+            />
+          </div>
+        </div>
 
-    {{!-- Effects Tab --}}
-    <div class="tab effects" data-group="primary" data-tab="effects">
-      {{> "systems/cain/templates/item/parts/item-effects.hbs"}}
+      </div>
     </div>
   </section>
 
 </form>
+
+<style>
+  /* Default Theme */
+.form-blasphemy {
+  border-radius: 10px;
+  box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.5), -10px -10px 0 rgba(0, 0, 0, 0.5), 10px -10px 0 rgba(0, 0, 0, 0.5), -10px 10px 0 rgba(0, 0, 0, 0.5);
+  font-family: 'Courier New', monospace;
+}
+
+.form-blasphemy label {
+  font-weight: bold;
+  color: #ffffff;
+}
+
+/* Default Theme */
+form.default-theme {
+  background-color: #000000; /* Black primary */
+  color: #ff0000; /* Red secondary */
+  border: 2px solid #ff0000; /* Red secondary */
+}
+
+form.default-theme .tab {
+  background-color: #000000; /* Black primary */
+}
+
+/* Tension Theme */
+form.tension-theme {
+  background-color: #000000; /* Black primary */
+  color: #ff0000; /* Red secondary */
+  border: 2px solid #ff0000; /* Red secondary */
+}
+
+form.tension-theme .tab {
+  background-color: #000000; /* Black primary */
+}
+
+/* Ardence Theme */
+form.ardence-theme {
+  background-color: #ff0000; /* Red primary */
+  color: #000000; /* Black secondary */
+  border: 2px solid #000000; /* Black secondary */
+}
+
+form.ardence-theme .tab {
+  background-color: #ff0000; /* Red primary */
+}
+
+/* Flux Theme */
+form.flux-theme {
+  background-color: #000000; /* Black primary */
+  color: #ffffff; /* White primary */
+  border: 2px solid #ff0000; /* Red tertiary */
+}
+
+form.flux-theme .tab {
+  background-color: #000000; /* Black primary */
+}
+
+/* Vector Theme */
+form.vector-theme {
+  background-color: #ffff00; /* Yellow primary */
+  color: #000000; /* Black secondary */
+  border: 2px solid #000000; /* Black secondary */
+}
+
+form.vector-theme .tab {
+  background-color: #ffff00; /* Yellow primary */
+}
+
+/* Gate Theme */
+form.gate-theme {
+  background-color: #ffd700; /* Gold primary */
+  color: #000000; /* Black secondary */
+  border: 2px solid #000000; /* Black secondary */
+}
+
+form.gate-theme .tab {
+  background-color: #ffd700; /* Gold primary */
+}
+
+/* Smother Theme */
+form.smother-theme {
+  background-color: #000000; /* Black primary */
+  color: #ffd700; /* Gold secondary */
+  border: 2px solid #ffd700; /* Gold secondary */
+}
+
+form.smother-theme .tab {
+  background-color: #000000; /* Black primary */
+}
+
+/* Whisper Theme */
+form.whisper-theme {
+  background-color: #000000; /* Black primary */
+  color: #87ceeb; /* Light Blue for better readability */
+  border: 2px solid #0000ff; /* Blue secondary */
+}
+
+form.whisper-theme .tab {
+  background-color: #000000; /* Black primary */
+}
+
+/* Edit Theme */
+form.edit-theme {
+  background-color: #0000ff; /* Blue primary */
+  color: #ffffff; /* White for better readability */
+  border: 2px solid #000000; /* Black secondary */
+}
+
+form.edit-theme .tab {
+  background-color: #0000ff; /* Blue primary */
+}
+
+/* Bind Theme */
+form.bind-theme {
+  background-color: #00008b; /* Dark Blue primary */
+  color: #ffffff; /* White for better readability */
+  border: 2px solid #000000; /* Black secondary */
+}
+
+form.bind-theme .tab {
+  background-color: #00008b; /* Dark Blue primary */
+}
+
+
+/* Jaunt Theme */
+form.jaunt-theme {
+  background-color: #dda0dd; /* Light Purple primary */
+  color: #000000; /* Black secondary */
+  border: 2px solid #000000; /* Black secondary */
+}
+
+form.jaunt-theme .tab {
+  background-color: #dda0dd; /* Light Purple primary */
+}
+
+/* Palace Theme */
+form.palace-theme {
+  background-color: #4b0082; /* Dark Purple primary */
+  color: #ffffff; /* White for better readability */
+  border: 2px solid #000000; /* Black secondary */
+}
+
+form.palace-theme .tab {
+  background-color: #4b0082; /* Dark Purple primary */
+}
+
+/* Sympathy Theme */
+form.sympathy-theme {
+  background-color: #000000; /* Black primary */
+  color: #4b0082; /* Dark Purple secondary */
+  border: 2px solid #4b0082; /* Dark Purple secondary */
+}
+
+form.sympathy-theme .tab {
+  background-color: #000000; /* Black primary */
+}
+
+/* Base Header */
+.form-blasphemy .sheet-header {
+  background-color: #2a2a2a;
+  border-radius: 5px;
+  padding: 5px;
+  font-family: 'Courier New', monospace;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+/* Default Theme Header */
+form.default-theme .sheet-header {
+  color: #ff0000; /* Red secondary */
+  border: 2px solid #ff0000; /* Red secondary */
+}
+
+/* Tension Theme Header */
+form.tension-theme .sheet-header {
+  color: #ff0000; /* Red secondary */
+  border: 2px solid #ff0000; /* Red secondary */
+}
+
+/* Ardence Theme Header */
+form.ardence-theme .sheet-header {
+  color: #000000; /* Black secondary */
+  border: 2px solid #000000; /* Black secondary */
+}
+
+/* Flux Theme Header */
+form.flux-theme .sheet-header {
+  color: #ffffff; /* White primary */
+  border: 2px solid #ff0000; /* Red tertiary */
+}
+
+/* Vector Theme Header */
+form.vector-theme .sheet-header {
+  color: #000000; /* Black secondary */
+  border: 2px solid #000000; /* Black secondary */
+}
+
+/* Gate Theme Header */
+form.gate-theme .sheet-header {
+  color: #000000; /* Black secondary */
+  border: 2px solid #000000; /* Black secondary */
+}
+
+/* Smother Theme Header */
+form.smother-theme .sheet-header {
+  color: #ffd700; /* Gold secondary */
+  border: 2px solid #ffd700; /* Gold secondary */
+}
+
+/* Whisper Theme Header */
+form.whisper-theme .sheet-header {
+  color: #0000ff; /* Blue secondary */
+  border: 2px solid #0000ff; /* Blue secondary */
+}
+
+/* Edit Theme Header */
+form.edit-theme .sheet-header {
+  color: #000000; /* Black secondary */
+  border: 2px solid #000000; /* Black secondary */
+}
+
+/* Bind Theme Header */
+form.bind-theme .sheet-header {
+  color: #000000; /* Black secondary */
+  border: 2px solid #000000; /* Black secondary */
+}
+
+/* Jaunt Theme Header */
+form.jaunt-theme .sheet-header {
+  color: #000000; /* Black secondary */
+  border: 2px solid #000000; /* Black secondary */
+}
+
+/* Palace Theme Header */
+form.palace-theme .sheet-header {
+  color: #000000; /* Black secondary */
+  border: 2px solid #000000; /* Black secondary */
+}
+
+/* Sympathy Theme Header */
+form.sympathy-theme .sheet-header {
+  color: #4b0082; /* Dark Purple secondary */
+  border: 2px solid #4b0082; /* Dark Purple secondary */
+}
+
+/* Style for select dropdown */
+.form-blasphemy select {
+  background-color: white;
+  border: 2px solid #333;
+  border-radius: 5px;
+  padding: 5px;
+  font-family: 'Courier New', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  font-style: normal;
+  cursor: pointer;
+}
+
+/* Style for checkbox */
+.form-blasphemy input[type="checkbox"] {
+  background-color: #2a2a2a;
+  color: #f0f0f0;
+  border: 2px solid #333;
+  border-radius: 5px;
+  padding: 5px;
+  font-family: 'Courier New', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  font-style: normal;
+  cursor: pointer;
+}
+
+/* Style for text input */
+.form-blasphemy input[type="text"] {
+  background-color: #2a2a2a;
+  color: #f0f0f0;
+  border: 2px solid #333;
+  border-radius: 5px;
+  padding: 5px;
+  font-family: 'Courier New', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.profile-img {
+  border: none;
+}
+
+.form-blasphemy .charname {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+
+</style>

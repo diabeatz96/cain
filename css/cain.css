@@ -772,6 +772,14 @@
   font-weight: bold;
 }
 
+.chat-message .table-draw .table-description  {
+  background-color: #262626; /* Slightly lighter dark background */
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px dashed #00bfff; /* Dashed border for a report look */
+  color: #00bfff;
+}
+
 .message-sender {
   color: #ffffff; /* White text */
 }
