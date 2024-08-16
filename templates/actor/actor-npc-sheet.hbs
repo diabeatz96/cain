@@ -1,7 +1,7 @@
-<form class="{{cssClass}} {{actor.type}} flexcol" autocomplete="off">
+<form class="{{cssClass}} {{actor.type}} flexcol brooding-theme" autocomplete="off">
 
   {{!-- Sheet Header --}}
-  <header class="sheet-header">
+  <header class="sheet-header dark-header">
     <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100"/>
     <div class="header-fields">
       <h1 class="charname"><input name="name" type="text" value="{{actor.name}}" placeholder="Name"/></h1>
@@ -49,7 +49,7 @@
   </header>
 
   {{!-- Sheet Tab Navigation --}}
-  <nav class="sheet-tabs tabs" data-group="primary">
+  <nav class="sheet-tabs tabs dark-tabs" data-group="primary">
     <a class="item" data-tab="description">Description</a>
     <a class="item" data-tab="palace-pressure">Palace / Pressure</a>
     <a class="item" data-tab="attacks">Attacks</a>
@@ -57,39 +57,53 @@
   </nav>
 
   {{!-- Sheet Body --}}
-  <section class="sheet-body">
+  <section class="sheet-body dark-body">
 
-    {{!-- Description Tab --}}
-    <div class="tab description" data-group="primary" data-tab="description">
-      <div class="form-group">
-        <label for="system.appearance">Appearance</label>
-        <textarea name="system.appearance">{{system.appearance}}</textarea>
-      </div>
-      <div class="form-group">
-        <label for="system.biography">Biography</label>
-        <textarea name="system.biography">{{system.biography}}</textarea>
-      </div>
-      <div class="form-group">
-        <label for="system.traumas">Traumas</label>
-        <textarea name="system.traumas">{{system.traumas}}</textarea>
-      </div>
-      <div class="form-group">
-        <label for="system.afflictions">Afflictions</label>
-        <ul>
-          {{#each system.afflictions}}
-            <li>{{this}}</li>
-          {{/each}}
-        </ul>
-      </div>
+{{!-- Description Tab --}}
+<div class="tab description" data-group="primary" data-tab="description">
+  <div class="left-column">
+    <div class="form-group dark-form-group">
+      <label for="system.appearance">Appearance</label>
+      <textarea name="system.appearance">{{system.appearance}}</textarea>
     </div>
+    <div class="form-group dark-form-group">
+      <label for="system.traumas">Traumas</label>
+      <textarea name="system.traumas">{{system.traumas}}</textarea>
+    </div>
+  </div>
+  <div class="right-column">
+    <div class="form-group dark-form-group">
+      <label for="system.biography">Biography</label>
+      <div class="enriched-bio" contenteditable="true">{{system.biography}}</div>
+    </div>
+    <div class="form-group dark-form-group">
+      <label for="system.afflictions">Afflictions</label>
+      <table class="afflictions-table">
+        <thead>
+          <tr>
+            <th>Affliction</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each system.afflictions}}
+            <tr>
+              <td>{{this}}</td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+      <button class="roll-affliction">Roll Affliction</button>
+    </div>
+  </div>
+</div>
 
     {{!-- Palace / Pressure Tab --}}
     <div class="tab palace-pressure" data-group="primary" data-tab="palace-pressure">
-      <div class="form-group">
+      <div class="form-group dark-form-group">
         <label for="system.palace">Palace</label>
         <input type="text" name="system.palace" value="{{system.palace}}"/>
       </div>
-      <div class="form-group">
+      <div class="form-group dark-form-group">
         <label for="system.pressure">Pressure</label>
         <textarea name="system.pressure">{{system.pressure}}</textarea>
       </div>
@@ -97,27 +111,27 @@
 
     {{!-- Attacks Tab --}}
     <div class="tab attacks" data-group="primary" data-tab="attacks">
-      <div class="form-group">
+      <div class="form-group dark-form-group">
         <label for="system.attackRoll.lowDamage">Roll Damage</label>
         <input type="text" name="system.attackRoll.lowDamage" value="{{system.attackRoll.lowDamage}}"/>
       </div>
-      <div class="form-group">
+      <div class="form-group dark-form-group">
         <label for="system.attackRoll.mediumDamage">Medium Damage</label>
         <input type="text" name="system.attackRoll.mediumDamage" value="{{system.attackRoll.mediumDamage}}"/>
       </div>
-      <div class="form-group">
+      <div class="form-group dark-form-group">
         <label for="system.attackRoll.highDamage">High Damage</label>
         <input type="text" name="system.attackRoll.highDamage" value="{{system.attackRoll.highDamage}}"/>
       </div>
-      <div class="form-group">
+      <div class="form-group dark-form-group">
         <label for="system.attackRoll.rollFormula">Roll Formula</label>
         <input type="text" name="system.attackRoll.rollFormula" value="{{system.attackRoll.rollFormula}}"/>
       </div>
-      <div class="form-group">
+      <div class="form-group dark-form-group">
         <label for="system.severeAttack.description">Severe Attack Description</label>
         <textarea name="system.severeAttack.description">{{system.severeAttack.description}}</textarea>
       </div>
-      <div class="form-group">
+      <div class="form-group dark-form-group">
         <label for="system.severeAttack.rollFormula">Severe Attack Roll Formula</label>
         <input type="text" name="system.severeAttack.rollFormula" value="{{system.severeAttack.rollFormula}}"/>
       </div>
@@ -125,7 +139,7 @@
 
     {{!-- Domains Tab --}}
     <div class="tab domains" data-group="primary" data-tab="domains">
-      <div class="form-group">
+      <div class="form-group dark-form-group">
         <label for="system.selectedAbilities.selectedAbility1">Domain 1</label>
         <select name="system.selectedAbilities.selectedAbility1" class="ability-select" data-ability="1">
           {{#each system.domains}}
@@ -135,7 +149,7 @@
         <p class="ability-value" data-ability="1">{{system.selectedAbilities.selectedAbility1}}</p>
         <p class="error-message" data-error="1" style="display: none; color: red;">Please choose another Domain ability.</p>
       </div>
-      <div class="form-group">
+      <div class="form-group dark-form-group">
         <label for="system.selectedAbilities.selectedAbility2">Domain 2</label>
         <select name="system.selectedAbilities.selectedAbility2" class="ability-select" data-ability="2">
           {{#each system.domains}}
@@ -145,7 +159,7 @@
         <p class="ability-value" data-ability="2">{{system.selectedAbilities.selectedAbility2}}</p>
         <p class="error-message" data-error="2" style="display: none; color: red;">Please choose another Domain ability.</p>
       </div>
-      <div class="form-group">
+      <div class="form-group dark-form-group">
         <label for="system.selectedAbilities.selectedAbility3">Domain 3</label>
         <select name="system.selectedAbilities.selectedAbility3" class="ability-select" data-ability="3">
           {{#each system.domains}}
@@ -159,3 +173,146 @@
 
   </section>
 </form>
+
+<style>
+  .brooding-theme {
+    background-color: #1a1a1a;
+    color: #e0e0e0;
+    font-family: "Courier New", Courier, monospace;
+  }
+  
+  .dark-header {
+    background-color: #1a1a1a;
+    color: #e0e0e0;
+    border-bottom: 2px solid #444;
+    padding: 20px;
+    box-shadow: 0 0 10px 2px #000;
+  }
+  
+  .dark-header select option {
+    background-color: #1a1a1a;
+    color: #e0e0e0;
+  }
+
+  .profile-img {
+    border: 2px solid #444;
+    border-radius: 50%;
+    box-shadow: 0 0 10px 2px #000;
+  }
+  
+  .header-fields {
+    margin-left: 20px;
+  }
+  
+  .charname input {
+    font-size: 24px;
+    background-color: #1a1a1a;
+    color: #e0e0e0;
+    border: none;
+    border-bottom: 2px solid #444;
+    padding: 5px;
+  }
+  
+  .resources {
+    margin-top: 20px;
+  }
+  
+  .resource-label {
+    font-size: 18px;
+    color: #e0e0e0;
+  }
+  
+  .resource-content select,
+  .resource-content input {
+    background-color: #1a1a1a;
+    color: #e0e0e0;
+    border: 1px solid #444;
+    padding: 5px;
+  }
+  
+  .resource-content img {
+    filter: grayscale(100%);
+    margin-left: 10px;
+  }
+  
+  .flex-group-center {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .flexrow {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .flex-center {
+    justify-content: center;
+  }
+  
+  .flex-between {
+    justify-content: space-between;
+  }
+  
+  .grid-3col {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  
+  .dark-tabs .item {
+    background-color: #333;
+    color: #e0e0e0;
+  }
+  
+  .dark-body {
+    background-color: #1a1a1a;
+  }
+  
+  .dark-form-group {
+    background-color: #2a2a2a;
+    border: 1px solid #444;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .dark-form-group {
+    background-color: #2a2a2a;
+    border: 1px solid #444;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .enriched-bio {
+    background-color: #1a1a1a;
+    color: #e0e0e0;
+    border: 1px solid #444;
+    padding: 10px;
+    min-height: 150px;
+  }
+  
+  .afflictions-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .afflictions-table th, .afflictions-table td {
+    border: 1px solid #444;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .roll-affliction {
+    background-color: #444;
+    color: #e0e0e0;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  .roll-affliction:hover {
+    background-color: #555;
+  }
+
+</style>
