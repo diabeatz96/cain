@@ -129,3 +129,4 @@ CAIN.abilityAbbreviations = {
   wis: 'CAIN.Ability.Wis.abbr',
   cha: 'CAIN.Ability.Cha.abbr',
 };
+

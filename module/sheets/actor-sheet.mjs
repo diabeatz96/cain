@@ -180,7 +180,7 @@ export class CainActorSheet extends ActorSheet {
       this.actor.update({ [`system.${field}.value`]: value });
     });
   
-    // Talisman input changes
+    // Character sheet specific listeners
     html.find('.item-description').click(this._onItemDescription.bind(this));
     html.find('.sinOverflow-checkbox').change(this._onOverflowChange.bind(this));
     html.find('.psyche-roll-button').click(this._onRollPsyche.bind(this));
@@ -200,8 +200,16 @@ export class CainActorSheet extends ActorSheet {
     html.find('.change-image').click(this._onChangeImage.bind(this));
     html.find('.talisman-image').click(this._onImageClick.bind(this));
     html.find('.talisman-image').on('contextmenu', this._onDecreaseMarks.bind(this));
+
+
+    // NPC sheet specific listeners
     
-  }
+    html.find('#sinTypeSelect').change(event => {
+      const sinType = event.target.value;
+      this._onSinTypeSelect(sinType);
+    });
+
+}
   
   _onInputChange(event) {
     const index = event.currentTarget.dataset.index;
@@ -681,4 +689,176 @@ export class CainActorSheet extends ActorSheet {
       return roll;
     }
   }
+
+
+  _onSinTypeSelect(sinType) {
+    const sinTypeMapping = {
+      ogre: {
+        domains: {
+          ability1: { title: "Hostile Door Patterns", value: "The world itself begins to turn against the exorcists. As a complication or a tension move, the ogre supernaturally erases entrances, exits, roads, vehicles, or light sources in an area of about a city block. These return when the scene passes or if the complication is dealt with. Once a hunt, as a tension move, if an exorcist opens any door, the entire group suddenly finds themself in an area of twisting corridors, pitch black darkness, and distant but troubling noises. The area is both dangerous and hostile to them. Finding an exit and escaping will require playing out a scene or two, and the Admin can set out talismans as needed." },
+          ability2: { title: "The Unseeing of Things", value: "The miasma becomes permeated with an deep, cloying dark. The ogre is invisible in darkness. It becomes hard to do anything to the ogre unless it is brightly lit or an action doesn’t rely on sight. As a tension move, all electric lights not held by an exorcist sputter out and cease functioning for the next scene. The Admin picks an exorcist and asks them ‘What do you see in the dark?’. They must answer truthfully and gain 1 stress after answering." },
+          ability3: { title: "The Grinding of Wheels", value: "The ogre can force exorcists to experience some of the crushing trauma that caused its birth. As a tension move, the ogre can pick an exorcist. That exorcist is afflicted by the Despair affliction. DESPAIR: This special affliction can only affect one exorcist at once. They gain the agenda item push people away even if losing this affliction. At the end of the mission, roll a 1d6. On a 1 or 2, keep this agenda item, on a 3+ may get rid of it. Ask that exorcist the question who in this group will let you down? Any time the chosen person fails an action roll, the afflicted exorcist gains 1 stress. However, if this triggered at least once during a session, at the end of that session also gain 1 xp." },
+          ability4: { title: "That Awful Flesh", value: "The ogre can regenerate rapidly from injuries. • It regenerates 1 segment of the execution talisman every time a risk result of 1 is rolled in a conflict scene where it is present. • The ogre takes -1 slash on its execution talisman unless damage by fire, acid, or some other strong chemical or solvent in the same scene." },
+          ability5: { title: "The Inevitable Place of Meat", value: "The ogre can temporarily cause the miasma to accelerate its effects. • The touch of the ogre can rapidly rot and decay objects, plant matter, and constructions, destroying them and dissolving them into mud and slime. • Exorcists inside the miasma start to superficially rot if they spend scenes there - hair falling out, sunken skin, dead skin cells, nails falling out, etc. They recover from this damage after the mission. • As a tension move the ogre can cause an exorcist inside the miasma to start decaying. They gain a hook with the Rotting affliction. • Exorcists subtract 1 from all their healing rolls." },
+          ability6: { title: "The Lash Calls you Brother", value: "At the start of a mission, the Ogre chooses an exorcist and creates a creature formed from the guilt and shame of that exorcist. The Admin secretly asks the targeted exorcist the following questions: • Which ally are you embarrassed to be around? • What's the worst thing you ever did? • What do you hate the most about yourself? The creature takes a form that plays off these answers. It is a trace with the following execution talisman." },
+          ability7: { title: "Where You Belong", value: "The ogre can control mud, water, and ambient temperature to killing effect. The ogre can sink into any sufficiently large pool of mud and reappear in short distance as part of any reaction it takes. As a tension move, the ogre can change the weather in its miasma zone until the exorcists rest, making it extremely hostile (freezing cold, rain, etc). It becomes hard or risky (or both) to perform any activity outside that requires concentration, focus, or manual dexterity without sufficient protection from the weather." },
+          ability8: { title: "The Agony", value: "Once a hunt, when pressure increases, the ogre can pick an exorcist. That exorcist gains the Sunken affliction for the rest of the mission." },
+        },
+        selectedAbilities: {
+          selectedAbility1: "",
+          selectedAbility2: "",
+          selectedAbility3: "",
+        },
+        palace: "fortress",
+        traumas: "battle scars",
+        appearance: "muscular and brutish",
+        pressure: "constant need to fight",
+        complications: "anger management",
+        threats: "uncontrolled rage",
+        attackRoll: { lowDamage: "1 stress", mediumDamage: "2 stress", highDamage: "1 stress", rollFormula: "1d6" },
+        severeAttack: { description: "devastating blow", rollFormula: "5d6" },
+        afflictions: ["berserk", "bloodlust"]
+      },
+      
+      toad: {
+        domains: {
+          ability1: { title: "Camouflage", value: "camouflage" },
+          ability2: { title: "Poison", value: "poison" },
+          ability3: { title: "Leap", value: "leap" },
+          ability4: { title: "Stealth", value: "stealth" },
+          ability5: { title: "Ambush", value: "ambush" },
+          ability6: { title: "Swim", value: "swim" },
+          ability7: { title: "Regeneration", value: "regeneration" },
+          ability8: { title: "Venom", value: "venom" },
+          selectedAbility1: "",
+          selectedAbility2: "",
+          selectedAbility3: "",
+        },
+        palace: "swamp",
+        appearance: "slimy and green",
+        traumas: "isolation",
+        pressure: "need to hide",
+        complications: "trust issues",
+        threats: "poisonous touch",
+        attackRoll: { lowDamage: "1d3", mediumDamage: "1d5", highDamage: "1d7", rollFormula: "1d5" },
+        severeAttack: { description: "venomous strike", rollFormula: "5d6" },
+        afflictions: ["toxic", "slippery"]
+      }, 
+      idol: {
+        domains: {
+          ability1: { title: "Charm", value: "charm" },
+          ability2: { title: "Influence", value: "influence" },
+          ability3: { title: "Persuasion", value: "persuasion" },
+          ability4: { title: "Seduction", value: "seduction" },
+          ability5: { title: "Deception", value: "deception" },
+          ability6: { title: "Manipulation", value: "manipulation" },
+          ability7: { title: "Charisma", value: "charisma" },
+          ability8: { title: "Diplomacy", value: "diplomacy" },
+          selectedAbility1: "",
+          selectedAbility2: "",
+          selectedAbility3: "",
+        },
+        palace: "temple",
+        appearance: "golden and radiant",
+        traumas: "betrayal",
+        pressure: "need to be loved",
+        complications: "narcissism",
+        threats: "mind control",
+        attackRoll: { lowDamage: "1d2", mediumDamage: "1d4", highDamage: "1d6", rollFormula: "1d4" },
+        severeAttack: { description: "hypnotic gaze", rollFormula: "5d6" },
+        afflictions: ["charmed", "enslaved"],
+      },
+      lord: {
+        domains: {
+          ability1: { title: "Authority", value: "authority" },
+          ability2: { title: "Command", value: "command" },
+          ability3: { title: "Leadership", value: "leadership" },
+          ability4: { title: "Tactics", value: "tactics" },
+          ability5: { title: "Strategy", value: "strategy" },
+          ability6: { title: "Inspiration", value: "inspiration" },
+          ability7: { title: "Intimidation", value: "intimidation" },
+          ability8: { title: "Charisma", value: "charisma" },
+          selectedAbility1: "",
+          selectedAbility2: "",
+          selectedAbility3: "",
+        },
+        palace: "castle",
+        appearance: "regal and imposing",
+        traumas: "betrayal",
+        pressure: "need to rule",
+        complications: "tyranny",
+        threats: "mind control",
+        attackRoll: { lowDamage: "1d3", mediumDamage: "1d5", highDamage: "1d7", rollFormula: "1d5" },
+        severeAttack: { description: "devastating blow", rollFormula: "5d6" },
+        afflictions: ["charmed", "enslaved"]
+      },
+      hound: {
+        domains: {
+          ability1: { title: "Scent", value: "scent" },
+          ability2: { title: "Track", value: "track" },
+          ability3: { title: "Hunt", value: "hunt" },
+          ability4: { title: "Bite", value: "bite" },
+          ability5: { title: "Pack", value: "pack" },
+          ability6: { title: "Loyal", value: "loyal" },
+          ability7: { title: "Ferocity", value: "ferocity" },
+          ability8: { title: "Savage", value: "savage" },
+          selectedAbility1: "",
+          selectedAbility2: "",
+          selectedAbility3: "",
+        },
+        palace: "forest",
+        appearance: "furry and feral",
+        traumas: "abandonment",
+        pressure: "need to belong",
+        complications: "pack mentality",
+        threats: "rabies",
+        attackRoll: { lowDamage: "1d3", mediumDamage: "1d5", highDamage: "1d7", rollFormula: "1d5" },
+        severeAttack: { description: "devastating bite", rollFormula: "5d6" },
+        afflictions: ["rabid", "feral"]
+      },
+      centipede: {
+        domains: {
+          ability1: { title: "Venom", value: "venom" },
+          ability2: { title: "Poison", value: "poison" },
+          ability3: { title: "Bite", value: "bite" },
+          ability4: { title: "Swarm", value: "swarm" },
+          ability5: { title: "Crawl", value: "crawl" },
+          ability6: { title: "Hide", value: "hide" },
+          ability7: { title: "Regeneration", value: "regeneration" },
+          ability8: { title: "Venomous", value: "venomous" },
+          selectedAbility1: "",
+          selectedAbility2: "",
+          selectedAbility3: "",
+        },
+        palace: "cave",
+        appearance: "creepy and crawly",
+        traumas: "isolation",
+        pressure: "need to hide",
+        complications: "trust issues",
+        threats: "poisonous touch",
+        attackRoll: { lowDamage: "1d3", mediumDamage: "1d5", highDamage: "1d7", rollFormula: "1d5" },
+        severeAttack: { description: "venomous strike", rollFormula: "5d6" },
+        afflictions: ["toxic", "slippery"]
+      },
+    };
+
+    const sinTypeData = sinTypeMapping[sinType];
+
+    if (sinTypeData) {
+      const actor = this.actor;
+      actor.update({
+        'system.domains': sinTypeData.domains,
+        'system.palace': sinTypeData.palace,
+        'system.appearance': sinTypeData.appearance,
+        'system.traumas': sinTypeData.traumas,
+        'system.pressure': sinTypeData.pressure,
+        'system.complications': sinTypeData.complications,
+        'system.threats': sinTypeData.threats,
+        'system.attackRoll': sinTypeData.attackRoll,
+        'system.severeAttack': sinTypeData.severeAttack,
+        'system.afflictions': sinTypeData.afflictions
+      });
+    }
+  }
+
 }

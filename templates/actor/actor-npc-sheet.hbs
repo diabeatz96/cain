@@ -1,70 +1,154 @@
 <form class="{{cssClass}} {{actor.type}} flexcol" autocomplete="off">
 
   {{!-- Sheet Header --}}
-  <header class="sheet-header">
+   <header class="sheet-header">
     <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100"/>
     <div class="header-fields">
       <h1 class="charname"><input name="name" type="text" value="{{actor.name}}" placeholder="Name"/></h1>
-      {{!-- The grid classes are defined in scss/global/_grid.scss. To use,
-      use both the "grid" and "grid-Ncol" class where "N" can be any number
-      from 1 to 12 and will create that number of columns.  --}}
       <div class="resources grid grid-3col">
-
-        {{!-- "flex-group-center" is also defined in the _grid.scss file
-        and it will add a small amount of padding, a border, and will
-        center all of its child elements content and text. --}}
         <div class="resource flex-group-center">
-          <label for="system.health.value" class="resource-label">Health</label>
+          <label for="system.sinType" class="resource-label">
+            Sin Type
+            <img src="systems/cain/assets/Sins/{{system.sinType}}.png" alt="{{system.sinType}}"/>
+          </label>
           <div class="resource-content flexrow flex-center flex-between">
-            <input type="text" name="system.health.value" value="{{system.health.value}}" data-dtype="Number"/>
-            <span> / </span>
-            <input type="text" name="system.health.max" value="{{system.health.max}}" data-dtype="Number"/>
+            <select id="sinTypeSelect" name="system.sinType">
+              <option value="ogre" {{#if (eq system.sinType "ogre")}}selected{{/if}}>Ogre</option>
+              <option value="toad" {{#if (eq system.sinType "toad")}}selected{{/if}}>Toad</option>
+              <option value="idol" {{#if (eq system.sinType "idol")}}selected{{/if}}>Idol</option>
+              <option value="lord" {{#if (eq system.sinType "lord")}}selected{{/if}}>Lord</option>
+              <option value="hound" {{#if (eq system.sinType "hound")}}selected{{/if}}>Hound</option>
+              <option value="centipede" {{#if (eq system.sinType "centipede")}}selected{{/if}}>Centipede</option>
+            </select>
           </div>
         </div>
-
         <div class="resource flex-group-center">
-          <label for="system.power.value" class="resource-label">Power</label>
+          <label for="system.sinForm" class="resource-label">
+            Sin Form
+            <img src="systems/cain/assets/items/affliction.png" alt="form" />
+          </label>
           <div class="resource-content flexrow flex-center flex-between">
-            <input type="text" name="system.power.value" value="{{system.power.value}}" data-dtype="Number"/>
-            <span> / </span>
-            <input type="text" name="system.power.max" value="{{system.power.max}}" data-dtype="Number"/>
+            <select name="system.sinForm">
+              <option value="Form I/Severed" {{#if (eq system.sinForm "Form I/Severed")}}selected{{/if}}>Form I/Severed</option>
+              <option value="Form II/Fused" {{#if (eq system.sinForm "Form II/Fused")}}selected{{/if}}>Form II/Fused</option>
+              <option value="Form III/Bound" {{#if (eq system.sinForm "Form III/Bound")}}selected{{/if}}>Form III/Bound</option>
+            </select>
           </div>
         </div>
-
         <div class="resource flex-group-center">
-          <label for="system.cr" class="resource-label">CR / XP</label>
+          <label for="system.category" class="resource-label">
+            Category
+            <img src="systems/cain/assets/items/pathos.png" alt="category image"/>
+          </label>
           <div class="resource-content flexrow flex-center flex-between">
-            <input type="text" name="system.cr" value="{{system.cr}}" data-dtype="Number"/>
-            <span> / </span>
-            <input type="text" disabled="true" name="system.xp" value="{{system.xp}}" data-dtype="Number"/>
+            <input type="text" name="system.category" value="{{system.category}}" data-dtype="Number"/>
           </div>
         </div>
-
       </div>
     </div>
   </header>
 
   {{!-- Sheet Tab Navigation --}}
   <nav class="sheet-tabs tabs" data-group="primary">
-    {{!-- Default tab is specified in actor-sheet.mjs --}}
     <a class="item" data-tab="description">Description</a>
-    <a class="item" data-tab="items">Items</a>
+    <a class="item" data-tab="palace-pressure">Palace / Pressure</a>
+    <a class="item" data-tab="attacks">Attacks</a>
+    <a class="item" data-tab="domains">Domains</a>
   </nav>
 
   {{!-- Sheet Body --}}
   <section class="sheet-body">
 
-    {{!-- Biography Tab --}}
-    <div class="tab biography" data-group="primary" data-tab="description">
-      {{!-- Editors must receive enriched text data from getData to properly handle rolls --}}
-      {{editor enrichedBiography target="system.biography" engine="prosemirror" button=true editable=editable}}
+    {{!-- Description Tab --}}
+    <div class="tab description" data-group="primary" data-tab="description">
+      <div class="form-group">
+        <label for="system.appearance">Appearance</label>
+        <textarea name="system.appearance">{{system.appearance}}</textarea>
+      </div>
+      <div class="form-group">
+        <label for="system.biography">Biography</label>
+        <textarea name="system.biography">{{system.biography}}</textarea>
+      </div>
+      <div class="form-group">
+        <label for="system.traumas">Traumas</label>
+        <textarea name="system.traumas">{{system.traumas}}</textarea>
+      </div>
     </div>
 
-    {{!-- Owned Items Tab --}}
-    <div class="tab items" data-group="primary" data-tab="items">
-       {{> "systems/cain/templates/actor/parts/actor-items.hbs"}}
+    {{!-- Palace / Pressure Tab --}}
+    <div class="tab palace-pressure" data-group="primary" data-tab="palace-pressure">
+      <div class="form-group">
+        <label for="system.palace">Palace</label>
+        <input type="text" name="system.palace" value="{{system.palace}}"/>
+      </div>
+      <div class="form-group">
+        <label for="system.pressure">Pressure</label>
+        <textarea name="system.pressure">{{system.pressure}}</textarea>
+      </div>
     </div>
+
+    {{!-- Attacks Tab --}}
+    <div class="tab attacks" data-group="primary" data-tab="attacks">
+      <div class="form-group">
+        <label for="system.attackRoll.lowDamage">Roll Damage</label>
+        <input type="text" name="system.attackRoll.lowDamage" value="{{system.attackRoll.lowDamage}}"/>
+      </div>
+      <div class="form-group">
+        <label for="system.attackRoll.mediumDamage">Medium Damage</label>
+        <input type="text" name="system.attackRoll.mediumDamage" value="{{system.attackRoll.mediumDamage}}"/>
+      </div>
+      <div class="form-group">
+        <label for="system.attackRoll.highDamage">High Damage</label>
+        <input type="text" name="system.attackRoll.highDamage" value="{{system.attackRoll.highDamage}}"/>
+      </div>
+      <div class="form-group">
+        <label for="system.attackRoll.rollFormula">Roll Formula</label>
+        <input type="text" name="system.attackRoll.rollFormula" value="{{system.attackRoll.rollFormula}}"/>
+      </div>
+      <div class="form-group">
+        <label for="system.severeAttack.description">Severe Attack Description</label>
+        <textarea name="system.severeAttack.description">{{system.severeAttack.description}}</textarea>
+      </div>
+      <div class="form-group">
+        <label for="system.severeAttack.rollFormula">Severe Attack Roll Formula</label>
+        <input type="text" name="system.severeAttack.rollFormula" value="{{system.severeAttack.rollFormula}}"/>
+      </div>
+    </div>
+
+    {{!-- Domains Tab --}}
+<div class="tab domains" data-group="primary" data-tab="domains">
+  <div class="form-group">
+    <label for="system.selectedAbilities.selectedAbility1">Domain 1</label>
+    <select name="system.selectedAbilities.selectedAbility1" class="ability-select" data-ability="1">
+      {{#each system.domains}}
+        <option value="{{this.value}}" {{#if (eq ../system.selectedAbilities.selectedAbility1 this.value)}}selected{{/if}}>{{this.title}}</option>
+      {{/each}}
+    </select>
+    <p class="ability-value" data-ability="1">{{system.selectedAbilities.selectedAbility1}}</p>
+    <p class="error-message" data-error="1" style="display: none; color: red;">Please choose another Domain ability.</p>
+  </div>
+  <div class="form-group">
+    <label for="system.selectedAbilities.selectedAbility2">Domain 2</label>
+    <select name="system.selectedAbilities.selectedAbility2" class="ability-select" data-ability="2">
+      {{#each system.domains}}
+        <option value="{{this.value}}" {{#if (eq ../system.selectedAbilities.selectedAbility2 this.value)}}selected{{/if}}>{{this.title}}</option>
+      {{/each}}
+    </select>
+    <p class="ability-value" data-ability="2">{{system.selectedAbilities.selectedAbility2}}</p>
+    <p class="error-message" data-error="2" style="display: none; color: red;">Please choose another Domain ability.</p>
+  </div>
+  <div class="form-group">
+    <label for="system.selectedAbilities.selectedAbility3">Domain 3</label>
+    <select name="system.selectedAbilities.selectedAbility3" class="ability-select" data-ability="3">
+      {{#each system.domains}}
+        <option value="{{this.value}}" {{#if (eq ../system.selectedAbilities.selectedAbility3 this.value)}}selected{{/if}}>{{this.title}}</option>
+      {{/each}}
+    </select>
+    <p class="ability-value" data-ability="3">{{system.selectedAbilities.selectedAbility3}}</p>
+    <p class="error-message" data-error="3" style="display: none; color: red;">Please choose another Domain ability.</p>
+  </div>
+</div>
+
 
   </section>
 </form>
-
