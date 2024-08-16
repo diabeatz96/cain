@@ -13,6 +13,11 @@ export const preloadHandlebarsTemplates = async function () {
     'systems/cain/templates/actor/parts/actor-abilities.hbs',
     'systems/cain/templates/actor/parts/actor-sin.hbs',
     'systems/cain/templates/actor/parts/actor-talismans.hbs',
+    // npc partials
+    'systems/cain/templates/actor/npc-parts/actor-description.hbs',
+    'systems/cain/templates/actor/npc-parts/actor-palace-pressure.hbs',
+    'systems/cain/templates/actor/npc-parts/actor-attacks.hbs',
+    'systems/cain/templates/actor/npc-parts/actor-domains.hbs',
     // Item partials
     'systems/cain/templates/item/parts/item-effects.hbs',
     

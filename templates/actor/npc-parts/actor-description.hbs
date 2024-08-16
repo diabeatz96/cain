@@ -1,0 +1,36 @@
+<div class="tab description" data-group="primary" data-tab="description">
+  <div class="left-column">
+    <div class="form-group dark-form-group">
+      <label for="system.appearance">Appearance</label>
+      <textarea name="system.appearance">{{system.appearance}}</textarea>
+    </div>
+    <div class="form-group dark-form-group">
+      <label for="system.traumas">Traumas</label>
+      <textarea name="system.traumas">{{system.traumas}}</textarea>
+    </div>
+  </div>
+  <div class="right-column">
+    <div class="form-group dark-form-group">
+      <label for="system.biography">Biography</label>
+      <div class="enriched-bio" contenteditable="true">{{system.biography}}</div>
+    </div>
+    <div class="form-group dark-form-group">
+      <label for="system.afflictions">Afflictions</label>
+      <table class="afflictions-table">
+        <thead>
+          <tr>
+            <th>Affliction</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each system.afflictions}}
+            <tr>
+              <td>{{this}}</td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+      <button class="roll-affliction">Roll Affliction</button>
+    </div>
+  </div>
+</div>
