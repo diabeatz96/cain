@@ -23,4 +23,22 @@
     <label for="system.severeAttack.rollFormula">Severe Attack Roll Formula</label>
     <input type="text" name="system.severeAttack.rollFormula" value="{{system.severeAttack.rollFormula}}"/>
   </div>
+    <div class="form-group dark-form-group">
+    <label for="system.afflictions" class="centered-label">Afflictions</label>
+    <table class="afflictions-table">
+      <thead>
+        <tr>
+          <th>Affliction</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each system.afflictions}}
+          <tr>
+            <td>{{this}}</td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+    <button class="roll-affliction">Roll Affliction</button>
+  </div>
 </div>
