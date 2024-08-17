@@ -7,7 +7,7 @@
       {{/each}}
     </select>
     <p class="ability-value" data-ability="1">{{system.selectedAbilities.selectedAbility1}}</p>
-    <p class="error-message" data-error="1" style="display: none; color: red;">Please choose another Domain ability.</p>
+    <i class="fas fa-comment-alt ability-icon" data-ability="1" onclick="sendAbilityToChat(1)"></i>
   </div>
   <div class="form-group dark-form-group">
     <label for="system.selectedAbilities.selectedAbility2">Domain 2</label>
@@ -17,7 +17,7 @@
       {{/each}}
     </select>
     <p class="ability-value" data-ability="2">{{system.selectedAbilities.selectedAbility2}}</p>
-    <p class="error-message" data-error="2" style="display: none; color: red;">Please choose another Domain ability.</p>
+    <i class="fas fa-comment-alt ability-icon" data-ability="2" onclick="sendAbilityToChat(2)"></i>
   </div>
   <div class="form-group dark-form-group">
     <label for="system.selectedAbilities.selectedAbility3">Domain 3</label>
@@ -27,6 +27,83 @@
       {{/each}}
     </select>
     <p class="ability-value" data-ability="3">{{system.selectedAbilities.selectedAbility3}}</p>
-    <p class="error-message" data-error="3" style="display: none; color: red;">Please choose another Domain ability.</p>
+    <i class="fas fa-comment-alt ability-icon" data-ability="3" onclick="sendAbilityToChat(3)"></i>
   </div>
 </div>
+
+<script>
+function sendAbilityToChat(abilityNumber) {
+  const abilityValue = document.querySelector(`.ability-value[data-ability="${abilityNumber}"]`).textContent;
+  const message = `Domain Description: ${abilityValue}`;
+  ChatMessage.create({ content: message });
+}
+</script>
+
+<style>
+.tab.domains {
+  background-color: #1a1a1a;
+  color: #f5f5f5;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.tab.domains .form-group {
+  margin-bottom: 20px;
+  text-align: center;
+  border: 1px solid #444;
+  padding: 15px;
+  border-radius: 8px;
+  background-color: #2a2a2a;
+}
+
+.tab.domains .dark-form-group label {
+  color: #f5f5f5;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 10px;
+  font-size: 1.1em;
+}
+
+.tab.domains .ability-select {
+  width: 80%;
+  border: 1px solid #444;
+  border-radius: 4px;
+  background-color: #333;
+  color: #f5f5f5;
+  font-size: 1em;
+  appearance: none; /* Remove default arrow */
+  -webkit-appearance: none; /* Remove default arrow for Safari */
+  background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 5"><path fill="#f5f5f5" d="M2 0L0 2h4z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 10px;
+}
+
+.tab.domains .ability-select option {
+  background-color: #333;
+  color: #f5f5f5;
+}
+
+.tab.domains .ability-value {
+  margin-top: 10px;
+  font-size: 1em;
+  color: #f5f5f5;
+}
+
+.tab.domains .ability-icon {
+  margin-left: 10px;
+  cursor: pointer;
+  color: #f5f5f5;
+}
+
+.tab.domains .ability-icon:hover {
+  color: #aaa;
+}
+
+form .tab.domains .form-group {
+  display: block;
+  margin-bottom: 20px;
+}
+
+</style>

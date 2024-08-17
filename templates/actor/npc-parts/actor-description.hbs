@@ -1,17 +1,17 @@
 <div class="tab description" data-group="primary" data-tab="description">
-  <div class="form-row">
+  <div class="form-grid">
     <div class="form-group dark-form-group">
       <label for="system.appearance" class="centered-label">Appearance</label>
-      <textarea name="system.appearance" class="large-textarea centered-textarea">{{system.appearance}}</textarea>
+      <textarea name="system.appearance" class="large-textarea">{{system.appearance}}</textarea>
     </div>
     <div class="form-group dark-form-group">
       <label for="system.traumas" class="centered-label">Traumas</label>
-      <textarea name="system.traumas" class="large-textarea centered-textarea">{{system.traumas}}</textarea>
+      <textarea name="system.traumas" class="large-textarea">{{system.traumas}}</textarea>
     </div>
-  </div>
-  <div class="form-group dark-form-group">
-    <label for="system.biography" class="centered-label">Biography</label>
-    <div class="enriched-bio centered-textarea" contenteditable="true">{{system.biography}}</div>
+        <div class="form-group dark-form-group full-width">
+      <label for="system.biography" class="centered-label">Biography</label>
+      {{ editor enrichedBiography target='system.biography' engine='prosemirror' button=true editable=editable class="mob-psycho-editor" }}
+    </div>
   </div>
 </div>
 
@@ -22,34 +22,32 @@
   padding: 20px;
 }
 
-.form-row {
-  display: flex;
-  justify-content: space-between;
+.tab.description .form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
 }
 
-.form-group {
-  margin-bottom: 20px;
+.tab.description .form-group {
   text-align: center;
-  flex: 1;
-  margin-right: 10px;
 }
 
-.form-group:last-child {
-  margin-right: 0;
-}
-
-.dark-form-group label {
+.tab.description .dark-form-group label {
   color: #f5f5f5;
   font-weight: bold;
   display: block;
   margin-bottom: 10px;
 }
 
-.centered-label {
+.tab.description .centered-label {
   text-align: center;
+  font-family: "Tiny5", sans-serif;
+  font-weight: 400;
+  font-size: 1.2em; /* Slightly larger font size */
+  letter-spacing: 0.05em; /* Small spacing between letters */
 }
 
-.large-textarea {
+.tab.description .large-textarea {
   width: 100%;
   height: 150px;
   padding: 10px;
@@ -59,14 +57,9 @@
   border-radius: 4px;
 }
 
-.centered-textarea {
-  display: block;
-  margin: 0 auto;
-}
-
-.enriched-bio {
+.tab.description .mob-psycho-editor {
   width: 100%;
-  height: 150px;
+  height: 400px; /* Increased height for better editing experience */
   padding: 10px;
   background-color: #333;
   color: #f5f5f5;
@@ -75,39 +68,13 @@
   overflow-y: auto;
 }
 
-.afflictions-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 10px;
+.tab.description .full-width {
+  grid-column: span 2;
+  height: 400px; /* Increased height for better editing experience */
 }
 
-.afflictions-table th, .afflictions-table td {
-  border: 1px solid #444;
-  padding: 8px;
-  text-align: left;
-}
-
-.afflictions-table th {
-  background-color: #444;
-  color: #f5f5f5;
-}
-
-.afflictions-table td {
-  background-color: #333;
-  color: #f5f5f5;
-}
-
-.roll-affliction {
-  margin-top: 10px;
-  padding: 10px 20px;
-  background-color: #444;
-  color: #f5f5f5;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.roll-affliction:hover {
-  background-color: #555;
+form .tab.description .form-group {
+  display: block;
+  margin-bottom: 20px;
 }
 </style>
