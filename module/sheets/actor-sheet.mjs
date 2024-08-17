@@ -200,7 +200,10 @@ export class CainActorSheet extends ActorSheet {
     html.find('.change-image').click(this._onChangeImage.bind(this));
     html.find('.talisman-image').click(this._onImageClick.bind(this));
     html.find('.talisman-image').on('contextmenu', this._onDecreaseMarks.bind(this));
-
+    /* NPC sheet specific listeners */
+    html.find('.attack-button').click(this._onNpcAttack.bind(this));
+    html.find('.severe-attack-button').click(this._onNpcSevereAttack.bind(this));
+    html.find('.roll-affliction').click(this._onRollAffliction.bind(this));
 
     // NPC sheet specific listeners
     
@@ -690,6 +693,122 @@ export class CainActorSheet extends ActorSheet {
     }
   }
 
+// Assuming this is part of the ActorSheet class
+
+  async _onNpcAttack(event) {
+    event.preventDefault();
+    const roll = await new Roll('1d6').roll({ async: true });
+    const lowDamage = this.actor.system.attackRoll.lowDamage;
+    const mediumDamage = this.actor.system.attackRoll.mediumDamage;
+    const highDamage = this.actor.system.attackRoll.highDamage;
+
+    let damageMessage;
+    if (roll.total >= 4) {
+      damageMessage = `<span style="color: green;">Low Damage: ${lowDamage}</span>`;
+    } else if (roll.total >= 2) {
+      damageMessage = `<span style="color: orange;">Medium Damage: ${mediumDamage}</span>`;
+    } else {
+      damageMessage = `<span style="color: red;">High Damage: ${highDamage}</span>`;
+    }
+
+    const message = `
+      <div style="border: 1px solid #444; padding: 10px; border-radius: 4px; background-color: #1a1a1a; color: #f5f5f5;">
+        <h2 style="margin: 0 0 10px 0;">Attack Roll</h2>
+        <p><strong>Roll:</strong> <span style="font-size: 1.2em;">${roll.total}</span></p>
+        <p>${damageMessage}</p>
+      </div>
+    `;
+    ChatMessage.create({ content: message });
+  }
+
+  async _onNpcSevereAttack(event) {
+    event.preventDefault();
+    const description = this.actor.system.severeAttack.description;
+    const rollFormula = this.actor.system.severeAttack.rollFormula;
+    const dialogContent = `
+      <div style="padding: 10px; background-color: #2c2c2c; border-radius: 8px; color: #f5f5f5;">
+        <p style="font-size: 1.2em; margin-bottom: 10px;">${description}</p>
+        <div style="margin-bottom: 10px;">
+          <label for="dice-modifier" style="display: block; margin-bottom: 5px; font-weight: bold;">Dice Modifier:</label>
+          <input type="number" id="dice-modifier" name="dice-modifier" value="0" style="width: 100%; padding: 5px; border-radius: 4px; border: 1px solid #444; background-color: #1a1a1a; color: #f5f5f5;">
+        </div>
+      </div>
+    `;
+    new Dialog({
+      title: "Severe Attack",
+      content: dialogContent,
+      buttons: {
+        roll: {
+          icon: "<i class='fas fa-dice'></i>",
+          label: "Roll",
+          callback: () => {
+            const modifier = parseInt(document.getElementById('dice-modifier').value) || 0;
+            console.log(modifier);
+            this._performSevereAttackRoll(rollFormula, modifier);
+          }
+        },
+        cancel: {
+          icon: "<i class='fas fa-times'></i>",
+          label: "Cancel"
+        }
+      },
+      default: "roll"
+    }).render(true);
+  }
+
+  async _performSevereAttackRoll(rollFormula, modifier) {
+    // Extract the number of dice from the roll formula
+    const match = rollFormula.match(/(\d+)d6/);
+    if (!match) {
+      console.error("Invalid roll formula");
+      return;
+    }
+  
+    const baseDice = parseInt(match[1]);
+    const totalDice = Math.max(baseDice + modifier, 0); // Ensure totalDice is not below 0
+  
+    const roll = new Roll(`${totalDice}d6`);
+    await roll.evaluate({ async: true });
+  
+    let onesCount = 0;
+    let nonOnesCount = 0;
+  
+    let message = `<h2>Severe Attack Roll</h2>`;
+    message += `<p>Dice Rolled:</p><ul>`;
+    roll.dice[0].results.forEach(r => {
+      if (r.result === 1) {
+        onesCount++;
+        message += `<li>Die: ${r.result} 😈👿</li>`;
+      } else {
+        nonOnesCount++;
+        message += `<li>Die: ${r.result}</li>`;
+      }
+    });
+    message += `</ul>`;
+    message += `<p>Number of 1's: ${onesCount}</p>`;
+    message += `<p>Number of non-1's: ${nonOnesCount}</p>`;
+  
+    ChatMessage.create({
+      content: message,
+      speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+    });
+  }
+
+
+  async _onRollAffliction(event) {
+    event.preventDefault();
+    const roll = await new Roll('1d6').roll({ async: true });
+    const afflictions = this.actor.system.afflictions;
+    const affliction = afflictions[roll.total - 1]; // Assuming afflictions is an array
+    const message = `
+      <div style="border: 1px solid #444; padding: 10px; border-radius: 4px; background-color: #1a1a1a; color: #f5f5f5;">
+        <h2 style="margin: 0 0 10px 0;">Affliction Roll</h2>
+        <p><strong>Roll:</strong> <span style="font-size: 1.2em;">${roll.total}</span></p>
+        <p><strong>Affliction:</strong> ${affliction}</p>
+      </div>
+    `;
+    ChatMessage.create({ content: message });
+  }
 
   _onSinTypeSelect(sinType) {
     const sinTypeMapping = {
@@ -804,7 +923,7 @@ export class CainActorSheet extends ActorSheet {
           rollFormula: "1d6"
         },         
         severeAttack: { description: "The Sin can use this ability on a ‘1’ on the risk roll. They can only use it once a mission. Target an exorcist. Any other exorcists nearby must decide to fly to their aid. Any that don’t offer aid cannot participate. Start with a pool of 5d6. Then remove one dice for each of the following. If an answer is ‘no’, you or someone aiding you can immediately make a single action roll to attempt rectify the answer, with only a few moments to act, suffering consequences as normal if they fail. • Are you accepting of your powers? • Are your allies close enough to touch you skin to skin? • Are you willing to part with your kit? If you answer yes to this, the Toad is distracted by stealing every item of gear from you you currently have ticked. They disappear until the Toad is defeated. Is the Toad hindered, distracted, or under duress in some way? Then roll the dice. The exorcist and any aiding them take 1 stress for every die rolled, no matter the result. • If at least one ‘1’ comes up, the Toad steals the ability to use psychic powers from the targeted exorcist. These coalesce into a psychic shadow, which runs off. It is a sin with an execution talisman of 3 and it uses reactions to attempt to flee. If it is destroyed, captured, or the scene ends, it fuses with its host again, ending this effect. • If two or more ‘1’s come up, the execution talisman of the shadow is 5 instead.", rollFormula: "5d6" },
-        afflictions: ["Absent Minded: Whenever you roll a ‘1’ on risk, erase 1 KP.", "Wasting Sickness: Reduce max stress by 1 each time you rest. If reduced to 0, you suffer instant death.", "Starvation: All", "Starvation: All actions are hard until you or an ally mark 1 KP and allow you to eat something. This effect resets and you must eat again after you rest.", "Itchy Fingers: Once a scene, stealing something (anything) gives you 1 psyche burst and 1d3 sin. Permanently add to your agenda: steal.", "Dreaming Desire: When pressure increases, spend 1 psyche burst to daydream about things you want or take 2 stress.", "The Want: Permanently add to your agenda: take more than you need. Or improvise: make a something hard or"]
+        afflictions: ["Absent Minded: Whenever you roll a ‘1’ on risk, erase 1 KP.", "Wasting Sickness: Reduce max stress by 1 each time you rest. If reduced to 0, you suffer instant death.", "Starvation: All actions are hard until you or an ally mark 1 KP and allow you to eat something. This effect resets and you must eat again after you rest.", "Itchy Fingers: Once a scene, stealing something (anything) gives you 1 psyche burst and 1d3 sin. Permanently add to your agenda: steal.", "Dreaming Desire: When pressure increases, spend 1 psyche burst to daydream about things you want or take 2 stress.", "The Want: Permanently add to your agenda: take more than you need. Or improvise: make a something hard or"]
       }, 
       idol: {
         domains: {

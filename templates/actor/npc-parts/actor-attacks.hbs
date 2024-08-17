@@ -12,8 +12,8 @@
     <div class="collapsible-content">
       <p class="styled-paragraph">{{system.severeAttack.description}}</p>
       <div class="button-group">
-        <button class="attack-button" onclick="rollAttack()">Attack</button>
-        <button class="severe-attack-button" onclick="showSevereAttack()">Severe Attack</button>
+        <button class="attack-button">Attack</button>
+        <button class="severe-attack-button">Severe Attack</button>
       </div>
     </div>
   </div>
@@ -38,39 +38,6 @@
 </div>
 
 <script>
-function rollAttack() {
-  const roll = new Roll('1d6').roll();
-  const lowDamage = "{{system.attackRoll.lowDamage}}";
-  const mediumDamage = "{{system.attackRoll.mediumDamage}}";
-  const highDamage = "{{system.attackRoll.highDamage}}";
-  const message = `Roll: ${roll.total}, Low Damage: ${lowDamage}, Medium Damage: ${mediumDamage}, High Damage: ${highDamage}`;
-  ChatMessage.create({ content: message });
-}
-
-function showSevereAttack() {
-  const description = "{{system.severeAttack.description}}";
-  const rollFormula = "{{system.severeAttack.rollFormula}}";
-  const dialogContent = `
-    <p>${description}</p>
-    <div>
-      <label for="dice-modifier">Dice Modifier:</label>
-      <input type="number" id="dice-modifier" name="dice-modifier" value="0"/>
-    </div>
-    <button onclick="rollSevereAttack('${rollFormula}')">Roll Severe Attack</button>
-  `;
-  new Dialog({
-    title: "Severe Attack",
-    content: dialogContent,
-    buttons: {}
-  }).render(true);
-}
-
-function rollSevereAttack(rollFormula) {
-  const modifier = parseInt(document.getElementById('dice-modifier').value) || 0;
-  const roll = new Roll(`${rollFormula} + ${modifier}d6`).roll();
-  ChatMessage.create({ content: `Severe Attack Roll: ${roll.total}` });
-}
-
 function toggleCollapse(button) {
   const content = button.nextElementSibling;
   if (content.style.display === "block") {
