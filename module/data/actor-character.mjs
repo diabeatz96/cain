@@ -112,6 +112,11 @@ export default class CainCharacter extends CainActorBase {
       value: new fields.NumberField({ required: true, initial: 0, min: 0, max: 3 }),
       max: new fields.NumberField({ required: true, initial: 3, min: 0, max: 3 }),
     });
+
+    schema.restDiceModifier = new fields.NumberField({ required: true, initial: 0, min: -3, max: 3 });
+    
+    schema.currentAgendaItems = new fields.ArrayField(new fields.StringField({ required: true, initial: " " }), { required: true, initial: [] });
+    schema.currentAgendaAbilities = new fields.ArrayField(new fields.StringField({ required: true, initial: " " }), { required: true, initial: [] });
     
     return schema;
   }

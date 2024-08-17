@@ -750,6 +750,34 @@
   padding: 10px;
 }
 
+.rest-dice-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.mob-psycho-rest-dice {
+  background-color: #2e0d45;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.mob-psycho-button {
+  padding: 5px 10px;
+  border-radius: 4px;
+  border: none;
+  background-color: #4b0082;
+  color: #f5f5f5;
+  cursor: pointer;
+}
+
+.mob-psycho-button:hover {
+  background-color: #6a0dad;
+}
+
 /* end mob-psycho-theme.css */
 
 /* Rolls and chat message edits */

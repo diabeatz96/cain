@@ -110,17 +110,17 @@
 
 <div class="flex-group-center">
   <label for="system.xp.value" class="resource-label">XP</label> 
-  <output>{{system.xp.value}}</output>
-  <div class=" flexrow flex-center">
-    <input type="range" name="system.xp.value" value="{{system.xp.value}}" min="0" max="4" step="1" data-dtype="Number" oninput="this.nextElementSibling.value = this.value">
+  <output id="xp-output">{{system.xp.value}}</output>
+  <div class="flexrow flex-center">
+    <input type="range" name="system.xp.value" value="{{system.xp.value}}" min="0" max="4" step="1" data-dtype="Number" oninput="document.getElementById('xp-output').value = this.value">
   </div>
 </div>
 
 <div class="flex-group-center">
   <label for="system.advancements.value" class="resource-label">Advancement</label>
-  <output>{{system.advancements.value}}</output>
+  <output id="advancements-output">{{system.advancements.value}}</output>
   <div class="resource-content flexrow flex-center">
-    <input type="range" name="system.advancements.value" value="{{system.advancements.value}}" min="0" max="4" step="1" data-dtype="Number" oninput="this.nextElementSibling.value = this.value">
+    <input type="range" name="system.advancements.value" value="{{system.advancements.value}}" min="0" max="4" step="1" data-dtype="Number" oninput="document.getElementById('advancements-output').value = this.value">
   </div>
 </div>
 

@@ -135,8 +135,8 @@ export class CainActorSheet extends ActorSheet {
     if (!this.isEditable) return;
   
     html.on('click', '.item-create', this._onItemCreate.bind(this));
-    html.on('click', '.create-agenda-button', this._onItemCreate.bind(this));    
-    html.on('click', '.create-blasphemy-button', this._onItemCreate.bind(this));
+    // html.on('click', '.create-agenda-button', this._onItemCreate.bind(this));    
+    // html.on('click', '.create-blasphemy-button', this._onItemCreate.bind(this));
 
     html.on('click', '.item-delete', (ev) => {
       const li = $(ev.currentTarget).parents('.item');
@@ -200,6 +200,13 @@ export class CainActorSheet extends ActorSheet {
     html.find('.change-image').click(this._onChangeImage.bind(this));
     html.find('.talisman-image').click(this._onImageClick.bind(this));
     html.find('.talisman-image').on('contextmenu', this._onDecreaseMarks.bind(this));
+    html.find('.roll-rest-dice').click(this._RollRestDice.bind(this));
+    html.find('#add-agenda-item-button').on('click', this._addAgendaItemButton.bind(this));
+    html.find('#add-agenda-ability-button').on('click', this._addAgendaAbilityButton.bind(this));
+    html.find('#editable-agenda-items').on('click', '.remove-item-button', this._removeItemButton.bind(this));
+    html.find('#editable-agenda-abilities').on('click', '.remove-ability-button', this._removeAbilityButton.bind(this));
+    html.find('#editable-agenda-items').on('change', '.editable-item-input', this._updateAgendaItem.bind(this));
+    html.find('#editable-agenda-abilities').on('change', '.editable-ability-input', this._updateAgendaAbility.bind(this));
     /* NPC sheet specific listeners */
     html.find('.attack-button').click(this._onNpcAttack.bind(this));
     html.find('.severe-attack-button').click(this._onNpcSevereAttack.bind(this));
@@ -214,6 +221,58 @@ export class CainActorSheet extends ActorSheet {
 
 }
   
+_addAgendaItemButton(event) {
+  event.preventDefault();
+  const agendaItems = this.actor.system.currentAgendaItems || [];
+  agendaItems.push('New Agenda Item');
+  this.actor.update({ 'system.currentAgendaItems': agendaItems }).then(() => {
+    this.render(false); // Re-render the sheet to reflect changes
+  });
+}
+
+_addAgendaAbilityButton(event) {
+  event.preventDefault();
+  const agendaAbilities = this.actor.system.currentAgendaAbilities || [];
+  agendaAbilities.push('New Agenda Ability');
+  this.actor.update({ 'system.currentAgendaAbilities': agendaAbilities }).then(() => {
+    this.render(false); // Re-render the sheet to reflect changes
+  });
+}
+
+_removeItemButton(event) {
+  event.preventDefault();
+  const index = event.target.dataset.index;
+  const agendaItems = this.actor.system.currentAgendaItems || [];
+  agendaItems.splice(index, 1);
+  this.actor.update({ 'system.currentAgendaItems': agendaItems }).then(() => {
+    this.render(false); // Re-render the sheet to reflect changes
+  });
+}
+
+_removeAbilityButton(event) {
+  event.preventDefault();
+  const index = event.target.dataset.index;
+  const agendaAbilities = this.actor.system.currentAgendaAbilities || [];
+  agendaAbilities.splice(index, 1);
+  this.actor.update({ 'system.currentAgendaAbilities': agendaAbilities }).then(() => {
+    this.render(false); // Re-render the sheet to reflect changes
+  });
+}
+
+_updateAgendaItem(event) {
+  const index = event.target.dataset.index;
+  const agendaItems = this.actor.system.currentAgendaItems || [];
+  agendaItems[index] = event.target.value;
+  this.actor.update({ 'system.currentAgendaItems': agendaItems });
+}
+
+_updateAgendaAbility(event) {
+  const index = event.target.dataset.index;
+  const agendaAbilities = this.actor.system.currentAgendaAbilities || [];
+  agendaAbilities[index] = event.target.value;
+  this.actor.update({ 'system.currentAgendaAbilities': agendaAbilities });
+}
+
   _onInputChange(event) {
     const index = event.currentTarget.dataset.index;
     const field = event.currentTarget.className.split('-')[1];
@@ -318,6 +377,43 @@ export class CainActorSheet extends ActorSheet {
     ChatMessage.create({
       content: message,
       speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+    });
+  }
+
+  async _RollRestDice(event) {
+    event.preventDefault();
+  
+    // Get the rest dice modifier from the input field
+    const restDiceModifier = parseInt(this.actor.system.restDiceModifier, 10) || 0;
+  
+    // Calculate the number of dice to roll
+    const baseDice = 2;
+    const totalDice = baseDice + restDiceModifier;
+    const rollFormula = `${totalDice}d3`;
+  
+    // Roll the dice using Foundry's built-in dice roller
+    const roll = new Roll(rollFormula);
+    await roll.evaluate({ async: true });
+  
+    // Get individual dice results
+    const diceResults = roll.terms[0].results.map(result => result.result).join(', ');
+  
+    // Display the result in the chat with the rules for rest dice
+    const restDiceRules = `
+      <h2>Rest Dice Rules</h2>
+      <p>Exorcists that rest are recovering and letting time pass. The exorcists must decide to rest as a group. If they do, pressure always increases by 1.</p>
+      <p>Each exorcist rolls 2d3, then takes each die and assigns it to an item from the following list. They are able to make the same choice twice:</p>
+      <ul>
+        <li>Regain that many psyche bursts</li>
+        <li>Recover stress equal to the d3</li>
+        <li>Erase slashes on a hook equal to the d3</li>
+      </ul>
+      <p>Resting also ends the effects of some powers and abilities, or resets others.</p>
+    `;
+  
+    roll.toMessage({
+      speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+      flavor: `Rolling Rest Dice: ${rollFormula}<br>Dice Results: ${diceResults}<br>${restDiceRules}`
     });
   }
 

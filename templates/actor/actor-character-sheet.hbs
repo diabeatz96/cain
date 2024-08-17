@@ -96,12 +96,18 @@
           use both the "grid" and "grid-Ncol" class where "N" can be any number
           from 1 to 12 and will create that number of columns.  --}}
         <h3 class="mob-psycho-heading">Afflictions</h3>
-        {{#each system.afflictions as |affliction key|}}
-          <div class="affliction flexrow flex-group-center mob-psycho-affliction">
-            <label for="system.afflictions.{{key}}" class="resource-label flexlarge align-left mob-psycho-label">Affliction</label>
-            <input type="text" name="system.afflictions.{{key}}" value="{{affliction}}" data-dtype="String" class="mob-psycho-input"/>
-          </div>
-        {{/each}}
+          {{#each system.afflictions as |affliction key|}}
+            <div class="affliction flexrow flex-group-center mob-psycho-affliction">
+              <textarea name="system.afflictions.{{key}}" data-dtype="String" class="mob-psycho-input">{{affliction}}</textarea>
+            </div>
+          {{/each}}
+
+        <div class="rest-dice-section flexrow mob-psycho-rest-dice">
+          <label for="system.restDiceModifier" class="resource-label flexlarge align-left mob-psycho-label">Rest Dice Modifier</label>
+          <input type="number" name="system.restDiceModifier" value="{{system.restDiceModifier}}" data-dtype="Number" class="mob-psycho-input"/>
+        </div>
+          <button type="button" class="roll-rest-dice mob-psycho-button">Roll Rest Dice</button>
+
         </aside>
 
         {{!-- For the main features list, span the right two columns --}}
