@@ -3,20 +3,40 @@
   <div id="talisman-management">
     <div id="talisman-list" class="talisman-grid">
       {{#each talismans}}
+      {{#unless this.isHidden}}
       <div class="talisman">
         <input type="text" placeholder="Name" class="talisman-name" value="{{this.name}}" data-index="{{@index}}">
         <img src="{{this.imagePath}}" alt="{{this.name}}" class="talisman-image" data-index="{{@index}}">
         <div class="talisman-controls">
           {{#if ../isGM}}
-            <button class="delete-talisman" data-index="{{@index}}">Delete</button>
+            <button class="delete-talisman" data-index="{{@index}}"><i class="fas fa-trash-alt"></i> Delete</button>
+            <button class="hide-talisman" data-index="{{@index}}">
+              <i class="fas fa-eye-slash"></i> Hide
+            </button>
+            <input type="range" min="0" max="{{this.maxMarkAmount}}" value="{{this.currMarkAmount}}" class="talisman-slider" data-index="{{@index}}">
           {{/if}}
+        </div>
+      </div>
+      {{/unless}}
+      {{#if ../isGM}}
+      {{#if this.isHidden}}
+      <div class="talisman">
+        <input type="text" placeholder="Name" class="talisman-name" value="{{this.name}}" data-index="{{@index}}">
+        <img src="{{this.imagePath}}" alt="{{this.name}}" class="talisman-image" data-index="{{@index}}">
+        <div class="talisman-controls">
+          <button class="delete-talisman" data-index="{{@index}}"><i class="fas fa-trash-alt"></i> Delete</button>
+          <button class="hide-talisman" data-index="{{@index}}">
+            <i class="fas fa-eye"></i> Show
+          </button>
           <input type="range" min="0" max="{{this.maxMarkAmount}}" value="{{this.currMarkAmount}}" class="talisman-slider" data-index="{{@index}}">
         </div>
       </div>
+      {{/if}}
+      {{/if}}
       {{/each}}
     </div>
     {{#if isGM}}
-      <button id="add-talisman">Add Talisman</button>
+      <button id="add-talisman"><i class="fas fa-plus"></i> Add Talisman</button>
     {{/if}}
   </div>
 </div>
@@ -90,7 +110,7 @@
   align-items: center;
 }
 
-.delete-talisman {
+.delete-talisman, .hide-talisman {
   background: #ff4500;
   color: #fff;
   border: none;
@@ -100,7 +120,7 @@
   margin-bottom: 10px;
 }
 
-.delete-talisman:hover {
+.delete-talisman:hover, .hide-talisman:hover {
   background: #ff6347; /* Slightly lighter on hover */
 }
 

@@ -755,7 +755,7 @@ export class CainActorSheet extends ActorSheet {
       default: "roll"
     }).render(true);
   }
-
+  
   async _performSevereAttackRoll(rollFormula, modifier) {
     // Extract the number of dice from the roll formula
     const match = rollFormula.match(/(\d+)d6/);
@@ -861,7 +861,7 @@ export class CainActorSheet extends ActorSheet {
         attackRoll: {
           lowDamage: "1 stress",
           mediumDamage: "2 stress",
-          highDamage: "1 stress",
+          highDamage: "3 stress",
           rollFormula: "1d6"
         }, 
         severeAttack: {
@@ -919,7 +919,7 @@ export class CainActorSheet extends ActorSheet {
         attackRoll: {
           lowDamage: "1 stress",
           mediumDamage: "2 stress",
-          highDamage: "1 stress",
+          highDamage: "3 stress",
           rollFormula: "1d6"
         },         
         severeAttack: { description: "The Sin can use this ability on a ‘1’ on the risk roll. They can only use it once a mission. Target an exorcist. Any other exorcists nearby must decide to fly to their aid. Any that don’t offer aid cannot participate. Start with a pool of 5d6. Then remove one dice for each of the following. If an answer is ‘no’, you or someone aiding you can immediately make a single action roll to attempt rectify the answer, with only a few moments to act, suffering consequences as normal if they fail. • Are you accepting of your powers? • Are your allies close enough to touch you skin to skin? • Are you willing to part with your kit? If you answer yes to this, the Toad is distracted by stealing every item of gear from you you currently have ticked. They disappear until the Toad is defeated. Is the Toad hindered, distracted, or under duress in some way? Then roll the dice. The exorcist and any aiding them take 1 stress for every die rolled, no matter the result. • If at least one ‘1’ comes up, the Toad steals the ability to use psychic powers from the targeted exorcist. These coalesce into a psychic shadow, which runs off. It is a sin with an execution talisman of 3 and it uses reactions to attempt to flee. If it is destroyed, captured, or the scene ends, it fuses with its host again, ending this effect. • If two or more ‘1’s come up, the execution talisman of the shadow is 5 instead.", rollFormula: "5d6" },
@@ -956,7 +956,7 @@ export class CainActorSheet extends ActorSheet {
         attackRoll: {
           lowDamage: "1 stress",
           mediumDamage: "2 stress",
-          highDamage: "1 stress",
+          highDamage: "3 stress",
           rollFormula: "1d6"
         }, 
         severeAttack: {
@@ -997,7 +997,7 @@ export class CainActorSheet extends ActorSheet {
         attackRoll: {
           lowDamage: "1 stress",
           mediumDamage: "2 stress",
-          highDamage: "1 stress",
+          highDamage: "3 stress",
           rollFormula: "1d6"
         },         
         severeAttack: {
@@ -1038,7 +1038,7 @@ export class CainActorSheet extends ActorSheet {
         attackRoll: {
           lowDamage: "1 stress",
           mediumDamage: "2 stress",
-          highDamage: "1 stress",
+          highDamage: "3 stress",
           rollFormula: "1d6"
         },         
         severeAttack: {
@@ -1117,6 +1117,71 @@ export class CainActorSheet extends ActorSheet {
           "Alienation: Permanently add to your agenda: ignore a plea for aid.",
           "Hive Brain: Hallucination from aerosol poison. Performing complicated mental activity such as research or investigation is hard.",
           "Let it End: Permanently add to your agenda: Kill Needlessly."
+        ]
+      },
+      redacted: {
+        domains: {
+          ability1: {
+            title: "The Redacted",
+            value: "The Redacted",
+          },
+          ability2: {
+            title: "The Redacted",
+            value: "The Redacted",
+          },
+          ability3: {
+            title: "The Redacted",
+            value: "The Redacted",
+          },
+          ability4: {
+            title: "The Redacted",
+            value: "The Redacted",
+          },
+          ability5: {
+            title: "The Redacted",
+            value: "The Redacted",
+          },
+          ability6: {
+            title: "The Redacted",
+            value: "The Redacted",
+          },
+          ability7: {
+            title: "The Redacted",
+            value: "The Redacted",
+          },
+          ability8: {
+            title: "The Redacted",
+            value: "The Redacted",
+          }
+        },
+        selectedAbilities: {
+          selectedAbility1: "",
+          selectedAbility2: "",
+          selectedAbility3: "",
+        },
+        palace: "The Redacted",
+        appearance: "The Redacted",
+        traumas: "The Redacted",
+        pressure: "The Redacted",
+        complications: "The Redacted",
+        threats: "The Redacted",
+        attackRoll: {
+          lowDamage: "1 stress",
+          mediumDamage: "2 stress",
+          highDamage: "3 stress",
+          rollFormula: "1d6"
+        },
+        severeAttack: {
+          description: "The Redacted",
+          rollFormula: "5d6"
+        },
+        afflictions: [
+          "The Redacted",
+          "The Redacted",
+          "The Redacted",
+          "The Redacted",
+          "The Redacted",
+          "The Redacted"
         ]
       },
     };

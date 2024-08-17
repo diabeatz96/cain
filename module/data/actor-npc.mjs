@@ -62,9 +62,9 @@ export default class CainNPC extends CainActorBase {
     schema.threats = new fields.StringField({ required: true, nullable: false, initial: "" });
 
     schema.attackRoll = new fields.SchemaField({
-      lowDamage: new fields.StringField({ initial: "" }),
-      mediumDamage: new fields.StringField({ initial: "" }),
-      highDamage: new fields.StringField({ initial: "" }),
+      lowDamage: new fields.StringField({ initial: "1" }),
+      mediumDamage: new fields.StringField({ initial: "2" }),
+      highDamage: new fields.StringField({ initial: "3" }),
       rollFormula: new fields.StringField({ initial: "1d6" }),
     });
 

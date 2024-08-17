@@ -26,6 +26,7 @@ export class TalismanWindow extends Application {
       html.find('.talisman-slider').on('input', this._onSliderChange.bind(this));
       html.find('.talisman-image').on('click', this._onImageClick.bind(this));
       html.find('.talisman-image').on('contextmenu', this._onDecreaseMarks.bind(this));
+      html.find('.hide-talisman').on('click', this._onHideTalisman.bind(this));
     }
   }
 
@@ -35,7 +36,7 @@ export class TalismanWindow extends Application {
     const talismans = game.settings.get('cain', 'globalTalismans');
     talismans[index].name = value;
     await game.settings.set('cain', 'globalTalismans', talismans);
-    this.render();
+    this._emitUpdate();
   }
 
   async _onAddTalisman(event) {
@@ -49,7 +50,7 @@ export class TalismanWindow extends Application {
       maxMarkAmount: 6,
     });
     await game.settings.set('cain', 'globalTalismans', talismans);
-    this.render();
+    this._emitUpdate();
   }
 
   async _onDeleteTalisman(event) {
@@ -58,7 +59,7 @@ export class TalismanWindow extends Application {
     const talismans = game.settings.get('cain', 'globalTalismans');
     talismans.splice(index, 1);
     await game.settings.set('cain', 'globalTalismans', talismans);
-    this.render();
+    this._emitUpdate();
   }
 
   async _onSliderChange(event) {
@@ -69,7 +70,7 @@ export class TalismanWindow extends Application {
     const imagePath = talismans[index].imagePath;
     talismans[index].imagePath = imagePath.replace(/-(\d+)\.png$/, `-${value}.png`);
     await game.settings.set('cain', 'globalTalismans', talismans);
-    this.render();
+    this._emitUpdate();
   }
 
   async _onImageClick(event) {
@@ -83,7 +84,7 @@ export class TalismanWindow extends Application {
         talismans[index].imagePath = imagePath.replace(/-(\d+)\.png$/, `-${imageNumber + 1}.png`);
       }
       await game.settings.set('cain', 'globalTalismans', talismans);
-      this.render();
+      this._emitUpdate();
     }
   }
 
@@ -101,6 +102,33 @@ export class TalismanWindow extends Application {
     }
   
     await game.settings.set('cain', 'globalTalismans', talismans);
-    this.render();
+    this._emitUpdate();
+  }
+
+  async _onHideTalisman(event) {
+    event.preventDefault();
+    const index = event.currentTarget.dataset.index;
+    const talismans = game.settings.get('cain', 'globalTalismans');
+    talismans[index].isHidden = !talismans[index].isHidden;
+    await game.settings.set('cain', 'globalTalismans', talismans);
+    this._emitUpdate();
+  }
+
+  _emitUpdate() {
+    game.socket.emit('system.cain', { action: 'updateTalismans' });
+    this.render(true); // Update the UI for the emitting client
   }
 }
+
+// Register the socket listener to update the TalismanWindow for all clients
+Hooks.once('ready', () => {
+  game.socket.on('system.cain', (data) => {
+    if (data.action === 'updateTalismans') {
+      for (let app of Object.values(ui.windows)) {
+        if (app instanceof TalismanWindow) {
+          app.render(true); // Force re-render
+        }
+      }
+    }
+  });
+});

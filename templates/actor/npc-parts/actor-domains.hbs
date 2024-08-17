@@ -1,39 +1,52 @@
 <div class="tab domains" data-group="primary" data-tab="domains">
   <div class="form-group dark-form-group">
     <label for="system.selectedAbilities.selectedAbility1">Domain 1</label>
-    <select name="system.selectedAbilities.selectedAbility1" class="ability-select" data-ability="1">
-      {{#each system.domains}}
-        <option value="{{this.value}}" {{#if (eq ../system.selectedAbilities.selectedAbility1 this.value)}}selected{{/if}}>{{this.title}}</option>
-      {{/each}}
-    </select>
-    <p class="ability-value" data-ability="1">{{system.selectedAbilities.selectedAbility1}}</p>
+    {{#if (eq system.sinType "redacted")}}
+      <textarea name="system.selectedAbilities.selectedAbility1" class="ability-textarea" data-ability="1">{{system.selectedAbilities.selectedAbility1}}</textarea>
+    {{else}}
+      <select name="system.selectedAbilities.selectedAbility1" class="ability-select" data-ability="1">
+        {{#each system.domains}}
+          <option value="{{this.value}}" {{#if (eq ../system.selectedAbilities.selectedAbility1 this.value)}}selected{{/if}}>{{this.title}}</option>
+        {{/each}}
+      </select>
+      <p class="ability-value" data-ability="1">{{system.selectedAbilities.selectedAbility1}}</p>
+    {{/if}}
     <i class="fas fa-comment-alt ability-icon" data-ability="1" onclick="sendAbilityToChat(1)"></i>
   </div>
   <div class="form-group dark-form-group">
     <label for="system.selectedAbilities.selectedAbility2">Domain 2</label>
-    <select name="system.selectedAbilities.selectedAbility2" class="ability-select" data-ability="2">
-      {{#each system.domains}}
-        <option value="{{this.value}}" {{#if (eq ../system.selectedAbilities.selectedAbility2 this.value)}}selected{{/if}}>{{this.title}}</option>
-      {{/each}}
-    </select>
-    <p class="ability-value" data-ability="2">{{system.selectedAbilities.selectedAbility2}}</p>
+    {{#if (eq system.sinType "redacted")}}
+      <textarea name="system.selectedAbilities.selectedAbility2" class="ability-textarea" data-ability="2">{{system.selectedAbilities.selectedAbility2}}</textarea>
+    {{else}}
+      <select name="system.selectedAbilities.selectedAbility2" class="ability-select" data-ability="2">
+        {{#each system.domains}}
+          <option value="{{this.value}}" {{#if (eq ../system.selectedAbilities.selectedAbility2 this.value)}}selected{{/if}}>{{this.title}}</option>
+        {{/each}}
+      </select>
+      <p class="ability-value" data-ability="2">{{system.selectedAbilities.selectedAbility2}}</p>
+    {{/if}}
     <i class="fas fa-comment-alt ability-icon" data-ability="2" onclick="sendAbilityToChat(2)"></i>
   </div>
   <div class="form-group dark-form-group">
     <label for="system.selectedAbilities.selectedAbility3">Domain 3</label>
-    <select name="system.selectedAbilities.selectedAbility3" class="ability-select" data-ability="3">
-      {{#each system.domains}}
-        <option value="{{this.value}}" {{#if (eq ../system.selectedAbilities.selectedAbility3 this.value)}}selected{{/if}}>{{this.title}}</option>
-      {{/each}}
-    </select>
-    <p class="ability-value" data-ability="3">{{system.selectedAbilities.selectedAbility3}}</p>
+    {{#if (eq system.sinType "redacted")}}
+      <textarea name="system.selectedAbilities.selectedAbility3" class="ability-textarea" data-ability="3">{{system.selectedAbilities.selectedAbility3}}</textarea>
+    {{else}}
+      <select name="system.selectedAbilities.selectedAbility3" class="ability-select" data-ability="3">
+        {{#each system.domains}}
+          <option value="{{this.value}}" {{#if (eq ../system.selectedAbilities.selectedAbility3 this.value)}}selected{{/if}}>{{this.title}}</option>
+        {{/each}}
+      </select>
+      <p class="ability-value" data-ability="3">{{system.selectedAbilities.selectedAbility3}}</p>
+    {{/if}}
     <i class="fas fa-comment-alt ability-icon" data-ability="3" onclick="sendAbilityToChat(3)"></i>
   </div>
 </div>
 
 <script>
 function sendAbilityToChat(abilityNumber) {
-  const abilityValue = document.querySelector(`.ability-value[data-ability="${abilityNumber}"]`).textContent;
+  const abilityElement = document.querySelector(`[data-ability="${abilityNumber}"]`);
+  const abilityValue = abilityElement.tagName === 'TEXTAREA' ? abilityElement.value : abilityElement.textContent;
   const message = `Domain Description: ${abilityValue}`;
   ChatMessage.create({ content: message });
 }
@@ -65,13 +78,20 @@ function sendAbilityToChat(abilityNumber) {
   font-size: 1.1em;
 }
 
-.tab.domains .ability-select {
+.tab.domains .ability-select, .tab.domains .ability-textarea {
   width: 80%;
   border: 1px solid #444;
   border-radius: 4px;
   background-color: #333;
   color: #f5f5f5;
   font-size: 1em;
+}
+
+.tab.domains .ability-textarea {
+  height: 100px; /* Fixed vertical height */
+}
+
+.tab.domains .ability-select {
   appearance: none; /* Remove default arrow */
   -webkit-appearance: none; /* Remove default arrow for Safari */
   background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 5"><path fill="#f5f5f5" d="M2 0L0 2h4z"/></svg>');
@@ -105,5 +125,4 @@ form .tab.domains .form-group {
   display: block;
   margin-bottom: 20px;
 }
-
 </style>

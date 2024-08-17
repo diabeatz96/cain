@@ -85,6 +85,7 @@ Hooks.once('init', function () {
         currMarkAmount: 0,
         minMarkAmount: 0,
         maxMarkAmount: 6,
+        isHidden: false,
       },
     ],
   });

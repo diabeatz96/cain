@@ -1,16 +1,30 @@
 <div class="tab attacks" data-group="primary" data-tab="attacks">
   <div class="form-grid">
     <div class="form-group dark-form-group">
-      <p class="styled-paragraph"><strong>Complications:</strong> {{system.complications}}</p>
+      {{#if (eq system.sinType "redacted")}}
+        <label for="system.complications"><strong>Complications:</strong></label>
+        <textarea class="styled-textarea" name="system.complications">{{system.complications}}</textarea>
+      {{else}}
+        <p class="styled-paragraph"><strong>Complications:</strong> {{system.complications}}</p>
+      {{/if}}
     </div>
     <div class="form-group dark-form-group">
-      <p class="styled-paragraph"><strong>Threats:</strong> {{system.threats}}</p>
+      {{#if (eq system.sinType "redacted")}}
+        <label for="system.threats"><strong>Threats:</strong></label>
+        <textarea class="styled-textarea" name="system.threats">{{system.threats}}</textarea>
+      {{else}}
+        <p class="styled-paragraph"><strong>Threats:</strong> {{system.threats}}</p>
+      {{/if}}
     </div>
   </div>
   <div class="form-group dark-form-group collapsible">
     <button class="collapsible-button" onclick="toggleCollapse(this)">Attacks and Severe Attacks</button>
     <div class="collapsible-content">
-      <p class="styled-paragraph">{{system.severeAttack.description}}</p>
+      {{#if (eq system.sinType "redacted")}}
+        <textarea class="styled-textarea" name="system.severeAttack.description">{{system.severeAttack.description}}</textarea>
+      {{else}}
+        <p class="styled-paragraph">{{system.severeAttack.description}}</p>
+      {{/if}}
       <div class="button-group">
         <button class="attack-button">Attack</button>
         <button class="severe-attack-button">Severe Attack</button>
@@ -28,7 +42,11 @@
       <tbody>
         {{#each system.afflictions}}
           <tr>
-            <td>{{this}}</td>
+            {{#if (eq ../system.sinType "redacted")}}
+              <td><input type="text" class="styled-input" name="system.afflictions.{{@index}}" value="{{this}}" /></td>
+            {{else}}
+              <td>{{this}}</td>
+            {{/if}}
           </tr>
         {{/each}}
       </tbody>
@@ -84,6 +102,15 @@ function toggleCollapse(button) {
   font-size: 1em;
   letter-spacing: 0.05em;
   margin-bottom: 20px;
+}
+
+.tab.attacks .styled-input, .tab.attacks .styled-textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #444;
+  border-radius: 4px;
+  background-color: #333;
+  color: #f5f5f5;
 }
 
 .tab.attacks .button-group {
