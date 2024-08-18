@@ -12,6 +12,7 @@
    <img src="https://img.shields.io/github/last-commit/diabeatz96/cain?style=default&logo=git&logoColor=white&color=0080ff" alt="last-commit">
    <img src="https://img.shields.io/github/languages/top/diabeatz96/cain?style=default&color=0080ff" alt="repo-top-language">
    <img src="https://img.shields.io/github/languages/count/diabeatz96/cain?style=default&color=0080ff" alt="repo-language-count">
+   <img alt="Static Badge" src="https://img.shields.io/badge/foundry-v12-blue">
 <p>
 <p align="center">
    <!-- default option, no dependency badges. -->
@@ -43,10 +44,65 @@
 
 ##  Overview
 
-Cain is an open-source project designed to streamline CAIN RPG system management within FoundryVTT. Cain enhances user experiences through customizable actors, items, and effects. The projects core functionalities, encapsulated in the `cain` module, facilitate dynamic talisman management, item roll logic, and interactive character sheet customization. Cains value proposition lies in its ability to empower game masters with a comprehensive system that ensures efficient data organization and seamless gameplay customization.
+Cain is an open-source project designed to streamline CAIN RPG system management within FoundryVTT. Cain enhances user experiences through customizable actors, items, and effects. The projects core functionalities, encapsulated in the `cain` module, facilitate dynamic talisman management, item roll logic, and interactive character sheet customization. 
 
 ---
 
+# Read here if you plan on installing Cain
+
+## Downloading and Installing the Cain System for Foundry VTT
+
+The Cain system is setup through a manifest file that is downloaded and put onto your foundry.
+
+### Obtaining the Manifest URL
+
+Head over to the Cain system.json GitHub repository: [Cain System Module](https://github.com/diabeatz96/cain/blob/main/system.json)
+
+
+**Here's how to find the manifest URL:**
+
+On the top right corner of the code, there is a RAW button. 
+
+<img width="1664" alt="image" src="https://github.com/user-attachments/assets/c5242a98-1cff-4f41-9368-e3c32172ec59">
+
+Then, proceed to copy the link at the top. 
+
+<img width="478" alt="image" src="https://github.com/user-attachments/assets/1757dc5b-7194-4342-97c2-d91f2079688e">
+
+
+### Installing the Cain System in Foundry VTT
+
+* Launch your Foundry VTT instance.
+* Navigate to the "Game Systems" menu (gear icon in the top right corner).
+* Click install system
+* Copy paste the link into manifest url
+
+
+https://github.com/user-attachments/assets/035fbb43-5e0c-4ed6-970d-b3dd6f9d6909
+
+* **Creating a World**
+  1. Click the "Game Worlds" button and then click "Create World".
+  2. Fill in info.
+  3. Click Create World
+
+
+
+https://github.com/user-attachments/assets/88cb39a3-a235-4c6b-9f56-ebfbcff463fa
+
+
+* **Importing Compendium Information**
+
+* Go to Compendium tab (Book with world looking icon).
+* Right click on each pack and click import content, then click yes.
+* Items are in items tab, Rollable tables are in Rollable tables tab.
+
+
+
+https://github.com/user-attachments/assets/f8bb07fc-d305-42a3-97b3-d1dedd0cbfb2
+
+
+
+# Developers
 ##  Features
 
 |    |   Feature         | Description |
@@ -273,9 +329,6 @@ Cain is an open-source project designed to streamline CAIN RPG system management
 
 ##  Getting Started
 
-**System Requirements:**
-
-* **None**: `version x.y.z`
 
 ###  Installation
 
@@ -291,37 +344,6 @@ Cain is an open-source project designed to streamline CAIN RPG system management
 > ```console
 > $ cd cain
 > ```
->
-> 3. Install the dependencies:
-> ```console
-> $ > INSERT-INSTALL-COMMANDS
-> ```
-
-###  Usage
-
-<h4>From <code>source</code></h4>
-
-> Run cain using the command below:
-> ```console
-> $ > INSERT-RUN-COMMANDS
-> ```
-
-###  Tests
-
-> Run the test suite using the command below:
-> ```console
-> $ > INSERT-TEST-COMMANDS
-> ```
-
----
-
-##  Project Roadmap
-
-- [X] `► INSERT-TASK-1`
-- [ ] `► INSERT-TASK-2`
-- [ ] `► ...`
-
----
 
 ##  Contributing
 
