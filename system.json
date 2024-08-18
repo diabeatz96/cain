@@ -63,7 +63,7 @@
   },
   "socket": true,
   "manifest": "https://raw.githubusercontent.com/diabeatz96/cain/main/system.json",
-  "download": "https://github.com/diabeatz96/cain/releases/download/v1.0.3/cain.zip",
+  "download": "https://github.com/diabeatz96/cain/releases/latest/download/cain.zip",
   "background": "systems/cain/assets/cain.png",
   "gridDistance": 5,
   "gridUnits": "ft",
