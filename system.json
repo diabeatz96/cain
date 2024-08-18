@@ -34,7 +34,30 @@
       "path": "lang/en.json"
     }
   ],
-  "packs": [],
+  "packs": [{
+    "name": "items",
+    "label": "Kit and Items",
+    "system": "cain",
+    "type": "Item"
+  },
+  {
+    "name": "agenda",
+    "label": "Agendas",
+    "system": "cain",
+    "type": "Item"
+  },
+  {
+    "name": "blasphemy",
+    "label": "Blasphemies",
+    "system": "cain",
+    "type": "Item"
+  },
+  {
+    "name": "tables",
+    "label": "Roll Tables",
+    "system": "cain",
+    "type": "RollTable"
+  }],
   "packFolders": [],
   "relationships": {
   },
