@@ -1,3 +1,5 @@
-2024/08/18-08:09:29.326352 ffff8cf9f120 Recovering log #4
-2024/08/18-08:09:29.352579 ffff8cf9f120 Delete type=3 #2
-2024/08/18-08:09:29.352965 ffff8cf9f120 Delete type=0 #4
+2024/08/18-09:27:15.930496 ffff7dfbf120 Recovering log #16
+2024/08/18-09:27:15.931980 ffff7dfbf120 Level-0 table #18: started
+2024/08/18-09:27:15.981419 ffff7dfbf120 Level-0 table #18: 52016 bytes OK
+2024/08/18-09:27:16.110943 ffff7dfbf120 Delete type=3 #15
+2024/08/18-09:27:16.111490 ffff7dfbf120 Delete type=0 #16

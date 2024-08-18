@@ -1,5 +1,5 @@
-2024/08/18-08:04:44.690448 ffff8dfbf120 Delete type=3 #1
-2024/08/18-08:08:18.800442 fffd6ffff120 Level-0 table #5: started
-2024/08/18-08:08:18.818504 fffd6ffff120 Level-0 table #5: 14089 bytes OK
-2024/08/18-08:08:18.827884 fffd6ffff120 Delete type=0 #3
-2024/08/18-08:08:18.828900 fffd6ffff120 Manual compaction at level-0 from '!folders!DYa1yCl9CNfOahIN' @ 72057594037927935 : 1 .. '!items!zUOSvdFDFvXZqROE' @ 0 : 0; will stop at (end)
+2024/08/18-09:22:53.731206 ffff8ce8f120 Recovering log #14
+2024/08/18-09:22:53.731452 ffff8ce8f120 Level-0 table #16: started
+2024/08/18-09:22:53.741199 ffff8ce8f120 Level-0 table #16: 901 bytes OK
+2024/08/18-09:22:53.764580 ffff8ce8f120 Delete type=3 #12
+2024/08/18-09:22:53.764918 ffff8ce8f120 Delete type=0 #14
