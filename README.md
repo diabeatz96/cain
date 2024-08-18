@@ -1,11 +1,11 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/PKief/vscode-material-icon-theme/ec559a9f6bfd399b82bb44393651661b08aaf7ba/icons/folder-markdown-open.svg" width="100" alt="project-logo">
+  <img src="https://img.itch.zone/aW1nLzE3MTg0NDA0LnBuZw==/original/UyMCiP.png" width="400" alt="project-logo">
 </p>
 <p align="center">
     <h1 align="center">CAIN</h1>
 </p>
 <p align="center">
-    <em><code>► INSERT-TEXT-HERE</code></em>
+    <em>A foundry alternative playing system for CAIN, created by Tom Bloom. Code created by Adam Kostandy</em>
 </p>
 <p align="center">
 	<img src="https://img.shields.io/github/license/diabeatz96/cain?style=default&logo=opensourceinitiative&logoColor=white&color=0080ff" alt="license">
@@ -35,6 +35,11 @@
 - [ Acknowledgments](#-acknowledgments)
 </details>
 <hr>
+
+## CREDITS
+    - Myco from the Pilot.NET/CAIN Discord for providing icon assets
+    - Tom Bloom Creator of Cain
+    - My sunday DND group
 
 ##  Overview
 
