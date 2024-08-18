@@ -47,11 +47,8 @@
     }, 
     "Item": {
       "item": "Item",
-      "feature": "Feature",
-      "spell": "Spell",
       "agenda": "Agenda",
-      "blasphemy": "Blasphemy",
-      "sin": "Sins"
+      "blasphemy": "Blasphemy"
     }
   }
 }

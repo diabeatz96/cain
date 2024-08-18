@@ -3,6 +3,6 @@
     "types": ["character", "npc", "mundane"]
   },
   "Item": {
-    "types": ["item", "feature", "spell", "agenda", "blasphemy", "sin"]
+    "types": ["item", "agenda", "blasphemy"]
   }
 }

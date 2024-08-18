@@ -50,10 +50,8 @@ Hooks.once('init', function () {
   CONFIG.Item.documentClass = CainItem;
   CONFIG.Item.dataModels = {
     item: models.CainItem,
-    feature: models.CainFeature,
     agenda: models.CainAgenda,
     blasphemy: models.CainBlasphemy,
-    sin: models.CainSins,
   }
 
   // Active Effects are never copied to the Actor,
@@ -129,41 +127,156 @@ Handlebars.registerHelper('set', function(context, key, value, options) {
 /* -------------------------------------------- */
 
 Hooks.once('ready', function () {
-  // Wait to register hotbar drop hook on ready so that modules could register earlier if they want to
-  Hooks.on('hotbarDrop', (bar, data, slot) => createItemMacro(data, slot));
-});
+  // Function to create and insert the Talisman button
+  function addTalismanButton() {
+    // Create the button element with the talisman icon
+    const button = $('<button title="Global Talismans" class="talisman-button"><img src="systems/cain/assets/talisman-icon.png" alt="Talisman Icon"></button>');
+    
+    // Add click event to open the TalismanWindow
+    button.on('click', () => {
+      new TalismanWindow().render(true);
+    });
 
-/* -------------------------------------------- */
-/*  Hotbar Macros                               */
-/* -------------------------------------------- */
-Hooks.once('ready', function () {
-  // Create the button element with the talisman icon
-  const button = $('<button class="talisman-button"><img src="systems/cain/assets/talisman-icon.png" alt="Talisman Icon"></button>');
-  
-  // Add click event to open the TalismanWindow
-  button.on('click', () => {
-    new TalismanWindow().render(true);
-  });
+    // Create an aside element and append the button to it
+    const aside = $('<aside class="talisman-container"></aside>').append(button);
 
-  // Create an aside element and append the button to it
-  const aside = $('<aside class="talisman-container"></aside>').append(button);
-
-  // Create a nav element and append the aside element to it
-  const nav = $('<nav class="talisman-nav"></nav>').append(aside);
-
-  // Insert the nav element above the players element
-  const playersElement = $('#action-bar');
-  if (playersElement.length) {
-    playersElement.append(nav);
-    console.log('Button inserted successfully.');
-  } else {
-    console.error('Players element not found.');
+    // Insert the aside element into the action bar
+    const actionBar = $('#action-bar');
+    if (actionBar.length) {
+      actionBar.append(aside);
+      console.log('Talisman button inserted successfully.');
+    } else {
+      console.error('Action bar not found.');
+    }
   }
+
+  // Function to create and insert the Risk Roll button
+  function addRiskRollButton() {
+    if (!game.user.isGM) return;
+
+    const riskRollButton = $('<button title="Risky Dice" class="risk-roll-button"><img src="systems/cain/assets/rolls/risky.png" alt="Risk Roll Icon"></button>');
+    riskRollButton.on('click', handleRiskRoll);
+
+    const aside = $('<aside class="talisman-container"></aside>').append(riskRollButton);
+    const actionBar = $('#action-bar');
+    if (actionBar.length) {
+      actionBar.append(aside);
+      console.log('Risk Roll button inserted successfully.');
+    } else {
+      console.error('Action bar not found.');
+    }
+  }
+
+  // Function to create and insert the Fate Roll button
+  function addFateRollButton() {
+    if (!game.user.isGM) return;
+
+    const fateRollButton = $('<button title = "Fate Roll" class="fate-roll-button"><img src="systems/cain/assets/rolls/fate.png" alt="Fate Roll Icon"></button>');
+    fateRollButton.on('click', handleFateRoll);
+
+    const aside = $('<aside class="talisman-container"></aside>').append(fateRollButton);
+    const actionBar = $('#action-bar');
+    if (actionBar.length) {
+      actionBar.append(aside);
+      console.log('Fate Roll button inserted successfully.');
+    } else {
+      console.error('Action bar not found.');
+    }
+  }
+
+  // Add the Talisman button when the action bar is first ready
+  addTalismanButton();
+
+  // Add the Risk Roll and Fate Roll buttons when the action bar is first ready
+  addRiskRollButton();
+  addFateRollButton();
+
+  // Ensure the buttons are added every time the action bar is rendered
+  Hooks.on('renderHotbar', () => {
+    addTalismanButton();
+    addRiskRollButton();
+    addFateRollButton();
+  });
 
   // Register hotbar drop hook
   Hooks.on('hotbarDrop', (bar, data, slot) => createItemMacro(data, slot));
 });
 
+// Function to handle Risk Roll
+async function handleRiskRoll() {
+  const roll = await new Roll('1d6').roll();
+  let resultText;
+  let resultColor;
+  switch (roll.total) {
+    case 1:
+      resultText = "Much Worse";
+      resultColor = "red";
+      break;
+    case 2:
+    case 3:
+      resultText = "Worse";
+      resultColor = "orange";
+      break;
+    case 4:
+    case 5:
+      resultText = "Expected";
+      resultColor = "yellow";
+      break;
+    case 6:
+      resultText = "Better";
+      resultColor = "green";
+      break;
+  }
+  const htmlContent = `
+    <div class="risk-roll-result" style="background: #333; border: 1px solid #555; padding: 10px; border-radius: 5px; margin-top: 10px; color: #ddd;">
+      <h2 style="margin: 0 0 5px 0; font-size: 1.2em; color: #fff;">Risk Roll</h2>
+      <p style="margin: 5px 0; font-size: 1em;"><strong>Result:</strong> <span style="color: ${resultColor};">${roll.total}</span></p>
+      <p style="margin: 5px 0; font-size: 1em;"><strong>Outcome:</strong> <span style="color: ${resultColor};">${resultText}</span></p>
+    </div>
+  `;
+  roll.toMessage({
+    speaker: ChatMessage.getSpeaker(),
+    flavor: htmlContent
+  });
+}
+
+// Function to handle Fate Roll
+async function handleFateRoll() {
+  const roll = await new Roll('1d6').roll();
+  let resultText;
+  let resultColor;
+  switch (roll.total) {
+    case 1:
+      resultText = "Poorest result";
+      resultColor = "red";
+      break;
+    case 2:
+    case 3:
+      resultText = "Poor result";
+      resultColor = "orange";
+      break;
+    case 4:
+    case 5:
+      resultText = "Good result";
+      resultColor = "yellow";
+      break;
+    case 6:
+      resultText = "Best result";
+      resultColor = "green";
+      break;
+  }
+  const htmlContent = `
+    <div class="fate-roll-result" style="background: #333; border: 1px solid #555; padding: 10px; border-radius: 5px; margin-top: 10px; color: #ddd;">
+      <h2 style="margin: 0 0 5px 0; font-size: 1.2em; color: #fff;">Fate Roll</h2>
+      <p style="margin: 5px 0; font-size: 1em;"><strong>Result:</strong> <span style="color: ${resultColor};">${roll.total}</span></p>
+      <p style="margin: 5px 0; font-size: 1em;"><strong>Outcome:</strong> <span style="color: ${resultColor};">${resultText}</span></p>
+    </div>
+  `;
+  roll.toMessage({
+    speaker: ChatMessage.getSpeaker(),
+    flavor: htmlContent
+  });
+}
 
 /**
  * Create a Macro from an Item drop.
