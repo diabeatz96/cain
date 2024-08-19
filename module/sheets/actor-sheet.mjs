@@ -211,9 +211,8 @@ export class CainActorSheet extends ActorSheet {
     html.find('.attack-button').click(this._onNpcAttack.bind(this));
     html.find('.severe-attack-button').click(this._onNpcSevereAttack.bind(this));
     html.find('.roll-affliction').click(this._onRollAffliction.bind(this));
-
-    // NPC sheet specific listeners
-    
+    html.find('.roll-button').click(this._onRollButtonClick.bind(this));
+    html.find('.collapsible-button').click(this._toggleCollapseButton.bind(this));    
     html.find('#sinTypeSelect').change(event => {
       const sinType = event.target.value;
       this._onSinTypeSelect(sinType);
@@ -264,6 +263,13 @@ _updateAgendaItem(event) {
   const agendaItems = this.actor.system.currentAgendaItems || [];
   agendaItems[index] = event.target.value;
   this.actor.update({ 'system.currentAgendaItems': agendaItems });
+}
+
+
+_toggleCollapseButton(event) {
+  const button = event.currentTarget;
+  const content = button.nextElementSibling;
+  content.classList.toggle('collapsed');
 }
 
 _updateAgendaAbility(event) {

@@ -18,7 +18,7 @@
     </div>
   </div>
   <div class="form-group dark-form-group collapsible">
-    <button class="collapsible-button" onclick="toggleCollapse(this)">Attacks and Severe Attacks</button>
+    <button class="collapsible-button">Attacks and Severe Attacks</button>
     <div class="collapsible-content">
       {{#if (eq system.sinType "redacted")}}
         <textarea class="styled-textarea" name="system.severeAttack.description">{{system.severeAttack.description}}</textarea>
@@ -55,19 +55,9 @@
   </div>
 </div>
 
-<script>
-function toggleCollapse(button) {
-  const content = button.nextElementSibling;
-  if (content.style.display === "block") {
-    content.style.display = "none";
-  } else {
-    content.style.display = "block";
-  }
-}
-</script>
 
 <style>
-.tab.attacks {
+  .tab.attacks {
   background-color: #1a1a1a;
   color: #f5f5f5;
   padding: 20px;
@@ -176,6 +166,17 @@ function toggleCollapse(button) {
   padding: 10px;
 }
 
+.tab.attacks .collapsible-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+  border-top: 1px solid #444;
+}
+
+.tab.attacks .collapsible-content.collapsed {
+  max-height: 1000px; /* Adjust this value as needed */
+}
+
 .tab.attacks .collapsible-button {
   background-color: #444;
   color: #f5f5f5;
@@ -189,12 +190,6 @@ function toggleCollapse(button) {
 
 .tab.attacks .collapsible-button:hover {
   background-color: #ff5555; /* Red hover color */
-}
-
-.tab.attacks .collapsible-content {
-  display: none;
-  padding: 10px;
-  border-top: 1px solid #444;
 }
 
 form .tab.attacks .form-group {
