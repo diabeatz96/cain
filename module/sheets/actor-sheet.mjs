@@ -323,7 +323,6 @@ _updateAgendaAbility(event) {
   }
   
   async _performRoll(skill, useDivineAgony, teamwork, setup, hard, extraDice) {
-    const TWIST = new foundry.dice.MersenneTwister(Date.now());
     const baseDice = this.actor.system.skills[skill].value;
     let totalDice = baseDice + extraDice + (teamwork ? 1 : 0) + (setup ? 1 : 0);
   
@@ -455,7 +454,6 @@ _updateAgendaAbility(event) {
   }
   
   async _performPsycheRoll(additionalDice, hardRoll) {
-    const TWIST = new foundry.dice.MersenneTwister(Date.now());
     const psyche = this.actor.system.psyche || 1;
     const totalDice = Math.max(psyche + additionalDice, 0); // Ensure totalDice is not below 0
     console.log(`Total dice: ${totalDice}`);
@@ -627,10 +625,8 @@ _updateAgendaAbility(event) {
     event.preventDefault();
     
     // Manually roll 1d6 for the mark
-    const TWIST = new foundry.dice.MersenneTwister(Date.now());
-    const roll = new Roll('1d6');
-    roll.evaluateSync({strict: false});
-    let markRoll = Array(roll.dice[0].number).fill(roll.dice[0].faces).reduce((acc, f) => acc + Math.ceil(TWIST.random() * f), roll.total);
+    const roll = await new Roll('1d6').roll({async: true});
+    let markRoll = roll.total;
     let markIndex = markRoll - 1;
     
     console.log(markRoll);
@@ -648,24 +644,19 @@ _updateAgendaAbility(event) {
     const existingMark = sinMarks.find(mark => mark.startsWith(sinMark.name));
     if (existingMark) {
       // Manually roll 1d6 for the ability
-      let abilityRoll;
       let newAbility;
       do {
-        let abilityRoll = new Roll('1d6');
-        abilityRoll.evaluateSync({strict: false});
-        abilityRoll = Array(abilityRoll.dice[0].number).fill(abilityRoll.dice[0].faces).reduce((acc, f) => acc + Math.ceil(TWIST.random() * f), abilityRoll.total);
-        newAbility = sinMark.abilities[abilityRoll - 1];
+        const abilityRoll = await new Roll('1d6').roll({async: true});
+        newAbility = sinMark.abilities[abilityRoll.total - 1];
       } while (existingMark.includes(newAbility));
   
       // Add the new ability to the existing mark
       sinMarks[sinMarks.indexOf(existingMark)] += `, ${newAbility}`;
     } else {
       // Manually roll 1d6 for the ability
-      let abilityRoll = new Roll('1d6');
-      abilityRoll.evaluateSync({strict: false});
-      abilityRoll = Array(abilityRoll.dice[0].number).fill(abilityRoll.dice[0].faces).reduce((acc, f) => acc + Math.ceil(TWIST.random() * f), abilityRoll.total);
+      const abilityRoll = await new Roll('1d6').roll({async: true});
+      const newAbility = sinMark.abilities[abilityRoll.total - 1];
       console.log(sinMark);
-      const newAbility = sinMark.abilities[abilityRoll - 1];
   
       // Format the sinMark as "Name - Ability"
       const formattedSinMark = `${sinMark.name} - ${newAbility}`;
@@ -675,9 +666,8 @@ _updateAgendaAbility(event) {
     }
   
     // Update the actor with the new sinMarks array
-    this.actor.update({ 'system.currentSinMarks': sinMarks }).then(() => {
-      this.render(false); // Re-render the sheet to reflect changes
-    });
+    await this.actor.update({ 'system.currentSinMarks': sinMarks });
+    this.render(false); // Re-render the sheet to reflect changes
   }
 
   async _deleteSinMark(event) {
