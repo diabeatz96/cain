@@ -34,33 +34,38 @@
       "path": "lang/en.json"
     }
   ],
-  "packs": [{
-    "name": "items",
-    "label": "Kit and Items",
-    "system": "cain",
-    "type": "Item"
-  },
-  {
-    "name": "agenda",
-    "label": "Agendas",
-    "system": "cain",
-    "type": "Item"
-  },
-  {
-    "name": "blasphemy",
-    "label": "Blasphemies",
-    "system": "cain",
-    "type": "Item"
-  },
-  {
-    "name": "tables",
-    "label": "Roll Tables",
-    "system": "cain",
-    "type": "RollTable"
-  }],
+  "packs": [
+    {
+      "name": "items",
+      "label": "Kit and Items",
+      "system": "cain",
+      "type": "Item",
+      "path": "packs/items.db"
+    },
+    {
+      "name": "agenda",
+      "label": "Agendas",
+      "system": "cain",
+      "type": "Item",
+      "path": "packs/agenda.db"
+    },
+    {
+      "name": "blasphemy",
+      "label": "Blasphemies",
+      "system": "cain",
+      "type": "Item",
+      "path": "packs/blasphemy.db"
+    },
+    {
+      "name": "tables",
+      "label": "Roll Tables",
+      "system": "cain",
+      "type": "RollTable",
+      "path": "packs/tables.db"
+    }
+  ],
   "packFolders": [],
-  "relationships": {
-  },
+  "relationships": {},
   "socket": true,
   "manifest": "https://raw.githubusercontent.com/diabeatz96/cain/main/system.json",
   "download": "https://github.com/diabeatz96/cain/releases/latest/download/cain.zip",
