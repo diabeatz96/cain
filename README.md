@@ -23,6 +23,7 @@
   <summary>Table of Contents</summary><br>
 
 - [ Overview](#-overview)
+- [ Investigations](#- investigations)
 - [ Features](#-features)
 - [ Repository Structure](#-repository-structure)
 - [ Modules](#-modules)
@@ -100,6 +101,9 @@ https://github.com/user-attachments/assets/88cb39a3-a235-4c6b-9f56-ebfbcff463fa
 
 https://github.com/user-attachments/assets/f8bb07fc-d305-42a3-97b3-d1dedd0cbfb2
 
+## Investigations
+
+ - [Operation Weeping Mountain](https://github.com/diabeatz96/operation-weeping-mountain)
 
 
 # Developers
