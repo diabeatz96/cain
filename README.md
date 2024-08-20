@@ -23,7 +23,7 @@
   <summary>Table of Contents</summary><br>
 
 - [ Overview](#-overview)
-- [ Investigations](#- investigations)
+- [ Investigations](#-investigations)
 - [ Features](#-features)
 - [ Repository Structure](#-repository-structure)
 - [ Modules](#-modules)
