@@ -20,7 +20,7 @@
       "thumbnail": "systems/cain/assets/cain.png"
     }
   ],
-  "version": "1.0.8",
+  "version": "1.0.10",
   "compatibility": {
     "minimum": 10,
     "verified": "12"
