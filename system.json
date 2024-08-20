@@ -40,28 +40,28 @@
       "label": "Kit and Items",
       "system": "cain",
       "type": "Item",
-      "path": "packs/items.db"
+      "path": "packs/items"
     },
     {
       "name": "agenda",
       "label": "Agendas",
       "system": "cain",
       "type": "Item",
-      "path": "packs/agenda.db"
+      "path": "packs/agenda"
     },
     {
       "name": "blasphemy",
       "label": "Blasphemies",
       "system": "cain",
       "type": "Item",
-      "path": "packs/blasphemy.db"
+      "path": "packs/blasphemy"
     },
     {
       "name": "tables",
       "label": "Roll Tables",
       "system": "cain",
       "type": "RollTable",
-      "path": "packs/tables.db"
+      "path": "packs/tables"
     }
   ],
   "packFolders": [],
