@@ -54,6 +54,8 @@ Hooks.once('init', function () {
     blasphemy: models.CainBlasphemy,
   }
 
+  console.log('CAIN | Initializing Cain system');
+  console.log(CONFIG)
   // Active Effects are never copied to the Actor,
   // but will still apply to the Actor from within the Item
   // if the transfer property on the Active Effect is true.

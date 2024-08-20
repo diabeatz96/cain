@@ -301,9 +301,6 @@ _updateAgendaAbility(event) {
       }
     });
 
-    console.log(isChecked);
-    console.log(newValue);
-
     this.actor.update({ 'system.psycheBurst.value': newValue }).then(() => {
       this.render(false); // Re-render the sheet to reflect changes
     });
@@ -337,9 +334,7 @@ _updateAgendaAbility(event) {
       totalDice += divineAgonyStat;
       this.actor.update({ 'system.divineAgony.value': 0 }); // Set divine agony to zero
     }
-  
-    console.log(`Total dice: ${totalDice}`);
-  
+    
     let roll;
     if (totalDice > 0) {
       roll = new Roll(`${totalDice}d6`);
@@ -347,9 +342,7 @@ _updateAgendaAbility(event) {
       roll = new Roll(`2d6`);
     }
     await roll.evaluate({ async: true });
-  
-    console.log(roll.dice[0].results);
-  
+    
     let rollResult;
     if (totalDice > 0) {
       rollResult = roll.dice[0].results.reduce((acc, r) => acc + r.result, 0);
@@ -835,7 +828,6 @@ _updateAgendaAbility(event) {
           label: "Roll",
           callback: () => {
             const modifier = parseInt(document.getElementById('dice-modifier').value) || 0;
-            console.log(modifier);
             this._performSevereAttackRoll(rollFormula, modifier);
           }
         },
