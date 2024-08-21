@@ -27,6 +27,7 @@ export class TalismanWindow extends Application {
       html.find('.talisman-image').on('click', this._onImageClick.bind(this));
       html.find('.talisman-image').on('contextmenu', this._onDecreaseMarks.bind(this));
       html.find('.hide-talisman').on('click', this._onHideTalisman.bind(this));
+      html.find('.talisman-max-mark').on('change', this._onMaxMarkChange.bind(this)); // Add listener for max mark amount
     }
   }
 
@@ -47,7 +48,7 @@ export class TalismanWindow extends Application {
       imagePath: 'systems/cain/assets/Talismans/Talisman-A-0.png',
       currMarkAmount: 0,
       minMarkAmount: 0,
-      maxMarkAmount: 6,
+      maxMarkAmount: 13,
     });
     await game.settings.set('cain', 'globalTalismans', talismans);
     this._emitUpdate();
@@ -110,6 +111,26 @@ export class TalismanWindow extends Application {
     const index = event.currentTarget.dataset.index;
     const talismans = game.settings.get('cain', 'globalTalismans');
     talismans[index].isHidden = !talismans[index].isHidden;
+    await game.settings.set('cain', 'globalTalismans', talismans);
+    this._emitUpdate();
+  }
+
+  async _onMaxMarkChange(event) {
+    const index = event.currentTarget.dataset.index;
+    const value = parseInt(event.currentTarget.value, 10);
+    const talismans = game.settings.get('cain', 'globalTalismans');
+    
+    // Ensure value is between 0 and 13
+    const newMaxMarkAmount = Math.max(0, Math.min(13, value));
+    talismans[index].maxMarkAmount = newMaxMarkAmount;
+    
+    // Adjust currMarkAmount if it exceeds the new maxMarkAmount
+    if (talismans[index].currMarkAmount > newMaxMarkAmount) {
+      talismans[index].currMarkAmount = newMaxMarkAmount;
+      const imagePath = talismans[index].imagePath;
+      talismans[index].imagePath = imagePath.replace(/-(\d+)\.png$/, `-${newMaxMarkAmount}.png`);
+    }
+    
     await game.settings.set('cain', 'globalTalismans', talismans);
     this._emitUpdate();
   }

@@ -888,6 +888,17 @@
   align-items: center;
 }
 
+#talisman-management .current-marks {
+  font-size: 1em;
+  color: #ff4500; /* Bright orange-red color */
+}
+
+#talisman-management .talisman-image {
+  width: 200px;
+  height: 220px;
+  margin-bottom: 10px;
+}
+
 .talisman-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -933,6 +944,17 @@
 .talisman button:hover {
   opacity: 0.8;
 }
+
+#talisman-management .talisman-name {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 5px;
+  border: none;
+  border-radius: 5px;
+  background: #3a3a3a;
+  color: #fff;
+}
+
 
 /* sin-marks.css */
 
