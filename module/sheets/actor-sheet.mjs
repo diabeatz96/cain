@@ -200,6 +200,7 @@ export class CainActorSheet extends ActorSheet {
     html.find('.change-image').click(this._onChangeImage.bind(this));
     html.find('.talisman-image').click(this._onImageClick.bind(this));
     html.find('.talisman-image').on('contextmenu', this._onDecreaseMarks.bind(this));
+    html.find('.talisman-max-mark').change(this._onMaxMarkAmountChange.bind(this));
     html.find('.roll-rest-dice').click(this._RollRestDice.bind(this));
     html.find('#add-agenda-item-button').on('click', this._addAgendaItemButton.bind(this));
     html.find('#add-agenda-ability-button').on('click', this._addAgendaAbilityButton.bind(this));
@@ -562,7 +563,7 @@ _updateAgendaAbility(event) {
       imagePath: 'systems/cain/assets/Talismans/Talisman-A-0.png',
       currMarkAmount: 0,
       minMarkAmount: 0,
-      maxMarkAmount: 6,
+      maxMarkAmount: 13,
     });
     this.actor.update({ 'system.talismans': talismans }).then(() => {
       this.render(false); // Re-render the sheet to reflect changes
@@ -619,6 +620,29 @@ _updateAgendaAbility(event) {
       });
     }
   }
+
+  _onMaxMarkAmountChange(event) {
+    const index = event.currentTarget.dataset.index;
+    const value = parseInt(event.currentTarget.value, 10);
+    const talismans = this.actor.system.talismans || [];
+  
+    // Ensure the max mark amount is between 0 and 13
+    const newMaxMarkAmount = Math.max(0, Math.min(13, value));
+    talismans[index].maxMarkAmount = newMaxMarkAmount;
+  
+    // Adjust currMarkAmount if it exceeds the new maxMarkAmount
+    if (talismans[index].currMarkAmount > newMaxMarkAmount) {
+      talismans[index].currMarkAmount = newMaxMarkAmount;
+      const imagePath = talismans[index].imagePath;
+      talismans[index].imagePath = imagePath.replace(/-(\d+)\.png$/, `-${newMaxMarkAmount}.png`);
+    }
+  
+    this.actor.update({ 'system.talismans': talismans }).then(() => {
+      this.render(false); // Re-render the sheet to reflect changes
+    });
+  }
+
+
 
   async _rollSinMark(event) {
     event.preventDefault();

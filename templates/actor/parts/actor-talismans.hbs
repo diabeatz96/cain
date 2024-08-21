@@ -6,7 +6,9 @@
       <img src="{{this.imagePath}}" alt="{{this.name}}" class="talisman-image" data-index="{{@index}}">
       <div class="talisman-controls">
         <button class="delete-talisman" data-index="{{@index}}">Delete</button>
+        <input type="number" min="0" max="13" value="{{this.maxMarkAmount}}" class="talisman-max-mark" data-index="{{@index}}">
         <input type="range" min="0" max="{{this.maxMarkAmount}}" value="{{this.currMarkAmount}}" class="talisman-slider" data-index="{{@index}}">
+        <span class="current-marks">Current Marks: {{this.currMarkAmount}}</span>
       </div>
     </div>
     {{/each}}
