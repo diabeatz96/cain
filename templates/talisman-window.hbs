@@ -13,8 +13,10 @@
             <button class="hide-talisman" data-index="{{@index}}">
               <i class="fas fa-eye-slash"></i> Hide
             </button>
-            <input type="range" min="0" max="{{this.maxMarkAmount}}" value="{{this.currMarkAmount}}" class="talisman-slider" data-index="{{@index}}">
+            <input type="number" min="0" max="13" value="{{this.maxMarkAmount}}" class="talisman-max-mark" data-index="{{@index}}">
           {{/if}}
+          <input type="range" min="0" max="{{this.maxMarkAmount}}" value="{{this.currMarkAmount}}" class="talisman-slider" data-index="{{@index}}">
+          <div class="talisman-marks">{{this.currMarkAmount}} / {{this.maxMarkAmount}}</div>
         </div>
       </div>
       {{/unless}}
@@ -28,7 +30,9 @@
           <button class="hide-talisman" data-index="{{@index}}">
             <i class="fas fa-eye"></i> Show
           </button>
+          <input type="number" min="0" max="13" value="{{this.maxMarkAmount}}" class="talisman-max-mark" data-index="{{@index}}">
           <input type="range" min="0" max="{{this.maxMarkAmount}}" value="{{this.currMarkAmount}}" class="talisman-slider" data-index="{{@index}}">
+          <div class="talisman-marks">{{this.currMarkAmount}} / {{this.maxMarkAmount}}</div>
         </div>
       </div>
       {{/if}}
@@ -40,8 +44,8 @@
     {{/if}}
   </div>
 </div>
-
 <style>
+  
 .talisman-window {
   background: #1a1a1a; /* Dark background */
   padding: 20px;
@@ -97,7 +101,7 @@
 
 .talisman-image {
   width: 200px; /* Fixed width */
-  height: 200px; /* Fixed height */
+  height: 220px;
   object-fit: cover; /* Ensure the image covers the area without distortion */
   border: none;
   border-radius: 10px;
@@ -124,7 +128,8 @@
   background: #ff6347; /* Slightly lighter on hover */
 }
 
-.talisman-slider {
+.talisman-slider, .talisman-max-mark {
   width: 100%;
+  margin-bottom: 10px;
 }
 </style>
