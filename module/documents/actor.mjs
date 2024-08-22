@@ -54,7 +54,6 @@ export class CainActor extends Actor {
   toPlainObject() {
     const result = {...this};
 
-    console.log(this)
     // Simplify system data.
     result.system = this.system.toPlainObject();
 
