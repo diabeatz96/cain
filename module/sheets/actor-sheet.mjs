@@ -268,8 +268,12 @@ _updateAgendaItem(event) {
 
 
 _toggleCollapseButton(event) {
+  event.preventDefault(); // Prevent default button behavior
   const button = event.currentTarget;
   const content = button.nextElementSibling;
+  console.log(this);
+  console.log('Button clicked:', button);
+  console.log('Content to toggle:', content);
   content.classList.toggle('collapsed');
 }
 
