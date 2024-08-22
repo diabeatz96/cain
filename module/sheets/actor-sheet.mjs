@@ -155,7 +155,7 @@ export class CainActorSheet extends ActorSheet {
     });
   
     html.on('click', '.rollable', this._onRoll.bind(this));
-    html.on('click', '.roll-button button', this._onRollButtonClick.bind(this));
+    // html.on('click', '.roll-button button', this._onRollButtonClick.bind(this));
 
     if (this.actor.isOwner) {
       let handler = (ev) => this._onDragStart(ev);
