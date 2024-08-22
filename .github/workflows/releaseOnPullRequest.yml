@@ -1,0 +1,58 @@
+name: Create Release
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [closed]
+    branches:
+      - main
+
+jobs:
+  create_release:
+    if: github.event.pull_request.merged == true || github.event_name == 'push'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4.1.7
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4.0.3
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Get current version
+        id: get_version
+        run: echo "::set-output name=version::$(jq -r .version system.json)"
+
+      - name: Increment version
+        id: increment_version
+        run: |
+          current_version=${{ steps.get_version.outputs.version }}
+          IFS='.' read -r -a version_parts <<< "$current_version"
+          version_parts[2]=$((version_parts[2] + 1))
+          new_version="${version_parts[0]}.${version_parts[1]}.${version_parts[2]}"
+          echo "::set-output name=new_version::$new_version"
+
+
+      - name: Create zip file
+        run: zip -r cain.zip .
+
+      - name: Create Release
+        uses: ncipollo/release-action@v1.14.0
+        with:
+          tag: v${{ steps.increment_version.outputs.new_version }}
+          name: Release ${{ steps.increment_version.outputs.new_version }}
+          body: |
+            ## Changes in this release
+            - Automatically generated release notes.
+          generateReleaseNotes: true
+          artifacts: cain.zip
+          token: ${{ secrets.GITHUB_TOKEN }}
+          allowUpdates: true
+          replacesArtifacts: true
