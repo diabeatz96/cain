@@ -316,16 +316,16 @@ _updateAgendaAbility(event) {
 
   _onRollButtonClick(event) {
     const skill = document.querySelector('select[name="system.skill"]').value;
-
+  
     // Get the checkbox values
     const useDivineAgony = document.querySelector('input[name="use-divine-agony"]').checked;
     const teamwork = document.querySelector('input[name="teamwork"]').checked;
     const setup = document.querySelector('input[name="setup"]').checked;
     const hard = document.querySelector('input[name="hard"]').checked;
-
+  
     // Get the extra dice value
     const extraDice = parseInt(document.querySelector('input[name="extra-dice"]').value) || 0;
-
+  
     // Perform the roll
     this._performRoll(skill, useDivineAgony, teamwork, setup, hard, extraDice); 
   }
@@ -342,30 +342,19 @@ _updateAgendaAbility(event) {
     
     let roll;
     if (totalDice > 0) {
-      roll = new Roll(`${totalDice}d6`);
+      // Custom roll formula to count successes
+      roll = new Roll(`${totalDice}d6cs>=${hard ? 6 : 4}`);
     } else {
-      roll = new Roll(`2d6`);
+      roll = new Roll(`2d6cs>=${hard ? 6 : 4}kl`);
     }
     await roll.evaluate({ async: true });
-    
-    let rollResult;
-    if (totalDice > 0) {
-      rollResult = roll.dice[0].results.reduce((acc, r) => acc + r.result, 0);
-    } else {
-      rollResult = Math.min(...roll.dice[0].results.map(r => r.result));
-    }
   
-    let successes;
-    if (totalDice > 0) {
-      successes = roll.dice[0].results.filter(r => hard ? r.result === 6 : r.result >= 4).length;
-    } else {
-      successes = rollResult >= 4 ? 1 : 0;
-    }
-
+    // Calculate successes
+    let successes = roll.total;
+  
     if(successes === 0 && this.actor.system.divineAgony.value < 3) {
       this.actor.update({'system.divineAgony.value' : this.actor.system.divineAgony.value + 1});
     }
-
   
     let message = `<h2>${skill.charAt(0).toUpperCase() + skill.slice(1)} Roll</h2>`;
     message += `<p>Successes: <span style="color:${successes > 0 ? 'green' : 'red'}">${successes}</span></p>`;
@@ -377,8 +366,9 @@ _updateAgendaAbility(event) {
   
     console.log(`Successes: ${successes}`);
   
-    ChatMessage.create({
-      content: message,
+    // Create the chat message using roll.toMessage() to ensure the roll noise is played
+    roll.toMessage({
+      flavor: message,
       speaker: ChatMessage.getSpeaker({ actor: this.actor }),
     });
   }
@@ -464,15 +454,15 @@ _updateAgendaAbility(event) {
   
     let roll;
     if (totalDice > 0) {
-      roll = new Roll(`${totalDice}d6`);
+      roll = new Roll(`${totalDice}d6cs>=${hardRoll ? 6 : 4}`);
     } else {
-      roll = new Roll(`2d6`);
+      roll = new Roll(`2d6cs>=${hardRoll ? 6 : 4}`);
     }
     await roll.evaluate({ async: true });
   
     console.log(roll.dice[0].results);
   
-    let successes = roll.dice[0].results.filter(r => hardRoll ? r.result === 6 : r.result >= 4).length;
+    let successes = roll.total;
   
     let message = `<h2>Psyche Roll</h2>`;
     message += `<p>Successes: <span style="color:${successes > 0 ? 'green' : 'red'}">${successes}</span></p>`;
@@ -484,8 +474,9 @@ _updateAgendaAbility(event) {
   
     console.log(`Successes: ${successes}`);
   
-    ChatMessage.create({
-      content: message,
+    // Create the chat message using roll.toMessage() to ensure the roll noise is played
+    roll.toMessage({
+      flavor: message,
       speaker: ChatMessage.getSpeaker({ actor: this.actor }),
     });
   }
