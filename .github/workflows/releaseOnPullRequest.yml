@@ -25,15 +25,13 @@ jobs:
         id: get_version
         run: echo "::set-output name=version::$(jq -r .version system.json)"
 
-      - name: Increment version
-        id: increment_version
+      - name: Get pull request details
+        if: github.event_name == 'pull_request'
+        id: pr_details
         run: |
-          current_version=${{ steps.get_version.outputs.version }}
-          IFS='.' read -r -a version_parts <<< "$current_version"
-          version_parts[2]=$((version_parts[2] + 1))
-          new_version="${version_parts[0]}.${version_parts[1]}.${version_parts[2]}"
-          echo "::set-output name=new_version::$new_version"
-
+          echo "::set-output name=pr_title::${{ github.event.pull_request.title }}"
+          echo "::set-output name=pr_body::${{ github.event.pull_request.body }}"
+          echo "::set-output name=pr_number::${{ github.event.pull_request.number }}"
 
       - name: Create zip file
         run: zip -r cain.zip .
@@ -41,12 +39,14 @@ jobs:
       - name: Create Release
         uses: ncipollo/release-action@v1.14.0
         with:
-          tag: v${{ steps.increment_version.outputs.new_version }}
-          name: Release ${{ steps.increment_version.outputs.new_version }}
+          tag: v${{ steps.get_version.outputs.version }}
+          name: Release ${{ steps.get_version.outputs.version }}
           body: |
             ## Changes in this release
-            - Automatically generated release notes.
+            - Pull Request #${{ steps.pr_details.outputs.pr_number }}: ${{ steps.pr_details.outputs.pr_title }}
+            - ${{ steps.pr_details.outputs.pr_body }}
           generateReleaseNotes: true
+          makeLatest: true
           artifacts: cain.zip
           token: ${{ secrets.GITHUB_TOKEN }}
           allowUpdates: true
