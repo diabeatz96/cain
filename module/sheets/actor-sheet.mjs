@@ -208,6 +208,8 @@ export class CainActorSheet extends ActorSheet {
     html.find('#editable-agenda-abilities').on('click', '.remove-ability-button', this._removeAbilityButton.bind(this));
     html.find('#editable-agenda-items').on('change', '.editable-item-input', this._updateAgendaItem.bind(this));
     html.find('#editable-agenda-abilities').on('change', '.editable-ability-input', this._updateAgendaAbility.bind(this));
+    html.find('.bold-item-button').click(this._boldItem.bind(this));
+    html.find('.agenda-to-chat').click(this._agendaToChat.bind(this));
     /* NPC sheet specific listeners */
     html.find('.attack-button').click(this._onNpcAttack.bind(this));
     html.find('.severe-attack-button').click(this._onNpcSevereAttack.bind(this));
@@ -221,6 +223,27 @@ export class CainActorSheet extends ActorSheet {
 
 }
   
+_boldItem(event) {
+  event.preventDefault();
+  const index = event.currentTarget.getAttribute('data-index');
+  const textarea = document.querySelector(`.editable-item-input[data-index="${index}"]`);
+  textarea.style.fontWeight = textarea.style.fontWeight === 'bold' ? 'normal' : 'bold';
+}
+
+_agendaToChat(event) {
+  event.preventDefault();
+  const index = event.currentTarget.getAttribute('data-index');
+  const itemText = document.querySelector(`.editable-item-input[data-index="${index}"]`).value;
+  const message = `<p>${itemText}</p>`;
+  ChatMessage.create({
+    content: message,
+    speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+  });
+
+}
+
+
+
 _addAgendaItemButton(event) {
   event.preventDefault();
   const agendaItems = this.actor.system.currentAgendaItems || [];
@@ -241,7 +264,7 @@ _addAgendaAbilityButton(event) {
 
 _removeItemButton(event) {
   event.preventDefault();
-  const index = event.target.dataset.index;
+  const index = event.currentTarget.dataset.index;
   const agendaItems = this.actor.system.currentAgendaItems || [];
   agendaItems.splice(index, 1);
   this.actor.update({ 'system.currentAgendaItems': agendaItems }).then(() => {
@@ -251,7 +274,7 @@ _removeItemButton(event) {
 
 _removeAbilityButton(event) {
   event.preventDefault();
-  const index = event.target.dataset.index;
+  const index = event.currentTarget.dataset.index;
   const agendaAbilities = this.actor.system.currentAgendaAbilities || [];
   agendaAbilities.splice(index, 1);
   this.actor.update({ 'system.currentAgendaAbilities': agendaAbilities }).then(() => {
