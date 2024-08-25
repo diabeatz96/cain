@@ -87,16 +87,12 @@
   </div>
   <!-- Items Section -->
   <div class="items-section" style="display: flex; justify-content: space-between;">
-    <!-- Agendas -->
-    <div class="agendas" style="width: 48%;">
-      <h2>Agendas</h2>
-      {{#each items as |item|}}
-        {{#if (eq item.type "agenda")}}
-          {{#unless agendaFound}}
-            {{#set this "agendaFound" true}}
-            <ol class='items-list'>
-          {{/set}}
-          {{/unless}}
+  <!-- Agendas -->
+  <div class="agendas" style="width: 48%;">
+    <h2>Agendas</h2>
+    {{#if agendas.length}}
+      <ol class='items-list'>
+        {{#each agendas as |item|}}
           <li class='item flexrow' data-item-id='{{item._id}}'>
             <div class='item-name flexrow'>
               <div class='item-image'>
@@ -130,70 +126,58 @@
               </a>
             </div>
           </li>
-        {{/if}}
-      {{/each}}
-      {{#unless agendaFound}}
-        <p class="psychedelic-text">Drag agenda onto your sheet.</p>
-      {{/unless}}
-      {{#if agendaFound}}
-        </ol>
-      {{/if}}
-    </div>
-
-    <!-- Blasphemy Powers -->
-    <div class="blasphemy-powers" style="width: 48%;">
-      <h2>Blasphemy Powers</h2>
-      {{#each items as |item|}}
-        {{#if (eq item.type "blasphemy")}}
-          {{#unless blasphemyFound}}
-            {{#set this "blasphemyFound" true}}
-            <ol class='items-list'>
-          {{/set}}
-          {{/unless}}
-          <li class='item flexrow' data-item-id='{{item._id}}'>
-            <div class='item-name flexrow'>
-              <div class='item-image'>
-                <a class='rollable' data-roll-type='item'><img
-                    src='{{item.img}}'
-                    title='{{item.name}}'
-                    width='24'
-                    height='24'
-                  /></a>
-              </div>
-              <h4>{{item.name}}</h4>
-            </div>
-            <div class='item-controls'>
-              <a
-                class='item-control item-edit'
-                title='{{localize "DOCUMENT.Update" type='Item'}}'
-              >
-                <i class='fas fa-edit'></i>
-              </a>
-              <a
-                class='item-control item-delete'
-                title='{{localize "DOCUMENT.Delete" type='Item'}}'
-              >
-                <i class='fas fa-trash'></i>
-              </a>
-              <a
-                class='item-control item-description'
-                title='{{localize "DOCUMENT.Description" type='Item'}}'
-              >
-                <i class='fas fa-info-circle'></i>
-              </a>
-            </div>
-          </li>
-        {{/if}}
-      {{/each}}
-      {{#unless blasphemyFound}}
-        <p class="psychedelic-text">Drag blasphemies onto your sheet</p>
-      {{/unless}}
-      {{#if blasphemyFound}}
-        </ol>
-      {{/if}}
-    </div>
+        {{/each}}
+      </ol>
+    {{else}}
+      <p class="psychedelic-text">Drag agenda onto your sheet.</p>
+    {{/if}}
   </div>
-</div>
+
+  <!-- Blasphemy Powers -->
+  <div class="blasphemy-powers" style="width: 48%;">
+    <h2>Blasphemy Powers</h2>
+    {{#if blasphemies.length}}
+      <ol class='items-list'>
+        {{#each blasphemies as |item|}}
+          <li class='item flexrow' data-item-id='{{item._id}}'>
+            <div class='item-name flexrow'>
+              <div class='item-image'>
+                <a class='rollable' data-roll-type='item'><img
+                    src='{{item.img}}'
+                    title='{{item.name}}'
+                    width='24'
+                    height='24'
+                  /></a>
+              </div>
+              <h4>{{item.name}}</h4>
+            </div>
+            <div class='item-controls'>
+              <a
+                class='item-control item-edit'
+                title='{{localize "DOCUMENT.Update" type='Item'}}'
+              >
+                <i class='fas fa-edit'></i>
+              </a>
+              <a
+                class='item-control item-delete'
+                title='{{localize "DOCUMENT.Delete" type='Item'}}'
+              >
+                <i class='fas fa-trash'></i>
+              </a>
+              <a
+                class='item-control item-description'
+                title='{{localize "DOCUMENT.Description" type='Item'}}'
+              >
+                <i class='fas fa-info-circle'></i>
+              </a>
+            </div>
+          </li>
+        {{/each}}
+      </ol>
+    {{else}}
+      <p class="psychedelic-text">Drag blasphemies onto your sheet</p>
+    {{/if}}
+  </div>
 
 <style>
 .abilities-page {
