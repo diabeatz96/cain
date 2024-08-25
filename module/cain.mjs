@@ -8,6 +8,8 @@ import { CainItemSheet } from './sheets/item-sheet.mjs';
 // Import helper/utility classes and constants.
 import { preloadHandlebarsTemplates } from './helpers/templates.mjs';
 import { CAIN } from './helpers/config.mjs';
+import { PlayerOverview } from './documents/player-overview.mjs';
+
 // Import DataModel classes
 import * as models from './data/_module.mjs';
 
@@ -84,7 +86,7 @@ Hooks.once('init', function () {
         imagePath: 'systems/cain/assets/Talismans/Talisman-A-0.png',
         currMarkAmount: 0,
         minMarkAmount: 0,
-        maxMarkAmount: 6,
+        maxMarkAmount: 2,
         isHidden: false,
       },
     ],
@@ -124,12 +126,35 @@ Handlebars.registerHelper('set', function(context, key, value, options) {
   context[key] = value;
 });
 
+Handlebars.registerHelper('calcPercentage', function(curr, max) {
+  return (curr / max) * 100;
+});
+
 /* -------------------------------------------- */
 /*  Ready Hook                                  */
 /* -------------------------------------------- */
 
 Hooks.once('ready', function () {
   // Function to create and insert the Talisman button
+
+  function addPlayerOverviewButton() {
+    if(!game.user.isGM) return;
+
+    const button = $('<button title="Player Overview" class="player-overview-button"><img src="systems/cain/assets/player-overview.png" alt="Player Overview"></button>');
+    button.on('click', () => {
+      new PlayerOverview().render(true);
+    });
+
+    const aside = $('<aside class="talisman-container"></aside>').append(button);
+    const actionBar = $('#action-bar');
+    if (actionBar.length) {
+      actionBar.append(aside);
+      console.log('Player Overview button inserted successfully.');
+    } else {
+      console.error('Action bar not found.');
+    }
+  }
+
   function addTalismanButton() {
     // Create the button element with the talisman icon
     const button = $('<button title="Global Talismans" class="talisman-button"><img src="systems/cain/assets/talisman-icon.png" alt="Talisman Icon"></button>');
@@ -188,7 +213,7 @@ Hooks.once('ready', function () {
 
   // Add the Talisman button when the action bar is first ready
   addTalismanButton();
-
+  addPlayerOverviewButton();
   // Add the Risk Roll and Fate Roll buttons when the action bar is first ready
   addRiskRollButton();
   addFateRollButton();
