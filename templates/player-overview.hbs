@@ -2,25 +2,31 @@
   {{!-- Sheet Tab Navigation --}}
   <nav class="sheet-tabs tabs" data-group="primary">
     <a class="item" data-tab="overview">Overview</a>
-    <a class="item" data-tab="skills">Skills</a>
+    <a class="item" data-tab="skills">Skills & Agendas</a>
     <a class="item" data-tab="xp">XP & Advancements</a>
     <a class="item" data-tab="talismans">Talismans</a>
   </nav>
 
   {{!-- Sheet Body --}}
   <section class="sheet-body">
-    <div class="tab overview active" data-group="primary" data-tab="overview">
-      {{> "systems/cain/templates/player-overview/overview.hbs" }}
-    </div>
-    <div class="tab skills" data-group="primary" data-tab="skills">
-      {{> "systems/cain/templates/player-overview/skills.hbs" }}
-    </div>
-    <div class="tab xp" data-group="primary" data-tab="xp">
-      {{> "systems/cain/templates/player-overview/xp.hbs" }}
-    </div>
-    <div class="tab talismans" data-group="primary" data-tab="talismans">
-      {{> "systems/cain/templates/player-overview/talismans.hbs" }}
-    </div>
+    {{#if playerData.length}}
+      <div class="tab overview active" data-group="primary" data-tab="overview">
+        {{> "systems/cain/templates/player-overview/overview.hbs" }}
+      </div>
+      <div class="tab skills" data-group="primary" data-tab="skills">
+        {{> "systems/cain/templates/player-overview/skills.hbs" }}
+      </div>
+      <div class="tab xp" data-group="primary" data-tab="xp">
+        {{> "systems/cain/templates/player-overview/xp.hbs" }}
+      </div>
+      <div class="tab talismans" data-group="primary" data-tab="talismans">
+        {{> "systems/cain/templates/player-overview/talismans.hbs" }}
+      </div>
+    {{else}}
+      <div class="no-players-message">
+        <p>🚀 Please add players and then add exorcist sheets to those players to view their stats. 📜</p>
+      </div>
+    {{/if}}
   </section>
 
   <script>
@@ -37,6 +43,7 @@
   <style>
     .player-overview {
       background-color: #121212;
+      box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.5), -10px -10px 0 rgba(0, 0, 0, 0.5), 10px -10px 0 rgba(0, 0, 0, 0.5), -10px 10px 0 rgba(0, 0, 0, 0.5);
       color: #e0e0e0;
       font-family: Arial, sans-serif;
     }
@@ -95,6 +102,13 @@
     }
     .player-overview th {
       background-color: #333;
+    }
+    .no-players-message {
+      text-align: center;
+      padding: 20px;
+      background-color: #1e1e1e;
+      border: 1px solid #333;
+      border-radius: 5px;
     }
   </style>
 </div>

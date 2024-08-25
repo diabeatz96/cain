@@ -1245,7 +1245,7 @@
   position: relative;
 }
 
-.talisman-button, .risk-roll-button, .fate-roll-button {
+.talisman-button, .risk-roll-button, .fate-roll-button, .player-overview-button {
   background: none;
   border: none;
   padding: 0;
@@ -1257,17 +1257,17 @@
   vertical-align: middle;
 }
 
-.talisman-button img, .risk-roll-button img, .fate-roll-button img {
+.talisman-button img, .risk-roll-button img, .fate-roll-button img, .player-overview-button img {
   border: none;
   width: 100%;
   height: auto;
   transition: filter 0.3s ease;
 }
 
-.talisman-button img:hover, .risk-roll-button img:hover, .fate-roll-button img:hover {
+.talisman-button img:hover, .risk-roll-button img:hover, .fate-roll-button img:hover, .player-overview-button img:hover {
   filter: brightness(1.2); /* Adjust the brightness to highlight the icon */
 }
 
-.talisman-button.clicked img, .risk-roll-button.clicked img, .fate-roll-button.clicked img {
+.talisman-button.clicked img, .risk-roll-button.clicked img, .fate-roll-button.clicked img, .player-overview-button.clicked img {
   filter: brightness(0.8); /* Adjust the brightness to indicate the button has been clicked */
 }

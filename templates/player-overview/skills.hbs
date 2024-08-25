@@ -1,16 +1,100 @@
 <div class="tab-pane active" id="overview">
-  <tbody>
-    {{#each playerData}}
-    <tr>
-      <td>{{name}}</td>
+  {{#if playerData.length}}
+    <div class="players-container">
+      {{#each playerData}}
       {{#if actor}}
-      <td>{{actor.name}}</td>
-      <td><img src="{{actor.img}}" alt="Profile Image" class="profile-image"></td>
-      <td>{{actor.system.attributes.level.value}}</td>
+      <div class="player-card">
+        <img src="{{actor.img}}" alt="Profile Image" class="profile-image">
+        <h3>{{actor.name}}</h3>
+        <p>Level: {{actor.system.attributes.level.value}}</p>
+        <ul class="skills-list">
+          {{#each actor.system.skills}}
+          <li>{{@key}}: {{this.value}}</li>
+          {{/each}}
+        </ul>
+        <div class="current-agenda">
+          <h4>Current Agenda Items</h4>
+          <ul class="agenda-list">
+            {{#each actor.system.currentAgendaItems}}
+            <li class="{{#if this.isBold}}bold{{/if}}">{{this.text}}</li>
+            {{/each}}
+          </ul>
+          <h4>Current Agenda Abilities</h4>
+          <ul class="agenda-list">
+            {{#each actor.system.currentAgendaAbilities}}
+            <li class="{{#if this.isBold}}bold{{/if}}">{{this.text}}</li>
+            {{/each}}
+          </ul>
+        </div>
+      </div>
       {{else}}
-      <td colspan="4">{{message}}</td>
+      <div class="player-card">
+        <p>{{message}}</p>
+      </div>
       {{/if}}
-    </tr>
-    {{/each}}
-  </tbody>
+      {{/each}}
+    </div>
+  {{else}}
+    <div class="no-players-message">
+      <p>🚀 Please add players and then add exorcist sheets to those players to view their stats. 📜</p>
+    </div>
+  {{/if}}
 </div>
+
+<style>
+  .players-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    padding: 20px;
+  }
+  .player-card {
+    background-color: #1e1e1e;
+    border: 1px solid #333;
+    border-radius: 5px;
+    padding: 20px;
+    text-align: center;
+  }
+  .profile-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+  }
+  .skills-list {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 10px;
+  }
+  .skills-list li {
+    background-color: #2e2e2e;
+    color: #e0e0e0;
+    padding: 5px;
+    margin-bottom: 5px;
+    border: 1px solid #333;
+  }
+  .current-agenda {
+    margin-top: 20px;
+  }
+  .agenda-list {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 10px;
+  }
+  .agenda-list li {
+    background-color: #2e2e2e;
+    color: #e0e0e0;
+    padding: 5px;
+    margin-bottom: 5px;
+    border: 1px solid #333;
+  }
+  .agenda-list li.bold {
+    font-weight: bold;
+  }
+  .no-players-message {
+    text-align: center;
+    padding: 20px;
+    background-color: #1e1e1e;
+    border: 1px solid #333;
+    border-radius: 5px;
+  }
+</style>

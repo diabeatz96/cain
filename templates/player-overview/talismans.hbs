@@ -1,22 +1,87 @@
-<div class="tab-pane" id="talismans">
-  <tbody>
-    {{#each playerData}}
-    <tr>
-      <td>{{name}}</td>
-      {{#if actor}}
-      <td>{{actor.name}}</td>
-      <td>
-        {{#each actor.system.talismans}}
-        <div>
-          <img src="{{this.imagePath}}" alt="{{this.name}}" class="talisman-image">
-          <div>{{this.name}}: {{this.currMarkAmount}} / {{this.maxMarkAmount}}</div>
+<div class="tab-pane talismans-overview" id="talismans">
+  {{#each playerData}}
+  <div class="talismans-card">
+    <div class="talismans-player-name">{{name}}</div>
+    {{#if actor}}
+    <div class="talismans-actor-name">{{actor.name}}</div>
+    <img src="{{actor.img}}" alt="Profile Image" class="talismans-profile-image">
+    <div class="talismans-list">
+      {{#each actor.system.talismans}}
+      <div class="talismans-talisman">
+        <div class="talismans-talisman-name">{{this.name}}</div>
+        <div class="talismans-talisman-bar">
+          <div class="talismans-talisman-bar-fill" style="width: {{calcPercentage this.currMarkAmount this.maxMarkAmount}}%;"></div>
         </div>
-        {{/each}}
-      </td>
-      {{else}}
-      <td colspan="3">{{message}}</td>
-      {{/if}}
-    </tr>
-    {{/each}}
-  </tbody>
+        <div class="talismans-talisman-level">{{this.currMarkAmount}} / {{this.maxMarkAmount}}</div>
+      </div>
+      {{/each}}
+    </div>
+    {{else}}
+    <div class="talismans-no-actor-message">{{message}}</div>
+    {{/if}}
+  </div>
+  {{/each}}
 </div>
+
+
+<style>
+  .talismans-overview {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
+  }
+  .talismans-card {
+    background-color: #1e1e1e;
+    border: 1px solid #333;
+    border-radius: 5px;
+    padding: 20px;
+    text-align: center;
+  }
+  .talismans-player-name {
+    font-family: 'Lacquer', sans-serif;
+    font-size: 1.2em;
+    color: #ffcc00;
+    margin-bottom: 10px;
+  }
+  .talismans-actor-name {
+    font-family: 'Lacquer', sans-serif;
+    font-size: 1.2em;
+    color: #18d199;
+    margin-bottom: 10px;
+  }
+  .talismans-profile-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+  }
+  .talismans-talisman {
+    margin-bottom: 10px;
+  }
+  .talismans-talisman-name {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  .talismans-talisman-bar {
+    background-color: #333;
+    border: 1px solid #555;
+    border-radius: 5px;
+    height: 20px;
+    width: 100%;
+    overflow: hidden;
+  }
+  .talismans-talisman-bar-fill {
+    background-color: #6200ea;
+    height: 100%;
+  }
+  .talismans-talisman-level {
+    margin-top: 5px;
+    font-size: 0.9em;
+    color: #e0e0e0;
+  }
+  .talismans-no-actor-message {
+    color: #e0e0e0;
+    font-size: 1em;
+  }
+</style>

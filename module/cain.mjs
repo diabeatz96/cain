@@ -126,6 +126,10 @@ Handlebars.registerHelper('set', function(context, key, value, options) {
   context[key] = value;
 });
 
+Handlebars.registerHelper('calcPercentage', function(curr, max) {
+  return (curr / max) * 100;
+});
+
 /* -------------------------------------------- */
 /*  Ready Hook                                  */
 /* -------------------------------------------- */
@@ -134,7 +138,9 @@ Hooks.once('ready', function () {
   // Function to create and insert the Talisman button
 
   function addPlayerOverviewButton() {
-    const button = $('<button title="Player Overview" class="player-overview-button"><i class="fas fa-users"></i></button>');
+    if(!game.user.isGM) return;
+
+    const button = $('<button title="Player Overview" class="player-overview-button"><img src="systems/cain/assets/player-overview.png" alt="Player Overview"></button>');
     button.on('click', () => {
       new PlayerOverview().render(true);
     });

@@ -1,16 +1,154 @@
-<div class="tab-pane" id="xp">
-  <tbody>
-    {{#each playerData}}
-    <tr>
-      <td>{{name}}</td>
+<div class="tab-pane xp-overview" id="xp">
+  {{#if playerData.length}}
+    <div class="players-container">
+      {{#each playerData}}
       {{#if actor}}
-      <td>{{actor.name}}</td>
-      <td>{{actor.system.xp.value}}</td>
-      <td>{{actor.system.advancements.value}}</td>
+      <div class="player-card">
+        <img src="{{actor.img}}" alt="Profile Image" class="profile-image">
+        <h3>{{actor.name}}</h3>
+        <p>Level: {{actor.system.attributes.level.value}}</p>
+        <div class="additional-info">
+          <h4>Sin Marks</h4>
+          <ul class="sin-marks-list">
+            {{#if actor.system.currentSinMarks.length}}
+              {{#each actor.system.currentSinMarks}}
+              <li>{{this}}</li>
+              {{/each}}
+            {{else}}
+              <li>No Sin Marks</li>
+            {{/if}}
+          </ul>
+          <div class="bars-container">
+            <h4>Sin Overflow</h4>
+            <div class="bar">
+              <div class="bar-fill" style="width: {{calcPercentage actor.system.sinOverflow.value actor.system.sinOverflow.max}}%;"></div>
+              <span>{{actor.system.sinOverflow.value}} / {{actor.system.sinOverflow.max}}</span>
+            </div>
+            <h4>Kit Points</h4>
+            <div class="bar">
+              <div class="bar-fill" style="width: {{calcPercentage actor.system.kitPoints.value actor.system.kitPoints.max}}%;"></div>
+              <span>{{actor.system.kitPoints.value}} / {{actor.system.kitPoints.max}}</span>
+            </div>
+            <h4>XP</h4>
+            <div class="bar">
+              <div class="bar-fill" style="width: {{calcPercentage actor.system.xp.value actor.system.xp.max}}%;"></div>
+              <span>{{actor.system.xp.value}} / {{actor.system.xp.max}}</span>
+            </div>
+            <h4>Advancements</h4>
+            <div class="bar">
+              <div class="bar-fill" style="width: {{calcPercentage actor.system.advancements.value actor.system.advancements.max}}%;"></div>
+              <span>{{actor.system.advancements.value}} / {{actor.system.advancements.max}}</span>
+            </div>
+          </div>
+          <h4>Psyche</h4>
+          <p>{{actor.system.psyche}}</p>
+          <h4>Psyche Burst</h4>
+          <p>{{actor.system.psycheBurst.value}} / {{actor.system.psycheBurst.max}}</p>
+        </div>
+      </div>
       {{else}}
-      <td colspan="4">{{message}}</td>
+      <div class="player-card">
+        <p>{{message}}</p>
+      </div>
       {{/if}}
-    </tr>
-    {{/each}}
-  </tbody>
+      {{/each}}
+    </div>
+  {{else}}
+    <div class="no-players-message">
+      <p>🚀 Please add players and then add exorcist sheets to those players to view their stats. 📜</p>
+    </div>
+  {{/if}}
 </div>
+
+<script>
+  Handlebars.registerHelper('calcPercentage', function(curr, max) {
+    return (curr / max) * 100;
+  });
+</script>
+
+<style>
+  .xp-overview .players-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    padding: 20px;
+  }
+  .xp-overview .player-card {
+    background-color: #1e1e1e;
+    border: 1px solid #333;
+    border-radius: 5px;
+    padding: 20px;
+    text-align: center;
+  }
+  .xp-overview .profile-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+  }
+  .xp-overview .skills-list {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 10px;
+  }
+  .xp-overview .skills-list li {
+    background-color: #2e2e2e;
+    color: #e0e0e0;
+    padding: 5px;
+    margin-bottom: 5px;
+    border: 1px solid #333;
+  }
+  .xp-overview .additional-info {
+    margin-top: 20px;
+  }
+  .xp-overview .additional-info h4 {
+    margin-top: 10px;
+    color: #ffcc00;
+  }
+  .xp-overview .additional-info p, .xp-overview .additional-info ul {
+    color: #e0e0e0;
+  }
+  .xp-overview .sin-marks-list {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 10px;
+  }
+  .xp-overview .sin-marks-list li {
+    background-color: #2e2e2e;
+    color: #e0e0e0;
+    padding: 5px;
+    margin-bottom: 5px;
+    border: 1px solid #333;
+  }
+  .xp-overview .bars-container {
+    margin-top: 20px;
+  }
+  .xp-overview .bar {
+    background-color: #333;
+    border: 1px solid #555;
+    border-radius: 5px;
+    height: 20px;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 10px;
+  }
+  .xp-overview .bar-fill {
+    background-color: #6200ea;
+    height: 100%;
+  }
+  .xp-overview .bar span {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    color: #e0e0e0;
+    top: 0;
+    left: 0;
+  }
+  .xp-overview .no-players-message {
+    text-align: center;
+    padding: 20px;
+    background-color: #1e1e1e;
+    border: 1px solid #333;
+    border-radius: 5px;
+  }
+</style>

@@ -40,7 +40,7 @@ export default class CainCharacter extends CainActorBase {
 
     schema.advancements = new fields.SchemaField({
       value: new fields.NumberField({ required: true, initial: 0, max: 4 }),
-      max: new fields.NumberField({ required: true, initial: 0, max: 4 }),
+      max: new fields.NumberField({ required: true, initial: 4, max: 4 }),
     });
 
     schema.scrip = new fields.NumberField({ required: true, initial: 0, min: 0, max: 1000 });

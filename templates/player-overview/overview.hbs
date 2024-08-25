@@ -1,4 +1,5 @@
 <div class="player-overview">
+  <h2>Player Overview</h2>
   <div class="table-container">
     <table class="player-overview-table">
       <thead>
@@ -52,12 +53,12 @@
     </table>
   </div>
 
-  <div class="afflictions-list">
+  <div class="afflictions-container">
     {{#each playerData}}
     {{#if actor}}
-    <div class="afflictions">
+    <div class="afflictions-column">
       <h3>{{actor.name}}'s Afflictions</h3>
-      <ul>
+      <ul class="afflictions-list">
         {{#if actor.system.afflictions.affliction1}}<li>{{actor.system.afflictions.affliction1}}</li>{{/if}}
         {{#if actor.system.afflictions.affliction2}}<li>{{actor.system.afflictions.affliction2}}</li>{{/if}}
         {{#if actor.system.afflictions.affliction3}}<li>{{actor.system.afflictions.affliction3}}</li>{{/if}}
@@ -74,6 +75,14 @@
 </div>
 
 <style>
+  .player-overview {
+    color: #e0e0e0;
+    font-family: Arial, sans-serif;
+  }
+  .player-overview h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
   .player-overview .table-container {
     overflow-x: auto;
   }
@@ -88,32 +97,36 @@
     text-align: left;
   }
   .player-overview .player-overview-table th {
-    color: #e0e0e0;
+    background-color: #333;
   }
   .player-overview .player-overview-table td {
     background-color: #1e1e1e;
-    color: #e0e0e0;
   }
   .player-overview .profile-image {
     width: 50px;
     height: 50px;
     border-radius: 50%;
   }
-  .player-overview .afflictions-list {
+  .afflictions-container {
+    display: flex;
+    flex-wrap: wrap;
     margin-top: 20px;
   }
-  .player-overview .afflictions {
-    margin-bottom: 20px;
+  .afflictions-column {
+    flex: 1;
+    min-width: 200px;
+    margin: 10px;
   }
-  .player-overview .afflictions h3 {
+  .afflictions-column h3 {
     margin-bottom: 10px;
   }
-  .player-overview .afflictions ul {
+  .afflictions-list {
     list-style-type: none;
     padding: 0;
+    margin: 0;
   }
-  .player-overview .afflictions ul li {
-    color: #e0e0e0;
+  .afflictions-list li {
+    background-color: #2e2e2e;
     padding: 5px;
     margin-bottom: 5px;
     border: 1px solid #333;
