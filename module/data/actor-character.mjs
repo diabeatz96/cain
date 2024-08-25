@@ -115,8 +115,15 @@ export default class CainCharacter extends CainActorBase {
 
     schema.restDiceModifier = new fields.NumberField({ required: true, initial: 0, min: -3, max: 3 });
     
-    schema.currentAgendaItems = new fields.ArrayField(new fields.StringField({ required: true, initial: " " }), { required: true, initial: [] });
-    schema.currentAgendaAbilities = new fields.ArrayField(new fields.StringField({ required: true, initial: " " }), { required: true, initial: [] });
+    schema.currentAgendaItems = new fields.ArrayField(new fields.SchemaField({
+      text: new fields.StringField({ required: true, initial: " " }),
+      isBold: new fields.BooleanField({ required: true, initial: false })
+    }), { required: true, initial: [] });
+    
+    schema.currentAgendaAbilities = new fields.ArrayField(new fields.SchemaField({
+      text: new fields.StringField({ required: true, initial: " " }),
+      isBold: new fields.BooleanField({ required: true, initial: false })
+    }), { required: true, initial: [] });
     
     return schema;
   }
@@ -157,4 +164,34 @@ export default class CainCharacter extends CainActorBase {
       this.advancements += 1;
     }
   }
+
+  // Migration function to convert old schema items to new format
+  static async migrateOldSchema(actor) {
+    const updateData = {};
+
+    // Convert old agenda items to new format
+    if (actor.system.agendaItems && Array.isArray(actor.system.agendaItems)) {
+      updateData['system.currentAgendaItems'] = actor.system.agendaItems.map(item => ({
+        text: item,
+        isBold: false
+      }));
+    }
+
+    // Convert old agenda abilities to new format
+    if (actor.system.agendaAbilities && Array.isArray(actor.system.agendaAbilities)) {
+      updateData['system.currentAgendaAbilities'] = actor.system.agendaAbilities.map(ability => ({
+        text: ability,
+        isBold: false
+      }));
+    }
+
+    // Update the actor with the new data
+    await actor.update(updateData);
+  }
+
+  prepareData() {
+    super.prepareData();
+    CainCharacter.migrateOldSchema(this);
+  }
+  
 }

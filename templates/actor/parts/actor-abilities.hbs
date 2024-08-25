@@ -32,59 +32,59 @@
       </ul>
     </div>
   </div>
-
+  <!-- My Agenda Section -->
 <!-- My Agenda Section -->
-<div class="my-agenda-section" style="margin-bottom: 20px;">
-  <h2>My Agenda</h2>
-  <div class="editable-agenda">
-    <div class="agenda-items">
-      <h3>Agenda Items</h3>
-      <ul id="editable-agenda-items" class="items-list">
-        {{#each actor.system.currentAgendaItems as |item index|}}
-          <li class='item flexrow'>
-            <textarea class="editable-item-input" data-index="{{index}}">{{item}}</textarea>
-            <div class="item-controls">
-              <a class="item-control agenda-to-chat" data-index="{{index}}" title="Send to Chat">
-                <i class="fas fa-comment"></i>
-              </a>
-              <a class="item-control bold-item-button" data-index="{{index}}" title="Bold Text">
-                <i class="fas fa-bold"></i>
-              </a>
-              <a class="item-control remove-item-button " data-index="{{index}}" title="Remove">
-                <i class="fas fa-trash"></i>
-              </a>
-            </div>
-          </li>
-        {{/each}}
-      </ul>
-      <button type="button" id="add-agenda-item-button" class="create-agenda-button">Add Item</button>
-    </div>
+<!-- My Agenda Section -->
+  <div class="my-agenda-section" style="margin-bottom: 20px;">
+    <h2>My Agenda</h2>
+    <div class="editable-agenda">
+      <div class="agenda-items">
+        <h3>Agenda Items</h3>
+        <ul id="editable-agenda-items" class="items-list">
+          {{#each actor.system.currentAgendaItems as |item index|}}
+            <li class='item flexrow'>
+              <textarea class="editable-item-input" data-index="{{index}}" style="font-weight: {{#if item.isBold}}bold{{else}}normal{{/if}};">{{item.text}}</textarea>
+              <div class="item-controls">
+                <a class="item-control agenda-item-to-chat" data-index="{{index}}" title="Send to Chat">
+                  <i class="fas fa-comment"></i>
+                </a>
+                <a class="item-control bold-item-button " data-index="{{index}}" title="Bold Text">
+                  <i class="fas fa-bold {{#if item.isBold}}fa-solid{{else}}fa-thin{{/if}}"></i>
+                </a>
+                <a class="item-control remove-item-button" data-index="{{index}}" title="Remove">
+                  <i class="fas fa-trash"></i>
+                </a>
+              </div>
+            </li>
+          {{/each}}
+        </ul>
+        <button type="button" id="add-agenda-item-button" class="create-agenda-button">Add Item</button>
+      </div>
 
-    <div class="agenda-abilities">
-      <h3>Agenda Abilities</h3>
-      <ul id="editable-agenda-abilities" class="items-list">
-        {{#each actor.system.currentAgendaAbilities as |ability index|}}
-          <li class='item flexrow'>
-            <textarea class="editable-ability-input" data-index="{{index}}">{{ability}}</textarea>
-            <div class="item-controls">
-              <a class="item-control agenda-to-chat" data-index="{{index}}" title="Send to Chat">
-                <i class="fas fa-comment"></i>
-              </a>
-              <a class="item-control bold-item-button" data-index="{{index}}" title="Bold Text">
-                <i class="fas fa-bold"></i>
-              </a>
-              <a class="item-control remove-ability-button " data-index="{{index}}" title="Remove">
-                <i class="fas fa-trash"></i>
-              </a>
-            </div>
-          </li>
-        {{/each}}
-      </ul>
-      <button type="button" id="add-agenda-ability-button" class="create-agenda-button">Add Ability</button>
+      <div class="agenda-abilities">
+        <h3>Agenda Abilities</h3>
+        <ul id="editable-agenda-abilities" class="items-list">
+          {{#each actor.system.currentAgendaAbilities as |ability index|}}
+            <li class='item flexrow'>
+              <textarea class="editable-ability-input" data-index="{{index}}" style="font-weight: {{#if ability.isBold}}bold{{else}}normal{{/if}};">{{ability.text}}</textarea>
+              <div class="item-controls">
+                <a class="item-control agenda-ability-to-chat" data-index="{{index}}" title="Send to Chat">
+                  <i class="fas fa-comment"></i>
+                </a>
+                <a class="item-control bold-ability-button" data-index="{{index}}" title="Bold Text">
+                  <i class="fas fa-bold {{#if ability.isBold}}fa-solid{{else}}fa-thin{{/if}}"></i>
+                </a>
+                <a class="item-control remove-ability-button" data-index="{{index}}" title="Remove">
+                  <i class="fas fa-trash"></i>
+                </a>
+              </div>
+            </li>
+          {{/each}}
+        </ul>
+        <button type="button" id="add-agenda-ability-button" class="create-agenda-button">Add Ability</button>
+      </div>
     </div>
   </div>
-</div>
-
   <!-- Items Section -->
   <div class="items-section" style="display: flex; justify-content: space-between;">
     <!-- Agendas -->

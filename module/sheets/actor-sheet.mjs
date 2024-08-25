@@ -208,8 +208,12 @@ export class CainActorSheet extends ActorSheet {
     html.find('#editable-agenda-abilities').on('click', '.remove-ability-button', this._removeAbilityButton.bind(this));
     html.find('#editable-agenda-items').on('change', '.editable-item-input', this._updateAgendaItem.bind(this));
     html.find('#editable-agenda-abilities').on('change', '.editable-ability-input', this._updateAgendaAbility.bind(this));
-    html.find('.bold-item-button').click(this._boldItem.bind(this));
-    html.find('.agenda-to-chat').click(this._agendaToChat.bind(this));
+    // Bind the bolding functions
+    html.find('.bold-item-button').click(this._boldAgendaItem.bind(this));
+    html.find('.bold-ability-button').click(this._boldAgendaAbility.bind(this));
+    // Bind the send to chat functions
+    html.find('.agenda-item-to-chat').click(this._sendAgendaItemMessage.bind(this));
+    html.find('.agenda-ability-to-chat').click(this._sendAgendaAbilityMessage.bind(this));
     /* NPC sheet specific listeners */
     html.find('.attack-button').click(this._onNpcAttack.bind(this));
     html.find('.severe-attack-button').click(this._onNpcSevereAttack.bind(this));
@@ -223,89 +227,122 @@ export class CainActorSheet extends ActorSheet {
 
 }
   
-_boldItem(event) {
-  event.preventDefault();
-  const index = event.currentTarget.getAttribute('data-index');
-  const textarea = document.querySelector(`.editable-item-input[data-index="${index}"]`);
-  textarea.style.fontWeight = textarea.style.fontWeight === 'bold' ? 'normal' : 'bold';
-}
+  _boldAgendaItem(event) {
+    event.preventDefault();
+    const index = event.currentTarget.getAttribute('data-index');
+    const textarea = document.querySelector(`.editable-item-input[data-index="${index}"]`);
+    const list = this.actor.system.currentAgendaItems;
+    
+    list[index].isBold = !list[index].isBold;
+    textarea.style.fontWeight = list[index].isBold ? 'bold' : 'normal';
+    event.currentTarget.querySelector('i').classList.toggle('active', list[index].isBold);
+    
+    console.log(`Bolding item at index ${index}: ${list[index].isBold}`);
+    
+    this.actor.update({ 'system.currentAgendaItems': list });
+  }
 
-_agendaToChat(event) {
-  event.preventDefault();
-  const index = event.currentTarget.getAttribute('data-index');
-  const itemText = document.querySelector(`.editable-item-input[data-index="${index}"]`).value;
-  const message = `<p>${itemText}</p>`;
-  ChatMessage.create({
-    content: message,
-    speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-  });
+  _boldAgendaAbility(event) {
+    event.preventDefault();
+    const index = event.currentTarget.getAttribute('data-index');
+    const textarea = document.querySelector(`.editable-ability-input[data-index="${index}"]`);
+    const list = this.actor.system.currentAgendaAbilities;
+    
+    list[index].isBold = !list[index].isBold;
+    textarea.style.fontWeight = list[index].isBold ? 'bold' : 'normal';
+    event.currentTarget.querySelector('i').classList.toggle('active', list[index].isBold);
+    
+    console.log(`Bolding ability at index ${index}: ${list[index].isBold}`);
+    
+    this.actor.update({ 'system.currentAgendaAbilities': list });
+  }
 
-}
+  _sendAgendaItemMessage(event) {
+    event.preventDefault();
+    const index = event.currentTarget.getAttribute('data-index');
+    const textarea = document.querySelector(`.editable-item-input[data-index="${index}"]`);
+    const itemText = textarea.value;
+    const message = `<p>${itemText}</p>`;
+    ChatMessage.create({
+      content: message,
+      speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+    });
+  }
 
+  _sendAgendaAbilityMessage(event) {
+    event.preventDefault();
+    const index = event.currentTarget.getAttribute('data-index');
+    const textarea = document.querySelector(`.editable-ability-input[data-index="${index}"]`);
+    const abilityText = textarea.value;
+    const message = `<p>${abilityText}</p>`;
+    ChatMessage.create({
+      content: message,
+      speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+    });
+  }
 
+  _addAgendaItemButton(event) {
+    event.preventDefault();
+    const agendaItems = this.actor.system.currentAgendaItems || [];
+    agendaItems.push({ text: 'New Agenda Item', isBold: false });
+    this.actor.update({ 'system.currentAgendaItems': agendaItems }).then(() => {
+      this.render(false); // Re-render the sheet to reflect changes
+    });
+  }
 
-_addAgendaItemButton(event) {
-  event.preventDefault();
-  const agendaItems = this.actor.system.currentAgendaItems || [];
-  agendaItems.push('New Agenda Item');
-  this.actor.update({ 'system.currentAgendaItems': agendaItems }).then(() => {
-    this.render(false); // Re-render the sheet to reflect changes
-  });
-}
+  _addAgendaAbilityButton(event) {
+    event.preventDefault();
+    const agendaAbilities = this.actor.system.currentAgendaAbilities || [];
+    agendaAbilities.push({ text: 'New Agenda Ability', isBold: false });
+    this.actor.update({ 'system.currentAgendaAbilities': agendaAbilities }).then(() => {
+      this.render(false); // Re-render the sheet to reflect changes
+    });
+  }
 
-_addAgendaAbilityButton(event) {
-  event.preventDefault();
-  const agendaAbilities = this.actor.system.currentAgendaAbilities || [];
-  agendaAbilities.push('New Agenda Ability');
-  this.actor.update({ 'system.currentAgendaAbilities': agendaAbilities }).then(() => {
-    this.render(false); // Re-render the sheet to reflect changes
-  });
-}
+  _removeItemButton(event) {
+    event.preventDefault();
+    const index = event.currentTarget.dataset.index;
+    const agendaItems = this.actor.system.currentAgendaItems || [];
+    agendaItems.splice(index, 1);
+    this.actor.update({ 'system.currentAgendaItems': agendaItems }).then(() => {
+      this.render(false); // Re-render the sheet to reflect changes
+    });
+  }
 
-_removeItemButton(event) {
-  event.preventDefault();
-  const index = event.currentTarget.dataset.index;
-  const agendaItems = this.actor.system.currentAgendaItems || [];
-  agendaItems.splice(index, 1);
-  this.actor.update({ 'system.currentAgendaItems': agendaItems }).then(() => {
-    this.render(false); // Re-render the sheet to reflect changes
-  });
-}
+  _removeAbilityButton(event) {
+    event.preventDefault();
+    const index = event.currentTarget.dataset.index;
+    const agendaAbilities = this.actor.system.currentAgendaAbilities || [];
+    agendaAbilities.splice(index, 1);
+    this.actor.update({ 'system.currentAgendaAbilities': agendaAbilities }).then(() => {
+      this.render(false); // Re-render the sheet to reflect changes
+    });
+  }
 
-_removeAbilityButton(event) {
-  event.preventDefault();
-  const index = event.currentTarget.dataset.index;
-  const agendaAbilities = this.actor.system.currentAgendaAbilities || [];
-  agendaAbilities.splice(index, 1);
-  this.actor.update({ 'system.currentAgendaAbilities': agendaAbilities }).then(() => {
-    this.render(false); // Re-render the sheet to reflect changes
-  });
-}
+  _updateAgendaItem(event) {
+    const index = event.target.dataset.index;
+    const agendaItems = this.actor.system.currentAgendaItems || [];
+    agendaItems[index].text = event.target.value;
+    this.actor.update({ 'system.currentAgendaItems': agendaItems });
+  }
 
-_updateAgendaItem(event) {
-  const index = event.target.dataset.index;
-  const agendaItems = this.actor.system.currentAgendaItems || [];
-  agendaItems[index] = event.target.value;
-  this.actor.update({ 'system.currentAgendaItems': agendaItems });
-}
+  _toggleCollapseButton(event) {
+    event.preventDefault(); // Prevent default button behavior
+    const button = event.currentTarget;
+    const content = button.nextElementSibling;
+    console.log(this);
+    console.log('Button clicked:', button);
+    console.log('Content to toggle:', content);
+    content.classList.toggle('collapsed');
+  }
 
+  _updateAgendaAbility(event) {
+    const index = event.target.dataset.index;
+    const agendaAbilities = this.actor.system.currentAgendaAbilities || [];
+    agendaAbilities[index].text = event.target.value;
+    this.actor.update({ 'system.currentAgendaAbilities': agendaAbilities });
+  }
 
-_toggleCollapseButton(event) {
-  event.preventDefault(); // Prevent default button behavior
-  const button = event.currentTarget;
-  const content = button.nextElementSibling;
-  console.log(this);
-  console.log('Button clicked:', button);
-  console.log('Content to toggle:', content);
-  content.classList.toggle('collapsed');
-}
-
-_updateAgendaAbility(event) {
-  const index = event.target.dataset.index;
-  const agendaAbilities = this.actor.system.currentAgendaAbilities || [];
-  agendaAbilities[index] = event.target.value;
-  this.actor.update({ 'system.currentAgendaAbilities': agendaAbilities });
-}
 
   _onInputChange(event) {
     const index = event.currentTarget.dataset.index;
