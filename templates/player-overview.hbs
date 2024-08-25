@@ -1,0 +1,39 @@
+<!-- templates/player-overview.hbs -->
+<table>
+  <thead>
+    <tr>
+      <th>Player Name</th>
+      <th>Character Name</th>
+      <th>Level</th>
+      <th>Abilities</th>
+      <th>Skills</th>
+      <th>XP</th>
+      <th>Advancements</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each playerData}}
+    <tr>
+      <td>{{name}}</td>
+      {{#if actor}}
+      <td>{{actor.name}}</td>
+      <td>{{actor.system.attributes.level.value}}</td>
+      <td>
+        {{#each actor.system.abilities}}
+        <div>{{@key}}: {{this.value}}</div>
+        {{/each}}
+      </td>
+      <td>
+        {{#each actor.system.skills}}
+        <div>{{@key}}: {{this.value}}</div>
+        {{/each}}
+      </td>
+      <td>{{actor.system.xp.value}}</td>
+      <td>{{actor.system.advancements.value}}</td>
+      {{else}}
+      <td colspan="6">{{message}}</td>
+      {{/if}}
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
