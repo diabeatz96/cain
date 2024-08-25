@@ -13,13 +13,6 @@ export default class CainCharacter extends CainActorBase {
       }),
     });
 
-    // Iterate over ability names and create a new SchemaField for each.
-    schema.abilities = new fields.SchemaField(Object.keys(CONFIG.CAIN.abilities).reduce((obj, ability) => {
-      obj[ability] = new fields.SchemaField({
-        value: new fields.NumberField({ ...requiredInteger, initial: 10, min: 0 }),
-      });
-      return obj;
-    }, {}));
 
     schema.skills = new fields.SchemaField(Object.keys(CONFIG.CAIN.skills).reduce((obj, skill) => {
       obj[skill] = new fields.SchemaField({
@@ -193,5 +186,5 @@ export default class CainCharacter extends CainActorBase {
     super.prepareData();
     CainCharacter.migrateOldSchema(this);
   }
-  
+
 }
