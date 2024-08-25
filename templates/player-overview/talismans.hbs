@@ -1,0 +1,22 @@
+<div class="tab-pane" id="talismans">
+  <tbody>
+    {{#each playerData}}
+    <tr>
+      <td>{{name}}</td>
+      {{#if actor}}
+      <td>{{actor.name}}</td>
+      <td>
+        {{#each actor.system.talismans}}
+        <div>
+          <img src="{{this.imagePath}}" alt="{{this.name}}" class="talisman-image">
+          <div>{{this.name}}: {{this.currMarkAmount}} / {{this.maxMarkAmount}}</div>
+        </div>
+        {{/each}}
+      </td>
+      {{else}}
+      <td colspan="3">{{message}}</td>
+      {{/if}}
+    </tr>
+    {{/each}}
+  </tbody>
+</div>

@@ -1,0 +1,16 @@
+<div class="tab-pane active" id="overview">
+  <tbody>
+    {{#each playerData}}
+    <tr>
+      <td>{{name}}</td>
+      {{#if actor}}
+      <td>{{actor.name}}</td>
+      <td><img src="{{actor.img}}" alt="Profile Image" class="profile-image"></td>
+      <td>{{actor.system.attributes.level.value}}</td>
+      {{else}}
+      <td colspan="4">{{message}}</td>
+      {{/if}}
+    </tr>
+    {{/each}}
+  </tbody>
+</div>

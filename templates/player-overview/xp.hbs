@@ -1,0 +1,16 @@
+<div class="tab-pane" id="xp">
+  <tbody>
+    {{#each playerData}}
+    <tr>
+      <td>{{name}}</td>
+      {{#if actor}}
+      <td>{{actor.name}}</td>
+      <td>{{actor.system.xp.value}}</td>
+      <td>{{actor.system.advancements.value}}</td>
+      {{else}}
+      <td colspan="4">{{message}}</td>
+      {{/if}}
+    </tr>
+    {{/each}}
+  </tbody>
+</div>

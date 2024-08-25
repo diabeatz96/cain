@@ -5,7 +5,7 @@ export class PlayerOverview extends Application {
         id: "player-overview",
         template: "systems/cain/templates/player-overview.hbs",
         width: 600,
-        height: "auto",
+        height: 600,
         title: "Player Overview",
         resizable: true,
       });

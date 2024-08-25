@@ -1,39 +1,100 @@
-<!-- templates/player-overview.hbs -->
-<table>
-  <thead>
-    <tr>
-      <th>Player Name</th>
-      <th>Character Name</th>
-      <th>Level</th>
-      <th>Abilities</th>
-      <th>Skills</th>
-      <th>XP</th>
-      <th>Advancements</th>
-    </tr>
-  </thead>
-  <tbody>
-    {{#each playerData}}
-    <tr>
-      <td>{{name}}</td>
-      {{#if actor}}
-      <td>{{actor.name}}</td>
-      <td>{{actor.system.attributes.level.value}}</td>
-      <td>
-        {{#each actor.system.abilities}}
-        <div>{{@key}}: {{this.value}}</div>
-        {{/each}}
-      </td>
-      <td>
-        {{#each actor.system.skills}}
-        <div>{{@key}}: {{this.value}}</div>
-        {{/each}}
-      </td>
-      <td>{{actor.system.xp.value}}</td>
-      <td>{{actor.system.advancements.value}}</td>
-      {{else}}
-      <td colspan="6">{{message}}</td>
-      {{/if}}
-    </tr>
-    {{/each}}
-  </tbody>
-</table>
+<div class="player-overview">
+  {{!-- Sheet Tab Navigation --}}
+  <nav class="sheet-tabs tabs" data-group="primary">
+    <a class="item" data-tab="overview">Overview</a>
+    <a class="item" data-tab="skills">Skills</a>
+    <a class="item" data-tab="xp">XP & Advancements</a>
+    <a class="item" data-tab="talismans">Talismans</a>
+  </nav>
+
+  {{!-- Sheet Body --}}
+  <section class="sheet-body">
+    <div class="tab overview active" data-group="primary" data-tab="overview">
+      {{> "systems/cain/templates/player-overview/overview.hbs" }}
+    </div>
+    <div class="tab skills" data-group="primary" data-tab="skills">
+      {{> "systems/cain/templates/player-overview/skills.hbs" }}
+    </div>
+    <div class="tab xp" data-group="primary" data-tab="xp">
+      {{> "systems/cain/templates/player-overview/xp.hbs" }}
+    </div>
+    <div class="tab talismans" data-group="primary" data-tab="talismans">
+      {{> "systems/cain/templates/player-overview/talismans.hbs" }}
+    </div>
+  </section>
+
+  <script>
+    document.querySelectorAll('.player-overview .item').forEach(tab => {
+      tab.addEventListener('click', function() {
+        document.querySelectorAll('.player-overview .item').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.player-overview .tab').forEach(pane => pane.classList.remove('active'));
+        this.classList.add('active');
+        document.querySelector(`.player-overview .tab[data-tab="${this.dataset.tab}"]`).classList.add('active');
+      });
+    });
+  </script>
+
+  <style>
+    .player-overview {
+      background-color: #121212;
+      color: #e0e0e0;
+      font-family: Arial, sans-serif;
+    }
+    .player-overview .tabs {
+      display: flex;
+      flex-direction: row;
+      padding: 10px;
+    }
+    .player-overview .sheet-tabs {
+      display: flex;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      background-color: #1e1e1e;
+      border-bottom: 1px solid #333;
+    }
+    .player-overview .item {
+      padding: 10px 20px;
+      cursor: pointer;
+      color: #e0e0e0;
+      text-decoration: none;
+    }
+    .player-overview .item.active {
+      font-weight: bold;
+      border-bottom: 2px solid #6200ea;
+    }
+    .player-overview .sheet-body {
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+      border: 1px solid #333;
+      border-radius: 5px;
+    }
+    .player-overview .tab {
+      display: none;
+    }
+    .player-overview .tab.active {
+      display: block;
+    }
+    .player-overview .profile-image {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+    }
+    .player-overview .talisman-image {
+      width: 30px;
+      height: 30px;
+    }
+    .player-overview table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .player-overview th, .player-overview td {
+      padding: 10px;
+      border: 1px solid #333;
+    }
+    .player-overview th {
+      background-color: #333;
+    }
+  </style>
+</div>

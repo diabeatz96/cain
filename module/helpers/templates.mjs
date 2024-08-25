@@ -9,6 +9,10 @@ export const preloadHandlebarsTemplates = async function () {
     'systems/cain/templates/talisman-window.hbs',
     // Player Overview
     'systems/cain/templates/player-overview.hbs',
+    'systems/cain/templates/player-overview/overview.hbs',
+    'systems/cain/templates/player-overview/skills.hbs',
+    'systems/cain/templates/player-overview/xp.hbs',
+    'systems/cain/templates/player-overview/talismans.hbs',
     // Actor partials.
     'systems/cain/templates/actor/parts/actor-features.hbs',
     'systems/cain/templates/actor/parts/actor-items.hbs',

@@ -1,0 +1,121 @@
+<div class="player-overview">
+  <div class="table-container">
+    <table class="player-overview-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Actor</th>
+          <th>Profile Image</th>
+          <th>CAT Level</th>
+          <th>Sex</th>
+          <th>Height</th>
+          <th>Weight</th>
+          <th>Hair</th>
+          <th>Eyes</th>
+          <th>Agenda</th>
+          <th>Blasphemy</th>
+          <th>XID</th>
+          <th>Scrip</th>
+          <th>Divine Agony</th>
+          <th>Injuries</th>
+          <th>Stress</th>
+          <th>Extra Dice</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each playerData}}
+        <tr>
+          <td>{{name}}</td>
+          {{#if actor}}
+          <td>{{actor.name}}</td>
+          <td><img src="{{actor.img}}" alt="Profile Image" class="profile-image"></td>
+          <td>{{actor.system.CATLEVEL.value}}</td>
+          <td>{{actor.system.sex}}</td>
+          <td>{{actor.system.height}}</td>
+          <td>{{actor.system.weight}}</td>
+          <td>{{actor.system.hair}}</td>
+          <td>{{actor.system.eyes}}</td>
+          <td>{{actor.system.agenda}}</td>
+          <td>{{actor.system.blasphemy}}</td>
+          <td>{{actor.system.XID}}</td>
+          <td>{{actor.system.scrip}}</td>
+          <td>{{actor.system.divineAgony.value}}</td>
+          <td>{{actor.system.injuries.value}}</td>
+          <td>{{actor.system.stress.value}}</td>
+          <td>{{actor.system.extraDice.value}}</td>
+          {{else}}
+          <td colspan="17">{{message}}</td>
+          {{/if}}
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="afflictions-list">
+    {{#each playerData}}
+    {{#if actor}}
+    <div class="afflictions">
+      <h3>{{actor.name}}'s Afflictions</h3>
+      <ul>
+        {{#if actor.system.afflictions.affliction1}}<li>{{actor.system.afflictions.affliction1}}</li>{{/if}}
+        {{#if actor.system.afflictions.affliction2}}<li>{{actor.system.afflictions.affliction2}}</li>{{/if}}
+        {{#if actor.system.afflictions.affliction3}}<li>{{actor.system.afflictions.affliction3}}</li>{{/if}}
+        {{#if actor.system.afflictions.affliction4}}<li>{{actor.system.afflictions.affliction4}}</li>{{/if}}
+        {{#if actor.system.afflictions.affliction5}}<li>{{actor.system.afflictions.affliction5}}</li>{{/if}}
+        {{#unless (or actor.system.afflictions.affliction1 actor.system.afflictions.affliction2 actor.system.afflictions.affliction3 actor.system.afflictions.affliction4 actor.system.afflictions.affliction5)}}
+        <li>No afflictions</li>
+        {{/unless}}
+      </ul>
+    </div>
+    {{/if}}
+    {{/each}}
+  </div>
+</div>
+
+<style>
+  .player-overview .table-container {
+    overflow-x: auto;
+  }
+  .player-overview .player-overview-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  .player-overview .player-overview-table th, .player-overview .player-overview-table td {
+    padding: 10px;
+    border: 1px solid #333;
+    text-align: left;
+  }
+  .player-overview .player-overview-table th {
+    color: #e0e0e0;
+  }
+  .player-overview .player-overview-table td {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+  }
+  .player-overview .profile-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+  }
+  .player-overview .afflictions-list {
+    margin-top: 20px;
+  }
+  .player-overview .afflictions {
+    margin-bottom: 20px;
+  }
+  .player-overview .afflictions h3 {
+    margin-bottom: 10px;
+  }
+  .player-overview .afflictions ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  .player-overview .afflictions ul li {
+    color: #e0e0e0;
+    padding: 5px;
+    margin-bottom: 5px;
+    border: 1px solid #333;
+  }
+</style>
