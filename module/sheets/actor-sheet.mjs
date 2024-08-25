@@ -75,36 +75,23 @@ export class CainActorSheet extends ActorSheet {
 
   _prepareItems(context) {
     const gear = [];
-    const features = [];
-    const spells = {
-      0: [],
-      1: [],
-      2: [],
-      3: [],
-      4: [],
-      5: [],
-      6: [],
-      7: [],
-      8: [],
-      9: [],
-    };
-
+    const agendas = [];
+    const blasphemies = [];
+  
     for (let i of context.items) {
       i.img = i.img || Item.DEFAULT_ICON;
       if (i.type === 'item') {
         gear.push(i);
-      } else if (i.type === 'feature') {
-        features.push(i);
-      } else if (i.type === 'spell') {
-        if (i.system.spellLevel != undefined) {
-          spells[i.system.spellLevel].push(i);
-        }
+      } else if (i.type === 'agenda') {
+        agendas.push(i);
+      } else if (i.type === 'blasphemy') {
+        blasphemies.push(i);
       }
     }
-
+  
     context.gear = gear;
-    context.features = features;
-    context.spells = spells;
+    context.agendas = agendas;
+    context.blasphemies = blasphemies;
   }
 
   _calculateRanges(context) {

@@ -122,10 +122,6 @@ Handlebars.registerHelper('hasItemsOfType', function(items, type, options) {
   return hasItems ? options.fn(this) : options.inverse(this);
 });
 
-Handlebars.registerHelper('set', function(context, key, value, options) {
-  context[key] = value;
-});
-
 Handlebars.registerHelper('calcPercentage', function(curr, max) {
   return (curr / max) * 100;
 });
