@@ -92,6 +92,18 @@ Hooks.once('init', function () {
     ],
   });
 
+  game.settings.register('cain', 'showPlayerOverview', {
+    name: 'Show Player Overview Button',
+    hint: 'Allow players to see the player overview button.',
+    scope: 'world',
+    config: true,
+    type: Boolean,
+    default: false,
+    onChange: value => {
+      ui.players.render();
+    }
+  });
+
   // Preload Handlebars templates.
   return preloadHandlebarsTemplates();
 });
@@ -134,13 +146,17 @@ Hooks.once('ready', function () {
   // Function to create and insert the Talisman button
 
   function addPlayerOverviewButton() {
-    if(!game.user.isGM) return;
-
+    const showPlayerOverview = game.settings.get('cain', 'showPlayerOverview');
+    const isGM = game.user.isGM;
+  
+    // If the user is not a GM and the setting is false, do not add the button
+    if (!isGM && !showPlayerOverview) return;
+  
     const button = $('<button title="Player Overview" class="player-overview-button"><img src="systems/cain/assets/player-overview.png" alt="Player Overview"></button>');
     button.on('click', () => {
       new PlayerOverview().render(true);
     });
-
+  
     const aside = $('<aside class="talisman-container"></aside>').append(button);
     const actionBar = $('#action-bar');
     if (actionBar.length) {
