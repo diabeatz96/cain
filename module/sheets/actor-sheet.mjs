@@ -160,7 +160,13 @@ export class CainActorSheet extends ActorSheet {
       let value = 0;
   
       checkboxes.each((index, cb) => {
-        if (cb.checked) value = index + 1;
+        if (cb == event.currentTarget) {
+          if (cb.checked) {
+            value = index + 1
+          } else {
+            value = index
+          }
+        } 
       });
   
       // Update the corresponding field value
@@ -174,6 +180,7 @@ export class CainActorSheet extends ActorSheet {
     html.find('.psyche-burst-checkbox').change(this._onPsycheBurstChange.bind(this));
     html.find('.kit-points-checkbox').change(this._onKitPointsChange.bind(this));
     html.find('.clear-sin-marks').click(this._clearSinMarks.bind(this));
+    html.find('#increment-xp-value').click(this._increaseXPValue.bind(this));
     html.find('.delete-sin-mark').click(this._deleteSinMark.bind(this));
     html.find('.roll-sin-mark').click(this._rollSinMark.bind(this));
     html.find('.talisman-name').change(this._onInputChange.bind(this));
@@ -214,6 +221,20 @@ export class CainActorSheet extends ActorSheet {
 
 }
   
+  _increaseXPValue(event) {
+    event.preventDefault();
+    const oldXPValue = this.actor.system.xp.value;
+    const newXPValue = oldXPValue + 1;
+    if (newXPValue >= this.actor.system.xp.max) {
+      this.actor.update({ 'system.xp.value': 0});
+      const newAdvanceValue = this.actor.system.advancements.value + 1
+      this.actor.update({ 'system.advancements.value': newAdvanceValue});
+    } else {
+      this.actor.update({ 'system.xp.value': newXPValue});
+      console.log("Updated xp from " + oldXPValue + " to " + newXPValue );  
+    }
+  }
+
   _boldAgendaItem(event) {
     event.preventDefault();
     const index = event.currentTarget.getAttribute('data-index');
