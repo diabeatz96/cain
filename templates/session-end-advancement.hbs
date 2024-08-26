@@ -1,0 +1,37 @@
+
+<form class="flexcol">
+    <h3> Survival </h3>
+    <div class="form-group">
+        <label for="survival"> Did you <b>survive</b>?</label>
+        <input type="checkbox" name="survival">
+    </div>
+    <h3> Up to 1 from first agenda </h3>
+    {{#each actor.system.currentAgendaItems}}
+    {{#unless this.isBold}}
+    <div class="form-group">
+        <label for="firstAgenda-{{@index}}"> Did you {{this.text}}?</label>
+        <input type="checkbox" name="firstAgenda-{{@index}}">
+    </div>
+    {{/unless}}
+    {{/each}}
+    <h3> Up to 2 from <b>bold</b> agendas</h3>
+
+    {{#each actor.system.currentAgendaItems}}
+    {{#if this.isBold}}
+        <div class="form-group">
+            <label for="boldAgenda-{{@index}}"> Did you <b>{{this.text}}</b>?</label>
+            <input type="checkbox" name="boldAgenda-{{@index}}">
+        </div>
+    {{/if}}
+    {{/each}}
+    <h3> Injuries/Afflictions </h3>
+    <div class="form-group">
+        <label for="injuries"> Did you take an <b>injury</b> or <b>affliction</b>?</label>
+        <input type="checkbox" name="injuries">
+    </div>
+  <footer class="sheet-footer flexrow">
+    <button type="submit" name="submit">
+        <i class="fa fa-check"></i> OK
+    </button>
+  </footer>
+</form>

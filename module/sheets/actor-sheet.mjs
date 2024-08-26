@@ -4,7 +4,7 @@ import {
 } from '../helpers/effects.mjs';
 
 import { CAIN } from '../helpers/config.mjs';
-
+import { SessionEndAdvancement } from '../documents/session-end-advancement.mjs';
 /**
  * Extend the basic ActorSheet with some very simple modifications
  * @extends {ActorSheet}
@@ -223,16 +223,7 @@ export class CainActorSheet extends ActorSheet {
   
   _increaseXPValue(event) {
     event.preventDefault();
-    const oldXPValue = this.actor.system.xp.value;
-    const newXPValue = oldXPValue + 1;
-    if (newXPValue >= this.actor.system.xp.max) {
-      this.actor.update({ 'system.xp.value': 0});
-      const newAdvanceValue = this.actor.system.advancements.value + 1
-      this.actor.update({ 'system.advancements.value': newAdvanceValue});
-    } else {
-      this.actor.update({ 'system.xp.value': newXPValue});
-      console.log("Updated xp from " + oldXPValue + " to " + newXPValue );  
-    }
+    new SessionEndAdvancement(this.actor).render(true);
   }
 
   _boldAgendaItem(event) {
