@@ -35,6 +35,9 @@
     color: red;
     font-weight: bold;
   }
+  .xp-button {
+    background-color: red
+  }
   .roller-box select {
     border: 1px solid red;
     background-color: white;
@@ -71,54 +74,29 @@
 <h3 class='resource-header'>Cat Level</h3>
 <div class="resource">
   <div class="checkbox-group checkbox-group_cat" data-field="CATLEVEL">
+    {{#times 7}}
     <div class="checkbox-item checkbox-item_cat">
-      <img src="systems/cain/assets/CAT/CAT1.png" alt="Image 1">
-      <label for="CATLEVEL-1">Level 1</label>
-      <input type="checkbox" name="CATLEVEL-1" {{#if (gte system.CATLEVEL.value 1)}}checked{{/if}}/>
+      <img src="systems/cain/assets/CAT/CAT{{@index}}.png" alt="CAT {{@index}}">
+      <label for="CATLEVEL-{{@index}}">Level {{@index}}</label>
+      <input type="checkbox" name="CATLEVEL-{{@index}}" {{#if (gte system.CATLEVEL.value @index)}}checked{{/if}}/>
     </div>
-    <div class="checkbox-item checkbox-item_cat">
-      <img src="systems/cain/assets/CAT/CAT2.png" alt="Image 2">
-      <label for="CATLEVEL-2">Level 2</label>
-      <input type="checkbox" name="CATLEVEL-2" {{#if (gte system.CATLEVEL.value 2)}}checked{{/if}}/>
-    </div>
-    <div class="checkbox-item checkbox-item_cat">
-      <img src="systems/cain/assets/CAT/CAT3.png" alt="Image 3">
-      <label for="CATLEVEL-3">Level 3</label>
-      <input type="checkbox" name="CATLEVEL-3" {{#if (gte system.CATLEVEL.value 3)}}checked{{/if}}/>
-    </div>
-    <div class="checkbox-item checkbox-item_cat">
-      <img src="systems/cain/assets/CAT/CAT4.png" alt="Image 4">
-      <label for="CATLEVEL-4">Level 4</label>
-      <input type="checkbox" name="CATLEVEL-4" {{#if (gte system.CATLEVEL.value 4)}}checked{{/if}}/>
-    </div>
-    <div class="checkbox-item checkbox-item_cat">
-      <img src="systems/cain/assets/CAT/CAT5.png" alt="Image 5">
-      <label for="CATLEVEL-5">Level 5</label>
-      <input type="checkbox" name="CATLEVEL-5" {{#if (gte system.CATLEVEL.value 5)}}checked{{/if}}/>
-    </div>
-    <div class="checkbox-item checkbox-item_cat">
-      <img src="systems/cain/assets/CAT/CAT6.png" alt="Image 6">
-      <label for="CATLEVEL-6">Level 6</label>
-      <input type="checkbox" name="CATLEVEL-6" {{#if (gte system.CATLEVEL.value 6)}}checked{{/if}}/>
-    </div>
-    <div class="checkbox-item checkbox-item_cat">
-      <img src="systems/cain/assets/CAT/CAT7.png" alt="Image 7">
-      <label for="CATLEVEL-7">Level 7</label>
-      <input type="checkbox" name="CATLEVEL-7" {{#if (gte system.CATLEVEL.value 7)}}checked{{/if}}/>
-    </div>
+    {{/times}}
   </div>
 </div>
 
-<div class="flex-group-center">
-  <label for="system.xp.value" class="resource-label">XP</label> 
-  <output id="xp-output">{{system.xp.value}}</output>
-  <div class="flexrow flex-center">
-    <input type="range" name="system.xp.value" value="{{system.xp.value}}" min="0" max="4" step="1" data-dtype="Number" oninput="document.getElementById('xp-output').value = this.value">
+<div class="resource">
+  <label for="xp">XP</label> 
+  <output id="xp-output">{{system.xp.value}}</output>   
+  <button id="increment-xp-value" class="xp-button">Increment XP</button>
+  <div class="checkbox-group" data-field="xp">
+    {{#times system.xp.max}}
+    <input type="checkbox" id="xp-checkbox-{{@index}}" name="xp-{{@index}}" {{#if (gte system.xp.value @index)}}checked{{/if}} disabled/>
+    {{/times}}
   </div>
 </div>
 
-<div class="flex-group-center">
-  <label for="system.advancements.value" class="resource-label">Advancement</label>
+<div class="resource">
+  <label for="system.advancements.value" class="resource-label">Advancements</label>
   <output id="advancements-output">{{system.advancements.value}}</output>
   <div class="resource-content flexrow flex-center">
     <input type="range" name="system.advancements.value" value="{{system.advancements.value}}" min="0" max="4" step="1" data-dtype="Number" oninput="document.getElementById('advancements-output').value = this.value">
@@ -129,30 +107,27 @@
 <div class="resource">
   <label for="divineAgony">Divine Agony</label>
   <div class="checkbox-group" data-field="divineAgony">
-    <input type="checkbox" name="divineAgony-1" {{#if (gte system.divineAgony.value 1)}}checked{{/if}}/>
-    <input type="checkbox" name="divineAgony-2" {{#if (gte system.divineAgony.value 2)}}checked{{/if}}/>
-    <input type="checkbox" name="divineAgony-3" {{#if (gte system.divineAgony.value 3)}}checked{{/if}}/>
+    {{#times 3}}
+    <input type="checkbox" name="divineAgony-{{@index}}" {{#if (gte system.divineAgony.value @index)}}checked{{/if}}/>
+    {{/times}}
   </div>
 </div>
 
 <div class="resource">
   <label for="injuries">Injuries</label>
   <div class="checkbox-group" data-field="injuries">
-    <input type="checkbox" name="injuries-1" {{#if (gte system.injuries.value 1)}}checked{{/if}}/>
-    <input type="checkbox" name="injuries-2" {{#if (gte system.injuries.value 2)}}checked{{/if}}/>
-    <input type="checkbox" name="injuries-3" {{#if (gte system.injuries.value 3)}}checked{{/if}}/>
+    {{#times 3}}
+    <input type="checkbox" name="injuries-{{@index}}" {{#if (gte system.injuries.value @index)}}checked{{/if}}/>
+    {{/times}}
   </div>
 </div>
 
 <div class="resource">
   <label for="stress">Stress</label>
   <div class="checkbox-group" data-field="stress">
-    <input type="checkbox" name="stress-1" {{#if (gte system.stress.value 1)}}checked{{/if}}/>
-    <input type="checkbox" name="stress-2" {{#if (gte system.stress.value 2)}}checked{{/if}}/>
-    <input type="checkbox" name="stress-3" {{#if (gte system.stress.value 3)}}checked{{/if}}/>
-    <input type="checkbox" name="stress-4" {{#if (gte system.stress.value 4)}}checked{{/if}}/>
-    <input type="checkbox" name="stress-5" {{#if (gte system.stress.value 5)}}checked{{/if}}/>
-    <input type="checkbox" name="stress-6" {{#if (gte system.stress.value 6)}}checked{{/if}}/>
+    {{#times 6}}
+    <input type="checkbox" name="stress-{{@index}}" {{#if (gte system.stress.value @index)}}checked{{/if}}/>
+    {{/times}}
   </div>
 </div>
 </div>

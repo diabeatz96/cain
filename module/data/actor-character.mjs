@@ -152,7 +152,7 @@ export default class CainCharacter extends CainActorBase {
 
   // Method to handle XP and advancements
   handleXP() {
-    if (this.xp >= 4) {
+    if (this.xp >= this.xp.max) {
       this.xp = 0;
       this.advancements += 1;
     }
