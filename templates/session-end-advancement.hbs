@@ -1,5 +1,62 @@
+<style>
+/* Form container styling */
+.session-end-form {
+    border: 2px solid #00FFFF; /* Neon blue border */
+    padding: 10px;
+    background-color: #1B1B1B; /* Dark background */
+    color: #00FFFF; /* Neon blue text color */
+    font-family: 'Courier New', Courier, monospace; /* Monospace font */
+    border-radius: 5px;
+}
 
-<form class="flexcol">
+/* Headings styling */
+.session-end-form h3 {
+    color: #FF0000; /* Red headings */
+    border-bottom: 1px solid #FF0000; /* Underline the heading with red */
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+/* Form group styling */
+.session-end-form .form-group {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+}
+
+/* Label styling */
+.session-end-form label {
+    color: #FFFFFF; /* White text for labels */
+    margin-right: 10px;
+    font-size: 14px;
+}
+
+/* Checkbox styling */
+.session-end-form input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    accent-color: #FF0000; /* Red accent color for the checkbox */
+}
+
+/* Button styling */
+.session-end-form .sheet-footer button {
+    background-color: #FF0000; /* Red button background */
+    color: #FFFFFF; /* White text */
+    border: 1px solid #0066ff; /* Neon blue border */
+    padding: 5px 10px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.session-end-form .sheet-footer button:hover {
+    background-color: #a53704; /* Change background to neon blue on hover */
+    color: #000000; /* Change text to black on hover */
+}
+</style>
+<form class="flexcol session-end-form">
     <h3> Survival </h3>
     <div class="form-group">
         <label for="survival"> Did you <b>survive</b>?</label>
