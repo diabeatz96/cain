@@ -160,7 +160,13 @@ export class CainActorSheet extends ActorSheet {
       let value = 0;
   
       checkboxes.each((index, cb) => {
-        if (cb.checked) value = index + 1;
+        if (cb == event.currentTarget) {
+          if (cb.checked) {
+            value = index + 1
+          } else {
+            value = index
+          }
+        } 
       });
   
       // Update the corresponding field value
