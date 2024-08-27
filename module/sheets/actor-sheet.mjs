@@ -4,7 +4,7 @@ import {
 } from '../helpers/effects.mjs';
 
 import { CAIN } from '../helpers/config.mjs';
-
+import { SessionEndAdvancement } from '../documents/session-end-advancement.mjs';
 /**
  * Extend the basic ActorSheet with some very simple modifications
  * @extends {ActorSheet}
@@ -181,6 +181,8 @@ export class CainActorSheet extends ActorSheet {
     html.find('.kit-points-checkbox').change(this._onKitPointsChange.bind(this));
     html.find('.clear-sin-marks').click(this._clearSinMarks.bind(this));
     html.find('#increment-xp-value').click(this._increaseXPValue.bind(this));
+    html.find('#decrement-xp-value').click(this._decreaseXPValue.bind(this));
+    html.find('#session-end-xp-value').click(this._openEndSessionModal.bind(this));
     html.find('.delete-sin-mark').click(this._deleteSinMark.bind(this));
     html.find('.roll-sin-mark').click(this._rollSinMark.bind(this));
     html.find('.talisman-name').change(this._onInputChange.bind(this));
@@ -233,6 +235,20 @@ export class CainActorSheet extends ActorSheet {
       this.actor.update({ 'system.xp.value': newXPValue});
       console.log("Updated xp from " + oldXPValue + " to " + newXPValue );  
     }
+  }
+  
+  _decreaseXPValue(event) {
+    event.preventDefault();
+    const oldXPValue = this.actor.system.xp.value;
+    const newXPValue = Math.max(oldXPValue - 1, 0);
+    //No need to check for advancement when decreasing
+    this.actor.update({ 'system.xp.value': newXPValue});
+    console.log("Updated xp from " + oldXPValue + " to " + newXPValue );  
+  }
+
+  _openEndSessionModal(event) {
+    event.preventDefault();
+    new SessionEndAdvancement(this.actor).render(true);
   }
 
   _boldAgendaItem(event) {

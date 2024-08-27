@@ -108,10 +108,20 @@
   <div class="advancements-experience-box">
     <div class="resource" style="font-family: 'Courier New', Courier, monospace;">
       <label for="xp"> <h2 class="resource-header">XP & Advancements</h3></label> 
-      <output id="xp-output" style="display: block; font-size: 1.2em;">{{system.xp.value}} / {{system.xp.max}}</output>   
-      <button id="increment-xp-value" class="xp-button" style="background-color: #660000; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 1em;">
-        Gain XP
-      </button>
+      <div class="xp-button-group" style="display: flex; justify-content: space-between; align-items: center">
+        <button id="increment-xp-value" class="xp-button" style="background-color: #660000; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 1em; width: 30%; display: inline-block;">
+          Gain 1 XP
+        </button>
+        <button id="decrement-xp-value" class="xp-button" style="background-color: #0e0c85; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 1em; width: 30%; display: inline-block;">
+          Lose 1 XP
+        </button>
+        <button id="session-end-xp-value" class="xp-button" style="background-color: #6e3274; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 1em; width: 30%; display: inline-block;">
+          End Session XP
+        </button>
+      </div>
+      <div>
+        <output id="xp-output" style="display: block; font-size: 1.2em; margin-top: 10px">{{system.xp.value}} / {{system.xp.max}}</output>
+      </div>
       <div class="checkbox-group" data-field="xp" style="margin-top: 10px;">
         {{#times system.xp.max}}
         <input type="checkbox" id="xp-checkbox-{{@index}}" name="xp-{{@index}}" {{#if (gte system.xp.value @index)}}checked{{/if}} disabled/>
