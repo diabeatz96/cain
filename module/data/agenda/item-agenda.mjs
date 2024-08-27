@@ -13,18 +13,11 @@ export default class CainAgenda extends CainItemBase {
     
         schema.formula = new fields.StringField({ blank: true });
 
-        schema.unboldedTasks = new fields.ArrayField(new fields.EmbeddedDataField(CainAgendaTask))
-        schema.boldedTasks = new fields.ArrayField(new fields.EmbeddedDataField(CainAgendaTask))
+        schema.unboldedTasks = new fields.ArrayField(new fields.StringField())
+        schema.boldedTasks = new fields.ArrayField(new fields.StringField())
 
-        schema.abilities = new fields.ArrayField(new fields.SchemaField({
-            name: new fields.StringField({required: false, nullable: true, initial: "New Ability"}),
-            description: new fields.StringField({required: false, nullable: true, initial: "Ability Description"})
-        }),  {required: false, nullable: true, initial: [{name: "bonk", description: "hit em good"}]});
+        schema.abilities = new fields.ArrayField(new fields.StringField());
         return schema;
-    }
-
-    get template() {
-        return `systems/cain/templates/item/agendas/item-agenda-sheet.hbs`;
     }
 }
 

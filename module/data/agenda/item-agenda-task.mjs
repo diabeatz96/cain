@@ -7,7 +7,7 @@ export default class CainAgendaTask extends CainItemBase {
         const schema = super.defineSchema();
     
         
-        schema.task = new fields.StringField({ required: true, nullable: false, initial: "New Agenda" });
+        schema.task = new fields.StringField({ required: true, nullable: false, initial: "New Task" });
         schema.isBold = new fields.BooleanField({ required: true, nullable: false, initial: false});
 
     

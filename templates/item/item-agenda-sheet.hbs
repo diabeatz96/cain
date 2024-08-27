@@ -26,20 +26,40 @@
   <section class='sheet-body agenda-body'>
       <div class='tab agenda-text-color' data-group='primary' data-tab='tasks'>
           <ul>
-            <li> {{item.system.primaryTask.task}} </li>
-          {{#each item.system.boldedTasks}}
-            <li>
-            <b>{{this.task}}</b>
+          {{#each agendaUnboldedTaskData}}
+            <li style="color: red;">
+            {{this.system.task}}
+            </li>
+          {{/each}}
+          {{#each agendaBoldedTaskData}}
+            <li style="color: red;">
+            <b>{{this.system.task}}</b>
             </li>
           {{/each}}
           </ul>
+          {{#if developerMode}}
+          <form>
+            <div class="form-group">
+              <label for="selectedItem">Select Item:</label>
+              <select name="selectedItem" id="selectedItem" style="background-color:antiquewhite">
+                {{#each agenda_tasks}}
+                  <option value="{{this.id}}">{{this.name}}</option>
+                {{/each}}
+              </select>
+            </div>
+            <div class="form-group" style="background-color:antiquewhite">
+              <button type="submit" id="addTaskToAgenda" style="background-color:antiquewhite">Add Task to Agenda</button>
+            </div>
+          </form>
+
+          {{/if}}
     </div>
       </div>
     {{! Abilities Tab }}
     <div class='tab agenda-text-color' data-group='primary' data-tab='abilities'>
       <ul>
-      {{#each item.system.abilities}}
-        <li> <b>{{this.name}}:</b> {{this.description}}</li>
+      {{#each agendaAbilityData}}
+        <li class="agenda-text-color"> <b>{{this.system.abilityName}}:</b> {{this.system.abilityDescription}}</li>
       {{/each}}
       </ul>
     </div>

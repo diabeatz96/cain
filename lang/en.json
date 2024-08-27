@@ -49,7 +49,8 @@
       "item": "Item",
       "agenda": "Agenda",
       "blasphemy": "Blasphemy",
-      "agendaTask": "Agenda Task"
+      "agendaTask": "Agenda Task",
+      "agendaAbility": "Agenda Ability"
     }
   }
 }

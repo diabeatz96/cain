@@ -2,6 +2,7 @@
 import { CainActor } from './documents/actor.mjs';
 import { CainItem } from './documents/item.mjs';
 import { TalismanWindow } from './documents/talisman-window.mjs';
+import { HomebrewWindow } from './documents/homebrew-window.mjs';
 // Import sheet classes.
 import { CainActorSheet } from './sheets/actor-sheet.mjs';
 import { CainItemSheet } from './sheets/item-sheet.mjs';
@@ -55,8 +56,9 @@ Hooks.once('init', function () {
     agenda: models.CainAgenda,
     blasphemy: models.CainBlasphemy,
     agendaTask: models.CainAgendaTask,
+    agendaAbility: models.CainAgendaAbility,
   }
-
+  
   console.log('CAIN | Initializing Cain system');
   console.log(CONFIG)
   // Active Effects are never copied to the Actor,
@@ -218,6 +220,30 @@ Hooks.once('ready', function () {
     }
   }
 
+  function addHomebrewButton() {
+    // Create the button element with the talisman icon
+    if (!game.user.isGM) return;
+    const button = $('<button title="Homebrew" class="talisman-button"><img src="systems/cain/assets/homebrew.png" alt="Homebrew Icon"></button>');
+    
+    // Add click event to open the TalismanWindow
+    button.on('click', () => {
+      new HomebrewWindow().render(true);
+    });
+
+    // Create an aside element and append the button to it
+    const aside = $('<aside class="talisman-container"></aside>').append(button);
+
+    // Insert the aside element into the action bar
+    const actionBar = $('#action-bar');
+    if (actionBar.length) {
+      actionBar.append(aside);
+      console.log('Homebrew button inserted successfully.');
+    } else {
+      console.error('Action bar not found.');
+    }
+  }
+
+
   // Function to create and insert the Risk Roll button
   function addRiskRollButton() {
     if (!game.user.isGM) return;
@@ -254,6 +280,7 @@ Hooks.once('ready', function () {
 
   // Add the Talisman button when the action bar is first ready
   addTalismanButton();
+  addHomebrewButton();
   addPlayerOverviewButton();
   // Add the Risk Roll and Fate Roll buttons when the action bar is first ready
   addRiskRollButton();
@@ -262,6 +289,7 @@ Hooks.once('ready', function () {
   // Ensure the buttons are added every time the action bar is rendered
   Hooks.on('renderHotbar', () => {
     addTalismanButton();
+    addHomebrewButton();
     addRiskRollButton();
     addFateRollButton();
   });
