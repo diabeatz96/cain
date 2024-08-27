@@ -1271,3 +1271,4 @@
 .talisman-button.clicked img, .risk-roll-button.clicked img, .fate-roll-button.clicked img, .player-overview-button.clicked img {
   filter: brightness(0.8); /* Adjust the brightness to indicate the button has been clicked */
 }
+
