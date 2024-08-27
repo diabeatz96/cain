@@ -105,6 +105,18 @@ Hooks.once('init', function () {
     }
   });
 
+  game.settings.register('cain', 'developerMode', {
+    name: 'Enable Developer Mode',
+    hint: 'Shows a lot of ugly debug information that allows direct modification of values.',
+    scope: 'world',
+    config: true,
+    type: Boolean,
+    default: false,
+    onChange: value => {
+      ui.players.render();
+    }
+  });
+
   // Preload Handlebars templates.
   return preloadHandlebarsTemplates();
 });
