@@ -126,6 +126,10 @@ Handlebars.registerHelper('calcPercentage', function(curr, max) {
   return (curr / max) * 100;
 });
 
+Handlebars.registerHelper('json', function(context) {
+  return JSON.stringify(context);
+});
+
 /* -------------------------------------------- */
 /*  Ready Hook                                  */
 /* -------------------------------------------- */

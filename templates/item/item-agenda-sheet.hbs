@@ -1,5 +1,3 @@
-{{! This template is a fallback for when items don't have more specific templates. }}
-{{! Generally, you'll want to make more specific templates when possible. }}
 <form class='{{cssClass}}, agenda-background' autocomplete='off'>
   <header class='sheet-header agenda-header '>
     <img
@@ -20,22 +18,30 @@
 
   {{! Sheet Tab Navigation }}
   <nav class='sheet-tabs tabs agenda-tabs' data-group='primary'>
-    <a class='item' data-tab='description'>Description</a>
+    <a class='item' data-tab='tasks'>Tasks</a>
+    <a class='item' data-tab='abilities'>Abilities</a>
   </nav>
 
   {{! Sheet Body }}
   <section class='sheet-body agenda-body'>
-
-    {{! Description Tab }}
-    <div class='tab agenda-text-color' data-group='primary' data-tab='description'>
-      {{! Editors must receive enriched text data from getData to properly handle rolls }}
-      {{editor
-        enrichedDescription
-        target='system.description'
-        engine='prosemirror'
-        button=true
-        editable=editable
-      }}
+      <div class='tab agenda-text-color' data-group='primary' data-tab='tasks'>
+          <ul>
+            <li> {{item.system.primaryTask.task}} </li>
+          {{#each item.system.boldedTasks}}
+            <li>
+            <b>{{this.task}}</b>
+            </li>
+          {{/each}}
+          </ul>
+    </div>
+      </div>
+    {{! Abilities Tab }}
+    <div class='tab agenda-text-color' data-group='primary' data-tab='abilities'>
+      <ul>
+      {{#each item.system.abilities}}
+        <li> <b>{{this.name}}:</b> {{this.description}}</li>
+      {{/each}}
+      </ul>
     </div>
   </section>
 </form>
