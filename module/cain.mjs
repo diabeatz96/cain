@@ -54,6 +54,7 @@ Hooks.once('init', function () {
     item: models.CainItem,
     agenda: models.CainAgenda,
     blasphemy: models.CainBlasphemy,
+    agendaTask: models.CainAgendaTask,
   }
 
   console.log('CAIN | Initializing Cain system');

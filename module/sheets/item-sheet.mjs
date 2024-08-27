@@ -89,18 +89,5 @@ export class CainItemSheet extends ItemSheet {
     html.on('click', '.effect-control', (ev) =>
       onManageActiveEffect(ev, this.item)
     );
-    html.find('#newAgendaTask').click(this._onMakeNewTask.bind(this));
   }
-
-  _onMakeNewTask(event) {
-    event.preventDefault();
-    console.log(this.object);
-    console.log(this.object.system);
-    console.log(this.object.system.primaryTask);
-    if (this.object.system.primaryTask == null) {
-      this.object.update({ 'system.primaryTask': {task: "be chill", isBold: false
-      }});
-    }
-}
-
 }

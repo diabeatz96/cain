@@ -48,7 +48,8 @@
     "Item": {
       "item": "Item",
       "agenda": "Agenda",
-      "blasphemy": "Blasphemy"
+      "blasphemy": "Blasphemy",
+      "agendaTask": "Agenda Task"
     }
   }
 }

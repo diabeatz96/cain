@@ -1,4 +1,4 @@
-import CainItemBase from "./base-item.mjs";
+import CainItemBase from "../base-item.mjs";
 
 export default class CainAgenda extends CainItemBase {
     static defineSchema() {
@@ -30,4 +30,3 @@ export default class CainAgenda extends CainItemBase {
     }
 
 }
-
