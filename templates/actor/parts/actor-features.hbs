@@ -119,7 +119,9 @@
           End Session XP
         </button>
       </div>
-      <output id="xp-output" style="display: block; font-size: 1.2em;">{{system.xp.value}} / {{system.xp.max}}</output>
+      <div>
+        <output id="xp-output" style="display: block; font-size: 1.2em; margin-top: 10px">{{system.xp.value}} / {{system.xp.max}}</output>
+      </div>
       <div class="checkbox-group" data-field="xp" style="margin-top: 10px;">
         {{#times system.xp.max}}
         <input type="checkbox" id="xp-checkbox-{{@index}}" name="xp-{{@index}}" {{#if (gte system.xp.value @index)}}checked{{/if}} disabled/>

@@ -70,6 +70,8 @@
         <input type="checkbox" name="firstAgenda-{{@index}}">
     </div>
     {{/unless}}
+    {{else}}
+    <w>You don't seem to have a primary agenda - consider adding one...</w>
     {{/each}}
     <h3> Up to 2 from <b>bold</b> agendas</h3>
 
@@ -80,6 +82,8 @@
             <input type="checkbox" name="boldAgenda-{{@index}}">
         </div>
     {{/if}}
+    {{else}}
+    <w>You don't seem to have any bolded agendas - consider adding one...</w>
     {{/each}}
     <h3> Injuries/Afflictions </h3>
     <div class="form-group">
