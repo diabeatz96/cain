@@ -83,10 +83,6 @@ export class CainActorSheet extends ActorSheet {
 
   _prepareCharacterData(context) {
     // Character-specific data preparation
-  }
-
-  _prepareItems(context) {
-    const gear = [];
     const agendas = [];
     const blasphemies = [];
   
@@ -95,6 +91,7 @@ export class CainActorSheet extends ActorSheet {
     context.currentUnboldedAgendaTasks = [];
     context.currentBoldedAgendaTasks = [];
     context.currentAgendaAbilities = [];
+    context.currentAgendaAvailableAbilities = [];
     if (agendaID !== "INVALID") context.currentAgenda = game.items.get(agendaID);
     for (const agendaTaskID in context.system.currentUnboldedAgendaTasks) {
       context.currentUnboldedAgendaTasks.push(game.items.get(context.system.currentUnboldedAgendaTasks[agendaTaskID]));
@@ -105,23 +102,24 @@ export class CainActorSheet extends ActorSheet {
     for (const agendaAbilityID in context.system.currentAgendaAbilities) {
       context.currentAgendaAbilities.push(game.items.get(context.system.currentAgendaAbilities[agendaAbilityID]));
     }
-    console.log(context.currentAgendaTasks);
+    const validAbilities = context.currentAgenda.system.abilities.filter(item => {return !context.system.currentAgendaAbilities.includes(item)});
+    for (const agendaAbilityID in validAbilities) {
+      context.currentAgendaAvailableAbilities.push(game.items.get(validAbilities[agendaAbilityID]));
+    }
+    context.agendas = agendas;
+    context.blasphemies = blasphemies;
+  }
 
-
+  _prepareItems(context) {
+    const gear = [];
     for (let i of context.items) {
       i.img = i.img || Item.DEFAULT_ICON;
       if (i.type === 'item') {
         gear.push(i);
-      } else if (i.type === 'agenda') {
-        agendas.push(i);
-      } else if (i.type === 'blasphemy') {
-        blasphemies.push(i);
       }
     }
   
     context.gear = gear;
-    context.agendas = agendas;
-    context.blasphemies = blasphemies;
   }
 
   _calculateRanges(context) {
@@ -231,11 +229,10 @@ export class CainActorSheet extends ActorSheet {
     html.find('.talisman-max-mark').change(this._onMaxMarkAmountChange.bind(this));
     html.find('.roll-rest-dice').click(this._RollRestDice.bind(this));
     html.find('#add-agenda-item-button').on('click', this._addAgendaItemButton.bind(this));
-    html.find('#add-agenda-ability-button').on('click', this._addAgendaAbilityButton.bind(this));
-    html.find('#editable-agenda-items').on('click', '.remove-item-button', this._removeItemButton.bind(this));
-    html.find('#editable-agenda-abilities').on('click', '.remove-ability-button', this._removeAbilityButton.bind(this));
+    html.find('#editable-agenda-abilities').on('click', '.remove-ability-button', this._removeAgendaAbilityButton.bind(this));
     html.find('#editable-agenda-items').on('change', '.editable-item-input', this._updateAgendaItem.bind(this));
     html.find('#editable-agenda-abilities').on('change', '.editable-ability-input', this._updateAgendaAbility.bind(this));
+    html.find('#add-agenda-ability-button').on('click', this._addAgendaAbility.bind(this));
     html.find('.agenda-drop-target').on('drop', async event => {
       event.preventDefault();
       const data = JSON.parse(event.originalEvent.dataTransfer.getData('text/plain'));
@@ -256,11 +253,8 @@ export class CainActorSheet extends ActorSheet {
       console.log(this.actor.system.currentBoldedAgendaTasks);
 });
 html.find('.remove-task-button').click(this._removeAgendaTask.bind(this));
-// Bind the bolding functions
-    html.find('.bold-item-button').click(this._boldAgendaItem.bind(this));
-    html.find('.bold-ability-button').click(this._boldAgendaAbility.bind(this));
     // Bind the send to chat functions
-    html.find('.agenda-item-to-chat').click(this._sendAgendaItemMessage.bind(this));
+    html.find('.agenda-task-to-chat').click(this._sendAgendaTaskMessage.bind(this));
     html.find('.agenda-ability-to-chat').click(this._sendAgendaAbilityMessage.bind(this));
     /* NPC sheet specific listeners */
     html.find('.attack-button').click(this._onNpcAttack.bind(this));
@@ -274,6 +268,18 @@ html.find('.remove-task-button').click(this._removeAgendaTask.bind(this));
     });
 
 }
+
+  _addAgendaAbility(event) {
+    event.preventDefault();
+    const abilityID = event.currentTarget.parentElement.querySelector('#selectedItem').value;
+    console.log(abilityID);
+    const currentAbilities = this.actor.system.currentAgendaAbilities;
+    console.log(currentAbilities);
+    currentAbilities.push(abilityID);
+    this.actor.update({'system.currentAgendaAbilities': currentAbilities});
+    console.log(currentAbilities);
+    this.actor.render(true);
+  }
 
   _removeAgendaTask(event) {
     event.preventDefault();
@@ -336,42 +342,20 @@ html.find('.remove-task-button').click(this._removeAgendaTask.bind(this));
     new SessionEndAdvancement(this.actor).render(true);
   }
 
-  _boldAgendaItem(event) {
+  _sendAgendaTaskMessage(event) {
     event.preventDefault();
     const index = event.currentTarget.getAttribute('data-index');
-    const textarea = document.querySelector(`.editable-item-input[data-index="${index}"]`);
-    const list = this.actor.system.currentAgendaItems;
-    
-    list[index].isBold = !list[index].isBold;
-    textarea.style.fontWeight = list[index].isBold ? 'bold' : 'normal';
-    event.currentTarget.querySelector('i').classList.toggle('active', list[index].isBold);
-    
-    console.log(`Bolding item at index ${index}: ${list[index].isBold}`);
-    
-    this.actor.update({ 'system.currentAgendaItems': list });
-  }
-
-  _boldAgendaAbility(event) {
-    event.preventDefault();
-    const index = event.currentTarget.getAttribute('data-index');
-    const textarea = document.querySelector(`.editable-ability-input[data-index="${index}"]`);
-    const list = this.actor.system.currentAgendaAbilities;
-    
-    list[index].isBold = !list[index].isBold;
-    textarea.style.fontWeight = list[index].isBold ? 'bold' : 'normal';
-    event.currentTarget.querySelector('i').classList.toggle('active', list[index].isBold);
-    
-    console.log(`Bolding ability at index ${index}: ${list[index].isBold}`);
-    
-    this.actor.update({ 'system.currentAgendaAbilities': list });
-  }
-
-  _sendAgendaItemMessage(event) {
-    event.preventDefault();
-    const index = event.currentTarget.getAttribute('data-index');
-    const textarea = document.querySelector(`.editable-item-input[data-index="${index}"]`);
-    const itemText = textarea.value;
-    const message = `<p>${itemText}</p>`;
+    let agendaTaskList = [];
+    if (event.currentTarget.hasAttribute('data-bold')) {
+      agendaTaskList = this.actor.system.currentBoldedAgendaTasks;
+    } else {
+      agendaTaskList = this.actor.system.currentUnboldedAgendaTasks;
+    }
+    console.log(index);
+    console.log(agendaTaskList);
+    const agendaTask = game.items.get(agendaTaskList[index]);
+    console.log(agendaTask);
+    const message = `<h3>${this.actor.name}</h3><p>${(agendaTask.system.isBold ? '<b>' : '')}${agendaTask.system.task}${(agendaTask.system.isBold ? '</b>' : '')}</p>`;
     ChatMessage.create({
       content: message,
       speaker: ChatMessage.getSpeaker({ actor: this.actor }),
@@ -381,9 +365,8 @@ html.find('.remove-task-button').click(this._removeAgendaTask.bind(this));
   _sendAgendaAbilityMessage(event) {
     event.preventDefault();
     const index = event.currentTarget.getAttribute('data-index');
-    const textarea = document.querySelector(`.editable-ability-input[data-index="${index}"]`);
-    const abilityText = textarea.value;
-    const message = `<p>${abilityText}</p>`;
+    const agendaAbility = game.items.get(this.actor.system.currentAgendaAbilities[index]);
+    const message = `<h3>${agendaAbility.system.abilityName}</h3><p>${agendaAbility.system.abilityDescription}</p>`;
     ChatMessage.create({
       content: message,
       speaker: ChatMessage.getSpeaker({ actor: this.actor }),
@@ -408,22 +391,12 @@ html.find('.remove-task-button').click(this._removeAgendaTask.bind(this));
     });
   }
 
-  _removeItemButton(event) {
-    event.preventDefault();
-    const index = event.currentTarget.dataset.index;
-    const agendaItems = this.actor.system.currentAgendaItems || [];
-    agendaItems.splice(index, 1);
-    this.actor.update({ 'system.currentAgendaItems': agendaItems }).then(() => {
-      this.render(false); // Re-render the sheet to reflect changes
-    });
-  }
-
-  _removeAbilityButton(event) {
+  _removeAgendaAbilityButton(event) {
     event.preventDefault();
     const index = event.currentTarget.dataset.index;
     const agendaAbilities = this.actor.system.currentAgendaAbilities || [];
-    agendaAbilities.splice(index, 1);
-    this.actor.update({ 'system.currentAgendaAbilities': agendaAbilities }).then(() => {
+    const newAgendaAbilities = agendaAbilities.slice(0, Number(index)).concat(agendaAbilities.slice(Number(index)+1))
+    this.actor.update({ 'system.currentAgendaAbilities': newAgendaAbilities }).then(() => {
       this.render(false); // Re-render the sheet to reflect changes
     });
   }

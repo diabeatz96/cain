@@ -49,12 +49,12 @@
         <ul id="editable-agenda-items" class="items-list">
           {{#each currentUnboldedAgendaTasks}}
             <li class='item flexrow'>
-              <p data-index="{{index}}" style="font-weight: {{#if this.system.isBold}}bold{{else}}normal{{/if}};">{{this.system.task}}</p>
+              <p data-index="{{@index}}" style="font-weight: {{#if this.system.isBold}}bold{{else}}normal{{/if}};">{{this.system.task}}</p>
               <div class="item-controls">
-                <a class="item-control agenda-item-to-chat" data-index="{{index}}" title="Send to Chat">
+                <a class="item-control agenda-task-to-chat" data-index="{{@index}}" title="Send to Chat">
                   <i class="fas fa-comment"></i>
                 </a>
-                <a class="item-control remove-task-button" data-index="{{index}}" title="Remove">
+                <a class="item-control remove-task-button" data-index="{{@index}}" title="Remove">
                   <i class="fas fa-trash"></i>
                 </a>
               </div>
@@ -62,12 +62,12 @@
           {{/each}}
             {{#each currentBoldedAgendaTasks}}
             <li class='item flexrow'>
-              <p data-index="{{index}}" style="font-weight: {{#if this.system.isBold}}bold{{else}}normal{{/if}};">{{this.system.task}}</p>
+              <p data-index="{{@index}}" style="font-weight: {{#if this.system.isBold}}bold{{else}}normal{{/if}};">{{this.system.task}}</p>
               <div class="item-controls">
-                <a class="item-control agenda-item-to-chat" data-index="{{index}}" title="Send to Chat">
+                <a class="item-control agenda-task-to-chat" data-index="{{@index}}" data-bold title="Send to Chat">
                   <i class="fas fa-comment"></i>
                 </a>
-                <a class="item-control remove-task-button" data-index="{{index}}" data-bold title="Remove">
+                <a class="item-control remove-task-button" data-index="{{@index}}" data-bold title="Remove">
                   <i class="fas fa-trash"></i>
                 </a>
               </div>
@@ -81,11 +81,26 @@
         <h3>Agenda Abilities</h3>
         <ul id="editable-agenda-abilities" class="items-list">
           {{#each currentAgendaAbilities}}
-            <li class='item flexrow'>
+            <li>
+              <span data-index="{{@index}}" title="{{this.system.abilityDescription}}">{{this.system.abilityName}}</span>
+              <a class="item-control agenda-ability-to-chat" data-index="{{@index}}" title="Send to Chat">
+                <i class="fas fa-comment"></i>
+              </a>
+              <a class="item-control remove-ability-button" data-index="{{@index}}" title="Remove">
+                <i class="fas fa-trash"></i>
+              </a>
             </li>
           {{/each}}
         </ul>
-        <button type="button" id="add-agenda-ability-button" class="create-agenda-button">Add Ability</button>
+        <div class="form-group">
+          <label for="selectedItem">Available Abilities:</label>
+          <select name="selectedItem" id="selectedItem" style="background-color:antiquewhite">
+            {{#each currentAgendaAvailableAbilities}}
+              <option value="{{this.id}}">{{this.name}}</option>
+            {{/each}}
+          </select>
+          <button type="button" id="add-agenda-ability-button" class="add-agenda-ability-button" {{#unless currentAgendaAvailableAbilities.length}} disabled {{/unless}}>Add Ability</button>
+        </div>
       </div>
     </div>
   </div>
@@ -218,7 +233,7 @@
   color: #ff0000;
 }
 
-.abilities-page .create-agenda-button, .abilities-page .create-blasphemy-button {
+.abilities-page .add-agenda-ability-button, .abilities-page .create-blasphemy-button {
   background-color: #1a1a1a;
   color: #e0e0e0;
   border: 1px solid #444;
@@ -227,9 +242,10 @@
   margin-top: 10px;
 }
 
-.abilities-page .create-agenda-button:hover, .abilities-page .create-blasphemy-button:hover {
+.abilities-page .add-agenda-ability-button:hover, .abilities-page .create-blasphemy-button:hover {
   background-color: #444;
 }
+
 
 .abilities-page .psychedelic-text {
   color: #9933ff;
