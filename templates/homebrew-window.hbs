@@ -35,9 +35,9 @@
         {{#each agendaOptions.abilities}}
             <li class='item flexrow'>
               <textarea class="editable-item-input homebrew-text-color homebrew-ability-name-input" data-ability-index="{{@index}}">{{this.name}}</textarea>
-              <textarea class="editable-item-input homebrew-text-color homebrew-ability-input" data-ability-index="{{@index}}">{{this.ability}}</textarea>
+              <textarea class="editable-item-input homebrew-text-color homebrew-ability-input" data-ability-index="{{@index}}">{{this.abilityDescription}}</textarea>
               <div class="item-controls">
-                <a class="item-control homebrew-remove-ability homebrew-text-color" data-task-index="{{@index}}" title="Remove">
+                <a class="item-control homebrew-remove-ability homebrew-text-color" data-ability-index="{{@index}}" title="Remove">
                   <i class="fas fa-trash"></i>
                 </a>
               </div>

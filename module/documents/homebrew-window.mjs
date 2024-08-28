@@ -14,27 +14,27 @@ export class HomebrewWindow extends Application {
             }],
         abilities: [{
             name: "Ability 1",
-            ability: "Ability Description"
+            abilityDescription: "Ability Description"
         },
         {
             name: "Ability 2",
-            ability: "Ability Description"
+            abilityDescription: "Ability Description"
         },
         {
             name: "Ability 3",
-            ability: "Ability Description"
+            abilityDescription: "Ability Description"
         },
         {
             name: "Ability 4",
-            ability: "Ability Description"
+            abilityDescription: "Ability Description"
         },
         {
             name: "Ability 5",
-            ability: "Ability Description"
+            abilityDescription: "Ability Description"
         },
         {
             name: "Ability 6",
-            ability: "Ability Description"
+            abilityDescription: "Ability Description"
         },
         ]
     }
@@ -150,7 +150,7 @@ export class HomebrewWindow extends Application {
     _onRemovePower(event) {
         event.preventDefault();
         const powerIndex = event.currentTarget.getAttribute('data-power-index');
-        const newPowers = this.blasphemyOptions.powers.slice(0, powerIndex).concat(this.blasphemyOptions.powers.slice(powerIndex+1));
+        const newPowers = this.blasphemyOptions.powers.slice(0, powerIndex).concat(this.blasphemyOptions.powers.slice(Number(powerIndex)+1));
         this.blasphemyOptions.powers = newPowers;
         this.render(true);
     }
@@ -271,7 +271,7 @@ export class HomebrewWindow extends Application {
     _onRemoveTask(event) {
         event.preventDefault();
         const taskIndex = event.currentTarget.getAttribute('data-task-index');
-        const newTasks = this.agendaOptions.tasks.slice(0, taskIndex).concat(this.agendaOptions.tasks.slice(taskIndex+1));
+        const newTasks = this.agendaOptions.tasks.slice(0, taskIndex).concat(this.agendaOptions.tasks.slice(Number(taskIndex)+1));
         this.agendaOptions.tasks = newTasks;
         this.render(true);
     }
@@ -279,7 +279,7 @@ export class HomebrewWindow extends Application {
     _onRemoveAbility(event) {
         event.preventDefault();
         const abilityIndex = event.currentTarget.getAttribute('data-ability-index');
-        const newAbilities = this.agendaOptions.abilities.slice(0, abilityIndex).concat(this.agendaOptions.abilities.slice(abilityIndex+1));
+        const newAbilities = this.agendaOptions.abilities.slice(0, abilityIndex).concat(this.agendaOptions.abilities.slice(Number(abilityIndex)+1));
         this.agendaOptions.abilities = newAbilities;
         this.render(true);
     }
@@ -308,7 +308,7 @@ export class HomebrewWindow extends Application {
     _onChangeAbilityDescription(event) {
         event.preventDefault();
         const abilityIndex = event.currentTarget.getAttribute('data-ability-index');
-        this.agendaOptions.abilities[abilityIndex].ability = event.currentTarget.value;
+        this.agendaOptions.abilities[abilityIndex].abilityDescription = event.currentTarget.value;
         this.render(true);
     }
 
@@ -392,7 +392,7 @@ export class HomebrewWindow extends Application {
                 folder: agendaAbilityFolder.id,  // Assign the item to the folder
                 system: {
                     abilityName: ability.name,
-                    abilityDescription: ability.description
+                    abilityDescription: ability.abilityDescription
                 }
             };
             const createdAbility = await Item.create(createdAbilityData);
