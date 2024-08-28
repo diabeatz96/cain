@@ -59,16 +59,17 @@ export class CainActorSheet extends ActorSheet {
         relativeTo: this.actor,
       }
     );
-
-    context.enrichedDescription = await TextEditor.enrichHTML(
-      this.actor.system.severeAttack.description  || this.actor.system.attack.description,
-      {
-        secrets: this.document.isOwner,
-        async: true,
-        rollData: this.actor.getRollData(),
-        relativeTo: this.actor,
-      }
-    );
+    if (this.actor.system.severeAttack || this.actor.system.attack) {
+      context.enrichedDescription = await TextEditor.enrichHTML(
+        this.actor.system.severeAttack.description  || this.actor.system.attack.description,
+        {
+          secrets: this.document.isOwner,
+          async: true,
+          rollData: this.actor.getRollData(),
+          relativeTo: this.actor,
+        }
+      );
+    }
 
     context.effects = prepareActiveEffectCategories(
       this.actor.allApplicableEffects()
