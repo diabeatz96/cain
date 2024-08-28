@@ -78,20 +78,32 @@ export class CainActorSheet extends ActorSheet {
     const agendas = [];
     const blasphemies = [];
   
+    const agendaID = context.system.currentAgenda;
+    context.currentAgenda = null;
+    context.currentUnboldedAgendaTasks = [];
+    context.currentBoldedAgendaTasks = [];
+    context.currentAgendaAbilities = [];
+    if (agendaID !== "INVALID") context.currentAgenda = game.items.get(agendaID);
+    for (const agendaTaskID in context.system.currentUnboldedAgendaTasks) {
+      context.currentUnboldedAgendaTasks.push(game.items.get(context.system.currentUnboldedAgendaTasks[agendaTaskID]));
+    }    
+    for (const agendaTaskID in context.system.currentBoldedAgendaTasks) {
+      context.currentBoldedAgendaTasks.push(game.items.get(context.system.currentBoldedAgendaTasks[agendaTaskID]));
+    }
+    for (const agendaAbilityID in context.system.currentAgendaAbilities) {
+      context.currentAgendaAbilities.push(game.items.get(context.system.currentAgendaAbilities[agendaAbilityID]));
+    }
+    console.log(context.currentAgendaTasks);
+
+
     for (let i of context.items) {
       i.img = i.img || Item.DEFAULT_ICON;
       if (i.type === 'item') {
         gear.push(i);
-      } else if (i.type === 'agenda') {
-        agendas.push(i);
-      } else if (i.type === 'blasphemy') {
-        blasphemies.push(i);
       }
     }
   
     context.gear = gear;
-    context.agendas = agendas;
-    context.blasphemies = blasphemies;
   }
 
   _calculateRanges(context) {
@@ -195,6 +207,27 @@ export class CainActorSheet extends ActorSheet {
     html.find('#editable-agenda-abilities').on('click', '.remove-ability-button', this._removeAbilityButton.bind(this));
     html.find('#editable-agenda-items').on('change', '.editable-item-input', this._updateAgendaItem.bind(this));
     html.find('#editable-agenda-abilities').on('change', '.editable-ability-input', this._updateAgendaAbility.bind(this));
+    html.find('.agenda-drop-target').on('drop', async event => {
+          event.preventDefault();
+          const data = JSON.parse(event.originalEvent.dataTransfer.getData('text/plain'));
+          const agenda = await Item.fromDropData(data);
+          if (agenda.type !== "agenda") return;
+          console.log(agenda);
+          const boldedTasks = this.actor.system.currentBoldedAgendaTasks;
+          for (const boldedTaskIndex in agenda.system.boldedTasks) {
+            boldedTasks.push(agenda.system.boldedTasks[boldedTaskIndex]);
+          }
+          this.actor.update({
+            'system.currentAgenda': agenda.id,
+            'system.currentUnboldedAgendaTasks': agenda.system.unboldedTasks,
+            'system.currentBoldedAgendaTasks': boldedTasks
+          });
+          console.log(agenda.system.unboldedTasks);
+          console.log(this.actor.system.currentUnboldedAgendaTasks);
+          console.log(this.actor.system.currentBoldedAgendaTasks);
+    });
+    html.find('.remove-task-button').click(this._removeAgendaTask.bind(this));
+  
     // Bind the bolding functions
     html.find('.bold-item-button').click(this._boldAgendaItem.bind(this));
     html.find('.bold-ability-button').click(this._boldAgendaAbility.bind(this));
@@ -213,6 +246,21 @@ export class CainActorSheet extends ActorSheet {
     });
 
 }
+
+
+  _removeAgendaTask(event) {
+    event.preventDefault();
+    const index = event.currentTarget.getAttribute('data-index');
+    if (event.currentTarget.hasAttribute('data-bold')) {
+      const agendaBoldedTasks = this.actor.system.currentBoldedAgendaTasks;
+      const newAgendaBoldedTasks = agendaBoldedTasks.slice(0, index).concat(agendaBoldedTasks.slice(Number(index)+1));
+      this.actor.update({'system.currentBoldedAgendaTasks': newAgendaBoldedTasks});
+    } else {
+      const agendaUnboldedTasks = this.actor.system.currentUnboldedAgendaTasks;
+      const newAgendaUnboldedTasks = agendaUnboldedTasks.slice(0, index).concat(agendaUnboldedTasks.slice(Number(index)+1));
+      this.actor.update({'system.currentUnboldedAgendaTasks': newAgendaUnboldedTasks});
+    }
+  }
   
   _boldAgendaItem(event) {
     event.preventDefault();

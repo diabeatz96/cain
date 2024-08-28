@@ -108,16 +108,14 @@ export default class CainCharacter extends CainActorBase {
 
     schema.restDiceModifier = new fields.NumberField({ required: true, initial: 0, min: -3, max: 3 });
     
-    schema.currentAgendaItems = new fields.ArrayField(new fields.SchemaField({
-      text: new fields.StringField({ required: true, initial: " " }),
-      isBold: new fields.BooleanField({ required: true, initial: false })
-    }), { required: true, initial: [] });
-    
-    schema.currentAgendaAbilities = new fields.ArrayField(new fields.SchemaField({
-      text: new fields.StringField({ required: true, initial: " " }),
-      isBold: new fields.BooleanField({ required: true, initial: false })
-    }), { required: true, initial: [] });
-    
+    schema.currentBoldedAgendaTasks = new fields.ArrayField(new fields.StringField(), { required: true, initial: [] });
+    schema.currentUnboldedAgendaTasks = new fields.ArrayField(new fields.StringField(), { required: true, initial: [] });
+    schema.currentAgendaAbilities = new fields.ArrayField(new fields.StringField(), { required: true, initial: [] });
+    schema.currentAgenda = new fields.StringField({required: true, nullable: false, initial: "INVALID"});
+
+    schema.currentBlasphemies =  new fields.ArrayField(new fields.StringField(), { required: true, initial: [] });
+    schema.currentBlasphemyPowers =  new fields.ArrayField(new fields.StringField(), { required: true, initial: [] });
+
     return schema;
   }
 
