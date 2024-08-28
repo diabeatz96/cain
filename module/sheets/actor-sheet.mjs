@@ -3,6 +3,7 @@ import {
   prepareActiveEffectCategories,
 } from '../helpers/effects.mjs';
 
+import { SessionEndAdvancement} from  '../documents/session-end-advancement.mjs'
 import { CAIN } from '../helpers/config.mjs';
 
 /**
@@ -331,6 +332,7 @@ html.find('.remove-task-button').click(this._removeAgendaTask.bind(this));
 
   _openEndSessionModal(event) {
     event.preventDefault();
+    console.log(this.actor);
     new SessionEndAdvancement(this.actor).render(true);
   }
 
