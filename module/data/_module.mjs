@@ -13,5 +13,6 @@ export {default as CainSins} from "./item-sins.mjs";
 export {default as CainAgenda} from "./agenda/item-agenda.mjs";    
 export {default as CainAgendaTask} from "./agenda/item-agenda-task.mjs";    
 export {default as CainAgendaAbility} from "./agenda/item-agenda-ability.mjs";    
-export {default as CainBlasphemy} from "./item-blasphemy.mjs";
+export {default as CainBlasphemy} from "./blasphemy/item-blasphemy.mjs";
+export {default as CainBlasphemyPower} from "./blasphemy/item-blasphemy-power.mjs";
 

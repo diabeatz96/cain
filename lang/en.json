@@ -49,6 +49,7 @@
       "item": "Item",
       "agenda": "Agenda",
       "blasphemy": "Blasphemy",
+      "blasphemyPower": "Blasphemy Power",
       "agendaTask": "Agenda Task",
       "agendaAbility": "Agenda Ability"
     }

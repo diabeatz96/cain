@@ -18,7 +18,7 @@ import * as models from './data/_module.mjs';
 /*  Init Hook                                   */
 /* -------------------------------------------- */
 
-Hooks.once('init', function () {
+Hooks.once('init', async function () {
   // Add utility classes to the global game object so that they're more easily
   // accessible in global contexts.
   game.cain = {
@@ -55,6 +55,7 @@ Hooks.once('init', function () {
     item: models.CainItem,
     agenda: models.CainAgenda,
     blasphemy: models.CainBlasphemy,
+    blasphemyPower: models.CainBlasphemyPower,
     agendaTask: models.CainAgendaTask,
     agendaAbility: models.CainAgendaAbility,
   }
@@ -118,6 +119,9 @@ Hooks.once('init', function () {
       ui.players.render();
     }
   });
+
+  const blasphemyPowerTemplate = await getTemplate("systems/cain/templates/item/parts/item-blasphemy-power-sheet.hbs");
+  Handlebars.registerPartial("blasphemyPower", blasphemyPowerTemplate);
 
   // Preload Handlebars templates.
   return preloadHandlebarsTemplates();

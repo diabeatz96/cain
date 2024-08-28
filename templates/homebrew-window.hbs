@@ -48,8 +48,27 @@
         <footer style="position:absolute; bottom: 1%; width: 90%;"><button class="homebrew-text-color homebrew-submit-agenda">Create Agenda</button></footer>
     </div>
     <div class='tab homebrew-text-color' data-group='primary' data-tab='blasphemy'>
-      <ul>
-      </ul>
+        {{!-- {{#each agendaOptions.tasks}}
+        <li class="homebrew-text-color" data-homebrew-index="{{@index}}"> {{#if this.isBold}}<b>{{/if}}{{this.task}}{{#if this.isBold}}</b>{{/if}} <button class="homebrew-text-color homebrew-toggle-bold" data-homebrew-index="{{@index}}">Toggle Bold</button></li>
+        {{/each}} --}}
+        <textarea class="editable-item-input homebrew-text-color homebrew-blasphemy-name-input">{{blasphemyOptions.name}}</textarea>
+        <ul>
+        {{#each blasphemyOptions.powers}}
+            <li class='item flexrow'>
+              <textarea class="editable-item-input homebrew-text-color homebrew-power-name-input" data-power-index="{{@index}}">{{this.name}}</textarea>
+              <input type="checkbox" class="homebrew-power-passive-input" data-power-index="{{@index}}" {{#if this.isPassive}} checked {{/if}}>
+              <textarea class="editable-item-input homebrew-text-color homebrew-power-tags" data-power-index="{{@index}}">{{this.tags}}</textarea>
+              <textarea class="editable-item-input homebrew-text-color homebrew-power-input" data-power-index="{{@index}}">{{this.powerDescription}}</textarea>
+              <div class="item-controls">
+                <a class="item-control homebrew-remove-power homebrew-text-color" data-task-index="{{@index}}" title="Remove">
+                  <i class="fas fa-trash"></i>
+                </a>
+              </div>
+            </li>
+        {{/each}}
+        </ul>
+        <button class="homebrew-text-color homebrew-new-power">Additional Power</button>
+        <footer style="position:absolute; bottom: 1%; width: 90%;"><button class="homebrew-text-color homebrew-submit-blasphemy">Create Blasphemy</button></footer>
     </div>
 
   </section>

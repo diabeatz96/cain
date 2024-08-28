@@ -26,6 +26,5 @@ export const preloadHandlebarsTemplates = async function () {
     'systems/cain/templates/actor/npc-parts/actor-domains.hbs',
     // Item partials
     'systems/cain/templates/item/parts/item-effects.hbs',
-    
   ]);
 };

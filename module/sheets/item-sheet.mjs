@@ -80,6 +80,10 @@ export class CainItemSheet extends ItemSheet {
         };; return {name: "INVALID"};
       }).filter(item => item.name !== "INVALID");  
     }
+    if (this.item.type === "blasphemy") {
+      context.blasphemyPassives = this.item.system.powers.map(item => {return game.items.get(item);}).filter(item => {return item.system.isPassive});
+      context.blasphemyPowers = this.item.system.powers.map(item => {return game.items.get(item);}).filter(item => {return !item.system.isPassive});
+    }
     context.developerMode = game.settings.get('cain', 'developerMode');
     // Add the item's data to context.data for easier access, as well as flags.
     context.system = itemData.system;
