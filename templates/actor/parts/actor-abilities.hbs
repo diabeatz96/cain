@@ -113,7 +113,7 @@
               <i class="fas fa-trash"></i>
             </a>
       </h3>
-      <img src="path/to/your/image.png" alt="Blasphemy Image" class="blasphemy-image">
+      <img src={{blasphemy.img}} alt="Blasphemy Image" class="blasphemy-image">
       <h4>Passive{{#if (gt passives.length 1)}}s{{/if}}</h3>
       <ul class="editable-blasphemy-powers">
         {{#each passives}}
@@ -176,235 +176,240 @@
 </div>
 
 <style>
-.abilities-page {
-  padding: 20px;
-}
-
-.abilities-page .psyche-roll-button {
-  background: linear-gradient(45deg, #ff00cc, #3333ff);
-  color: #fff;
-  border: 2px solid #ff00cc;
-  padding: 10px 20px;
-  cursor: pointer;
-  font-family: "Lacquer", system-ui;
-  font-weight: 400;
-  font-style: normal;
-  font-size: 16px;
-  text-shadow: 1px 1px 2px #000;
-  transition: background 0.3s;
-}
-
-.abilities-page .psyche-roll-button:hover {
-  background: linear-gradient(45deg, #3333ff, #ff00cc);
-}
-
-.abilities-page .psyche-burst-checkboxes input[type="checkbox"] {
-  display: none;
-}
-
-.abilities-page .psyche-burst-checkboxes input[type="checkbox"] + label {
-  display: inline-block;
-  padding: 0;
-  background: url('systems/cain/assets/brain.png') no-repeat;
-  height: 50px;
-  width: 50px;
-  background-size: cover;
-  position: relative;
-}
-
-.abilities-page .psyche-burst-checkboxes input[type="checkbox"] + label::before {
-  content: '';
-  display: block;
-  width: 24px;
-  height: 24px;
-  border: 3px solid purple; /* Adjust the thickness here */
-  border-radius: 50%;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.abilities-page .psyche-burst-checkboxes input[type="checkbox"]:checked + label::before {
-  background-color: purple;
-}
-
-.abilities-page .items-section {
-  margin-top: 20px;
-}
-
-.abilities-page .items-list {
-  background-color: #1a1a1a;
-  color: #e0e0e0;
-  font-family: 'Courier New', Courier, monospace;
-  padding: 20px;
-  border: 1px solid #444;
-}
-
-.abilities-page .item-name h4 {
-  color: #ff0000;
-}
-
-.abilities-page .item-controls a {
-  color: #e0e0e0;
-  margin-left: 5px;
-}
-
-.abilities-page .item-controls a:hover {
-  color: #ff0000;
-}
-
-.abilities-page .add-agenda-ability-button, .abilities-page .create-blasphemy-button {
-  background-color: #1a1a1a;
-  color: #e0e0e0;
-  border: 1px solid #444;
-  padding: 10px 20px;
-  cursor: pointer;
-  margin-top: 10px;
-}
-
-.abilities-page .add-agenda-ability-button:hover, .abilities-page .create-blasphemy-button:hover {
-  background-color: #444;
-}
-
-
-.abilities-page .add-blasphemy-power-button, .abilities-page .create-blasphemy-button {
-  background-color: #1a1a1a;
-  color: #e0e0e0;
-  border: 1px solid #444;
-  padding: 10px 20px;
-  cursor: pointer;
-  margin-top: 10px;
-}
-
-.abilities-page .add-blasphemy-power-button:hover, .abilities-page .create-blasphemy-button:hover {
-  background-color: #444;
-}
-
-
-
-.abilities-page .psychedelic-text {
-  color: #9933ff;
-  font-family: "Lacquer", system-ui;
-  font-weight: 400;
-  font-style: normal;
-  font-size: 18px;
-  text-shadow: 2px 2px 4px #000;
-  animation: psychedelic-animation 1s infinite alternate;
-  font-weight: calc(100 + (900 - 100) * random());
-  font-size: calc(16px + (32px - 16px) * random());
-}
-
-.abilities-page .agenda-items, .abilities-page .agenda-abilities {
-  width: 48%;
-}
-
-@keyframes psychedelic-animation {
-  from {
+  /* Hover effects for agenda tasks and abilities */
+  .abilities-page .agenda-task:hover,
+  .abilities-page .agenda-ability:hover {
     color: #ff00cc;
+    cursor: pointer;
+    text-decoration: underline;
   }
-  to {
-    color: #3333ff;
+  
+  /* Existing styles for context */
+  .abilities-page {
+    padding: 20px;
   }
-}
-
-.abilities-page .my-agenda-section {
-  margin-bottom: 20px;
-  text-align: center; /* Center the My Agenda section */
-}
-
-
-.abilities-page .editable-agenda {
-  display: flex; /* Use flexbox to align items side by side */
-  justify-content: space-around; /* Space between the two sections */
-  text-align: left; /* Align text to the left within the editable agenda */
-}
-
-.abilities-page .editable-agenda h3 {
-  margin-top: 10px;
-  margin-bottom: 10px;
-  color: #e0e0e0;
-  font-family: 'Courier New', Courier, monospace;
-}
-
-.abilities-page .items-list {
-  background-color: #1a1a1a;
-  color: #e0e0e0;
-  font-family: 'Courier New', Courier, monospace;
-  padding: 10px; /* Reduced padding */
-  border: 1px solid #444;
-  list-style-type: none;
-  margin: 0;
-  padding-left: 0;
-  width: 100%; /* Make the lists take up less space */
-}
-
-.abilities-page .item {
-  display: flex;
-  align-items: center;
-  margin-bottom: 5px;
-}
-
-.abilities-page .item textarea {
-  flex: 1;
-  padding: 5px; /* Reduced padding */
-  border: 1px solid #444;
-  background-color: #333;
-  color: #e0e0e0;
-  border-radius: 4px;
-  margin-bottom: 5px;
-  font-size: 12px; /* Smaller font size */
-  width: 100%; /* Make the text areas wider */
-  resize: vertical; /* Allow vertical resizing */
-}
-
-.abilities-page .item button {
-  margin-left: 5px;
-  padding: 5px 10px;
-  background-color: #1a1a1a;
-  color: #e0e0e0;
-  border: 1px solid #444;
-  cursor: pointer;
-  font-size: 12px; /* Smaller font size */
-}
-
-.abilities-page .item button:hover {
-  background-color: #444;
-}
-
-.abilities-page .create-agenda-button {
-  background-color: #1a1a1a;
-  color: #e0e0e0;
-  border: 1px solid #444;
-  padding: 5px 10px; /* Reduced padding */
-  cursor: pointer;
-  margin-top: 10px;
-  font-size: 12px; /* Smaller font size */
-}
-
-.abilities-page .create-agenda-button:hover {
-  background-color: #444;
-}
-
-/* New Styles for Blasphemies */
-.abilities-page .blasphemy h3 {
-  color: #ff00cc;
-  font-family: "Lacquer", system-ui;
-  font-size: 24px;
-  text-shadow: 2px 2px 4px #000;
-}
-
-.abilities-page .blasphemy h4 {
-  color: #9933ff;
-  font-family: "Lacquer", system-ui;
-  font-size: 20px;
-  text-shadow: 2px 2px 4px #000;
-}
-
-.abilities-page .blasphemy .blasphemy-image {
-  width: 50px;
-  height: 50px;
-  margin-right: 10px;
-  vertical-align: middle;
-}
+  
+  .abilities-page .psyche-roll-button {
+    background: linear-gradient(45deg, #ff00cc, #3333ff);
+    color: #fff;
+    border: 2px solid #ff00cc;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-family: "Lacquer", system-ui;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 16px;
+    text-shadow: 1px 1px 2px #000;
+    transition: background 0.3s;
+  }
+  
+  .abilities-page .psyche-roll-button:hover {
+    background: linear-gradient(45deg, #3333ff, #ff00cc);
+  }
+  
+  .abilities-page .psyche-burst-checkboxes input[type="checkbox"] {
+    display: none;
+  }
+  
+  .abilities-page .psyche-burst-checkboxes input[type="checkbox"] + label {
+    display: inline-block;
+    padding: 0;
+    background: url('systems/cain/assets/brain.png') no-repeat;
+    height: 50px;
+    width: 50px;
+    background-size: cover;
+    position: relative;
+  }
+  
+  .abilities-page .psyche-burst-checkboxes input[type="checkbox"] + label::before {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 24px;
+    border: 3px solid purple; /* Adjust the thickness here */
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  .abilities-page .psyche-burst-checkboxes input[type="checkbox"]:checked + label::before {
+    background-color: purple;
+  }
+  
+  .abilities-page .items-section {
+    margin-top: 20px;
+  }
+  
+  .abilities-page .items-list {
+    background-color: #1a1a1a;
+    color: #e0e0e0;
+    font-family: 'Courier New', Courier, monospace;
+    padding: 20px;
+    border: 1px solid #444;
+  }
+  
+  .abilities-page .item-name h4 {
+    color: #ff0000;
+  }
+  
+  .abilities-page .item-controls a {
+    color: #e0e0e0;
+    margin-left: 5px;
+  }
+  
+  .abilities-page .item-controls a:hover {
+    color: #ff0000;
+  }
+  
+  .abilities-page .add-agenda-ability-button, .abilities-page .create-blasphemy-button {
+    background-color: #1a1a1a;
+    color: #e0e0e0;
+    border: 1px solid #444;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  .abilities-page .add-agenda-ability-button:hover, .abilities-page .create-blasphemy-button:hover {
+    background-color: #444;
+  }
+  
+  .abilities-page .add-blasphemy-power-button, .abilities-page .create-blasphemy-button {
+    background-color: #1a1a1a;
+    color: #e0e0e0;
+    border: 1px solid #444;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  .abilities-page .add-blasphemy-power-button:hover, .abilities-page .create-blasphemy-button:hover {
+    background-color: #444;
+  }
+  
+  .abilities-page .psychedelic-text {
+    color: #9933ff;
+    font-family: "Lacquer", system-ui;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 18px;
+    text-shadow: 2px 2px 4px #000;
+    animation: psychedelic-animation 1s infinite alternate;
+    font-weight: calc(100 + (900 - 100) * random());
+    font-size: calc(16px + (32px - 16px) * random());
+  }
+  
+  .abilities-page .agenda-items, .abilities-page .agenda-abilities {
+    width: 48%;
+  }
+  
+  @keyframes psychedelic-animation {
+    from {
+      color: #ff00cc;
+    }
+    to {
+      color: #3333ff;
+    }
+  }
+  
+  .abilities-page .my-agenda-section {
+    margin-bottom: 20px;
+    text-align: center; /* Center the My Agenda section */
+  }
+  
+  .abilities-page .editable-agenda {
+    display: flex; /* Use flexbox to align items side by side */
+    justify-content: space-around; /* Space between the two sections */
+    text-align: left; /* Align text to the left within the editable agenda */
+  }
+  
+  .abilities-page .editable-agenda h3 {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: #e0e0e0;
+    font-family: 'Courier New', Courier, monospace;
+  }
+  
+  .abilities-page .items-list {
+    background-color: #1a1a1a;
+    color: #e0e0e0;
+    font-family: 'Courier New', Courier, monospace;
+    padding: 10px; /* Reduced padding */
+    border: 1px solid #444;
+    list-style-type: none;
+    margin: 0;
+    padding-left: 0;
+    width: 100%; /* Make the lists take up less space */
+  }
+  
+  .abilities-page .item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+  }
+  
+  .abilities-page .item textarea {
+    flex: 1;
+    padding: 5px; /* Reduced padding */
+    border: 1px solid #444;
+    background-color: #333;
+    color: #e0e0e0;
+    border-radius: 4px;
+    margin-bottom: 5px;
+    font-size: 12px; /* Smaller font size */
+    width: 100%; /* Make the text areas wider */
+    resize: vertical; /* Allow vertical resizing */
+  }
+  
+  .abilities-page .item button {
+    margin-left: 5px;
+    padding: 5px 10px;
+    background-color: #1a1a1a;
+    color: #e0e0e0;
+    border: 1px solid #444;
+    cursor: pointer;
+    font-size: 12px; /* Smaller font size */
+  }
+  
+  .abilities-page .item button:hover {
+    background-color: #444;
+  }
+  
+  .abilities-page .create-agenda-button {
+    background-color: #1a1a1a;
+    color: #e0e0e0;
+    border: 1px solid #444;
+    padding: 5px 10px; /* Reduced padding */
+    cursor: pointer;
+    margin-top: 10px;
+    font-size: 12px; /* Smaller font size */
+  }
+  
+  .abilities-page .create-agenda-button:hover {
+    background-color: #444;
+  }
+  
+  /* New Styles for Blasphemies */
+  .abilities-page .blasphemy h3 {
+    color: #ff00cc;
+    font-family: "Lacquer", system-ui;
+    font-size: 24px;
+    text-shadow: 2px 2px 4px #000;
+  }
+  
+  .abilities-page .blasphemy h4 {
+    color: #9933ff;
+    font-family: "Lacquer", system-ui;
+    font-size: 20px;
+    text-shadow: 2px 2px 4px #000;
+  }
+  
+  .abilities-page .blasphemy .blasphemy-image {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+    vertical-align: middle;
+  }
 </style>

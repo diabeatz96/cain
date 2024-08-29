@@ -248,13 +248,14 @@ export class CainActorSheet extends ActorSheet {
     html.find('#add-agenda-ability-button').on('click', this._addAgendaAbility.bind(this));
     html.find('.add-blasphemy-power-button').on('click', this._addBlasphemyPower.bind(this));
     
+    // New event listeners for agenda tasks and abilities
     html.find('.agenda-task').on('click', (event) => {
-      const itemId = event.currentTarget.dataset.index;
+      const itemId = this.actor.system.currentAgenda; // Get the current agenda ID
       this._openAgendaItemSheet(itemId);
     });
-  
+
     html.find('.agenda-ability').on('click', (event) => {
-      const itemId = event.currentTarget.dataset.index;
+      const itemId = this.actor.system.currentAgenda; // Get the current agenda ID
       this._openAgendaItemSheet(itemId);
     });
 
@@ -300,9 +301,17 @@ html.find('.remove-task-button').click(this._removeAgendaTask.bind(this));
 
   _openAgendaItemSheet(itemId) {
     // Logic to open the agenda item sheet
+
+    /** We should add more complicated logic in event listenrr
+     * to handle different types of items
+     * AKA agenda, agendaTask, agendaAbility, blasphemy, blasphemyPower
+     * etc.
+     * 
+     * Right now this function only opens the whole Agenda you have assigned.
+     */
     console.log(`Opening agenda item sheet for item ID: ${itemId}`);
-    // Assuming you have a method to open the sheet, e.g., using Foundry's API
-    const item = this.actor.items.get(itemId);
+    const item = Item.get(itemId);
+    console.log(item);
     if (item) {
       item.sheet.render(true);
     }
