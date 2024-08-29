@@ -57,10 +57,10 @@
             <li class='item flexrow'>
               <textarea class="editable-item-input homebrew-text-color homebrew-power-name-input" data-power-index="{{@index}}">{{this.name}}</textarea>
               <input type="checkbox" class="homebrew-power-passive-input" data-power-index="{{@index}}" {{#if this.isPassive}} checked {{/if}}>
-              <textarea class="editable-item-input homebrew-text-color homebrew-power-tags" data-power-index="{{@index}}">{{this.tags}}</textarea>
+              <textarea class="editable-item-input homebrew-text-color homebrew-power-tags-input" data-power-index="{{@index}}">{{this.keywords}}</textarea>
               <textarea class="editable-item-input homebrew-text-color homebrew-power-input" data-power-index="{{@index}}">{{this.powerDescription}}</textarea>
               <div class="item-controls">
-                <a class="item-control homebrew-remove-power homebrew-text-color" data-task-index="{{@index}}" title="Remove">
+                <a class="item-control homebrew-remove-power homebrew-text-color" data-power-index="{{@index}}" title="Remove">
                   <i class="fas fa-trash"></i>
                 </a>
               </div>

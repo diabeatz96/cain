@@ -1,11 +1,11 @@
 <form class="{{cssClass}} form-blasphemy {{system.classType}}-theme" autocomplete="off">
   <header class="sheet-header">
-    <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}"/>
+    <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{system.powerName}}"/>
     <div class="header-fields">
-      <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Name" disabled/></h1>
+      <h1 class="charname"><input name="name" type="text" value="{{system.powerName}}" placeholder="Name" disabled/></h1>
       <div class="form-group">
         <label for="classType">Type</label>
-        <input type="text" name="system.classType" value="{{system.classType}}" disabled/>
+        <input type="text" name="system.classType" value="{{system.blasphemyType}}" disabled/>
 
       </div>
       <div class="form-group">

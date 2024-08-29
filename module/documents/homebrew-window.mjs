@@ -125,7 +125,7 @@ export class HomebrewWindow extends Application {
       
 
       html.find('.homebrew-blasphemy-name-input').change(this._onChangeBlasphemyName.bind(this));
-      html.find('.homebrew-new-ability').click(this._onCreateNewPower.bind(this));
+      html.find('.homebrew-new-power').click(this._onCreateNewPower.bind(this));
       html.find('.homebrew-power-name-input').change(this._onChangePowerName.bind(this));
       html.find('.homebrew-power-tags-input').change(this._onChangePowerTags.bind(this));
       html.find('.homebrew-power-input').change(this._onChangePowerDescription.bind(this));
@@ -241,7 +241,7 @@ export class HomebrewWindow extends Application {
             img: "icons/svg/item-bag.svg",
             folder: blasphemyFolder.id, // Assign the item to the folder
             system: {
-                agendaName: this.blasphemyOptions.name,
+                blasphemyName: this.blasphemyOptions.name,
                 powers: powerList,
             }
         };
