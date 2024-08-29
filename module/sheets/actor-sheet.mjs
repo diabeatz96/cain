@@ -230,24 +230,29 @@ export class CainActorSheet extends ActorSheet {
     html.find('#editable-agenda-items').on('change', '.editable-item-input', this._updateAgendaItem.bind(this));
     html.find('#editable-agenda-abilities').on('change', '.editable-ability-input', this._updateAgendaAbility.bind(this));
     html.find('#add-agenda-ability-button').on('click', this._addAgendaAbility.bind(this));
-    html.find('.agenda-drop-target').on('drop', async event => {
+    html.find('.abilities-page-drop-target').on('drop', async event => {
       event.preventDefault();
       const data = JSON.parse(event.originalEvent.dataTransfer.getData('text/plain'));
-      const agenda = await Item.fromDropData(data);
-      if (agenda.type !== "agenda") return;
-      console.log(agenda);
-      const boldedTasks = this.actor.system.currentBoldedAgendaTasks;
-      for (const boldedTaskIndex in agenda.system.boldedTasks) {
-        boldedTasks.push(agenda.system.boldedTasks[boldedTaskIndex]);
+      const itemDrop = await Item.fromDropData(data);
+      switch(itemDrop.type) {
+          case "agenda":
+            this._onDropAgenda(event, itemDrop);
+            break;
+          case "agendaTask":
+            this._onDropAgendaTask(event, itemDrop);
+            break;
+          case "agendaAbility":
+            this._onDropAgendaAbility(event, itemDrop);
+            break;
+          case "blasphemy":
+            this._onDropBlasphemy(event, itemDrop);
+            break;         
+          case "blasphemyPower":
+            this._onDropBlasphemyPower(event, itemDrop);
+            break;
+          default:
+            console.warn("Invalid drop type on ability page: " + itemDrop.type);
       }
-      this.actor.update({
-        'system.currentAgenda': agenda.id,
-        'system.currentUnboldedAgendaTasks': agenda.system.unboldedTasks,
-        'system.currentBoldedAgendaTasks': boldedTasks
-      });
-      console.log(agenda.system.unboldedTasks);
-      console.log(this.actor.system.currentUnboldedAgendaTasks);
-      console.log(this.actor.system.currentBoldedAgendaTasks);
 });
 html.find('.remove-task-button').click(this._removeAgendaTask.bind(this));
     // Bind the send to chat functions
@@ -265,6 +270,42 @@ html.find('.remove-task-button').click(this._removeAgendaTask.bind(this));
     });
 
 }
+
+  _onDropAgenda(event, agenda) {
+    const boldedTasks = this.actor.system.currentBoldedAgendaTasks;
+    const newBoldedTasks = boldedTasks.concat(agenda.system.boldedTasks.filter(boldedTask => {return !this.actor.system.currentBoldedAgendaTasks.includes(boldedTask)}));
+    this.actor.update({
+      'system.agenda': agenda.system.agendaName,
+      'system.currentAgenda': agenda.id,
+      'system.currentUnboldedAgendaTasks': agenda.system.unboldedTasks,
+      'system.currentBoldedAgendaTasks': newBoldedTasks
+    });
+  }
+
+  _onDropAgendaTask(event, agendaTask) {
+    const isBold = agendaTask.system.isBold
+    const taskList = (isBold ? this.actor.system.currentBoldedAgendaTasks : this.actor.system.currentUnboldedAgendaTasks);
+    taskList.push(agendaTask.id);
+    this.actor.update({
+      'system.currentUnboldedAgendaTasks': ( isBold ? this.actor.system.currentUnboldedAgendaTasks : taskList),
+      'system.currentBoldedAgendaTasks':  ( isBold ? taskList : this.actor.system.currentBoldedAgendaTasks)
+    });
+  }
+
+  _onDropAgendaAbility(event, agendaAbility) {
+    const abilityList = this.actor.system.currentAgendaAbilities;
+    abilityList.push(agendaAbility.id);
+    this.actor.update({
+      'system.currentAgendaAbilities': abilityList
+    });
+  }
+
+  _onDropBlasphemy(event, agenda) {
+
+  }
+  _onDropBlasphemyPower(event, agenda) {
+
+  }
 
   _addAgendaAbility(event) {
     event.preventDefault();
