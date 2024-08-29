@@ -184,7 +184,7 @@
           </select>
           <button type="button" class="add-blasphemy-power-button" {{#unless availablePowers.length}} disabled {{/unless}}>Add Power</button>
         </div>
-        <div class="power-description-card">          
+        <div class="available-power-description-card">          
           <h4>Keywords</h4>
           <p class="powerKeywords"></p>
           <h4>Power Description</h4>
@@ -521,6 +521,7 @@
     padding: 10px;
     margin-top: 10px;
     border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s;
   }
 
   .abilities-page .power-description-card h4 {
@@ -592,5 +593,39 @@
     margin: 0 0 10px 0;
     font-family: 'Courier New', Courier, monospace;
   }
+
+  .abilities-page .power-description-card {
+    transition: opacity 1s ease-in-out, max-height 1s ease-in-out, transform 1s ease-in-out, background-color 1s ease-in-out, box-shadow 1s ease-in-out, color 1s ease-in-out;
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transform: scale(0.4) rotate(-10deg);
+    background-color: rgba(0, 0, 0, 0);
+    box-shadow: 0 0 15px rgba(128, 0, 128, 0);
+    color: #4b0082; /* Initial dark purple text color */
+  }
+
+  .abilities-page .power-description-card.visible {
+    opacity: 1;
+    max-height: 1000px; /* Set a high enough value to accommodate the content */
+    transform: scale(0.95); /* Remove fixed rotation */
+    background-color: rgba(75, 0, 130, 0.9); /* Dark purple background */
+    box-shadow: 0 0 30px rgba(138, 43, 226, 1), 0 0 50px rgba(75, 0, 130, 0.7); /* Psychedelic glowing effect */
+    color: #dda0dd; /* Light purple text color */
+  }
+
+
+  .abilities-page .available-power-description-card{
+    margin-top: 10px;
+    opacity: 1;
+    max-height: 1000px; /* Set a high enough value to accommodate the content */
+    padding: 10px;
+    border: 1px solid #444;
+    border-radius: 4px;
+    background-color: rgba(75, 0, 130, 0.9); /* Dark purple background */
+    box-shadow: 0 0 30px rgba(138, 43, 226, 1), 0 0 50px rgba(75, 0, 130, 0.7); /* Psychedelic glowing effect */
+    color: #dda0dd; /* Light purple text color */
+  }
+
 
 </style>
