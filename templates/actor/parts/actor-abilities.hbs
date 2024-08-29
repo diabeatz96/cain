@@ -161,18 +161,18 @@
           </ul>
         <div class="form-group">
           <label for="selectedPower" class="labelSelectedPower">Available Powers:</label>
-          <select name="selectedPower" id="selectedPower">
+          <select name="selectedPower" class="selectedPower">
             {{#each availablePowers}}
             <option value="{{this.id}}" data-description="{{this.system.powerDescription}}" data-keywords="{{this.system.keywords}}">{{this.system.powerName}}</option>
             {{/each}}
           </select>
           <button type="button" class="add-blasphemy-power-button" {{#unless availablePowers.length}} disabled {{/unless}}>Add Power</button>
         </div>
-        <div class="power-description-card">
-          <h4>Power Description</h4>
-          <p id="powerDescription"></p>
+        <div class="power-description-card">          
           <h4>Keywords</h4>
-          <p id="powerKeywords"></p>
+          <p class="powerKeywords"></p>
+          <h4>Power Description</h4>
+          <p class="powerDescription"></p>
         </div>
       {{/each}}
       {{#if currentUnlinkedBlasphemyPowers.length}}

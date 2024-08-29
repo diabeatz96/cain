@@ -325,10 +325,8 @@ export class CainActorSheet extends ActorSheet {
       this._onSinTypeSelect(sinType);
     });
 
-    const selectedPowerElement = html.find('#selectedPower')[0];
-    if (selectedPowerElement) {
-      this._onPowerSelect({ target: selectedPowerElement });
-    }
+    //Initialize the power descriptions
+    Array.from(html.find('.selectedPower')).forEach(selectedPowerElement => {this._onPowerSelect({ target: selectedPowerElement });});
 
     // Call _onAbilitySelect when the sheet is loaded
     const selectedAbilityElement = html.find('#selectedAgenda')[0];
@@ -336,7 +334,7 @@ export class CainActorSheet extends ActorSheet {
       this._onAbilitySelect({ target: selectedAbilityElement });
     }
 
-    html.find('#selectedPower').on('change', this._onPowerSelect.bind(this));
+    html.find('.selectedPower').on('change', this._onPowerSelect.bind(this));
 
     // Event listener for selectedAgenda
     html.find('#selectedAgenda').change(this._onAbilitySelect.bind(this));
@@ -361,16 +359,16 @@ export class CainActorSheet extends ActorSheet {
   _onPowerSelect(event) {
     const selectElement = event.target;
     if (selectElement.options.length === 0) {
-      document.getElementById('powerDescription').innerText = 'There are no more selectable powers.';
-      document.getElementById('powerKeywords').innerText = 'None';
+      selectElement.parentElement.parentElement.querySelector('.powerDescription').innerText = 'There are no more selectable powers.';
+      selectElement.parentElement.parentElement.querySelector('.powerKeywords').innerText = 'None';
       return;
     }
 
     const selectedOption = selectElement.options[selectElement.selectedIndex];
     const description = selectedOption.getAttribute('data-description');
     const keywords = selectedOption.getAttribute('data-keywords');
-    document.getElementById('powerDescription').innerText = description;
-    document.getElementById('powerKeywords').innerText = keywords ? keywords.split(',').join(', ') : '';
+    selectElement.parentElement.parentElement.querySelector('.powerDescription').innerText = description;
+    selectElement.parentElement.parentElement.querySelector('.powerKeywords').innerText = keywords ? keywords.split(',').join(', ') : '';
   }
 
   _openAgendaItemSheet(itemId) {
@@ -628,7 +626,7 @@ export class CainActorSheet extends ActorSheet {
 
   _addBlasphemyPower(event) {
     event.preventDefault();
-    const powerID = event.currentTarget.parentElement.querySelector('#selectedPower').value;
+    const powerID = event.currentTarget.parentElement.querySelector('.selectedPower').value;
     const currentPowers = this.actor.system.currentBlasphemyPowers;
     if (currentPowers.includes(powerID)) return;
     currentPowers.push(powerID);
