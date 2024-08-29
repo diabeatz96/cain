@@ -286,8 +286,6 @@ export class CainActorSheet extends ActorSheet {
       this._openBlasphemyItemSheet(itemId);
     });
 
-    html.find('#selectedPower').on('change', this._onPowerSelect.bind(this));
-
     html.find('.abilities-page-drop-target').on('drop', async event => {
       event.preventDefault();
       const data = JSON.parse(event.originalEvent.dataTransfer.getData('text/plain'));
@@ -332,7 +330,33 @@ export class CainActorSheet extends ActorSheet {
       this._onPowerSelect({ target: selectedPowerElement });
     }
 
+    // Call _onAbilitySelect when the sheet is loaded
+    const selectedAbilityElement = html.find('#selectedAgenda')[0];
+    if (selectedAbilityElement) {
+      this._onAbilitySelect({ target: selectedAbilityElement });
+    }
+
+    html.find('#selectedPower').on('change', this._onPowerSelect.bind(this));
+
+    // Event listener for selectedAgenda
+    html.find('#selectedAgenda').change(this._onAbilitySelect.bind(this));
+
 }
+
+  _onAbilitySelect(event) {
+    const selectElement = event.target;
+    if (selectElement.options.length === 0) {
+      document.getElementById('abilityDescription').innerText = 'No more available Abilites';
+      return;
+    }
+
+    const selectedOption = selectElement.options[selectElement.selectedIndex];
+    console.log(selectedOption);
+    const description = selectedOption.getAttribute('data-description');
+    console.log(description);
+    document.getElementById('abilityDescription').innerText = description;
+  }
+
 
   _onPowerSelect(event) {
     const selectElement = event.target;

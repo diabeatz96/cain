@@ -89,15 +89,21 @@
             </li>
           {{/each}}
         </ul>
-        <div class="form-group">
-          <label for="selectedAgenda">Available Abilities:</label>
-          <select name="selectedAgenda" id="selectedAgenda" style="background-color:antiquewhite">
-            {{#each currentAgendaAvailableAbilities}}
-              <option value="{{this.id}}"><a href="#">{{this.name}}</a></option>
-            {{/each}}
-          </select>
-          <button type="button" id="add-agenda-ability-button" class="add-agenda-ability-button" {{#unless currentAgendaAvailableAbilities.length}} disabled {{/unless}}>Add Ability</button>
+      <div class="form-group">
+        <div style="display: inline-block; margin-right: 10px">
+          <label for="selectedTask" style="font-size: smaller;">Available Abilities:</label>
+        <select name="selectedAgenda" id="selectedAgenda">
+          {{#each currentAgendaAvailableAbilities}}
+            <option value="{{this.id}}" data-description="{{this.system.abilityDescription}}">{{this.name}}</option>
+          {{/each}}
+        </select>
         </div>
+        <button type="button" id="add-agenda-ability-button" class="add-agenda-ability-button" {{#unless currentAgendaAvailableAbilities.length}} disabled {{/unless}}>Add Ability</button>
+      </div>
+      <div class="ability-description-card">
+        <h4>Ability Description</h4>
+        <p id="abilityDescription"></p>
+      </div>
       </div>
     </div>
   </div>
@@ -106,6 +112,11 @@
     <!-- Blasphemy Powers -->
     <div class="blasphemy"  style="width: 100%;">
       <h2>Blasphemies</h2>
+      {{#unless blasphemyData}}
+      <div class="blasphemy-powers">
+        <p class="psychedelic-text">Drag blasphemy onto your sheet.</p>
+      </div>
+      {{/unless}}
       {{#each blasphemyData}}
       <div class="blasphemy-powers">
         <div class="blasphemy-header">
@@ -133,6 +144,9 @@
           </ul>
           <h4>Powers</h4>
           <ul>
+            {{#unless powers}}
+            <li>No Powers</li>
+            {{/unless}}
             {{#each powers}}
             <li>
               <span data-id="{{this.id}}" class="blasphemy-power" title="{{this.system.powerDescription}}">{{this.system.powerName}}</span>
@@ -146,7 +160,7 @@
             {{/each}}
           </ul>
         <div class="form-group">
-          <label for="selectedPower">Available Powers:</label>
+          <label for="selectedPower" class="labelSelectedPower">Available Powers:</label>
           <select name="selectedPower" id="selectedPower">
             {{#each availablePowers}}
             <option value="{{this.id}}" data-description="{{this.system.powerDescription}}" data-keywords="{{this.system.keywords}}">{{this.system.powerName}}</option>
@@ -179,10 +193,11 @@
         </ul>
       </div>
       {{/if}}
+       </div>
+     </div>
     </div>
   </div>
-  </div>
-  </div>
+</div>
 
 <style>
   /* Hover effects for agenda tasks and abilities */
@@ -503,4 +518,63 @@
     font-family: "Lacquer", system-ui;
     font-size: medium;
   }
+
+  .abilities-page .ability-description-card {
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid #444;
+    border-radius: 4px;
+    background-color: #333;
+    color: #ddd;
+  }
+
+  .abilities-page .ability-description-card h4 {
+    margin: 0 0 10px 0;
+    font-family: "Lacquer", system-ui;
+    text-decoration: underline;
+    color: #ddd;
+  }
+
+  .abilities-page .add-agenda-ability-button {
+    margin-top: 10px;
+    padding: 8px 12px;
+    background-color: #555;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .abilities-page .add-agenda-ability-button:disabled {
+    background-color: #777;
+    cursor: not-allowed;
+  }
+
+  .abilities-page select {
+    width: 100%;
+    background-color: #444;
+    color: #ddd;
+    border: 1px solid #555;
+    border-radius: 4px;
+  }
+
+  .abilities-page select option {
+    background-color: #444;
+    color: #ddd;
+  }
+
+  .abilities-page select option:checked {
+    background-color: #555;
+    color: #fff;
+  }
+
+  .abilities-page .ability-description-card p {
+    margin: 0;
+  }
+
+  .abilities-page .ability-description-card h4 {
+    margin: 0 0 10px 0;
+    font-family: 'Courier New', Courier, monospace;
+  }
+
 </style>
