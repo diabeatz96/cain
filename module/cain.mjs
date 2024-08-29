@@ -294,18 +294,18 @@ Hooks.once('ready', function () {
 
   // Add the Talisman button when the action bar is first ready
   addTalismanButton();
-  addHomebrewButton();
   addPlayerOverviewButton();
   // Add the Risk Roll and Fate Roll buttons when the action bar is first ready
   addRiskRollButton();
   addFateRollButton();
+  addHomebrewButton();
 
   // Ensure the buttons are added every time the action bar is rendered
   Hooks.on('renderHotbar', () => {
     addTalismanButton();
-    addHomebrewButton();
     addRiskRollButton();
     addFateRollButton();
+    addHomebrewButton();
   });
 
   // Register hotbar drop hook
