@@ -90,8 +90,8 @@
           {{/each}}
         </ul>
         <div class="form-group">
-          <label for="selectedItem">Available Abilities:</label>
-          <select name="selectedItem" id="selectedItem" style="background-color:antiquewhite">
+          <label for="selectedAgenda">Available Abilities:</label>
+          <select name="selectedAgenda" id="selectedAgenda" style="background-color:antiquewhite">
             {{#each currentAgendaAvailableAbilities}}
               <option value="{{this.id}}"><a href="#">{{this.name}}</a></option>
             {{/each}}
@@ -102,88 +102,98 @@
     </div>
   </div>
   <!-- Items Section -->
-  <div class="items-section" style="display: flex; justify-content: space-between;">
-  <!-- Blasphemy Powers -->
-  <div class="blasphemy" style="width: 100%;">
-    <h2>Blasphemies</h2>
-    {{#each blasphemyData}}
-    <div class="blasphemy-powers" style="width: 100%;">
-      <h3>{{blasphemy.system.blasphemyName}}
+  <div class="items-section" style="width: 100%;">
+    <!-- Blasphemy Powers -->
+    <div class="blasphemy"  style="width: 100%;">
+      <h2>Blasphemies</h2>
+      {{#each blasphemyData}}
+      <div class="blasphemy-powers">
+        <div class="blasphemy-header">
+          <img src={{blasphemy.img}} alt="Blasphemy Image" class="blasphemy-image">
+          <h3>{{blasphemy.system.blasphemyName}}
             <a class="item-control remove-blasphemy-button" data-id="{{blasphemy.id}}" title="Remove">
               <i class="fas fa-trash"></i>
             </a>
-      </h3>
-      <img src={{blasphemy.img}} alt="Blasphemy Image" class="blasphemy-image">
-      <h4>Passive{{#if (gt passives.length 1)}}s{{/if}}</h3>
-      <ul class="editable-blasphemy-powers">
-        {{#each passives}}
-          <li>
-            <span data-id="{{this.id}}" title="{{this.system.powerDescription}}">{{this.system.powerName}}</span>
-            <a class="item-control blasphemy-power-to-chat" data-id="{{this.id}}" title="Send to Chat">
-              <i class="fas fa-comment"></i>
-            </a>
-            <a class="item-control remove-blasphemy-power-button" data-id="{{this.id}}" title="Remove">
-              <i class="fas fa-trash"></i>
-            </a>
-          </li>
-        {{/each}}
-      </ul>
-      <h4>Powers</h3>
-      <ul>
-        {{#each powers}}
-          <li>
-            <span data-id="{{this.id}}" title="{{this.system.powerDescription}}">{{this.system.powerName}}</span>
-            <a class="item-control blasphemy-power-to-chat" data-id="{{this.id}}" title="Send to Chat">
-              <i class="fas fa-comment"></i>
-            </a>
-            <a class="item-control remove-blasphemy-power-button" data-id="{{this.id}}" title="Remove">
-              <i class="fas fa-trash"></i>
-            </a>
-          </li>
-        {{/each}}
-      </ul>
-      <div class="form-group">
-        <label for="selectedItem">Available Powers:</label>
-        <select name="selectedItem" id="selectedItem" style="background-color:antiquewhite">
-          {{#each availablePowers}}
-            <option value="{{this.id}}"><a href="#">{{this.system.powerName}}</a></option>
-          {{/each}}
-        </select>
-        <button type="button" class="add-blasphemy-power-button" {{#unless availablePowers.length}} disabled {{/unless}}>Add Power</button>
-      </div>
-    </div>
-    
-    {{/each}}
-    {{#if currentUnlinkedBlasphemyPowers.length}}
-        <div class="blasphemy-powers" style="width: 100%;">
-          <h3>Other Powers</h3>
-            <ul class="editable-blasphemy-powers">
-            {{#each currentUnlinkedBlasphemyPowers}}
-              <li>
-                <span data-id="{{this.id}}" title="{{this.system.powerDescription}}">{{this.system.powerName}}</span>
-                <a class="item-control blasphemy-power-to-chat" data-id="{{this.id}}" title="Send to Chat">
-                  <i class="fas fa-comment"></i>
-                </a>
-                <a class="item-control remove-blasphemy-power-button" data-id="{{this.id}}" title="Remove">
-                  <i class="fas fa-trash"></i>
-                </a>
-              </li>
+          </h3>
+        </div>
+        <div class="blasphemy-details">
+          <h4>Passive{{#if (gt passives.length 1)}}s{{/if}}</h4>
+          <ul class="editable-blasphemy-powers">
+            {{#each passives}}
+            <li>
+              <span data-id="{{this.id}}" class="blasphemy-passive" title="{{this.system.powerDescription}}">{{this.system.powerName}}</span>
+              <a class="item-control blasphemy-power-to-chat" data-id="{{this.id}}" title="Send to Chat">
+                <i class="fas fa-comment"></i>
+              </a>
+              <a class="item-control remove-blasphemy-power-button" data-id="{{this.id}}" title="Remove">
+                <i class="fas fa-trash"></i>
+              </a>
+            </li>
             {{/each}}
           </ul>
-    {{/if}}
+          <h4>Powers</h4>
+          <ul>
+            {{#each powers}}
+            <li>
+              <span data-id="{{this.id}}" class="blasphemy-power" title="{{this.system.powerDescription}}">{{this.system.powerName}}</span>
+              <a class="item-control blasphemy-power-to-chat" data-id="{{this.id}}" title="Send to Chat">
+                <i class="fas fa-comment"></i>
+              </a>
+              <a class="item-control remove-blasphemy-power-button" data-id="{{this.id}}" title="Remove">
+                <i class="fas fa-trash"></i>
+              </a>
+            </li>
+            {{/each}}
+          </ul>
+        <div class="form-group">
+          <label for="selectedPower">Available Powers:</label>
+          <select name="selectedPower" id="selectedPower">
+            {{#each availablePowers}}
+            <option value="{{this.id}}" data-description="{{this.system.powerDescription}}" data-keywords="{{this.system.keywords}}">{{this.system.powerName}}</option>
+            {{/each}}
+          </select>
+          <button type="button" class="add-blasphemy-power-button" {{#unless availablePowers.length}} disabled {{/unless}}>Add Power</button>
+        </div>
+        <div class="power-description-card">
+          <h4>Power Description</h4>
+          <p id="powerDescription"></p>
+          <h4>Keywords</h4>
+          <p id="powerKeywords"></p>
+        </div>
+      {{/each}}
+      {{#if currentUnlinkedBlasphemyPowers.length}}
+      <div class="blasphemy-powers">
+        <h3>Other Powers</h3>
+        <ul class="editable-blasphemy-powers">
+          {{#each currentUnlinkedBlasphemyPowers}}
+          <li>
+            <span data-id="{{this.id}}" title="{{this.system.powerDescription}}">{{this.system.powerName}}</span>
+            <a class="item-control blasphemy-power-to-chat" data-id="{{this.id}}" title="Send to Chat">
+              <i class="fas fa-comment"></i>
+            </a>
+            <a class="item-control remove-blasphemy-power-button" data-id="{{this.id}}" title="Remove">
+              <i class="fas fa-trash"></i>
+            </a>
+          </li>
+          {{/each}}
+        </ul>
+      </div>
+      {{/if}}
+    </div>
   </div>
-</div>
-</div>
+  </div>
+  </div>
 
 <style>
   /* Hover effects for agenda tasks and abilities */
   .abilities-page .agenda-task:hover,
-  .abilities-page .agenda-ability:hover {
+  .abilities-page .agenda-ability:hover,
+  .abilities-page .blasphemy-passive:hover,
+  .abilities-page .blasphemy-power:hover {
     color: #ff00cc;
     cursor: pointer;
     text-decoration: underline;
   }
-  
   /* Existing styles for context */
   .abilities-page {
     padding: 20px;
@@ -391,25 +401,106 @@
     background-color: #444;
   }
   
-  /* New Styles for Blasphemies */
   .abilities-page .blasphemy h3 {
     color: #ff00cc;
     font-family: "Lacquer", system-ui;
     font-size: 24px;
-    text-shadow: 2px 2px 4px #000;
+    text-shadow: 2px 2px 4px #520088;
+    display: inline-block;
+    margin-left: 10px;
+    vertical-align: middle;
   }
-  
+
   .abilities-page .blasphemy h4 {
     color: #9933ff;
     font-family: "Lacquer", system-ui;
     font-size: 20px;
     text-shadow: 2px 2px 4px #000;
   }
-  
+
+
   .abilities-page .blasphemy .blasphemy-image {
     width: 50px;
     height: 50px;
-    margin-right: 10px;
     vertical-align: middle;
+  }
+
+  .abilities-page .blasphemy-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .abilities-page .blasphemy .blasphemy-image {
+    width: 50px;
+    height: 50px;
+    vertical-align: middle;
+  }
+
+  
+  .abilities-page .form-group {
+    margin-top: 10px;
+  }
+
+  .abilities-page .blasphemy .form-group label {
+    margin-right: 10px;
+    color: #ff00cc;
+    font-family: "Lacquer", system-ui;
+  }
+
+  .abilities-page .blasphemy .form-group select {
+    background-color: #1a1a1a;
+    color: #ff00cc;
+    border: 1px solid #ff00cc;
+    font-family: "Lacquer", system-ui;
+    font-size: 16px;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+  .abilities-page .blasphemy .form-group select:hover {
+    background-color: #ff00cc;
+    color: #1a1a1a;
+  }
+
+  .abilities-page .blasphemy .add-blasphemy-power-button {
+    margin-left: 10px;
+    background-color: #1a1a1a;
+    color: #ff00cc;
+    border: 1px solid #ff00cc;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-family: "Lacquer", system-ui;
+    font-size: 16px;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+  .abilities-page .blasphemy .add-blasphemy-power-button:hover {
+    background-color: #ff00cc;
+    color: #1a1a1a;
+  }
+
+    .abilities-page .power-description-card {
+    font-family: "Courier New", Courier, monospace;
+    background-color: #1a1a1a;
+    color: #ff00cc;
+    border: 1px solid #ff00cc;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 4px;
+  }
+
+  .abilities-page .power-description-card h4 {
+    margin: 0 0 10px 0;
+    font-family: "Lacquer", system-ui;
+    text-decoration: underline;
+  }
+
+  .abilities-page .power-description-card p {
+    margin: 0;
+    font-family: "Lacquer", system-ui;
+    font-size: medium;
   }
 </style>

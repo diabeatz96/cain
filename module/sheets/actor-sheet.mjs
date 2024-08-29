@@ -276,6 +276,17 @@ export class CainActorSheet extends ActorSheet {
       this._openAgendaItemSheet(itemId);
     });
 
+    html.find('.blasphemy-passive').on('click', (event) => {
+      const itemId = $(event.currentTarget).data('id'); // Get the blasphemy passive ID
+      this._openBlasphemyItemSheet(itemId);
+    });
+    
+    html.find('.blasphemy-power').on('click', (event) => {
+      const itemId = $(event.currentTarget).data('id'); // Get the blasphemy power ID
+      this._openBlasphemyItemSheet(itemId);
+    });
+
+    html.find('#selectedPower').on('change', this._onPowerSelect.bind(this));
 
     html.find('.abilities-page-drop-target').on('drop', async event => {
       event.preventDefault();
@@ -301,7 +312,7 @@ export class CainActorSheet extends ActorSheet {
             console.warn("Invalid drop type on ability page: " + itemDrop.type);
       }
 });
-html.find('.remove-task-button').click(this._removeAgendaTask.bind(this));
+    html.find('.remove-task-button').click(this._removeAgendaTask.bind(this));
     // Bind the send to chat functions
     html.find('.agenda-task-to-chat').click(this._sendAgendaTaskMessage.bind(this));
     html.find('.agenda-ability-to-chat').click(this._sendAgendaAbilityMessage.bind(this));
@@ -315,7 +326,28 @@ html.find('.remove-task-button').click(this._removeAgendaTask.bind(this));
       const sinType = event.target.value;
       this._onSinTypeSelect(sinType);
     });
+
+    const selectedPowerElement = html.find('#selectedPower')[0];
+    if (selectedPowerElement) {
+      this._onPowerSelect({ target: selectedPowerElement });
+    }
+
 }
+
+  _onPowerSelect(event) {
+    const selectElement = event.target;
+    if (selectElement.options.length === 0) {
+      document.getElementById('powerDescription').innerText = 'There are no more selectable powers.';
+      document.getElementById('powerKeywords').innerText = 'None';
+      return;
+    }
+
+    const selectedOption = selectElement.options[selectElement.selectedIndex];
+    const description = selectedOption.getAttribute('data-description');
+    const keywords = selectedOption.getAttribute('data-keywords');
+    document.getElementById('powerDescription').innerText = description;
+    document.getElementById('powerKeywords').innerText = keywords ? keywords.split(',').join(', ') : '';
+  }
 
   _openAgendaItemSheet(itemId) {
     // Logic to open the agenda item sheet
@@ -328,6 +360,16 @@ html.find('.remove-task-button').click(this._removeAgendaTask.bind(this));
      * Right now this function only opens the whole Agenda you have assigned.
      */
     console.log(`Opening agenda item sheet for item ID: ${itemId}`);
+    const item = Item.get(itemId);
+    console.log(item);
+    if (item) {
+      item.sheet.render(true);
+    }
+  }
+
+  _openBlasphemyItemSheet(itemId) {
+    // Logic to open the blasphemy item sheet
+    console.log(`Opening blasphemy item sheet for item ID: ${itemId}`);
     const item = Item.get(itemId);
     console.log(item);
     if (item) {
@@ -552,7 +594,7 @@ html.find('.remove-task-button').click(this._removeAgendaTask.bind(this));
 
   _addAgendaAbility(event) {
     event.preventDefault();
-    const abilityID = event.currentTarget.parentElement.querySelector('#selectedItem').value;
+    const abilityID = event.currentTarget.parentElement.querySelector('#selectedAgenda').value;
     const currentAbilities = this.actor.system.currentAgendaAbilities;
     if (currentAbilities.includes(abilityID)) return;
     currentAbilities.push(abilityID);
@@ -562,7 +604,7 @@ html.find('.remove-task-button').click(this._removeAgendaTask.bind(this));
 
   _addBlasphemyPower(event) {
     event.preventDefault();
-    const powerID = event.currentTarget.parentElement.querySelector('#selectedItem').value;
+    const powerID = event.currentTarget.parentElement.querySelector('#selectedPower').value;
     const currentPowers = this.actor.system.currentBlasphemyPowers;
     if (currentPowers.includes(powerID)) return;
     currentPowers.push(powerID);
