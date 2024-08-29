@@ -1,4 +1,4 @@
-<form class="{{cssClass}} form-blasphemy {{system.classType}}-theme" autocomplete="off">
+<form class="{{cssClass}} form-blasphemy {{system.blasphemyType}}-theme" autocomplete="off">
   <header class="sheet-header">
     <img class="profile-img" src="{{this.img}}" data-edit="img" title="{{system.powerName}}"/>
     <div class="header-fields">
@@ -21,6 +21,6 @@
 
   {{!-- Sheet Body --}}
   <section class='sheet-body'>
-      <w>{{system.powerDescription}}</w>
+      <w>{{#formatted system.powerDescription}}{{/formatted}}</w>
   </section>
 </form>
