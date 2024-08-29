@@ -91,6 +91,18 @@ export class CainActorSheet extends ActorSheet {
     context.currentUnboldedAgendaTasks = this._getItemsFromIDs(context.system.currentUnboldedAgendaTasks);
     context.currentBoldedAgendaTasks = this._getItemsFromIDs(context.system.currentBoldedAgendaTasks);
     context.currentAgendaAbilities = this._getItemsFromIDs(context.system.currentAgendaAbilities);
+    context.currentBlasphemies = this._getItemsFromIDs(context.system.currentBlasphemies);
+    context.currentBlasphemyPowers = this._getItemsFromIDs(context.system.currentBlasphemyPowers);
+    context.currentUnlinkedBlasphemyPowers = this._getItemsFromIDs(context.system.currentBlasphemyPowers.filter(blasphemyPowerID => {return context.currentBlasphemies.map(blasphemy => {return !blasphemy.system.powers.includes(blasphemyPowerID)}).reduce((a,b) => {return a && b;});}));
+
+    context.blasphemyData = context.currentBlasphemies.map(blasphemy => {return {
+      "blasphemy" : blasphemy,
+      "passives" : this._getItemsFromIDs(blasphemy.system.powers.filter(powerID => {return context.system.currentBlasphemyPowers.includes(powerID)})).filter(power => {return power.system.isPassive;}),
+      "powers" : this._getItemsFromIDs(blasphemy.system.powers.filter(powerID => {return context.system.currentBlasphemyPowers.includes(powerID)})).filter(power => {return !power.system.isPassive;}),
+      "availablePowers" : this._getItemsFromIDs(blasphemy.system.powers.filter(powerID => {return !context.system.currentBlasphemyPowers.includes(powerID)}))
+    };});
+    console.log(context);
+
   
     if (context.currentAgenda) {
       const validAbilities = context.currentAgenda.system.abilities.filter(item => 
@@ -229,7 +241,13 @@ export class CainActorSheet extends ActorSheet {
     html.find('#editable-agenda-abilities').on('click', '.remove-ability-button', this._removeAgendaAbilityButton.bind(this));
     html.find('#editable-agenda-items').on('change', '.editable-item-input', this._updateAgendaItem.bind(this));
     html.find('#editable-agenda-abilities').on('change', '.editable-ability-input', this._updateAgendaAbility.bind(this));
+    html.find('.blasphemy-power-to-chat').on('click', this._sendBlasphemyPowerMessage.bind(this));
+    html.find('.remove-blasphemy-power-button').on('click', this._removeBlasphemyPowerButton.bind(this));
+    html.find('.remove-blasphemy-button').on('click', this._removeBlasphemyButton.bind(this));
+    
     html.find('#add-agenda-ability-button').on('click', this._addAgendaAbility.bind(this));
+    html.find('.add-blasphemy-power-button').on('click', this._addBlasphemyPower.bind(this));
+    
     html.find('.abilities-page-drop-target').on('drop', async event => {
       event.preventDefault();
       const data = JSON.parse(event.originalEvent.dataTransfer.getData('text/plain'));
@@ -300,24 +318,47 @@ html.find('.remove-task-button').click(this._removeAgendaTask.bind(this));
     });
   }
 
-  _onDropBlasphemy(event, agenda) {
-
+  _onDropBlasphemy(event, blasphemy) {
+    const blasphemyList = this.actor.system.currentBlasphemies;
+    if (blasphemyList.includes(blasphemy.id)) return;
+    blasphemyList.push(blasphemy.id);
+    const BlasphemyPowersList = this.actor.system.currentBlasphemyPowers;
+    const newBlasphemyPowersList = BlasphemyPowersList.concat(this._getItemsFromIDs(blasphemy.system.powers).filter(power => {return power.system.isPassive;}).map(power => {return power.id;}));
+    this.actor.update({
+      'system.currentBlasphemies' : blasphemyList,
+      'system.currentBlasphemyPowers' : newBlasphemyPowersList
+    });
   }
-  _onDropBlasphemyPower(event, agenda) {
 
+  _onDropBlasphemyPower(event, blasphemyPower) {
+    const BlasphemyPowersList = this.actor.system.currentBlasphemyPowers;
+    if (BlasphemyPowersList.includes(blasphemyPower.id)) return;
+    BlasphemyPowersList.push(blasphemyPower.id);
+    this.actor.update({
+      'system.currentBlasphemyPowers' : BlasphemyPowersList
+    });
   }
 
   _addAgendaAbility(event) {
     event.preventDefault();
     const abilityID = event.currentTarget.parentElement.querySelector('#selectedItem').value;
-    console.log(abilityID);
     const currentAbilities = this.actor.system.currentAgendaAbilities;
-    console.log(currentAbilities);
+    if (currentAbilities.includes(abilityID)) return;
     currentAbilities.push(abilityID);
     this.actor.update({'system.currentAgendaAbilities': currentAbilities});
-    console.log(currentAbilities);
     this.actor.render(true);
   }
+
+  _addBlasphemyPower(event) {
+    event.preventDefault();
+    const powerID = event.currentTarget.parentElement.querySelector('#selectedItem').value;
+    const currentPowers = this.actor.system.currentBlasphemyPowers;
+    if (currentPowers.includes(powerID)) return;
+    currentPowers.push(powerID);
+    this.actor.update({'system.currentBlasphemyPowers': currentPowers});
+    this.actor.render(true);
+  }
+
 
   _removeAgendaTask(event) {
     event.preventDefault();
@@ -400,11 +441,24 @@ html.find('.remove-task-button').click(this._removeAgendaTask.bind(this));
     });
   }
 
+  _sendBlasphemyPowerMessage(event) {
+    event.preventDefault();
+    const id = event.currentTarget.getAttribute('data-id');
+    const blasphemyPower = game.items.get(id);
+    const formattedDescription = blasphemyPower.system.powerDescription.replace(/\n/g, '<br>');
+    const message = `<h3>${blasphemyPower.system.powerName}</h3><p>${formattedDescription}</p>`;
+    ChatMessage.create({
+      content: message,
+      speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+    });
+  }
+
   _sendAgendaAbilityMessage(event) {
     event.preventDefault();
     const index = event.currentTarget.getAttribute('data-index');
     const agendaAbility = game.items.get(this.actor.system.currentAgendaAbilities[index]);
-    const message = `<h3>${agendaAbility.system.abilityName}</h3><p>${agendaAbility.system.abilityDescription}</p>`;
+    const formattedDescription = agendaAbility.system.abilityDescription.replace(/\n/g, '<br>');
+    const message = `<h3>${agendaAbility.system.abilityName}</h3><p>${formattedDescription}</p>`;
     ChatMessage.create({
       content: message,
       speaker: ChatMessage.getSpeaker({ actor: this.actor }),
@@ -435,6 +489,38 @@ html.find('.remove-task-button').click(this._removeAgendaTask.bind(this));
     const agendaAbilities = this.actor.system.currentAgendaAbilities || [];
     const newAgendaAbilities = agendaAbilities.slice(0, Number(index)).concat(agendaAbilities.slice(Number(index)+1))
     this.actor.update({ 'system.currentAgendaAbilities': newAgendaAbilities }).then(() => {
+      this.render(false); // Re-render the sheet to reflect changes
+    });
+  }
+
+  _removeBlasphemyPowerButton(event) {
+    event.preventDefault();
+    const powerID = event.currentTarget.dataset.id;
+    const blasphemyPowers = this.actor.system.currentBlasphemyPowers || [];
+    const index = blasphemyPowers.indexOf(powerID);
+    const newblasphemyPowers = blasphemyPowers.slice(0, Number(index)).concat(blasphemyPowers.slice(Number(index)+1))
+    this.actor.update({ 'system.currentBlasphemyPowers': newblasphemyPowers }).then(() => {
+      this.render(false); // Re-render the sheet to reflect changes
+    });
+  }
+
+  _removeBlasphemyButton(event) {
+    event.preventDefault();
+    const blasphemyID = event.currentTarget.dataset.id;
+    console.log(blasphemyID);
+    const blasphemy = game.items.get(blasphemyID);
+    console.log(blasphemy);
+    const blasphemies = this.actor.system.currentBlasphemies || [];
+    const index = blasphemies.indexOf(blasphemyID);
+    const newBlasphemies = blasphemies.slice(0, Number(index)).concat(blasphemies.slice(Number(index)+1));
+    const blasphemyPowers = this.actor.system.currentBlasphemyPowers || [];
+    console.log(blasphemy);
+    const newBlasphemyPowers = blasphemyPowers.filter(powerID => {return !(blasphemy.system.powers.includes(powerID));});
+    
+    this.actor.update({
+      'system.currentBlasphemies': newBlasphemies,
+      'system.currentBlasphemyPowers': newBlasphemyPowers,
+     }).then(() => {
       this.render(false); // Re-render the sheet to reflect changes
     });
   }

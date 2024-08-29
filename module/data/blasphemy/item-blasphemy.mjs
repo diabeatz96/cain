@@ -10,7 +10,6 @@ export default class CainBlasphemy extends CainItemBase {
         schema.blasphemyName = new fields.StringField({ required: true, nullable: false, initial: "default" });
         schema.powers = new fields.ArrayField(new fields.StringField(), {required: true, nullable: false, initial: []});
         
-
         return schema;
       }
 }

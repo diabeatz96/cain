@@ -107,48 +107,71 @@
   <!-- Items Section -->
   <div class="items-section" style="display: flex; justify-content: space-between;">
   <!-- Blasphemy Powers -->
-  <div class="blasphemy-powers" style="width: 100%;">
-    <h2>Blasphemy Powers</h2>
-    {{#if blasphemies.length}}
-      <ol class='items-list'>
-        {{#each blasphemies as |item|}}
-          <li class='item flexrow' data-item-id='{{item._id}}'>
-            <div class='item-name flexrow'>
-              <div class='item-image'>
-                <a class='rollable' data-roll-type='item'><img
-                    src='{{item.img}}'
-                    title='{{item.name}}'
-                    width='24'
-                    height='24'
-                  /></a>
-              </div>
-              <h4>{{item.name}}</h4>
-            </div>
-            <div class='item-controls'>
-              <a
-                class='item-control item-edit'
-                title='{{localize "DOCUMENT.Update" type='Item'}}'
-              >
-                <i class='fas fa-edit'></i>
-              </a>
-              <a
-                class='item-control item-delete'
-                title='{{localize "DOCUMENT.Delete" type='Item'}}'
-              >
-                <i class='fas fa-trash'></i>
-              </a>
-              <a
-                class='item-control item-description'
-                title='{{localize "DOCUMENT.Description" type='Item'}}'
-              >
-                <i class='fas fa-info-circle'></i>
-              </a>
-            </div>
+  <div class="blasphemy" style="width: 100%;">
+    <h2>Blasphemies</h2>
+    {{#each blasphemyData}}
+    <div class="blasphemy-powers" style="width: 100%;">
+      <h3>{{blasphemy.system.blasphemyName}}
+            <a class="item-control remove-blasphemy-button" data-id="{{blasphemy.id}}" title="Remove">
+              <i class="fas fa-trash"></i>
+            </a>
+      </h3>
+      <h4>Passive{{#if (gt passives.length 1)}}s{{/if}}</h3>
+      <ul class="editable-blasphemy-powers">
+        {{#each passives}}
+          <li>
+            <span data-id="{{this.id}}" title="{{this.system.powerDescription}}">{{this.system.powerName}}</span>
+            <a class="item-control blasphemy-power-to-chat" data-id="{{this.id}}" title="Send to Chat">
+              <i class="fas fa-comment"></i>
+            </a>
+            <a class="item-control remove-blasphemy-power-button" data-id="{{this.id}}" title="Remove">
+              <i class="fas fa-trash"></i>
+            </a>
           </li>
         {{/each}}
-      </ol>
-    {{else}}
-      <p class="psychedelic-text">Drag blasphemies onto your sheet</p>
+      </ul>
+      <h4>Powers</h3>
+      <ul>
+        {{#each powers}}
+          <li>
+            <span data-id="{{this.id}}" title="{{this.system.powerDescription}}">{{this.system.powerName}}</span>
+            <a class="item-control blasphemy-power-to-chat" data-id="{{this.id}}" title="Send to Chat">
+              <i class="fas fa-comment"></i>
+            </a>
+            <a class="item-control remove-blasphemy-power-button" data-id="{{this.id}}" title="Remove">
+              <i class="fas fa-trash"></i>
+            </a>
+          </li>
+        {{/each}}
+      </ul>
+      <div class="form-group">
+        <label for="selectedItem">Available Powers:</label>
+        <select name="selectedItem" id="selectedItem" style="background-color:antiquewhite">
+          {{#each availablePowers}}
+            <option value="{{this.id}}">{{this.system.powerName}}</option>
+          {{/each}}
+        </select>
+        <button type="button" class="add-blasphemy-power-button" {{#unless availablePowers.length}} disabled {{/unless}}>Add Power</button>
+      </div>
+    </div>
+    
+    {{/each}}
+    {{#if currentUnlinkedBlasphemyPowers.length}}
+        <div class="blasphemy-powers" style="width: 100%;">
+          <h3>Other Powers</h3>
+            <ul class="editable-blasphemy-powers">
+            {{#each currentUnlinkedBlasphemyPowers}}
+              <li>
+                <span data-id="{{this.id}}" title="{{this.system.powerDescription}}">{{this.system.powerName}}</span>
+                <a class="item-control blasphemy-power-to-chat" data-id="{{this.id}}" title="Send to Chat">
+                  <i class="fas fa-comment"></i>
+                </a>
+                <a class="item-control remove-blasphemy-power-button" data-id="{{this.id}}" title="Remove">
+                  <i class="fas fa-trash"></i>
+                </a>
+              </li>
+            {{/each}}
+          </ul>
     {{/if}}
   </div>
 </div>
@@ -245,6 +268,21 @@
 .abilities-page .add-agenda-ability-button:hover, .abilities-page .create-blasphemy-button:hover {
   background-color: #444;
 }
+
+
+.abilities-page .add-blasphemy-power-button, .abilities-page .create-blasphemy-button {
+  background-color: #1a1a1a;
+  color: #e0e0e0;
+  border: 1px solid #444;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.abilities-page .add-blasphemy-power-button:hover, .abilities-page .create-blasphemy-button:hover {
+  background-color: #444;
+}
+
 
 
 .abilities-page .psychedelic-text {
