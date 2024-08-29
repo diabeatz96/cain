@@ -277,13 +277,11 @@ export class CainActorSheet extends ActorSheet {
     });
 
     html.find('.blasphemy-passive').on('click', (event) => {
-      const itemId = $(event.currentTarget).data('id'); // Get the blasphemy passive ID
-      this._openBlasphemyItemSheet(itemId);
+      event.target.parentElement.parentElement.querySelector('.power-description-card').hidden = !event.target.parentElement.parentElement.querySelector('.power-description-card').hidden;
     });
     
     html.find('.blasphemy-power').on('click', (event) => {
-      const itemId = $(event.currentTarget).data('id'); // Get the blasphemy power ID
-      this._openBlasphemyItemSheet(itemId);
+      event.target.parentElement.parentElement.querySelector('.power-description-card').hidden = !event.target.parentElement.parentElement.querySelector('.power-description-card').hidden;
     });
 
     html.find('.abilities-page-drop-target').on('drop', async event => {
