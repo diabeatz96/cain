@@ -33,8 +33,6 @@
     </div>
   </div>
   <!-- My Agenda Section -->
-<!-- My Agenda Section -->
-<!-- My Agenda Section -->
   <div class="my-agenda-section" style="margin-bottom: 20px;">
     <h2 title="Drag new agenda here to swap">    
     {{#if currentAgenda }}
@@ -49,7 +47,7 @@
         <ul id="editable-agenda-items" class="items-list">
           {{#each currentUnboldedAgendaTasks}}
             <li class='item flexrow'>
-              <p data-index="{{@index}}" style="font-weight: {{#if this.system.isBold}}bold{{else}}normal{{/if}};">{{this.system.task}}</p>
+              <p data-index="{{@index}}" class="agenda-task" style="font-weight: {{#if this.system.isBold}}bold{{else}}normal{{/if}};">{{this.system.task}}</p>
               <div class="item-controls">
                 <a class="item-control agenda-task-to-chat" data-index="{{@index}}" title="Send to Chat">
                   <i class="fas fa-comment"></i>
@@ -60,9 +58,9 @@
               </div>
             </li>
           {{/each}}
-            {{#each currentBoldedAgendaTasks}}
+          {{#each currentBoldedAgendaTasks}}
             <li class='item flexrow'>
-              <p data-index="{{@index}}" style="font-weight: {{#if this.system.isBold}}bold{{else}}normal{{/if}};">{{this.system.task}}</p>
+              <p data-index="{{@index}}" class="agenda-task" style="font-weight: {{#if this.system.isBold}}bold{{else}}normal{{/if}};">{{this.system.task}}</p>
               <div class="item-controls">
                 <a class="item-control agenda-task-to-chat" data-index="{{@index}}" data-bold title="Send to Chat">
                   <i class="fas fa-comment"></i>
@@ -73,16 +71,15 @@
               </div>
             </li>
           {{/each}}
-
         </ul>
       </div>
-
+      
       <div class="agenda-abilities">
         <h3>Agenda Abilities</h3>
         <ul id="editable-agenda-abilities" class="items-list">
           {{#each currentAgendaAbilities}}
             <li>
-              <span data-index="{{@index}}" title="{{this.system.abilityDescription}}">{{this.system.abilityName}}</span>
+              <span data-index="{{@index}}" class="agenda-ability" title="{{this.system.abilityDescription}}">{{this.system.abilityName}}</span>
               <a class="item-control agenda-ability-to-chat" data-index="{{@index}}" title="Send to Chat">
                 <i class="fas fa-comment"></i>
               </a>
@@ -96,7 +93,7 @@
           <label for="selectedItem">Available Abilities:</label>
           <select name="selectedItem" id="selectedItem" style="background-color:antiquewhite">
             {{#each currentAgendaAvailableAbilities}}
-              <option value="{{this.id}}">{{this.name}}</option>
+              <option value="{{this.id}}"><a href="#">{{this.name}}</a></option>
             {{/each}}
           </select>
           <button type="button" id="add-agenda-ability-button" class="add-agenda-ability-button" {{#unless currentAgendaAvailableAbilities.length}} disabled {{/unless}}>Add Ability</button>
@@ -116,6 +113,7 @@
               <i class="fas fa-trash"></i>
             </a>
       </h3>
+      <img src="path/to/your/image.png" alt="Blasphemy Image" class="blasphemy-image">
       <h4>Passive{{#if (gt passives.length 1)}}s{{/if}}</h3>
       <ul class="editable-blasphemy-powers">
         {{#each passives}}
@@ -148,7 +146,7 @@
         <label for="selectedItem">Available Powers:</label>
         <select name="selectedItem" id="selectedItem" style="background-color:antiquewhite">
           {{#each availablePowers}}
-            <option value="{{this.id}}">{{this.system.powerName}}</option>
+            <option value="{{this.id}}"><a href="#">{{this.system.powerName}}</a></option>
           {{/each}}
         </select>
         <button type="button" class="add-blasphemy-power-button" {{#unless availablePowers.length}} disabled {{/unless}}>Add Power</button>
@@ -386,5 +384,27 @@
 
 .abilities-page .create-agenda-button:hover {
   background-color: #444;
+}
+
+/* New Styles for Blasphemies */
+.abilities-page .blasphemy h3 {
+  color: #ff00cc;
+  font-family: "Lacquer", system-ui;
+  font-size: 24px;
+  text-shadow: 2px 2px 4px #000;
+}
+
+.abilities-page .blasphemy h4 {
+  color: #9933ff;
+  font-family: "Lacquer", system-ui;
+  font-size: 20px;
+  text-shadow: 2px 2px 4px #000;
+}
+
+.abilities-page .blasphemy .blasphemy-image {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+  vertical-align: middle;
 }
 </style>

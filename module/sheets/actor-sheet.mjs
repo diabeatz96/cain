@@ -244,10 +244,20 @@ export class CainActorSheet extends ActorSheet {
     html.find('.blasphemy-power-to-chat').on('click', this._sendBlasphemyPowerMessage.bind(this));
     html.find('.remove-blasphemy-power-button').on('click', this._removeBlasphemyPowerButton.bind(this));
     html.find('.remove-blasphemy-button').on('click', this._removeBlasphemyButton.bind(this));
-    
+  
     html.find('#add-agenda-ability-button').on('click', this._addAgendaAbility.bind(this));
     html.find('.add-blasphemy-power-button').on('click', this._addBlasphemyPower.bind(this));
     
+    html.find('.agenda-task').on('click', (event) => {
+      const itemId = event.currentTarget.dataset.index;
+      this._openAgendaItemSheet(itemId);
+    });
+  
+    html.find('.agenda-ability').on('click', (event) => {
+      const itemId = event.currentTarget.dataset.index;
+      this._openAgendaItemSheet(itemId);
+    });
+
     html.find('.abilities-page-drop-target').on('drop', async event => {
       event.preventDefault();
       const data = JSON.parse(event.originalEvent.dataTransfer.getData('text/plain'));
@@ -286,8 +296,17 @@ html.find('.remove-task-button').click(this._removeAgendaTask.bind(this));
       const sinType = event.target.value;
       this._onSinTypeSelect(sinType);
     });
-
 }
+
+  _openAgendaItemSheet(itemId) {
+    // Logic to open the agenda item sheet
+    console.log(`Opening agenda item sheet for item ID: ${itemId}`);
+    // Assuming you have a method to open the sheet, e.g., using Foundry's API
+    const item = this.actor.items.get(itemId);
+    if (item) {
+      item.sheet.render(true);
+    }
+  }
 
   _onDropAgenda(event, agenda) {
     const boldedTasks = this.actor.system.currentBoldedAgendaTasks;
