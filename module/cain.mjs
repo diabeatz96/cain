@@ -168,6 +168,16 @@ Handlebars.registerHelper('times', function(n, block) {
   return accum;
 });
 
+Handlebars.registerHelper('formatted', function(text) {
+  // Check if the text is defined and is a string
+  if (typeof text === 'string') {
+      // Replace all newlines with <br> tags
+      return new Handlebars.SafeString(text.replace(/\n/g, '<br>'));
+  } else {
+      return text; // Return the text as is if it's not a string
+  }
+});
+
 
 Handlebars.registerHelper('json', function(context) {
   return JSON.stringify(context);
