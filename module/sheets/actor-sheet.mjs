@@ -83,32 +83,29 @@ export class CainActorSheet extends ActorSheet {
 
   _prepareCharacterData(context) {
     // Character-specific data preparation
-    const agendas = [];
-    const blasphemies = [];
+    context.agendas = [];
+    context.blasphemies = [];
   
     const agendaID = context.system.currentAgenda;
-    context.currentAgenda = null;
-    context.currentUnboldedAgendaTasks = [];
-    context.currentBoldedAgendaTasks = [];
-    context.currentAgendaAbilities = [];
-    context.currentAgendaAvailableAbilities = [];
-    if (agendaID !== "INVALID") context.currentAgenda = game.items.get(agendaID);
-    for (const agendaTaskID in context.system.currentUnboldedAgendaTasks) {
-      context.currentUnboldedAgendaTasks.push(game.items.get(context.system.currentUnboldedAgendaTasks[agendaTaskID]));
-    }    
-    for (const agendaTaskID in context.system.currentBoldedAgendaTasks) {
-      context.currentBoldedAgendaTasks.push(game.items.get(context.system.currentBoldedAgendaTasks[agendaTaskID]));
+    context.currentAgenda = agendaID !== "INVALID" ? game.items.get(agendaID) : null;
+    context.currentUnboldedAgendaTasks = this._getItemsFromIDs(context.system.currentUnboldedAgendaTasks);
+    context.currentBoldedAgendaTasks = this._getItemsFromIDs(context.system.currentBoldedAgendaTasks);
+    context.currentAgendaAbilities = this._getItemsFromIDs(context.system.currentAgendaAbilities);
+  
+    if (context.currentAgenda) {
+      const validAbilities = context.currentAgenda.system.abilities.filter(item => 
+        !context.system.currentAgendaAbilities.includes(item)
+      );
+      context.currentAgendaAvailableAbilities = this._getItemsFromIDs(validAbilities);
+    } else {
+      context.currentAgendaAvailableAbilities = [];
     }
-    for (const agendaAbilityID in context.system.currentAgendaAbilities) {
-      context.currentAgendaAbilities.push(game.items.get(context.system.currentAgendaAbilities[agendaAbilityID]));
-    }
-    const validAbilities = context.currentAgenda.system.abilities.filter(item => {return !context.system.currentAgendaAbilities.includes(item)});
-    for (const agendaAbilityID in validAbilities) {
-      context.currentAgendaAvailableAbilities.push(game.items.get(validAbilities[agendaAbilityID]));
-    }
-    context.agendas = agendas;
-    context.blasphemies = blasphemies;
   }
+  
+  _getItemsFromIDs(ids) {
+    return ids.map(id => game.items.get(id));
+  } 
+  
 
   _prepareItems(context) {
     const gear = [];
