@@ -88,25 +88,42 @@ export class CainActorSheet extends ActorSheet {
   
     const agendaID = context.system.currentAgenda;
     context.currentAgenda = agendaID !== "INVALID" ? game.items.get(agendaID) : null;
-    context.currentUnboldedAgendaTasks = this._getItemsFromIDs(context.system.currentUnboldedAgendaTasks);
-    context.currentBoldedAgendaTasks = this._getItemsFromIDs(context.system.currentBoldedAgendaTasks);
-    context.currentAgendaAbilities = this._getItemsFromIDs(context.system.currentAgendaAbilities);
-    context.currentBlasphemies = this._getItemsFromIDs(context.system.currentBlasphemies);
-    context.currentBlasphemyPowers = this._getItemsFromIDs(context.system.currentBlasphemyPowers);
-    context.currentUnlinkedBlasphemyPowers = this._getItemsFromIDs(context.system.currentBlasphemyPowers.filter(blasphemyPowerID => {return context.currentBlasphemies.map(blasphemy => {return !blasphemy.system.powers.includes(blasphemyPowerID)}).reduce((a,b) => {return a && b;});}));
-
-    context.blasphemyData = context.currentBlasphemies.map(blasphemy => {return {
-      "blasphemy" : blasphemy,
-      "passives" : this._getItemsFromIDs(blasphemy.system.powers.filter(powerID => {return context.system.currentBlasphemyPowers.includes(powerID)})).filter(power => {return power.system.isPassive;}),
-      "powers" : this._getItemsFromIDs(blasphemy.system.powers.filter(powerID => {return context.system.currentBlasphemyPowers.includes(powerID)})).filter(power => {return !power.system.isPassive;}),
-      "availablePowers" : this._getItemsFromIDs(blasphemy.system.powers.filter(powerID => {return !context.system.currentBlasphemyPowers.includes(powerID)}))
-    };});
-    console.log(context);
-
+    context.currentUnboldedAgendaTasks = this._getItemsFromIDs(context.system.currentUnboldedAgendaTasks || []);
+    context.currentBoldedAgendaTasks = this._getItemsFromIDs(context.system.currentBoldedAgendaTasks || []);
+    context.currentAgendaAbilities = this._getItemsFromIDs(context.system.currentAgendaAbilities || []);
+    context.currentBlasphemies = this._getItemsFromIDs(context.system.currentBlasphemies || []);
+    context.currentBlasphemyPowers = this._getItemsFromIDs(context.system.currentBlasphemyPowers || []);
   
+    // Calculate currentUnlinkedBlasphemyPowers
+    context.currentUnlinkedBlasphemyPowers = this._getItemsFromIDs(
+      (context.system.currentBlasphemyPowers || []).filter(blasphemyPowerID => {
+        return (context.currentBlasphemies || []).map(blasphemy => {
+          return !blasphemy.system.powers.includes(blasphemyPowerID);
+        }).reduce((a, b) => a && b, true);
+      })
+    );
+  
+    // Prepare blasphemy data
+    context.blasphemyData = (context.currentBlasphemies || []).map(blasphemy => {
+      const blasphemyPowers = blasphemy.system.powers || [];
+      const currentBlasphemyPowers = context.system.currentBlasphemyPowers || [];
+  
+      return {
+        blasphemy: blasphemy,
+        passives: this._getItemsFromIDs(blasphemyPowers.filter(powerID => currentBlasphemyPowers.includes(powerID)))
+          .filter(power => power.system.isPassive),
+        powers: this._getItemsFromIDs(blasphemyPowers.filter(powerID => currentBlasphemyPowers.includes(powerID)))
+          .filter(power => !power.system.isPassive),
+        availablePowers: this._getItemsFromIDs(blasphemyPowers.filter(powerID => !currentBlasphemyPowers.includes(powerID)))
+      };
+    });
+  
+    console.log(context);
+  
+    // Prepare currentAgendaAvailableAbilities
     if (context.currentAgenda) {
-      const validAbilities = context.currentAgenda.system.abilities.filter(item => 
-        !context.system.currentAgendaAbilities.includes(item)
+      const validAbilities = (context.currentAgenda.system.abilities || []).filter(item => 
+        !(context.system.currentAgendaAbilities || []).includes(item)
       );
       context.currentAgendaAvailableAbilities = this._getItemsFromIDs(validAbilities);
     } else {
@@ -244,10 +261,31 @@ export class CainActorSheet extends ActorSheet {
     html.find('.blasphemy-power-to-chat').on('click', this._sendBlasphemyPowerMessage.bind(this));
     html.find('.remove-blasphemy-power-button').on('click', this._removeBlasphemyPowerButton.bind(this));
     html.find('.remove-blasphemy-button').on('click', this._removeBlasphemyButton.bind(this));
-    
+  
     html.find('#add-agenda-ability-button').on('click', this._addAgendaAbility.bind(this));
     html.find('.add-blasphemy-power-button').on('click', this._addBlasphemyPower.bind(this));
     
+    // New event listeners for agenda tasks and abilities
+    html.find('.agenda-task').on('click', (event) => {
+      const itemId = this.actor.system.currentAgenda; // Get the current agenda ID
+      this._openAgendaItemSheet(itemId);
+    });
+
+    html.find('.agenda-ability').on('click', (event) => {
+      const itemId = this.actor.system.currentAgenda; // Get the current agenda ID
+      this._openAgendaItemSheet(itemId);
+    });
+
+    html.find('.blasphemy-passive').on('click', (event) => {
+      const itemId = $(event.currentTarget).data('id'); // Get the blasphemy passive ID
+      this._openBlasphemyItemSheet(itemId);
+    });
+    
+    html.find('.blasphemy-power').on('click', (event) => {
+      const itemId = $(event.currentTarget).data('id'); // Get the blasphemy power ID
+      this._openBlasphemyItemSheet(itemId);
+    });
+
     html.find('.abilities-page-drop-target').on('drop', async event => {
       event.preventDefault();
       const data = JSON.parse(event.originalEvent.dataTransfer.getData('text/plain'));
@@ -272,7 +310,7 @@ export class CainActorSheet extends ActorSheet {
             console.warn("Invalid drop type on ability page: " + itemDrop.type);
       }
 });
-html.find('.remove-task-button').click(this._removeAgendaTask.bind(this));
+    html.find('.remove-task-button').click(this._removeAgendaTask.bind(this));
     // Bind the send to chat functions
     html.find('.agenda-task-to-chat').click(this._sendAgendaTaskMessage.bind(this));
     html.find('.agenda-ability-to-chat').click(this._sendAgendaAbilityMessage.bind(this));
@@ -287,61 +325,300 @@ html.find('.remove-task-button').click(this._removeAgendaTask.bind(this));
       this._onSinTypeSelect(sinType);
     });
 
+    const selectedPowerElement = html.find('#selectedPower')[0];
+    if (selectedPowerElement) {
+      this._onPowerSelect({ target: selectedPowerElement });
+    }
+
+    // Call _onAbilitySelect when the sheet is loaded
+    const selectedAbilityElement = html.find('#selectedAgenda')[0];
+    if (selectedAbilityElement) {
+      this._onAbilitySelect({ target: selectedAbilityElement });
+    }
+
+    html.find('#selectedPower').on('change', this._onPowerSelect.bind(this));
+
+    // Event listener for selectedAgenda
+    html.find('#selectedAgenda').change(this._onAbilitySelect.bind(this));
+
 }
 
+  _onAbilitySelect(event) {
+    const selectElement = event.target;
+    if (selectElement.options.length === 0) {
+      document.getElementById('abilityDescription').innerText = 'No more available Abilites';
+      return;
+    }
+
+    const selectedOption = selectElement.options[selectElement.selectedIndex];
+    console.log(selectedOption);
+    const description = selectedOption.getAttribute('data-description');
+    console.log(description);
+    document.getElementById('abilityDescription').innerText = description;
+  }
+
+
+  _onPowerSelect(event) {
+    const selectElement = event.target;
+    if (selectElement.options.length === 0) {
+      document.getElementById('powerDescription').innerText = 'There are no more selectable powers.';
+      document.getElementById('powerKeywords').innerText = 'None';
+      return;
+    }
+
+    const selectedOption = selectElement.options[selectElement.selectedIndex];
+    const description = selectedOption.getAttribute('data-description');
+    const keywords = selectedOption.getAttribute('data-keywords');
+    document.getElementById('powerDescription').innerText = description;
+    document.getElementById('powerKeywords').innerText = keywords ? keywords.split(',').join(', ') : '';
+  }
+
+  _openAgendaItemSheet(itemId) {
+    // Logic to open the agenda item sheet
+
+    /** We should add more complicated logic in event listenrr
+     * to handle different types of items
+     * AKA agenda, agendaTask, agendaAbility, blasphemy, blasphemyPower
+     * etc.
+     * 
+     * Right now this function only opens the whole Agenda you have assigned.
+     */
+    console.log(`Opening agenda item sheet for item ID: ${itemId}`);
+    const item = Item.get(itemId);
+    console.log(item);
+    if (item) {
+      item.sheet.render(true);
+    }
+  }
+
+  _openBlasphemyItemSheet(itemId) {
+    // Logic to open the blasphemy item sheet
+    console.log(`Opening blasphemy item sheet for item ID: ${itemId}`);
+    const item = Item.get(itemId);
+    console.log(item);
+    if (item) {
+      item.sheet.render(true);
+    }
+  }
+
   _onDropAgenda(event, agenda) {
-    const boldedTasks = this.actor.system.currentBoldedAgendaTasks;
-    const newBoldedTasks = boldedTasks.concat(agenda.system.boldedTasks.filter(boldedTask => {return !this.actor.system.currentBoldedAgendaTasks.includes(boldedTask)}));
+    // Ensure this.actor and this.actor.system are defined
+    if (!this.actor || !this.actor.system) {
+      console.error("Actor or actor system is undefined.");
+      ui.notifications.error("Actor or actor system is undefined. Please check your setup.");
+      return;
+    }
+    console.log("Actor and actor system are defined.");
+  
+    const boldedTasks = this.actor.system.currentBoldedAgendaTasks || [];
+    console.log("Current Bolded Agenda Tasks:", boldedTasks);
+  
+    // Ensure agenda and agenda.system are defined
+    if (!agenda || !agenda.system) {
+      console.error("Agenda or agenda system is undefined.");
+      ui.notifications.error("Agenda or agenda system is undefined. Please check your setup.");
+      return;
+    }
+    console.log("Agenda and agenda system are defined.");
+  
+    const newBoldedTasks = boldedTasks.concat(
+      (agenda.system.boldedTasks || []).filter(boldedTask => {
+        const isIncluded = !this.actor.system.currentBoldedAgendaTasks.includes(boldedTask);
+        console.log("Is bolded task included?", isIncluded);
+        return isIncluded;
+      })
+    );
+    console.log("New Bolded Tasks:", newBoldedTasks);
+  
     this.actor.update({
       'system.agenda': agenda.system.agendaName,
       'system.currentAgenda': agenda.id,
-      'system.currentUnboldedAgendaTasks': agenda.system.unboldedTasks,
+      'system.currentUnboldedAgendaTasks': agenda.system.unboldedTasks || [],
       'system.currentBoldedAgendaTasks': newBoldedTasks
+    }).then(() => {
+      console.log("Actor updated successfully.");
+    }).catch(err => {
+      console.error("Error updating actor:", err);
+      ui.notifications.error("Error updating actor. Please check the console for more details.");
     });
   }
-
+  
   _onDropAgendaTask(event, agendaTask) {
-    const isBold = agendaTask.system.isBold
-    const taskList = (isBold ? this.actor.system.currentBoldedAgendaTasks : this.actor.system.currentUnboldedAgendaTasks);
+    // Ensure this.actor and this.actor.system are defined
+    if (!this.actor || !this.actor.system) {
+      console.error("Actor or actor system is undefined.");
+      ui.notifications.error("Actor or actor system is undefined. Please check your setup.");
+      return;
+    }
+    console.log("Actor and actor system are defined.");
+  
+    // Ensure agendaTask and agendaTask.system are defined
+    if (!agendaTask || !agendaTask.system) {
+      console.error("Agenda task or agenda task system is undefined.");
+      ui.notifications.error("Agenda task or agenda task system is undefined. Please check your setup.");
+      return;
+    }
+    console.log("Agenda task and agenda task system are defined.");
+  
+    const isBold = agendaTask.system.isBold;
+    const taskList = isBold ? this.actor.system.currentBoldedAgendaTasks || [] : this.actor.system.currentUnboldedAgendaTasks || [];
+    console.log("Current Task List:", taskList);
+  
     taskList.push(agendaTask.id);
+    console.log("Updated Task List:", taskList);
+  
     this.actor.update({
-      'system.currentUnboldedAgendaTasks': ( isBold ? this.actor.system.currentUnboldedAgendaTasks : taskList),
-      'system.currentBoldedAgendaTasks':  ( isBold ? taskList : this.actor.system.currentBoldedAgendaTasks)
+      'system.currentUnboldedAgendaTasks': isBold ? this.actor.system.currentUnboldedAgendaTasks || [] : taskList,
+      'system.currentBoldedAgendaTasks': isBold ? taskList : this.actor.system.currentBoldedAgendaTasks || []
+    }).then(() => {
+      console.log("Actor updated successfully.");
+    }).catch(err => {
+      console.error("Error updating actor:", err);
+      ui.notifications.error("Error updating actor. Please check the console for more details.");
     });
   }
-
+  
   _onDropAgendaAbility(event, agendaAbility) {
-    const abilityList = this.actor.system.currentAgendaAbilities;
+    // Ensure this.actor and this.actor.system are defined
+    if (!this.actor || !this.actor.system) {
+      console.error("Actor or actor system is undefined.");
+      ui.notifications.error("Actor or actor system is undefined. Please check your setup.");
+      return;
+    }
+    console.log("Actor and actor system are defined.");
+  
+    // Ensure agendaAbility and agendaAbility.system are defined
+    if (!agendaAbility || !agendaAbility.system) {
+      console.error("Agenda ability or agenda ability system is undefined.");
+      ui.notifications.error("Agenda ability or agenda ability system is undefined. Please check your setup.");
+      return;
+    }
+    console.log("Agenda ability and agenda ability system are defined.");
+  
+    const abilityList = this.actor.system.currentAgendaAbilities || [];
+    console.log("Current Ability List:", abilityList);
+  
     abilityList.push(agendaAbility.id);
+    console.log("Updated Ability List:", abilityList);
+  
     this.actor.update({
       'system.currentAgendaAbilities': abilityList
+    }).then(() => {
+      console.log("Actor updated successfully.");
+    }).catch(err => {
+      console.error("Error updating actor:", err);
+      ui.notifications.error("Error updating actor. Please check the console for more details.");
     });
   }
 
   _onDropBlasphemy(event, blasphemy) {
-    const blasphemyList = this.actor.system.currentBlasphemies;
-    if (blasphemyList.includes(blasphemy.id)) return;
+    // Ensure this.actor and this.actor.system are defined
+    if (!this.actor || !this.actor.system) {
+      console.error("Actor or actor system is undefined.");
+      ui.notifications.error("Actor or actor system is undefined. Please check your setup.");
+      return;
+    }
+    console.log("Actor and actor system are defined.");
+  
+    const blasphemyList = this.actor.system.currentBlasphemies || [];
+    console.log("Current Blasphemies:", blasphemyList);
+  
+    // Check if the blasphemy is already in the list
+    if (blasphemyList.includes(blasphemy.id)) {
+      console.log("Blasphemy already exists:", blasphemy.id);
+      return;
+    }
+  
+    // Add the new blasphemy to the list
     blasphemyList.push(blasphemy.id);
-    const BlasphemyPowersList = this.actor.system.currentBlasphemyPowers;
-    const newBlasphemyPowersList = BlasphemyPowersList.concat(this._getItemsFromIDs(blasphemy.system.powers).filter(power => {return power.system.isPassive;}).map(power => {return power.id;}));
+    console.log("Updated Blasphemies:", blasphemyList);
+  
+    // Get the current list of blasphemy powers
+    const blasphemyPowersList = this.actor.system.currentBlasphemyPowers || [];
+    console.log("Current Blasphemy Powers:", blasphemyPowersList);
+  
+    console.log(blasphemy.system);
+  
+    // Get the new blasphemy powers that are passive
+    const newBlasphemyPowers = this._getItemsFromIDs(blasphemy.system.powers || [])
+      .filter(power => {
+        console.log("Inspecting power:", power);
+        if (!power || !power.system) {
+          console.error("Power or power system is undefined:", power);
+          ui.notifications.error("Some powers are undefined. Did you import the compendium to keep document IDs?");
+          return false;
+        }
+        const isPassive = power.system.isPassive;
+        console.log("Is power passive?", isPassive);
+        return isPassive;
+      })
+      .map(power => {
+        console.log("Mapping power to ID:", power.id);
+        return power.id;
+      });
+  
+    console.log("New Blasphemy Powers:", newBlasphemyPowers);
+  
+    // Combine the current and new blasphemy powers
+    const newBlasphemyPowersList = blasphemyPowersList.concat(newBlasphemyPowers);
+    console.log("Updated Blasphemy Powers:", newBlasphemyPowersList);
+  
+    // Update the actor with the new lists
     this.actor.update({
-      'system.currentBlasphemies' : blasphemyList,
-      'system.currentBlasphemyPowers' : newBlasphemyPowersList
+      'system.currentBlasphemies': blasphemyList,
+      'system.currentBlasphemyPowers': newBlasphemyPowersList
+    }).then(() => {
+      console.log("Actor updated successfully.");
+    }).catch(err => {
+      console.error("Error updating actor:", err);
+      ui.notifications.error("Error updating actor. Please check the console for more details.");
     });
   }
-
+  
   _onDropBlasphemyPower(event, blasphemyPower) {
-    const BlasphemyPowersList = this.actor.system.currentBlasphemyPowers;
-    if (BlasphemyPowersList.includes(blasphemyPower.id)) return;
-    BlasphemyPowersList.push(blasphemyPower.id);
+    // Ensure this.actor and this.actor.system are defined
+    if (!this.actor || !this.actor.system) {
+      console.error("Actor or actor system is undefined.");
+      ui.notifications.error("Actor or actor system is undefined. Please check your setup.");
+      return;
+    }
+    console.log("Actor and actor system are defined.");
+  
+    // Ensure blasphemyPower and blasphemyPower.system are defined
+    if (!blasphemyPower || !blasphemyPower.system) {
+      console.error("Blasphemy power or blasphemy power system is undefined.");
+      ui.notifications.error("Blasphemy power or blasphemy power system is undefined. Please check your setup.");
+      return;
+    }
+    console.log("Blasphemy power and blasphemy power system are defined.");
+  
+    const blasphemyPowersList = this.actor.system.currentBlasphemyPowers || [];
+    console.log("Current Blasphemy Powers List:", blasphemyPowersList);
+  
+    // Check if the blasphemy power is already in the list
+    if (blasphemyPowersList.includes(blasphemyPower.id)) {
+      console.log("Blasphemy power already exists:", blasphemyPower.id);
+      return;
+    }
+  
+    // Add the new blasphemy power to the list
+    blasphemyPowersList.push(blasphemyPower.id);
+    console.log("Updated Blasphemy Powers List:", blasphemyPowersList);
+  
+    // Update the actor with the new list
     this.actor.update({
-      'system.currentBlasphemyPowers' : BlasphemyPowersList
+      'system.currentBlasphemyPowers': blasphemyPowersList
+    }).then(() => {
+      console.log("Actor updated successfully.");
+    }).catch(err => {
+      console.error("Error updating actor:", err);
+      ui.notifications.error("Error updating actor. Please check the console for more details.");
     });
   }
 
   _addAgendaAbility(event) {
     event.preventDefault();
-    const abilityID = event.currentTarget.parentElement.querySelector('#selectedItem').value;
+    const abilityID = event.currentTarget.parentElement.querySelector('#selectedAgenda').value;
     const currentAbilities = this.actor.system.currentAgendaAbilities;
     if (currentAbilities.includes(abilityID)) return;
     currentAbilities.push(abilityID);
@@ -351,7 +628,7 @@ html.find('.remove-task-button').click(this._removeAgendaTask.bind(this));
 
   _addBlasphemyPower(event) {
     event.preventDefault();
-    const powerID = event.currentTarget.parentElement.querySelector('#selectedItem').value;
+    const powerID = event.currentTarget.parentElement.querySelector('#selectedPower').value;
     const currentPowers = this.actor.system.currentBlasphemyPowers;
     if (currentPowers.includes(powerID)) return;
     currentPowers.push(powerID);
