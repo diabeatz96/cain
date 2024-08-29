@@ -1,5 +1,22 @@
-2024/08/29-01:56:07.850 9020 Recovering log #23
-2024/08/29-01:56:07.850 9020 Level-0 table #25: started
-2024/08/29-01:56:07.854 9020 Level-0 table #25: 11737 bytes OK
-2024/08/29-01:56:07.858 9020 Delete type=0 #23
-2024/08/29-01:56:07.858 9020 Delete type=3 #22
+2024/08/29-10:26:24.252894 ffff997af120 Recovering log #29
+2024/08/29-10:26:24.272580 ffff997af120 Delete type=3 #27
+2024/08/29-10:26:24.272874 ffff997af120 Delete type=0 #29
+2024/08/29-10:26:35.011123 ffff98e1e120 Level-0 table #33: started
+2024/08/29-10:26:35.011284 ffff98e1e120 Level-0 table #33: 0 bytes OK
+2024/08/29-10:26:35.023381 ffff98e1e120 Delete type=0 #31
+2024/08/29-10:26:35.057228 ffff98e1e120 Manual compaction at level-0 from '!folders!0Rx103v99LTFoMTP' @ 72057594037927935 : 1 .. '!items!ziiFc860EZanavt1' @ 0 : 0; will stop at '!items!zWyiMAc1vXBKa6Oa' @ 52 : 1
+2024/08/29-10:26:35.057287 ffff98e1e120 Compacting 2@0 + 0@1 files
+2024/08/29-10:26:35.072026 ffff98e1e120 Generated table #34@0: 97 keys, 48976 bytes
+2024/08/29-10:26:35.072122 ffff98e1e120 Compacted 2@0 + 0@1 files => 48976 bytes
+2024/08/29-10:26:35.079221 ffff98e1e120 compacted to: files[ 0 1 1 0 0 0 0 ]
+2024/08/29-10:26:35.080108 ffff98e1e120 Delete type=2 #25
+2024/08/29-10:26:35.080571 ffff98e1e120 Delete type=2 #28
+2024/08/29-10:26:35.081543 ffff98e1e120 Manual compaction at level-0 from '!items!zWyiMAc1vXBKa6Oa' @ 52 : 1 .. '!items!ziiFc860EZanavt1' @ 0 : 0; will stop at (end)
+2024/08/29-10:26:35.093995 ffff98e1e120 Manual compaction at level-1 from '!folders!0Rx103v99LTFoMTP' @ 72057594037927935 : 1 .. '!items!ziiFc860EZanavt1' @ 0 : 0; will stop at '!items!ziiFc860EZanavt1' @ 129 : 1
+2024/08/29-10:26:35.094056 ffff98e1e120 Compacting 1@1 + 1@2 files
+2024/08/29-10:26:35.113586 ffff98e1e120 Generated table #35@1: 87 keys, 48710 bytes
+2024/08/29-10:26:35.113680 ffff98e1e120 Compacted 1@1 + 1@2 files => 48710 bytes
+2024/08/29-10:26:35.121304 ffff98e1e120 compacted to: files[ 0 0 1 0 0 0 0 ]
+2024/08/29-10:26:35.122207 ffff98e1e120 Delete type=2 #21
+2024/08/29-10:26:35.122692 ffff98e1e120 Delete type=2 #34
+2024/08/29-10:26:35.143646 ffff98e1e120 Manual compaction at level-1 from '!items!ziiFc860EZanavt1' @ 129 : 1 .. '!items!ziiFc860EZanavt1' @ 0 : 0; will stop at (end)
