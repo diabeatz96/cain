@@ -83,32 +83,41 @@ export class CainActorSheet extends ActorSheet {
 
   _prepareCharacterData(context) {
     // Character-specific data preparation
-    const agendas = [];
-    const blasphemies = [];
+    context.agendas = [];
+    context.blasphemies = [];
   
     const agendaID = context.system.currentAgenda;
-    context.currentAgenda = null;
-    context.currentUnboldedAgendaTasks = [];
-    context.currentBoldedAgendaTasks = [];
-    context.currentAgendaAbilities = [];
-    context.currentAgendaAvailableAbilities = [];
-    if (agendaID !== "INVALID") context.currentAgenda = game.items.get(agendaID);
-    for (const agendaTaskID in context.system.currentUnboldedAgendaTasks) {
-      context.currentUnboldedAgendaTasks.push(game.items.get(context.system.currentUnboldedAgendaTasks[agendaTaskID]));
-    }    
-    for (const agendaTaskID in context.system.currentBoldedAgendaTasks) {
-      context.currentBoldedAgendaTasks.push(game.items.get(context.system.currentBoldedAgendaTasks[agendaTaskID]));
+    context.currentAgenda = agendaID !== "INVALID" ? game.items.get(agendaID) : null;
+    context.currentUnboldedAgendaTasks = this._getItemsFromIDs(context.system.currentUnboldedAgendaTasks);
+    context.currentBoldedAgendaTasks = this._getItemsFromIDs(context.system.currentBoldedAgendaTasks);
+    context.currentAgendaAbilities = this._getItemsFromIDs(context.system.currentAgendaAbilities);
+    context.currentBlasphemies = this._getItemsFromIDs(context.system.currentBlasphemies);
+    context.currentBlasphemyPowers = this._getItemsFromIDs(context.system.currentBlasphemyPowers);
+    context.currentUnlinkedBlasphemyPowers = this._getItemsFromIDs(context.system.currentBlasphemyPowers.filter(blasphemyPowerID => {return context.currentBlasphemies.map(blasphemy => {return !blasphemy.system.powers.includes(blasphemyPowerID)}).reduce((a,b) => {return a && b;});}));
+
+    context.blasphemyData = context.currentBlasphemies.map(blasphemy => {return {
+      "blasphemy" : blasphemy,
+      "passives" : this._getItemsFromIDs(blasphemy.system.powers.filter(powerID => {return context.system.currentBlasphemyPowers.includes(powerID)})).filter(power => {return power.system.isPassive;}),
+      "powers" : this._getItemsFromIDs(blasphemy.system.powers.filter(powerID => {return context.system.currentBlasphemyPowers.includes(powerID)})).filter(power => {return !power.system.isPassive;}),
+      "availablePowers" : this._getItemsFromIDs(blasphemy.system.powers.filter(powerID => {return !context.system.currentBlasphemyPowers.includes(powerID)}))
+    };});
+    console.log(context);
+
+  
+    if (context.currentAgenda) {
+      const validAbilities = context.currentAgenda.system.abilities.filter(item => 
+        !context.system.currentAgendaAbilities.includes(item)
+      );
+      context.currentAgendaAvailableAbilities = this._getItemsFromIDs(validAbilities);
+    } else {
+      context.currentAgendaAvailableAbilities = [];
     }
-    for (const agendaAbilityID in context.system.currentAgendaAbilities) {
-      context.currentAgendaAbilities.push(game.items.get(context.system.currentAgendaAbilities[agendaAbilityID]));
-    }
-    const validAbilities = context.currentAgenda.system.abilities.filter(item => {return !context.system.currentAgendaAbilities.includes(item)});
-    for (const agendaAbilityID in validAbilities) {
-      context.currentAgendaAvailableAbilities.push(game.items.get(validAbilities[agendaAbilityID]));
-    }
-    context.agendas = agendas;
-    context.blasphemies = blasphemies;
   }
+  
+  _getItemsFromIDs(ids) {
+    return ids.map(id => game.items.get(id));
+  } 
+  
 
   _prepareItems(context) {
     const gear = [];
@@ -232,25 +241,36 @@ export class CainActorSheet extends ActorSheet {
     html.find('#editable-agenda-abilities').on('click', '.remove-ability-button', this._removeAgendaAbilityButton.bind(this));
     html.find('#editable-agenda-items').on('change', '.editable-item-input', this._updateAgendaItem.bind(this));
     html.find('#editable-agenda-abilities').on('change', '.editable-ability-input', this._updateAgendaAbility.bind(this));
+    html.find('.blasphemy-power-to-chat').on('click', this._sendBlasphemyPowerMessage.bind(this));
+    html.find('.remove-blasphemy-power-button').on('click', this._removeBlasphemyPowerButton.bind(this));
+    html.find('.remove-blasphemy-button').on('click', this._removeBlasphemyButton.bind(this));
+    
     html.find('#add-agenda-ability-button').on('click', this._addAgendaAbility.bind(this));
-    html.find('.agenda-drop-target').on('drop', async event => {
+    html.find('.add-blasphemy-power-button').on('click', this._addBlasphemyPower.bind(this));
+    
+    html.find('.abilities-page-drop-target').on('drop', async event => {
       event.preventDefault();
       const data = JSON.parse(event.originalEvent.dataTransfer.getData('text/plain'));
-      const agenda = await Item.fromDropData(data);
-      if (agenda.type !== "agenda") return;
-      console.log(agenda);
-      const boldedTasks = this.actor.system.currentBoldedAgendaTasks;
-      for (const boldedTaskIndex in agenda.system.boldedTasks) {
-        boldedTasks.push(agenda.system.boldedTasks[boldedTaskIndex]);
+      const itemDrop = await Item.fromDropData(data);
+      switch(itemDrop.type) {
+          case "agenda":
+            this._onDropAgenda(event, itemDrop);
+            break;
+          case "agendaTask":
+            this._onDropAgendaTask(event, itemDrop);
+            break;
+          case "agendaAbility":
+            this._onDropAgendaAbility(event, itemDrop);
+            break;
+          case "blasphemy":
+            this._onDropBlasphemy(event, itemDrop);
+            break;         
+          case "blasphemyPower":
+            this._onDropBlasphemyPower(event, itemDrop);
+            break;
+          default:
+            console.warn("Invalid drop type on ability page: " + itemDrop.type);
       }
-      this.actor.update({
-        'system.currentAgenda': agenda.id,
-        'system.currentUnboldedAgendaTasks': agenda.system.unboldedTasks,
-        'system.currentBoldedAgendaTasks': boldedTasks
-      });
-      console.log(agenda.system.unboldedTasks);
-      console.log(this.actor.system.currentUnboldedAgendaTasks);
-      console.log(this.actor.system.currentBoldedAgendaTasks);
 });
 html.find('.remove-task-button').click(this._removeAgendaTask.bind(this));
     // Bind the send to chat functions
@@ -269,17 +289,76 @@ html.find('.remove-task-button').click(this._removeAgendaTask.bind(this));
 
 }
 
+  _onDropAgenda(event, agenda) {
+    const boldedTasks = this.actor.system.currentBoldedAgendaTasks;
+    const newBoldedTasks = boldedTasks.concat(agenda.system.boldedTasks.filter(boldedTask => {return !this.actor.system.currentBoldedAgendaTasks.includes(boldedTask)}));
+    this.actor.update({
+      'system.agenda': agenda.system.agendaName,
+      'system.currentAgenda': agenda.id,
+      'system.currentUnboldedAgendaTasks': agenda.system.unboldedTasks,
+      'system.currentBoldedAgendaTasks': newBoldedTasks
+    });
+  }
+
+  _onDropAgendaTask(event, agendaTask) {
+    const isBold = agendaTask.system.isBold
+    const taskList = (isBold ? this.actor.system.currentBoldedAgendaTasks : this.actor.system.currentUnboldedAgendaTasks);
+    taskList.push(agendaTask.id);
+    this.actor.update({
+      'system.currentUnboldedAgendaTasks': ( isBold ? this.actor.system.currentUnboldedAgendaTasks : taskList),
+      'system.currentBoldedAgendaTasks':  ( isBold ? taskList : this.actor.system.currentBoldedAgendaTasks)
+    });
+  }
+
+  _onDropAgendaAbility(event, agendaAbility) {
+    const abilityList = this.actor.system.currentAgendaAbilities;
+    abilityList.push(agendaAbility.id);
+    this.actor.update({
+      'system.currentAgendaAbilities': abilityList
+    });
+  }
+
+  _onDropBlasphemy(event, blasphemy) {
+    const blasphemyList = this.actor.system.currentBlasphemies;
+    if (blasphemyList.includes(blasphemy.id)) return;
+    blasphemyList.push(blasphemy.id);
+    const BlasphemyPowersList = this.actor.system.currentBlasphemyPowers;
+    const newBlasphemyPowersList = BlasphemyPowersList.concat(this._getItemsFromIDs(blasphemy.system.powers).filter(power => {return power.system.isPassive;}).map(power => {return power.id;}));
+    this.actor.update({
+      'system.currentBlasphemies' : blasphemyList,
+      'system.currentBlasphemyPowers' : newBlasphemyPowersList
+    });
+  }
+
+  _onDropBlasphemyPower(event, blasphemyPower) {
+    const BlasphemyPowersList = this.actor.system.currentBlasphemyPowers;
+    if (BlasphemyPowersList.includes(blasphemyPower.id)) return;
+    BlasphemyPowersList.push(blasphemyPower.id);
+    this.actor.update({
+      'system.currentBlasphemyPowers' : BlasphemyPowersList
+    });
+  }
+
   _addAgendaAbility(event) {
     event.preventDefault();
     const abilityID = event.currentTarget.parentElement.querySelector('#selectedItem').value;
-    console.log(abilityID);
     const currentAbilities = this.actor.system.currentAgendaAbilities;
-    console.log(currentAbilities);
+    if (currentAbilities.includes(abilityID)) return;
     currentAbilities.push(abilityID);
     this.actor.update({'system.currentAgendaAbilities': currentAbilities});
-    console.log(currentAbilities);
     this.actor.render(true);
   }
+
+  _addBlasphemyPower(event) {
+    event.preventDefault();
+    const powerID = event.currentTarget.parentElement.querySelector('#selectedItem').value;
+    const currentPowers = this.actor.system.currentBlasphemyPowers;
+    if (currentPowers.includes(powerID)) return;
+    currentPowers.push(powerID);
+    this.actor.update({'system.currentBlasphemyPowers': currentPowers});
+    this.actor.render(true);
+  }
+
 
   _removeAgendaTask(event) {
     event.preventDefault();
@@ -362,11 +441,24 @@ html.find('.remove-task-button').click(this._removeAgendaTask.bind(this));
     });
   }
 
+  _sendBlasphemyPowerMessage(event) {
+    event.preventDefault();
+    const id = event.currentTarget.getAttribute('data-id');
+    const blasphemyPower = game.items.get(id);
+    const formattedDescription = blasphemyPower.system.powerDescription.replace(/\n/g, '<br>');
+    const message = `<h3>${blasphemyPower.system.powerName}</h3><p>${formattedDescription}</p>`;
+    ChatMessage.create({
+      content: message,
+      speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+    });
+  }
+
   _sendAgendaAbilityMessage(event) {
     event.preventDefault();
     const index = event.currentTarget.getAttribute('data-index');
     const agendaAbility = game.items.get(this.actor.system.currentAgendaAbilities[index]);
-    const message = `<h3>${agendaAbility.system.abilityName}</h3><p>${agendaAbility.system.abilityDescription}</p>`;
+    const formattedDescription = agendaAbility.system.abilityDescription.replace(/\n/g, '<br>');
+    const message = `<h3>${agendaAbility.system.abilityName}</h3><p>${formattedDescription}</p>`;
     ChatMessage.create({
       content: message,
       speaker: ChatMessage.getSpeaker({ actor: this.actor }),
@@ -397,6 +489,38 @@ html.find('.remove-task-button').click(this._removeAgendaTask.bind(this));
     const agendaAbilities = this.actor.system.currentAgendaAbilities || [];
     const newAgendaAbilities = agendaAbilities.slice(0, Number(index)).concat(agendaAbilities.slice(Number(index)+1))
     this.actor.update({ 'system.currentAgendaAbilities': newAgendaAbilities }).then(() => {
+      this.render(false); // Re-render the sheet to reflect changes
+    });
+  }
+
+  _removeBlasphemyPowerButton(event) {
+    event.preventDefault();
+    const powerID = event.currentTarget.dataset.id;
+    const blasphemyPowers = this.actor.system.currentBlasphemyPowers || [];
+    const index = blasphemyPowers.indexOf(powerID);
+    const newblasphemyPowers = blasphemyPowers.slice(0, Number(index)).concat(blasphemyPowers.slice(Number(index)+1))
+    this.actor.update({ 'system.currentBlasphemyPowers': newblasphemyPowers }).then(() => {
+      this.render(false); // Re-render the sheet to reflect changes
+    });
+  }
+
+  _removeBlasphemyButton(event) {
+    event.preventDefault();
+    const blasphemyID = event.currentTarget.dataset.id;
+    console.log(blasphemyID);
+    const blasphemy = game.items.get(blasphemyID);
+    console.log(blasphemy);
+    const blasphemies = this.actor.system.currentBlasphemies || [];
+    const index = blasphemies.indexOf(blasphemyID);
+    const newBlasphemies = blasphemies.slice(0, Number(index)).concat(blasphemies.slice(Number(index)+1));
+    const blasphemyPowers = this.actor.system.currentBlasphemyPowers || [];
+    console.log(blasphemy);
+    const newBlasphemyPowers = blasphemyPowers.filter(powerID => {return !(blasphemy.system.powers.includes(powerID));});
+    
+    this.actor.update({
+      'system.currentBlasphemies': newBlasphemies,
+      'system.currentBlasphemyPowers': newBlasphemyPowers,
+     }).then(() => {
       this.render(false); // Re-render the sheet to reflect changes
     });
   }

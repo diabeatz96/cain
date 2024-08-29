@@ -1,8 +1,8 @@
 <form class="{{cssClass}} form-blasphemy {{system.classType}}-theme" autocomplete="off">
   <header class="sheet-header">
-    <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}"/>
+    <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{system.blasphemyName}}"/>
     <div class="header-fields">
-      <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Name"/></h1>
+      <h1 class="charname" class="blasphemy-text">{{system.blasphemyName}}</h1>
     </div>
   </header>
 
@@ -309,7 +309,7 @@ form.sympathy-theme .sheet-header {
 }
 
 /* Style for text input */
-.form-blasphemy input[type="text"] {
+.form-blasphemy .blasphemy-text {
   background-color: #2a2a2a;
   color: #f0f0f0;
   border: 2px solid #333;
