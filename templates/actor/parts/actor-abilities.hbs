@@ -111,7 +111,7 @@
   <div class="items-section" style="width: 100%;">
     <!-- Blasphemy Powers -->
     <div class="blasphemy"  style="width: 100%;">
-      <h2>Blasphemies</h2>
+      <h1>Blasphemies</h1>
       {{#unless blasphemyData}}
       <div class="blasphemy-powers">
         <p class="psychedelic-text">Drag blasphemy onto your sheet.</p>
@@ -121,41 +121,57 @@
       <div class="blasphemy-powers">
         <div class="blasphemy-header">
           <img src={{blasphemy.img}} alt="Blasphemy Image" class="blasphemy-image">
-          <h3>{{blasphemy.system.blasphemyName}}
+          <h2>{{blasphemy.system.blasphemyName}}
             <a class="item-control remove-blasphemy-button" data-id="{{blasphemy.id}}" title="Remove">
               <i class="fas fa-trash"></i>
             </a>
-          </h3>
+          </h2>
         </div>
         <div class="blasphemy-details">
-          <h4>Passive{{#if (gt passives.length 1)}}s{{/if}}</h4>
+          <h3>Passive{{#if (gt passives.length 1)}}s{{/if}}</h3>
           <ul class="editable-blasphemy-powers">
             {{#each passives}}
             <li>
-              <span data-id="{{this.id}}" class="blasphemy-passive" title="{{this.system.powerDescription}}">{{this.system.powerName}}</span>
-              <a class="item-control blasphemy-power-to-chat" data-id="{{this.id}}" title="Send to Chat">
-                <i class="fas fa-comment"></i>
-              </a>
-              <a class="item-control remove-blasphemy-power-button" data-id="{{this.id}}" title="Remove">
-                <i class="fas fa-trash"></i>
-              </a>
+              <h4>
+                <span data-id="{{this.id}}" class="blasphemy-passive" title="{{this.system.powerDescription}}">{{this.system.powerName}}</span>
+                <a class="item-control blasphemy-power-to-chat" data-id="{{this.id}}" title="Send to Chat">
+                  <i class="fas fa-comment"></i>
+                </a>
+                <a class="item-control remove-blasphemy-power-button" data-id="{{this.id}}" title="Remove">
+                  <i class="fas fa-trash"></i>
+                </a>
+              </h4>
+              <div class="power-description-card">          
+                <h4>Keywords</h4>
+                <p>{{this.system.keywords}}</p>
+                <h4>Power Description</h4>
+                <p>{{#formatted this.system.powerDescription}}{{/formatted}}</p>
+              </div>
             </li>
             {{/each}}
           </ul>
-          <h4>Powers</h4>
+          <h3>Powers</h3>
           <ul>
             {{#unless powers}}
             <li>No Powers</li>
             {{/unless}}
             {{#each powers}}
             <li>
-              <span data-id="{{this.id}}" class="blasphemy-power" title="{{this.system.powerDescription}}">{{this.system.powerName}}</span>
-              <a class="item-control blasphemy-power-to-chat" data-id="{{this.id}}" title="Send to Chat">
-                <i class="fas fa-comment"></i>
-              </a>
-              <a class="item-control remove-blasphemy-power-button" data-id="{{this.id}}" title="Remove">
-                <i class="fas fa-trash"></i>
-              </a>
+              <h4>
+                <span data-id="{{this.id}}" class="blasphemy-power" title="{{this.system.powerDescription}}">{{this.system.powerName}}</span>
+                <a class="item-control blasphemy-power-to-chat" data-id="{{this.id}}" title="Send to Chat">
+                  <i class="fas fa-comment"></i>
+                </a>
+                <a class="item-control remove-blasphemy-power-button" data-id="{{this.id}}" title="Remove">
+                  <i class="fas fa-trash"></i>
+                </a>
+              </h4>
+              <div class="power-description-card">          
+                <h4>Keywords</h4>
+                <p>{{this.system.keywords}}</p>
+                <h4>Power Description</h4>
+                <p>{{#formatted this.system.powerDescription}}{{/formatted}}</p>
+              </div>
             </li>
             {{/each}}
           </ul>
