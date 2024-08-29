@@ -2,6 +2,7 @@
 import { CainActor } from './documents/actor.mjs';
 import { CainItem } from './documents/item.mjs';
 import { TalismanWindow } from './documents/talisman-window.mjs';
+import { HomebrewWindow } from './documents/homebrew-window.mjs';
 // Import sheet classes.
 import { CainActorSheet } from './sheets/actor-sheet.mjs';
 import { CainItemSheet } from './sheets/item-sheet.mjs';
@@ -17,7 +18,7 @@ import * as models from './data/_module.mjs';
 /*  Init Hook                                   */
 /* -------------------------------------------- */
 
-Hooks.once('init', function () {
+Hooks.once('init', async function () {
   // Add utility classes to the global game object so that they're more easily
   // accessible in global contexts.
   game.cain = {
@@ -54,8 +55,11 @@ Hooks.once('init', function () {
     item: models.CainItem,
     agenda: models.CainAgenda,
     blasphemy: models.CainBlasphemy,
+    blasphemyPower: models.CainBlasphemyPower,
+    agendaTask: models.CainAgendaTask,
+    agendaAbility: models.CainAgendaAbility,
   }
-
+  
   console.log('CAIN | Initializing Cain system');
   console.log(CONFIG)
   // Active Effects are never copied to the Actor,
@@ -104,6 +108,21 @@ Hooks.once('init', function () {
     }
   });
 
+  game.settings.register('cain', 'developerMode', {
+    name: 'Enable Developer Mode',
+    hint: 'Shows a lot of ugly debug information that allows direct modification of values.',
+    scope: 'world',
+    config: true,
+    type: Boolean,
+    default: false,
+    onChange: value => {
+      ui.players.render();
+    }
+  });
+
+  const blasphemyPowerTemplate = await getTemplate("systems/cain/templates/item/parts/item-blasphemy-power-sheet.hbs");
+  Handlebars.registerPartial("blasphemyPower", blasphemyPowerTemplate);
+
   // Preload Handlebars templates.
   return preloadHandlebarsTemplates();
 });
@@ -149,6 +168,10 @@ Handlebars.registerHelper('times', function(n, block) {
   return accum;
 });
 
+
+Handlebars.registerHelper('json', function(context) {
+  return JSON.stringify(context);
+});
 
 /* -------------------------------------------- */
 /*  Ready Hook                                  */
@@ -201,6 +224,30 @@ Hooks.once('ready', function () {
     }
   }
 
+  function addHomebrewButton() {
+    // Create the button element with the talisman icon
+    if (!game.user.isGM) return;
+    const button = $('<button title="Homebrew" class="talisman-button"><img src="systems/cain/assets/homebrew.png" alt="Homebrew Icon"></button>');
+    
+    // Add click event to open the TalismanWindow
+    button.on('click', () => {
+      new HomebrewWindow().render(true);
+    });
+
+    // Create an aside element and append the button to it
+    const aside = $('<aside class="talisman-container"></aside>').append(button);
+
+    // Insert the aside element into the action bar
+    const actionBar = $('#action-bar');
+    if (actionBar.length) {
+      actionBar.append(aside);
+      console.log('Homebrew button inserted successfully.');
+    } else {
+      console.error('Action bar not found.');
+    }
+  }
+
+
   // Function to create and insert the Risk Roll button
   function addRiskRollButton() {
     if (!game.user.isGM) return;
@@ -237,6 +284,7 @@ Hooks.once('ready', function () {
 
   // Add the Talisman button when the action bar is first ready
   addTalismanButton();
+  addHomebrewButton();
   addPlayerOverviewButton();
   // Add the Risk Roll and Fate Roll buttons when the action bar is first ready
   addRiskRollButton();
@@ -245,6 +293,7 @@ Hooks.once('ready', function () {
   // Ensure the buttons are added every time the action bar is rendered
   Hooks.on('renderHotbar', () => {
     addTalismanButton();
+    addHomebrewButton();
     addRiskRollButton();
     addFateRollButton();
   });

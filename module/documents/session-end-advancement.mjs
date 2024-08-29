@@ -12,11 +12,26 @@ export class SessionEndAdvancement extends FormApplication  {
             title: 'End of Session Advancement',
         });
     }
+
+    /** @override */
     getData() {
+        const currentUnboldedAgendaTasks = [];
+        const currentBoldedAgendaTasks = [];
+        for (const agendaTaskID in this.actor.system.currentUnboldedAgendaTasks) {
+          currentUnboldedAgendaTasks.push(game.items.get(this.actor.system.currentUnboldedAgendaTasks[agendaTaskID]));
+        }    
+        for (const agendaTaskID in this.actor.system.currentBoldedAgendaTasks) {
+          currentBoldedAgendaTasks.push(game.items.get(this.actor.system.currentBoldedAgendaTasks[agendaTaskID]));
+        }
+        console.log(currentBoldedAgendaTasks);
+    
         return {
           actor: this.actor,
+          boldedAgendaTasks: currentBoldedAgendaTasks,
+          unboldedAgendaTasks: currentUnboldedAgendaTasks,
         };
     }
+
     activateListeners(html) {
         super.activateListeners(html);
     }

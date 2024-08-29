@@ -1,4 +1,4 @@
-<div class="abilities-page">
+<div class="abilities-page agenda-drop-target">
   <!-- Psyche Section -->
   <div class="psyche-section" style="text-align: center; margin-bottom: 20px;">
     <div style="display: flex; justify-content: center; align-items: center;">
@@ -36,105 +36,78 @@
 <!-- My Agenda Section -->
 <!-- My Agenda Section -->
   <div class="my-agenda-section" style="margin-bottom: 20px;">
-    <h2>My Agenda</h2>
+    <h2>    
+    {{#if currentAgenda }}
+      {{currentAgenda.name}}
+    {{else}}
+      <p class="psychedelic-text">Drag agenda onto your sheet.</p>
+    {{/if}}
+    </h2>
     <div class="editable-agenda">
       <div class="agenda-items">
-        <h3>Agenda Items</h3>
+        <h3>Agenda Tasks</h3>
         <ul id="editable-agenda-items" class="items-list">
-          {{#each actor.system.currentAgendaItems as |item index|}}
+          {{#each currentUnboldedAgendaTasks}}
             <li class='item flexrow'>
-              <textarea class="editable-item-input" data-index="{{index}}" style="font-weight: {{#if item.isBold}}bold{{else}}normal{{/if}};">{{item.text}}</textarea>
+              <p data-index="{{@index}}" style="font-weight: {{#if this.system.isBold}}bold{{else}}normal{{/if}};">{{this.system.task}}</p>
               <div class="item-controls">
-                <a class="item-control agenda-item-to-chat" data-index="{{index}}" title="Send to Chat">
+                <a class="item-control agenda-task-to-chat" data-index="{{@index}}" title="Send to Chat">
                   <i class="fas fa-comment"></i>
                 </a>
-                <a class="item-control bold-item-button " data-index="{{index}}" title="Bold Text">
-                  <i class="fas fa-bold {{#if item.isBold}}fa-solid{{else}}fa-thin{{/if}}"></i>
-                </a>
-                <a class="item-control remove-item-button" data-index="{{index}}" title="Remove">
+                <a class="item-control remove-task-button" data-index="{{@index}}" title="Remove">
                   <i class="fas fa-trash"></i>
                 </a>
               </div>
             </li>
           {{/each}}
+            {{#each currentBoldedAgendaTasks}}
+            <li class='item flexrow'>
+              <p data-index="{{@index}}" style="font-weight: {{#if this.system.isBold}}bold{{else}}normal{{/if}};">{{this.system.task}}</p>
+              <div class="item-controls">
+                <a class="item-control agenda-task-to-chat" data-index="{{@index}}" data-bold title="Send to Chat">
+                  <i class="fas fa-comment"></i>
+                </a>
+                <a class="item-control remove-task-button" data-index="{{@index}}" data-bold title="Remove">
+                  <i class="fas fa-trash"></i>
+                </a>
+              </div>
+            </li>
+          {{/each}}
+
         </ul>
-        <button type="button" id="add-agenda-item-button" class="create-agenda-button">Add Item</button>
       </div>
 
       <div class="agenda-abilities">
         <h3>Agenda Abilities</h3>
         <ul id="editable-agenda-abilities" class="items-list">
-          {{#each actor.system.currentAgendaAbilities as |ability index|}}
-            <li class='item flexrow'>
-              <textarea class="editable-ability-input" data-index="{{index}}" style="font-weight: {{#if ability.isBold}}bold{{else}}normal{{/if}};">{{ability.text}}</textarea>
-              <div class="item-controls">
-                <a class="item-control agenda-ability-to-chat" data-index="{{index}}" title="Send to Chat">
-                  <i class="fas fa-comment"></i>
-                </a>
-                <a class="item-control bold-ability-button" data-index="{{index}}" title="Bold Text">
-                  <i class="fas fa-bold {{#if ability.isBold}}fa-solid{{else}}fa-thin{{/if}}"></i>
-                </a>
-                <a class="item-control remove-ability-button" data-index="{{index}}" title="Remove">
-                  <i class="fas fa-trash"></i>
-                </a>
-              </div>
+          {{#each currentAgendaAbilities}}
+            <li>
+              <span data-index="{{@index}}" title="{{this.system.abilityDescription}}">{{this.system.abilityName}}</span>
+              <a class="item-control agenda-ability-to-chat" data-index="{{@index}}" title="Send to Chat">
+                <i class="fas fa-comment"></i>
+              </a>
+              <a class="item-control remove-ability-button" data-index="{{@index}}" title="Remove">
+                <i class="fas fa-trash"></i>
+              </a>
             </li>
           {{/each}}
         </ul>
-        <button type="button" id="add-agenda-ability-button" class="create-agenda-button">Add Ability</button>
+        <div class="form-group">
+          <label for="selectedItem">Available Abilities:</label>
+          <select name="selectedItem" id="selectedItem" style="background-color:antiquewhite">
+            {{#each currentAgendaAvailableAbilities}}
+              <option value="{{this.id}}">{{this.name}}</option>
+            {{/each}}
+          </select>
+          <button type="button" id="add-agenda-ability-button" class="add-agenda-ability-button" {{#unless currentAgendaAvailableAbilities.length}} disabled {{/unless}}>Add Ability</button>
+        </div>
       </div>
     </div>
   </div>
   <!-- Items Section -->
   <div class="items-section" style="display: flex; justify-content: space-between;">
-  <!-- Agendas -->
-  <div class="agendas" style="width: 48%;">
-    <h2>Agendas</h2>
-    {{#if agendas.length}}
-      <ol class='items-list'>
-        {{#each agendas as |item|}}
-          <li class='item flexrow' data-item-id='{{item._id}}'>
-            <div class='item-name flexrow'>
-              <div class='item-image'>
-                <a class='rollable' data-roll-type='item'><img
-                    src='{{item.img}}'
-                    title='{{item.name}}'
-                    width='24'
-                    height='24'
-                  /></a>
-              </div>
-              <h4>{{item.name}}</h4>
-            </div>
-            <div class='item-controls'>
-              <a
-                class='item-control item-edit'
-                title='{{localize "DOCUMENT.Update" type='Item'}}'
-              >
-                <i class='fas fa-edit'></i>
-              </a>
-              <a
-                class='item-control item-delete'
-                title='{{localize "DOCUMENT.Delete" type='Item'}}'
-              >
-                <i class='fas fa-trash'></i>
-              </a>
-              <a
-                class='item-control item-description'
-                title='{{localize "DOCUMENT.Description" type='Item'}}'
-              >
-                <i class='fas fa-info-circle'></i>
-              </a>
-            </div>
-          </li>
-        {{/each}}
-      </ol>
-    {{else}}
-      <p class="psychedelic-text">Drag agenda onto your sheet.</p>
-    {{/if}}
-  </div>
-
   <!-- Blasphemy Powers -->
-  <div class="blasphemy-powers" style="width: 48%;">
+  <div class="blasphemy-powers" style="width: 100%;">
     <h2>Blasphemy Powers</h2>
     {{#if blasphemies.length}}
       <ol class='items-list'>
@@ -260,7 +233,7 @@
   color: #ff0000;
 }
 
-.abilities-page .create-agenda-button, .abilities-page .create-blasphemy-button {
+.abilities-page .add-agenda-ability-button, .abilities-page .create-blasphemy-button {
   background-color: #1a1a1a;
   color: #e0e0e0;
   border: 1px solid #444;
@@ -269,9 +242,10 @@
   margin-top: 10px;
 }
 
-.abilities-page .create-agenda-button:hover, .abilities-page .create-blasphemy-button:hover {
+.abilities-page .add-agenda-ability-button:hover, .abilities-page .create-blasphemy-button:hover {
   background-color: #444;
 }
+
 
 .abilities-page .psychedelic-text {
   color: #9933ff;

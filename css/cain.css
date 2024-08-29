@@ -533,9 +533,131 @@
 
 .agenda-background {
   background-color: #1a1a1a;
-  box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.5), -10px -10px 0 rgba(0, 0, 0, 0.5), 10px -10px 0 rgba(0, 0, 0, 0.5), -10px 10px 0 rgba(0, 0, 0, 0.5);}
+  box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.5), -10px -10px 0 rgba(0, 0, 0, 0.5), 10px -10px 0 rgba(0, 0, 0, 0.5), -10px 10px 0 rgba(0, 0, 0, 0.5);
+}
 
 /* end agenda styles */
+
+/* homebrew styles */
+.homebrew-size {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin: 0;
+  padding: 0;
+  height: 400px;
+}
+
+.homebrew-name {
+  font-family: "Metal Mania", system-ui;
+  font-weight: 400;
+  font-style: normal;
+  font-weight: bold;
+  margin: 0;
+  padding: 0;
+}
+
+/* homebrew Header */
+.homebrew-header {
+  background-color: #2b2b2b;
+  border-bottom: 2px solid #444;
+  padding: 1em;
+  display: flex;
+  align-items: center;
+}
+
+.homebrew-header .profile-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 1em;
+  border: 2px solid #555;
+}
+
+.homebrew-header .header-fields {
+  flex-grow: 1;
+}
+
+.homebrew-header .charname input {
+  font-size: 1.5em;
+  width: 100%;
+  background-color: #333;
+  color: #e0e0e0;
+  border: 1px solid #555;
+  padding: 0.5em;
+  border-radius: 4px;
+}
+
+/* homebrew Tabs */
+.homebrew-tabs {
+  background-color: #2b2b2b;
+  border-bottom: 2px solid #444;
+  display: flex;
+  justify-content: space-around;
+  padding: 0.5em 0;
+}
+
+.homebrew-tabs .item {
+  color: #e0e0e0;
+  padding: 0.5em 1em;
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  transition: border-bottom 0.3s;
+}
+
+.homebrew-tabs .item:hover,
+.homebrew-tabs .item.active {
+  border-bottom: 2px solid #e0e0e0;
+}
+
+/* homebrew Body */
+.homebrew-body {
+  background-color: #1a1a1a;
+  padding: 1em;
+}
+
+.homebrew-body .tab {
+  display: none;
+}
+
+.homebrew-body .tab.active {
+  display: block;
+}
+
+.homebrew-body .form-group {
+  margin-bottom: 1em;
+}
+
+.homebrew-body .form-group label {
+  display: block;
+  margin-bottom: 0.5em;
+  font-weight: bold;
+  color: #e0e0e0;
+}
+
+.homebrew-body .form-group textarea {
+  width: 100%;
+  padding: 0.5em;
+  background-color: #333;
+  color: #e0e0e0;
+  border: 1px solid #555;
+  border-radius: 4px;
+  min-height: 100px;
+}
+
+.homebrew-text-color {
+  color: #e0e0e0;
+}
+
+.homebrew-background {
+  background-color: #1a1a1a;
+  box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.5), -10px -10px 0 rgba(0, 0, 0, 0.5), 10px -10px 0 rgba(0, 0, 0, 0.5), -10px 10px 0 rgba(0, 0, 0, 0.5);
+}
+
+.homebrew-toggle-bold {
+  width: 20%;
+}
+/* end homebrew styles */
+
 
 /* Character Sheet */
 

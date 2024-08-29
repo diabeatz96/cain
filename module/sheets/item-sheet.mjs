@@ -61,6 +61,30 @@ export class CainItemSheet extends ItemSheet {
       }
     );
 
+    if (this.item.type === "agenda") {
+      context.agendaBoldedTaskData = this.item.system.boldedTasks.map(item => {return game.items.get(item);});
+      context.agendaUnboldedTaskData = this.item.system.unboldedTasks.map(item => {return game.items.get(item);});
+      context.agendaAbilityData = this.item.system.abilities.map(item => {return game.items.get(item);});
+      console.log(this.item.system.abilities);
+      console.log(context.agendaAbilityData);
+      context.agenda_tasks = game.items.contents.map(item => { if (item.type === "agendaTask")
+        return {
+          id: item.id,
+          name: item.name
+        }; return {name: "INVALID"};
+      }).filter(item => item.name !== "INVALID");
+      context.agenda_abilities = game.items.contents.map(item => { if (item.type === "agendaAbility")
+        return {
+          id: item.id,
+          name: item.name
+        };; return {name: "INVALID"};
+      }).filter(item => item.name !== "INVALID");  
+    }
+    if (this.item.type === "blasphemy") {
+      context.blasphemyPassives = this.item.system.powers.map(item => {return game.items.get(item);}).filter(item => {return item.system.isPassive});
+      context.blasphemyPowers = this.item.system.powers.map(item => {return game.items.get(item);}).filter(item => {return !item.system.isPassive});
+    }
+    context.developerMode = game.settings.get('cain', 'developerMode');
     // Add the item's data to context.data for easier access, as well as flags.
     context.system = itemData.system;
     context.flags = itemData.flags;
@@ -70,7 +94,6 @@ export class CainItemSheet extends ItemSheet {
 
     // Prepare active effects for easier access
     context.effects = prepareActiveEffectCategories(this.item.effects);
-
     return context;
   }
 
@@ -89,5 +112,27 @@ export class CainItemSheet extends ItemSheet {
     html.on('click', '.effect-control', (ev) =>
       onManageActiveEffect(ev, this.item)
     );
+
+    html.find('#addTaskToAgenda').click(this._addTaskToAgenda.bind(this));
+  }
+
+  _addTaskToAgenda(event) {
+    let value = event.currentTarget.parentElement.parentElement.querySelector('#selectedItem').value
+
+    const unboldedTasks = this.item.system.unboldedTasks || [];
+    const boldedTasks = this.item.system.unboldedTasks || [];
+    console.log(unboldedTasks);
+    console.log(boldedTasks);
+    const newTask = value;
+    const newTaskItem = game.items.get(newTask);
+    if (newTaskItem.system.isBold) {
+      boldedTasks.push(newTask);
+      this.item.update({'system.boldedTasks': boldedTasks});
+    } else {
+      unboldedTasks.push(newTask);
+      this.item.update({'system.unboldedTasks': unboldedTasks});
+    }
+    console.log(newTask)
+    console.log(this.item.system);
   }
 }

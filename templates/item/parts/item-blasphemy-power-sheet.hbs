@@ -1,0 +1,26 @@
+<form class="{{cssClass}} form-blasphemy {{system.classType}}-theme" autocomplete="off">
+  <header class="sheet-header">
+    <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}"/>
+    <div class="header-fields">
+      <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Name" disabled/></h1>
+      <div class="form-group">
+        <label for="classType">Type</label>
+        <input type="text" name="system.classType" value="{{system.classType}}" disabled/>
+
+      </div>
+      <div class="form-group">
+        <label for="isPassive">Is Passive</label>
+        <input type="checkbox" name="system.isPassive" {{#if system.isPassive}}checked{{/if}} disabled/>
+      </div>
+      <div class="form-group">
+        <label for="keywords">Keywords</label>
+        <input type="text" name="system.keywords" value="{{system.keywords}}" disabled/>
+      </div>
+    </div>
+  </header>
+
+  {{!-- Sheet Body --}}
+  <section class='sheet-body'>
+      <w>{{system.powerDescription}}</w>
+  </section>
+</form>

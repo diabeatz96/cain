@@ -3,8 +3,9 @@ import {
   prepareActiveEffectCategories,
 } from '../helpers/effects.mjs';
 
+import { SessionEndAdvancement} from  '../documents/session-end-advancement.mjs'
 import { CAIN } from '../helpers/config.mjs';
-import { SessionEndAdvancement } from '../documents/session-end-advancement.mjs';
+
 /**
  * Extend the basic ActorSheet with some very simple modifications
  * @extends {ActorSheet}
@@ -59,6 +60,17 @@ export class CainActorSheet extends ActorSheet {
         relativeTo: this.actor,
       }
     );
+    if (this.actor.system.severeAttack || this.actor.system.attack) {
+      context.enrichedDescription = await TextEditor.enrichHTML(
+        this.actor.system.severeAttack.description  || this.actor.system.attack.description,
+        {
+          secrets: this.document.isOwner,
+          async: true,
+          rollData: this.actor.getRollData(),
+          relativeTo: this.actor,
+        }
+      );
+    }
 
     context.effects = prepareActiveEffectCategories(
       this.actor.allApplicableEffects()
@@ -71,27 +83,43 @@ export class CainActorSheet extends ActorSheet {
 
   _prepareCharacterData(context) {
     // Character-specific data preparation
+    const agendas = [];
+    const blasphemies = [];
+  
+    const agendaID = context.system.currentAgenda;
+    context.currentAgenda = null;
+    context.currentUnboldedAgendaTasks = [];
+    context.currentBoldedAgendaTasks = [];
+    context.currentAgendaAbilities = [];
+    context.currentAgendaAvailableAbilities = [];
+    if (agendaID !== "INVALID") context.currentAgenda = game.items.get(agendaID);
+    for (const agendaTaskID in context.system.currentUnboldedAgendaTasks) {
+      context.currentUnboldedAgendaTasks.push(game.items.get(context.system.currentUnboldedAgendaTasks[agendaTaskID]));
+    }    
+    for (const agendaTaskID in context.system.currentBoldedAgendaTasks) {
+      context.currentBoldedAgendaTasks.push(game.items.get(context.system.currentBoldedAgendaTasks[agendaTaskID]));
+    }
+    for (const agendaAbilityID in context.system.currentAgendaAbilities) {
+      context.currentAgendaAbilities.push(game.items.get(context.system.currentAgendaAbilities[agendaAbilityID]));
+    }
+    const validAbilities = context.currentAgenda.system.abilities.filter(item => {return !context.system.currentAgendaAbilities.includes(item)});
+    for (const agendaAbilityID in validAbilities) {
+      context.currentAgendaAvailableAbilities.push(game.items.get(validAbilities[agendaAbilityID]));
+    }
+    context.agendas = agendas;
+    context.blasphemies = blasphemies;
   }
 
   _prepareItems(context) {
     const gear = [];
-    const agendas = [];
-    const blasphemies = [];
-  
     for (let i of context.items) {
       i.img = i.img || Item.DEFAULT_ICON;
       if (i.type === 'item') {
         gear.push(i);
-      } else if (i.type === 'agenda') {
-        agendas.push(i);
-      } else if (i.type === 'blasphemy') {
-        blasphemies.push(i);
       }
     }
   
     context.gear = gear;
-    context.agendas = agendas;
-    context.blasphemies = blasphemies;
   }
 
   _calculateRanges(context) {
@@ -194,21 +222,39 @@ export class CainActorSheet extends ActorSheet {
     html.find('.delete-talisman').click(this._onDeleteTalisman.bind(this));
     html.find('.increase-marks').click(this._onIncreaseMarks.bind(this));
     html.find('.change-image').click(this._onChangeImage.bind(this));
+    html.find('.add-question-button').click(this._addQuestion.bind(this));
+    html.find('.delete-question-button').click(this._deleteQuestion.bind(this));
     html.find('.talisman-image').click(this._onImageClick.bind(this));
     html.find('.talisman-image').on('contextmenu', this._onDecreaseMarks.bind(this));
     html.find('.talisman-max-mark').change(this._onMaxMarkAmountChange.bind(this));
     html.find('.roll-rest-dice').click(this._RollRestDice.bind(this));
     html.find('#add-agenda-item-button').on('click', this._addAgendaItemButton.bind(this));
-    html.find('#add-agenda-ability-button').on('click', this._addAgendaAbilityButton.bind(this));
-    html.find('#editable-agenda-items').on('click', '.remove-item-button', this._removeItemButton.bind(this));
-    html.find('#editable-agenda-abilities').on('click', '.remove-ability-button', this._removeAbilityButton.bind(this));
+    html.find('#editable-agenda-abilities').on('click', '.remove-ability-button', this._removeAgendaAbilityButton.bind(this));
     html.find('#editable-agenda-items').on('change', '.editable-item-input', this._updateAgendaItem.bind(this));
     html.find('#editable-agenda-abilities').on('change', '.editable-ability-input', this._updateAgendaAbility.bind(this));
-    // Bind the bolding functions
-    html.find('.bold-item-button').click(this._boldAgendaItem.bind(this));
-    html.find('.bold-ability-button').click(this._boldAgendaAbility.bind(this));
+    html.find('#add-agenda-ability-button').on('click', this._addAgendaAbility.bind(this));
+    html.find('.agenda-drop-target').on('drop', async event => {
+      event.preventDefault();
+      const data = JSON.parse(event.originalEvent.dataTransfer.getData('text/plain'));
+      const agenda = await Item.fromDropData(data);
+      if (agenda.type !== "agenda") return;
+      console.log(agenda);
+      const boldedTasks = this.actor.system.currentBoldedAgendaTasks;
+      for (const boldedTaskIndex in agenda.system.boldedTasks) {
+        boldedTasks.push(agenda.system.boldedTasks[boldedTaskIndex]);
+      }
+      this.actor.update({
+        'system.currentAgenda': agenda.id,
+        'system.currentUnboldedAgendaTasks': agenda.system.unboldedTasks,
+        'system.currentBoldedAgendaTasks': boldedTasks
+      });
+      console.log(agenda.system.unboldedTasks);
+      console.log(this.actor.system.currentUnboldedAgendaTasks);
+      console.log(this.actor.system.currentBoldedAgendaTasks);
+});
+html.find('.remove-task-button').click(this._removeAgendaTask.bind(this));
     // Bind the send to chat functions
-    html.find('.agenda-item-to-chat').click(this._sendAgendaItemMessage.bind(this));
+    html.find('.agenda-task-to-chat').click(this._sendAgendaTaskMessage.bind(this));
     html.find('.agenda-ability-to-chat').click(this._sendAgendaAbilityMessage.bind(this));
     /* NPC sheet specific listeners */
     html.find('.attack-button').click(this._onNpcAttack.bind(this));
@@ -222,6 +268,50 @@ export class CainActorSheet extends ActorSheet {
     });
 
 }
+
+  _addAgendaAbility(event) {
+    event.preventDefault();
+    const abilityID = event.currentTarget.parentElement.querySelector('#selectedItem').value;
+    console.log(abilityID);
+    const currentAbilities = this.actor.system.currentAgendaAbilities;
+    console.log(currentAbilities);
+    currentAbilities.push(abilityID);
+    this.actor.update({'system.currentAgendaAbilities': currentAbilities});
+    console.log(currentAbilities);
+    this.actor.render(true);
+  }
+
+  _removeAgendaTask(event) {
+    event.preventDefault();
+    const index = event.currentTarget.getAttribute('data-index');
+    if (event.currentTarget.hasAttribute('data-bold')) {
+      const agendaBoldedTasks = this.actor.system.currentBoldedAgendaTasks;
+      const newAgendaBoldedTasks = agendaBoldedTasks.slice(0, index).concat(agendaBoldedTasks.slice(Number(index)+1));
+      this.actor.update({'system.currentBoldedAgendaTasks': newAgendaBoldedTasks});
+    } else {
+      const agendaUnboldedTasks = this.actor.system.currentUnboldedAgendaTasks;
+      const newAgendaUnboldedTasks = agendaUnboldedTasks.slice(0, index).concat(agendaUnboldedTasks.slice(Number(index)+1));
+      this.actor.update({'system.currentUnboldedAgendaTasks': newAgendaUnboldedTasks});
+    }
+  }
+  _addQuestion(event) {
+    event.preventDefault();
+    const questions = this.actor.system.severeAbilityQuestions || [];
+    questions.push('New Question');
+    this.actor.update({ 'system.severeAbilityQuestions': questions }).then(() => {
+      this.render(false); // Re-render the sheet to reflect changes
+    });
+  }
+
+  _deleteQuestion(event) {
+    event.preventDefault();
+    const index = event.currentTarget.getAttribute('data-index');
+    const questions = this.actor.system.severeAbilityQuestions || [];
+    questions.splice(index, 1);
+    this.actor.update({ 'system.severeAbilityQuestions': questions }).then(() => {
+      this.render(false); // Re-render the sheet to reflect changes
+    });
+  }
   
   _increaseXPValue(event) {
     event.preventDefault();
@@ -248,45 +338,24 @@ export class CainActorSheet extends ActorSheet {
 
   _openEndSessionModal(event) {
     event.preventDefault();
+    console.log(this.actor);
     new SessionEndAdvancement(this.actor).render(true);
   }
 
-  _boldAgendaItem(event) {
+  _sendAgendaTaskMessage(event) {
     event.preventDefault();
     const index = event.currentTarget.getAttribute('data-index');
-    const textarea = document.querySelector(`.editable-item-input[data-index="${index}"]`);
-    const list = this.actor.system.currentAgendaItems;
-    
-    list[index].isBold = !list[index].isBold;
-    textarea.style.fontWeight = list[index].isBold ? 'bold' : 'normal';
-    event.currentTarget.querySelector('i').classList.toggle('active', list[index].isBold);
-    
-    console.log(`Bolding item at index ${index}: ${list[index].isBold}`);
-    
-    this.actor.update({ 'system.currentAgendaItems': list });
-  }
-
-  _boldAgendaAbility(event) {
-    event.preventDefault();
-    const index = event.currentTarget.getAttribute('data-index');
-    const textarea = document.querySelector(`.editable-ability-input[data-index="${index}"]`);
-    const list = this.actor.system.currentAgendaAbilities;
-    
-    list[index].isBold = !list[index].isBold;
-    textarea.style.fontWeight = list[index].isBold ? 'bold' : 'normal';
-    event.currentTarget.querySelector('i').classList.toggle('active', list[index].isBold);
-    
-    console.log(`Bolding ability at index ${index}: ${list[index].isBold}`);
-    
-    this.actor.update({ 'system.currentAgendaAbilities': list });
-  }
-
-  _sendAgendaItemMessage(event) {
-    event.preventDefault();
-    const index = event.currentTarget.getAttribute('data-index');
-    const textarea = document.querySelector(`.editable-item-input[data-index="${index}"]`);
-    const itemText = textarea.value;
-    const message = `<p>${itemText}</p>`;
+    let agendaTaskList = [];
+    if (event.currentTarget.hasAttribute('data-bold')) {
+      agendaTaskList = this.actor.system.currentBoldedAgendaTasks;
+    } else {
+      agendaTaskList = this.actor.system.currentUnboldedAgendaTasks;
+    }
+    console.log(index);
+    console.log(agendaTaskList);
+    const agendaTask = game.items.get(agendaTaskList[index]);
+    console.log(agendaTask);
+    const message = `<h3>${this.actor.name}</h3><p>${(agendaTask.system.isBold ? '<b>' : '')}${agendaTask.system.task}${(agendaTask.system.isBold ? '</b>' : '')}</p>`;
     ChatMessage.create({
       content: message,
       speaker: ChatMessage.getSpeaker({ actor: this.actor }),
@@ -296,9 +365,8 @@ export class CainActorSheet extends ActorSheet {
   _sendAgendaAbilityMessage(event) {
     event.preventDefault();
     const index = event.currentTarget.getAttribute('data-index');
-    const textarea = document.querySelector(`.editable-ability-input[data-index="${index}"]`);
-    const abilityText = textarea.value;
-    const message = `<p>${abilityText}</p>`;
+    const agendaAbility = game.items.get(this.actor.system.currentAgendaAbilities[index]);
+    const message = `<h3>${agendaAbility.system.abilityName}</h3><p>${agendaAbility.system.abilityDescription}</p>`;
     ChatMessage.create({
       content: message,
       speaker: ChatMessage.getSpeaker({ actor: this.actor }),
@@ -323,22 +391,12 @@ export class CainActorSheet extends ActorSheet {
     });
   }
 
-  _removeItemButton(event) {
-    event.preventDefault();
-    const index = event.currentTarget.dataset.index;
-    const agendaItems = this.actor.system.currentAgendaItems || [];
-    agendaItems.splice(index, 1);
-    this.actor.update({ 'system.currentAgendaItems': agendaItems }).then(() => {
-      this.render(false); // Re-render the sheet to reflect changes
-    });
-  }
-
-  _removeAbilityButton(event) {
+  _removeAgendaAbilityButton(event) {
     event.preventDefault();
     const index = event.currentTarget.dataset.index;
     const agendaAbilities = this.actor.system.currentAgendaAbilities || [];
-    agendaAbilities.splice(index, 1);
-    this.actor.update({ 'system.currentAgendaAbilities': agendaAbilities }).then(() => {
+    const newAgendaAbilities = agendaAbilities.slice(0, Number(index)).concat(agendaAbilities.slice(Number(index)+1))
+    this.actor.update({ 'system.currentAgendaAbilities': newAgendaAbilities }).then(() => {
       this.render(false); // Re-render the sheet to reflect changes
     });
   }
@@ -881,8 +939,6 @@ export class CainActorSheet extends ActorSheet {
     }
   }
 
-// Assuming this is part of the ActorSheet class
-
   async _onNpcAttack(event) {
     event.preventDefault();
     const roll = await new Roll('1d6').roll({ async: true });
@@ -900,29 +956,53 @@ export class CainActorSheet extends ActorSheet {
     }
 
     const message = `
-      <div style="border: 1px solid #444; padding: 10px; border-radius: 4px; background-color: #1a1a1a; color: #f5f5f5;">
+      <div style="border: 1px solid #444; padding: 10px; border-radius: 4px; background-color: #1a1a1a; color: #f5f5f5; font-family: 'Courier New', Courier, monospace;">
         <h2 style="margin: 0 0 10px 0;">Attack Roll</h2>
         <p><strong>Roll:</strong> <span style="font-size: 1.2em;">${roll.total}</span></p>
         <p>${damageMessage}</p>
       </div>
     `;
-    ChatMessage.create({ content: message });
+    await roll.toMessage({
+      flavor: message,
+      speaker: ChatMessage.getSpeaker({ actor: this.actor })
+    });
   }
 
   async _onNpcSevereAttack(event) {
     event.preventDefault();
     const description = this.actor.system.severeAttack.description;
     const rollFormula = this.actor.system.severeAttack.rollFormula;
+    const abilityQuestions = this.actor.system.severeAbilityQuestions || [];
+  
     const dialogContent = `
-      <div style="padding: 10px; background-color: #2c2c2c; border-radius: 8px; color: #f5f5f5;">
+      <div style="padding: 20px; background-color: #2c2c2c; border-radius: 8px; color: #f5f5f5; font-family: 'Courier New', Courier, monospace;">
         <p style="font-size: 1.2em; margin-bottom: 10px;">${description}</p>
         <div style="margin-bottom: 10px;">
           <label for="dice-modifier" style="display: block; margin-bottom: 5px; font-weight: bold;">Dice Modifier:</label>
           <input type="number" id="dice-modifier" name="dice-modifier" value="0" style="width: 100%; padding: 5px; border-radius: 4px; border: 1px solid #444; background-color: #1a1a1a; color: #f5f5f5;">
         </div>
+        <div style="margin-bottom: 10px;">
+          ${abilityQuestions.map((question, index) => `
+            <div style="margin-bottom: 5px;">
+              <label style="font-weight: bold;">${question}</label>
+              <div>
+                <label><input type="radio" name="question-${index}" value="yes"> Yes</label>
+                <label><input type="radio" name="question-${index}" value="no"> No</label>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+        <div style="margin-bottom: 10px;">
+          <label for="yes-no-toggle" style="display: block; margin-bottom: 5px; font-weight: bold;">Yes/No Modifier:</label>
+          <select id="yes-no-toggle" name="yes-no-toggle" style="width: 100%; padding: 5px; border-radius: 4px; border: 1px solid #444; background-color: #1a1a1a; color: #f5f5f5;">
+            <option value="yes+1">Yes +1, No -1</option>
+            <option value="yes-1">Yes -1, No +1</option>
+          </select>
+        </div>
       </div>
     `;
-    new Dialog({
+  
+    let dialog = new Dialog({
       title: "Severe Attack",
       content: dialogContent,
       buttons: {
@@ -930,21 +1010,57 @@ export class CainActorSheet extends ActorSheet {
           icon: "<i class='fas fa-dice'></i>",
           label: "Roll",
           callback: () => {
-            const modifier = parseInt(document.getElementById('dice-modifier').value) || 0;
+            let modifier = parseInt(document.getElementById('dice-modifier').value) || 0;
+            const yesNoToggle = document.getElementById('yes-no-toggle').value;
+            const yesModifier = yesNoToggle === 'yes+1' ? 1 : -1;
+            const noModifier = yesNoToggle === 'yes+1' ? -1 : 1;
+  
+            abilityQuestions.forEach((_, index) => {
+              const selectedOption = document.querySelector(`input[name="question-${index}"]:checked`);
+              if (selectedOption) {
+                if (selectedOption.value === 'yes') {
+                  modifier += yesModifier;
+                } else if (selectedOption.value === 'no') {
+                  modifier += noModifier;
+                }
+              }
+            });
+  
             this._performSevereAttackRoll(rollFormula, modifier);
-          }
+          },
+          buttonClass: "severe-attack-roll-button",
+          style: "background-color: #ff5555; color: #fff; border: 1px solid #ff0000; border-radius: 4px; padding: 5px 10px; font-family: 'Courier New', Courier, monospace;"
+        },
+        print: {
+          icon: "<i class='fas fa-print'></i>",
+          label: "Print Questions",
+          callback: () => {
+            event.preventDefault();
+            console.log("Ability Activation Questions:");
+            ChatMessage.create({
+              content: abilityQuestions.map((question, index) => `${index + 1}. ${question}`).join('<br>'),
+              speaker: ChatMessage.getSpeaker({ actor: this.actor })
+            });
+          },
+          buttonClass: "severe-attack-print-button",
+          style: "background-color: #555; color: #fff; border: 1px solid #000; border-radius: 4px; padding: 5px 10px; font-family: 'Courier New', Courier, monospace;"
         },
         cancel: {
           icon: "<i class='fas fa-times'></i>",
-          label: "Cancel"
+          label: "Cancel",
+          buttonClass: "severe-attack-cancel-button",
+          style: "background-color: #444; color: #fff; border: 1px solid #ff0000; border-radius: 4px; padding: 5px 10px; font-family: 'Courier New', Courier, monospace;"
         }
       },
-      default: "roll"
-    }).render(true);
+      render: html => {
+        dialog.setPosition({ width: 650, height: 650 });
+      },
+      default: "roll",
+    });
+    dialog.render(true);
   }
   
   async _performSevereAttackRoll(rollFormula, modifier) {
-    // Extract the number of dice from the roll formula
     const match = rollFormula.match(/(\d+)d6/);
     if (!match) {
       console.error("Invalid roll formula");
@@ -952,9 +1068,9 @@ export class CainActorSheet extends ActorSheet {
     }
   
     const baseDice = parseInt(match[1]);
-    const totalDice = Math.max(baseDice + modifier, 0); // Ensure totalDice is not below 0
+    const totalDice = Math.max(baseDice + modifier, 0);
   
-    const roll = new Roll(`${totalDice}d6`);
+    const roll = new Roll(`${totalDice}d6cs=1`);
     await roll.evaluate({ async: true });
   
     let onesCount = 0;
@@ -972,31 +1088,35 @@ export class CainActorSheet extends ActorSheet {
       }
     });
     message += `</ul>`;
-    message += `<p>Number of 1's: ${onesCount}</p>`;
+    message += `<p>Number of 1's (Successes): ${onesCount}</p>`;
     message += `<p>Number of non-1's: ${nonOnesCount}</p>`;
+    message += `<p>Total Successes: ${onesCount}</p>`;
   
-    ChatMessage.create({
-      content: message,
+    await roll.toMessage({
+      flavor: `<div style="font-family: 'Courier New', Courier, monospace;">${message}</div>`,
       speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+      roll: onesCount // Set the roll result to the number of 1s
     });
   }
-
-
+  
   async _onRollAffliction(event) {
     event.preventDefault();
     const roll = await new Roll('1d6').roll({ async: true });
     const afflictions = this.actor.system.afflictions;
-    const affliction = afflictions[roll.total - 1]; // Assuming afflictions is an array
+    const affliction = afflictions[roll.total - 1];
+
     const message = `
-      <div style="border: 1px solid #444; padding: 10px; border-radius: 4px; background-color: #1a1a1a; color: #f5f5f5;">
+      <div style="border: 1px solid #444; padding: 10px; border-radius: 4px; background-color: #1a1a1a; color: #f5f5f5; font-family: 'Courier New', Courier, monospace;">
         <h2 style="margin: 0 0 10px 0;">Affliction Roll</h2>
         <p><strong>Roll:</strong> <span style="font-size: 1.2em;">${roll.total}</span></p>
         <p><strong>Affliction:</strong> ${affliction}</p>
       </div>
     `;
-    ChatMessage.create({ content: message });
+    await roll.toMessage({
+      flavor: message,
+      speaker: ChatMessage.getSpeaker({ actor: this.actor })
+    });
   }
-
   _onSinTypeSelect(sinType) {
     const sinTypeMapping = {
       ogre: {
@@ -1052,10 +1172,35 @@ export class CainActorSheet extends ActorSheet {
           rollFormula: "1d6"
         }, 
         severeAttack: {
-          description: "An ogre can use this ability on a ‘1’ on the risk roll, striking out with overwhelming and crushing force: a flurry of limbs, a torrent of darkness, an elephant-like foot, a cavernous jaw. They can only use it once a mission. Target an exorcist. Any other exorcists nearby must decide to fly to their aid. Any that don’t offer aid cannot participate. Start with a pool of 5d6. Then remove one dice for each of the following. If an answer is ‘no’, you or someone aiding you can immediately make a single action roll to attempt rectify the answer, with only a few moments to act. • Is another person aiding you? They can describe how. • Can you grab on to something nearby? • Do you have a source of bright light or heat? • Is the ogre distracted, hindered, or under duress in some way? • Then roll the dice. The exorcist and any aiding them take 1 stress for every die rolled, no matter the result. If at least one ‘1’ comes up, the targeted exorcist immediately takes an injury and the mangled limbs affliction: all physical activity is hard unless set up by an ally or participating in teamwork. If two or more ‘1’s come up, the exorcist has one or more of their limbs torn off (roll 1d3: 1: arm 2: leg 3: both legs). Roll 1d6 for left or right (left on 1-3, right on 4-6). They take an injury, pass out until the scene passes, then all physical activity is hard for them without teamwork. After the mission is over, they can adjust to their disability and this no longer has an effect on them (determine with Admin how your character heals).",
-          rollFormula: "5d6"
+          description: `
+          <div>
+            <h2>Description</h2>
+            <p>The Sin can use this ability on a '1' on the risk roll. They can only use it once a mission. Target an exorcist. Any other exorcists nearby must decide to fly to their aid. Any that don't offer aid cannot participate.</p>
+      
+            <h3>Ability Activation</h3>
+            <p>Start with a pool of 5d6. Then remove one dice for each of the following:</p>
+            <ul>
+              <li>Is another person aiding you?</li>
+              <li>Can you grab on to something nearby?</li>
+              <li>Do you have a source of bright light or heat?</li>
+              <li>Is the ogre distracted, hindered, or under duress in some way?</li>
+            </ul>
+            <p>Then roll the dice. The exorcist and any aiding them take 1 stress for every die rolled, no matter the result.</p>
+      
+            <h3>Consequences</h3>
+            <p>If at least one '1' comes up, the targeted exorcist immediately takes an injury and the mangled limbs affliction: all physical activity is hard unless set up by an ally or participating in teamwork.</p>
+            <p>If two or more '1's come up, the exorcist has one or more of their limbs torn off. Roll 1d3: 1: arm, 2: leg, 3: both legs. Roll 1d6 for left or right (left on 1-3, right on 4-6). They take an injury, pass out until the scene passes, then all physical activity is hard for them without teamwork. After the mission is over, they can adjust to their disability and this no longer has an effect on them (determine with Admin how your character heals).</p>
+          </div>
+        `,
+        rollFormula: "5d6"
         },
-        afflictions: ["White Mold: Spreading white veins and coughing indicate mold infection. Subtract 1 from all resting rolls while afflicted and cannot eat, drink, or use consumables.", "Frozen Limbs: Physical activity or fine motor skill is hard if it requires more than one limb.", "Circling the Drain : Cannot benefit from teamwork or setup. Permanently add to your agenda: give up on something.", "Speaking spews out black sludge. All communication that requires speaking is hard", "Rotting: Black rot has taken in the body. Take 1 stress each time pressure fills up. If this inflicts an injury, it inflicts instant death.", "Permanently add to your agenda: die."]
+        afflictions: ["White Mold: Spreading white veins and coughing indicate mold infection. Subtract 1 from all resting rolls while afflicted and cannot eat, drink, or use consumables.", "Frozen Limbs: Physical activity or fine motor skill is hard if it requires more than one limb.", "Circling the Drain : Cannot benefit from teamwork or setup. Permanently add to your agenda: give up on something.", "Speaking spews out black sludge. All communication that requires speaking is hard", "Rotting: Black rot has taken in the body. Take 1 stress each time pressure fills up. If this inflicts an injury, it inflicts instant death.", "Permanently add to your agenda: die."],
+        severeAbilityQuestions: [
+          "Is another person aiding you?",
+          "Can you grab on to something nearby?",
+          "Do you have a source of bright light or heat?",
+          "Is the ogre distracted, hindered, or under duress in some way?"
+        ]
       },
       toad: {
         domains: {
@@ -1109,8 +1254,29 @@ export class CainActorSheet extends ActorSheet {
           highDamage: "3 stress",
           rollFormula: "1d6"
         },         
-        severeAttack: { description: "The Sin can use this ability on a ‘1’ on the risk roll. They can only use it once a mission. Target an exorcist. Any other exorcists nearby must decide to fly to their aid. Any that don’t offer aid cannot participate. Start with a pool of 5d6. Then remove one dice for each of the following. If an answer is ‘no’, you or someone aiding you can immediately make a single action roll to attempt rectify the answer, with only a few moments to act, suffering consequences as normal if they fail. • Are you accepting of your powers? • Are your allies close enough to touch you skin to skin? • Are you willing to part with your kit? If you answer yes to this, the Toad is distracted by stealing every item of gear from you you currently have ticked. They disappear until the Toad is defeated. Is the Toad hindered, distracted, or under duress in some way? Then roll the dice. The exorcist and any aiding them take 1 stress for every die rolled, no matter the result. • If at least one ‘1’ comes up, the Toad steals the ability to use psychic powers from the targeted exorcist. These coalesce into a psychic shadow, which runs off. It is a sin with an execution talisman of 3 and it uses reactions to attempt to flee. If it is destroyed, captured, or the scene ends, it fuses with its host again, ending this effect. • If two or more ‘1’s come up, the execution talisman of the shadow is 5 instead.", rollFormula: "5d6" },
-        afflictions: ["Absent Minded: Whenever you roll a ‘1’ on risk, erase 1 KP.", "Wasting Sickness: Reduce max stress by 1 each time you rest. If reduced to 0, you suffer instant death.", "Starvation: All actions are hard until you or an ally mark 1 KP and allow you to eat something. This effect resets and you must eat again after you rest.", "Itchy Fingers: Once a scene, stealing something (anything) gives you 1 psyche burst and 1d3 sin. Permanently add to your agenda: steal.", "Dreaming Desire: When pressure increases, spend 1 psyche burst to daydream about things you want or take 2 stress.", "The Want: Permanently add to your agenda: take more than you need. Or improvise: make a something hard or"]
+        severeAttack: {   description: `
+          <div>
+            <h2>Description</h2>
+            <p>The Sin can use this ability on a '1' on the risk roll. They can only use it once a mission. Target an exorcist. Any other exorcists nearby must decide to fly to their aid. Any that don't offer aid cannot participate.</p>
+      
+            <h3>Ability Activation</h3>
+            <p>Start with a pool of 5d6. Then remove one dice for each of the following:</p>
+            <ul>
+              <li>Are you accepting of your powers?</li>
+              <li>Are your allies close enough to touch you skin to skin?</li>
+              <li>Are you willing to part with your kit?</li>
+              <li>Is the Toad hindered, distracted, or under duress in some way?</li>
+            </ul>
+            <p>Then roll the dice. The exorcist and any aiding them take 1 stress for every die rolled, no matter the result.</p>
+      
+            <h3>Consequences</h3>
+            <p>If at least one '1' comes up, the Toad steals the ability to use psychic powers from the targeted exorcist. These coalesce into a psychic shadow, which runs off. It is a sin with an execution talisman of 3 and it uses reactions to attempt to flee. If it is destroyed, captured, or the scene ends, it fuses with its host again, ending this effect.</p>
+            <p>If two or more '1's come up, the execution talisman of the shadow is 5 instead.</p>
+          </div>
+        `,
+        rollFormula: "5d6" },
+        afflictions: ["Absent Minded: Whenever you roll a ‘1’ on risk, erase 1 KP.", "Wasting Sickness: Reduce max stress by 1 each time you rest. If reduced to 0, you suffer instant death.", "Starvation: All actions are hard until you or an ally mark 1 KP and allow you to eat something. This effect resets and you must eat again after you rest.", "Itchy Fingers: Once a scene, stealing something (anything) gives you 1 psyche burst and 1d3 sin. Permanently add to your agenda: steal.", "Dreaming Desire: When pressure increases, spend 1 psyche burst to daydream about things you want or take 2 stress.", "The Want: Permanently add to your agenda: take more than you need. Or improvise: make a something hard or"],
+        severeAbilityQuestions: ["Are you accepting of your powers?", "Are your allies close enough to touch you skin to skin?", "Are you willing to part with your kit?", "Is the Toad hindered, distracted, or under duress in some way?"]
       }, 
       idol: {
         domains: {
@@ -1147,7 +1313,28 @@ export class CainActorSheet extends ActorSheet {
           rollFormula: "1d6"
         }, 
         severeAttack: {
-        description: "An idol can use this ability on a ‘1’ on the risk roll. They can only use it once a mission. Target an exorcist. Any other exorcists nearby must decide to fly to their aid. Any that don’t offer aid cannot participate. Start with a pool of 5d6. Then remove one dice for each of the following questions you answer ‘yes’ to. If an answer is ‘no’, you or someone aiding you can immediately make a single action roll to attempt rectify the answer, with only a few moments to act, suffering consequences as normal if they fail. • Are you far from the idol? • Do you have love in your life? • Does someone aiding you care about you? They can describe how. • Is the idol hindered, distracted, or under duress in some way? Then roll the dice. The exorcist and any aiding them take 1 stress for every die rolled, no matter the result. • If at least one ‘1’ comes up, the targeted exorcist must answer the question: Who in among their allies do they desire the most? This answer could be platonic, and the idol may give them a chance to reconsider. • If the answer is ‘nobody’ or ‘myself’, the idol instantly inflicts an injury and knocks the targeted exorcist unconscious for the remainder of the scene. If the answer is another ally, the idol forcibly fuses the flesh of the two together. This has no immediate adverse effects, but the two victims can only act with teamwork with each other while fused. After the exorcists rest, they can remain fused or forcibly separate themselves. This inflicts an injury on each of them. It otherwise ends after the hunt as CAIN is able to safely separate them. • If two or more ‘1’s come up, this effect instead lasts until the rest of the hunt, and can’t be ended early. • After two fused exorcists are un-fused (whichever way), they each take an agenda item from the other’s agenda as a bold item.",
+          description: `
+          <div>
+            <h2>Description</h2>
+            <p>The Sin can use this ability on a '1' on the risk roll. They can only use it once a mission. Target an exorcist. Any other exorcists nearby must decide to fly to their aid. Any that don't offer aid cannot participate.</p>
+      
+            <h3>Ability Activation</h3>
+            <p>Start with a pool of 5d6. Then remove one dice for each of the following:</p>
+            <ul>
+              <li>Are you far from the idol?</li>
+              <li>Do you have love in your life?</li>
+              <li>Does someone aiding you care about you? They can describe how.</li>
+              <li>Is the idol hindered, distracted, or under duress in some way?</li>
+            </ul>
+            <p>Then roll the dice. The exorcist and any aiding them take 1 stress for every die rolled, no matter the result.</p>
+      
+            <h3>Consequences</h3>
+            <p>If at least one '1' comes up, the targeted exorcist must answer the question: Who in among their allies do they desire the most? This answer could be platonic, and the idol may give them a chance to reconsider.</p>
+            <p>If the answer is 'nobody' or 'myself', the idol instantly inflicts an injury and knocks the targeted exorcist unconscious for the remainder of the scene.</p>
+            <p>If the answer is another ally, the idol forcibly fuses the flesh of the two together. This has no immediate adverse effects, but the two victims can only act with teamwork with each other while fused. After the exorcists rest, they can remain fused or forcibly separate themselves. This inflicts an injury on each of them. It otherwise ends after the hunt as CAIN is able to safely separate them.</p>
+            <p>If two or more '1's come up, this effect instead lasts until the rest of the hunt, and can't be ended early.</p>
+          </div>
+        `,
         rollFormula: "5d6"
        },
        afflictions: [
@@ -1157,7 +1344,8 @@ export class CainActorSheet extends ActorSheet {
         "Violent Jealousy: Pick an ally. Gain 1 stress if they roll any ‘6’. Permanently add to your agenda: let nobody else outshine you.",
         "Narcissi: Powers that target only yourself gain +1 CAT. Powers that target at least one ally get -1 CAT.",
         "The Want: Permanently add to your agenda: show someone you are worthy of their attention"
-      ]
+      ],
+      severeAbilityQuestions: ["Are you far from the idol?", "Do you have love in your life?", "Does someone aiding you care about you? They can describe how.", "Is the idol hindered, distracted, or under duress in some way?"],
       },
       lord: {
         domains: {
@@ -1188,8 +1376,27 @@ export class CainActorSheet extends ActorSheet {
           rollFormula: "1d6"
         },         
         severeAttack: {
-          description: "The Sin can use this ability on a ‘1’ on the risk roll. They can only use it once a scene. Target an exorcist. Any other exorcists nearby must decide to fly to their aid. Any that don’t offer aid cannot participate. The lord binds the targeted exorcist with divine chains, then begins a summary trial. Start with a pool of 5d6. Then remove one dice for each of the following. If an answer is ‘no’, you or someone aiding you can immediately make a single action roll to attempt rectify the answer, with only a few moments to act, suffering consequences as normal if they fail. Uniquely, this may take the form of a verbal argument from any aiding exorcist • Are you innocent of crimes? • Are you a liar or a cheat? • Have you lived a life by your ideals? • Is the lord hindered, distracted, or under duress in any way? Then roll the dice as the Lord passes judgement, smiting the chosen exorcist with fire. The exorcist and any aiding them take 1 stress for every die rolled, no matter the result. For every ‘1’ that comes up, the targeted exorcist is forced to confront their inadequacy and additionally gains 1d6 sin. This could occur multiple times.",
-          rollFormula: "5d6"
+          description: `
+          <div>
+            <h2>Description</h2>
+            <p>The Sin can use this ability on a '1' on the risk roll. They can only use it once a scene. Target an exorcist. Any other exorcists nearby must decide to fly to their aid. Any that don't offer aid cannot participate.</p>
+      
+            <h3>Ability Activation</h3>
+            <p>The Lord binds the targeted exorcist with divine chains, then begins a summary trial. Start with a pool of 5d6. Then remove one dice for each of the following:</p>
+            <ul>
+              <li>Are you innocent of crimes?</li>
+              <li>Are you a liar or a cheat?</li>
+              <li>Have you lived a life by your ideals?</li>
+              <li>Is the Lord hindered, distracted, or under duress in any way?</li>
+            </ul>
+            <p>Then roll the dice as the Lord passes judgment, smiting the chosen exorcist with fire.</p>
+      
+            <h3>Consequences</h3>
+            <p>The exorcist and any aiding them take 1 stress for every die rolled, no matter the result.</p>
+            <p>For every '1' that comes up, the targeted exorcist is forced to confront their inadequacy and additionally gains 1d6 sin.</p>
+          </div>
+        `,
+        rollFormula: "5d6"
         },
         afflictions: [
           "Reality Control: Must spend 1 stress to spend any amount of KP in the kingdom.",
@@ -1198,7 +1405,8 @@ export class CainActorSheet extends ActorSheet {
           "Hitchhiker: Always count as in the Kingdom for the purposes of the Lord’s powers.",
           "Welcome Home: Gain +1 max psyche burst in the kingdom, regain max psyche burst when resting in the kingdom, but become unable to use blasphemies outside.",
           "Justiciar: Permanently add to your agenda punish wickedness."
-        ]
+        ],
+        severeAbilityQuestions: ["Are you innocent of crimes?", "Are you a liar or a cheat?", "Have you lived a life by your ideals?", "Is the Lord hindered, distracted, or under duress in any way?"],
       },
       hound: {
         domains: {
@@ -1229,7 +1437,26 @@ export class CainActorSheet extends ActorSheet {
           rollFormula: "1d6"
         },         
         severeAttack: {
-          description: "A hound can use this ability on a ‘1’ on the risk roll. They can only use it once a mission. Target an exorcist. Any other exorcists nearby must decide to fly to their aid. Any that don’t offer aid cannot participate. Start with a pool of 5d6. Then remove one dice for each of the following questions you answer ‘yes’ to. If an answer is ‘no’, you or someone aiding you can immediately make a single action roll to attempt rectify the answer, with only a few moments to act, suffering consequences as normal if they fail. • Do you have a sword (or something like it) ? • Are you calm, collected, and focused? • Do you have a shield (or something like it)? • Is the hound hindered, distracted, or under duress in some way? Then roll the dice, one at a time. The hound immediately separates the chosen exorcist from the group (hurled into a pocket dimension, smashed through a wall, flung off a freeway,) then also begins attacking them with immeasurable fury, with each dice roll representing an attack. • For every die rolled, the exorcist and anyone aiding them gains 1 stress, no matter what. • For every ‘1’ rolled the targeted exorcist suffers 2 additional stress and has a piece of skin cut away, causing permanent scarring (roll).",
+          description: `
+            <div>
+              <h2>Description</h2>
+              <p>The Sin can use this ability on a '1' on the risk roll. They can only use it once a mission. Target an exorcist. Any other exorcists nearby must decide to fly to their aid. Any that don't offer aid cannot participate.</p>
+        
+              <h3>Ability Activation</h3>
+              <p>Start with a pool of 5d6. Then remove one dice for each of the following:</p>
+              <ul>
+                <li>Do you have a sword (or something like it)?</li>
+                <li>Are you calm, collected, and focused?</li>
+                <li>Do you have a shield (or something like it)?</li>
+                <li>Is the hound hindered, distracted, or under duress in some way?</li>
+              </ul>
+              <p>Then roll the dice, one at a time. The hound immediately separates the chosen exorcist from the group (hurled into a pocket dimension, smashed through a wall, flung off a freeway), then also begins attacking them with immeasurable fury, with each dice roll representing an attack.</p>
+        
+              <h3>Consequences</h3>
+              <p>For every die rolled, the exorcist and anyone aiding them gains 1 stress, no matter what.</p>
+              <p>For every '1' rolled, the targeted exorcist suffers 2 additional stress and has a piece of skin cut away, causing permanent scarring (roll).</p>
+            </div>
+          `,
           rollFormula: "5d6"
         },
         afflictions: [
@@ -1239,7 +1466,8 @@ export class CainActorSheet extends ActorSheet {
           "Boiling Resentment: At the end of the mission, if you inflicted physical violence on a human, you may erase 2d3 sin. If you do, permanently add to your agenda: make a human pay for their crimes.",
           "Blood Scent: When any exorcist suffers an injury, you may gain a psyche burst. If you did this at least once during a mission, permanently add to your agenda: taste blood.",
           "The Urge: Permanently add to your agenda: kill"
-        ]
+        ],
+        severeAbilityQuestions: ["Do you have a sword (or something like it)?", "Are you calm, collected, and focused?", "Do you have a shield (or something like it)?", "Is the hound hindered, distracted, or under duress in some way?"],
       },
       centipede: {
         domains: {
@@ -1294,7 +1522,40 @@ export class CainActorSheet extends ActorSheet {
           rollFormula: "1d6"
         },
         severeAttack: {
-          description: "The Sin can use this ability on a ‘1’ on the risk roll. They can only use it once a mission. Target an exorcist. Any other exorcists nearby must decide to fly to their aid. Any that don’t offer aid cannot participate.Start with a pool of 5d6. Then remove one dice for each of the following. If an answer is ‘no’, you or someone aiding you can immediately make a single action roll to attempt rectify the answer, with only a few moments to act, suffering consequences as normal if they fail. • Can you move quickly and unencumbered? • Is someone aiding you able to push or grab you? • Can you forgive the centipede’s host? • Is the centipede hindered, distracted, or under duress in some way? Then roll the dice. The centipede shoots a pressurized stream of mutagenic venom at the targeted exorcist, dissolving all obstacles and flesh in its way with incredible force. The exorcist and any aiding them take 1 stress for every die rolled, no matter the result. If at least one ‘1’ comes up, the targeted exorcist suffers an injury and rolls on the table for a permanent scar. If two or more ‘1’s come up, the exorcist targeted either: • suffers instant death. • suffers sin overflow to avoid instant death • suffers an injury and rolls three times on the table instead for permanent scars 1. Missing eye, fused shut 2. Large bleached patch of skin 3. Fingers on one hand melted together 4. Missing hair, burn scar on scalp 5. Massive burn scar over both arms 6. Rippling acid burn from neck to groin ",
+          description: `
+            <div>
+              <h2>Description</h2>
+              <p>The Sin can use this ability on a '1' on the risk roll. They can only use it once a mission. Target an exorcist. Any other exorcists nearby must decide to fly to their aid. Any that don't offer aid cannot participate.</p>
+        
+              <h3>Ability Activation</h3>
+              <p>Start with a pool of 5d6. Then remove one dice for each of the following:</p>
+              <ul>
+                <li>Can you move quickly and unencumbered?</li>
+                <li>Is someone aiding you able to push or grab you?</li>
+                <li>Can you forgive the centipede's host?</li>
+                <li>Is the centipede hindered, distracted, or under duress in some way?</li>
+              </ul>
+              <p>Then roll the dice. The centipede shoots a pressurized stream of mutagenic venom at the targeted exorcist, dissolving all obstacles and flesh in its way with incredible force.</p>
+        
+              <h3>Consequences</h3>
+              <p>The exorcist and any aiding them take 1 stress for every die rolled, no matter the result.</p>
+              <p>If at least one '1' comes up, the targeted exorcist suffers an injury and rolls on the table for a permanent scar.</p>
+              <p>If two or more '1's come up, the exorcist targeted either:</p>
+              <ul>
+                <li>Suffers instant death.</li>
+                <li>Suffers sin overflow to avoid instant death.</li>
+                <li>Suffers an injury and rolls three times on the table instead for permanent scars:</li>
+                <ul>
+                  <li>Missing eye, fused shut</li>
+                  <li>Large bleached patch of skin</li>
+                  <li>Fingers on one hand melted together</li>
+                  <li>Missing hair, burn scar on scalp</li>
+                  <li>Massive burn scar over both arms</li>
+                  <li>Rippling acid burn from neck to groin</li>
+                </ul>
+              </ul>
+            </div>
+          `,
           rollFormula: "5d6"
         },
         afflictions: [
@@ -1304,7 +1565,8 @@ export class CainActorSheet extends ActorSheet {
           "Alienation: Permanently add to your agenda: ignore a plea for aid.",
           "Hive Brain: Hallucination from aerosol poison. Performing complicated mental activity such as research or investigation is hard.",
           "Let it End: Permanently add to your agenda: Kill Needlessly."
-        ]
+        ],
+        severeAbilityQuestions: ["Can you move quickly and unencumbered?", "Is someone aiding you able to push or grab you?", "Can you forgive the centipede's host?", "Is the centipede hindered, distracted, or under duress in some way?"],
       },
       redacted: {
         domains: {
@@ -1369,7 +1631,8 @@ export class CainActorSheet extends ActorSheet {
           "The Redacted",
           "The Redacted",
           "The Redacted"
-        ]
+        ],
+        severeAbilityQuestions: ["The Redacted", "The Redacted", "The Redacted", "The Redacted"],
       },
     };
 
@@ -1388,7 +1651,8 @@ export class CainActorSheet extends ActorSheet {
         'system.threats': sinTypeData.threats,
         'system.attackRoll': sinTypeData.attackRoll,
         'system.severeAttack': sinTypeData.severeAttack,
-        'system.afflictions': sinTypeData.afflictions
+        'system.afflictions': sinTypeData.afflictions,
+        'system.severeAbilityQuestions': sinTypeData.severeAbilityQuestions
       });
     }
   }

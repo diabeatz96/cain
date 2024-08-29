@@ -1,0 +1,15 @@
+<form class='{{cssClass}}, agenda-background' autocomplete='off'>
+  <header class='sheet-header agenda-header '>
+
+  </header>
+
+  {{! Sheet Tab Navigation }}
+  {{! Sheet Body }}
+  <section class='sheet-body agenda-body'>
+    <h2 style="color: white;">
+    {{#if this.item.system.isBold}}<b>{{/if}}
+    {{this.item.system.task}}
+    {{#if this.item.system.isBold}}</b>{{/if}}
+    </h2>
+  </section>
+</form>

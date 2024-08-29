@@ -63,25 +63,21 @@
         <input type="checkbox" name="survival">
     </div>
     <h3> Up to 1 from first agenda </h3>
-    {{#each actor.system.currentAgendaItems}}
-    {{#unless this.isBold}}
+    {{#each unboldedAgendaTasks}}
     <div class="form-group">
-        <label for="firstAgenda-{{@index}}"> Did you {{this.text}}?</label>
+        <label for="firstAgenda-{{@index}}"> Did you {{this.system.task}}?</label>
         <input type="checkbox" name="firstAgenda-{{@index}}">
     </div>
-    {{/unless}}
     {{else}}
     <w>You don't seem to have a primary agenda - consider adding one...</w>
     {{/each}}
     <h3> Up to 2 from <b>bold</b> agendas</h3>
 
-    {{#each actor.system.currentAgendaItems}}
-    {{#if this.isBold}}
+    {{#each boldedAgendaTasks}}
         <div class="form-group">
-            <label for="boldAgenda-{{@index}}"> Did you <b>{{this.text}}</b>?</label>
+            <label for="boldAgenda-{{@index}}"> Did you <b>{{this.system.task}}</b>?</label>
             <input type="checkbox" name="boldAgenda-{{@index}}">
         </div>
-    {{/if}}
     {{else}}
     <w>You don't seem to have any bolded agendas - consider adding one...</w>
     {{/each}}

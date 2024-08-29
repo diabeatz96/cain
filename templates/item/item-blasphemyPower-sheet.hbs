@@ -3,30 +3,93 @@
     <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}"/>
     <div class="header-fields">
       <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Name"/></h1>
+      <div class="form-group">
+        <label for="classType">Type</label>
+        <select name="system.classType" value="{{system.classType}}">
+          <option value="tension" {{#if (eq system.classType "tension")}}selected{{/if}}>Tension</option>
+          <option value="ardence" {{#if (eq system.classType "ardence")}}selected{{/if}}>Ardence</option>
+          <option value="flux" {{#if (eq system.classType "flux")}}selected{{/if}}>Flux</option>
+          <option value="vector" {{#if (eq system.classType "vector")}}selected{{/if}}>Vector</option>
+          <option value="gate" {{#if (eq system.classType "gate")}}selected{{/if}}>Gate</option>
+          <option value="smother" {{#if (eq system.classType "smother")}}selected{{/if}}>Smother</option>
+          <option value="whisper" {{#if (eq system.classType "whisper")}}selected{{/if}}>Whisper</option>
+          <option value="edit" {{#if (eq system.classType "edit")}}selected{{/if}}>Edit</option>
+          <option value="bind" {{#if (eq system.classType "bind")}}selected{{/if}}>Bind</option>
+          <option value="jaunt" {{#if (eq system.classType "jaunt")}}selected{{/if}}>Jaunt</option>
+          <option value="palace" {{#if (eq system.classType "palace")}}selected{{/if}}>Palace</option>
+          <option value="sympathy" {{#if (eq system.classType "sympathy")}}selected{{/if}}>Sympathy</option>
+          <option value="default" {{#if (eq system.classType "default")}}selected{{/if}}>Default</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="isPassive">Is Passive</label>
+        <input type="checkbox" name="system.isPassive" {{#if system.isPassive}}checked{{/if}}/>
+      </div>
+      <div class="form-group">
+        <label for="keywords">Keywords</label>
+        <input type="text" name="system.keywords" value="{{system.keywords}}"/>
+      </div>
     </div>
   </header>
 
   {{!-- Sheet Tab Navigation --}}
   <nav class="sheet-tabs tabs" data-group="primary">
-    <a class="item" data-tab="passive">Passive</a>
-    <a class="item" data-tab="powers">Powers</a>
+    <a class="item" data-tab="description">Description</a>
   </nav>
 
   {{!-- Sheet Body --}}
   {{! Sheet Body }}
   <section class='sheet-body'>
 
-    <div class='tab' data-group='primary' data-tab='passive'>
-      {{#each blasphemyPassives}}
-        {{> blasphemyPower this classOptions=["tension", "ardence", "flux", "vector", "gate", "smother", "whisper", "edit", "bind", "jaunt", "palace", "sympathy", "default"]}}
-      {{/each}}
+    {{! Description Tab }}
+    <div class='tab' data-group='primary' data-tab='description'>
+      {{! Editors must receive enriched text data from getData to properly handle rolls }}
+      {{editor
+        enrichedDescription
+        target='system.description'
+        engine='prosemirror'
+        button=true
+        editable=editable
+      }}
     </div>
 
-    <div class='tab' data-group='primary' data-tab='powers'>
+    {{! Attributes Tab }}
+    <div class='tab attributes' data-group='primary' data-tab='attributes'>
       {{! As you add new fields, add them in here! }}
-      {{#each blasphemyPowers}}
-        {{> blasphemyPower this classOptions=["tension", "ardence", "flux", "vector", "gate", "smother", "whisper", "edit", "bind", "jaunt", "palace", "sympathy", "default"]}}
-      {{/each}}
+      <div class='resource'>
+        <label class='resource-label'>Roll Formula:</label>
+        <span>{{system.formula}}</span>
+        <div class='grid grid-4col'>
+          <div class='grid-span-1'>
+            <label class='resource-label'>Number of Dice</label>
+            <input
+              type='text'
+              name='system.roll.diceNum'
+              value='{{system.roll.diceNum}}'
+              data-dtype='Number'
+            />
+          </div>
+          <div class='grid-span-1'>
+            <label class='resource-label'>Die Size</label>
+            <input
+              type='text'
+              name='system.roll.diceSize'
+              value='{{system.roll.diceSize}}'
+              data-dtype='String'
+            />
+          </div>
+          <div class='grid-span-2'>
+            <label class='resource-label'>Roll Modifier</label>
+            <input
+              type='text'
+              name='system.roll.diceBonus'
+              value='{{system.roll.diceBonus}}'
+              data-dtype='String'
+            />
+          </div>
+        </div>
+
+      </div>
     </div>
   </section>
 
@@ -36,9 +99,9 @@
   /* Default Theme */
 .form-blasphemy {
   border-radius: 10px;
-  border: 2px solid #333;
   padding: 10px;
   gap: 10px;
+  box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.5), -10px -10px 0 rgba(0, 0, 0, 0.5), 10px -10px 0 rgba(0, 0, 0, 0.5), -10px 10px 0 rgba(0, 0, 0, 0.5);
   font-family: 'Courier New', monospace;
 }
 
