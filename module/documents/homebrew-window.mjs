@@ -203,22 +203,22 @@ export class HomebrewWindow extends Application {
             });
         }
 
-        let blasphemyFolder = game.folders.find(f => f.name === "Blasphemies" && f.type === "Item");
+        let blasphemyFolder = game.folders.find(f => f.name === this.blasphemyOptions.name && f.type === "Item");
         if (!blasphemyFolder) {
             blasphemyFolder = await Folder.create({
-                name: "Blasphemies",
+                name: this.blasphemyOptions.name,
                 type: "Item",
                 folder: blasphemyFolderFolder.id,  // Set a parent folder ID if nesting is desired
                 sorting: "m",  // 'm' for manual sorting, 'a' for alphabetical
             });
         }
 
-        let blasphemyPowerFolder = game.folders.find(f => f.name === "Blasphemy Powers" && f.type === "Item");
+        let blasphemyPowerFolder = game.folders.find(f => f.name === (this.blasphemyOptions.name + " Powers") && f.type === "Item");
         if (!blasphemyPowerFolder) {
             blasphemyPowerFolder = await Folder.create({
                 name: "Blasphemy Powers",
                 type: "Item",
-                folder: blasphemyFolderFolder.id,  // Set a parent folder ID if nesting is desired
+                folder: blasphemyFolder.id,  // Set a parent folder ID if nesting is desired
                 sorting: "m",  // 'm' for manual sorting, 'a' for alphabetical
             });
         }
@@ -332,39 +332,39 @@ export class HomebrewWindow extends Application {
         let agendaFolderFolder = game.folders.find(f => f.name === "Agenda Data" && f.type === "Item");
         if (!agendaFolderFolder) {
             agendaFolderFolder = await Folder.create({
-                name: "Agenda Data",
+                name: "Agendas",
                 type: "Item",
                 folder: null,  // Set a parent folder ID if nesting is desired
                 sorting: "m",  // 'm' for manual sorting, 'a' for alphabetical
             });
         }
 
-        let agendaFolder = game.folders.find(f => f.name === "Agendas" && f.type === "Item");
+        let agendaFolder = game.folders.find(f => f.name === this.agendaOptions.name && f.type === "Item");
         if (!agendaFolder) {
             agendaFolder = await Folder.create({
-                name: "Agendas",
+                name: this.agendaOptions.name,
                 type: "Item",
                 folder: agendaFolderFolder.id,  // Set a parent folder ID if nesting is desired
                 sorting: "m",  // 'm' for manual sorting, 'a' for alphabetical
             });
         }
 
-        let agendaTaskFolder = game.folders.find(f => f.name === "Agenda Tasks" && f.type === "Item");
+        let agendaTaskFolder = game.folders.find(f => f.name === ( + " Tasks") && f.type === "Item");
         if (!agendaTaskFolder) {
             agendaTaskFolder = await Folder.create({
-                name: "Agenda Tasks",
+                name: (this.agendaOptions.name + " Tasks"),
                 type: "Item",
-                folder: agendaFolderFolder.id,  // Set a parent folder ID if nesting is desired
+                folder: agendaFolder.id,  // Set a parent folder ID if nesting is desired
                 sorting: "m",  // 'm' for manual sorting, 'a' for alphabetical
             });
         }
 
-        let agendaAbilityFolder = game.folders.find(f => f.name === "Agenda Abilities" && f.type === "Item");
+        let agendaAbilityFolder = game.folders.find(f => f.name === (this.agendaOptions.name + " Abilities") && f.type === "Item");
         if (!agendaAbilityFolder) {
             agendaAbilityFolder = await Folder.create({
                 name: "Agenda Abilities",
                 type: "Item",
-                folder: agendaFolderFolder.id,  // Set a parent folder ID if nesting is desired
+                folder: agendaFolder.id,  // Set a parent folder ID if nesting is desired
                 sorting: "m",  // 'm' for manual sorting, 'a' for alphabetical
             });
         }
