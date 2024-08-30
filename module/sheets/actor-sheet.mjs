@@ -118,7 +118,6 @@ export class CainActorSheet extends ActorSheet {
       };
     });
   
-    console.log(context);
   
     // Prepare currentAgendaAvailableAbilities
     if (context.currentAgenda) {
