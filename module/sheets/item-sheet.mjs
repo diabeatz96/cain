@@ -77,7 +77,7 @@ export class CainItemSheet extends ItemSheet {
         return {
           id: item.id,
           name: item.name
-        };; return {name: "INVALID"};
+        };; return {name: "INVALID"}; 
       }).filter(item => item.name !== "INVALID");  
     }
     if (this.item.type === "blasphemy") {
@@ -94,6 +94,14 @@ export class CainItemSheet extends ItemSheet {
 
     // Prepare active effects for easier access
     context.effects = prepareActiveEffectCategories(this.item.effects);
+
+    // Set CSS variables for colors
+    const root = document.documentElement;
+    root.style.setProperty('--primary-color', this.item.system.primaryColor || '#000000');
+    root.style.setProperty('--accent-color', this.item.system.accentColor || '#FFFFFF');
+    root.style.setProperty('--secondary-color', this.item.system.secondaryColor || '#CCCCCC');
+    root.style.setProperty('--text-color', this.item.system.textColor || '#000000');
+
     return context;
   }
 
@@ -114,6 +122,9 @@ export class CainItemSheet extends ItemSheet {
     );
 
     html.find('#addTaskToAgenda').click(this._addTaskToAgenda.bind(this));
+
+    // Color pickers
+    html.find('input[type="color"]').on('input', this._updateColor.bind(this, html));
   }
 
   _addTaskToAgenda(event) {
@@ -134,5 +145,19 @@ export class CainItemSheet extends ItemSheet {
     }
     console.log(newTask)
     console.log(this.item.system);
+  }
+
+  _updateColor(html, event) {
+    const colorType = event.target.getAttribute('data-id');
+    const colorValue = event.target.value;
+    const eventId = event.target.id;
+    console.log(`Color picker event: ${eventId}`);
+    console.log(`Updating color: ${colorType} to ${colorValue}`);
+    this.item.update({[`system.${eventId}`]: colorValue}, {render: false}).then(() => {
+      html[0].style.setProperty(`--${colorType}`, colorValue);
+      console.log(`CSS variable --${colorType} set to ${colorValue}`);
+    }).catch(err => {
+      console.error(`Error updating item with ${colorType}: ${colorValue}`, err);
+    });
   }
 }
