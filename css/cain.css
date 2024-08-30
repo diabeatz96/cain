@@ -737,10 +737,8 @@
 }
 
 .mob-psycho-header-fields {
-  background-color: #262626;
   padding: 10px;
   border-radius: 5px;
-  border: 1px dashed #00bfff; /* Dashed border for a report look */
 }
 
 .mob-psycho-charname input {
@@ -753,7 +751,6 @@
 .mob-psycho-grid {
   color: #ffffff;
   gap: 10px;
-  border: 1px solid #00bfff; /* Jujutsu Kaisen inspired accent color */
   padding: 10px;
   margin: 10px 0;
 }
@@ -762,7 +759,6 @@
   background-color: #333333;
   padding: 5px;
   border-radius: 5px;
-  border: 1px dashed #00bfff; /* Dashed border for a report look */
 }
 
 .mob-psycho-label {
@@ -819,8 +815,6 @@
 
 .mob-psycho-tab {
   background-color: #0d0d0d;
-  padding: 10px;
-  border: 1px solid #00bfff; /* Jujutsu Kaisen inspired accent color */
 }
 
 .mob-psycho-sidebar {
@@ -841,7 +835,7 @@
   background-color: #262626;
   padding: 5px;
   border-radius: 5px;
-  border: 1px dashed #00bfff; /* Dashed border for a report look */
+  margin: 2px; /* Dashed border for a report look */
 }
 
 .mob-psycho-extra-dice {
@@ -852,17 +846,15 @@
 }
 
 .mob-psycho-affliction {
-  background-color: #262626;
   padding: 5px;
   border-radius: 5px;
-  border: 1px dashed #00bfff; /* Dashed border for a report look */
 }
 
 .mob-psycho-main {
   background-color: #1a1a1a;
   padding: 10px;
   border-radius: 5px;
-  border: 2px solid #00bfff; /* Jujutsu Kaisen inspired accent color */
+  border: 1px dashed #00bfff; /* Jujutsu Kaisen inspired accent color */
 }
 
 .mob-psycho-editor {
@@ -945,6 +937,14 @@
 
 .message-delete {
   color: #ff4d4d; /* Red color for delete icon */
+}
+
+.no-border{
+  border: none !important;
+}
+
+.no-padding{
+  padding: none !important;
 }
 
 .flavor-text {
