@@ -737,7 +737,6 @@
 }
 
 .mob-psycho-header-fields {
-  background-color: #262626;
   padding: 10px;
   border-radius: 5px;
 }
@@ -816,8 +815,6 @@
 
 .mob-psycho-tab {
   background-color: #0d0d0d;
-  padding: 10px;
-  border: 1px solid #00bfff; /* Jujutsu Kaisen inspired accent color */
 }
 
 .mob-psycho-sidebar {
@@ -858,7 +855,7 @@
   background-color: #1a1a1a;
   padding: 10px;
   border-radius: 5px;
-  border: 2px solid #00bfff; /* Jujutsu Kaisen inspired accent color */
+  border: 1px dashed #00bfff; /* Jujutsu Kaisen inspired accent color */
 }
 
 .mob-psycho-editor {
