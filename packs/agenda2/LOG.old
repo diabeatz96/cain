@@ -1,21 +1,8 @@
-2024/08/29-10:26:24.174818 ffff99fbf120 Recovering log #28
-2024/08/29-10:26:24.202511 ffff99fbf120 Delete type=0 #28
-2024/08/29-10:26:24.202773 ffff99fbf120 Delete type=3 #26
-2024/08/29-10:26:34.968545 ffff98e1e120 Level-0 table #32: started
-2024/08/29-10:26:34.968731 ffff98e1e120 Level-0 table #32: 0 bytes OK
-2024/08/29-10:26:34.977668 ffff98e1e120 Delete type=0 #30
-2024/08/29-10:26:34.978249 ffff98e1e120 Manual compaction at level-0 from '!folders!CLEw3YHmwcZOWPfm' @ 72057594037927935 : 1 .. '!items!zZFPaBUSRswOimI7' @ 0 : 0; will stop at '!items!zZFPaBUSRswOimI7' @ 87 : 0
-2024/08/29-10:26:34.978299 ffff98e1e120 Compacting 1@0 + 0@1 files
-2024/08/29-10:26:34.989836 ffff98e1e120 Generated table #33@0: 125 keys, 28141 bytes
-2024/08/29-10:26:34.989920 ffff98e1e120 Compacted 1@0 + 0@1 files => 28141 bytes
-2024/08/29-10:26:34.997781 ffff98e1e120 compacted to: files[ 0 1 1 0 0 0 0 ]
-2024/08/29-10:26:34.998388 ffff98e1e120 Delete type=2 #27
-2024/08/29-10:26:34.999709 ffff98e1e120 Manual compaction at level-0 from '!items!zZFPaBUSRswOimI7' @ 87 : 0 .. '!items!zZFPaBUSRswOimI7' @ 0 : 0; will stop at (end)
-2024/08/29-10:26:35.023766 ffff98e1e120 Manual compaction at level-1 from '!folders!CLEw3YHmwcZOWPfm' @ 72057594037927935 : 1 .. '!items!zZFPaBUSRswOimI7' @ 0 : 0; will stop at '!items!zZFPaBUSRswOimI7' @ 106 : 1
-2024/08/29-10:26:35.023850 ffff98e1e120 Compacting 1@1 + 1@2 files
-2024/08/29-10:26:35.036660 ffff98e1e120 Generated table #34@1: 125 keys, 28141 bytes
-2024/08/29-10:26:35.036744 ffff98e1e120 Compacted 1@1 + 1@2 files => 28141 bytes
-2024/08/29-10:26:35.042882 ffff98e1e120 compacted to: files[ 0 0 1 0 0 0 0 ]
-2024/08/29-10:26:35.043805 ffff98e1e120 Delete type=2 #5
-2024/08/29-10:26:35.044303 ffff98e1e120 Delete type=2 #33
-2024/08/29-10:26:35.081083 ffff98e1e120 Manual compaction at level-1 from '!items!zZFPaBUSRswOimI7' @ 106 : 1 .. '!items!zZFPaBUSRswOimI7' @ 0 : 0; will stop at (end)
+2024/08/30-00:00:50.574 a7e0 Recovering log #56
+2024/08/30-00:00:50.579 a7e0 Delete type=0 #56
+2024/08/30-00:00:50.579 a7e0 Delete type=3 #55
+2024/08/30-00:04:18.052 820c Level-0 table #60: started
+2024/08/30-00:04:18.052 820c Level-0 table #60: 0 bytes OK
+2024/08/30-00:04:18.054 820c Delete type=0 #58
+2024/08/30-00:04:18.058 820c Manual compaction at level-0 from '!folders!CLEw3YHmwcZOWPfm' @ 72057594037927935 : 1 .. '!items!zZFPaBUSRswOimI7' @ 0 : 0; will stop at (end)
+2024/08/30-00:04:18.058 820c Manual compaction at level-1 from '!folders!CLEw3YHmwcZOWPfm' @ 72057594037927935 : 1 .. '!items!zZFPaBUSRswOimI7' @ 0 : 0; will stop at (end)

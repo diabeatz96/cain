@@ -118,7 +118,6 @@ export class CainActorSheet extends ActorSheet {
       };
     });
   
-    console.log(context);
   
     // Prepare currentAgendaAvailableAbilities
     if (context.currentAgenda) {
@@ -347,9 +346,7 @@ export class CainActorSheet extends ActorSheet {
     }
 
     const selectedOption = selectElement.options[selectElement.selectedIndex];
-    console.log(selectedOption);
     const description = selectedOption.getAttribute('data-description');
-    console.log(description);
     document.getElementById('abilityDescription').innerText = description;
   }
 
