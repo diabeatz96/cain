@@ -740,7 +740,6 @@
   background-color: #262626;
   padding: 10px;
   border-radius: 5px;
-  border: 1px dashed #00bfff; /* Dashed border for a report look */
 }
 
 .mob-psycho-charname input {
@@ -753,7 +752,6 @@
 .mob-psycho-grid {
   color: #ffffff;
   gap: 10px;
-  border: 1px solid #00bfff; /* Jujutsu Kaisen inspired accent color */
   padding: 10px;
   margin: 10px 0;
 }
@@ -762,7 +760,6 @@
   background-color: #333333;
   padding: 5px;
   border-radius: 5px;
-  border: 1px dashed #00bfff; /* Dashed border for a report look */
 }
 
 .mob-psycho-label {
@@ -841,7 +838,7 @@
   background-color: #262626;
   padding: 5px;
   border-radius: 5px;
-  border: 1px dashed #00bfff; /* Dashed border for a report look */
+  margin: 2px; /* Dashed border for a report look */
 }
 
 .mob-psycho-extra-dice {
@@ -855,7 +852,6 @@
   background-color: #262626;
   padding: 5px;
   border-radius: 5px;
-  border: 1px dashed #00bfff; /* Dashed border for a report look */
 }
 
 .mob-psycho-main {
@@ -945,6 +941,14 @@
 
 .message-delete {
   color: #ff4d4d; /* Red color for delete icon */
+}
+
+.no-border{
+  border: none !important;
+}
+
+.no-padding{
+  padding: none !important;
 }
 
 .flavor-text {

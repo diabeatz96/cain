@@ -1,4 +1,4 @@
-<form class="{{cssClass}} {{actor.type}} flexcol mob-psycho-theme" autocomplete="off">
+<form class="{{cssClass}} {{actor.type}} flexcol mob-psycho-theme no-border" autocomplete="off">
 
   {{!-- Sheet Header --}}
   <header class="sheet-header mob-psycho-header">
@@ -8,7 +8,7 @@
     <div class="header-fields mob-psycho-header-fields">
       <h1 class="charname mob-psycho-charname"><input name="name" type="text" value="{{actor.name}}" placeholder="Name"/></h1>
 
-      <div class="grid grid-4col mob-psycho-grid">
+      <div class="grid grid-4col">
         <div class="flex-group-center mob-psycho-flex-group">
           <label for="system.sex" class="resource-label mob-psycho-label">Sex</label>
           <input type="text" name="system.sex" value="{{system.sex}}" data-dtype="String" class="mob-psycho-input"/>
@@ -52,7 +52,9 @@
 
         <div class="flex-group-center mob-psycho-flex-group">
           <label for="system.XID" class="resource-label mob-psycho-label">XID</label>
-          <input type="text" name="system.XID" value="{{system.XID}}" data-dtype="Number" class="mob-psycho-input"/>
+          <div style="padding: 5px">
+            <input type="text" name="system.XID" value="{{system.XID}}" data-dtype="Number" class="mob-psycho-input"/>
+          </div>
         </div>
       </div>
   </header>
@@ -72,7 +74,7 @@
   <section class="sheet-body mob-psycho-body">
 
     {{!-- Owned Features Tab --}}
-    <div class="tab features mob-psycho-tab" data-group="primary" data-tab="features">
+    <div class="tab" data-group="primary" data-tab="features">
   
       <section class="grid grid-3col mob-psycho-grid">
         <aside class="sidebar mob-psycho-sidebar">
@@ -120,7 +122,7 @@
     </div>
 
     {{!-- Biography Tab --}}
-    <div class="tab biography mob-psycho-tab" data-group="primary" data-tab="description">
+    <div class="tab biography mob-psycho-tab no-border no-padding" data-group="primary" data-tab="description">
       {{!-- Editors must receive enriched text data from getData to properly handle rolls --}}
       
       {{editor enrichedBiography target="system.biography" button=True engine="prosemirror" button=true editable=editable class="mob-psycho-editor"}}
