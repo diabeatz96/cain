@@ -276,17 +276,29 @@ export class CainActorSheet extends ActorSheet {
       this._openAgendaItemSheet(itemId);
     });
 
-    html.find('.blasphemy-passive').on('click', (event) => {
+    // Event delegation for blasphemy-passive
+    html.on('click', '.blasphemy-passive', (event) => {
       const card = event.target.parentElement.parentElement.querySelector('.power-description-card');
-      const randomRotation = Math.random() * 6 - 3; // Random rotation between -3 and 3 degrees
-      card.style.transform = `scale(0.95) rotate(${randomRotation}deg)`;
+      const disableAnimations = document.getElementById('toggle-animation').checked;
+      if (!disableAnimations) {
+        const randomRotation = Math.random() * 6 - 3; // Random rotation between -3 and 3 degrees
+        card.style.transform = `scale(0.95) rotate(${randomRotation}deg)`;
+      } else {
+        card.style.transform = 'none';
+      }
       card.classList.toggle('visible');
     });
-    
-    html.find('.blasphemy-power').on('click', (event) => {
+
+    // Event delegation for blasphemy-power
+    html.on('click', '.blasphemy-power', (event) => {
       const card = event.target.parentElement.parentElement.querySelector('.power-description-card');
-      const randomRotation = Math.random() * 6 - 3; // Random rotation between -3 and 3 degrees
-      card.style.transform = `scale(0.95) rotate(${randomRotation}deg)`;
+      const disableAnimations = document.getElementById('toggle-animation').checked;
+      if (!disableAnimations) {
+        const randomRotation = Math.random() * 6 - 3; // Random rotation between -3 and 3 degrees
+        card.style.transform = `scale(0.95) rotate(${randomRotation}deg)`;
+      } else {
+        card.style.transform = 'none';
+      }
       card.classList.toggle('visible');
     });
 
