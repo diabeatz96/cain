@@ -112,6 +112,7 @@ export class CainItemSheet extends ItemSheet {
     html.on('click', '.effect-control', (ev) =>
       onManageActiveEffect(ev, this.item)
     );
+    html.find('.blasphemy-power-textbox').change(this._modifyBlasphemyPower.bind(this));
 
     html.find('#addTaskToAgenda').click(this._addTaskToAgenda.bind(this));
   }
@@ -134,5 +135,14 @@ export class CainItemSheet extends ItemSheet {
     }
     console.log(newTask)
     console.log(this.item.system);
+  }
+
+  _modifyBlasphemyPower(event) {
+    let powerID = event.currentTarget.dataset.id;
+    console.log(event);
+    console.log(powerID);
+    const power = game.items.get(powerID);
+    console.log(power);
+    power.update({'system.powerDescription' : event.currentTarget.value});
   }
 }

@@ -18,14 +18,14 @@
 
     <div class='tab' data-group='primary' data-tab='passive'>
       {{#each blasphemyPassives}}
-        {{> blasphemyPower this classOptions=["tension", "ardence", "flux", "vector", "gate", "smother", "whisper", "edit", "bind", "jaunt", "palace", "sympathy", "default"]}}
+        {{> blasphemyPower this powerItem=this developerMode=../developerMode}}
       {{/each}}
     </div>
 
     <div class='tab' data-group='primary' data-tab='powers'>
       {{! As you add new fields, add them in here! }}
       {{#each blasphemyPowers}}
-        {{> blasphemyPower this classOptions=["tension", "ardence", "flux", "vector", "gate", "smother", "whisper", "edit", "bind", "jaunt", "palace", "sympathy", "default"]}}
+        {{> blasphemyPower this powerItem=this developerMode=../developerMode}}
       {{/each}}
     </div>
   </section>

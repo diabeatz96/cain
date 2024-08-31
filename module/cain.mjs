@@ -208,7 +208,7 @@ Handlebars.registerHelper('formatted', function(text, category) {
       'CAT': 3,
       'people': 'large group',
       'size': 'vehicle',
-      'area': 'A few rooms',
+      'area': 'few rooms',
       'distance_short': '0-2 blocks',
       'distance_long': '3-4 blocks',
       'distance_extreme': '5+ blocks',
@@ -230,7 +230,7 @@ Handlebars.registerHelper('formatted', function(text, category) {
       'CAT': 5,
       'people': 'a huge crowd',
       'size': 'building',
-      'area': 'a city block',
+      'area': 'city block',
       'distance_short': 'across town',
       'distance_long': 'across town',
       'distance_extreme': 'across town',
@@ -241,7 +241,7 @@ Handlebars.registerHelper('formatted', function(text, category) {
       'CAT': 6,
       'people': 'thousands',
       'size': 'large building',
-      'area': 'a whole neighborhood',
+      'area': 'whole neighborhood',
       'distance_short': 'visual range',
       'distance_long': 'visual range',
       'distance_extreme': 'visual range',
@@ -252,7 +252,7 @@ Handlebars.registerHelper('formatted', function(text, category) {
       'CAT': 7,
       'people': 'many thousands',
       'size': 'skyscraper',
-      'area': 'a whole town',
+      'area': 'whole town',
       'distance_short': 'over the horizon',
       'distance_long': 'over the horizon',
       'distance_extreme': 'over the horizon',
@@ -275,7 +275,6 @@ Handlebars.registerHelper('formatted', function(text, category) {
 
   if (typeof text === 'string') {
       const CatFormattingData = parse_cat_values(text);
-      console.log(CatFormattingData);
       //TODO: fix hardcoded category limits - it'd be nice to have the option to expand Category beyond 0-7
       let updatedText = text;
       if (isNaN(category) || Number(category) < 0 || Number(category) > 7) {
