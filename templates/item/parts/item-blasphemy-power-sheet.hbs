@@ -1,45 +1,38 @@
-<form class="{{cssClass}} form-blasphemy-power {{system.blasphemyType}}-theme" autocomplete="off">
+<form class="{{cssClass}} form-blasphemy-power {{system.blasphemyType}}-theme" autocomplete="off" style="--primary-color: {{system.primaryColor}}; --accent-color: {{system.accentColor}}; --secondary-color: {{system.secondaryColor}}; --text-color: {{system.textColor}};">
   <header class="sheet-header">
     <img class="profile-img" src="{{this.img}}" data-edit="img" title="{{system.powerName}}"/>
     <div class="header-fields">
-      <h1 class="charname"><input name="name" type="text" value="{{system.powerName}}" placeholder="Name" disabled/></h1>
       <div class="form-group">
-        <label for="classType">Type</label>
-        <input type="text" name="system.classType" value="{{system.blasphemyType}}" disabled/>
+        <label for="name">Power Name</label>
+        <input name="name" type="text" value="{{system.powerName}}" placeholder="Name"/>
       </div>
       <div class="form-group">
         <label for="isPassive">Is Passive</label>
-        <input type="checkbox" name="system.isPassive" {{#if system.isPassive}}checked{{/if}} disabled/>
+        <input type="checkbox" name="system.isPassive" {{#if system.isPassive}}checked{{/if}}/>
       </div>
       <div class="form-group">
         <label for="keywords">Keywords</label>
-        <input type="text" name="system.keywords" value="{{system.keywords}}" disabled/>
+        <input type="text" name="system.keywords" value="{{system.keywords}}"/>
       </div>
     </div>
   </header>
 
   <section class="sheet-body">
-    <section class="color-pickers">
-      <div class="form-group">
-        <label for="primaryColor">Primary Color</label>
-        <input type="color" id="primaryColor" data-id="primary-color" value="{{system.primaryColor}}">
-      </div>
-      <div class="form-group">
-        <label for="accentColor">Accent Color</label>
-        <input type="color" id="accentColor" data-id="accent-color" value="{{system.accentColor}}">
-      </div>
-      <div class="form-group">
-        <label for="secondaryColor">Secondary Color</label>
-        <input type="color" id="secondaryColor" data-id="secondary-color" value="{{system.secondaryColor}}">
-      </div>
-      <div class="form-group">
-        <label for="textColor">Text Color</label>
-        <input type="color" id="textColor" data-id="text-color" value="{{system.textColor}}">
-      </div>
-    </section>
-    
+    <h2>Description</h2>
     <w>{{#formatted system.powerDescription}}{{/formatted}}</w>
   </section>
+
+  <div class="color-picker-container">
+    <button class="color-picker-toggle">
+      <i class="fas fa-palette"></i>
+    </button>
+    <div class="color-pickers">
+      <input type="color" id="primaryColor" data-id="primary-color" value="{{system.primaryColor}}" title="Primary Color">
+      <input type="color" id="accentColor" data-id="accent-color" value="{{system.accentColor}}" title="Accent Color">
+      <input type="color" id="secondaryColor" data-id="secondary-color" value="{{system.secondaryColor}}" title="Secondary Color">
+      <input type="color" id="textColor" data-id="text-color" value="{{system.textColor}}" title="Text Color">
+    </div>
+  </div>
 </form>
 
 <style>
@@ -48,6 +41,8 @@
   .form-blasphemy-power {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
     height: 100%;
     border-radius: 10px;
     padding: 20px;
@@ -56,6 +51,11 @@
     font-family: 'Lacquer', sans-serif;
     background-color: var(--primary-color, #2a2a2a);
     color: var(--text-color, #ffffff);
+    margin: 0;
+    border: 2px solid var(--secondary-color, #555);
+    overflow-y: auto;
+    position: relative;
+    width: 100%;
   }
 
   .form-blasphemy-power label {
@@ -65,21 +65,26 @@
 
   .form-blasphemy-power .sheet-header {
     display: flex;
-    flex-direction: row;
+    align-items: flex-start;
     gap: 20px;
-    align-items: center;
+    width: 100%;
+    border-bottom: 2px solid var(--secondary-color, #555);
+    padding-bottom: 10px;
+    overflow: visible; /* Override the parent overflow */
   }
 
   .form-blasphemy-power .header-fields {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    width: 100%;
   }
 
   .form-blasphemy-power .form-group {
     display: flex;
     flex-direction: column;
     gap: 5px;
+    width: 100%;
   }
 
   .form-blasphemy-power .charname {
@@ -87,30 +92,65 @@
     font-weight: bold;
   }
 
+  .form-blasphemy-power .color-picker-container {
+    position: absolute;
+    bottom: 30px;
+    left: 30px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .form-blasphemy-power .color-picker-toggle {
+    background-color: var(--primary-color, #2a2a2a);
+    color: var(--text-color, #ffffff);
+    border: 2px solid var(--secondary-color, #333);
+    padding: 5px;
+    cursor: pointer;
+    transition: transform 0.3s ease, border-radius 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 0 10px var(--accent-color, #ff00ff), 0 0 20px var(--accent-color, #ff00ff);
+  }
+
+  .form-blasphemy-power .color-picker-toggle:hover {
+    transform: scale(1.2);
+    box-shadow: 0 0 20px var(--accent-color, #ff00ff), 0 0 40px var(--accent-color, #ff00ff);
+  }
+
   .form-blasphemy-power .color-pickers {
     display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    margin-top: 20px;
+    flex-direction: row;
+    gap: 10px;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+    transform: translateX(-30px);
+    opacity: 0;
+    pointer-events: none;
   }
 
-  .form-blasphemy-power .color-pickers .form-group {
-    flex: 1;
-    min-width: 150px;
+  .form-blasphemy-power .color-picker-container.active .color-pickers {
+    transform: translateX(0);
+    opacity: 1;
   }
 
-  .form-blasphemy-power input[type="color"] {
-    width: 100%;
+  .form-blasphemy-power .color-pickers input[type="color"] {
+    width: 40px;
     height: 40px;
     border: none;
     cursor: pointer;
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5), 0 0 10px var(--accent-color, #ff00ff);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .form-blasphemy-power .color-pickers input[type="color"]:hover {
+    transform: scale(1.2);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5), 0 0 20px var(--accent-color, #ff00ff);
   }
 
   .form-blasphemy-power input[type="text"],
   .form-blasphemy-power input[type="checkbox"] {
-    background-color: #2a2a2a;
-    color: #f0f0f0;
-    border: 2px solid #333;
+    background-color: var(--primary-color, #2a2a2a);
+    color: var(--text-color, #f0f0f0);
+    border: 2px solid var(--secondary-color, #333);
     border-radius: 5px;
     padding: 5px;
     font-family: 'Lacquer', sans-serif;
@@ -124,15 +164,50 @@
   }
 
   .form-blasphemy-power .profile-img {
-    border: none;
-    max-width: 100px;
-    border-radius: 10px;
-    height: auto;
+    border: 2px solid var(--accent-color, #ff00ff);
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    box-shadow: 0 0 10px var(--accent-color, #ff00ff), 0 0 20px var(--accent-color, #ff00ff);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .form-blasphemy-power .profile-img:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px var(--accent-color, #ff00ff), 0 0 40px var(--accent-color, #ff00ff);
   }
 
   .form-blasphemy-power .sheet-body {
     flex-grow: 1;
     margin-top: 20px;
     overflow-y: auto;
+    width: 100%;
+    max-height: 600px;
+    text-align: center; /* Center text in the sheet body */
+  }
+
+  .form-blasphemy-power .sheet-body h2 {
+    text-align: center; /* Center the Description heading */
+  }
+
+  /* Psychedelic/Investigation Style Accents */
+  .form-blasphemy-power {
+    background: radial-gradient(circle, var(--primary-color, #2a2a2a), var(--secondary-color, #555));
+    border-image: linear-gradient(45deg, var(--accent-color, #ff00ff), var(--secondary-color, #555)) 1;
+  }
+
+  .form-blasphemy-power .sheet-header {
+    background: linear-gradient(135deg, var(--accent-color, #ff00ff), var(--primary-color, #2a2a2a));
+    padding: 10px;
+    border-radius: 10px;
+    width: 100%;
+  }
+
+  .form-blasphemy-power .sheet-body {
+    background: linear-gradient(135deg, var(--primary-color, #2a2a2a), var(--secondary-color, #555));
+    padding: 20px;
+    border-radius: 10px;
+    width: 100%;
   }
 </style>

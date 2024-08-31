@@ -1,14 +1,8 @@
-<form class="{{cssClass}} form-blasphemy" autocomplete="off">
+<form class="{{cssClass}} form-blasphemy {{toLowerCase system.blasphemyName}}-theme" autocomplete="off">
   <header class="sheet-header">
     <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{system.blasphemyName}}"/>
     <div class="header-fields">
       <h1 class="charname blasphemy-text">{{system.blasphemyName}}</h1>
-      <div class="color-pickers">
-        <label>Primary Color: <input type="color" id="primaryColor" data-id="primary-color" value="{{system.primaryColor}}"></label>
-        <label>Accent Color: <input type="color" id="accentColor" data-id="accent-color" value="{{system.accentColor}}"></label>
-        <label>Secondary Color: <input type="color" id="secondaryColor" data-id="secondary-color" value="{{system.secondaryColor}}"></label>
-        <label>Text Color: <input type="color" id="textColor" data-id="text-color" value="{{system.textColor}}"></label>
-      </div>
     </div>
   </header>
 
@@ -35,49 +29,109 @@
 </form>
 
 <style>
-  .form-blasphemy {
-    border-radius: 10px;
-    border: 2px solid var(--secondary-color, #333);
-    padding: 10px;
-    gap: 10px;
-    font-family: 'Courier New', monospace;
-    background-color: var(--primary-color, #2a2a2a);
-    color: var(--text-color, #ffffff);
-  }
+/* Dark Theme */
+.form-blasphemy {
+  background-color: #2a2a2a; /* Dark grey primary */
+  color: #f0f0f0; /* Light grey secondary */
+  border: 2px solid #444; /* Slightly lighter grey for border */
+  border-radius: 10px;
+  padding: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  font-family: 'Courier New', monospace;
+}
 
-  .form-blasphemy label {
-    font-weight: bold;
-    color: var(--text-color, #ffffff);
-  }
+.sheet-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  background-color: #333; /* Slightly lighter grey for header */
+  border-radius: 5px;
+  padding: 10px;
+}
 
-  .form-blasphemy .tab {
-    background-color: var(--primary-color, #2a2a2a);
-  }
+.profile-img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-right: 20px;
+  object-fit: cover;
+  border: 2px solid #555; /* Slightly lighter grey for border */
+}
 
-  .form-blasphemy .sheet-header {
-    background-color: var(--primary-color, #2a2a2a);
-    border-radius: 5px;
-    padding: 5px;
-    font-family: 'Courier New', monospace;
-    font-size: 16px;
-    font-weight: 400;
-    color: var(--text-color, #ffffff);
-    border: 2px solid var(--accent-color, #f0f0f0);
-  }
+.header-fields {
+  flex-grow: 1;
+}
 
-  .form-blasphemy .charname {
-    font-size: 24px;
-    font-weight: bold;
-  }
+.charname {
+  font-size: 1.5em;
+  margin: 0;
+  margin-bottom: 10px;
+  color: #f0f0f0; /* Light grey secondary */
+}
 
-  .color-pickers {
-    display: flex;
-    gap: 10px;
-  }
+.form-group {
+  margin-bottom: 10px;
+}
 
-  .color-pickers label {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-  }
+.form-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #ccc; /* Light grey for labels */
+}
+
+.form-group input[type="text"],
+.form-group input[type="checkbox"] {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #555; /* Slightly lighter grey for border */
+  border-radius: 4px;
+  box-sizing: border-box;
+  background-color: #444; /* Dark grey for input background */
+  color: #f0f0f0; /* Light grey for input text */
+}
+
+.form-group input[type="checkbox"] {
+  width: auto;
+  margin-right: 10px;
+}
+
+.sheet-body {
+  background-color: #333; /* Slightly lighter grey for body */
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid #555; /* Slightly lighter grey for border */
+}
+
+.sheet-body p {
+  display: block;
+  font-size: 1em;
+  line-height: 1.5;
+  color: #f0f0f0; /* Light grey for text */
+}
+
+.sheet-tabs .item {
+  color: #f0f0f0; /* Light grey for tab text */
+  background-color: #444; /* Dark grey for tab background */
+  border: 1px solid #555; /* Slightly lighter grey for border */
+  padding: 10px;
+  border-radius: 5px;
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.sheet-tabs .item.active {
+  background-color: #555; /* Slightly lighter grey for active tab */
+}
+
+.profile-img {
+  border: none;
+}
+
+.form-blasphemy .charname {
+  font-size: 24px;
+  font-weight: bold;
+}
 </style>

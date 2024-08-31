@@ -125,6 +125,27 @@ export class CainItemSheet extends ItemSheet {
 
     // Color pickers
     html.find('input[type="color"]').on('input', this._updateColor.bind(this, html));
+
+    html.find('.color-picker-toggle').click(() => {
+      const colorPickerContainer = html.find('.color-picker-container');
+      const colorPickers = html.find('.color-pickers');
+    
+      if (colorPickerContainer.hasClass('active')) {
+        colorPickers.css('transform', 'translateX(-30px)');
+        colorPickers.css('opacity', '0');
+        colorPickers.css('pointer-events', 'none'); // Disable interaction
+        setTimeout(() => {
+          colorPickerContainer.removeClass('active');
+        }, 500); // Match the transition duration
+      } else {
+        colorPickerContainer.addClass('active');
+        setTimeout(() => {
+          colorPickers.css('transform', 'translateX(0)');
+          colorPickers.css('opacity', '1');
+          colorPickers.css('pointer-events', 'auto'); // Enable interaction
+        }, 10); // Small delay to trigger the transition
+      }
+    });
   }
 
   _addTaskToAgenda(event) {
