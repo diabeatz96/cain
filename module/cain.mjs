@@ -121,7 +121,9 @@ Hooks.once('init', async function () {
   });
 
   const blasphemyPowerTemplate = await getTemplate("systems/cain/templates/item/parts/item-blasphemy-power-sheet.hbs");
+  const blasphemyPowerPartialTemplate = await getTemplate("systems/cain/templates/item/parts/item-blasphemy-power-partial.hbs");
   Handlebars.registerPartial("blasphemyPower", blasphemyPowerTemplate);
+  Handlebars.registerPartial("blasphemyPowerPartial", blasphemyPowerPartialTemplate);
 
   // Preload Handlebars templates.
   return preloadHandlebarsTemplates();

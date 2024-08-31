@@ -8,11 +8,11 @@ export default class CainItemBase extends CainDataModel {
 
     schema.description = new fields.StringField({ required: true, blank: true });
 
-    // Set default color scheme to purple
-    schema.primaryColor = new fields.StringField({ required: false, nullable: false, initial: "#800080" }); // Purple
-    schema.accentColor = new fields.StringField({ required: false, nullable: false, initial: "#D8BFD8" }); // Thistle
-    schema.secondaryColor = new fields.StringField({ required: false, nullable: false, initial: "#9370DB" }); // Medium Purple
-    schema.textColor = new fields.StringField({ required: false, nullable: false, initial: "#FFFFFF" }); // White
+    // Set default color scheme to a dark theme
+    schema.primaryColor = new fields.StringField({ required: false, nullable: false, initial: "#2a2a2a" }); // Dark Gray
+    schema.accentColor = new fields.StringField({ required: false, nullable: false, initial: "#ff00ff" }); // Magenta
+    schema.secondaryColor = new fields.StringField({ required: false, nullable: false, initial: "#555555" }); // Medium Gray
+    schema.textColor = new fields.StringField({ required: false, nullable: false, initial: "#ffffff" }); // White
 
     return schema;
   }

@@ -12,8 +12,8 @@ export class CainItemSheet extends ItemSheet {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ['cain', 'sheet', 'item'],
-      width: 520,
-      height: 480,
+      width: 640,
+      height: 640,
       tabs: [
         {
           navSelector: '.sheet-tabs',
@@ -126,26 +126,61 @@ export class CainItemSheet extends ItemSheet {
     // Color pickers
     html.find('input[type="color"]').on('input', this._updateColor.bind(this, html));
 
-    html.find('.color-picker-toggle').click(() => {
-      const colorPickerContainer = html.find('.color-picker-container');
-      const colorPickers = html.find('.color-pickers');
+    // html click item to open
+
+
+    html.find('.item-click').click((event) => {
+        const itemId = $(event.currentTarget).data('id');
+        const item = Item.get(itemId);
+        console.log(item);
+        if (item) {
+          item.sheet.render(true);
+        }
+      });
     
-      if (colorPickerContainer.hasClass('active')) {
-        colorPickers.css('transform', 'translateX(-30px)');
-        colorPickers.css('opacity', '0');
-        colorPickers.css('pointer-events', 'none'); // Disable interaction
-        setTimeout(() => {
+    
+    // Setup color picker functionality
+    setupColorPicker(html);
+
+    function setupColorPicker(html) {
+      html.find('.color-picker-toggle').click(() => {
+        console.log('Color picker toggle clicked');
+        const colorPickerContainer = html.find('.color-picker-container');
+        console.log(colorPickerContainer);
+        const colorPickers = html.find('.color-pickers');
+        console.log(colorPickerContainer.hasClass('active'));
+
+        if (colorPickerContainer.hasClass('active')) {
+          console.log('Closing color picker');
+          colorPickers.css('transform', 'translateX(-30px)');
+          colorPickers.css('opacity', '0');
+          colorPickers.css('pointer-events', 'none'); // Disable interaction
+          setTimeout(() => {
+            colorPickerContainer.removeClass('active');
+          }, 500); // Match the transition duration
+        } else {
+          colorPickerContainer.addClass('active');
+          setTimeout(() => {
+            colorPickers.css('transform', 'translateX(0)');
+            colorPickers.css('opacity', '1');
+            colorPickers.css('pointer-events', 'auto'); // Enable interaction
+          }, 10); // Small delay to trigger the transition
+        }
+      });
+
+      html.on('click', (event) => {
+        const colorPickerContainer = html.find('.color-picker-container');
+        const colorPickerToggle = html.find('.color-picker-toggle');
+        const colorPickers = html.find('.color-pickers');
+
+        if (!colorPickerContainer.is(event.target) && !colorPickerToggle.is(event.target) && colorPickerContainer.has(event.target).length === 0) {
           colorPickerContainer.removeClass('active');
-        }, 500); // Match the transition duration
-      } else {
-        colorPickerContainer.addClass('active');
-        setTimeout(() => {
-          colorPickers.css('transform', 'translateX(0)');
-          colorPickers.css('opacity', '1');
-          colorPickers.css('pointer-events', 'auto'); // Enable interaction
-        }, 10); // Small delay to trigger the transition
-      }
-    });
+          colorPickers.css('transform', 'translateX(-30px)');
+          colorPickers.css('opacity', '0');
+          colorPickers.css('pointer-events', 'none'); // Disable interaction
+        }
+      });
+    }
   }
 
   _addTaskToAgenda(event) {

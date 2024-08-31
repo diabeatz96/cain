@@ -1393,3 +1393,144 @@
 .talisman-button.clicked img, .risk-roll-button.clicked img, .fate-roll-button.clicked img, .player-overview-button.clicked img {
   filter: brightness(0.8); /* Adjust the brightness to indicate the button has been clicked */
 }
+
+.form-blasphemy-power {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100%;
+  border-radius: 15px;
+  padding: 25px;
+  gap: 25px;
+  box-shadow: 0 0 15px var(--accent-color, #ff00ff), 0 0 30px var(--accent-color, #ff00ff);
+  font-family: 'Lacquer', sans-serif;
+  background: linear-gradient(135deg, var(--primary-color, #2a2a2a), var(--secondary-color, #555));
+  color: var(--text-color, #ffffff);
+  margin: 0;
+  border: 3px solid var(--secondary-color, #555);
+  overflow-y: auto;
+  position: relative;
+  width: 100%;
+}
+
+.form-blasphemy-power label {
+  font-weight: bold;
+  color: var(--text-color, #ffffff);
+  text-decoration: underline;
+}
+
+.form-blasphemy-power .blasphemy-power-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  width: 100%;
+  border-bottom: 3px solid var(--secondary-color, #555);
+  padding-bottom: 15px;
+  overflow: visible; /* Override the parent overflow */
+  background: linear-gradient(135deg, var(--accent-color, #ff00ff), var(--primary-color, #2a2a2a));
+  border-radius: 10px;
+}
+
+.form-blasphemy-power .header-fields {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.form-blasphemy-power .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 100%;
+}
+
+.form-blasphemy-power .charname {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.form-blasphemy-power .profile-img {
+  border: 3px solid var(--accent-color, #ff00ff);
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  box-shadow: 0 0 10px var(--accent-color, #ff00ff), 0 0 20px var(--accent-color, #ff00ff);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-blasphemy-power .profile-img:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 20px var(--accent-color, #ff00ff), 0 0 40px var(--accent-color, #ff00ff);
+}
+
+.form-blasphemy-power input[type="text"],
+.form-blasphemy-power input[type="checkbox"] {
+  background-color: var(--primary-color, #2a2a2a);
+  color: var(--text-color, #f0f0f0);
+  border: 2px solid var(--secondary-color, #333);
+  border-radius: 5px;
+  padding: 5px;
+  font-family: 'Lacquer', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.form-blasphemy-power input[type="checkbox"] {
+  width: auto;
+  height: auto;
+}
+
+.form-blasphemy-power .blasphemy-power-body {
+  flex-grow: 1;
+  overflow-y: auto;
+  width: 100%;
+  max-height: 600px;
+  text-align: center; /* Center text in the sheet body */
+  background: linear-gradient(135deg, var(--primary-color, #2a2a2a), var(--secondary-color, #555));
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.form-blasphemy-power .blasphemy-power-body h2 {
+  text-align: center; /* Center the Description heading */
+  color: var(--accent-color, #ff00ff);
+  text-shadow: 0 0 10px var(--accent-color, #ff00ff);
+}
+
+.form-blasphemy-power .blasphemy-power-body p {
+  text-align: center;
+  padding: 10px;
+  border: 2px solid var(--secondary-color, #555);
+  border-radius: 10px;
+  background-color: var(--primary-color, #2a2a2a);
+  font-family: 'Courier New', Courier, monospace;
+  color: var(--text-color, #ffffff);
+  box-shadow: 0 0 10px var(--accent-color, #ff00ff);
+}
+
+.form-blasphemy-power .blasphemy-power-body img {
+  max-width: 100%;
+  border-radius: 10px;
+  box-shadow: 0 0 10px var(--accent-color, #ff00ff);
+}
+
+.form-blasphemy-power .blasphemy-power-header h1 {
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--accent-color, #ff00ff);
+}
+
+.form-blasphemy-power .blasphemy-power-header h2 {
+  font-size: 20px;
+  font-weight: bold;
+  color: var(--accent-color, #ff00ff);
+}
+
+.form-blasphemy-power .power-label {
+  margin-left: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--text-color, #ff00ff);
+}

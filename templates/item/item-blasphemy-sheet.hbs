@@ -1,8 +1,9 @@
-<form class="{{cssClass}} form-blasphemy {{toLowerCase system.blasphemyName}}-theme" autocomplete="off">
+<form class="{{cssClass}} main-blasphemy" style="--primary-color: {{system.primaryColor}}; --accent-color: {{system.accentColor}}; --secondary-color: {{system.secondaryColor}}; --text-color: {{system.textColor}};">
   <header class="sheet-header">
     <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{system.blasphemyName}}"/>
     <div class="header-fields">
-      <h1 class="charname blasphemy-text">{{system.blasphemyName}}</h1>
+      <label for="name">Blasphemy Name</label>
+      <input type="text" name="system.blasphemyName" class="charname blasphemy-text" value="{{system.blasphemyName}}" data-dtype="String"/>
     </div>
   </header>
 
@@ -16,122 +17,232 @@
   <section class='sheet-body'>
     <div class='tab' data-group='primary' data-tab='passive'>
       {{#each blasphemyPassives}}
-        {{> blasphemyPower this classOptions=["tension", "ardence", "flux", "vector", "gate", "smother", "whisper", "edit", "bind", "jaunt", "palace", "sympathy", "default"]}}
+        <div class="blasphemyPower">
+          {{> blasphemyPowerPartial this}}
+        </div>
       {{/each}}
+      <div class="color-picker-container">
+        <button class="color-picker-toggle" type="button">
+          <i class="fas fa-palette"></i>
+        </button>
+        <div class="color-pickers">
+          <input type="color" id="primaryColor" data-id="primary-color" value="{{system.primaryColor}}" title="Primary Color">
+          <input type="color" id="accentColor" data-id="accent-color" value="{{system.accentColor}}" title="Accent Color">
+          <input type="color" id="secondaryColor" data-id="secondary-color" value="{{system.secondaryColor}}" title="Secondary Color">
+          <input type="color" id="textColor" data-id="text-color" value="{{system.textColor}}" title="Text Color">
+        </div>
+      </div>
     </div>
-
     <div class='tab' data-group='primary' data-tab='powers'>
       {{#each blasphemyPowers}}
-        {{> blasphemyPower this classOptions=["tension", "ardence", "flux", "vector", "gate", "smother", "whisper", "edit", "bind", "jaunt", "palace", "sympathy", "default"]}}
+        <div class="blasphemyPower">
+          {{> blasphemyPowerPartial this}}
+        </div>
       {{/each}}
     </div>
   </section>
 </form>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Lacquer&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Courier+New&display=swap');
+
 /* Dark Theme */
-.form-blasphemy {
-  background-color: #2a2a2a; /* Dark grey primary */
-  color: #f0f0f0; /* Light grey secondary */
-  border: 2px solid #444; /* Slightly lighter grey for border */
-  border-radius: 10px;
-  padding: 20px;
-  max-width: 600px;
-  margin: 0 auto;
+.main-blasphemy {
+  background-color: var(--primary-color);
+  color: var(--text-color);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-  font-family: 'Courier New', monospace;
+  font-family: 'Courier New', Courier, monospace;
 }
 
-.sheet-header {
+.main-blasphemy .sheet-header {
   display: flex;
   align-items: center;
-  margin-bottom: 20px;
-  background-color: #333; /* Slightly lighter grey for header */
+  background-color: var(--secondary-color);
   border-radius: 5px;
   padding: 10px;
 }
 
-.profile-img {
+.main-blasphemy .profile-img {
   width: 80px;
   height: 80px;
   border-radius: 50%;
   margin-right: 20px;
   object-fit: cover;
-  border: 2px solid #555; /* Slightly lighter grey for border */
+  border: 2px solid #555;
 }
 
-.header-fields {
+.main-blasphemy .header-fields {
   flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.charname {
+.main-blasphemy .charname {
   font-size: 1.5em;
   margin: 0;
   margin-bottom: 10px;
-  color: #f0f0f0; /* Light grey secondary */
+  color: var(--text-color);
 }
 
-.form-group {
+.main-blasphemy .form-group {
   margin-bottom: 10px;
 }
 
-.form-group label {
+.main-blasphemy .form-group label {
   display: block;
   font-weight: bold;
   margin-bottom: 5px;
-  color: #ccc; /* Light grey for labels */
+  font-family: 'Lacquer', sans-serif;
 }
 
-.form-group input[type="text"],
-.form-group input[type="checkbox"] {
+.main-blasphemy .form-group input[type="text"],
+.main-blasphemy .form-group input[type="checkbox"],
+.main-blasphemy .form-group select {
   width: 100%;
   padding: 8px;
-  border: 1px solid #555; /* Slightly lighter grey for border */
+  border: 1px solid var(--secondary-color);
   border-radius: 4px;
   box-sizing: border-box;
-  background-color: #444; /* Dark grey for input background */
-  color: #f0f0f0; /* Light grey for input text */
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  font-family: 'Courier New', Courier, monospace;
 }
 
-.form-group input[type="checkbox"] {
+.main-blasphemy .form-group input[type="checkbox"] {
   width: auto;
   margin-right: 10px;
 }
 
-.sheet-body {
-  background-color: #333; /* Slightly lighter grey for body */
+.main-blasphemy .sheet-body {
+  height: 600px;
+  overflow-y: auto;
+  background-color: #333;
   padding: 15px;
   border-radius: 8px;
-  border: 1px solid #555; /* Slightly lighter grey for border */
+  border: 1px solid #555;
+  position: relative;
 }
 
-.sheet-body p {
+.main-blasphemy .sheet-body p {
   display: block;
   font-size: 1em;
   line-height: 1.5;
-  color: #f0f0f0; /* Light grey for text */
+  color: var(--text-color);
 }
 
-.sheet-tabs .item {
-  color: #f0f0f0; /* Light grey for tab text */
-  background-color: #444; /* Dark grey for tab background */
-  border: 1px solid #555; /* Slightly lighter grey for border */
+.main-blasphemy .sheet-body h2 {
+  color: var(--accent-color);
+  text-shadow: 0 0 10px var(--accent-color);
+  margin-bottom: 10px;
+  font-family: 'Lacquer', sans-serif;
+}
+
+.main-blasphemy .passive-section,
+.main-blasphemy .powers-section {
+  margin-bottom: 20px;
+  background-color: var(--primary-color);
+  color: var(--text-color);
   padding: 10px;
   border-radius: 5px;
-  margin-right: 5px;
-  cursor: pointer;
+  border: 1px solid var(--secondary-color);
 }
 
-.sheet-tabs .item.active {
-  background-color: #555; /* Slightly lighter grey for active tab */
-}
-
-.profile-img {
+.main-blasphemy .profile-img {
   border: none;
 }
 
-.form-blasphemy .charname {
+.main-blasphemy .charname {
   font-size: 24px;
   font-weight: bold;
+}
+
+.main-blasphemy .color-picker-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+}
+
+.main-blasphemy .color-picker-toggle {
+  background-color: var(--primary-color, #2a2a2a);
+  color: var(--text-color, #ffffff);
+  border: 2px solid var(--secondary-color, #333);
+  padding: 5px;
+  cursor: pointer;
+  transition: transform 0.3s ease, border-radius 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 0 10px var(--accent-color, #ff00ff), 0 0 20px var(--accent-color, #ff00ff);
+}
+
+.main-blasphemy .color-picker-toggle:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px var(--accent-color, #ff00ff), 0 0 40px var(--accent-color, #ff00ff);
+}
+
+.main-blasphemy .color-pickers {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  transition: transform 0.5s ease, opacity 0.5s ease;
+  transform: translateY(-20px);
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  left: 0;
+  top: 100%;
+}
+
+.main-blasphemy .color-picker-container.active .color-pickers {
+  margin-top: 20px;
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.main-blasphemy .color-pickers input[type="color"] {
+  width: 40px;
+  height: 40px;
+  border: none;
+  cursor: pointer;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5), 0 0 10px var(--accent-color, #ff00ff);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.main-blasphemy .color-pickers input[type="color"]:hover {
+  transform: scale(1.2);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5), 0 0 20px var(--accent-color, #ff00ff);
+}
+
+.main-blasphemy .sheet-tabs {
+  display: flex;
+  justify-content: space-around;
+  border-bottom: 1px solid var(--secondary-color);
+  padding-bottom: 10px;
+  padding-top: 10px;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.main-blasphemy .sheet-tabs .item {
+  color: var(--text-color);
+  background-color: var(--primary-color);
+  border: 1px solid var(--secondary-color);
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.main-blasphemy .sheet-tabs .item.active {
+  background-color: var(--secondary-color);
+}
+
+.main-blasphemy .tab {
+  display: none;
+}
+
+.main-blasphemy .tab.active {
+  display: block;
 }
 </style>

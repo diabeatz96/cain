@@ -1,5 +1,5 @@
 <form class="{{cssClass}} form-blasphemy-power {{system.blasphemyType}}-theme" autocomplete="off" style="--primary-color: {{system.primaryColor}}; --accent-color: {{system.accentColor}}; --secondary-color: {{system.secondaryColor}}; --text-color: {{system.textColor}};">
-  <header class="sheet-header">
+  <header class="blasphemy-power-header">
     <img class="profile-img" src="{{this.img}}" data-edit="img" title="{{system.powerName}}"/>
     <div class="header-fields">
       <div class="form-group">
@@ -17,11 +17,11 @@
     </div>
   </header>
 
-  <section class="sheet-body">
+  <section class="blasphemy-power-body">
     <h2>Description</h2>
-    <w>{{#formatted system.powerDescription}}{{/formatted}}</w>
-  </section>
-
+    <p>{{#formatted system.powerDescription}}{{/formatted}}</p>
+  
+{{#unless disableColorPickers}}
   <div class="color-picker-container">
     <button class="color-picker-toggle">
       <i class="fas fa-palette"></i>
@@ -33,6 +33,9 @@
       <input type="color" id="textColor" data-id="text-color" value="{{system.textColor}}" title="Text Color">
     </div>
   </div>
+  {{/unless}}
+
+  </section>
 </form>
 
 <style>
@@ -61,9 +64,10 @@
   .form-blasphemy-power label {
     font-weight: bold;
     color: var(--text-color, #ffffff);
+    text-decoration: underline;
   }
 
-  .form-blasphemy-power .sheet-header {
+  .form-blasphemy-power .blasphemy-power-header {
     display: flex;
     align-items: flex-start;
     gap: 20px;
@@ -73,26 +77,19 @@
     overflow: visible; /* Override the parent overflow */
   }
 
-  .form-blasphemy-power .header-fields {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    width: 100%;
-  }
-
-  .form-blasphemy-power .form-group {
+    .form-blasphemy-power .form-group {
     display: flex;
     flex-direction: column;
     gap: 5px;
     width: 100%;
   }
 
-  .form-blasphemy-power .charname {
+    .form-blasphemy-power .charname {
     font-size: 24px;
     font-weight: bold;
   }
 
-  .form-blasphemy-power .color-picker-container {
+    .form-blasphemy-power.color-picker-container {
     position: absolute;
     bottom: 30px;
     left: 30px;
@@ -101,7 +98,7 @@
     gap: 10px;
   }
 
-  .form-blasphemy-power .color-picker-toggle {
+    .form-blasphemy-power .color-picker-toggle {
     background-color: var(--primary-color, #2a2a2a);
     color: var(--text-color, #ffffff);
     border: 2px solid var(--secondary-color, #333);
@@ -127,6 +124,7 @@
   }
 
   .form-blasphemy-power .color-picker-container.active .color-pickers {
+    margin-top: 20px;
     transform: translateX(0);
     opacity: 1;
   }
@@ -178,17 +176,25 @@
     box-shadow: 0 0 20px var(--accent-color, #ff00ff), 0 0 40px var(--accent-color, #ff00ff);
   }
 
-  .form-blasphemy-power .sheet-body {
+  .form-blasphemy-power .blasphemy-power-body {
     flex-grow: 1;
-    margin-top: 20px;
     overflow-y: auto;
     width: 100%;
     max-height: 600px;
     text-align: center; /* Center text in the sheet body */
   }
 
-  .form-blasphemy-power .sheet-body h2 {
+  .form-blasphemy-power .blasphemy-power-body h2 {
     text-align: center; /* Center the Description heading */
+  }
+
+  .form-blasphemy-power .blasphemy-power-body p {
+    text-align: center;
+    padding: 5px;
+    border: 2px solid var(--secondary-color, #555);
+    border-radius: 10px;
+    background-color: var(--primary-color, #2a2a2a);
+    font-family: 'Courier New', Courier, monospace;
   }
 
   /* Psychedelic/Investigation Style Accents */
@@ -197,14 +203,14 @@
     border-image: linear-gradient(45deg, var(--accent-color, #ff00ff), var(--secondary-color, #555)) 1;
   }
 
-  .form-blasphemy-power .sheet-header {
+  .form-blasphemy-power .blasphemy-power-header {
     background: linear-gradient(135deg, var(--accent-color, #ff00ff), var(--primary-color, #2a2a2a));
     padding: 10px;
     border-radius: 10px;
     width: 100%;
   }
 
-  .form-blasphemy-power .sheet-body {
+  .form-blasphemy-power .blasphemy-power-body {
     background: linear-gradient(135deg, var(--primary-color, #2a2a2a), var(--secondary-color, #555));
     padding: 20px;
     border-radius: 10px;
