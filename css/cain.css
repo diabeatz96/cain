@@ -401,13 +401,26 @@
   text-align: center;
 }
 
-.cain .checkbox-item img {
-  max-width: 45px; /* Adjust the image size as needed */
-  margin-bottom: 5px; /* Space between image and label */
-}
-
 .cain .checkbox-item_cat label {
   margin-bottom: 5px; /* Space between label and checkbox */
+}
+
+.CAT-selector {
+  width: 45px; 
+  height: 45px;
+  overflow: hidden;
+  margin-bottom: 5px; /* Space between image and label */
+  padding: 1px;
+}
+
+.CAT-selector img {
+  width: 100%;
+  border: none !important;
+}
+
+.CAT-selected{
+  border: #ff3333 dashed 1px;
+  padding: unset !important;
 }
 
 .extra-dice-section {
@@ -944,7 +957,7 @@
 }
 
 .no-padding{
-  padding: none !important;
+  padding: unset !important;
 }
 
 .flavor-text {

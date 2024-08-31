@@ -261,6 +261,10 @@ export class CainActorSheet extends ActorSheet {
     html.find('.blasphemy-power-to-chat').on('click', this._sendBlasphemyPowerMessage.bind(this));
     html.find('.remove-blasphemy-power-button').on('click', this._removeBlasphemyPowerButton.bind(this));
     html.find('.remove-blasphemy-button').on('click', this._removeBlasphemyButton.bind(this));
+    
+    let cat_selector_imgs = html.find('.CAT-selector')
+    cat_selector_imgs.on('click', this._onCATSelect.bind(this, true));
+    cat_selector_imgs.on('contextmenu', this._onCATSelect.bind(this, false));
   
     html.find('#add-agenda-ability-button').on('click', this._addAgendaAbility.bind(this));
     html.find('.add-blasphemy-power-button').on('click', this._addBlasphemyPower.bind(this));
@@ -870,6 +874,17 @@ export class CainActorSheet extends ActorSheet {
   }
   
 
+  _onCATSelect(leftClick, event){
+    let selectedCat = event.currentTarget.dataset.cat
+    if(leftClick){
+      //set to new category
+      this.actor.update({["system.CATLEVEL.value"]: selectedCat});
+    }
+    else{
+      //set to 0
+      this.actor.update({["system.CATLEVEL.value"]: 0});
+    }
+  }
 
   _onRollButtonClick(event) {
     const skill = document.querySelector('select[name="system.skill"]').value;
