@@ -77,8 +77,14 @@ export class CainActorSheet extends ActorSheet {
     );
 
     this._calculateRanges(context);
+    this._addSheetConstants(context);
 
     return context;
+  }
+
+  _addSheetConstants(context){
+    context.sheetConstants = {}
+    context.sheetConstants.CATSessionNumbers = ["0", "2", "3", "5", "7", "X", "X"];
   }
 
   _prepareCharacterData(context) {

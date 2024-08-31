@@ -388,8 +388,11 @@
 
 }
 /* New styles for checkbox group */
-.cain .checkbox-group_cat {
+.cain .group_cat {
+  align-items: center; 
+  justify-content: center;
   display: flex;
+  flex-wrap: wrap;
   flex-direction: row;
   gap: 10px; /* Adjust the gap between items as needed */
 }
@@ -409,6 +412,7 @@
   width: 45px; 
   height: 45px;
   overflow: hidden;
+  cursor: pointer;
   margin-bottom: 5px; /* Space between image and label */
   padding: 1px;
 }
@@ -419,8 +423,13 @@
 }
 
 .CAT-selected{
-  border: #ff3333 dashed 1px;
+  border: #ff3333 solid 1px;
   padding: unset !important;
+}
+
+.CAT-session-text{
+  color: white; 
+  width:100%;
 }
 
 .extra-dice-section {
