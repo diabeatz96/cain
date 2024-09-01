@@ -1,22 +1,8 @@
-2024/08/30-00:00:50.594 7008 Recovering log #58
-2024/08/30-00:00:50.599 7008 Delete type=0 #58
-2024/08/30-00:00:50.599 7008 Delete type=3 #56
-2024/08/30-00:04:18.064 820c Level-0 table #62: started
-2024/08/30-00:04:18.064 820c Level-0 table #62: 0 bytes OK
-2024/08/30-00:04:18.067 820c Delete type=0 #60
-2024/08/30-00:04:18.069 820c Manual compaction at level-0 from '!folders!0Rx103v99LTFoMTP' @ 72057594037927935 : 1 .. '!items!ziiFc860EZanavt1' @ 0 : 0; will stop at '!items!ziiFc860EZanavt1' @ 255 : 0
-2024/08/30-00:04:18.069 820c Compacting 1@0 + 0@1 files
-2024/08/30-00:04:18.074 820c Generated table #63@0: 111 keys, 52739 bytes
-2024/08/30-00:04:18.074 820c Compacted 1@0 + 0@1 files => 52739 bytes
-2024/08/30-00:04:18.075 820c compacted to: files[ 0 1 1 0 0 0 0 ]
-2024/08/30-00:04:18.076 820c Delete type=2 #57
-2024/08/30-00:04:18.076 820c Manual compaction at level-0 from '!items!ziiFc860EZanavt1' @ 255 : 0 .. '!items!ziiFc860EZanavt1' @ 0 : 0; will stop at (end)
-2024/08/30-00:04:18.076 820c Manual compaction at level-1 from '!folders!0Rx103v99LTFoMTP' @ 72057594037927935 : 1 .. '!items!ziiFc860EZanavt1' @ 0 : 0; will stop at '!items!ziiFc860EZanavt1' @ 328 : 1
-2024/08/30-00:04:18.076 820c Compacting 1@1 + 1@2 files
-2024/08/30-00:04:18.079 820c Generated table #64@1: 109 keys, 52669 bytes
-2024/08/30-00:04:18.079 820c Compacted 1@1 + 1@2 files => 52669 bytes
-2024/08/30-00:04:18.082 820c compacted to: files[ 0 0 1 0 0 0 0 ]
-2024/08/30-00:04:18.082 820c Delete type=2 #35
-2024/08/30-00:04:18.082 820c Delete type=2 #63
-2024/08/30-00:04:18.088 820c Manual compaction at level-1 from '!items!ziiFc860EZanavt1' @ 328 : 1 .. '!items!ziiFc860EZanavt1' @ 0 : 0; will stop at (end)
-
+2024/08/31-15:17:15.200 79fc Recovering log #81
+2024/08/31-15:17:15.206 79fc Delete type=0 #81
+2024/08/31-15:17:15.206 79fc Delete type=3 #79
+2024/08/31-15:17:16.161 7b74 Level-0 table #86: started
+2024/08/31-15:17:16.161 7b74 Level-0 table #86: 0 bytes OK
+2024/08/31-15:17:16.163 7b74 Delete type=0 #84
+2024/08/31-15:17:16.163 7b74 Manual compaction at level-0 from '!folders!0Rx103v99LTFoMTP' @ 72057594037927935 : 1 .. '!items!ziiFc860EZanavt1' @ 0 : 0; will stop at (end)
+2024/08/31-15:17:16.163 7b74 Manual compaction at level-1 from '!folders!0Rx103v99LTFoMTP' @ 72057594037927935 : 1 .. '!items!ziiFc860EZanavt1' @ 0 : 0; will stop at (end)
