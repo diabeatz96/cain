@@ -58,6 +58,8 @@ Hooks.once('init', async function () {
     blasphemyPower: models.CainBlasphemyPower,
     agendaTask: models.CainAgendaTask,
     agendaAbility: models.CainAgendaAbility,
+    sinMark: models.CainSinMark,
+    sinMarkAbility: models.CainSinMarkAbility,
   }
   
   console.log('CAIN | Initializing Cain system');
@@ -122,6 +124,9 @@ Hooks.once('init', async function () {
 
   const blasphemyPowerTemplate = await getTemplate("systems/cain/templates/item/parts/item-blasphemy-power-sheet.hbs");
   const blasphemyPowerPartialTemplate = await getTemplate("systems/cain/templates/item/parts/item-blasphemy-power-partial.hbs");
+  const sinMarkAbilityTemplate = await getTemplate("systems/cain/templates/item/parts/item-sin-mark-partial.hbs");
+
+  Handlebars.registerPartial("sinMarkAbility", sinMarkAbilityTemplate);
   Handlebars.registerPartial("blasphemyPower", blasphemyPowerTemplate);
   Handlebars.registerPartial("blasphemyPowerPartial", blasphemyPowerPartialTemplate);
 

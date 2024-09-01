@@ -3,6 +3,6 @@
     "types": ["character", "npc", "mundane"]
   },
   "Item": {
-    "types": ["item", "agenda", "blasphemy", "blasphemyPower", "agendaTask", "agendaAbility"]
+    "types": ["item", "agenda", "blasphemy", "blasphemyPower", "agendaTask", "agendaAbility", "sinMark", "sinMarkAbility"]
   }
 }

@@ -51,7 +51,9 @@
       "blasphemy": "Blasphemy",
       "blasphemyPower": "Blasphemy Power",
       "agendaTask": "Agenda Task",
-      "agendaAbility": "Agenda Ability"
+      "agendaAbility": "Agenda Ability",
+      "sinMark": "Sin Mark",
+      "sinMarkAbility": "Sin Mark Ability"
     }
   },
 
