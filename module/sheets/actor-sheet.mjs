@@ -77,8 +77,14 @@ export class CainActorSheet extends ActorSheet {
     );
 
     this._calculateRanges(context);
+    this._addSheetConstants(context);
 
     return context;
+  }
+
+  _addSheetConstants(context){
+    context.sheetConstants = {}
+    context.sheetConstants.CATSessionNumbers = ["0", "2", "3", "5", "7", "X", "X"];
   }
 
   _prepareCharacterData(context) {
@@ -260,6 +266,10 @@ export class CainActorSheet extends ActorSheet {
     html.find('.blasphemy-power-to-chat').on('click', this._sendBlasphemyPowerMessage.bind(this));
     html.find('.remove-blasphemy-power-button').on('click', this._removeBlasphemyPowerButton.bind(this));
     html.find('.remove-blasphemy-button').on('click', this._removeBlasphemyButton.bind(this));
+    
+    let cat_selector_imgs = html.find('.CAT-selector')
+    cat_selector_imgs.on('click', this._onCATSelect.bind(this, true));
+    cat_selector_imgs.on('contextmenu', this._onCATSelect.bind(this, false));
   
     html.find('#add-agenda-ability-button').on('click', this._addAgendaAbility.bind(this));
     html.find('.add-blasphemy-power-button').on('click', this._addBlasphemyPower.bind(this));
@@ -275,12 +285,30 @@ export class CainActorSheet extends ActorSheet {
       this._openAgendaItemSheet(itemId);
     });
 
-    html.find('.blasphemy-passive').on('click', (event) => {
-      event.target.parentElement.parentElement.querySelector('.power-description-card').hidden = !event.target.parentElement.parentElement.querySelector('.power-description-card').hidden;
+    // Event delegation for blasphemy-passive
+    html.on('click', '.blasphemy-passive', (event) => {
+      const card = event.target.parentElement.parentElement.querySelector('.power-description-card');
+      const disableAnimations = document.getElementById('toggle-animation').checked;
+      if (!disableAnimations) {
+        const randomRotation = Math.random() * 6 - 3; // Random rotation between -3 and 3 degrees
+        card.style.transform = `scale(0.95) rotate(${randomRotation}deg)`;
+      } else {
+        card.style.transform = 'none';
+      }
+      card.classList.toggle('visible');
     });
-    
-    html.find('.blasphemy-power').on('click', (event) => {
-      event.target.parentElement.parentElement.querySelector('.power-description-card').hidden = !event.target.parentElement.parentElement.querySelector('.power-description-card').hidden;
+
+    // Event delegation for blasphemy-power
+    html.on('click', '.blasphemy-power', (event) => {
+      const card = event.target.parentElement.parentElement.querySelector('.power-description-card');
+      const disableAnimations = document.getElementById('toggle-animation').checked;
+      if (!disableAnimations) {
+        const randomRotation = Math.random() * 6 - 3; // Random rotation between -3 and 3 degrees
+        card.style.transform = `scale(0.95) rotate(${randomRotation}deg)`;
+      } else {
+        card.style.transform = 'none';
+      }
+      card.classList.toggle('visible');
     });
 
     html.find('.abilities-page-drop-target').on('drop', async event => {
@@ -849,6 +877,17 @@ export class CainActorSheet extends ActorSheet {
   }
   
 
+  _onCATSelect(leftClick, event){
+    let selectedCat = event.currentTarget.dataset.cat
+    if(leftClick){
+      //set to new category
+      this.actor.update({["system.CATLEVEL.value"]: selectedCat});
+    }
+    else{
+      //set to 0
+      this.actor.update({["system.CATLEVEL.value"]: 0});
+    }
+  }
 
   _onRollButtonClick(event) {
     const skill = document.querySelector('select[name="system.skill"]').value;

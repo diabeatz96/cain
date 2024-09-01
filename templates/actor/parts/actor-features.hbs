@@ -94,12 +94,13 @@
 
 <h3 class='resource-header'>Cat Level</h3>
 <div class="resource">
-  <div class="checkbox-group checkbox-group_cat" data-field="CATLEVEL">
+  <div class="group_cat">
     {{#times 7}}
-    <div class="checkbox-item checkbox-item_cat">
-      <img src="systems/cain/assets/CAT/CAT{{@index}}.png" alt="CAT {{@index}}">
-      <label for="CATLEVEL-{{@index}}">Level {{@index}}</label>
-      <input type="checkbox" name="CATLEVEL-{{@index}}" {{#if (gte system.CATLEVEL.value @index)}}checked{{/if}}/>
+    <div class="checkbox-item_cat">
+      <div class="CAT-selector {{#if (eq system.CATLEVEL.value @index)}}CAT-selected{{/if}}" data-cat="{{@index}}" title="{{testData}}" {{log this}} data-tooltip="{{localize 'SHEET.TOOLTIPS.CATSELECT'}}">
+        <img src="systems/cain/assets/CAT/CAT{{@index}}.png" alt="CAT {{@index}}">
+      </div>
+      <div class="CAT-session-text" data-tooltip="{{localize 'SHEET.TOOLTIPS.SURVIVED'}}">{{lookup sheetConstants.CATSessionNumbers (offset @index -1)}}</div>
     </div>
     {{/times}}
   </div>

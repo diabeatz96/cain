@@ -12,8 +12,8 @@ export class CainItemSheet extends ItemSheet {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ['cain', 'sheet', 'item'],
-      width: 520,
-      height: 480,
+      width: 640,
+      height: 640,
       tabs: [
         {
           navSelector: '.sheet-tabs',
@@ -77,7 +77,7 @@ export class CainItemSheet extends ItemSheet {
         return {
           id: item.id,
           name: item.name
-        };; return {name: "INVALID"};
+        };; return {name: "INVALID"}; 
       }).filter(item => item.name !== "INVALID");  
     }
     if (this.item.type === "blasphemy") {
@@ -94,6 +94,14 @@ export class CainItemSheet extends ItemSheet {
 
     // Prepare active effects for easier access
     context.effects = prepareActiveEffectCategories(this.item.effects);
+
+    // Set CSS variables for colors
+    const root = document.documentElement;
+    root.style.setProperty('--primary-color', this.item.system.primaryColor || '#000000');
+    root.style.setProperty('--accent-color', this.item.system.accentColor || '#FFFFFF');
+    root.style.setProperty('--secondary-color', this.item.system.secondaryColor || '#CCCCCC');
+    root.style.setProperty('--text-color', this.item.system.textColor || '#000000');
+
     return context;
   }
 
@@ -115,6 +123,65 @@ export class CainItemSheet extends ItemSheet {
     html.find('.blasphemy-power-textbox').change(this._modifyBlasphemyPower.bind(this));
 
     html.find('#addTaskToAgenda').click(this._addTaskToAgenda.bind(this));
+
+    // Color pickers
+    html.find('input[type="color"]').on('input', this._updateColor.bind(this, html));
+
+    // html click item to open
+
+
+    html.find('.item-click').click((event) => {
+        const itemId = $(event.currentTarget).data('id');
+        const item = Item.get(itemId);
+        console.log(item);
+        if (item) {
+          item.sheet.render(true);
+        }
+      });
+    
+    
+    // Setup color picker functionality
+    setupColorPicker(html);
+
+    function setupColorPicker(html) {
+      html.find('.color-picker-toggle').click(() => {
+        console.log('Color picker toggle clicked');
+        const colorPickerContainer = html.find('.color-picker-container');
+        console.log(colorPickerContainer);
+        const colorPickers = html.find('.color-pickers');
+        console.log(colorPickerContainer.hasClass('active'));
+
+        if (colorPickerContainer.hasClass('active')) {
+          console.log('Closing color picker');
+          colorPickers.css('transform', 'translateX(-30px)');
+          colorPickers.css('opacity', '0');
+          colorPickers.css('pointer-events', 'none'); // Disable interaction
+          setTimeout(() => {
+            colorPickerContainer.removeClass('active');
+          }, 500); // Match the transition duration
+        } else {
+          colorPickerContainer.addClass('active');
+          setTimeout(() => {
+            colorPickers.css('transform', 'translateX(0)');
+            colorPickers.css('opacity', '1');
+            colorPickers.css('pointer-events', 'auto'); // Enable interaction
+          }, 10); // Small delay to trigger the transition
+        }
+      });
+
+      html.on('click', (event) => {
+        const colorPickerContainer = html.find('.color-picker-container');
+        const colorPickerToggle = html.find('.color-picker-toggle');
+        const colorPickers = html.find('.color-pickers');
+
+        if (!colorPickerContainer.is(event.target) && !colorPickerToggle.is(event.target) && colorPickerContainer.has(event.target).length === 0) {
+          colorPickerContainer.removeClass('active');
+          colorPickers.css('transform', 'translateX(-30px)');
+          colorPickers.css('opacity', '0');
+          colorPickers.css('pointer-events', 'none'); // Disable interaction
+        }
+      });
+    }
   }
 
   _addTaskToAgenda(event) {
@@ -137,12 +204,17 @@ export class CainItemSheet extends ItemSheet {
     console.log(this.item.system);
   }
 
-  _modifyBlasphemyPower(event) {
-    let powerID = event.currentTarget.dataset.id;
-    console.log(event);
-    console.log(powerID);
-    const power = game.items.get(powerID);
-    console.log(power);
-    power.update({'system.powerDescription' : event.currentTarget.value});
+  _updateColor(html, event) {
+    const colorType = event.target.getAttribute('data-id');
+    const colorValue = event.target.value;
+    const eventId = event.target.id;
+    console.log(`Color picker event: ${eventId}`);
+    console.log(`Updating color: ${colorType} to ${colorValue}`);
+    this.item.update({[`system.${eventId}`]: colorValue}, {render: false}).then(() => {
+      html[0].style.setProperty(`--${colorType}`, colorValue);
+      console.log(`CSS variable --${colorType} set to ${colorValue}`);
+    }).catch(err => {
+      console.error(`Error updating item with ${colorType}: ${colorValue}`, err);
+    });
   }
 }
