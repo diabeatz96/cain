@@ -56,9 +56,15 @@
   },
 
   "SHEET": {
+    "SIN": {
+      "ROLLSIN": "Roll SIN (1D3)",
+      "ROLLRESIST": "Resist Roll (1D6 + SIN MARKS)",
+      "ADJUSTMAX": "Adjust maximum"
+    },
     "TOOLTIPS": {
       "SURVIVED": "Missions Survived",
-      "CATSELECT": "Right click to set CAT 0"
+      "CATSELECT": "Right click to set CAT 0",
+      "SINMAXADJUST": "Change maximum SIN capacity"
     }
   }
 }
