@@ -11,6 +11,11 @@ import { CAIN } from '../helpers/config.mjs';
  * @extends {ActorSheet}
  */
 export class CainActorSheet extends ActorSheet {
+  sheetConstants = {
+    "CATSessionNumbers": ["0", "2", "3", "5", "7", "X", "X"],
+    "SINVisualOffset": Math.round( Math.random() * 8) //a random offset so the EYES in the sin section don't always look exactly the same
+  };
+
   /** @override */
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
@@ -77,14 +82,9 @@ export class CainActorSheet extends ActorSheet {
     );
 
     this._calculateRanges(context);
-    this._addSheetConstants(context);
+    context.sheetConstants = this.sheetConstants
 
     return context;
-  }
-
-  _addSheetConstants(context){
-    context.sheetConstants = {}
-    context.sheetConstants.CATSessionNumbers = ["0", "2", "3", "5", "7", "X", "X"];
   }
 
   _prepareCharacterData(context) {
@@ -234,7 +234,7 @@ export class CainActorSheet extends ActorSheet {
   
     // Character sheet specific listeners
     html.find('.item-description').click(this._onItemDescription.bind(this));
-    html.find('.sinOverflow-checkbox').change(this._onOverflowChange.bind(this));
+    html.find('.sinOverflow-icon').click(this._onOverflowChange.bind(this));
     html.find('.psyche-roll-button').click(this._onRollPsyche.bind(this));
     html.find('.psyche-burst-checkbox').change(this._onPsycheBurstChange.bind(this));
     html.find('.kit-points-checkbox').change(this._onKitPointsChange.bind(this));
@@ -1057,22 +1057,14 @@ export class CainActorSheet extends ActorSheet {
   }
 
   _onOverflowChange(event) {
-    const checkboxes = document.querySelectorAll('.sinOverflow-checkbox');
-    const isChecked = event.currentTarget.checked;
-    let newValue = 0;
-  
-    checkboxes.forEach(checkbox => {
-      if (checkbox.checked) {
-        newValue++;
-      }
-    });
-  
-    console.log(isChecked);
-    console.log(newValue);
-  
-    this.actor.update({ 'system.sinOverflow.value': newValue }).then(() => {
-      this.render(false); // Re-render the sheet to reflect changes
-    });
+    let newValue = event.currentTarget.dataset.sin;
+    console.info(this.actor)
+    if(this.actor.system.sinOverflow.value == newValue){
+      this.actor.update({ 'system.sinOverflow.value': newValue - 1});
+    }
+    else{
+      this.actor.update({ 'system.sinOverflow.value': newValue });
+    }
   }
 
   _onKitPointsChange(event) {

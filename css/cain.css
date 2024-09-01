@@ -1100,6 +1100,10 @@
 }
 
 
+.sinOverflow-icon{
+  border: none !important;
+}
+
 /* sin-marks.css */
 
 .sin-marks {

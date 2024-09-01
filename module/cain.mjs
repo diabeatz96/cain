@@ -300,7 +300,12 @@ Handlebars.registerHelper('formatted', function(text, category) {
   }
 });
 
-
+Handlebars.registerHelper('mod', function(value, modval, options){
+  if(value===undefined || modval===undefined || parseInt(value) === NaN || !parseInt(modval) === NaN){
+    throw new Error(`Mod helper did not receive a number: val=${value}, modval=${modval}`);
+  }
+  return parseInt(value) % parseInt(modval)
+});
 
 
 Handlebars.registerHelper('json', function(context) {
@@ -308,7 +313,10 @@ Handlebars.registerHelper('json', function(context) {
 });
 
 Handlebars.registerHelper('offset', function(value, offset, options) {
-  return parseInt(value) + offset;
+  if(value===undefined || offset===undefined || parseInt(value)===NaN || !parseInt(offset) === NaN){
+    throw new Error(`offset helper did not receive a number: val=${value}, offset=${offset}`);
+  }
+  return parseInt(value) + parseInt(offset);
 });
 
 /* -------------------------------------------- */

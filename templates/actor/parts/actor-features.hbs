@@ -97,7 +97,7 @@
   <div class="group_cat">
     {{#times 7}}
     <div class="checkbox-item_cat">
-      <div class="CAT-selector {{#if (eq system.CATLEVEL.value @index)}}CAT-selected{{/if}}" data-cat="{{@index}}" title="{{testData}}" {{log this}} data-tooltip="{{localize 'SHEET.TOOLTIPS.CATSELECT'}}">
+      <div class="CAT-selector {{#if (eq system.CATLEVEL.value @index)}}CAT-selected{{/if}}" data-cat="{{@index}}" title="{{testData}}" data-tooltip="{{localize 'SHEET.TOOLTIPS.CATSELECT'}}">
         <img src="systems/cain/assets/CAT/CAT{{@index}}.png" alt="CAT {{@index}}">
       </div>
       <div class="CAT-session-text" data-tooltip="{{localize 'SHEET.TOOLTIPS.SURVIVED'}}">{{lookup sheetConstants.CATSessionNumbers (offset @index -1)}}</div>
