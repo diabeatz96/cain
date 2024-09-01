@@ -170,15 +170,138 @@ Handlebars.registerHelper('times', function(n, block) {
   return accum;
 });
 
-Handlebars.registerHelper('formatted', function(text) {
+Handlebars.registerHelper('formatted', function(text, category) {
+  // console.log(category);
+  const categoryTable = [
+    {
+      'CAT': 0,
+      'people': 'one',
+      'size': 'human',
+      'area': 'personal',
+      'distance_short': 'touch',
+      'distance_long': 'touch',
+      'distance_extreme': 'touch',
+      'speed': 'average human',
+      'magnitude': 'small'
+    },
+    {
+      'CAT': 1,
+      'people': 'a few',
+      'size': 'heavy furniture',
+      'area': 'a few people',
+      'distance_short': '0-2 rooms',
+      'distance_long': '3-4 rooms',
+      'distance_extreme': '5+ rooms',
+      'speed': 'fast human',
+      'magnitude': 'Noticable'
+    },
+    {
+      'CAT': 2,
+      'people': 'small group',
+      'size': 'large animal',
+      'area': 'entire room',
+      'distance_short': '0-2 street widths',
+      'distance_long': '3-4 street widths',
+      'distance_extreme': '5+ street widths',
+      'speed': 'fast animal',
+      'magnitude': 'large'
+    },
+    {
+      'CAT': 3,
+      'people': 'large group',
+      'size': 'vehicle',
+      'area': 'A few rooms',
+      'distance_short': '0-2 blocks',
+      'distance_long': '3-4 blocks',
+      'distance_extreme': '5+ blocks',
+      'speed': 'car',
+      'magnitude': 'very large'
+    },
+    {
+      'CAT': 4,
+      'people': 'a crowd',
+      'size': 'large vehicle',
+      'area': 'whole building',
+      'distance_short': '0-8 blocks',
+      'distance_long': '9-16 blocks',
+      'distance_extreme': '17+ blocks',
+      'speed': 'train',
+      'magnitude': 'massive'
+    },
+    {
+      'CAT': 5,
+      'people': 'a huge crowd',
+      'size': 'building',
+      'area': 'a city block',
+      'distance_short': 'across town',
+      'distance_long': 'across town',
+      'distance_extreme': 'across town',
+      'speed': 'maglev',
+      'magnitude': 'destructive'
+    },
+    {
+      'CAT': 6,
+      'people': 'thousands',
+      'size': 'large building',
+      'area': 'a whole neighborhood',
+      'distance_short': 'visual range',
+      'distance_long': 'visual range',
+      'distance_extreme': 'visual range',
+      'speed': 'airliner',
+      'magnitude': 'overwhelming'
+    },
+    {
+      'CAT': 7,
+      'people': 'many thousands',
+      'size': 'skyscraper',
+      'area': 'a whole town',
+      'distance_short': 'over the horizon',
+      'distance_long': 'over the horizon',
+      'distance_extreme': 'over the horizon',
+      'speed': 'jet fighter',
+      'magnitude': 'cataclysmic'
+    }
+  ]
   // Check if the text is defined and is a string
+  let parse_cat_values = (inputString => {
+    const regex = /\{<CAT>\s+(\S+)\s+(\S+)\}/g;
+
+    const matches = [...inputString.matchAll(regex)];
+
+    return matches.map(match => ({
+        string: match[0],
+        type: match[1],
+        modifier: match[2]
+    }));
+  });
+
   if (typeof text === 'string') {
+      const CatFormattingData = parse_cat_values(text);
+      console.log(CatFormattingData);
+      //TODO: fix hardcoded category limits - it'd be nice to have the option to expand Category beyond 0-7
+      let updatedText = text;
+      if (isNaN(category) || Number(category) < 0 || Number(category) > 7) {
+        CatFormattingData.forEach(catData => {
+          const replacementString = `<span><b> CAT${(catData.modifier <=  0 ? '' : '+') + (catData.modifier == 0 ? '' : catData.modifier)}</b></span>`;
+          updatedText = updatedText.replace(catData.string, replacementString)
+        })
+      } else {
+        CatFormattingData.forEach(catData => {
+          const catIndex = Math.max(Math.min(Number(category) + Number(catData.modifier), 7), 0);
+          const replacementString = `<span title="CAT${(catData.modifier <=  0 ? '' : '+') + (catData.modifier == 0 ? '' : catData.modifier)}"><img style="vertical-align: middle; max-height: 2em; display: inline-block;" src="systems/cain/assets/CAT/CAT${category}.png"/> <b>${categoryTable[catIndex][catData.type]}</b></span>`;
+          console.log(replacementString);
+          updatedText = updatedText.replace(catData.string, replacementString)
+        })
+      }
+
       // Replace all newlines with <br> tags
-      return new Handlebars.SafeString(text.replace(/\n/g, '<br>'));
+      return new Handlebars.SafeString(updatedText.replace(/\n/g, '<br>'));
   } else {
       return text; // Return the text as is if it's not a string
   }
 });
+
+
 
 
 Handlebars.registerHelper('json', function(context) {
@@ -296,18 +419,18 @@ Hooks.once('ready', function () {
 
   // Add the Talisman button when the action bar is first ready
   addTalismanButton();
-  addHomebrewButton();
   addPlayerOverviewButton();
   // Add the Risk Roll and Fate Roll buttons when the action bar is first ready
   addRiskRollButton();
   addFateRollButton();
+  addHomebrewButton();
 
   // Ensure the buttons are added every time the action bar is rendered
   Hooks.on('renderHotbar', () => {
     addTalismanButton();
-    addHomebrewButton();
     addRiskRollButton();
     addFateRollButton();
+    addHomebrewButton();
   });
 
   // Register hotbar drop hook

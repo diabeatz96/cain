@@ -152,7 +152,7 @@
               <h4>Keywords</h4>
               <p>{{this.system.keywords}}</p>
               <h4>Power Description</h4>
-              <p>{{#formatted this.system.powerDescription}}{{/formatted}}</p>
+              <p>{{formatted this.system.powerDescription ../../system.CATLEVEL.value}}</p>
             </div>
           </li>
           {{/each}}
@@ -177,7 +177,7 @@
               <h4>Keywords</h4>
               <p>{{this.system.keywords}}</p>
               <h4>Power Description</h4>
-              <p>{{#formatted this.system.powerDescription}}{{/formatted}}</p>
+              <p>{{formatted this.system.powerDescription ../../system.CATLEVEL.value}}</p>
             </div>
           </li>
           {{/each}}
