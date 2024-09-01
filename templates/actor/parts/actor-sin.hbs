@@ -1,27 +1,37 @@
 <div class="sin-overflow">
   <h3>Sin Overflow</h3>
   <div class="sin-overflow-controls" style="display: flex; flex-direction: column; align-items: center;">
-    <label for="sinOverflow-max">Maximum Value:</label>
-    <input type="number" id="sinOverflow-max" name="system.sinOverflow.max" value="{{system.sinOverflow.max}}" min="{{system.sinOverflow.min}}" max="10" style="width: 100px;" />
     <div id="sinOverflow-checkboxes" style="display: flex; justify-content: center; margin-top: 10px;">
       {{#range 0 system.sinOverflow.max}}
-        <input type="checkbox" class="sinOverflow-checkbox" data-index="{{index}}" {{#if (lt index ../system.sinOverflow.value)}}checked{{/if}} />
+        {{#if (lt index ../system.sinOverflow.value)}}
+          <img 
+            class="sinOverflow-icon sinOverflow-icon-anim sin-icon-anim-{{mod (offset index ../sheetConstants.SINVisualOffset) 7}}"
+            data-sin="{{offset index 1}}"/>
+        {{else}}
+          <img 
+            class="sinOverflow-icon"
+            src="systems/cain/assets/sheet/CAIN-sin-no.png"
+            data-sin="{{offset index 1}}"/>
+        {{/if}}
       {{/range}}
     </div>
-    <div style="display: flex; justify-content: center; margin-top: 10px;">
-      <label for="roll-sin" class="resource-label rollable flexlarge align-left mob-psycho-label" 
+    <h3 style="margin-bottom: 1rem;">{{system.sinOverflow.value}} / {{system.sinOverflow.max}}</h3>
+    <div style="display: flex; justify-content: center; margin-top: 10px; margin-bottom: 20px">
+      <label class="resource-label rollable flexlarge align-left mob-psycho-label" 
              data-roll="1d3" 
-             data-label="{{localize 'Roll Sin (1d3)'}}" 
+             data-label="{{localize 'SHEET.SIN.ROLLSIN'}}" 
              style="text-align: center;">
-        Roll Sin (1d3)
+        {{localize 'SHEET.SIN.ROLLSIN'}}
       </label>
-      <label for="resist-roll" class="resource-label rollable flexlarge align-left mob-psycho-label" 
+      <label class="resource-label rollable align-left mob-psycho-label" 
              data-roll="1d6+{{system.currentSinMarks.length}}" 
-             data-label="{{localize 'Resist Roll (1d6 + Sin Marks)'}}" 
-             style="text-align: center;">
-        Resist Roll (1d6 + Sin Marks)
+             data-label="{{localize 'SHEET.SIN.ROLLRESIST'}}" 
+             style="text-align: center; flex: 2;">
+        {{localize 'SHEET.SIN.ROLLRESIST'}}
       </label>
     </div>
+    <label for="sinOverflow-max">{{localize 'SHEET.SIN.ADJUSTMAX'}}</label>
+    <input type="number" id="sinOverflow-max" data-tooltip="{{localize 'SHEET.TOOLTIPS.SINMAXADJUST'}}" name="system.sinOverflow.max" value="{{system.sinOverflow.max}}" min="{{system.sinOverflow.min}}" max="10" style="width: 100px; text-align: center;" />
   </div>
 </div>
 

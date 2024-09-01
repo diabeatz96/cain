@@ -3,6 +3,7 @@
 @import url('https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Lacquer&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Tiny5&display=swap');
+@import url('./eye-anim.css');
 
 /* 
 .unifrakturmaguntia-regular {
@@ -1099,6 +1100,10 @@
   color: #fff;
 }
 
+
+.sinOverflow-icon{
+  border: none !important;
+}
 
 /* sin-marks.css */
 
