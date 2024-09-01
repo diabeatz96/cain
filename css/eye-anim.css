@@ -1,0 +1,83 @@
+.sinOverflow-icon-anim{
+    width: 45px;
+    height: 45px;
+    border: none !important;
+}
+
+.sin-icon-anim-0{
+    animation: eyeAnim-0 5s infinite;
+}
+
+.sin-icon-anim-1{
+    animation: eyeAnim-1 5.5s infinite;
+}
+
+.sin-icon-anim-2{
+    animation: eyeAnim-2 4.7s infinite;
+}
+
+.sin-icon-anim-3{
+    animation: eyeAnim-3 4.5s infinite;
+}
+
+.sin-icon-anim-4{
+    animation: eyeAnim-4 6s infinite;
+}
+
+.sin-icon-anim-5{
+    animation: eyeAnim-5 5.4s infinite;
+}
+
+.sin-icon-anim-6{
+    animation: eyeAnim-6 4.3s infinite;
+}
+
+@keyframes eyeAnim-0 {
+    0%, 7%, 100% {content:url("../assets/sheet/CAIN-eye-0-0.png");}
+    1% {content:url("../assets/sheet/CAIN-eye-0-1.png");}
+    3% {content:url("../assets/sheet/CAIN-eye-closed.png");}
+    5% {content:url("../assets/sheet/CAIN-eye-0-1.png");}
+}
+
+@keyframes eyeAnim-1 {
+    0%, 20%, 27%, 100% {content:url("../assets/sheet/CAIN-eye-1-0.png");}
+    21% {content:url("../assets/sheet/CAIN-eye-1-1.png");}
+    23% {content:url("../assets/sheet/CAIN-eye-closed.png");}
+    25% {content:url("../assets/sheet/CAIN-eye-1-1.png");}
+}
+
+@keyframes eyeAnim-2 {
+    0%, 71%, 78%, 100% {content:url("../assets/sheet/CAIN-eye-2-0.png");}
+    72% {content:url("../assets/sheet/CAIN-eye-2-1.png");}
+    74% {content:url("../assets/sheet/CAIN-eye-closed.png");}
+    76% {content:url("../assets/sheet/CAIN-eye-2-1.png");}
+}
+
+@keyframes eyeAnim-3 {
+    0%, 90%, 97%, 100% {content:url("../assets/sheet/CAIN-eye-3-0.png");}
+    91% {content:url("../assets/sheet/CAIN-eye-3-1.png");}
+    93% {content:url("../assets/sheet/CAIN-eye-closed.png");}
+    95% {content:url("../assets/sheet/CAIN-eye-3-1.png");}
+}
+
+@keyframes eyeAnim-4 {
+    0%, 9%, 16%, 100% {content:url("../assets/sheet/CAIN-eye-4-0.png");}
+    10% {content:url("../assets/sheet/CAIN-eye-4-1.png");}
+    12% {content:url("../assets/sheet/CAIN-eye-closed.png");}
+    14% {content:url("../assets/sheet/CAIN-eye-4-1.png");}
+}
+
+@keyframes eyeAnim-5 {
+    0%, 50%, 57%, 100% {content:url("../assets/sheet/CAIN-eye-5-0.png");}
+    51% {content:url("../assets/sheet/CAIN-eye-5-1.png");}
+    53% {content:url("../assets/sheet/CAIN-eye-closed.png");}
+    55% {content:url("../assets/sheet/CAIN-eye-5-1.png");}
+}
+
+@keyframes eyeAnim-6 {
+    0%, 33%, 40%, 100% {content:url("../assets/sheet/CAIN-eye-6-0.png");}
+    34% {content:url("../assets/sheet/CAIN-eye-6-1.png");}
+    36% {content:url("../assets/sheet/CAIN-eye-closed.png");}
+    38% {content:url("../assets/sheet/CAIN-eye-6-1.png");}
+}
+

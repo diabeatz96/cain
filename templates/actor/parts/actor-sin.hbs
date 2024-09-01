@@ -5,10 +5,16 @@
     <input type="number" id="sinOverflow-max" name="system.sinOverflow.max" value="{{system.sinOverflow.max}}" min="{{system.sinOverflow.min}}" max="10" style="width: 100px;" />
     <div id="sinOverflow-checkboxes" style="display: flex; justify-content: center; margin-top: 10px;">
       {{#range 0 system.sinOverflow.max}}
-        <img 
-          class="sinOverflow-icon"
-          src="systems/cain/assets/sheet/CAIN-eye-{{#if (gte index ../system.sinOverflow.value)}}closed{{else}}{{mod (offset index ../sheetConstants.SINVisualOffset) 7}}{{/if}}.png"
-          data-sin="{{offset index 1}}"/>
+        {{#if (lt index ../system.sinOverflow.value)}}
+          <img 
+            class="sinOverflow-icon sinOverflow-icon-anim sin-icon-anim-{{mod (offset index ../sheetConstants.SINVisualOffset) 7}}"
+            data-sin="{{offset index 1}}"/>
+        {{else}}
+          <img 
+            class="sinOverflow-icon"
+            src="systems/cain/assets/sheet/CAIN-sin-no.png"
+            data-sin="{{offset index 1}}"/>
+        {{/if}}
       {{/range}}
     </div>
     <div style="display: flex; justify-content: center; margin-top: 10px;">
