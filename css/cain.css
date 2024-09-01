@@ -1420,16 +1420,18 @@
   text-decoration: underline;
 }
 
-.form-blasphemy-power .blasphemy-power-header {
+.blasphemy-power-header {
   display: flex;
   align-items: flex-start;
   gap: 20px;
   width: 100%;
-  border-bottom: 3px solid var(--secondary-color, #555);
-  padding-bottom: 15px;
+  border-bottom: 2px solid var(--secondary-color, #555);
+  padding-bottom: 10px;
   overflow: visible; /* Override the parent overflow */
   background: linear-gradient(135deg, var(--accent-color, #ff00ff), var(--primary-color, #2a2a2a));
+  padding: 10px;
   border-radius: 10px;
+  width: 100%;
 }
 
 .form-blasphemy-power .header-fields {
@@ -1516,7 +1518,7 @@
   box-shadow: 0 0 10px var(--accent-color, #ff00ff);
 }
 
-.form-blasphemy-power .blasphemy-power-header h1 {
+.form-blasphemy-power .er h1 {
   font-size: 24px;
   font-weight: bold;
   color: var(--accent-color, #ff00ff);
