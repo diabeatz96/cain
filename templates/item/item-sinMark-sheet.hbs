@@ -1,0 +1,161 @@
+<form class='sin-mark-ability-form {{cssClass}}' autocomplete='off'>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap');
+
+    .sin-mark-ability-form .charname input {
+      font-size: 24px;
+      font-weight: bold;
+      color: #ff0000;
+      text-shadow: 0 0 10px #ff0000;
+    }
+
+    .sin-mark-ability-form {
+      font-family: 'Cinzel', serif;
+      background: linear-gradient(135deg, #1a1a1a, #333);
+      color: #e0e0e0;
+      border: 2px solid #444;
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 0 20px #000;
+      height: 100%;
+      box-sizing: border-box;
+    }
+
+    .sin-mark-ability-form .sheet-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 2px solid #555;
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+    }
+
+    .sin-mark-ability-form .profile-img {
+      border: 3px solid #ff0000;
+      width: 60px;
+      height: 60px;
+      object-fit: contain;
+      box-shadow: 0 0 10px #ff0000;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .sin-mark-ability-form .profile-img:hover {
+      transform: scale(0.9);
+      box-shadow: 0 0 20px #ff0000;
+    }
+
+    .sin-mark-ability-form .header-fields h1 {
+      font-size: 24px;
+      font-weight: bold;
+      color: #ff0000;
+      text-shadow: 0 0 10px #ff0000;
+    }
+
+    .sin-mark-ability-form .sheet-body {
+      padding: 20px;
+      border-radius: 10px;
+      background: #222;
+      box-shadow: inset 0 0 10px #000;
+      height: 75%;
+      overflow-y: auto;
+    }
+
+    .sin-mark-ability-form .form-group {
+      margin-bottom: 15px;
+    }
+
+    .sin-mark-ability-form .form-group label {
+      font-weight: bold;
+      color: #ff0000;
+    }
+
+    .sin-mark-ability-form .form-group input,
+    .sin-mark-ability-form .form-group textarea {
+      width: 100%;
+      padding: 10px;
+      border: 2px solid #555;
+      border-radius: 5px;
+      background: #333;
+      color: #fff;
+      transition: border 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .sin-mark-ability-form .form-group input:focus,
+    .sin-mark-ability-form .form-group textarea:focus {
+      border: 2px solid #ff0000;
+      box-shadow: 0 0 10px #ff0000;
+    }
+
+    .sin-mark-ability-form button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      background: #ff0000;
+      color: #fff;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.3s ease;
+    }
+
+    .sin-mark-ability-form button:hover {
+      background: #cc0000;
+      transform: scale(1.05);
+    }
+
+    .sin-mark-ability-form .ability-container {
+      margin-bottom: 20px;
+      padding: 10px;
+      border: 1px solid #444;
+      border-radius: 10px;
+      background: #333;
+      box-shadow: 0 0 10px #000;
+    }
+
+    .sin-mark-ability-form .ability-text {
+      font-size: 16px;
+      font-weight: bold;
+      color: #ff0000;
+    }
+
+    .sin-mark-ability-form .form-group label :hover {
+      pointer-events: 'click';
+      color: #cc0000;
+      text-decoration: underline;
+    }
+
+  </style>
+
+  <header class='sheet-header'>
+    <img
+      class='profile-img'
+      src='{{item.img}}'
+      data-edit='img'
+      title='{{item.name}}'
+    />
+    <div class='header-fields'>
+      <h1 class='charname'><input
+          name='name'
+          type='text'
+          value='{{item.name}}'
+          placeholder='Name'
+        /></h1>
+    </div>
+  </header>
+
+  {{! Sheet Body }}
+  <section class='sheet-body'>
+    <h2>Sin Abilities</h2>
+
+    {{#each sinMarkAbilities}}
+      <div class="ability-container">
+        {{> sinMarkAbility this powerItem=this developerMode=../developerMode}}
+      </div>
+    {{/each}}
+
+    <div class="form-group">
+      <label for="abilityUUID">Ability UUID</label>
+      <input type="text" id="abilityUUID" name="abilityUUID" placeholder="Enter Ability UUID">
+      <button id="addAbility" type="button">Add Ability</button>
+    </div>
+    <button id="removeAbility" type="button">Remove Ability</button>
+  </section>
+</form>
