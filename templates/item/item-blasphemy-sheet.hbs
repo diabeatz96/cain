@@ -17,7 +17,7 @@
   <section class='sheet-body'>
     <div class='tab' data-group='primary' data-tab='passive'>
       {{#each blasphemyPassives}}
-        {{> blasphemyPower this powerItem=this developerMode=../developerMode}}
+        {{> blasphemyPowerPartial this powerItem=this developerMode=../developerMode}}
       {{/each}}
       <div class="color-picker-container">
         <button class="color-picker-toggle" type="button">
@@ -33,7 +33,7 @@
     </div>
     <div class='tab' data-group='primary' data-tab='powers'>
       {{#each blasphemyPowers}}
-        {{> blasphemyPower this powerItem=this developerMode=../developerMode}}
+        {{> blasphemyPowerPartial this powerItem=this developerMode=../developerMode}}
       {{/each}}
     </div>
   </section>

@@ -120,7 +120,6 @@ export class CainItemSheet extends ItemSheet {
     html.on('click', '.effect-control', (ev) =>
       onManageActiveEffect(ev, this.item)
     );
-    html.find('.blasphemy-power-textbox').change(this._modifyBlasphemyPower.bind(this));
 
     html.find('#addTaskToAgenda').click(this._addTaskToAgenda.bind(this));
 
