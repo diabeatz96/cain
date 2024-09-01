@@ -133,17 +133,17 @@ export class CainItemSheet extends ItemSheet {
     html.find('input[type="color"]').on('input', this._updateColor.bind(this, html));
 
     // html click item to open
-
-
     html.find('.item-click').click((event) => {
+        console.log('Item clicked');
+        console.log(event.currentTarget)
         const itemId = $(event.currentTarget).data('id');
+        console.log(itemId);
         const item = Item.get(itemId);
         console.log(item);
         if (item) {
           item.sheet.render(true);
         }
       });
-    
     
     // Setup color picker functionality
     setupColorPicker(html);
@@ -187,6 +187,10 @@ export class CainItemSheet extends ItemSheet {
         }
       });
     }
+
+    // Add ability to the page
+    html.find('#addAbility').click(this._addAbility.bind(this));
+    html.find('#removeAbility').click(this._removeAbility.bind(this));
   }
 
   _addTaskToAgenda(event) {
@@ -222,4 +226,32 @@ export class CainItemSheet extends ItemSheet {
       console.error(`Error updating item with ${colorType}: ${colorValue}`, err);
     });
   }
+
+  async _addAbility(event) {
+    event.preventDefault();
+    const abilityUUID = event.currentTarget.parentElement.querySelector('#abilityUUID').value;
+    const abilityItem = await fromUuid(abilityUUID);
+    if (abilityItem) {
+      const abilities = this.item.system.abilities || [];
+      abilities.push(abilityItem.id);
+      await this.item.update({ 'system.abilities': abilities });
+      ui.notifications.info(`Added ability: ${abilityItem.name}`);
+    } else {
+      ui.notifications.error('Invalid ability UUID');
+    }
+  }
+
+  async _removeAbility(event) {
+    event.preventDefault();
+    const abilities = this.item.system.abilities || [];
+    if (abilities.length > 0) {
+      const lastAbilityId = abilities.pop();
+      const lastAbilityItem = game.items.get(lastAbilityId);
+      await this.item.update({ 'system.abilities': abilities });
+      ui.notifications.info(`Removed ability: ${lastAbilityItem.name}`);
+    } else {
+      ui.notifications.error('No abilities to remove');
+    }
+  }
+
 }
