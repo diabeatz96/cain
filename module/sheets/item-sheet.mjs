@@ -84,6 +84,12 @@ export class CainItemSheet extends ItemSheet {
       context.blasphemyPassives = this.item.system.powers.map(item => {return game.items.get(item);}).filter(item => {return item.system.isPassive});
       context.blasphemyPowers = this.item.system.powers.map(item => {return game.items.get(item);}).filter(item => {return !item.system.isPassive});
     }
+    if (this.item.type === "sinMark") {
+      console.log("Context:", context)
+      console.log("Item:", this.item)
+      context.sinMarkAbilities = this.item.system.abilities.map(item => {return game.items.get(item);});
+    }
+
     context.developerMode = game.settings.get('cain', 'developerMode');
     // Add the item's data to context.data for easier access, as well as flags.
     context.system = itemData.system;

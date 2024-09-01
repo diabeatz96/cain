@@ -8,13 +8,14 @@ export default class CainSinMark extends CainItemBase {
     const schema = super.defineSchema();
 
     schema.bodyPartName = new fields.StringField({ required: true, nullable: false, initial: "Body Part Name" });
-    schema.markAmount = new fields.IntegerField({ required: true, nullable: false, initial: 0, min: 0, max: 10 });
+    schema.markAmount = new fields.NumberField({ required: true, nullable: false, initial: 0, min: 0, max: 10 });
+    schema.abilities = new fields.ArrayField(new fields.StringField(), { required: true, nullable: false, initial: [] });
     
     /*
     description is inherited by CainItemBase
     schema.description = new fields.StringField({ required: true, nullable: false, initial: "default" });
     */
-   
+
     return schema;
     }
 
