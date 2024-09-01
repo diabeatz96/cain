@@ -97,8 +97,8 @@
   <div class="checkbox-group checkbox-group_cat" data-field="CATLEVEL">
     {{#times 7}}
     <div class="checkbox-item checkbox-item_cat">
-      <img src="systems/cain/assets/CAT/CAT{{@index}}.png" alt="CAT {{@index}}">
-      <label for="CATLEVEL-{{@index}}">Level {{@index}}</label>
+      <img src="systems/cain/assets/CAT/CAT{{@index}}.png" class="no-border" alt="CAT {{@index}}">
+      <label class="mob-psycho-heading" for="CATLEVEL-{{@index}}">Level {{@index}}</label>
       <input type="checkbox" name="CATLEVEL-{{@index}}" {{#if (gte system.CATLEVEL.value @index)}}checked{{/if}}/>
     </div>
     {{/times}}

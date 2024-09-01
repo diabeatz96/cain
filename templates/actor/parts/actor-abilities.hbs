@@ -109,72 +109,79 @@
   </div>
   <!-- Items Section -->
   <div class="items-section" style="width: 100%;">
-    <!-- Blasphemy Powers -->
-    <div class="blasphemy"  style="width: 100%;">
-      <h1>Blasphemies</h1>
-      {{#unless blasphemyData}}
-      <div class="blasphemy-powers">
-        <p class="psychedelic-text">Drag blasphemy onto your sheet.</p>
+  <!-- Blasphemy Powers -->
+  <div class="blasphemy" style="width: 100%;">
+    <h1>Blasphemies</h1>
+    {{#unless blasphemyData}}
+    <div class="blasphemy-powers">
+      <p class="psychedelic-text">Drag blasphemy onto your sheet.</p>
+    </div>
+    {{/unless}}
+    {{#each blasphemyData}}
+    <div class="blasphemy-powers">
+      <div class="blasphemy-header">
+        <img src={{blasphemy.img}} alt="Blasphemy Image" class="blasphemy-image">
+        <h2>{{blasphemy.system.blasphemyName}}
+          <a class="item-control remove-blasphemy-button" data-id="{{blasphemy.id}}" title="Remove">
+            <i class="fas fa-trash"></i>
+          </a>
+          <a class="animation-toggle" title="Toggle Animation">
+            <input type="checkbox" id="toggle-animation" class="toggle-animation">
+            <label for="toggle-animation">
+              <i class="fas fa-sync-alt"></i> <!-- Icon for enabled state -->
+              <i class="fas fa-ban"></i> <!-- Icon for disabled state -->
+            </label>
+          </a>
+        </h2>
       </div>
-      {{/unless}}
-      {{#each blasphemyData}}
-      <div class="blasphemy-powers">
-        <div class="blasphemy-header">
-          <img src={{blasphemy.img}} alt="Blasphemy Image" class="blasphemy-image">
-          <h2>{{blasphemy.system.blasphemyName}}
-            <a class="item-control remove-blasphemy-button" data-id="{{blasphemy.id}}" title="Remove">
-              <i class="fas fa-trash"></i>
-            </a>
-          </h2>
-        </div>
-        <div class="blasphemy-details">
-          <h3>Passive{{#if (gt passives.length 1)}}s{{/if}}</h3>
-          <ul class="editable-blasphemy-powers">
-            {{#each passives}}
-            <li>
-              <h4>
-                <span data-id="{{this.id}}" class="blasphemy-passive" title="{{this.system.powerDescription}}">{{this.system.powerName}}</span>
-                <a class="item-control blasphemy-power-to-chat" data-id="{{this.id}}" title="Send to Chat">
-                  <i class="fas fa-comment"></i>
-                </a>
-                <a class="item-control remove-blasphemy-power-button" data-id="{{this.id}}" title="Remove">
-                  <i class="fas fa-trash"></i>
-                </a>
-              </h4>
-              <div class="power-description-card">
-                <h4>Keywords</h4>
-                <p>{{this.system.keywords}}</p>
-                <h4>Power Description</h4>
-                <p>{{formatted this.system.powerDescription ../../system.CATLEVEL.value}}</p>
-              </div>
-            </li>
-            {{/each}}
-          </ul>
-          <h3>Powers</h3>
-          <ul>
-            {{#unless powers}}
-            <li>No Powers</li>
-            {{/unless}}
-            {{#each powers}}
-            <li>
-              <h4>
-                <span data-id="{{this.id}}" class="blasphemy-power" title="{{this.system.powerDescription}}">{{this.system.powerName}}</span>
-                <a class="item-control blasphemy-power-to-chat" data-id="{{this.id}}" title="Send to Chat">
-                  <i class="fas fa-comment"></i>
-                </a>
-                <a class="item-control remove-blasphemy-power-button" data-id="{{this.id}}" title="Remove">
-                  <i class="fas fa-trash"></i>
-                </a>
-              </h4>
-              <div class="power-description-card">          
-                <h4>Keywords</h4>
-                <p>{{this.system.keywords}}</p>
-                <h4>Power Description</h4>
-                <p>{{formatted this.system.powerDescription ../../system.CATLEVEL.value}}</p>
-              </div>
-            </li>
-            {{/each}}
-          </ul>
+      <div class="blasphemy-details">
+        <h3>Passive{{#if (gt passives.length 1)}}s{{/if}}</h3>
+        <ul class="editable-blasphemy-powers">
+          {{#each passives}}
+          <li>
+            <h4>
+              <span data-id="{{this.id}}" class="blasphemy-passive" title="{{this.system.powerDescription}}">{{this.system.powerName}}</span>
+              <a class="item-control blasphemy-power-to-chat" data-id="{{this.id}}" title="Send to Chat">
+                <i class="fas fa-comment"></i>
+              </a>
+              <a class="item-control remove-blasphemy-power-button" data-id="{{this.id}}" title="Remove">
+                <i class="fas fa-trash"></i>
+              </a>
+            </h4>
+            <div class="power-description-card">          
+              <h4>Keywords</h4>
+              <p>{{this.system.keywords}}</p>
+              <h4>Power Description</h4>
+              <p>{{formatted this.system.powerDescription ../../system.CATLEVEL.value}}</p>
+            </div>
+          </li>
+          {{/each}}
+        </ul>
+        <h3>Powers</h3>
+        <ul>
+          {{#unless powers}}
+          <li>No Powers</li>
+          {{/unless}}
+          {{#each powers}}
+          <li>
+            <h4>
+              <span data-id="{{this.id}}" class="blasphemy-power" title="{{this.system.powerDescription}}">{{this.system.powerName}}</span>
+              <a class="item-control blasphemy-power-to-chat" data-id="{{this.id}}" title="Send to Chat">
+                <i class="fas fa-comment"></i>
+              </a>
+              <a class="item-control remove-blasphemy-power-button" data-id="{{this.id}}" title="Remove">
+                <i class="fas fa-trash"></i>
+              </a>
+            </h4>
+            <div class="power-description-card">          
+              <h4>Keywords</h4>
+              <p>{{this.system.keywords}}</p>
+              <h4>Power Description</h4>
+              <p>{{formatted this.system.powerDescription ../../system.CATLEVEL.value}}</p>
+            </div>
+          </li>
+          {{/each}}
+        </ul>
         <div class="form-group">
           <label for="selectedPower" class="labelSelectedPower">Available Powers:</label>
           <select name="selectedPower" class="selectedPower">
@@ -184,7 +191,7 @@
           </select>
           <button type="button" class="add-blasphemy-power-button" {{#unless availablePowers.length}} disabled {{/unless}}>Add Power</button>
         </div>
-        <div class="power-description-card">          
+        <div class="available-power-description-card">          
           <h4>Keywords</h4>
           <p class="powerKeywords"></p>
           <h4>Power Description</h4>
@@ -209,8 +216,8 @@
         </ul>
       </div>
       {{/if}}
-       </div>
-     </div>
+      </div>
+    </div>
     </div>
   </div>
 </div>
@@ -521,6 +528,7 @@
     padding: 10px;
     margin-top: 10px;
     border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s;
   }
 
   .abilities-page .power-description-card h4 {
@@ -592,5 +600,73 @@
     margin: 0 0 10px 0;
     font-family: 'Courier New', Courier, monospace;
   }
+
+  .abilities-page .power-description-card {
+    transition: opacity 1s ease-in-out, max-height 1s ease-in-out, transform 1s ease-in-out, background-color 1s ease-in-out, box-shadow 1s ease-in-out, color 1s ease-in-out;
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transform: scale(0.4) rotate(-10deg);
+    background-color: rgba(0, 0, 0, 0);
+    box-shadow: 0 0 15px rgba(128, 0, 128, 0);
+    color: #4b0082; /* Initial dark purple text color */
+  }
+
+  .abilities-page .power-description-card.visible {
+    opacity: 1;
+    max-height: 1000px; /* Set a high enough value to accommodate the content */
+    transform: scale(0.95); /* Remove fixed rotation */
+    background-color: rgba(75, 0, 130, 0.9); /* Dark purple background */
+    box-shadow: 0 0 30px rgba(138, 43, 226, 1), 0 0 50px rgba(75, 0, 130, 0.7); /* Psychedelic glowing effect */
+    color: #dda0dd; /* Light purple text color */
+  }
+
+
+  .abilities-page .available-power-description-card{
+    margin-top: 10px;
+    opacity: 1;
+    max-height: 1000px; /* Set a high enough value to accommodate the content */
+    padding: 10px;
+    border: 1px solid #444;
+    border-radius: 4px;
+    background-color: rgba(75, 0, 130, 0.9); /* Dark purple background */
+    box-shadow: 0 0 30px rgba(138, 43, 226, 1), 0 0 50px rgba(75, 0, 130, 0.7); /* Psychedelic glowing effect */
+    color: #dda0dd; /* Light purple text color */
+  }
+
+
+  .animation-toggle {
+    display: inline-block;
+    position: relative;
+    margin-left: 10px;
+    cursor: pointer;
+  }
+
+  .toggle-animation {
+    display: none;
+  }
+
+  .toggle-animation + label {
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .toggle-animation + label .fa-sync-alt {
+    display: inline; /* Show enabled icon by default */
+  }
+
+  .toggle-animation + label .fa-ban {
+    display: none; /* Hide disabled icon by default */
+  }
+
+  .toggle-animation:checked + label .fa-sync-alt {
+    display: none; /* Hide enabled icon when checked */
+  }
+
+  .toggle-animation:checked + label .fa-ban {
+    display: inline; /* Show disabled icon when checked */
+  }
+
 
 </style>
