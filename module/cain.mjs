@@ -308,6 +308,10 @@ Handlebars.registerHelper('json', function(context) {
   return JSON.stringify(context);
 });
 
+Handlebars.registerHelper('offset', function(value, offset, options) {
+  return parseInt(value) + offset;
+});
+
 /* -------------------------------------------- */
 /*  Ready Hook                                  */
 /* -------------------------------------------- */

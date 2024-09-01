@@ -53,5 +53,12 @@
       "agendaTask": "Agenda Task",
       "agendaAbility": "Agenda Ability"
     }
+  },
+
+  "SHEET": {
+    "TOOLTIPS": {
+      "SURVIVED": "Missions Survived",
+      "CATSELECT": "Right click to set CAT 0"
+    }
   }
 }
