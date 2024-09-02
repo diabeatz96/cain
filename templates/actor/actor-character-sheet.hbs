@@ -165,10 +165,12 @@
 
 <style>
 .affliction {
+    display: flex;
+    position: relative;
     align-items: center;
     border: 2px solid black;
     border-radius: 25px;
-    padding-left: 5px;
+    padding-left: 0px;
     padding-right: 0px;
     padding-top: 0px;
     padding-bottom: 0px;
@@ -193,27 +195,25 @@
 
 .remove-affliction-div {
     padding-left: 0 0px;
-    padding-top: 10 0px;
-    height: 150px;
-    width: 10%; /* Restrict the width to 20% */
+    padding-top: 0 0px;
     display: flex;
-    justify-content: center;
+    height: 100%;
     border-top-right-radius: 25px;
     border-bottom-right-radius: 25px;
     max-width: 30px; /* Optional: Set a max-width if you want to prevent it from becoming too large */
 }
 
 .remove-affliction-button {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    height: 100%;
+    width: 30px;
     background-color:brown;
     border-radius: 0px;
     border-top-right-radius: 15px;
     border-bottom-right-radius: 15px;
     border: 0px solid white;
-}
-
-.remove-affliction-button:hover {
-    box-shadow: 0 0 10px 5px rgba(128, 0, 128, 0.75); /* Purple glow effect */
-    transition: box-shadow 0.3s ease-in-out; /* Smooth transition */
 }
 
 .remove-affliction-button i {
