@@ -17,3 +17,4 @@ export {default as CainBlasphemy} from "./blasphemy/item-blasphemy.mjs";
 export {default as CainBlasphemyPower} from "./blasphemy/item-blasphemy-power.mjs";
 export {default as CainSinMark} from "./sins/item-sin-mark.mjs";
 export {default as CainSinMarkAbility} from "./sins/item-sin-mark-ability.mjs";
+export {default as CainAffliction} from "./afflictions/item-affliction.mjs";

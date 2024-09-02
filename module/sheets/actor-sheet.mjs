@@ -101,6 +101,7 @@ export class CainActorSheet extends ActorSheet {
     context.currentBlasphemyPowers = this._getItemsFromIDs(context.system.currentBlasphemyPowers || []);
     context.currentSinMarks = this._getItemsFromIDs(context.system.sinMarks || []);
     context.currentSinMarkAbilities = this._getItemsFromIDs(context.system.sinMarkAbilities || []);
+    context.currentAfflictions = this._getItemsFromIDs(context.system.afflictions || []);
 
     // Calculate currentUnlinkedBlasphemyPowers
     context.currentUnlinkedBlasphemyPowers = this._getItemsFromIDs(
@@ -291,6 +292,10 @@ export class CainActorSheet extends ActorSheet {
     html.find('.blasphemy-power-to-chat').on('click', this._sendBlasphemyPowerMessage.bind(this));
     html.find('.remove-blasphemy-power-button').on('click', this._removeBlasphemyPowerButton.bind(this));
     html.find('.remove-blasphemy-button').on('click', this._removeBlasphemyButton.bind(this));
+    html.find('.remove-blasphemy-button').on('click', this._removeBlasphemyButton.bind(this));
+    html.find('.remove-affliction-button').on('click', this._removeAfflictionButton.bind(this));
+    
+    html.find('.add-affliction-button').on('click', async event => {await this._addAffliction(event)});
     
     let cat_selector_imgs = html.find('.CAT-selector')
     cat_selector_imgs.on('click', this._onCATSelect.bind(this, true));
@@ -802,6 +807,62 @@ export class CainActorSheet extends ActorSheet {
     this.actor.render(true);
   }
 
+  async _addAffliction(event) {
+    event.preventDefault();
+    console.log("adding affliction");
+    const dialogResult = await Dialog.wait({
+      title: "Add Affliction",
+      content: `<p>This lets you create a new affliction.  If your Admin has an existing one in mind, they should add it from the player overview section or by dragging it to you sheet.</p>
+      <form>
+        <label>Name <input name="afflictionName" type="string"/></label>
+        <label>Description <textarea name="afflictionDescription"></textarea></label>
+      </form>`,
+      buttons: {
+        submit: { label: "Submit", callback: (html) => {
+          const formElement = html[0].querySelector('form');
+          const formData = new FormDataExtended(formElement);
+          const formDataObject = formData.object;
+          return formDataObject;
+        }},
+        cancel: { label: "Cancel" },
+      }
+     });
+     if (dialogResult === 'cancel') return;
+     let afflictionFolderFolder = game.folders.find(f => f.name === "Affliction Data" && f.type === "Item");
+     if (!afflictionFolderFolder) {
+        afflictionFolderFolder = await Folder.create({
+             name: "Affliction Data",
+             type: "Item",
+             folder: null,  // Set a parent folder ID if nesting is desired
+             sorting: "m",  // 'm' for manual sorting, 'a' for alphabetical
+        });
+     }
+
+     let afflictionFolder = game.folders.find(f => f.name === "Misc Afflictions" && f.type === "Item");
+     if (!afflictionFolder) {
+        afflictionFolder = await Folder.create({
+             name: "Misc Afflictions",
+             type: "Item",
+             folder: afflictionFolderFolder.id,  // Set a parent folder ID if nesting is desired
+             sorting: "m",  // 'm' for manual sorting, 'a' for alphabetical
+        });
+     }
+     const createdAfflictionData = {
+      name: dialogResult.afflictionName,
+      type: "affliction", // Ensure this matches the item type defined in your game system
+      img: "icons/svg/item-bag.svg",
+      folder: afflictionFolder.id,  // Assign the item to the folder
+      system: {
+          afflictionName: dialogResult.afflictionName,
+          afflictionDescription: dialogResult.afflictionDescription
+      }
+    };
+    const createdAffliction = await Item.create(createdAfflictionData);
+    const afflictionList = this.actor.system.afflictions;
+    afflictionList.push(createdAffliction.id);
+    this.actor.update({'system.afflictions': afflictionList});
+  }
+
 
   _removeAgendaTask(event) {
     event.preventDefault();
@@ -932,6 +993,17 @@ export class CainActorSheet extends ActorSheet {
     const agendaAbilities = this.actor.system.currentAgendaAbilities || [];
     const newAgendaAbilities = agendaAbilities.slice(0, Number(index)).concat(agendaAbilities.slice(Number(index)+1))
     this.actor.update({ 'system.currentAgendaAbilities': newAgendaAbilities }).then(() => {
+      this.render(false); // Re-render the sheet to reflect changes
+    });
+  }
+
+  _removeAfflictionButton(event) {
+    event.preventDefault();
+    const afflictionID = event.currentTarget.dataset.id;
+    const afflictions = this.actor.system.afflictions || [];
+    const index = afflictions.indexOf(afflictionID);
+    const newAfflictions = afflictions.slice(0, Number(index)).concat(afflictions.slice(Number(index)+1))
+    this.actor.update({ 'system.afflictions': newAfflictions }).then(() => {
       this.render(false); // Re-render the sheet to reflect changes
     });
   }

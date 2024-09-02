@@ -49,13 +49,7 @@ export default class CainCharacter extends CainActorBase {
       value: new fields.NumberField({ required: true, initial: 0, min: 0, max: 7 }),
     });
 
-    schema.afflictions = new fields.SchemaField({
-      affliction1: new fields.StringField({ required: true, blank: true }),
-      affliction2: new fields.StringField({ required: true, blank: true }),
-      affliction3: new fields.StringField({ required: true, blank: true }),
-      affliction4: new fields.StringField({ required: true, blank: true }),
-      affliction5: new fields.StringField({ required: true, blank: true }),
-    });
+    schema.afflictions = new fields.ArrayField(new fields.StringField({ required: true, initial: " " }), { required: true, initial: [] });
     
     schema.divineAgony = new fields.SchemaField({
       value: new fields.NumberField({ required: true, initial: 0, min: 0, max: 3 }),
