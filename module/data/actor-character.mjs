@@ -116,6 +116,9 @@ export default class CainCharacter extends CainActorBase {
     schema.currentBlasphemies =  new fields.ArrayField(new fields.StringField(), { required: true, initial: [] });
     schema.currentBlasphemyPowers =  new fields.ArrayField(new fields.StringField(), { required: true, initial: [] });
 
+    schema.sinMarks = new fields.ArrayField(new fields.StringField(), { required: true, initial: [] });
+    schema.sinMarkAbilities = new fields.ArrayField(new fields.StringField(), { required: true, initial: [] });
+    
     return schema;
   }
 
