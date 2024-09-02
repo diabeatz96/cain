@@ -76,6 +76,13 @@
       "system": "cain",
       "type": "RollTable",
       "path": "packs/tables"
+    },
+    {
+      "name": "sin-marks",
+      "label": "Sin Marks",
+      "system": "cain",
+      "type": "Item",
+      "path": "packs/sin-marks"
     }
   ],
   "packFolders": [],

@@ -1,4 +1,4 @@
-<div class="sin-overflow">
+<div class="sin-overflow .sin-page-drop-target">
   <h3>Sin Overflow</h3>
   <div class="sin-overflow-controls" style="display: flex; flex-direction: column; align-items: center;">
     <div id="sinOverflow-checkboxes" style="display: flex; justify-content: center; margin-top: 10px;">
@@ -35,12 +35,21 @@
   </div>
 </div>
 
-<div class="sin-marks">
+<div class="sin-marks sin-page-drop-target">
   <h3>Sin Marks</h3>
-  {{#if system.currentSinMarks.length}}
+  {{#if currentSinMarkData.length}}
     <ul>
-      {{#each system.currentSinMarks}}
-        <li>{{this}}</li>
+      {{#each currentSinMarkData}}
+        <li>
+          <strong>{{this.sinMark.name}}</strong>
+          <ul>
+            {{#each this.abilities}}
+              <li>
+                <strong>{{this.name}}</strong>: {{this.description}} ({{this.bodyPart}})
+              </li>
+            {{/each}}
+          </ul>
+        </li>
       {{/each}}
     </ul>
   {{else}}
@@ -54,3 +63,7 @@
     <button class="delete-sin-mark">Delete Sin Mark</button>
   </div>
 </div>
+
+<style>
+
+</style>

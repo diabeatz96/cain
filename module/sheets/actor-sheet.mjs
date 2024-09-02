@@ -110,7 +110,28 @@ export class CainActorSheet extends ActorSheet {
         }).reduce((a, b) => a && b, true);
       })
     );
-  
+    
+    context.currentSinMarkData = (context.currentSinMarks || []).map(sinMark => {
+      const sinMarkAbilities = sinMark.system.abilities || [];
+      const currentSinMarkAbilities = (context.currentSinMarkAbilities || []).map(item => item.id);
+
+      console.log("CURRENT SIN MARK ABILITIES:", currentSinMarkAbilities);
+      console.log("CONTEXT SIN MARK ABILITIES:", sinMarkAbilities);
+      
+      const abilities = this._getItemsFromIDs(sinMarkAbilities.filter(abilityID => currentSinMarkAbilities.includes(abilityID)));
+      
+      console.log("Sin Mark Abilities:", abilities);
+      return {
+        sinMark: sinMark,
+        abilities: abilities.map(ability => ({
+          name: ability.system.abilityName,
+          description: ability.system.abilityDescription,
+          bodyPart: ability.system.bodyPartName,
+          formula: ability.system.formula
+        }))
+      };
+    });
+
     // Prepare blasphemy data
     context.blasphemyData = (context.currentBlasphemies || []).map(blasphemy => {
       const blasphemyPowers = blasphemy.system.powers || [];
@@ -136,11 +157,13 @@ export class CainActorSheet extends ActorSheet {
     } else {
       context.currentAgendaAvailableAbilities = [];
     }
+    
   }
   
   _getItemsFromIDs(ids) {
     return ids.map(id => game.items.get(id));
   } 
+  
   
 
   _prepareItems(context) {
@@ -721,7 +744,47 @@ export class CainActorSheet extends ActorSheet {
     );
   }
 
-  
+  _onDropSinMarkAbility(event, sinMarkAbility) {
+    // Ensure this.actor and this.actor.system are defined
+    if (!this.actor || !this.actor.system) {
+      console.error("Actor or actor system is undefined.");
+      ui.notifications.error("Actor or actor system is undefined. Please check your setup.");
+      return;
+    }
+    console.log("Actor and actor system are defined.");
+
+    // Ensure sinMarkAbility and sinMarkAbility.system are defined
+    if (!sinMarkAbility || !sinMarkAbility.system) {
+      console.error("Sin mark ability or sin mark ability system is undefined.");
+      ui.notifications.error("Sin mark ability or sin mark ability system is undefined. Please check your setup.");
+      return;
+    }
+
+    console.log("Sin mark ability and sin mark ability system are defined.");
+
+    const sinMarkAbilitiesList = this.actor.system.sinMarkAbilities || [];
+    console.log("Current Sin Mark Abilities List:", sinMarkAbilitiesList);
+
+    // Check if the sin mark ability is already in the list
+    if (sinMarkAbilitiesList.includes(sinMarkAbility.id)) {
+      console.log("Sin mark ability already exists:", sinMarkAbility.id);
+      return;
+    }
+
+    // Add the new sin mark ability to the list
+    sinMarkAbilitiesList.push(sinMarkAbility.id);
+    console.log("Updated Sin Mark Abilities List:", sinMarkAbilitiesList);
+
+    // Update the actor with the new list
+    this.actor.update({
+      'system.sinMarkAbilities': sinMarkAbilitiesList
+    }).then(() => {
+      console.log("Actor updated successfully.");
+    }).catch(err => {
+      console.error("Error updating actor:", err);
+      ui.notifications.error("Error updating actor. Please check the console for more details.");
+    });
+  }
 
   _addAgendaAbility(event) {
     event.preventDefault();
@@ -1303,7 +1366,7 @@ export class CainActorSheet extends ActorSheet {
     }
   
     // Roll 1d6 to determine if the user can choose a Sin Mark
-    const initialRoll = await new Roll('1d6').roll({async: true});
+    const initialRoll = await new Roll('1d6').roll();
     let selectedSinMark;
   
     if (initialRoll.total === 6) {
@@ -1312,7 +1375,7 @@ export class CainActorSheet extends ActorSheet {
       selectedSinMark = sinMarkItems[chosenIndex];
     } else {
       // Randomly choose a Sin Mark
-      const sinMarkRoll = await new Roll(`1d${sinMarkItems.length}`).roll({async: true});
+      const sinMarkRoll = await new Roll(`1d${sinMarkItems.length}`).roll();
       selectedSinMark = sinMarkItems[sinMarkRoll.total - 1];
     }
   
@@ -1360,11 +1423,13 @@ export class CainActorSheet extends ActorSheet {
     }
   
     // Update the actor with the new Sin Marks and Sin Mark Abilities
+
+    
     await this.actor.update({
       'system.sinMarks': currentSinMarks,
       'system.sinMarkAbilities': currentSinMarkAbilities
     });
-  
+    
     console.log(this.actor);
     ui.notifications.info(`Rolled Sin Mark: ${selectedSinMark.name} with ability: ${selectedAbility}`);
   

@@ -3,6 +3,7 @@
 @import url('https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Lacquer&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Tiny5&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap');
 @import url('./eye-anim.css');
 
 /* 
@@ -1107,18 +1108,25 @@
 
 /* sin-marks.css */
 
+/* sin-marks.css */
+
 .sin-marks {
-  background-color: #2b2b2b;
-  border: 1px solid #444;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  background-color: #1a1a1a;
+  border: 2px solid #660066;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+  font-family: 'Courier-New', serif;
+  color: #e0b3ff;
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .sin-marks h3 {
-  color: #ff6666;
-  font-family: 'Courier New', Courier, monospace;
-  text-shadow: 2px 2px 4px #000;
+  color: #cc33ff;
+  font-family: 'Courier-New', serif;
+  text-shadow: 3px 3px 6px #000;
+  font-size: 2em;
+  margin-bottom: 20px;
 }
 
 .sin-marks ul {
@@ -1127,107 +1135,148 @@
 }
 
 .sin-marks li {
-  background-color: #333;
-  border: 1px solid #555;
-  padding: 10px;
-  margin: 5px 0;
-  border-radius: 4px;
-  transition: background-color 0.3s;
+  background-color: #2b2b2b;
+  border: 2px solid #660066;
+  padding: 15px;
+  margin: 10px 0;
+  border-radius: 8px;
+  transition: transform 0.3s, box-shadow 0.3s;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 .sin-marks li:hover {
-  background-color: #444;
+  box-shadow: 0 0 20px rgba(128, 0, 128, 0.8);
+}
+
+.sin-marks li:active {
+  background-color: #1a1a1a;
+  transform: scale(0.95);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
 }
 
 .button-row {
   display: flex;
   justify-content: space-between;
-  margin-top: 10px;
+  margin-top: 20px;
 }
 
 .sin-marks button {
-  background-color: #ff6666;
+  background-color: #cc33ff;
   color: #fff;
-  border: none;
-  padding: 10px 20px;
+  border: 2px solid #660066;
+  padding: 12px 24px;
   margin: 5px;
-  border-radius: 4px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  font-family: 'Courier-New', serif;
+  transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 .sin-marks button:hover {
-  background-color: #ff3333;
+  background-color: #b300b3;
+  transform: scale(1.1);
+  box-shadow: 0 0 20px rgba(128, 0, 128, 0.8);
 }
 
 .sin-marks button:active {
-  background-color: #cc0000;
+  background-color: #990099;
+  transform: scale(0.95);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
 }
 
 .no-sin-marks {
-  color: #e0e0e0;
-  background-color: #333;
-  padding: 10px;
-  border-radius: 4px;
-  margin: 10px 0;
-  font-style: italic;
-}
-.sin-overflow {
+  color: #e0b3ff;
   background-color: #2b2b2b;
-  border: 1px solid #444;
-  padding: 20px;
+  padding: 15px;
   border-radius: 8px;
+  margin: 20px 0;
+  font-style: italic;
+  border: 2px solid #660066;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  margin-bottom: 10px;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.no-sin-marks:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(128, 0, 128, 0.8);
+}
+
+.sin-overflow {
+  background-color: #1a1a1a;
+  border: 2px solid #660066;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+  font-family: 'Courier-New', serif;
+  color: #e0b3ff;
+  transition: transform 0.3s, box-shadow 0.3s;
+  margin-bottom: 20px;
 }
 
 .sin-overflow h3 {
-  color: #ff6666;
-  font-family: 'Courier New', Courier, monospace;
-  text-shadow: 2px 2px 4px #000;
+  color: #cc33ff;
+  font-family: 'Courier-New', serif;
+  text-shadow: 3px 3px 6px #000;
+  font-size: 2em;
+  margin-bottom: 20px;
 }
 
 .sin-overflow-controls {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 15px;
 }
 
 .sin-overflow-controls label {
-  color: #e0e0e0;
+  color: #e0b3ff;
+  font-family: 'Courier-New', serif;
 }
 
 .sin-overflow-controls input {
+  background-color: #2b2b2b;
+  color: #e0b3ff;
+  border: 2px solid #660066;
+  padding: 10px;
+  border-radius: 8px;
+  font-family: 'Courier-New', serif;
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.sin-overflow-controls input:hover {
   background-color: #333;
-  color: #fff;
-  border: 1px solid #555;
-  padding: 5px;
-  border-radius: 4px;
+  box-shadow: 0 0 10px rgba(128, 0, 128, 0.8);
 }
 
 .sin-overflow-buttons {
   display: flex;
   justify-content: space-between;
-  margin-top: 10px;
+  margin-top: 20px;
 }
 
 .sin-overflow-buttons button {
-  background-color: #ff6666;
+  background-color: #cc33ff;
   color: #fff;
-  border: none;
-  padding: 10px 20px;
+  border: 2px solid #660066;
+  padding: 12px 24px;
   margin: 5px;
-  border-radius: 4px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  font-family: 'Courier-New', serif;
+  transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 .sin-overflow-buttons button:hover {
-  background-color: #ff3333;
+  background-color: #b300b3;
+  transform: scale(1.1);
+  box-shadow: 0 0 20px rgba(128, 0, 128, 0.8);
 }
 
 .sin-overflow-buttons button:active {
-  background-color: #cc0000;
+  background-color: #990099;
+  transform: scale(0.95);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
 }
 
 /* Media query for responsive design */
