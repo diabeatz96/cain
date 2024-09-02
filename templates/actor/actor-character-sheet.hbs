@@ -99,7 +99,7 @@
           from 1 to 12 and will create that number of columns.  --}}
         <h3 class="mob-psycho-heading">Afflictions</h3>
           {{#each currentAfflictions}}
-          <div class="affliction flexrow">
+          <div class="affliction flexrow flex-group-center mob-psycho-affliction">
               <div class="flexcol affliction-content">
                   <h2><b>Title</b></h2>
                   <p class="affliction-description">
@@ -109,7 +109,7 @@
               <div class="flexcol remove-affliction-div">
                 <button data-id="{{this.id}}" class="remove-affliction-button"> 
                   <i class="fas fa-trash"></i>
-                </div>
+                </button>
               </div>
           </div>
           {{/each}}
@@ -165,11 +165,10 @@
 
 <style>
 .affliction {
-    display: flex;
     align-items: center;
     border: 2px solid black;
     border-radius: 25px;
-    padding-left: 10px;
+    padding-left: 5px;
     padding-right: 0px;
     padding-top: 0px;
     padding-bottom: 0px;
@@ -182,9 +181,8 @@
 }
 
 .affliction-content {
-    flex-grow: 1;
     line-height: 1.4;
-    padding-right: 10px; /* Add padding to give space between content and trashcan */
+    padding-right: 2px; /* Add padding to give space between content and trashcan */
 }
 
 .affliction-description {
@@ -196,7 +194,6 @@
 .remove-affliction-div {
     padding-left: 0 0px;
     padding-top: 10 0px;
-    border-left: 2px solid black;
     height: 150px;
     width: 10%; /* Restrict the width to 20% */
     display: flex;
