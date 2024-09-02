@@ -99,7 +99,9 @@ export class CainActorSheet extends ActorSheet {
     context.currentAgendaAbilities = this._getItemsFromIDs(context.system.currentAgendaAbilities || []);
     context.currentBlasphemies = this._getItemsFromIDs(context.system.currentBlasphemies || []);
     context.currentBlasphemyPowers = this._getItemsFromIDs(context.system.currentBlasphemyPowers || []);
-  
+    context.currentSinMarks = this._getItemsFromIDs(context.system.sinMarks || []);
+    context.currentSinMarkAbilities = this._getItemsFromIDs(context.system.sinMarkAbilities || []);
+
     // Calculate currentUnlinkedBlasphemyPowers
     context.currentUnlinkedBlasphemyPowers = this._getItemsFromIDs(
       (context.system.currentBlasphemyPowers || []).filter(blasphemyPowerID => {
@@ -332,9 +334,28 @@ export class CainActorSheet extends ActorSheet {
             this._onDropBlasphemyPower(event, itemDrop);
             break;
           default:
+            ui.notifications.error("Invalid drop type on ability page: " + itemDrop.type);
             console.warn("Invalid drop type on ability page: " + itemDrop.type);
       }
 });
+
+    html.find('.sin-page-drop-target').on('drop', async event => {
+      event.preventDefault();
+      const data = JSON.parse(event.originalEvent.dataTransfer.getData('text/plain'));
+      const itemDrop = await Item.fromDropData(data);
+      switch(itemDrop.type) {
+          case "sinMark":
+            this._onDropSinMark(event, itemDrop);
+            break;
+          case "sinMarkAbility":
+            this._onDropSinMarkAbility(event, itemDrop);
+            break;
+          default:
+            ui.notifications.error("Invalid drop type on sin page: " + itemDrop.type);
+            console.warn("Invalid drop type on sin page: " + itemDrop.type);
+      }
+    });
+
     html.find('.remove-task-button').click(this._removeAgendaTask.bind(this));
     // Bind the send to chat functions
     html.find('.agenda-task-to-chat').click(this._sendAgendaTaskMessage.bind(this));
@@ -636,6 +657,71 @@ export class CainActorSheet extends ActorSheet {
       ui.notifications.error("Error updating actor. Please check the console for more details.");
     });
   }
+
+  _onDropSinMark(event, sinMark) {
+    // Ensure this.actor and this.actor.system are defined
+    if (!this.actor || !this.actor.system) {
+      console.error("Actor or actor system is undefined.");
+      ui.notifications.error("Actor or actor system is undefined. Please check your setup.");
+      return;
+    }
+    console.log("Actor and actor system are defined.");
+
+    const sinMarkList = this.actor.system.sinMarks || [];
+    console.log("Current Sin Marks:", sinMarkList);
+
+    // Check if the sin mark is already in the list
+    if (sinMarkList.includes(sinMark.id)) {
+      console.log("Sin mark already exists:", sinMark.id);
+      return;
+    }
+
+    // Add the new sin mark to the list
+    sinMarkList.push(sinMark.id);
+    console.log("Updated Sin Marks:", sinMarkList);
+
+    // Get the current list of sin mark abilities
+    const sinMarkAbilitiesList = this.actor.system.sinMarkAbilities || [];
+    console.log("Current Sin Mark Abilities:", sinMarkAbilitiesList);
+
+    // Get the new sin mark abilities that are passive
+    const newSinMarkAbilities = this._getItemsFromIDs(sinMark.system.abilities || [])
+      .filter(ability => {
+        console.log("Inspecting ability:", ability);
+        if (!ability || !ability.system) {
+          console.error("Ability or ability system is undefined:", ability);
+          ui.notifications.error("Some abilities are undefined. Did you import the compendium to keep document IDs?");
+          return false;
+        }
+        const isPassive = ability.system.isPassive;
+        console.log("Is ability passive?", isPassive);
+        return isPassive;
+      })
+      .map(ability => {
+        console.log("Mapping ability to ID:", ability.id);
+        return ability.id;
+      });
+
+    console.log("New Sin Mark Abilities:", newSinMarkAbilities);
+
+    // Combine the current and new sin mark abilities
+    const newSinMarkAbilitiesList = sinMarkAbilitiesList.concat(newSinMarkAbilities);
+    console.log("Updated Sin Mark Abilities:", newSinMarkAbilitiesList);
+
+    // Update the actor with the new lists
+    this.actor.update({
+      'system.sinMarks': sinMarkList,
+      'system.sinMarkAbilities': newSinMarkAbilitiesList
+    }).then(() => {
+      console.log("Actor updated successfully.");
+    }).catch(err => {
+      console.error("Error updating actor:", err);
+      ui.notifications.error("Error updating actor. Please check the console for more details.");
+    }
+    );
+  }
+
+  
 
   _addAgendaAbility(event) {
     event.preventDefault();
@@ -1208,73 +1294,114 @@ export class CainActorSheet extends ActorSheet {
 
   async _rollSinMark(event) {
     event.preventDefault();
-    
-    // Manually roll 1d6 for the mark
-    const roll = await new Roll('1d6').roll({async: true});
-    let markRoll = roll.total;
-    let markIndex = markRoll - 1;
-    
-    console.log(markRoll);
-    console.log(markIndex);
   
-    // If rolled a 6, allow the user to choose the mark
-    if (markRoll === 6) {
-      markIndex = await this._chooseMark();
+    // Get all Sin Mark items
+    const sinMarkItems = game.items.filter(item => item.type === 'sinMark');
+    if (sinMarkItems.length === 0) {
+      ui.notifications.warn("No Sin Mark items found.");
+      return;
     }
   
-    const sinMarks = this.actor.system.currentSinMarks || [];
-    const sinMark = CAIN.sinMarks[markIndex];
+    // Roll 1d6 to determine if the user can choose a Sin Mark
+    const initialRoll = await new Roll('1d6').roll({async: true});
+    let selectedSinMark;
   
-    // Check if the mark already exists
-    const existingMark = sinMarks.find(mark => mark.startsWith(sinMark.name));
-    if (existingMark) {
-      // Manually roll 1d6 for the ability
-      let newAbility;
-      do {
-        const abilityRoll = await new Roll('1d6').roll({async: true});
-        newAbility = sinMark.abilities[abilityRoll.total - 1];
-      } while (existingMark.includes(newAbility));
-  
-      // Add the new ability to the existing mark
-      sinMarks[sinMarks.indexOf(existingMark)] += `, ${newAbility}`;
+    if (initialRoll.total === 6) {
+      // Allow the user to choose a Sin Mark
+      const chosenIndex = await this._chooseMark();
+      selectedSinMark = sinMarkItems[chosenIndex];
     } else {
-      // Manually roll 1d6 for the ability
-      const abilityRoll = await new Roll('1d6').roll({async: true});
-      const newAbility = sinMark.abilities[abilityRoll.total - 1];
-      console.log(sinMark);
-  
-      // Format the sinMark as "Name - Ability"
-      const formattedSinMark = `${sinMark.name} - ${newAbility}`;
-  
-      // Add the new mark to the sinMarks array
-      sinMarks.push(formattedSinMark);
+      // Randomly choose a Sin Mark
+      const sinMarkRoll = await new Roll(`1d${sinMarkItems.length}`).roll({async: true});
+      selectedSinMark = sinMarkItems[sinMarkRoll.total - 1];
     }
   
-    // Update the actor with the new sinMarks array
-    await this.actor.update({ 'system.currentSinMarks': sinMarks });
+    console.log(selectedSinMark);
+  
+    // Get abilities of the selected Sin Mark
+    const abilities = selectedSinMark.system.abilities || [];
+    if (abilities.length === 0) {
+      ui.notifications.warn("Selected Sin Mark has no abilities.");
+      return;
+    }
+  
+    // Get current Sin Marks and Sin Mark Abilities
+    const currentSinMarks = this.actor.system.sinMarks || [];
+    const currentSinMarkAbilities = this.actor.system.sinMarkAbilities || [];
+  
+    // Check if the Sin Mark is already in the list
+    const existingMarkIndex = currentSinMarks.indexOf(selectedSinMark.id);
+    let selectedAbility;
+  
+    if (existingMarkIndex !== -1) {
+      // Sin Mark is already in the list, proceed to select an ability
+      const maxAttempts = 10;
+      let attempts = 0;
+      do {
+        const abilityRoll = await new Roll(`1d${abilities.length}`).roll({async: true});
+        selectedAbility = abilities[abilityRoll.total - 1];
+        attempts++;
+      } while (currentSinMarkAbilities.includes(selectedAbility) && attempts < maxAttempts);
+  
+      if (attempts >= maxAttempts) {
+        ui.notifications.warn("Unable to select a unique ability after multiple attempts.");
+        return;
+      }
+  
+      currentSinMarkAbilities.push(selectedAbility);
+    } else {
+      // Sin Mark is not in the list, add it and select an ability
+      currentSinMarks.push(selectedSinMark.id);
+  
+      const abilityRoll = await new Roll(`1d${abilities.length}`).roll({async: true});
+      selectedAbility = abilities[abilityRoll.total - 1];
+  
+      currentSinMarkAbilities.push(selectedAbility);
+    }
+  
+    // Update the actor with the new Sin Marks and Sin Mark Abilities
+    await this.actor.update({
+      'system.sinMarks': currentSinMarks,
+      'system.sinMarkAbilities': currentSinMarkAbilities
+    });
+  
+    console.log(this.actor);
+    ui.notifications.info(`Rolled Sin Mark: ${selectedSinMark.name} with ability: ${selectedAbility}`);
+  
     this.render(false); // Re-render the sheet to reflect changes
   }
-
+  
   async _deleteSinMark(event) {
     event.preventDefault();
     const index = event.currentTarget.dataset.index;
-    const sinMarks = this.actor.system.currentSinMarks || [];
+    const sinMarks = this.actor.system.sinMarks || [];
+    const sinMarkAbilities = this.actor.system.sinMarkAbilities || [];
+  
+    // Remove the selected Sin Mark and its abilities
     sinMarks.splice(index, 1);
-    this.actor.update({ 'system.currentSinMarks': sinMarks }).then(() => {
-      this.render(false); // Re-render the sheet to reflect changes
+    sinMarkAbilities.splice(index, 1);
+  
+    await this.actor.update({
+      'system.sinMarks': sinMarks,
+      'system.sinMarkAbilities': sinMarkAbilities
     });
+  
+    this.render(false); // Re-render the sheet to reflect changes
   }
-
+  
   async _clearSinMarks(event) {
     event.preventDefault();
-    this.actor.update({ 'system.currentSinMarks': [] }).then(() => {
-      this.render(false); // Re-render the sheet to reflect changes
+    await this.actor.update({
+      'system.sinMarks': [],
+      'system.sinMarkAbilities': []
     });
+  
+    this.render(false); // Re-render the sheet to reflect changes
   }
   
   async _chooseMark() {
     return new Promise((resolve) => {
-      const options = CAIN.sinMarks.map((mark, index) => `<option value="${index}">${mark.name}</option>`).join('');
+      const options = game.items.filter(item => item.type === 'sinMark').map((mark, index) => `<option value="${index}">${mark.name}</option>`).join('');
       const content = `
         <form>
           <div class="form-group">
