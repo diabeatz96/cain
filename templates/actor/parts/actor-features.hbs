@@ -133,8 +133,10 @@
     <div class="resource">
       <label for="system.advancements.value" class="resource-label">Advancements</label>
       <output id="advancements-output">{{system.advancements.value}}</output>
-      <div class="resource-content flexrow flex-center">
-        <input type="range" name="system.advancements.value" value="{{system.advancements.value}}" min="0" max="4" step="1" data-dtype="Number" oninput="document.getElementById('advancements-output').value = this.value">
+      <div class="checkbox-group" data-field="advancements" style="margin-top: 10px;">
+        {{#times system.advancements.max}}
+        <input type="checkbox" id="advancements-checkbox-{{@index}}" name="advancements-{{@index}}" {{#if (gte system.advancements.value @index)}}checked{{/if}}/>
+        {{/times}}
       </div>
     </div>
   </div>

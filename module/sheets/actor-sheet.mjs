@@ -336,7 +336,7 @@ export class CainActorSheet extends ActorSheet {
       card.classList.toggle('visible');
     });
 
-    html.find('.abilities-page-drop-target').on('drop', async event => {
+    html.find('.character-drop-target').on('drop', async event => {
       event.preventDefault();
       const data = JSON.parse(event.originalEvent.dataTransfer.getData('text/plain'));
       const itemDrop = await Item.fromDropData(data);
@@ -356,28 +356,18 @@ export class CainActorSheet extends ActorSheet {
           case "blasphemyPower":
             this._onDropBlasphemyPower(event, itemDrop);
             break;
-          default:
-            ui.notifications.error("Invalid drop type on ability page: " + itemDrop.type);
-            console.warn("Invalid drop type on ability page: " + itemDrop.type);
-      }
-});
-
-    html.find('.sin-page-drop-target').on('drop', async event => {
-      event.preventDefault();
-      const data = JSON.parse(event.originalEvent.dataTransfer.getData('text/plain'));
-      const itemDrop = await Item.fromDropData(data);
-      switch(itemDrop.type) {
           case "sinMark":
             this._onDropSinMark(event, itemDrop);
             break;
           case "sinMarkAbility":
             this._onDropSinMarkAbility(event, itemDrop);
             break;
-          default:
-            ui.notifications.error("Invalid drop type on sin page: " + itemDrop.type);
-            console.warn("Invalid drop type on sin page: " + itemDrop.type);
+            default:
+            ui.notifications.error("Invalid drop type on ability page: " + itemDrop.type);
+            console.warn("Invalid drop type on ability page: " + itemDrop.type);
       }
-    });
+});
+
 
     html.find('.remove-task-button').click(this._removeAgendaTask.bind(this));
     // Bind the send to chat functions
@@ -627,13 +617,19 @@ export class CainActorSheet extends ActorSheet {
     // Combine the current and new blasphemy powers
     const newBlasphemyPowersList = blasphemyPowersList.concat(newBlasphemyPowers);
     console.log("Updated Blasphemy Powers:", newBlasphemyPowersList);
-  
+
+    //Check if this raises the number of blasphemies higher than 1, if so, add one to the XP max
+    let XPmax = this.actor.system.xp.max;
+    if (blasphemyList.length > 1) XPmax += 1;
+    const newXPMax = XPmax;
     // Update the actor with the new lists
     this.actor.update({
       'system.currentBlasphemies': blasphemyList,
-      'system.currentBlasphemyPowers': newBlasphemyPowersList
+      'system.currentBlasphemyPowers': newBlasphemyPowersList,
+      'system.xp.max': newXPMax
     }).then(() => {
       console.log("Actor updated successfully.");
+      console.log(this.actor);
     }).catch(err => {
       console.error("Error updating actor:", err);
       ui.notifications.error("Error updating actor. Please check the console for more details.");
@@ -958,6 +954,15 @@ export class CainActorSheet extends ActorSheet {
     const blasphemy = game.items.get(blasphemyID);
     console.log(blasphemy);
     const blasphemies = this.actor.system.currentBlasphemies || [];
+    if (!blasphemies.includes(blasphemyID)) {console.error("Tried to remove Blasphemy ID: " + blasphemyID + " but did not find it in list: " + blasphemies); return}; //Break out if we're trying to remove a non-existant blasphemy.  
+
+    //Handle reducing XP max if removing a 2nd blasphemy.
+    let XPmax = this.actor.system.xp.max;
+    if (blasphemies.length > 1) {
+      XPmax -= 1;
+    }
+    
+    //Remove the blasphemy
     const index = blasphemies.indexOf(blasphemyID);
     const newBlasphemies = blasphemies.slice(0, Number(index)).concat(blasphemies.slice(Number(index)+1));
     const blasphemyPowers = this.actor.system.currentBlasphemyPowers || [];
@@ -967,6 +972,7 @@ export class CainActorSheet extends ActorSheet {
     this.actor.update({
       'system.currentBlasphemies': newBlasphemies,
       'system.currentBlasphemyPowers': newBlasphemyPowers,
+      'system.xp.max': XPmax,
      }).then(() => {
       this.render(false); // Re-render the sheet to reflect changes
     });
