@@ -34,8 +34,8 @@ export default class CainCharacter extends CainActorBase {
 
     // Add XP and advancements fields
     schema.xp = new fields.SchemaField({
-      value: new fields.NumberField({ required: true, initial: 0, min: 0, max: 4 }),
-      max: new fields.NumberField({ required: true, initial: 4, min: 4, max: 4 }),
+      value: new fields.NumberField({ required: true, initial: 0, min: 0, max: 10 }),
+      max: new fields.NumberField({ required: true, initial: 4, min: 4, max: 10 }),
     });
 
     schema.advancements = new fields.SchemaField({
