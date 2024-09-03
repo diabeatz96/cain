@@ -43,29 +43,15 @@
       "path": "packs/items"
     },
     {
-      "name": "agenda",
+      "name": "agendas",
       "label": "Agendas",
-      "system": "cain",
-      "type": "Item",
-      "path": "packs/agenda"
-    },
-    {
-      "name": "Agendas-2.0",
-      "label": "Agendas-2.0",
       "system": "cain",
       "type": "Item",
       "path": "packs/agenda2"
     },
     {
-      "name": "blasphemy",
+      "name": "blasphemies",
       "label": "Blasphemies",
-      "system": "cain",
-      "type": "Item",
-      "path": "packs/blasphemy"
-    },
-    {
-      "name": "blasphemy2",
-      "label": "Blasphemies-2.0",
       "system": "cain",
       "type": "Item",
       "path": "packs/blasphemy2"
