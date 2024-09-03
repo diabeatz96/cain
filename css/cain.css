@@ -1135,7 +1135,7 @@
   padding: 0;
 }
 
-.sin-marks li {
+.sin-mark-body-part {
   background-color: #2b2b2b;
   border: 2px solid #660066;
   padding: 15px;
@@ -1151,7 +1151,6 @@
 
 .sin-marks li:active {
   background-color: #1a1a1a;
-  transform: scale(0.95);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
 }
 
@@ -1162,27 +1161,21 @@
 }
 
 .sin-marks button {
-  background-color: #cc33ff;
   color: #fff;
-  border: 2px solid #660066;
-  padding: 12px 24px;
-  margin: 5px;
-  border-radius: 8px;
+  border: 2px solid #660066;;
+  margin: 0px;
   cursor: pointer;
   font-family: 'Courier-New', serif;
   transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 .sin-marks button:hover {
   background-color: #b300b3;
-  transform: scale(1.1);
   box-shadow: 0 0 20px rgba(128, 0, 128, 0.8);
 }
 
 .sin-marks button:active {
   background-color: #990099;
-  transform: scale(0.95);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
 }
 
