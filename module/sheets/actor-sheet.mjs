@@ -1566,6 +1566,7 @@ export class CainActorSheet extends ActorSheet {
 
     
     await this.actor.update({
+      'system.sinMarks' : currentSinMarks,
       'system.sinMarkAbilities': currentSinMarkAbilities
     });
     
@@ -1634,7 +1635,6 @@ export class CainActorSheet extends ActorSheet {
 
     
     await this.actor.update({
-      'system.sinMarks': currentSinMarks,
       'system.sinMarkAbilities': currentSinMarkAbilities
     });
     
