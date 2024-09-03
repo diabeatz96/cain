@@ -109,13 +109,25 @@
   <div class="advancements-experience-box">
     <div class="resource" style="font-family: 'Courier New', Courier, monospace;">
       <label for="xp"> <h2 class="resource-header">XP & Advancements</h3></label> 
-      <div class="xp-button-group" style="display: flex; justify-content: space-between; align-items: center">
-        <button id="increment-xp-value" class="xp-button" style="background-color: #660000; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 1em; width: 30%; display: inline-block;">
+      <div class="xp-button-group flexrow" style="display: flex; justify-content: space-between; align-items: center">
+        <div class="flexcol">        
+        <button id="increment-xp-value" class="xp-button" style="background-color: #660000; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 1em; width: 90%; display: inline-block;">
           Gain 1 XP
         </button>
-        <button id="decrement-xp-value" class="xp-button" style="background-color: #0e0c85; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 1em; width: 30%; display: inline-block;">
+        <button id="decrement-xp-value" class="xp-button" style="background-color: #00bffe; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 1em; width: 90%; display: inline-block;">
           Lose 1 XP
         </button>
+        </div>
+        <div class="flexcol">        
+        <button id="increment-max-xp-value" class="xp-button" style="background-color: #660000; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 1em; width: 90%; display: inline-block;">
+          +1 Max XP
+        </button>
+        <button id="decrement-max-xp-value" class="xp-button" style="background-color: #00bffe; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 1em; width: 90%; display: inline-block;">
+          -1 Max XP
+        </button>
+        </div>
+
+
         <button id="session-end-xp-value" class="xp-button" style="background-color: #6e3274; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 1em; width: 30%; display: inline-block;">
           End Session XP
         </button>

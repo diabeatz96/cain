@@ -270,6 +270,8 @@ export class CainActorSheet extends ActorSheet {
     html.find('.clear-sin-marks').click(this._clearSinMarks.bind(this));
     html.find('#increment-xp-value').click(this._increaseXPValue.bind(this));
     html.find('#decrement-xp-value').click(this._decreaseXPValue.bind(this));
+    html.find('#increment-max-xp-value').click(this._increaseMaxXPValue.bind(this));
+    html.find('#decrement-max-xp-value').click(this._decreaseMaxXPValue.bind(this));
     html.find('#session-end-xp-value').click(this._openEndSessionModal.bind(this));
     html.find('.delete-sin-mark').click(this._deleteSinMark.bind(this));
     html.find('.evolve-mark-button').click(this._evolveSinMark.bind(this));
@@ -988,6 +990,24 @@ export class CainActorSheet extends ActorSheet {
     this.actor.update({ 'system.xp.value': newXPValue});
     console.log("Updated xp from " + oldXPValue + " to " + newXPValue );  
   }
+
+  _increaseMaxXPValue(event) {
+    event.preventDefault();
+    const oldXPValue = this.actor.system.xp.max;
+    const newXPValue = oldXPValue + 1;
+    this.actor.update({ 'system.xp.max': newXPValue});
+    console.log("Updated max xp from " + oldXPValue + " to " + newXPValue );  
+  }
+  
+  _decreaseMaxXPValue(event) {
+    event.preventDefault();
+    const oldXPValue = this.actor.system.xp.max;
+    const newXPValue = Math.max(oldXPValue - 1, 1);
+    //No need to check for advancement when decreasing
+    this.actor.update({ 'system.xp.max': newXPValue});
+    console.log("Updated max xp from " + oldXPValue + " to " + newXPValue );  
+  }
+
 
   _openEndSessionModal(event) {
     event.preventDefault();
