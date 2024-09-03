@@ -326,7 +326,7 @@ Handlebars.registerHelper('json', function(context) {
   return JSON.stringify(context);
 });
 
-Handlebars.registerHelper('offset', function(value, offset, options) {
+Handlebars.registerHelper('CainOffset', function(value, offset, options) {
   if(value===undefined || offset===undefined || parseInt(value)===NaN || !parseInt(offset) === NaN){
     throw new Error(`offset helper did not receive a number: val=${value}, offset=${offset}`);
   }
