@@ -367,9 +367,12 @@ export class CainActorSheet extends ActorSheet {
           case "sinMarkAbility":
             this._onDropSinMarkAbility(event, itemDrop);
             break;
-            default:
-            ui.notifications.error("Invalid drop type on ability page: " + itemDrop.type);
-            console.warn("Invalid drop type on ability page: " + itemDrop.type);
+          case "affliction":
+            this._onDropAffliction(event, itemDrop);
+            break;
+          default:
+          ui.notifications.error("Invalid drop type on ability page: " + itemDrop.type);
+          console.warn("Invalid drop type on ability page: " + itemDrop.type);
       }
 });
 
@@ -787,6 +790,39 @@ export class CainActorSheet extends ActorSheet {
     });
   }
 
+  _onDropAffliction(event, affliction) {
+      // Ensure this.actor and this.actor.system are defined
+      if (!this.actor || !this.actor.system) {
+        console.error("Actor or actor system is undefined.");
+        ui.notifications.error("Actor or actor system is undefined. Please check your setup.");
+        return;
+      }
+      console.log("Actor and actor system are defined.");
+    
+      // Ensure agendaTask and agendaTask.system are defined
+      if (!affliction || !affliction.system) {
+        console.error("Affliction or affliction system is undefined.");
+        ui.notifications.error("Affliction or affliction system is undefined. Please check your setup.");
+        return;
+      }
+      console.log("Affliction and affliction system system are defined.");
+    
+      const afflictionList = this.actor.system.afflictions || [];
+      console.log("Current Task List:", afflictionList);
+    
+      afflictionList.push(affliction.id);
+      console.log("Updated Task List:", afflictionList);
+    
+      this.actor.update({
+        'system.afflictions': afflictionList,
+      }).then(() => {
+        console.log("Actor updated successfully.");
+      }).catch(err => {
+        console.error("Error updating actor:", err);
+        ui.notifications.error("Error updating actor. Please check the console for more details.");
+      });
+  }
+
   _addAgendaAbility(event) {
     event.preventDefault();
     const abilityID = event.currentTarget.parentElement.querySelector('#selectedAgenda').value;
@@ -814,8 +850,8 @@ export class CainActorSheet extends ActorSheet {
       title: "Add Affliction",
       content: `<p>This lets you create a new affliction.  If your Admin has an existing one in mind, they should add it from the player overview section or by dragging it to you sheet.</p>
       <form>
-        <label>Name <input name="afflictionName" type="string"/></label>
-        <label>Description <textarea name="afflictionDescription"></textarea></label>
+        <label><b>Name</b> <input name="afflictionName" type="string"/></label> <br>
+        <label><b>Description</b> <textarea name="afflictionDescription" style="height:300px"></textarea></label>
       </form>`,
       buttons: {
         submit: { label: "Submit", callback: (html) => {
@@ -826,7 +862,7 @@ export class CainActorSheet extends ActorSheet {
         }},
         cancel: { label: "Cancel" },
       }
-     });
+     }, {height: 500});
      if (dialogResult === 'cancel') return;
      let afflictionFolderFolder = game.folders.find(f => f.name === "Affliction Data" && f.type === "Item");
      if (!afflictionFolderFolder) {
@@ -999,10 +1035,10 @@ export class CainActorSheet extends ActorSheet {
 
   _removeAfflictionButton(event) {
     event.preventDefault();
-    const afflictionID = event.currentTarget.dataset.id;
+    const index = event.currentTarget.dataset.index;
     const afflictions = this.actor.system.afflictions || [];
-    const index = afflictions.indexOf(afflictionID);
     const newAfflictions = afflictions.slice(0, Number(index)).concat(afflictions.slice(Number(index)+1))
+    console.log(newAfflictions);
     this.actor.update({ 'system.afflictions': newAfflictions }).then(() => {
       this.render(false); // Re-render the sheet to reflect changes
     });

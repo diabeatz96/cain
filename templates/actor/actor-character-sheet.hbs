@@ -101,19 +101,19 @@
           {{#each currentAfflictions}}
           <div class="affliction flexrow flex-group-center mob-psycho-affliction">
               <div class="flexcol affliction-content">
-                  <h2><b>Title</b></h2>
+                  <h2><b>{{this.system.afflictionName}}</b></h2>
                   <p class="affliction-description">
                       {{formatted this.system.afflictionDescription}}
                   </p>
               </div>
               <div class="flexcol remove-affliction-div">
-                <button data-id="{{this.id}}" class="remove-affliction-button"> 
+                <button data-index="{{@index}}" class="remove-affliction-button"> 
                   <i class="fas fa-trash"></i>
                 </button>
               </div>
           </div>
           {{/each}}
-          <button id="add-affliction" class="add-affliction-button" style="background-color: #660000; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 1em; width: 100%; display: inline-block;">Add Affliction </button>
+          <button id="add-affliction" class="add-affliction-button" style="background-color: brown; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 1em; width: 100%; display: inline-block; margin-top: 10px">Add Affliction </button>
 
 
         <div class="rest-dice-section flexrow mob-psycho-rest-dice">
@@ -170,16 +170,16 @@
     align-items: center;
     border: 2px solid black;
     border-radius: 25px;
-    padding-left: 0px;
+    padding-left: 2px;
     padding-right: 0px;
-    padding-top: 0px;
-    padding-bottom: 0px;
-    margin-top: 10px 0;
-    margin-bottom: 10px 0;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    margin-top: 20px 0;
+    margin-bottom: 20px 0;
     margin-left: 10px 0;
     margin-right: 0px 0;
-    background-color: #fff;
-    color: black;
+    background-color: #404040;
+    color: aliceblue;
 }
 
 .affliction-content {
@@ -189,7 +189,7 @@
 
 .affliction-description {
     margin: 5px 0;
-    color: #333;
+    color:aliceblue;
     line-height: 1.4;
 }
 
@@ -209,7 +209,7 @@
     bottom: 0;
     height: 100%;
     width: 30px;
-    background-color:brown;
+    background-color: brown;
     border-radius: 0px;
     border-top-right-radius: 15px;
     border-bottom-right-radius: 15px;
