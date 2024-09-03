@@ -9,7 +9,7 @@ export default class CainAffliction extends CainItemBase {
         
         schema.afflictionName = new fields.StringField({ required: true, nullable: false, initial: "New Affliction" });
         schema.afflictionDescription = new fields.StringField({required: true, nullable: false, initial: "Affliction Description"});
-
+        
     
         schema.formula = new fields.StringField({ blank: true });
     

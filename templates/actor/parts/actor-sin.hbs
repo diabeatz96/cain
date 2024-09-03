@@ -41,14 +41,22 @@
     <ul>
       {{#each currentSinMarkData}}
         <li>
-          <strong>{{this.sinMark.name}}</strong>
+          <h1>{{this.sinMark.name}}</h1>
           <ul>
             {{#each this.abilities}}
-              <li>
-                <strong>{{this.name}}</strong>: {{this.description}} ({{this.bodyPart}})
+              <li class="flexrow sin-mark">
+                <div class="flexcol sin-mark-content" style="flex: 1 1 0;">
+                <h3>{{this.name}}</h3><p class="sin-mark-description">{{this.description}}</p> 
+                </div>
+                <div class="flexcol remove-sin-mark-div">
+                <button data-markindex="{{@../index}}" data-abilityindex="{{@index}}" class="{{#unless (and @first @last)}}remove-sin-mark-ability-button{{else}}delete-sin-mark{{/unless}} remove-sin-mark-button"> 
+                  <i class="fas fa-trash"></i>
+                </button>
+                </div>
               </li>
             {{/each}}
           </ul>
+          <button class="evolve-mark-button" data-markindex="{{@index}}"><h2 style="position: relative; background: inherit; border: none;"><span class="glitch" data-text="GIVE IN"> EVOLVE </span></h2></button>
         </li>
       {{/each}}
     </ul>
@@ -63,3 +71,63 @@
     <button class="delete-sin-mark">Delete Sin Mark</button>
   </div>
 </div>
+
+<style>
+.sin-mark {
+    display: flex;
+    position: relative;
+    align-items: center;
+    border: 2px solid black;
+    border-radius: 25px;
+    padding-left: 2px;
+    padding-right: 0px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    margin-top: 20px 0;
+    margin-bottom: 20px 0;
+    margin-left: 10px 0;
+    margin-right: 0px 0;
+    background-color: #404040;
+    color: aliceblue;
+}
+
+.sin-mark-content {
+    line-height: 1.4;
+    padding-right: 2px; /* Add padding to give space between content and trashcan */
+}
+
+.sin-mark-description {
+    margin: 5px 0;
+    color:aliceblue;
+    line-height: 1.4;
+}
+
+.remove-sin-mark-div {
+    padding-left: 0 0px;
+    padding-top: 0 0px;
+    display: flex;
+    height: 100%;
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+    max-width: 30px; /* Optional: Set a max-width if you want to prevent it from becoming too large */
+}
+
+.remove-sin-mark-button {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    height: 100%;
+    width: 30px;
+    background-color: brown;
+    border-radius: 0px;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    border: 0px solid white;
+}
+
+.remove-sin-mark-button i {
+    color: black;
+    font-size: 16px;
+    text-align: center; /* Center the icon within its container */
+}
+</style>
