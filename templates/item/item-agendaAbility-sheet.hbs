@@ -1,18 +1,13 @@
 <form class='{{cssClass}}, agenda-background' autocomplete='off'>
     <div class='header-fields'>
-      <h1 class='charname agenda-ability-name agenda-text-color'><input
-          name='name'
-          type='text'
-          value='{{item.system.abilityName}}'
-          placeholder='Name'
-        /></h1>
+      <h1 class='charname agenda-ability-name agenda-text-color' style="padding:10px">{{item.system.abilityName}}</h1>
     </div>
 
   {{! Sheet Tab Navigation }}
   {{! Sheet Body }}
   <section class='sheet-body agenda-body'>
-    <h2 style="color: white;">
+    <p style="color: white;">
     {{this.item.system.abilityDescription}}
-    </h2>
+    </p>
   </section>
 </form>
