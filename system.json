@@ -83,6 +83,13 @@
       "system": "cain",
       "type": "Item",
       "path": "packs/sin-marks"
+    },
+    {
+      "name": "afflictions",
+      "label": "Afflictions",
+      "system": "cain",
+      "type": "Item",
+      "path": "packs/afflictions"
     }
   ],
   "packFolders": [],
