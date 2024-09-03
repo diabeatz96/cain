@@ -275,16 +275,18 @@ Handlebars.registerHelper('formatted', function(text, category) {
     const matches = [...inputString.matchAll(regex)];
 
     return matches.map(match => ({
-        string: match[0],
+        string: Handlebars.escapeExpression(match[0]),
         type: match[1],
         modifier: match[2]
     }));
   });
 
+  
+
   if (typeof text === 'string') {
       const CatFormattingData = parse_cat_values(text);
       //TODO: fix hardcoded category limits - it'd be nice to have the option to expand Category beyond 0-7
-      let updatedText = text;
+      let updatedText = Handlebars.escapeExpression(text);
       if (isNaN(category) || Number(category) < 0 || Number(category) > 7) {
         CatFormattingData.forEach(catData => {
           const replacementString = `<span><b> CAT${(catData.modifier <=  0 ? '' : '+') + (catData.modifier == 0 ? '' : catData.modifier)}</b></span>`;
@@ -293,11 +295,17 @@ Handlebars.registerHelper('formatted', function(text, category) {
       } else {
         CatFormattingData.forEach(catData => {
           const catIndex = Math.max(Math.min(Number(category) + Number(catData.modifier), 7), 0);
-          const replacementString = `<span title="CAT${(catData.modifier <=  0 ? '' : '+') + (catData.modifier == 0 ? '' : catData.modifier)}"><img style="vertical-align: middle; max-height: 2em; display: inline-block;" src="systems/cain/assets/CAT/CAT${category}.png"/> <b>${categoryTable[catIndex][catData.type]}</b></span>`;
+          const replacementString = `<span title="CAT${(catData.modifier <=  0 ? '' : '+') + (catData.modifier == 0 ? '' : catData.modifier)}"><img style="vertical-align: middle; max-height: 2em; display: inline-block; border: none;" src="systems/cain/assets/CAT/CAT${category}.png"/> <b>${categoryTable[catIndex][catData.type]}</b> <img style="vertical-align: middle; max-height: 2em; display: inline-block; border: none;" src="systems/cain/assets/CAT/CAT${category}.png"/> </span>`;
           console.log(replacementString);
           updatedText = updatedText.replace(catData.string, replacementString)
         })
       }
+
+      //Allow user text to have bolds and italics because they won't pose security issues.
+      updatedText = updatedText.split(Handlebars.escapeExpression("<b>")).join("<b>");
+      updatedText = updatedText.split(Handlebars.escapeExpression("</b>")).join("</b>");
+      updatedText = updatedText.split(Handlebars.escapeExpression("<i>")).join("<i>");
+      updatedText = updatedText.split(Handlebars.escapeExpression("</i>")).join("</i>");
 
       // Replace all newlines with <br> tags
       return new Handlebars.SafeString(updatedText.replace(/\n/g, '<br>'));
