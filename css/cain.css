@@ -16,7 +16,9 @@
   
 
 */
-
+img {
+  border: none;
+}
 
 /* Global styles */
 .window-app {

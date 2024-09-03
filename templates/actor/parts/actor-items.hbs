@@ -1,8 +1,8 @@
 <h2> Kit Points & Scrip Amount </h2>
-<div class="kit-points-scrip" style="display: flex; justify-content: center; margin-top:10px;">
+<div class="kit-points-scrip" style="display: flex; margin-top:10px;">
     <div id="kit-points" style="display: flex; align-items: center; margin-right: 20px;">
         {{#range 0 system.kitPoints.max}}
-          <input type="checkbox" class="kit-points-checkbox" {{#if (lt index ../system.kitPoints.value)}}checked{{/if}} />
+          <img class="kit-points-selection" src="systems/cain/assets/KIT/{{#if (lt index ../system.kitPoints.value)}}KIT-filled.png{{else}}KIT-empty.png{{/if}}" data-kit="{{offset index 1}}" data-tooltip="Right click to clear">
         {{/range}}
         <span class="kit-points-text">{{system.kitPoints.value}} / {{system.kitPoints.max}}</span>
     </div>
@@ -38,12 +38,12 @@
             <img
               src='{{item.img}}'
               title='{{item.name}}'
-              width='24'
-              height='24'
+              width='30'
+              height='30'
             />
           </a>
         </div>
-        <h4>{{item.name}}</h4>
+        <h4 style="text-align:center !important; width: 100%">{{item.name}}</h4>
       </div>
       <div class='item-type item-prop'>{{item.system.type}}</div>
       <div class='item-scrip item-prop'>{{item.system.scripValue}}</div>
@@ -88,21 +88,24 @@
   }
 
   .item-name-header {
-    color: #ff0000;
+    color: white;
+    font-weight: bold;
+    justify-content: center;
+    text-align: center;
     flex: 2;
   }
 
   .item-type {
-    color: #00ff00;
+    color: white;
     flex: 1;
   }
 
   .item-name h4 {
-    color: #ff0000;
+    color: white;
   }
 
   .item-scrip, .item-kit-points {
-    color: #00ff00;
+    color: white;
   }
 
   .item-controls a {
@@ -111,11 +114,7 @@
   }
 
   .item-controls a:hover {
-    color: #ff0000;
-  }
-
-  .kit-points-checkbox:checked {
-    background-color: #ff0000;
+    color: white;
   }
 
   .kit-points-text {
