@@ -411,7 +411,36 @@ export class CainActorSheet extends ActorSheet {
     // Event listener for selectedAgenda
     html.find('#selectedAgenda').change(this._onAbilitySelect.bind(this));
 
+    html.find('.rollable[data-roll="1d3"]').click(async () => {
+      const actor = this.actor;
+      await this._rollSinOverflow(actor);
+    });
+
 }
+
+  async _rollSinOverflow(actor) {
+    // Roll 1d3
+    const roll = await new Roll('1d3').roll();
+    const rolledValue = roll.total;
+
+    // Get current sinOverflow value and max
+    const currentSinOverflow = actor.system.sinOverflow.value;
+    const maxSinOverflow = actor.system.sinOverflow.max;
+
+    // Calculate new sinOverflow value
+    let newSinOverflow = currentSinOverflow + rolledValue;
+
+    // Check if new value exceeds max
+    if (newSinOverflow >= maxSinOverflow) {
+      newSinOverflow = maxSinOverflow;
+      ui.notifications.error(`😈 You are now at risk of sin overflow! Current value: ${newSinOverflow} / ${maxSinOverflow} 😈`);
+    } else {
+      ui.notifications.info(`😈 Current sin overflow value: ${newSinOverflow} / ${maxSinOverflow} 😈`);
+    }
+
+    // Update actor's sinOverflow value
+    await actor.update({'system.sinOverflow.value': newSinOverflow});
+  }
 
   _onAbilitySelect(event) {
     const selectElement = event.target;
