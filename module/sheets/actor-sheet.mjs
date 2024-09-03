@@ -1522,7 +1522,7 @@ export class CainActorSheet extends ActorSheet {
     console.log(selectedSinMark);
   
     // Get abilities of the selected Sin Mark
-    const abilities = selectedSinMark.system.abilities.filter(sinMarkID => {return this.actor.system.sinMarkAbilities.includes(sinMarkID)}) || [];
+    const abilities = selectedSinMark.system.abilities.filter(sinMarkID => {return !this.actor.system.sinMarkAbilities.includes(sinMarkID)}) || [];
     if (abilities.length === 0) {
       ui.notifications.warn("Selected Sin Mark has no abilities.");
       return;
@@ -1590,7 +1590,7 @@ export class CainActorSheet extends ActorSheet {
     console.log(selectedSinMark);
   
     // Get abilities of the selected Sin Mark
-    const abilities = selectedSinMark.system.abilities.filter(sinMarkID => {return this.actor.system.sinMarkAbilities.includes(sinMarkID)}) || [];
+    const abilities = selectedSinMark.system.abilities.filter(sinMarkID => {return !this.actor.system.sinMarkAbilities.includes(sinMarkID)}) || [];
     if (abilities.length === 0) {
       ui.notifications.warn("Selected Sin Mark has no abilities.");
       return;
