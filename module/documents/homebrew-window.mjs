@@ -193,10 +193,10 @@ export class HomebrewWindow extends Application {
 
     async _onSubmitBlasphemy(event) {
         event.preventDefault();
-        let blasphemyFolderFolder = game.folders.find(f => f.name === "Blasphemy Data" && f.type === "Item");
+        let blasphemyFolderFolder = game.folders.find(f => f.name === "Blasphemies" && f.type === "Item");
         if (!blasphemyFolderFolder) {
             blasphemyFolderFolder = await Folder.create({
-                name: "Blasphemy Data",
+                name: "Blasphemies",
                 type: "Item",
                 folder: null,  // Set a parent folder ID if nesting is desired
                 sorting: "m",  // 'm' for manual sorting, 'a' for alphabetical
@@ -216,7 +216,7 @@ export class HomebrewWindow extends Application {
         let blasphemyPowerFolder = game.folders.find(f => f.name === (this.blasphemyOptions.name + " Powers") && f.type === "Item");
         if (!blasphemyPowerFolder) {
             blasphemyPowerFolder = await Folder.create({
-                name: "Blasphemy Powers",
+                name: (this.blasphemyOptions.name + " Powers"),
                 type: "Item",
                 folder: blasphemyFolder.id,  // Set a parent folder ID if nesting is desired
                 sorting: "m",  // 'm' for manual sorting, 'a' for alphabetical
@@ -329,7 +329,7 @@ export class HomebrewWindow extends Application {
 
     async _onSubmitAgenda(event) {
         event.preventDefault();
-        let agendaFolderFolder = game.folders.find(f => f.name === "Agenda Data" && f.type === "Item");
+        let agendaFolderFolder = game.folders.find(f => f.name === "Agendas" && f.type === "Item");
         if (!agendaFolderFolder) {
             agendaFolderFolder = await Folder.create({
                 name: "Agendas",
@@ -349,7 +349,7 @@ export class HomebrewWindow extends Application {
             });
         }
 
-        let agendaTaskFolder = game.folders.find(f => f.name === ( + " Tasks") && f.type === "Item");
+        let agendaTaskFolder = game.folders.find(f => f.name === (this.agendaOptions.name + " Tasks") && f.type === "Item");
         if (!agendaTaskFolder) {
             agendaTaskFolder = await Folder.create({
                 name: (this.agendaOptions.name + " Tasks"),
@@ -362,7 +362,7 @@ export class HomebrewWindow extends Application {
         let agendaAbilityFolder = game.folders.find(f => f.name === (this.agendaOptions.name + " Abilities") && f.type === "Item");
         if (!agendaAbilityFolder) {
             agendaAbilityFolder = await Folder.create({
-                name: "Agenda Abilities",
+                name: this.agendaOptions.name + " Abilities",
                 type: "Item",
                 folder: agendaFolder.id,  // Set a parent folder ID if nesting is desired
                 sorting: "m",  // 'm' for manual sorting, 'a' for alphabetical
