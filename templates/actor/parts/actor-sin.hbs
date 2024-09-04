@@ -6,12 +6,17 @@
         {{#if (lt index ../system.sinOverflow.value)}}
           <img 
             class="sinOverflow-icon sinOverflow-icon-anim sin-icon-anim-{{mod (CainOffset index ../sheetConstants.SINVisualOffset) 7}}"
-            data-sin="{{CainOffset index 1}}"/>
+            data-sin="{{CainOffset index 1}}"
+            data-tooltip="Right click to clear"
+            />
         {{else}}
           <img 
             class="sinOverflow-icon"
             src="systems/cain/assets/sheet/CAIN-sin-no.png"
-            data-sin="{{CainOffset index 1}}"/>
+            data-sin="{{CainOffset index 1}}"
+            data-tooltip="Right click to clear"
+            />
+
         {{/if}}
       {{/range}}
     </div>

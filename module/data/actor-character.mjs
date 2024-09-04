@@ -89,7 +89,7 @@ export default class CainCharacter extends CainActorBase {
 
     schema.kitPoints = new fields.SchemaField({
       value: new fields.NumberField({ required: true, initial: 5, min: 0, max: 10 }),
-      max: new fields.NumberField({ required: true, initial: 10, min: 0, max: 10 }),
+      max: new fields.NumberField({ required: true, initial: 5, min: 0, max: 10 }),
     });
 
     // Add psyche field

@@ -3,6 +3,10 @@ import {
   prepareActiveEffectCategories,
 } from '../helpers/effects.mjs';
 
+import {
+  HTMLShortcut
+} from '../helpers/standard_event_assignment_shortcuts.mjs'
+
 import { SessionEndAdvancement} from  '../documents/session-end-advancement.mjs'
 import { CAIN } from '../helpers/config.mjs';
 
@@ -261,12 +265,11 @@ export class CainActorSheet extends ActorSheet {
       this.actor.update({ [`system.${field}.value`]: value });
     });
   
+    let scHtml = new HTMLShortcut(html);
     // Character sheet specific listeners
     html.find('.item-description').click(this._onItemDescription.bind(this));
-    html.find('.sinOverflow-icon').click(this._onOverflowChange.bind(this));
     html.find('.psyche-roll-button').click(this._onRollPsyche.bind(this));
     html.find('.psyche-burst-checkbox').change(this._onPsycheBurstChange.bind(this));
-    html.find('.kit-points-checkbox').change(this._onKitPointsChange.bind(this));
     html.find('.clear-sin-marks').click(this._clearSinMarks.bind(this));
     html.find('#increment-xp-value').click(this._increaseXPValue.bind(this));
     html.find('#decrement-xp-value').click(this._decreaseXPValue.bind(this));
@@ -304,12 +307,27 @@ export class CainActorSheet extends ActorSheet {
     
     html.find('.add-affliction-button').on('click', async event => {await this._addAffliction(event)});
     
-    let cat_selector_imgs = html.find('.CAT-selector')
-    cat_selector_imgs.on('click', this._onCATSelect.bind(this, true));
-    cat_selector_imgs.on('contextmenu', this._onCATSelect.bind(this, false));
+    scHtml.setLeftAndRightClick(
+      '.CAT-selector',
+      this._onCATSelect.bind(this, true), 
+      this._onCATSelect.bind(this, false)
+    );
   
     html.find('#add-agenda-ability-button').on('click', this._addAgendaAbility.bind(this));
     html.find('.add-blasphemy-power-button').on('click', this._addBlasphemyPower.bind(this));
+
+    scHtml.setLeftAndRightClick(
+      '.kit-points-selection', 
+      this._onKitPointsChange.bind(this), 
+      this._clearKitPoints.bind(this)
+    );
+
+    scHtml.setLeftAndRightClick(
+      '.sinOverflow-icon', 
+      this._sinChange.bind(this), 
+      this._clearSin.bind(this)
+    );
+
     
     // New event listeners for agenda tasks and abilities
     html.find('.agenda-task').on('click', (event) => {
@@ -1394,34 +1412,25 @@ export class CainActorSheet extends ActorSheet {
     });
   }
 
-  _onOverflowChange(event) {
+  _sinChange(event) {
     let newValue = event.currentTarget.dataset.sin;
-    console.info(this.actor)
-    if(this.actor.system.sinOverflow.value == newValue){
-      this.actor.update({ 'system.sinOverflow.value': newValue - 1});
-    }
-    else{
-      this.actor.update({ 'system.sinOverflow.value': newValue });
-    }
+    let isEqual = this.actor.system.sinOverflow.value == newValue
+    console.info(isEqual, isEqual ? newValue -1 : newValue)
+    this.updateActor('system.sinOverflow.value', isEqual ? newValue -1 : newValue);
+  }
+  
+  _clearSin(_) {
+    this.updateActor('system.sinOverflow.value', 0);
   }
 
   _onKitPointsChange(event) {
-    const checkboxes = document.querySelectorAll('.kit-points-checkbox');
-    const isChecked = event.currentTarget.checked;
-    let newValue = 0;
+    let newValue = event.currentTarget.dataset.kit;
+    let isEqual = this.actor.system.kitPoints.value == newValue
+    this.updateActor('system.kitPoints.value', isEqual ? newValue -1 : newValue);
+  }
 
-    checkboxes.forEach(checkbox => {
-      if (checkbox.checked) {
-        newValue++;
-      }
-    });
-
-    console.log(isChecked);
-    console.log(newValue);
-    
-    this.actor.update({ 'system.kitPoints.value': newValue }).then(() => {
-      this.render(false); // Re-render the sheet to reflect changes
-    });
+  _clearKitPoints(_){
+    this.updateActor('system.kitPoints.value', 0);
   }
 
   
@@ -1995,6 +2004,13 @@ export class CainActorSheet extends ActorSheet {
       speaker: ChatMessage.getSpeaker({ actor: this.actor })
     });
   }
+
+  async updateActor(key, value){
+    let obj = {}
+    obj[key] = value
+    this.actor.update(obj);
+  }
+
   _onSinTypeSelect(sinType) {
     const sinTypeMapping = {
       ogre: {
