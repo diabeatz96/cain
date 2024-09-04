@@ -184,9 +184,7 @@ Handlebars.registerHelper('formatted', function(text, category) {
       'people': 'one',
       'size': 'human',
       'area': 'personal',
-      'distance_short': 'touch',
-      'distance_long': 'touch',
-      'distance_extreme': 'touch',
+      'range': 'touch',
       'speed': 'average human',
       'magnitude': 'small'
     },
@@ -195,9 +193,7 @@ Handlebars.registerHelper('formatted', function(text, category) {
       'people': 'a few',
       'size': 'heavy furniture',
       'area': 'a few people',
-      'distance_short': '0-2 rooms',
-      'distance_long': '3-4 rooms',
-      'distance_extreme': '5+ rooms',
+      'range': 'same room',
       'speed': 'fast human',
       'magnitude': 'Noticable'
     },
@@ -206,9 +202,7 @@ Handlebars.registerHelper('formatted', function(text, category) {
       'people': 'small group',
       'size': 'large animal',
       'area': 'entire room',
-      'distance_short': '0-2 street widths',
-      'distance_long': '3-4 street widths',
-      'distance_extreme': '5+ street widths',
+      'range': 'accross the street',
       'speed': 'fast animal',
       'magnitude': 'large'
     },
@@ -217,9 +211,7 @@ Handlebars.registerHelper('formatted', function(text, category) {
       'people': 'large group',
       'size': 'vehicle',
       'area': 'few rooms',
-      'distance_short': '0-2 blocks',
-      'distance_long': '3-4 blocks',
-      'distance_extreme': '5+ blocks',
+      'range': 'down the block',
       'speed': 'car',
       'magnitude': 'very large'
     },
@@ -228,9 +220,7 @@ Handlebars.registerHelper('formatted', function(text, category) {
       'people': 'a crowd',
       'size': 'large vehicle',
       'area': 'whole building',
-      'distance_short': '0-8 blocks',
-      'distance_long': '9-16 blocks',
-      'distance_extreme': '17+ blocks',
+      'range': 'a few blocks away',
       'speed': 'train',
       'magnitude': 'massive'
     },
@@ -239,9 +229,7 @@ Handlebars.registerHelper('formatted', function(text, category) {
       'people': 'a huge crowd',
       'size': 'building',
       'area': 'city block',
-      'distance_short': 'across town',
-      'distance_long': 'across town',
-      'distance_extreme': 'across town',
+      'range': 'across town',
       'speed': 'maglev',
       'magnitude': 'destructive'
     },
@@ -250,9 +238,7 @@ Handlebars.registerHelper('formatted', function(text, category) {
       'people': 'thousands',
       'size': 'large building',
       'area': 'whole neighborhood',
-      'distance_short': 'visual range',
-      'distance_long': 'visual range',
-      'distance_extreme': 'visual range',
+      'range': 'visual range',
       'speed': 'airliner',
       'magnitude': 'overwhelming'
     },
@@ -261,9 +247,7 @@ Handlebars.registerHelper('formatted', function(text, category) {
       'people': 'many thousands',
       'size': 'skyscraper',
       'area': 'whole town',
-      'distance_short': 'over the horizon',
-      'distance_long': 'over the horizon',
-      'distance_extreme': 'over the horizon',
+      'range': 'over the horizon',
       'speed': 'jet fighter',
       'magnitude': 'cataclysmic'
     }
