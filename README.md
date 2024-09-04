@@ -43,9 +43,49 @@
     - Tom Bloom Creator of Cain
     - My sunday DND group
 
+## v1.1.X Update
+
+Version 1.1.X update is a rework of the item sheet, blasphemies, agendas, sin-marks, and afflictions. All of these items have now been itemized, and we are able to further update better automation into the system moving forward. 
+
+Features are included but not limited too: 
+
+- Re-work of sheet aesthetics to better fit accessibility needs.
+- Re-coloring and re-designing the look of blasphmies, as well as letting you customize your own
+- Kit has been re-styled and icons have been updated.
+- Homebrew page for Agenda and blasphemies for easy to create home-brew content.
+- Afflictions are now items, and afflictions can now be added onto sheet by dragging them on.
+- Sin-mark re-haul, automatic sin-mark rolling, and improved sin-mark roll system.
+- Agendas are now semi-automated. You drag an agenda onto sheet, it will automate the process of adding in agenda items.
+- Blasphmies are now semi-automated, You drag blasphmies onto your sheet and it will automate the process of adding in abilities etc.
+- XP managment has been vastly improved with automated xp advancment, xp maximum increase and decrease, and end of session XP bonuses.
+- Added in some settings for player managment to be more accessible.
+
+
+## Migrating to v1.1.X 
+
+If you are coming from an older version of the system here is what you have to know:
+We have completley re-worked items, and they are **Mandatory** for the new system work. Details are below when importing the new items, and remember **KEEP DOCUMENT IDS**
+When updating, I highly, highly suggest deleting all of your old items and adding the new ones. 
+In addition to this, you may have to wipe some parts of actor-sheets.
+I would take screenshots of what you had before and replicate them back to the now standard items that are needed. 
+
+Things that will most definitley  be wiped off your old character sheets are:
+------------------
+1. Agendas
+2. Blasphemies
+3. Sin Marks
+4. Afflictions
+
+
+Overall, the rest of your game should be un-changed on the game-master side. 
+
+As a side note, it will definitley be in a 1.2.X update where we re-haul sins and improve functionality. This may not be for some time as we perfect the player portion of the game. 
+If you have any questions, message in the foundry vtt channel. Thank you! 
+
+
 ##  Overview
 
-Cain is an open-source project designed to streamline CAIN RPG system management within FoundryVTT. Cain enhances user experiences through customizable actors, items, and effects. The projects core functionalities, encapsulated in the `cain` module, facilitate dynamic talisman management, item roll logic, and interactive character sheet customization. 
+Cain is an open-source project designed to streamline CAIN RPG player, gm and system management within FoundryVTT. Cain enhances user experiences through customizable actors, items, and effects. The projects core functionalities, encapsulated in the `cain` module, facilitate dynamic talisman management, item roll logic, and interactive character sheet customization. 
 
 ---
 
@@ -81,7 +121,7 @@ Then, proceed to copy the link at the top.
 
 https://github.com/user-attachments/assets/035fbb43-5e0c-4ed6-970d-b3dd6f9d6909
 
-* **Creating a World**
+### **Creating a World**
   1. Click the "Game Worlds" button and then click "Create World".
   2. Fill in info.
   3. Click Create World
@@ -91,15 +131,18 @@ https://github.com/user-attachments/assets/035fbb43-5e0c-4ed6-970d-b3dd6f9d6909
 https://github.com/user-attachments/assets/88cb39a3-a235-4c6b-9f56-ebfbcff463fa
 
 
-* **Importing Compendium Information**
+### **Importing Compendium Information**
 
 * Go to Compendium tab (Book with world looking icon).
-* Right click on each pack and click import content, then click yes.
-* Items are in items tab, Rollable tables are in Rollable tables tab.
+* Right click on each pack and click import content, **CLICK KEEP DOCUMENT IDS** then click yes.
+
+
+**YOU MUST KEEP DOCUMENT IDS, THIS IS CRITICAL TO THE SYSTEM WORKING AS INTENDED.**
 
 
 
-https://github.com/user-attachments/assets/f8bb07fc-d305-42a3-97b3-d1dedd0cbfb2
+https://github.com/user-attachments/assets/464240a1-7d6c-49f0-b68e-6415b091d353
+
 
 ## Investigations
 
