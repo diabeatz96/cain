@@ -72,6 +72,7 @@
             </li>
           {{/each}}
         </ul>
+        <button class="add-task-button" style="color:aliceblue">Add Task</button>
       </div>
       
       <div class="agenda-abilities">
@@ -91,12 +92,12 @@
         </ul>
       <div class="form-group">
         <div style="display: inline-block; margin-right: 10px">
-          <label for="selectedTask" style="font-size: smaller;">Available Abilities:</label>
-        <select name="selectedAgenda" id="selectedAgenda">
-          {{#each currentAgendaAvailableAbilities}}
-            <option value="{{this.id}}" data-description="{{this.system.abilityDescription}}">{{this.name}}</option>
-          {{/each}}
-        </select>
+          <label for="selectedAgenda" style="font-size: smaller;">Available Abilities:</label>
+            <select name="selectedAgenda" id="selectedAgenda">
+              {{#each currentAgendaAvailableAbilities}}
+                <option value="{{this.id}}" data-description="{{this.system.abilityDescription}}">{{this.name}}</option>
+              {{/each}}
+            </select>
         </div>
         <button type="button" id="add-agenda-ability-button" class="add-agenda-ability-button" {{#unless currentAgendaAvailableAbilities.length}} disabled {{/unless}}>Add Ability</button>
       </div>

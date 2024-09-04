@@ -304,6 +304,7 @@ export class CainActorSheet extends ActorSheet {
     html.find('.remove-blasphemy-button').on('click', this._removeBlasphemyButton.bind(this));
     html.find('.remove-blasphemy-button').on('click', this._removeBlasphemyButton.bind(this));
     html.find('.remove-affliction-button').on('click', this._removeAfflictionButton.bind(this));
+    scHtml.setLeftClick('.add-task-button', this._addNewTask.bind(this));
     
     html.find('.add-affliction-button').on('click', async event => {await this._addAffliction(event)});
     
@@ -918,10 +919,10 @@ export class CainActorSheet extends ActorSheet {
       }
      }, {height: 500});
      if (dialogResult === 'cancel') return;
-     let afflictionFolderFolder = game.folders.find(f => f.name === "Affliction Data" && f.type === "Item");
+     let afflictionFolderFolder = game.folders.find(f => f.name === "Afflictions" && f.type === "Item");
      if (!afflictionFolderFolder) {
         afflictionFolderFolder = await Folder.create({
-             name: "Affliction Data",
+             name: "Afflictions",
              type: "Item",
              folder: null,  // Set a parent folder ID if nesting is desired
              sorting: "m",  // 'm' for manual sorting, 'a' for alphabetical
@@ -953,6 +954,70 @@ export class CainActorSheet extends ActorSheet {
     this.actor.update({'system.afflictions': afflictionList});
   }
 
+
+  async _addNewTask(event) {
+    event.preventDefault();
+    console.log("adding task");
+    const dialogResult = await Dialog.wait({
+      title: "Add Task",
+      content: `<p>This lets you create a new task.  If you or your Admin has an existing one in mind, they should add by dragging it to you sheet.</p>
+      <form>
+        <label><b>Bold Task</b> <input type="checkbox" name="isBold" checked></input></label><br>
+        <label><b>Task</b> <textarea name="task" style="height:300px"></textarea></label>
+      </form>`,
+      buttons: {
+        submit: { label: "Submit", callback: (html) => {
+          const formElement = html[0].querySelector('form');
+          const formData = new FormDataExtended(formElement);
+          const formDataObject = formData.object;
+          return formDataObject;
+        }},
+        cancel: { label: "Cancel" },
+      }
+     }, {height: 500});
+     if (dialogResult === 'cancel') return;
+     let agendaFolderFolder = game.folders.find(f => f.name === "Agendas/Tasks" && f.type === "Item");
+     if (!agendaFolderFolder) {
+      agendaFolderFolder = await Folder.create({
+             name: "Agendas/Tasks",
+             type: "Item",
+             folder: null,  // Set a parent folder ID if nesting is desired
+             sorting: "m",  // 'm' for manual sorting, 'a' for alphabetical
+        });
+     }
+
+     let agendaFolder = game.folders.find(f => f.name === "Misc Tasks" && f.type === "Item");
+     if (!agendaFolder) {
+        agendaFolder = await Folder.create({
+             name: "Misc Tasks",
+             type: "Item",
+             folder: agendaFolderFolder.id,  // Set a parent folder ID if nesting is desired
+             sorting: "m",  // 'm' for manual sorting, 'a' for alphabetical
+        });
+     }
+     const createdTaskData = {
+      name: dialogResult.task,
+      type: "agendaTask", // Ensure this matches the item type defined in your game system
+      img: "icons/svg/item-bag.svg",
+      folder: agendaFolder.id,  // Assign the item to the folder
+      system: {
+          task: dialogResult.task,
+          isBold: dialogResult.isBold
+      }
+    };
+    const createdTask = await Item.create(createdTaskData);
+    const boldTaskList = this.actor.system.currentBoldedAgendaTasks;
+    const unboldTaskList = this.actor.system.currentUnboldedAgendaTasks;
+    if (dialogResult.isBold) {
+      boldTaskList.push(createdTask.id);
+    } else {
+      unboldTaskList.push(createdTask.id);
+    }
+    this.actor.update({
+      'system.currentBoldedAgendaTasks': boldTaskList,
+      'system.currentUnboldedAgendaTasks': unboldTaskList,
+    });
+  }
 
   _removeAgendaTask(event) {
     event.preventDefault();
