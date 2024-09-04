@@ -100,7 +100,7 @@
       <div class="CAT-selector {{#if (eq system.CATLEVEL.value @index)}}CAT-selected{{/if}}" data-cat="{{@index}}" title="{{testData}}" data-tooltip="{{localize 'SHEET.TOOLTIPS.CATSELECT'}}">
         <img src="systems/cain/assets/CAT/CAT{{@index}}.png" alt="CAT {{@index}}">
       </div>
-      <div class="CAT-session-text" data-tooltip="{{localize 'SHEET.TOOLTIPS.SURVIVED'}}">{{lookup sheetConstants.CATSessionNumbers (offset @index -1)}}</div>
+      <div class="CAT-session-text" data-tooltip="{{localize 'SHEET.TOOLTIPS.SURVIVED'}}">{{lookup sheetConstants.CATSessionNumbers (CainOffset @index -1)}}</div>
     </div>
     {{/times}}
   </div>
