@@ -2,7 +2,7 @@
 <div class="kit-points-scrip" style="display: flex; margin-top:10px;">
     <div id="kit-points" style="display: flex; align-items: center; margin-right: 20px;">
         {{#range 0 system.kitPoints.max}}
-          <img class="kit-points-selection" src="systems/cain/assets/KIT/{{#if (lt index ../system.kitPoints.value)}}KIT-filled.png{{else}}KIT-empty.png{{/if}}" data-kit="{{offset index 1}}" data-tooltip="Right click to clear">
+          <img class="kit-points-selection" src="systems/cain/assets/KIT/{{#if (lt index ../system.kitPoints.value)}}KIT-filled.png{{else}}KIT-empty.png{{/if}}" data-kit="{{CainOffset index 1}}" data-tooltip="Right click to clear">
         {{/range}}
         <span class="kit-points-text">{{system.kitPoints.value}} / {{system.kitPoints.max}}</span>
     </div>
