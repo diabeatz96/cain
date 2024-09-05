@@ -80,7 +80,7 @@
         <ul id="editable-agenda-abilities" class="items-list">
           {{#each currentAgendaAbilities}}
             <li>
-              <span data-index="{{@index}}" class="agenda-ability" title="{{this.system.abilityDescription}}">{{this.system.abilityName}}</span>
+              <span data-index="{{@index}}" data-id="{{this.id}}" class="agenda-ability" title="{{this.system.abilityDescription}}">{{this.system.abilityName}}</span>
               <a class="item-control agenda-ability-to-chat" data-index="{{@index}}" title="Send to Chat">
                 <i class="fas fa-comment"></i>
               </a>
