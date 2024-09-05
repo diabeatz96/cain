@@ -1,14 +1,14 @@
-<form class="{{cssClass}} {{actor.type}} flexcol mob-psycho-theme" autocomplete="off">
+<form class="{{cssClass}} {{actor.type}} flexcol mob-psycho-theme no-border" autocomplete="off">
 
   {{!-- Sheet Header --}}
-  <header class="sheet-header mob-psycho-header">
+  <header class="sheet-header mob-psycho-header character-drop-target">
 
     <img class="profile-img mob-psycho-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="200" width="200"/>
                                    
     <div class="header-fields mob-psycho-header-fields">
       <h1 class="charname mob-psycho-charname"><input name="name" type="text" value="{{actor.name}}" placeholder="Name"/></h1>
 
-      <div class="grid grid-4col mob-psycho-grid">
+      <div class="grid grid-4col">
         <div class="flex-group-center mob-psycho-flex-group">
           <label for="system.sex" class="resource-label mob-psycho-label">Sex</label>
           <input type="text" name="system.sex" value="{{system.sex}}" data-dtype="String" class="mob-psycho-input"/>
@@ -52,7 +52,9 @@
 
         <div class="flex-group-center mob-psycho-flex-group">
           <label for="system.XID" class="resource-label mob-psycho-label">XID</label>
-          <input type="text" name="system.XID" value="{{system.XID}}" data-dtype="Number" class="mob-psycho-input"/>
+          <div style="padding: 5px">
+            <input type="text" name="system.XID" value="{{system.XID}}" data-dtype="Number" class="mob-psycho-input"/>
+          </div>
         </div>
       </div>
   </header>
@@ -69,10 +71,10 @@
   </nav>
 
   {{!-- Sheet Body --}}
-  <section class="sheet-body mob-psycho-body">
+  <section class="sheet-body mob-psycho-body character-drop-target">
 
     {{!-- Owned Features Tab --}}
-    <div class="tab features mob-psycho-tab" data-group="primary" data-tab="features">
+    <div class="tab" data-group="primary" data-tab="features">
   
       <section class="grid grid-3col mob-psycho-grid">
         <aside class="sidebar mob-psycho-sidebar">
@@ -96,11 +98,23 @@
           use both the "grid" and "grid-Ncol" class where "N" can be any number
           from 1 to 12 and will create that number of columns.  --}}
         <h3 class="mob-psycho-heading">Afflictions</h3>
-          {{#each system.afflictions as |affliction key|}}
-            <div class="affliction flexrow flex-group-center mob-psycho-affliction">
-              <textarea name="system.afflictions.{{key}}" data-dtype="String" class="mob-psycho-input">{{affliction}}</textarea>
-            </div>
+          {{#each currentAfflictions}}
+          <div class="affliction flexrow flex-group-center mob-psycho-affliction">
+              <div class="flexcol affliction-content">
+                  <h2><b>{{this.system.afflictionName}}</b></h2>
+                  <p class="affliction-description">
+                      {{formatted this.system.afflictionDescription}}
+                  </p>
+              </div>
+              <div class="flexcol remove-affliction-div">
+                <button data-index="{{@index}}" class="remove-affliction-button"> 
+                  <i class="fas fa-trash"></i>
+                </button>
+              </div>
+          </div>
           {{/each}}
+          <button id="add-affliction" class="add-affliction-button" style="background-color: brown; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 1em; width: 100%; display: inline-block; margin-top: 10px">Add Affliction </button>
+
 
         <div class="rest-dice-section flexrow mob-psycho-rest-dice">
           <label for="system.restDiceModifier" class="resource-label flexlarge align-left mob-psycho-label">Rest Dice Modifier</label>
@@ -148,3 +162,62 @@
 
   </section>
 </form>
+
+<style>
+.affliction {
+    display: flex;
+    position: relative;
+    align-items: center;
+    border-radius: 25px;
+    padding-left: 2px;
+    padding-right: 0px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    margin-top: 20px 0;
+    margin-bottom: 20px 0;
+    margin-left: 10px 0;
+    margin-right: 0px 0;
+    background-color: #404040;
+    color: aliceblue;
+}
+
+.affliction-content {
+    line-height: 1.4;
+    padding-right: 2px; /* Add padding to give space between content and trashcan */
+}
+
+.affliction-description {
+    margin: 5px 0;
+    color:aliceblue;
+    line-height: 1.4;
+}
+
+.remove-affliction-div {
+    padding-left: 0 0px;
+    padding-top: 0 0px;
+    display: flex;
+    height: 100%;
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+    max-width: 30px; /* Optional: Set a max-width if you want to prevent it from becoming too large */
+}
+
+.remove-affliction-button {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    height: 100%;
+    width: 30px;
+    background-color: brown;
+    border-radius: 0px;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    border: 0px solid white;
+}
+
+.remove-affliction-button i {
+    color: black;
+    font-size: 16px;
+    text-align: center; /* Center the icon within its container */
+}
+</style>

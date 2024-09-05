@@ -1,0 +1,24 @@
+<form class="{{cssClass}} {{system.blasphemyType}}-theme" autocomplete="off">
+  <header class="blasphemy-power-header" style="display: flex; align-items: center; justify-content: space-between;">
+    <div class="header-fields" style="flex-grow: 1; text-align: left;">
+      <div class="form-group" style="margin-bottom: 10px;">
+        <label class="power-label" style="font-weight: bold; font-size: 1.2em;">Power Name:</label>
+        <span style="font-size: 2em; font-weight: bold;">{{system.powerName}}</span>
+      </div>
+      <div class="form-group" style="margin-bottom: 10px;">
+        <label class="power-label" for="isPassive" style="font-weight: bold; font-size: 1.2em;">Is Passive:</label>
+        <span>{{#if system.isPassive}}Yes{{else}}No{{/if}}</span>
+      </div>
+      <div class="form-group" style="margin-bottom: 10px;">
+        <label class="power-label" style="font-weight: bold; font-size: 1.2em;">Keywords:</label>
+        <span>{{system.keywords}}</span>
+      </div>
+    </div>
+    <img class="profile-img item-click" src="{{this.img}}" data-id="{{this.id}}" title="{{system.powerName}}" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 3px solid var(--accent-color, #ff00ff); box-shadow: 0 0 10px var(--accent-color, #ff00ff), 0 0 20px var(--accent-color, #ff00ff); cursor: pointer;"/>
+  </header>
+
+  <section class="blasphemy-power-body" style="text-align: center; padding: 20px; border-radius: 10px; background: linear-gradient(135deg, var(--primary-color, #2a2a2a), var(--secondary-color, #555));">
+    <h2 style="color: var(--accent-color, #ff00ff); text-shadow: 0 0 10px var(--accent-color, #ff00ff);">Description</h2>
+    <p style="padding: 10px; border: 2px solid var(--secondary-color, #555); border-radius: 10px; background-color: var(--primary-color, #2a2a2a); font-family: 'Courier New', Courier, monospace; color: var(--text-color, #ffffff); box-shadow: 0 0 10px var(--accent-color, #ff00ff);">{{#formatted system.powerDescription}}{{/formatted}}</p>
+  </section>
+</form>

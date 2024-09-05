@@ -1,395 +1,243 @@
-<form class="{{cssClass}} form-blasphemy {{system.classType}}-theme" autocomplete="off">
+<form class="{{cssClass}} main-blasphemy" style="--primary-color: {{system.primaryColor}}; --accent-color: {{system.accentColor}}; --secondary-color: {{system.secondaryColor}}; --text-color: {{system.textColor}};">
   <header class="sheet-header">
-    <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}"/>
+    <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{system.blasphemyName}}"/>
     <div class="header-fields">
-      <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Name"/></h1>
-      <div class="form-group">
-        <label for="classType">Type</label>
-        <select name="system.classType" value="{{system.classType}}">
-          <option value="tension" {{#if (eq system.classType "tension")}}selected{{/if}}>Tension</option>
-          <option value="ardence" {{#if (eq system.classType "ardence")}}selected{{/if}}>Ardence</option>
-          <option value="flux" {{#if (eq system.classType "flux")}}selected{{/if}}>Flux</option>
-          <option value="vector" {{#if (eq system.classType "vector")}}selected{{/if}}>Vector</option>
-          <option value="gate" {{#if (eq system.classType "gate")}}selected{{/if}}>Gate</option>
-          <option value="smother" {{#if (eq system.classType "smother")}}selected{{/if}}>Smother</option>
-          <option value="whisper" {{#if (eq system.classType "whisper")}}selected{{/if}}>Whisper</option>
-          <option value="edit" {{#if (eq system.classType "edit")}}selected{{/if}}>Edit</option>
-          <option value="bind" {{#if (eq system.classType "bind")}}selected{{/if}}>Bind</option>
-          <option value="jaunt" {{#if (eq system.classType "jaunt")}}selected{{/if}}>Jaunt</option>
-          <option value="palace" {{#if (eq system.classType "palace")}}selected{{/if}}>Palace</option>
-          <option value="sympathy" {{#if (eq system.classType "sympathy")}}selected{{/if}}>Sympathy</option>
-          <option value="default" {{#if (eq system.classType "default")}}selected{{/if}}>Default</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="isPassive">Is Passive</label>
-        <input type="checkbox" name="system.isPassive" {{#if system.isPassive}}checked{{/if}}/>
-      </div>
-      <div class="form-group">
-        <label for="keywords">Keywords</label>
-        <input type="text" name="system.keywords" value="{{system.keywords}}"/>
-      </div>
+      <label for="name">Blasphemy Name</label>
+      <input type="text" name="system.blasphemyName" class="charname blasphemy-text" value="{{system.blasphemyName}}" data-dtype="String"/>
     </div>
   </header>
 
   {{!-- Sheet Tab Navigation --}}
   <nav class="sheet-tabs tabs" data-group="primary">
-    <a class="item" data-tab="description">Description</a>
+    <a class="item" data-tab="passive">Passive</a>
+    <a class="item" data-tab="powers">Powers</a>
   </nav>
 
   {{!-- Sheet Body --}}
-  {{! Sheet Body }}
   <section class='sheet-body'>
-
-    {{! Description Tab }}
-    <div class='tab' data-group='primary' data-tab='description'>
-      {{! Editors must receive enriched text data from getData to properly handle rolls }}
-      {{editor
-        enrichedDescription
-        target='system.description'
-        engine='prosemirror'
-        button=true
-        editable=editable
-      }}
-    </div>
-
-    {{! Attributes Tab }}
-    <div class='tab attributes' data-group='primary' data-tab='attributes'>
-      {{! As you add new fields, add them in here! }}
-      <div class='resource'>
-        <label class='resource-label'>Roll Formula:</label>
-        <span>{{system.formula}}</span>
-        <div class='grid grid-4col'>
-          <div class='grid-span-1'>
-            <label class='resource-label'>Number of Dice</label>
-            <input
-              type='text'
-              name='system.roll.diceNum'
-              value='{{system.roll.diceNum}}'
-              data-dtype='Number'
-            />
-          </div>
-          <div class='grid-span-1'>
-            <label class='resource-label'>Die Size</label>
-            <input
-              type='text'
-              name='system.roll.diceSize'
-              value='{{system.roll.diceSize}}'
-              data-dtype='String'
-            />
-          </div>
-          <div class='grid-span-2'>
-            <label class='resource-label'>Roll Modifier</label>
-            <input
-              type='text'
-              name='system.roll.diceBonus'
-              value='{{system.roll.diceBonus}}'
-              data-dtype='String'
-            />
-          </div>
+    <div class='tab' data-group='primary' data-tab='passive'>
+      {{#each blasphemyPassives}}
+        {{> blasphemyPowerPartial this powerItem=this developerMode=../developerMode}}
+      {{/each}}
+      <div class="color-picker-container">
+        <button class="color-picker-toggle" type="button">
+          <i class="fas fa-palette"></i>
+        </button>
+        <div class="color-pickers">
+          <input type="color" id="primaryColor" data-id="primary-color" value="{{system.primaryColor}}" title="Primary Color">
+          <input type="color" id="accentColor" data-id="accent-color" value="{{system.accentColor}}" title="Accent Color">
+          <input type="color" id="secondaryColor" data-id="secondary-color" value="{{system.secondaryColor}}" title="Secondary Color">
+          <input type="color" id="textColor" data-id="text-color" value="{{system.textColor}}" title="Text Color">
         </div>
-
       </div>
     </div>
+    <div class='tab' data-group='primary' data-tab='powers'>
+      {{#each blasphemyPowers}}
+        {{> blasphemyPowerPartial this powerItem=this developerMode=../developerMode}}
+      {{/each}}
+    </div>
   </section>
-
 </form>
 
 <style>
-  /* Default Theme */
-.form-blasphemy {
-  border-radius: 10px;
-  box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.5), -10px -10px 0 rgba(0, 0, 0, 0.5), 10px -10px 0 rgba(0, 0, 0, 0.5), -10px 10px 0 rgba(0, 0, 0, 0.5);
-  font-family: 'Courier New', monospace;
+@import url('https://fonts.googleapis.com/css2?family=Lacquer&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Courier+New&display=swap');
+
+/* Dark Theme */
+.main-blasphemy {
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  font-family: 'Courier New', Courier, monospace;
 }
 
-.form-blasphemy label {
+.main-blasphemy .sheet-header {
+  display: flex;
+  align-items: center;
+  background-color: var(--secondary-color);
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.main-blasphemy .profile-img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-right: 20px;
+  object-fit: cover;
+  border: 2px solid #555;
+}
+
+.main-blasphemy .header-fields {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.main-blasphemy .charname {
+  font-size: 1.5em;
+  margin: 0;
+  margin-bottom: 10px;
+  color: var(--text-color);
+}
+
+.main-blasphemy .form-group {
+  margin-bottom: 10px;
+}
+
+.main-blasphemy .form-group label {
+  display: block;
   font-weight: bold;
-  color: #ffffff;
+  margin-bottom: 5px;
+  font-family: 'Lacquer', sans-serif;
 }
 
-/* Default Theme */
-form.default-theme {
-    background-color: #2a2a2a; /* Dark grey primary */
-    color: #f0f0f0; /* Light grey secondary */
-    border: 2px solid #f0f0f0; /* Light grey secondary */
-  }
-
-
-  form.default-theme .tab {
-    background-color: #2a2a2a; /* Dark grey primary */
-  }
-  
-/* Tension Theme */
-form.tension-theme {
-  background-color: #000000; /* Black primary */
-  color: #ff0000; /* Red secondary */
-  border: 2px solid #ff0000; /* Red secondary */
+.main-blasphemy .form-group input[type="text"],
+.main-blasphemy .form-group input[type="checkbox"],
+.main-blasphemy .form-group select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid var(--secondary-color);
+  border-radius: 4px;
+  box-sizing: border-box;
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  font-family: 'Courier New', Courier, monospace;
 }
 
-form.tension-theme .tab {
-  background-color: #000000; /* Black primary */
+.main-blasphemy .form-group input[type="checkbox"] {
+  width: auto;
+  margin-right: 10px;
 }
 
-/* Ardence Theme */
-form.ardence-theme {
-  background-color: #ff0000; /* Red primary */
-  color: #000000; /* Black secondary */
-  border: 2px solid #000000; /* Black secondary */
+.main-blasphemy .sheet-body {
+  overflow-y: auto;
+  background-color: #333;
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid #555;
+  position: relative;
 }
 
-form.ardence-theme .tab {
-  background-color: #ff0000; /* Red primary */
+.main-blasphemy .sheet-body p {
+  display: block;
+  font-size: 1em;
+  line-height: 1.5;
+  color: var(--text-color);
 }
 
-/* Flux Theme */
-form.flux-theme {
-  background-color: #000000; /* Black primary */
-  color: #ffffff; /* White primary */
-  border: 2px solid #ff0000; /* Red tertiary */
+.main-blasphemy .sheet-body h2 {
+  color: var(--accent-color);
+  text-shadow: 0 0 10px var(--accent-color);
+  margin-bottom: 10px;
+  font-family: 'Lacquer', sans-serif;
 }
 
-form.flux-theme .tab {
-  background-color: #000000; /* Black primary */
-}
-
-/* Vector Theme */
-form.vector-theme {
-  background-color: #ffff00; /* Yellow primary */
-  color: #000000; /* Black secondary */
-  border: 2px solid #000000; /* Black secondary */
-}
-
-form.vector-theme .tab {
-  background-color: #ffff00; /* Yellow primary */
-}
-
-/* Gate Theme */
-form.gate-theme {
-  background-color: #ffd700; /* Gold primary */
-  color: #000000; /* Black secondary */
-  border: 2px solid #000000; /* Black secondary */
-}
-
-form.gate-theme .tab {
-  background-color: #ffd700; /* Gold primary */
-}
-
-/* Smother Theme */
-form.smother-theme {
-  background-color: #000000; /* Black primary */
-  color: #ffd700; /* Gold secondary */
-  border: 2px solid #ffd700; /* Gold secondary */
-}
-
-form.smother-theme .tab {
-  background-color: #000000; /* Black primary */
-}
-
-/* Whisper Theme */
-form.whisper-theme {
-  background-color: #000000; /* Black primary */
-  color: #87ceeb; /* Light Blue for better readability */
-  border: 2px solid #0000ff; /* Blue secondary */
-}
-
-form.whisper-theme .tab {
-  background-color: #000000; /* Black primary */
-}
-
-/* Edit Theme */
-form.edit-theme {
-  background-color: #0000ff; /* Blue primary */
-  color: #ffffff; /* White for better readability */
-  border: 2px solid #000000; /* Black secondary */
-}
-
-form.edit-theme .tab {
-  background-color: #0000ff; /* Blue primary */
-}
-
-/* Bind Theme */
-form.bind-theme {
-  background-color: #00008b; /* Dark Blue primary */
-  color: #ffffff; /* White for better readability */
-  border: 2px solid #000000; /* Black secondary */
-}
-
-form.bind-theme .tab {
-  background-color: #00008b; /* Dark Blue primary */
-}
-
-
-/* Jaunt Theme */
-form.jaunt-theme {
-  background-color: #dda0dd; /* Light Purple primary */
-  color: #000000; /* Black secondary */
-  border: 2px solid #000000; /* Black secondary */
-}
-
-form.jaunt-theme .tab {
-  background-color: #dda0dd; /* Light Purple primary */
-}
-
-/* Palace Theme */
-form.palace-theme {
-  background-color: #4b0082; /* Dark Purple primary */
-  color: #ffffff; /* White for better readability */
-  border: 2px solid #000000; /* Black secondary */
-}
-
-form.palace-theme .tab {
-  background-color: #4b0082; /* Dark Purple primary */
-}
-
-/* Sympathy Theme */
-form.sympathy-theme {
-  background-color: #000000; /* Black primary */
-  color: #ffffff; /* Dark Purple secondary */
-  border: 2px solid #4b0082; /* Dark Purple secondary */
-}
-
-form.sympathy-theme .tab {
-  background-color: #000000; /* Black primary */
-}
-
-/* Base Header */
-.form-blasphemy .sheet-header {
-  background-color: #2a2a2a;
+.main-blasphemy .passive-section,
+.main-blasphemy .powers-section {
+  margin-bottom: 20px;
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  padding: 10px;
   border-radius: 5px;
-  padding: 5px;
-  font-family: 'Courier New', monospace;
-  font-size: 16px;
-  font-weight: 400;
+  border: 1px solid var(--secondary-color);
 }
 
-/* Default Theme Header */
-  form.default-theme .sheet-header {
-    color: #f0f0f0; /* Light grey secondary */
-    border: 2px solid #f0f0f0; /* Light grey secondary */
-  }
-
-
-/* Tension Theme Header */
-form.tension-theme .sheet-header {
-  color: #ff0000; /* Red secondary */
-  border: 2px solid #ff0000; /* Red secondary */
-}
-
-/* Ardence Theme Header */
-form.ardence-theme .sheet-header {
-  color: #000000; /* Black secondary */
-  border: 2px solid #000000; /* Black secondary */
-}
-
-/* Flux Theme Header */
-form.flux-theme .sheet-header {
-  color: #ffffff; /* White primary */
-  border: 2px solid #ff0000; /* Red tertiary */
-}
-
-/* Vector Theme Header */
-form.vector-theme .sheet-header {
-  color: #000000; /* Black secondary */
-  border: 2px solid #000000; /* Black secondary */
-}
-
-/* Gate Theme Header */
-form.gate-theme .sheet-header {
-  color: #000000; /* Black secondary */
-  border: 2px solid #000000; /* Black secondary */
-}
-
-/* Smother Theme Header */
-form.smother-theme .sheet-header {
-  color: #ffd700; /* Gold secondary */
-  border: 2px solid #ffd700; /* Gold secondary */
-}
-
-/* Whisper Theme Header */
-form.whisper-theme .sheet-header {
-  color: #0000ff; /* Blue secondary */
-  border: 2px solid #0000ff; /* Blue secondary */
-}
-
-/* Edit Theme Header */
-form.edit-theme .sheet-header {
-  color: #000000; /* Black secondary */
-  border: 2px solid #000000; /* Black secondary */
-}
-
-/* Bind Theme Header */
-form.bind-theme .sheet-header {
-  color: #000000; /* Black secondary */
-  border: 2px solid #000000; /* Black secondary */
-}
-
-/* Jaunt Theme Header */
-form.jaunt-theme .sheet-header {
-  color: #000000; /* Black secondary */
-  border: 2px solid #000000; /* Black secondary */
-}
-
-/* Palace Theme Header */
-form.palace-theme .sheet-header {
-  color: #000000; /* Black secondary */
-  border: 2px solid #000000; /* Black secondary */
-}
-
-/* Sympathy Theme Header */
-form.sympathy-theme .sheet-header {
-  color: #4b0082; /* Dark Purple secondary */
-  border: 2px solid #4b0082; /* Dark Purple secondary */
-}
-
-/* Style for select dropdown */
-.form-blasphemy select {
-  background-color: white;
-  border: 2px solid #333;
-  border-radius: 5px;
-  padding: 5px;
-  font-family: 'Courier New', sans-serif;
-  font-size: 12px;
-  font-weight: 400;
-  font-style: normal;
-  cursor: pointer;
-}
-
-/* Style for checkbox */
-.form-blasphemy input[type="checkbox"] {
-  background-color: #2a2a2a;
-  color: #f0f0f0;
-  border: 2px solid #333;
-  border-radius: 5px;
-  padding: 5px;
-  font-family: 'Courier New', sans-serif;
-  font-size: 16px;
-  font-weight: 400;
-  font-style: normal;
-  cursor: pointer;
-}
-
-/* Style for text input */
-.form-blasphemy input[type="text"] {
-  background-color: #2a2a2a;
-  color: #f0f0f0;
-  border: 2px solid #333;
-  border-radius: 5px;
-  padding: 5px;
-  font-family: 'Courier New', sans-serif;
-  font-size: 16px;
-  font-weight: 400;
-  font-style: normal;
-}
-
-.profile-img {
+.main-blasphemy .profile-img {
   border: none;
 }
 
-.form-blasphemy .charname {
+.main-blasphemy .charname {
   font-size: 24px;
   font-weight: bold;
 }
 
+.main-blasphemy .color-picker-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+}
 
+.main-blasphemy .color-picker-toggle {
+  background-color: var(--primary-color, #2a2a2a);
+  color: var(--text-color, #ffffff);
+  border: 2px solid var(--secondary-color, #333);
+  padding: 5px;
+  cursor: pointer;
+  transition: transform 0.3s ease, border-radius 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 0 10px var(--accent-color, #ff00ff), 0 0 20px var(--accent-color, #ff00ff);
+}
+
+.main-blasphemy .color-picker-toggle:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px var(--accent-color, #ff00ff), 0 0 40px var(--accent-color, #ff00ff);
+}
+
+.main-blasphemy .color-pickers {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  transition: transform 0.5s ease, opacity 0.5s ease;
+  transform: translateY(-20px);
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  left: 0;
+  top: 100%;
+}
+
+.main-blasphemy .color-picker-container.active .color-pickers {
+  margin-top: 20px;
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.main-blasphemy .color-pickers input[type="color"] {
+  width: 40px;
+  height: 40px;
+  border: none;
+  cursor: pointer;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5), 0 0 10px var(--accent-color, #ff00ff);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.main-blasphemy .color-pickers input[type="color"]:hover {
+  transform: scale(1.2);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5), 0 0 20px var(--accent-color, #ff00ff);
+}
+
+.main-blasphemy .sheet-tabs {
+  display: flex;
+  justify-content: space-around;
+  border-bottom: 1px solid var(--secondary-color);
+  padding-bottom: 10px;
+  padding-top: 10px;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.main-blasphemy .sheet-tabs .item {
+  color: var(--text-color);
+  background-color: var(--primary-color);
+  border: 1px solid var(--secondary-color);
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.main-blasphemy .sheet-tabs .item.active {
+  background-color: var(--secondary-color);
+}
+
+.main-blasphemy .tab {
+  display: none;
+}
+
+.main-blasphemy .tab.active {
+  display: block;
+}
 </style>

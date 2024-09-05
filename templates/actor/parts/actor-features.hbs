@@ -94,12 +94,13 @@
 
 <h3 class='resource-header'>Cat Level</h3>
 <div class="resource">
-  <div class="checkbox-group checkbox-group_cat" data-field="CATLEVEL">
+  <div class="group_cat">
     {{#times 7}}
-    <div class="checkbox-item checkbox-item_cat">
-      <img src="systems/cain/assets/CAT/CAT{{@index}}.png" alt="CAT {{@index}}">
-      <label for="CATLEVEL-{{@index}}">Level {{@index}}</label>
-      <input type="checkbox" name="CATLEVEL-{{@index}}" {{#if (gte system.CATLEVEL.value @index)}}checked{{/if}}/>
+    <div class="checkbox-item_cat">
+      <div class="CAT-selector {{#if (eq system.CATLEVEL.value @index)}}CAT-selected{{/if}}" data-cat="{{@index}}" title="{{testData}}" data-tooltip="{{localize 'SHEET.TOOLTIPS.CATSELECT'}}">
+        <img src="systems/cain/assets/CAT/CAT{{@index}}.png" alt="CAT {{@index}}">
+      </div>
+      <div class="CAT-session-text" data-tooltip="{{localize 'SHEET.TOOLTIPS.SURVIVED'}}">{{lookup sheetConstants.CATSessionNumbers (CainOffset @index -1)}}</div>
     </div>
     {{/times}}
   </div>
@@ -108,10 +109,32 @@
   <div class="advancements-experience-box">
     <div class="resource" style="font-family: 'Courier New', Courier, monospace;">
       <label for="xp"> <h2 class="resource-header">XP & Advancements</h3></label> 
-      <output id="xp-output" style="display: block; font-size: 1.2em;">{{system.xp.value}} / {{system.xp.max}}</output>   
-      <button id="increment-xp-value" class="xp-button" style="background-color: #660000; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 1em;">
-        Gain XP
-      </button>
+      <div class="xp-button-group flexrow" style="display: flex; justify-content: space-between; align-items: center">
+        <div class="flexcol">        
+        <button id="increment-xp-value" class="xp-button" style="background-color: #660000; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 1em; width: 90%; display: inline-block;">
+          Gain 1 XP
+        </button>
+        <button id="decrement-xp-value" class="xp-button" style="background-color: #00bffe; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 1em; width: 90%; display: inline-block;">
+          Lose 1 XP
+        </button>
+        </div>
+        <div class="flexcol">        
+        <button id="increment-max-xp-value" class="xp-button" style="background-color: #660000; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 1em; width: 90%; display: inline-block;">
+          +1 Max XP
+        </button>
+        <button id="decrement-max-xp-value" class="xp-button" style="background-color: #00bffe; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 1em; width: 90%; display: inline-block;">
+          -1 Max XP
+        </button>
+        </div>
+
+
+        <button id="session-end-xp-value" class="xp-button" style="background-color: #6e3274; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 1em; width: 30%; display: inline-block;">
+          End Session XP
+        </button>
+      </div>
+      <div>
+        <output id="xp-output" style="display: block; font-size: 1.2em; margin-top: 10px">{{system.xp.value}} / {{system.xp.max}}</output>
+      </div>
       <div class="checkbox-group" data-field="xp" style="margin-top: 10px;">
         {{#times system.xp.max}}
         <input type="checkbox" id="xp-checkbox-{{@index}}" name="xp-{{@index}}" {{#if (gte system.xp.value @index)}}checked{{/if}} disabled/>
@@ -122,8 +145,10 @@
     <div class="resource">
       <label for="system.advancements.value" class="resource-label">Advancements</label>
       <output id="advancements-output">{{system.advancements.value}}</output>
-      <div class="resource-content flexrow flex-center">
-        <input type="range" name="system.advancements.value" value="{{system.advancements.value}}" min="0" max="4" step="1" data-dtype="Number" oninput="document.getElementById('advancements-output').value = this.value">
+      <div class="checkbox-group" data-field="advancements" style="margin-top: 10px;">
+        {{#times system.advancements.max}}
+        <input type="checkbox" id="advancements-checkbox-{{@index}}" name="advancements-{{@index}}" {{#if (gte system.advancements.value @index)}}checked{{/if}}/>
+        {{/times}}
       </div>
     </div>
   </div>

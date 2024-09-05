@@ -1,36 +1,68 @@
-<div class="sin-overflow">
+<div class="sin-overflow sin-page-drop-target">
   <h3>Sin Overflow</h3>
   <div class="sin-overflow-controls" style="display: flex; flex-direction: column; align-items: center;">
-    <label for="sinOverflow-max">Maximum Value:</label>
-    <input type="number" id="sinOverflow-max" name="system.sinOverflow.max" value="{{system.sinOverflow.max}}" min="{{system.sinOverflow.min}}" max="10" style="width: 100px;" />
     <div id="sinOverflow-checkboxes" style="display: flex; justify-content: center; margin-top: 10px;">
       {{#range 0 system.sinOverflow.max}}
-        <input type="checkbox" class="sinOverflow-checkbox" data-index="{{index}}" {{#if (lt index ../system.sinOverflow.value)}}checked{{/if}} />
+        {{#if (lt index ../system.sinOverflow.value)}}
+          <img 
+            class="sinOverflow-icon sinOverflow-icon-anim sin-icon-anim-{{mod (CainOffset index ../sheetConstants.SINVisualOffset) 7}}"
+            data-sin="{{CainOffset index 1}}"
+            data-tooltip="Right click to clear"
+            />
+        {{else}}
+          <img 
+            class="sinOverflow-icon"
+            src="systems/cain/assets/sheet/CAIN-sin-no.png"
+            data-sin="{{CainOffset index 1}}"
+            data-tooltip="Right click to clear"
+            />
+
+        {{/if}}
       {{/range}}
     </div>
-    <div style="display: flex; justify-content: center; margin-top: 10px;">
-      <label for="roll-sin" class="resource-label rollable flexlarge align-left mob-psycho-label" 
+    <h3 style="margin-bottom: 1rem;">{{system.sinOverflow.value}} / {{system.sinOverflow.max}}</h3>
+    <div style="display: flex; justify-content: center; margin-top: 10px; margin-bottom: 20px">
+      <label class="resource-label rollable flexlarge align-left mob-psycho-label" 
              data-roll="1d3" 
-             data-label="{{localize 'Roll Sin (1d3)'}}" 
+             data-label="{{localize 'SHEET.SIN.ROLLSIN'}}" 
              style="text-align: center;">
-        Roll Sin (1d3)
+        {{localize 'SHEET.SIN.ROLLSIN'}}
       </label>
-      <label for="resist-roll" class="resource-label rollable flexlarge align-left mob-psycho-label" 
+      <label class="resource-label rollable align-left mob-psycho-label" 
              data-roll="1d6+{{system.currentSinMarks.length}}" 
-             data-label="{{localize 'Resist Roll (1d6 + Sin Marks)'}}" 
-             style="text-align: center;">
-        Resist Roll (1d6 + Sin Marks)
+             data-label="{{localize 'SHEET.SIN.ROLLRESIST'}}" 
+             style="text-align: center; flex: 2;">
+        {{localize 'SHEET.SIN.ROLLRESIST'}}
       </label>
     </div>
+    <label for="sinOverflow-max">{{localize 'SHEET.SIN.ADJUSTMAX'}}</label>
+    <input type="number" id="sinOverflow-max" data-tooltip="{{localize 'SHEET.TOOLTIPS.SINMAXADJUST'}}" name="system.sinOverflow.max" value="{{system.sinOverflow.max}}" min="{{system.sinOverflow.min}}" max="10" style="width: 100px; text-align: center;" />
   </div>
 </div>
 
-<div class="sin-marks">
+<div class="sin-marks sin-page-drop-target">
   <h3>Sin Marks</h3>
-  {{#if system.currentSinMarks.length}}
+  {{#if currentSinMarkData.length}}
     <ul>
-      {{#each system.currentSinMarks}}
-        <li>{{this}}</li>
+      {{#each currentSinMarkData}}
+        <li class="sin-mark-over-size">
+          <h1>{{this.sinMark.name}}</h1>
+          <ul>
+            {{#each this.abilities}}
+              <li class="flexrow sin-mark sin-mark-body-part">
+                <div class="flexcol sin-mark-content" style="flex: 1 1 0;">
+                <h3>{{this.name}}</h3><p class="sin-mark-description">{{this.description}}</p> 
+                </div>
+                <div class="flexcol remove-sin-mark-div">
+                <button data-markindex="{{@../index}}" data-abilityindex="{{@index}}" class="{{#unless (and @first @last)}}remove-sin-mark-ability-button{{else}}delete-sin-mark{{/unless}} remove-sin-mark-button"> 
+                  <i class="fas fa-trash"></i>
+                </button>
+                </div>
+              </li>
+            {{/each}}
+          </ul>
+          <button class="evolve-mark-button" data-markindex="{{@index}}"><h2 style="position: relative; background: inherit; border: none;"><span class="glitch" data-text="SUCCOMB"> EVOLVE </span></h2></button>
+        </li>
       {{/each}}
     </ul>
   {{else}}
@@ -41,6 +73,94 @@
   <div class="button-row">
     <button class="roll-sin-mark">Roll Sin Marks</button>
     <button class="clear-sin-marks">Clear Sin Marks</button>
-    <button class="delete-sin-mark">Delete Sin Mark</button>
   </div>
 </div>
+
+<style>
+.sin-mark {
+    display: flex;
+    position: relative;
+    align-items: center;
+    border: 2px solid black;
+    padding-right: 0px;
+    margin-top: 20px 0;
+    margin-bottom: 20px 0;
+    margin-left: 10px 0;
+    margin-right: 0px 0;
+    background-color: #404040;
+    color: aliceblue;
+}
+
+.sin-mark-content {
+    line-height: 1.4;
+    padding-right: 2px; /* Add padding to give space between content and trashcan */
+}
+
+.sin-mark-description {
+    margin: 5px 0;
+    color:aliceblue;
+    line-height: 1.4;
+}
+
+.remove-sin-mark-div {
+    padding-right: 0px;
+    padding-left: 0 0px;
+    margin: 0;
+    padding-top: 0 0px;
+    display: flex;
+    height: 100%;
+    border-radius: 0px;
+    border-top-left-radius: 25px;
+    border-bottom-left-radius: 25px;
+    max-width: 30px; /* Optional: Set a max-width if you want to prevent it from becoming too large */
+}
+
+.remove-sin-mark-button {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    height: 100%;
+    width: 30px;
+    margin: 0;
+    background-color: #606060;
+    border-radius: 0px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border: 0px solid white;
+} 
+
+.remove-sin-mark-button i {
+    color: white;
+    font-size: 16px;
+    text-align: center; /* Center the icon within its container */
+}
+
+.evolve-mark-button {
+  border: 2px solid #660066;;
+  background-color: #cc33ff;
+  border-radius: 8px;
+}
+
+.roll-sin-mark {
+  border: 2px solid #660066;;
+  background-color: #cc33ff;
+  border-radius: 8px;
+}
+
+.clear-sin-marks {
+  border: 2px solid #660066;;
+  background-color: #cc33ff;
+  border-radius: 8px;
+}
+
+.delete-sin-2 {
+  border: 2px solid #660066;;
+  background-color: #cc33ff;
+  border-radius: 8px;
+}
+
+.sin-mark-over-size {
+  border-radius: 8px;
+  padding: 15px;
+}
+</style>

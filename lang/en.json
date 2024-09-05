@@ -48,7 +48,26 @@
     "Item": {
       "item": "Item",
       "agenda": "Agenda",
-      "blasphemy": "Blasphemy"
+      "blasphemy": "Blasphemy",
+      "blasphemyPower": "Blasphemy Power",
+      "agendaTask": "Agenda Task",
+      "agendaAbility": "Agenda Ability",
+      "sinMark": "Sin Mark",
+      "sinMarkAbility": "Sin Mark Ability",
+      "affliction": "Affliction"
+    }
+  },
+
+  "SHEET": {
+    "SIN": {
+      "ROLLSIN": "Roll SIN (1D3)",
+      "ROLLRESIST": "Resist Roll (1D6 + SIN MARKS)",
+      "ADJUSTMAX": "Adjust maximum"
+    },
+    "TOOLTIPS": {
+      "SURVIVED": "Missions Survived",
+      "CATSELECT": "Right click to set CAT 0",
+      "SINMAXADJUST": "Change maximum SIN capacity"
     }
   }
 }

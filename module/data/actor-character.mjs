@@ -34,8 +34,8 @@ export default class CainCharacter extends CainActorBase {
 
     // Add XP and advancements fields
     schema.xp = new fields.SchemaField({
-      value: new fields.NumberField({ required: true, initial: 0, min: 0, max: 4 }),
-      max: new fields.NumberField({ required: true, initial: 4, min: 4, max: 4 }),
+      value: new fields.NumberField({ required: true, initial: 0, min: 0, max: 10 }),
+      max: new fields.NumberField({ required: true, initial: 4, min: 4, max: 10 }),
     });
 
     schema.advancements = new fields.SchemaField({
@@ -46,16 +46,10 @@ export default class CainCharacter extends CainActorBase {
     schema.scrip = new fields.NumberField({ required: true, initial: 0, min: 0, max: 1000 });
     
     schema.CATLEVEL = new fields.SchemaField({
-      value: new fields.NumberField({ required: true, initial: 0, min: 0, max: 7 }),
+      value: new fields.NumberField({ required: true, initial: 1, min: 0, max: 7 }),
     });
 
-    schema.afflictions = new fields.SchemaField({
-      affliction1: new fields.StringField({ required: true, blank: true }),
-      affliction2: new fields.StringField({ required: true, blank: true }),
-      affliction3: new fields.StringField({ required: true, blank: true }),
-      affliction4: new fields.StringField({ required: true, blank: true }),
-      affliction5: new fields.StringField({ required: true, blank: true }),
-    });
+    schema.afflictions = new fields.ArrayField(new fields.StringField({ required: true, initial: " " }), { required: true, initial: [] });
     
     schema.divineAgony = new fields.SchemaField({
       value: new fields.NumberField({ required: true, initial: 0, min: 0, max: 3 }),
@@ -95,7 +89,7 @@ export default class CainCharacter extends CainActorBase {
 
     schema.kitPoints = new fields.SchemaField({
       value: new fields.NumberField({ required: true, initial: 5, min: 0, max: 10 }),
-      max: new fields.NumberField({ required: true, initial: 10, min: 0, max: 10 }),
+      max: new fields.NumberField({ required: true, initial: 5, min: 0, max: 10 }),
     });
 
     // Add psyche field
@@ -108,15 +102,16 @@ export default class CainCharacter extends CainActorBase {
 
     schema.restDiceModifier = new fields.NumberField({ required: true, initial: 0, min: -3, max: 3 });
     
-    schema.currentAgendaItems = new fields.ArrayField(new fields.SchemaField({
-      text: new fields.StringField({ required: true, initial: " " }),
-      isBold: new fields.BooleanField({ required: true, initial: false })
-    }), { required: true, initial: [] });
-    
-    schema.currentAgendaAbilities = new fields.ArrayField(new fields.SchemaField({
-      text: new fields.StringField({ required: true, initial: " " }),
-      isBold: new fields.BooleanField({ required: true, initial: false })
-    }), { required: true, initial: [] });
+    schema.currentBoldedAgendaTasks = new fields.ArrayField(new fields.StringField(), { required: true, initial: [] });
+    schema.currentUnboldedAgendaTasks = new fields.ArrayField(new fields.StringField(), { required: true, initial: [] });
+    schema.currentAgendaAbilities = new fields.ArrayField(new fields.StringField(), { required: true, initial: [] });
+    schema.currentAgenda = new fields.StringField({required: true, nullable: false, initial: "INVALID"});
+
+    schema.currentBlasphemies =  new fields.ArrayField(new fields.StringField(), { required: true, initial: [] });
+    schema.currentBlasphemyPowers =  new fields.ArrayField(new fields.StringField(), { required: true, initial: [] });
+
+    schema.sinMarks = new fields.ArrayField(new fields.StringField(), { required: true, initial: [] });
+    schema.sinMarkAbilities = new fields.ArrayField(new fields.StringField(), { required: true, initial: [] });
     
     return schema;
   }

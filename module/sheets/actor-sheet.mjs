@@ -3,6 +3,11 @@ import {
   prepareActiveEffectCategories,
 } from '../helpers/effects.mjs';
 
+import {
+  HTMLShortcut
+} from '../helpers/standard_event_assignment_shortcuts.mjs'
+
+import { SessionEndAdvancement} from  '../documents/session-end-advancement.mjs'
 import { CAIN } from '../helpers/config.mjs';
 
 /**
@@ -10,6 +15,11 @@ import { CAIN } from '../helpers/config.mjs';
  * @extends {ActorSheet}
  */
 export class CainActorSheet extends ActorSheet {
+  sheetConstants = {
+    "CATSessionNumbers": ["0", "2", "3", "5", "7", "X", "X"],
+    "SINVisualOffset": Math.round( Math.random() * 8) //a random offset so the EYES in the sin section don't always look exactly the same
+  };
+
   /** @override */
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
@@ -83,38 +93,120 @@ export class CainActorSheet extends ActorSheet {
       );
     }
 
+    if (this.actor.system.severeAttack || this.actor.system.attack) {
+      context.enrichedDescription = await TextEditor.enrichHTML(
+        this.actor.system.severeAttack.description,
+        {
+          secrets: this.document.isOwner,
+          async: true,
+          rollData: this.actor.getRollData(),
+          relativeTo: this.actor,
+        }
+      );
+    }
+
     context.effects = prepareActiveEffectCategories(
       this.actor.allApplicableEffects()
     );
 
     this._calculateRanges(context);
+    context.sheetConstants = this.sheetConstants
 
     return context;
   }
 
   _prepareCharacterData(context) {
     // Character-specific data preparation
+    context.agendas = [];
+    context.blasphemies = [];
+  
+    const agendaID = context.system.currentAgenda;
+    context.currentAgenda = agendaID !== "INVALID" ? game.items.get(agendaID) : null;
+    context.currentUnboldedAgendaTasks = this._getItemsFromIDs(context.system.currentUnboldedAgendaTasks || []);
+    context.currentBoldedAgendaTasks = this._getItemsFromIDs(context.system.currentBoldedAgendaTasks || []);
+    context.currentAgendaAbilities = this._getItemsFromIDs(context.system.currentAgendaAbilities || []);
+    context.currentBlasphemies = this._getItemsFromIDs(context.system.currentBlasphemies || []);
+    context.currentBlasphemyPowers = this._getItemsFromIDs(context.system.currentBlasphemyPowers || []);
+    context.currentSinMarks = this._getItemsFromIDs(context.system.sinMarks || []);
+    context.currentSinMarkAbilities = this._getItemsFromIDs(context.system.sinMarkAbilities || []);
+    context.currentAfflictions = this._getItemsFromIDs(context.system.afflictions || []);
+
+    // Calculate currentUnlinkedBlasphemyPowers
+    context.currentUnlinkedBlasphemyPowers = this._getItemsFromIDs(
+      (context.system.currentBlasphemyPowers || []).filter(blasphemyPowerID => {
+        return (context.currentBlasphemies || []).map(blasphemy => {
+          return !blasphemy.system.powers.includes(blasphemyPowerID);
+        }).reduce((a, b) => a && b, true);
+      })
+    );
+    
+    context.currentSinMarkData = (context.currentSinMarks || []).map(sinMark => {
+      const sinMarkAbilities = sinMark.system.abilities || [];
+      const currentSinMarkAbilities = (context.currentSinMarkAbilities || []).map(item => item.id);
+
+      console.log("CURRENT SIN MARK ABILITIES:", currentSinMarkAbilities);
+      console.log("CONTEXT SIN MARK ABILITIES:", sinMarkAbilities);
+      
+      const abilities = this._getItemsFromIDs(sinMarkAbilities.filter(abilityID => currentSinMarkAbilities.includes(abilityID)));
+      
+      console.log("Sin Mark Abilities:", abilities);
+      return {
+        sinMark: sinMark,
+        id: sinMark.id,
+        abilities: abilities.map(ability => ({
+          name: ability.system.abilityName,
+          id: ability.id,
+          description: ability.system.abilityDescription,
+          bodyPart: ability.system.bodyPartName,
+          formula: ability.system.formula
+        }))
+      };
+    });
+
+    // Prepare blasphemy data
+    context.blasphemyData = (context.currentBlasphemies || []).map(blasphemy => {
+      const blasphemyPowers = blasphemy.system.powers || [];
+      const currentBlasphemyPowers = context.system.currentBlasphemyPowers || [];
+  
+      return {
+        blasphemy: blasphemy,
+        passives: this._getItemsFromIDs(blasphemyPowers.filter(powerID => currentBlasphemyPowers.includes(powerID)))
+          .filter(power => power.system.isPassive),
+        powers: this._getItemsFromIDs(blasphemyPowers.filter(powerID => currentBlasphemyPowers.includes(powerID)))
+          .filter(power => !power.system.isPassive),
+        availablePowers: this._getItemsFromIDs(blasphemyPowers.filter(powerID => !currentBlasphemyPowers.includes(powerID)))
+      };
+    });
+  
+  
+    // Prepare currentAgendaAvailableAbilities
+    if (context.currentAgenda) {
+      const validAbilities = (context.currentAgenda.system.abilities || []).filter(item => 
+        !(context.system.currentAgendaAbilities || []).includes(item)
+      );
+      context.currentAgendaAvailableAbilities = this._getItemsFromIDs(validAbilities);
+    } else {
+      context.currentAgendaAvailableAbilities = [];
+    }
+    
   }
+  
+  _getItemsFromIDs(ids) {
+    return ids.map(id => game.items.get(id));
+  } 
+  
+  
 
   _prepareItems(context) {
     const gear = [];
-    const agendas = [];
-    const blasphemies = [];
-  
     for (let i of context.items) {
       i.img = i.img || Item.DEFAULT_ICON;
       if (i.type === 'item') {
         gear.push(i);
-      } else if (i.type === 'agenda') {
-        agendas.push(i);
-      } else if (i.type === 'blasphemy') {
-        blasphemies.push(i);
       }
     }
   
     context.gear = gear;
-    context.agendas = agendas;
-    context.blasphemies = blasphemies;
   }
 
   _calculateRanges(context) {
@@ -196,15 +288,19 @@ export class CainActorSheet extends ActorSheet {
       this.actor.update({ [`system.${field}.value`]: value });
     });
   
+    let scHtml = new HTMLShortcut(html);
     // Character sheet specific listeners
     html.find('.item-description').click(this._onItemDescription.bind(this));
-    html.find('.sinOverflow-checkbox').change(this._onOverflowChange.bind(this));
     html.find('.psyche-roll-button').click(this._onRollPsyche.bind(this));
     html.find('.psyche-burst-checkbox').change(this._onPsycheBurstChange.bind(this));
-    html.find('.kit-points-checkbox').change(this._onKitPointsChange.bind(this));
     html.find('.clear-sin-marks').click(this._clearSinMarks.bind(this));
     html.find('#increment-xp-value').click(this._increaseXPValue.bind(this));
+    html.find('#decrement-xp-value').click(this._decreaseXPValue.bind(this));
+    html.find('#increment-max-xp-value').click(this._increaseMaxXPValue.bind(this));
+    html.find('#decrement-max-xp-value').click(this._decreaseMaxXPValue.bind(this));
+    html.find('#session-end-xp-value').click(this._openEndSessionModal.bind(this));
     html.find('.delete-sin-mark').click(this._deleteSinMark.bind(this));
+    html.find('.evolve-mark-button').click(this._evolveSinMark.bind(this));
     html.find('.roll-sin-mark').click(this._rollSinMark.bind(this));
     html.find('.talisman-name').change(this._onInputChange.bind(this));
     html.find('.talisman-curr-mark-amount').change(this._onInputChange.bind(this));
@@ -222,16 +318,117 @@ export class CainActorSheet extends ActorSheet {
     html.find('.talisman-max-mark').change(this._onMaxMarkAmountChange.bind(this));
     html.find('.roll-rest-dice').click(this._RollRestDice.bind(this));
     html.find('#add-agenda-item-button').on('click', this._addAgendaItemButton.bind(this));
-    html.find('#add-agenda-ability-button').on('click', this._addAgendaAbilityButton.bind(this));
-    html.find('#editable-agenda-items').on('click', '.remove-item-button', this._removeItemButton.bind(this));
-    html.find('#editable-agenda-abilities').on('click', '.remove-ability-button', this._removeAbilityButton.bind(this));
+    html.find('#editable-agenda-abilities').on('click', '.remove-ability-button', this._removeAgendaAbilityButton.bind(this));
+    html.find('.remove-sin-mark-ability-button').click(this._removeSinMarkAbilityButton.bind(this));
     html.find('#editable-agenda-items').on('change', '.editable-item-input', this._updateAgendaItem.bind(this));
     html.find('#editable-agenda-abilities').on('change', '.editable-ability-input', this._updateAgendaAbility.bind(this));
-    // Bind the bolding functions
-    html.find('.bold-item-button').click(this._boldAgendaItem.bind(this));
-    html.find('.bold-ability-button').click(this._boldAgendaAbility.bind(this));
+    html.find('.blasphemy-power-to-chat').on('click', this._sendBlasphemyPowerMessage.bind(this));
+    html.find('.remove-blasphemy-power-button').on('click', this._removeBlasphemyPowerButton.bind(this));
+    html.find('.remove-blasphemy-button').on('click', this._removeBlasphemyButton.bind(this));
+    html.find('.remove-blasphemy-button').on('click', this._removeBlasphemyButton.bind(this));
+    html.find('.remove-affliction-button').on('click', this._removeAfflictionButton.bind(this));
+    scHtml.setLeftClick('.add-task-button', this._addNewTask.bind(this));
+    
+    html.find('.add-affliction-button').on('click', async event => {await this._addAffliction(event)});
+    
+    scHtml.setLeftAndRightClick(
+      '.CAT-selector',
+      this._onCATSelect.bind(this, true), 
+      this._onCATSelect.bind(this, false)
+    );
+  
+    html.find('#add-agenda-ability-button').on('click', this._addAgendaAbility.bind(this));
+    html.find('.add-blasphemy-power-button').on('click', this._addBlasphemyPower.bind(this));
+
+    scHtml.setLeftAndRightClick(
+      '.kit-points-selection', 
+      this._onKitPointsChange.bind(this), 
+      this._clearKitPoints.bind(this)
+    );
+
+    scHtml.setLeftAndRightClick(
+      '.sinOverflow-icon', 
+      this._sinChange.bind(this), 
+      this._clearSin.bind(this)
+    );
+
+    
+    // New event listeners for agenda tasks and abilities
+    html.find('.agenda-task').on('click', (event) => {
+      const itemId = this.actor.system.currentAgenda; // Get the current agenda ID
+      this._openAgendaItemSheet(itemId);
+    });
+
+    html.find('.agenda-ability').on('click', (event) => {
+      const itemId = this.actor.system.currentAgenda; // Get the current agenda ID
+      this._openAgendaItemSheet(itemId);
+    });
+
+    // Event delegation for blasphemy-passive
+    html.on('click', '.blasphemy-passive', (event) => {
+      const card = event.target.parentElement.parentElement.querySelector('.power-description-card');
+      const disableAnimations = document.getElementById('toggle-animation').checked;
+      if (!disableAnimations) {
+        const randomRotation = Math.random() * 6 - 3; // Random rotation between -3 and 3 degrees
+        card.style.transform = `scale(0.95) rotate(${randomRotation}deg)`;
+      } else {
+        card.style.transform = 'none';
+      }
+      card.classList.toggle('visible');
+    });
+
+    // Event delegation for blasphemy-power
+    html.on('click', '.blasphemy-power', (event) => {
+      const card = event.target.parentElement.parentElement.querySelector('.power-description-card');
+      const disableAnimations = document.getElementById('toggle-animation').checked;
+      if (!disableAnimations) {
+        const randomRotation = Math.random() * 6 - 3; // Random rotation between -3 and 3 degrees
+        card.style.transform = `scale(0.95) rotate(${randomRotation}deg)`;
+      } else {
+        card.style.transform = 'none';
+      }
+      card.classList.toggle('visible');
+    });
+
+    html.find('.character-drop-target').on('drop', async event => {
+      event.preventDefault();
+      const data = JSON.parse(event.originalEvent.dataTransfer.getData('text/plain'));
+      const itemDrop = await Item.fromDropData(data);
+      switch(itemDrop.type) {
+          case "agenda":
+            this._onDropAgenda(event, itemDrop);
+            break;
+          case "agendaTask":
+            this._onDropAgendaTask(event, itemDrop);
+            break;
+          case "agendaAbility":
+            this._onDropAgendaAbility(event, itemDrop);
+            break;
+          case "blasphemy":
+            this._onDropBlasphemy(event, itemDrop);
+            break;         
+          case "blasphemyPower":
+            this._onDropBlasphemyPower(event, itemDrop);
+            break;
+          case "sinMark":
+            this._onDropSinMark(event, itemDrop);
+            break;
+          case "sinMarkAbility":
+            this._onDropSinMarkAbility(event, itemDrop);
+            break;
+          case "affliction":
+            this._onDropAffliction(event, itemDrop);
+            break;
+          default:
+          ui.notifications.error("Invalid drop type on ability page: " + itemDrop.type);
+          console.warn("Invalid drop type on ability page: " + itemDrop.type);
+      }
+});
+
+
+    html.find('.remove-task-button').click(this._removeAgendaTask.bind(this));
     // Bind the send to chat functions
-    html.find('.agenda-item-to-chat').click(this._sendAgendaItemMessage.bind(this));
+    html.find('.agenda-task-to-chat').click(this._sendAgendaTaskMessage.bind(this));
     html.find('.agenda-ability-to-chat').click(this._sendAgendaAbilityMessage.bind(this));
     /* NPC sheet specific listeners */
     html.find('.attack-button').click(this._onNpcAttack.bind(this));
@@ -244,8 +441,621 @@ export class CainActorSheet extends ActorSheet {
       this._onSinTypeSelect(sinType);
     });
 
+    //Initialize the power descriptions
+    Array.from(html.find('.selectedPower')).forEach(selectedPowerElement => {this._onPowerSelect({ target: selectedPowerElement });});
+
+    // Call _onAbilitySelect when the sheet is loaded
+    const selectedAbilityElement = html.find('#selectedAgenda')[0];
+    if (selectedAbilityElement) {
+      this._onAbilitySelect({ target: selectedAbilityElement });
+    }
+
+    html.find('.selectedPower').on('change', this._onPowerSelect.bind(this));
+
+    // Event listener for selectedAgenda
+    html.find('#selectedAgenda').change(this._onAbilitySelect.bind(this));
+
+    html.find('.rollable[data-roll="1d3"]').click(async () => {
+      const actor = this.actor;
+      await this._rollSinOverflow(actor);
+    });
+
 }
 
+  async _rollSinOverflow(actor) {
+    // Roll 1d3
+    const roll = await new Roll('1d3').roll();
+    const rolledValue = roll.total;
+
+    // Get current sinOverflow value and max
+    const currentSinOverflow = actor.system.sinOverflow.value;
+    const maxSinOverflow = actor.system.sinOverflow.max;
+
+    // Calculate new sinOverflow value
+    let newSinOverflow = currentSinOverflow + rolledValue;
+
+    // Check if new value exceeds max
+    if (newSinOverflow >= maxSinOverflow) {
+      newSinOverflow = maxSinOverflow;
+      ui.notifications.error(`😈 You are now at risk of sin overflow! Current value: ${newSinOverflow} / ${maxSinOverflow} 😈`);
+    } else {
+      ui.notifications.info(`😈 Current sin overflow value: ${newSinOverflow} / ${maxSinOverflow} 😈`);
+    }
+
+    // Update actor's sinOverflow value
+    await actor.update({'system.sinOverflow.value': newSinOverflow});
+  }
+
+  _onAbilitySelect(event) {
+    const selectElement = event.target;
+    if (selectElement.options.length === 0) {
+      document.getElementById('abilityDescription').innerText = 'No more available Abilites';
+      return;
+    }
+
+    const selectedOption = selectElement.options[selectElement.selectedIndex];
+    const description = selectedOption.getAttribute('data-description');
+    document.getElementById('abilityDescription').innerText = description;
+  }
+
+
+  _onPowerSelect(event) {
+    const selectElement = event.target;
+    if (selectElement.options.length === 0) {
+      selectElement.parentElement.parentElement.querySelector('.powerDescription').innerText = 'There are no more selectable powers.';
+      selectElement.parentElement.parentElement.querySelector('.powerKeywords').innerText = 'None';
+      return;
+    }
+
+    const selectedOption = selectElement.options[selectElement.selectedIndex];
+    const description = selectedOption.getAttribute('data-description');
+    const keywords = selectedOption.getAttribute('data-keywords');
+    selectElement.parentElement.parentElement.querySelector('.powerDescription').innerText = description;
+    selectElement.parentElement.parentElement.querySelector('.powerKeywords').innerText = keywords ? keywords.split(',').join(', ') : '';
+  }
+
+  _openAgendaItemSheet(itemId) {
+    // Logic to open the agenda item sheet
+
+    /** We should add more complicated logic in event listenrr
+     * to handle different types of items
+     * AKA agenda, agendaTask, agendaAbility, blasphemy, blasphemyPower
+     * etc.
+     * 
+     * Right now this function only opens the whole Agenda you have assigned.
+     */
+    console.log(`Opening agenda item sheet for item ID: ${itemId}`);
+    const item = Item.get(itemId);
+    console.log(item);
+    if (item) {
+      item.sheet.render(true);
+    }
+  }
+
+  _openBlasphemyItemSheet(itemId) {
+    // Logic to open the blasphemy item sheet
+    console.log(`Opening blasphemy item sheet for item ID: ${itemId}`);
+    const item = Item.get(itemId);
+    console.log(item);
+    if (item) {
+      item.sheet.render(true);
+    }
+  }
+
+  _onDropAgenda(event, agenda) {
+    // Ensure this.actor and this.actor.system are defined
+    if (!this.actor || !this.actor.system) {
+      console.error("Actor or actor system is undefined.");
+      ui.notifications.error("Actor or actor system is undefined. Please check your setup.");
+      return;
+    }
+    console.log("Actor and actor system are defined.");
+  
+    const boldedTasks = this.actor.system.currentBoldedAgendaTasks || [];
+    console.log("Current Bolded Agenda Tasks:", boldedTasks);
+  
+    // Ensure agenda and agenda.system are defined
+    if (!agenda || !agenda.system) {
+      console.error("Agenda or agenda system is undefined.");
+      ui.notifications.error("Agenda or agenda system is undefined. Please check your setup.");
+      return;
+    }
+    console.log("Agenda and agenda system are defined.");
+  
+    const newBoldedTasks = boldedTasks.concat(
+      (agenda.system.boldedTasks || []).filter(boldedTask => {
+        const isIncluded = !this.actor.system.currentBoldedAgendaTasks.includes(boldedTask);
+        console.log("Is bolded task included?", isIncluded);
+        return isIncluded;
+      })
+    );
+    console.log("New Bolded Tasks:", newBoldedTasks);
+  
+    this.actor.update({
+      'system.agenda': agenda.system.agendaName,
+      'system.currentAgenda': agenda.id,
+      'system.currentUnboldedAgendaTasks': agenda.system.unboldedTasks || [],
+      'system.currentBoldedAgendaTasks': newBoldedTasks
+    }).then(() => {
+      console.log("Actor updated successfully.");
+    }).catch(err => {
+      console.error("Error updating actor:", err);
+      ui.notifications.error("Error updating actor. Please check the console for more details.");
+    });
+  }
+  
+  _onDropAgendaTask(event, agendaTask) {
+    // Ensure this.actor and this.actor.system are defined
+    if (!this.actor || !this.actor.system) {
+      console.error("Actor or actor system is undefined.");
+      ui.notifications.error("Actor or actor system is undefined. Please check your setup.");
+      return;
+    }
+    console.log("Actor and actor system are defined.");
+  
+    // Ensure agendaTask and agendaTask.system are defined
+    if (!agendaTask || !agendaTask.system) {
+      console.error("Agenda task or agenda task system is undefined.");
+      ui.notifications.error("Agenda task or agenda task system is undefined. Please check your setup.");
+      return;
+    }
+    console.log("Agenda task and agenda task system are defined.");
+  
+    const isBold = agendaTask.system.isBold;
+    const taskList = isBold ? this.actor.system.currentBoldedAgendaTasks || [] : this.actor.system.currentUnboldedAgendaTasks || [];
+    console.log("Current Task List:", taskList);
+  
+    taskList.push(agendaTask.id);
+    console.log("Updated Task List:", taskList);
+  
+    this.actor.update({
+      'system.currentUnboldedAgendaTasks': isBold ? this.actor.system.currentUnboldedAgendaTasks || [] : taskList,
+      'system.currentBoldedAgendaTasks': isBold ? taskList : this.actor.system.currentBoldedAgendaTasks || []
+    }).then(() => {
+      console.log("Actor updated successfully.");
+    }).catch(err => {
+      console.error("Error updating actor:", err);
+      ui.notifications.error("Error updating actor. Please check the console for more details.");
+    });
+  }
+  
+  _onDropAgendaAbility(event, agendaAbility) {
+    // Ensure this.actor and this.actor.system are defined
+    if (!this.actor || !this.actor.system) {
+      console.error("Actor or actor system is undefined.");
+      ui.notifications.error("Actor or actor system is undefined. Please check your setup.");
+      return;
+    }
+    console.log("Actor and actor system are defined.");
+  
+    // Ensure agendaAbility and agendaAbility.system are defined
+    if (!agendaAbility || !agendaAbility.system) {
+      console.error("Agenda ability or agenda ability system is undefined.");
+      ui.notifications.error("Agenda ability or agenda ability system is undefined. Please check your setup.");
+      return;
+    }
+    console.log("Agenda ability and agenda ability system are defined.");
+  
+    const abilityList = this.actor.system.currentAgendaAbilities || [];
+    console.log("Current Ability List:", abilityList);
+  
+    abilityList.push(agendaAbility.id);
+    console.log("Updated Ability List:", abilityList);
+  
+    this.actor.update({
+      'system.currentAgendaAbilities': abilityList
+    }).then(() => {
+      console.log("Actor updated successfully.");
+    }).catch(err => {
+      console.error("Error updating actor:", err);
+      ui.notifications.error("Error updating actor. Please check the console for more details.");
+    });
+  }
+
+  _onDropBlasphemy(event, blasphemy) {
+    // Ensure this.actor and this.actor.system are defined
+    if (!this.actor || !this.actor.system) {
+      console.error("Actor or actor system is undefined.");
+      ui.notifications.error("Actor or actor system is undefined. Please check your setup.");
+      return;
+    }
+    console.log("Actor and actor system are defined.");
+  
+    const blasphemyList = this.actor.system.currentBlasphemies || [];
+    console.log("Current Blasphemies:", blasphemyList);
+  
+    // Check if the blasphemy is already in the list
+    if (blasphemyList.includes(blasphemy.id)) {
+      console.log("Blasphemy already exists:", blasphemy.id);
+      return;
+    }
+  
+    // Add the new blasphemy to the list
+    blasphemyList.push(blasphemy.id);
+    console.log("Updated Blasphemies:", blasphemyList);
+  
+    // Get the current list of blasphemy powers
+    const blasphemyPowersList = this.actor.system.currentBlasphemyPowers || [];
+    console.log("Current Blasphemy Powers:", blasphemyPowersList);
+  
+    console.log(blasphemy.system);
+  
+    // Get the new blasphemy powers that are passive
+    const newBlasphemyPowers = this._getItemsFromIDs(blasphemy.system.powers || [])
+      .filter(power => {
+        console.log("Inspecting power:", power);
+        if (!power || !power.system) {
+          console.error("Power or power system is undefined:", power);
+          ui.notifications.error("Some powers are undefined. Did you import the compendium to keep document IDs?");
+          return false;
+        }
+        const isPassive = power.system.isPassive;
+        console.log("Is power passive?", isPassive);
+        return isPassive;
+      })
+      .map(power => {
+        console.log("Mapping power to ID:", power.id);
+        return power.id;
+      });
+  
+    console.log("New Blasphemy Powers:", newBlasphemyPowers);
+  
+    // Combine the current and new blasphemy powers
+    const newBlasphemyPowersList = blasphemyPowersList.concat(newBlasphemyPowers);
+    console.log("Updated Blasphemy Powers:", newBlasphemyPowersList);
+
+    //Check if this raises the number of blasphemies higher than 1, if so, add one to the XP max
+    let XPmax = this.actor.system.xp.max;
+    if (blasphemyList.length > 1) XPmax += 1;
+    const newXPMax = XPmax;
+    // Update the actor with the new lists
+    this.actor.update({
+      'system.currentBlasphemies': blasphemyList,
+      'system.currentBlasphemyPowers': newBlasphemyPowersList,
+      'system.xp.max': newXPMax
+    }).then(() => {
+      console.log("Actor updated successfully.");
+      console.log(this.actor);
+    }).catch(err => {
+      console.error("Error updating actor:", err);
+      ui.notifications.error("Error updating actor. Please check the console for more details.");
+    });
+  }
+  
+  _onDropBlasphemyPower(event, blasphemyPower) {
+    // Ensure this.actor and this.actor.system are defined
+    if (!this.actor || !this.actor.system) {
+      console.error("Actor or actor system is undefined.");
+      ui.notifications.error("Actor or actor system is undefined. Please check your setup.");
+      return;
+    }
+    console.log("Actor and actor system are defined.");
+  
+    // Ensure blasphemyPower and blasphemyPower.system are defined
+    if (!blasphemyPower || !blasphemyPower.system) {
+      console.error("Blasphemy power or blasphemy power system is undefined.");
+      ui.notifications.error("Blasphemy power or blasphemy power system is undefined. Please check your setup.");
+      return;
+    }
+    console.log("Blasphemy power and blasphemy power system are defined.");
+  
+    const blasphemyPowersList = this.actor.system.currentBlasphemyPowers || [];
+    console.log("Current Blasphemy Powers List:", blasphemyPowersList);
+  
+    // Check if the blasphemy power is already in the list
+    if (blasphemyPowersList.includes(blasphemyPower.id)) {
+      console.log("Blasphemy power already exists:", blasphemyPower.id);
+      return;
+    }
+  
+    // Add the new blasphemy power to the list
+    blasphemyPowersList.push(blasphemyPower.id);
+    console.log("Updated Blasphemy Powers List:", blasphemyPowersList);
+  
+    // Update the actor with the new list
+    this.actor.update({
+      'system.currentBlasphemyPowers': blasphemyPowersList
+    }).then(() => {
+      console.log("Actor updated successfully.");
+    }).catch(err => {
+      console.error("Error updating actor:", err);
+      ui.notifications.error("Error updating actor. Please check the console for more details.");
+    });
+  }
+
+  _onDropSinMark(event, sinMark) {
+    // Ensure this.actor and this.actor.system are defined
+    if (!this.actor || !this.actor.system) {
+      console.error("Actor or actor system is undefined.");
+      ui.notifications.error("Actor or actor system is undefined. Please check your setup.");
+      return;
+    }
+    console.log("Actor and actor system are defined.");
+
+    const sinMarkList = this.actor.system.sinMarks || [];
+    console.log("Current Sin Marks:", sinMarkList);
+
+    // Check if the sin mark is already in the list
+    if (sinMarkList.includes(sinMark.id)) {
+      console.log("Sin mark already exists:", sinMark.id);
+      return;
+    }
+
+    // Add the new sin mark to the list
+    sinMarkList.push(sinMark.id);
+    console.log("Updated Sin Marks:", sinMarkList);
+
+    // Get the current list of sin mark abilities
+    const sinMarkAbilitiesList = this.actor.system.sinMarkAbilities || [];
+    console.log("Current Sin Mark Abilities:", sinMarkAbilitiesList);
+
+    // Get the new sin mark abilities that are passive
+    const newSinMarkAbilities = this._getItemsFromIDs(sinMark.system.abilities || [])
+      .filter(ability => {
+        console.log("Inspecting ability:", ability);
+        if (!ability || !ability.system) {
+          console.error("Ability or ability system is undefined:", ability);
+          ui.notifications.error("Some abilities are undefined. Did you import the compendium to keep document IDs?");
+          return false;
+        }
+        const isPassive = ability.system.isPassive;
+        console.log("Is ability passive?", isPassive);
+        return isPassive;
+      })
+      .map(ability => {
+        console.log("Mapping ability to ID:", ability.id);
+        return ability.id;
+      });
+
+    console.log("New Sin Mark Abilities:", newSinMarkAbilities);
+
+    // Combine the current and new sin mark abilities
+    const newSinMarkAbilitiesList = sinMarkAbilitiesList.concat(newSinMarkAbilities);
+    console.log("Updated Sin Mark Abilities:", newSinMarkAbilitiesList);
+
+    // Update the actor with the new lists
+    this.actor.update({
+      'system.sinMarks': sinMarkList,
+      'system.sinMarkAbilities': newSinMarkAbilitiesList
+    }).then(() => {
+      console.log("Actor updated successfully.");
+    }).catch(err => {
+      console.error("Error updating actor:", err);
+      ui.notifications.error("Error updating actor. Please check the console for more details.");
+    }
+    );
+  }
+
+  _onDropSinMarkAbility(event, sinMarkAbility) {
+    // Ensure this.actor and this.actor.system are defined
+    if (!this.actor || !this.actor.system) {
+      console.error("Actor or actor system is undefined.");
+      ui.notifications.error("Actor or actor system is undefined. Please check your setup.");
+      return;
+    }
+    console.log("Actor and actor system are defined.");
+
+    // Ensure sinMarkAbility and sinMarkAbility.system are defined
+    if (!sinMarkAbility || !sinMarkAbility.system) {
+      console.error("Sin mark ability or sin mark ability system is undefined.");
+      ui.notifications.error("Sin mark ability or sin mark ability system is undefined. Please check your setup.");
+      return;
+    }
+
+    console.log("Sin mark ability and sin mark ability system are defined.");
+
+    const sinMarkAbilitiesList = this.actor.system.sinMarkAbilities || [];
+    console.log("Current Sin Mark Abilities List:", sinMarkAbilitiesList);
+
+    // Check if the sin mark ability is already in the list
+    if (sinMarkAbilitiesList.includes(sinMarkAbility.id)) {
+      console.log("Sin mark ability already exists:", sinMarkAbility.id);
+      return;
+    }
+
+    // Add the new sin mark ability to the list
+    sinMarkAbilitiesList.push(sinMarkAbility.id);
+    console.log("Updated Sin Mark Abilities List:", sinMarkAbilitiesList);
+
+    // Update the actor with the new list
+    this.actor.update({
+      'system.sinMarkAbilities': sinMarkAbilitiesList
+    }).then(() => {
+      console.log("Actor updated successfully.");
+    }).catch(err => {
+      console.error("Error updating actor:", err);
+      ui.notifications.error("Error updating actor. Please check the console for more details.");
+    });
+  }
+
+  _onDropAffliction(event, affliction) {
+      // Ensure this.actor and this.actor.system are defined
+      if (!this.actor || !this.actor.system) {
+        console.error("Actor or actor system is undefined.");
+        ui.notifications.error("Actor or actor system is undefined. Please check your setup.");
+        return;
+      }
+      console.log("Actor and actor system are defined.");
+    
+      // Ensure agendaTask and agendaTask.system are defined
+      if (!affliction || !affliction.system) {
+        console.error("Affliction or affliction system is undefined.");
+        ui.notifications.error("Affliction or affliction system is undefined. Please check your setup.");
+        return;
+      }
+      console.log("Affliction and affliction system system are defined.");
+    
+      const afflictionList = this.actor.system.afflictions || [];
+      console.log("Current Task List:", afflictionList);
+    
+      afflictionList.push(affliction.id);
+      console.log("Updated Task List:", afflictionList);
+    
+      this.actor.update({
+        'system.afflictions': afflictionList,
+      }).then(() => {
+        console.log("Actor updated successfully.");
+      }).catch(err => {
+        console.error("Error updating actor:", err);
+        ui.notifications.error("Error updating actor. Please check the console for more details.");
+      });
+  }
+
+  _addAgendaAbility(event) {
+    event.preventDefault();
+    const abilityID = event.currentTarget.parentElement.querySelector('#selectedAgenda').value;
+    const currentAbilities = this.actor.system.currentAgendaAbilities;
+    if (currentAbilities.includes(abilityID)) return;
+    currentAbilities.push(abilityID);
+    this.actor.update({'system.currentAgendaAbilities': currentAbilities});
+    this.actor.render(true);
+  }
+
+  _addBlasphemyPower(event) {
+    event.preventDefault();
+    const powerID = event.currentTarget.parentElement.querySelector('.selectedPower').value;
+    const currentPowers = this.actor.system.currentBlasphemyPowers;
+    if (currentPowers.includes(powerID)) return;
+    currentPowers.push(powerID);
+    this.actor.update({'system.currentBlasphemyPowers': currentPowers});
+    this.actor.render(true);
+  }
+
+  async _addAffliction(event) {
+    event.preventDefault();
+    console.log("adding affliction");
+    const dialogResult = await Dialog.wait({
+      title: "Add Affliction",
+      content: `<p>This lets you create a new affliction.  If your Admin has an existing one in mind, they should add it from the player overview section or by dragging it to you sheet.</p>
+      <form>
+        <label><b>Name</b> <input name="afflictionName" type="string"/></label> <br>
+        <label><b>Description</b> <textarea name="afflictionDescription" style="height:300px"></textarea></label>
+      </form>`,
+      buttons: {
+        submit: { label: "Submit", callback: (html) => {
+          const formElement = html[0].querySelector('form');
+          const formData = new FormDataExtended(formElement);
+          const formDataObject = formData.object;
+          return formDataObject;
+        }},
+        cancel: { label: "Cancel" },
+      }
+     }, {height: 500});
+     if (dialogResult === 'cancel') return;
+     let afflictionFolderFolder = game.folders.find(f => f.name === "Afflictions" && f.type === "Item");
+     if (!afflictionFolderFolder) {
+        afflictionFolderFolder = await Folder.create({
+             name: "Afflictions",
+             type: "Item",
+             folder: null,  // Set a parent folder ID if nesting is desired
+             sorting: "m",  // 'm' for manual sorting, 'a' for alphabetical
+        });
+     }
+
+     let afflictionFolder = game.folders.find(f => f.name === "Misc Afflictions" && f.type === "Item");
+     if (!afflictionFolder) {
+        afflictionFolder = await Folder.create({
+             name: "Misc Afflictions",
+             type: "Item",
+             folder: afflictionFolderFolder.id,  // Set a parent folder ID if nesting is desired
+             sorting: "m",  // 'm' for manual sorting, 'a' for alphabetical
+        });
+     }
+     const createdAfflictionData = {
+      name: dialogResult.afflictionName,
+      type: "affliction", // Ensure this matches the item type defined in your game system
+      img: "icons/svg/item-bag.svg",
+      folder: afflictionFolder.id,  // Assign the item to the folder
+      system: {
+          afflictionName: dialogResult.afflictionName,
+          afflictionDescription: dialogResult.afflictionDescription
+      }
+    };
+    const createdAffliction = await Item.create(createdAfflictionData);
+    const afflictionList = this.actor.system.afflictions;
+    afflictionList.push(createdAffliction.id);
+    this.actor.update({'system.afflictions': afflictionList});
+  }
+
+
+  async _addNewTask(event) {
+    event.preventDefault();
+    console.log("adding task");
+    const dialogResult = await Dialog.wait({
+      title: "Add Task",
+      content: `<p>This lets you create a new task.  If you or your Admin has an existing one in mind, they should add by dragging it to you sheet.</p>
+      <form>
+        <label><b>Bold Task</b> <input type="checkbox" name="isBold" checked></input></label><br>
+        <label><b>Task</b> <textarea name="task" style="height:300px"></textarea></label>
+      </form>`,
+      buttons: {
+        submit: { label: "Submit", callback: (html) => {
+          const formElement = html[0].querySelector('form');
+          const formData = new FormDataExtended(formElement);
+          const formDataObject = formData.object;
+          return formDataObject;
+        }},
+        cancel: { label: "Cancel" },
+      }
+     }, {height: 500});
+     if (dialogResult === 'cancel') return;
+     let agendaFolderFolder = game.folders.find(f => f.name === "Agendas/Tasks" && f.type === "Item");
+     if (!agendaFolderFolder) {
+      agendaFolderFolder = await Folder.create({
+             name: "Agendas/Tasks",
+             type: "Item",
+             folder: null,  // Set a parent folder ID if nesting is desired
+             sorting: "m",  // 'm' for manual sorting, 'a' for alphabetical
+        });
+     }
+
+     let agendaFolder = game.folders.find(f => f.name === "Misc Tasks" && f.type === "Item");
+     if (!agendaFolder) {
+        agendaFolder = await Folder.create({
+             name: "Misc Tasks",
+             type: "Item",
+             folder: agendaFolderFolder.id,  // Set a parent folder ID if nesting is desired
+             sorting: "m",  // 'm' for manual sorting, 'a' for alphabetical
+        });
+     }
+     const createdTaskData = {
+      name: dialogResult.task,
+      type: "agendaTask", // Ensure this matches the item type defined in your game system
+      img: "icons/svg/item-bag.svg",
+      folder: agendaFolder.id,  // Assign the item to the folder
+      system: {
+          task: dialogResult.task,
+          isBold: dialogResult.isBold
+      }
+    };
+    const createdTask = await Item.create(createdTaskData);
+    const boldTaskList = this.actor.system.currentBoldedAgendaTasks;
+    const unboldTaskList = this.actor.system.currentUnboldedAgendaTasks;
+    if (dialogResult.isBold) {
+      boldTaskList.push(createdTask.id);
+    } else {
+      unboldTaskList.push(createdTask.id);
+    }
+    this.actor.update({
+      'system.currentBoldedAgendaTasks': boldTaskList,
+      'system.currentUnboldedAgendaTasks': unboldTaskList,
+    });
+  }
+
+  _removeAgendaTask(event) {
+    event.preventDefault();
+    const index = event.currentTarget.getAttribute('data-index');
+    if (event.currentTarget.hasAttribute('data-bold')) {
+      const agendaBoldedTasks = this.actor.system.currentBoldedAgendaTasks;
+      const newAgendaBoldedTasks = agendaBoldedTasks.slice(0, index).concat(agendaBoldedTasks.slice(Number(index)+1));
+      this.actor.update({'system.currentBoldedAgendaTasks': newAgendaBoldedTasks});
+    } else {
+      const agendaUnboldedTasks = this.actor.system.currentUnboldedAgendaTasks;
+      const newAgendaUnboldedTasks = agendaUnboldedTasks.slice(0, index).concat(agendaUnboldedTasks.slice(Number(index)+1));
+      this.actor.update({'system.currentUnboldedAgendaTasks': newAgendaUnboldedTasks});
+    }
+  }
+  
   _addQuestion(event) {
     event.preventDefault();
     const questions = this.actor.system.severeAbilityQuestions || [];
@@ -278,43 +1088,66 @@ export class CainActorSheet extends ActorSheet {
       console.log("Updated xp from " + oldXPValue + " to " + newXPValue );  
     }
   }
-
-  _boldAgendaItem(event) {
+  
+  _decreaseXPValue(event) {
     event.preventDefault();
-    const index = event.currentTarget.getAttribute('data-index');
-    const textarea = document.querySelector(`.editable-item-input[data-index="${index}"]`);
-    const list = this.actor.system.currentAgendaItems;
-    
-    list[index].isBold = !list[index].isBold;
-    textarea.style.fontWeight = list[index].isBold ? 'bold' : 'normal';
-    event.currentTarget.querySelector('i').classList.toggle('active', list[index].isBold);
-    
-    console.log(`Bolding item at index ${index}: ${list[index].isBold}`);
-    
-    this.actor.update({ 'system.currentAgendaItems': list });
+    const oldXPValue = this.actor.system.xp.value;
+    const newXPValue = Math.max(oldXPValue - 1, 0);
+    //No need to check for advancement when decreasing
+    this.actor.update({ 'system.xp.value': newXPValue});
+    console.log("Updated xp from " + oldXPValue + " to " + newXPValue );  
   }
 
-  _boldAgendaAbility(event) {
+  _increaseMaxXPValue(event) {
     event.preventDefault();
-    const index = event.currentTarget.getAttribute('data-index');
-    const textarea = document.querySelector(`.editable-ability-input[data-index="${index}"]`);
-    const list = this.actor.system.currentAgendaAbilities;
-    
-    list[index].isBold = !list[index].isBold;
-    textarea.style.fontWeight = list[index].isBold ? 'bold' : 'normal';
-    event.currentTarget.querySelector('i').classList.toggle('active', list[index].isBold);
-    
-    console.log(`Bolding ability at index ${index}: ${list[index].isBold}`);
-    
-    this.actor.update({ 'system.currentAgendaAbilities': list });
+    const oldXPValue = this.actor.system.xp.max;
+    const newXPValue = oldXPValue + 1;
+    this.actor.update({ 'system.xp.max': newXPValue});
+    console.log("Updated max xp from " + oldXPValue + " to " + newXPValue );  
+  }
+  
+  _decreaseMaxXPValue(event) {
+    event.preventDefault();
+    const oldXPValue = this.actor.system.xp.max;
+    const newXPValue = Math.max(oldXPValue - 1, 1);
+    //No need to check for advancement when decreasing
+    this.actor.update({ 'system.xp.max': newXPValue});
+    console.log("Updated max xp from " + oldXPValue + " to " + newXPValue );  
   }
 
-  _sendAgendaItemMessage(event) {
+
+  _openEndSessionModal(event) {
+    event.preventDefault();
+    console.log(this.actor);
+    new SessionEndAdvancement(this.actor).render(true);
+  }
+
+  _sendAgendaTaskMessage(event) {
     event.preventDefault();
     const index = event.currentTarget.getAttribute('data-index');
-    const textarea = document.querySelector(`.editable-item-input[data-index="${index}"]`);
-    const itemText = textarea.value;
-    const message = `<p>${itemText}</p>`;
+    let agendaTaskList = [];
+    if (event.currentTarget.hasAttribute('data-bold')) {
+      agendaTaskList = this.actor.system.currentBoldedAgendaTasks;
+    } else {
+      agendaTaskList = this.actor.system.currentUnboldedAgendaTasks;
+    }
+    console.log(index);
+    console.log(agendaTaskList);
+    const agendaTask = game.items.get(agendaTaskList[index]);
+    console.log(agendaTask);
+    const message = `<h3>${this.actor.name}</h3><p>${(agendaTask.system.isBold ? '<b>' : '')}${agendaTask.system.task}${(agendaTask.system.isBold ? '</b>' : '')}</p>`;
+    ChatMessage.create({
+      content: message,
+      speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+    });
+  }
+
+  _sendBlasphemyPowerMessage(event) {
+    event.preventDefault();
+    const id = event.currentTarget.getAttribute('data-id');
+    const blasphemyPower = game.items.get(id);
+    const formattedDescription = blasphemyPower.system.powerDescription.replace(/\n/g, '<br>');
+    const message = `<h3>${blasphemyPower.system.powerName}</h3><p>${formattedDescription}</p>`;
     ChatMessage.create({
       content: message,
       speaker: ChatMessage.getSpeaker({ actor: this.actor }),
@@ -324,9 +1157,9 @@ export class CainActorSheet extends ActorSheet {
   _sendAgendaAbilityMessage(event) {
     event.preventDefault();
     const index = event.currentTarget.getAttribute('data-index');
-    const textarea = document.querySelector(`.editable-ability-input[data-index="${index}"]`);
-    const abilityText = textarea.value;
-    const message = `<p>${abilityText}</p>`;
+    const agendaAbility = game.items.get(this.actor.system.currentAgendaAbilities[index]);
+    const formattedDescription = agendaAbility.system.abilityDescription.replace(/\n/g, '<br>');
+    const message = `<h3>${agendaAbility.system.abilityName}</h3><p>${formattedDescription}</p>`;
     ChatMessage.create({
       content: message,
       speaker: ChatMessage.getSpeaker({ actor: this.actor }),
@@ -351,24 +1184,88 @@ export class CainActorSheet extends ActorSheet {
     });
   }
 
-  _removeItemButton(event) {
+  _removeAgendaAbilityButton(event) {
     event.preventDefault();
     const index = event.currentTarget.dataset.index;
-    const agendaItems = this.actor.system.currentAgendaItems || [];
-    agendaItems.splice(index, 1);
-    this.actor.update({ 'system.currentAgendaItems': agendaItems }).then(() => {
+    const agendaAbilities = this.actor.system.currentAgendaAbilities || [];
+    const newAgendaAbilities = agendaAbilities.slice(0, Number(index)).concat(agendaAbilities.slice(Number(index)+1))
+    this.actor.update({ 'system.currentAgendaAbilities': newAgendaAbilities }).then(() => {
       this.render(false); // Re-render the sheet to reflect changes
     });
   }
 
-  _removeAbilityButton(event) {
+  _removeAfflictionButton(event) {
     event.preventDefault();
     const index = event.currentTarget.dataset.index;
-    const agendaAbilities = this.actor.system.currentAgendaAbilities || [];
-    agendaAbilities.splice(index, 1);
-    this.actor.update({ 'system.currentAgendaAbilities': agendaAbilities }).then(() => {
+    const afflictions = this.actor.system.afflictions || [];
+    const newAfflictions = afflictions.slice(0, Number(index)).concat(afflictions.slice(Number(index)+1))
+    console.log(newAfflictions);
+    this.actor.update({ 'system.afflictions': newAfflictions }).then(() => {
       this.render(false); // Re-render the sheet to reflect changes
     });
+  }
+
+  _removeBlasphemyPowerButton(event) {
+    event.preventDefault();
+    const powerID = event.currentTarget.dataset.id;
+    const blasphemyPowers = this.actor.system.currentBlasphemyPowers || [];
+    const index = blasphemyPowers.indexOf(powerID);
+    const newblasphemyPowers = blasphemyPowers.slice(0, Number(index)).concat(blasphemyPowers.slice(Number(index)+1))
+    this.actor.update({ 'system.currentBlasphemyPowers': newblasphemyPowers }).then(() => {
+      this.render(false); // Re-render the sheet to reflect changes
+    });
+  }
+
+  _removeBlasphemyButton(event) {
+    event.preventDefault();
+    const blasphemyID = event.currentTarget.dataset.id;
+    console.log(blasphemyID);
+    const blasphemy = game.items.get(blasphemyID);
+    console.log(blasphemy);
+    const blasphemies = this.actor.system.currentBlasphemies || [];
+    if (!blasphemies.includes(blasphemyID)) {console.error("Tried to remove Blasphemy ID: " + blasphemyID + " but did not find it in list: " + blasphemies); return}; //Break out if we're trying to remove a non-existant blasphemy.  
+
+    //Handle reducing XP max if removing a 2nd blasphemy.
+    let XPmax = this.actor.system.xp.max;
+    if (blasphemies.length > 1) {
+      XPmax -= 1;
+    }
+    
+    //Remove the blasphemy
+    const index = blasphemies.indexOf(blasphemyID);
+    const newBlasphemies = blasphemies.slice(0, Number(index)).concat(blasphemies.slice(Number(index)+1));
+    const blasphemyPowers = this.actor.system.currentBlasphemyPowers || [];
+    console.log(blasphemy);
+    const newBlasphemyPowers = blasphemyPowers.filter(powerID => {return !(blasphemy.system.powers.includes(powerID));});
+    
+    this.actor.update({
+      'system.currentBlasphemies': newBlasphemies,
+      'system.currentBlasphemyPowers': newBlasphemyPowers,
+      'system.xp.max': XPmax,
+     }).then(() => {
+      this.render(false); // Re-render the sheet to reflect changes
+    });
+  }
+
+  _removeSinMarkAbilityButton(event) {
+    event.preventDefault();
+    const sinMarkIndex = event.currentTarget.dataset.markindex;
+    console.log(sinMarkIndex);
+    const sinAbilityIndex = event.currentTarget.dataset.abilityindex;
+    console.log(sinAbilityIndex);
+    const sinMark = game.items.get(this.actor.system.sinMarks[sinMarkIndex]);
+    console.log(sinMark);
+    console.log(this.actor.system.sinMarkAbilities);
+    const sinMarkAbilities = this.actor.system.sinMarkAbilities.filter(filterID => {return sinMark.system.abilities.includes(filterID) });
+    const sinAbilityID = game.items.get(sinMarkAbilities[sinAbilityIndex]).id
+
+
+    //Clear out the removed ability.  Note that we don't need to worry about whether it's the last item, because we would have called _deleteSinMark then.
+    const newSinMarkAbilities = this.actor.system.sinMarkAbilities.filter(filterID => {return filterID != sinAbilityID});
+    console.log(newSinMarkAbilities);
+
+    this.actor.update({'system.sinMarkAbilities' : newSinMarkAbilities});
+    this.actor.render(true);
   }
 
   _updateAgendaItem(event) {
@@ -425,6 +1322,17 @@ export class CainActorSheet extends ActorSheet {
   }
   
 
+  _onCATSelect(leftClick, event){
+    let selectedCat = event.currentTarget.dataset.cat
+    if(leftClick){
+      //set to new category
+      this.actor.update({["system.CATLEVEL.value"]: selectedCat});
+    }
+    else{
+      //set to 0
+      this.actor.update({["system.CATLEVEL.value"]: 0});
+    }
+  }
 
   _onRollButtonClick(event) {
     const skill = document.querySelector('select[name="system.skill"]').value;
@@ -593,42 +1501,25 @@ export class CainActorSheet extends ActorSheet {
     });
   }
 
-  _onOverflowChange(event) {
-    const checkboxes = document.querySelectorAll('.sinOverflow-checkbox');
-    const isChecked = event.currentTarget.checked;
-    let newValue = 0;
+  _sinChange(event) {
+    let newValue = event.currentTarget.dataset.sin;
+    let isEqual = this.actor.system.sinOverflow.value == newValue
+    console.info(isEqual, isEqual ? newValue -1 : newValue)
+    this.updateActor('system.sinOverflow.value', isEqual ? newValue -1 : newValue);
+  }
   
-    checkboxes.forEach(checkbox => {
-      if (checkbox.checked) {
-        newValue++;
-      }
-    });
-  
-    console.log(isChecked);
-    console.log(newValue);
-  
-    this.actor.update({ 'system.sinOverflow.value': newValue }).then(() => {
-      this.render(false); // Re-render the sheet to reflect changes
-    });
+  _clearSin(_) {
+    this.updateActor('system.sinOverflow.value', 0);
   }
 
   _onKitPointsChange(event) {
-    const checkboxes = document.querySelectorAll('.kit-points-checkbox');
-    const isChecked = event.currentTarget.checked;
-    let newValue = 0;
+    let newValue = event.currentTarget.dataset.kit;
+    let isEqual = this.actor.system.kitPoints.value == newValue
+    this.updateActor('system.kitPoints.value', isEqual ? newValue -1 : newValue);
+  }
 
-    checkboxes.forEach(checkbox => {
-      if (checkbox.checked) {
-        newValue++;
-      }
-    });
-
-    console.log(isChecked);
-    console.log(newValue);
-    
-    this.actor.update({ 'system.kitPoints.value': newValue }).then(() => {
-      this.render(false); // Re-render the sheet to reflect changes
-    });
+  _clearKitPoints(_){
+    this.updateActor('system.kitPoints.value', 0);
   }
 
   
@@ -753,73 +1644,188 @@ export class CainActorSheet extends ActorSheet {
 
   async _rollSinMark(event) {
     event.preventDefault();
-    
-    // Manually roll 1d6 for the mark
-    const roll = await new Roll('1d6').roll({async: true});
-    let markRoll = roll.total;
-    let markIndex = markRoll - 1;
-    
-    console.log(markRoll);
-    console.log(markIndex);
   
-    // If rolled a 6, allow the user to choose the mark
-    if (markRoll === 6) {
-      markIndex = await this._chooseMark();
+    // Get all Sin Mark items
+    const sinMarkItems = game.items.filter(item => item.type === 'sinMark');
+    if (sinMarkItems.length === 0) {
+      ui.notifications.warn("No Sin Mark items found.");
+      return;
     }
   
-    const sinMarks = this.actor.system.currentSinMarks || [];
-    const sinMark = CAIN.sinMarks[markIndex];
+    // Roll 1d6 to determine if the user can choose a Sin Mark
+    const initialRoll = await new Roll('1d6').roll();
+    let selectedSinMark;
   
-    // Check if the mark already exists
-    const existingMark = sinMarks.find(mark => mark.startsWith(sinMark.name));
-    if (existingMark) {
-      // Manually roll 1d6 for the ability
-      let newAbility;
-      do {
-        const abilityRoll = await new Roll('1d6').roll({async: true});
-        newAbility = sinMark.abilities[abilityRoll.total - 1];
-      } while (existingMark.includes(newAbility));
-  
-      // Add the new ability to the existing mark
-      sinMarks[sinMarks.indexOf(existingMark)] += `, ${newAbility}`;
+    if (initialRoll.total === 6) {
+      // Allow the user to choose a Sin Mark
+      const chosenIndex = await this._chooseMark();
+      selectedSinMark = sinMarkItems[chosenIndex];
     } else {
-      // Manually roll 1d6 for the ability
-      const abilityRoll = await new Roll('1d6').roll({async: true});
-      const newAbility = sinMark.abilities[abilityRoll.total - 1];
-      console.log(sinMark);
-  
-      // Format the sinMark as "Name - Ability"
-      const formattedSinMark = `${sinMark.name} - ${newAbility}`;
-  
-      // Add the new mark to the sinMarks array
-      sinMarks.push(formattedSinMark);
+      // Randomly choose a Sin Mark
+      const sinMarkRoll = await new Roll(`1d${sinMarkItems.length}`).roll();
+      selectedSinMark = sinMarkItems[sinMarkRoll.total - 1];
     }
   
-    // Update the actor with the new sinMarks array
-    await this.actor.update({ 'system.currentSinMarks': sinMarks });
+    console.log(selectedSinMark);
+  
+    // Get abilities of the selected Sin Mark
+    const abilities = selectedSinMark.system.abilities.filter(sinMarkID => {return !this.actor.system.sinMarkAbilities.includes(sinMarkID)}) || [];
+    if (abilities.length === 0) {
+      ui.notifications.warn("Selected Sin Mark has no abilities.");
+      return;
+    }
+  
+    // Get current Sin Marks and Sin Mark Abilities
+    const currentSinMarks = this.actor.system.sinMarks || [];
+    const currentSinMarkAbilities = this.actor.system.sinMarkAbilities || [];
+  
+    // Check if the Sin Mark is already in the list
+    const existingMarkIndex = currentSinMarks.indexOf(selectedSinMark.id);
+    let selectedAbility;
+  
+    if (existingMarkIndex !== -1) {
+      // Sin Mark is already in the list, proceed to select an ability
+      const maxAttempts = 10;
+      let attempts = 0;
+      do {
+        const abilityRoll = await new Roll(`1d${abilities.length}`).roll({async: true});
+        selectedAbility = abilities[abilityRoll.total - 1];
+        attempts++;
+      } while (currentSinMarkAbilities.includes(selectedAbility) && attempts < maxAttempts);
+  
+      if (attempts >= maxAttempts) {
+        ui.notifications.warn("Unable to select a unique ability after multiple attempts.");
+        return;
+      }
+  
+      currentSinMarkAbilities.push(selectedAbility);
+    } else {
+      // Sin Mark is not in the list, add it and select an ability
+      currentSinMarks.push(selectedSinMark.id);
+  
+      const abilityRoll = await new Roll(`1d${abilities.length}`).roll({async: true});
+      selectedAbility = abilities[abilityRoll.total - 1];
+  
+      currentSinMarkAbilities.push(selectedAbility);
+    }
+  
+    // Update the actor with the new Sin Marks and Sin Mark Abilities
+
+    
+    await this.actor.update({
+      'system.sinMarks' : currentSinMarks,
+      'system.sinMarkAbilities': currentSinMarkAbilities
+    });
+    
+    console.log(this.actor);
+    ui.notifications.info(`Rolled Sin Mark: ${selectedSinMark.name} with ability: ${selectedAbility}`);
+  
     this.render(false); // Re-render the sheet to reflect changes
   }
 
+  async _evolveSinMark(event) {
+    event.preventDefault();
+  
+    // Get all Sin Mark items
+    const sinMarkItems = this._getItemsFromIDs(this.actor.system.sinMarks);
+    if (sinMarkItems.length === 0) {
+      ui.notifications.warn("No Sin Mark items found.");
+      return;
+    }
+  
+    // Roll 1d6 to determine if the user can choose a Sin Mark
+    let selectedSinMark = sinMarkItems[event.currentTarget.dataset.markindex];
+    console.log(selectedSinMark);
+  
+    // Get abilities of the selected Sin Mark
+    const abilities = selectedSinMark.system.abilities.filter(sinMarkID => {return !this.actor.system.sinMarkAbilities.includes(sinMarkID)}) || [];
+    if (abilities.length === 0) {
+      ui.notifications.warn("Selected Sin Mark has no abilities.");
+      return;
+    }
+  
+    // Get current Sin Marks and Sin Mark Abilities
+    const currentSinMarks = this.actor.system.sinMarks || [];
+    const currentSinMarkAbilities = this.actor.system.sinMarkAbilities || [];
+  
+    // Check if the Sin Mark is already in the list
+    const existingMarkIndex = currentSinMarks.indexOf(selectedSinMark.id);
+    let selectedAbility;
+  
+    if (existingMarkIndex !== -1) {
+      // Sin Mark is already in the list, proceed to select an ability
+      const maxAttempts = 10;
+      let attempts = 0;
+      do {
+        const abilityRoll = await new Roll(`1d${abilities.length}`).roll({async: true});
+        selectedAbility = abilities[abilityRoll.total - 1];
+        attempts++;
+      } while (currentSinMarkAbilities.includes(selectedAbility) && attempts < maxAttempts);
+  
+      if (attempts >= maxAttempts) {
+        ui.notifications.warn("Unable to select a unique ability after multiple attempts.");
+        return;
+      }
+  
+      currentSinMarkAbilities.push(selectedAbility);
+    } else {
+      // Sin Mark is not in the list, add it and select an ability
+      currentSinMarks.push(selectedSinMark.id);
+  
+      const abilityRoll = await new Roll(`1d${abilities.length}`).roll({async: true});
+      selectedAbility = abilities[abilityRoll.total - 1];
+  
+      currentSinMarkAbilities.push(selectedAbility);
+    }
+  
+    // Update the actor with the new Sin Marks and Sin Mark Abilities
+
+    
+    await this.actor.update({
+      'system.sinMarkAbilities': currentSinMarkAbilities
+    });
+    
+    console.log(this.actor);
+    ui.notifications.info(`Rolled Sin Mark: ${selectedSinMark.name} with ability: ${selectedAbility}`);
+  
+    this.render(false); // Re-render the sheet to reflect changes
+  }
+  
   async _deleteSinMark(event) {
     event.preventDefault();
-    const index = event.currentTarget.dataset.index;
-    const sinMarks = this.actor.system.currentSinMarks || [];
-    sinMarks.splice(index, 1);
-    this.actor.update({ 'system.currentSinMarks': sinMarks }).then(() => {
-      this.render(false); // Re-render the sheet to reflect changes
+    const index = event.currentTarget.dataset.markindex;
+    console.log(index);
+    const sinMarks = this.actor.system.sinMarks || [];
+    console.log(sinMarks);
+    const sinMarkAbilities = this.actor.system.sinMarkAbilities || [];
+    const sinMark = game.items.get(this.actor.system.sinMarks[index]);
+    console.log(sinMark);
+  
+    // Remove the selected Sin Mark and its abilities
+    const newSinMarks = sinMarks.slice(0, Number(index)).concat(sinMarks.slice(Number(index)+1));
+    const newSinMarkAbilities = sinMarkAbilities.filter(sinMarkAbilityID => {return !sinMark.system.abilities.includes(sinMarkAbilityID)});
+  
+    await this.actor.update({
+      'system.sinMarks': newSinMarks,
+      'system.sinMarkAbilities': newSinMarkAbilities
     });
+  
+    this.render(false); // Re-render the sheet to reflect changes
   }
-
+  
   async _clearSinMarks(event) {
     event.preventDefault();
-    this.actor.update({ 'system.currentSinMarks': [] }).then(() => {
-      this.render(false); // Re-render the sheet to reflect changes
+    await this.actor.update({
+      'system.sinMarks': [],
+      'system.sinMarkAbilities': []
     });
+  
+    this.render(false); // Re-render the sheet to reflect changes
   }
   
   async _chooseMark() {
     return new Promise((resolve) => {
-      const options = CAIN.sinMarks.map((mark, index) => `<option value="${index}">${mark.name}</option>`).join('');
+      const options = game.items.filter(item => item.type === 'sinMark').map((mark, index) => `<option value="${index}">${mark.name}</option>`).join('');
       const content = `
         <form>
           <div class="form-group">
@@ -1087,6 +2093,13 @@ export class CainActorSheet extends ActorSheet {
       speaker: ChatMessage.getSpeaker({ actor: this.actor })
     });
   }
+
+  async updateActor(key, value){
+    let obj = {}
+    obj[key] = value
+    this.actor.update(obj);
+  }
+
   _onSinTypeSelect(sinType) {
     const sinTypeMapping = {
       ogre: {

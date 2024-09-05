@@ -1,0 +1,222 @@
+<form class='{{cssClass}}, homebrew-background' autocomplete='off'>
+  <header class='sheet-header homebrew-header '>
+  </header>
+
+  {{! Sheet Tab Navigation }}
+  <nav class='sheet-tabs tabs homebrew-tabs' data-group='primary'>
+    <a class='item' data-tab='agenda'>Agenda</a>
+    <a class='item' data-tab='blasphemy'>Blasphemy</a>
+  </nav>
+
+  {{! Sheet Body }}
+  <section class='sheet-body homebrew-body'>
+    <div class='tab homebrew-text-color' data-group='primary' data-tab='agenda'>
+        {{!-- {{#each agendaOptions.tasks}}
+        <li class="homebrew-text-color" data-homebrew-index="{{@index}}"> {{#if this.isBold}}<b>{{/if}}{{this.task}}{{#if this.isBold}}</b>{{/if}} <button class="homebrew-text-color homebrew-toggle-bold" data-homebrew-index="{{@index}}">Toggle Bold</button></li>
+        {{/each}} --}}
+        <textarea class="editable-item-input homebrew-text-color homebrew-agenda-name-input">{{agendaOptions.name}}</textarea>
+        <ul>
+        {{#each agendaOptions.tasks}}
+            <li class='item flexrow'>
+              <textarea class="editable-item-input homebrew-text-color homebrew-task-input" data-task-index="{{@index}}" style="font-weight: {{#if this.isBold}}bold{{else}}normal{{/if}};">{{this.task}}</textarea>
+              <div class="item-controls">
+                <a class="item-control homebrew-toggle-bold homebrew-text-color" data-task-index="{{@index}}" title="Bold Text">
+                  <i class="fas fa-bold {{#if this.isBold}}fa-solid{{else}}fa-thin{{/if}}"></i>
+                </a>
+                <a class="item-control homebrew-remove-task homebrew-text-color" data-task-index="{{@index}}" title="Remove">
+                  <i class="fas fa-trash"></i>
+                </a>
+              </div>
+            </li>
+        {{/each}}
+        </ul>
+        <button class="homebrew-text-color homebrew-new-task">Additional Task</button>
+        <ul>
+        {{#each agendaOptions.abilities}}
+            <li class='item flexrow'>
+              <textarea class="editable-item-input homebrew-text-color homebrew-ability-name-input" data-ability-index="{{@index}}">{{this.name}}</textarea>
+              <textarea class="editable-item-input homebrew-text-color homebrew-ability-input" data-ability-index="{{@index}}">{{this.abilityDescription}}</textarea>
+              <div class="item-controls">
+                <a class="item-control homebrew-remove-ability homebrew-text-color" data-ability-index="{{@index}}" title="Remove">
+                  <i class="fas fa-trash"></i>
+                </a>
+              </div>
+            </li>
+        {{/each}}
+        </ul>
+        <button class="homebrew-text-color homebrew-new-ability">Additional Ability</button>
+        <footer><button class="homebrew-text-color homebrew-submit-agenda">Create Agenda</button></footer>
+    </div>
+    <div class='tab homebrew-text-color' data-group='primary' data-tab='blasphemy'>
+        {{!-- {{#each agendaOptions.tasks}}
+        <li class="homebrew-text-color" data-homebrew-index="{{@index}}"> {{#if this.isBold}}<b>{{/if}}{{this.task}}{{#if this.isBold}}</b>{{/if}} <button class="homebrew-text-color homebrew-toggle-bold" data-homebrew-index="{{@index}}">Toggle Bold</button></li>
+        {{/each}} --}}
+        <textarea class="editable-item-input homebrew-text-color homebrew-blasphemy-name-input">{{blasphemyOptions.name}}</textarea>
+        <ul>
+        {{#each blasphemyOptions.powers}}
+          <li class='item flexrow'>
+              <div style="display: flex; flex-direction: column; margin-right: 10px;">
+                  <label for="power-name-{{@index}}">Power Name</label>
+                  <textarea id="power-name-{{@index}}" class="editable-item-input homebrew-text-color homebrew-power-name-input" data-power-index="{{@index}}">{{this.name}}</textarea>
+              </div>
+              <div style="display: flex; flex-direction: column; margin-right: 10px;">
+                  <label for="power-passive-{{@index}}">Passive?</label>
+                  <input type="checkbox" id="power-passive-{{@index}}" class="homebrew-power-passive-input" data-power-index="{{@index}}" {{#if this.isPassive}} checked {{/if}}>
+              </div>
+              <div style="display: flex; flex-direction: column; margin-right: 10px;">
+                  <label for="power-tags-{{@index}}">Keywords</label>
+                  <textarea id="power-tags-{{@index}}" class="editable-item-input homebrew-text-color homebrew-power-tags-input" data-power-index="{{@index}}">{{this.keywords}}</textarea>
+              </div>
+              <div style="display: flex; flex-direction: column; margin-right: 10px;">
+                  <label for="power-description-{{@index}}">Description</label>
+                  <textarea id="power-description-{{@index}}" class="editable-item-input homebrew-text-color homebrew-power-input" data-power-index="{{@index}}">{{this.powerDescription}}</textarea>
+              </div>
+              <div class="item-controls" style="align-self: flex-end;">
+                  <a class="item-control homebrew-remove-power homebrew-text-color" data-power-index="{{@index}}" title="Remove">
+                      <i class="fas fa-trash"></i>
+                  </a>
+              </div>
+          </li>
+        {{/each}}
+        </ul>
+        <button class="homebrew-text-color homebrew-new-power">Additional Power</button>
+        <footer><button class="homebrew-text-color homebrew-submit-blasphemy">Create Blasphemy</button></footer>
+    </div>
+
+  </section>
+</form>
+
+<style>
+/* General Form Styling */
+form.homebrew-background {
+    background-color: #2e2e2e; /* Dark background for contrast */
+    color: #f0f0f0; /* Light text color for readability */
+    padding: 20px;
+    border-radius: 10px;
+    width: 100%; /* Full width to fill the available space */
+    max-width: none; /* Remove max-width constraint */
+    margin: auto;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Header */
+header.sheet-header.homebrew-header {
+    text-align: center;
+    font-size: 1.5em;
+    font-weight: bold;
+    padding-bottom: 15px;
+}
+
+/* Navigation Tabs */
+nav.sheet-tabs.homebrew-tabs {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #444;
+}
+
+nav.sheet-tabs.homebrew-tabs .item {
+    flex: 1;
+    text-align: center;
+    padding: 10px;
+    cursor: pointer;
+    color: #bbb;
+    transition: color 0.3s, background-color 0.3s;
+}
+
+nav.sheet-tabs.homebrew-tabs .item:hover, 
+nav.sheet-tabs.homebrew-tabs .item.active {
+    color: #f0f0f0;
+    background-color: #444;
+}
+
+/* Tab Content */
+section.sheet-body.homebrew-body {
+    position: relative;
+    padding: 20px;
+    background-color: #383838;
+    border-radius: 10px;
+}
+
+.tab.homebrew-text-color {
+    display: none;
+}
+
+.tab.active {
+    display: block;
+}
+
+/* List Items */
+.item.flexrow {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+textarea.editable-item-input.homebrew-text-color {
+    flex: 1;
+    background-color: #444;
+    color: #f0f0f0;
+    border: 1px solid #666;
+    border-radius: 5px;
+    padding: 5px;
+    margin-right: 10px;
+    font-size: 1em;
+}
+
+.item-controls {
+    display: flex;
+    gap: 10px;
+}
+
+.item-control.homebrew-text-color {
+    color: #bbb;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.item-control.homebrew-text-color:hover {
+    color: #f0f0f0;
+}
+
+/* Buttons */
+button.homebrew-text-color {
+    background-color: #555;
+    color: #f0f0f0;
+    border: 1px solid #777;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    font-size: 1em;
+}
+
+button.homebrew-text-color:hover {
+    background-color: #666;
+    color: #fff;
+}
+
+/* Footer Buttons */
+footer {
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Checkbox Styling */
+input[type="checkbox"].homebrew-power-passive-input {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    accent-color: #f0f0f0;
+    cursor: pointer;
+}
+
+textarea.editable-item-input.homebrew-text-color.homebrew-ability-input,
+textarea.editable-item-input.homebrew-text-color.homebrew-power-input {
+    margin-top: 5px;
+}
+
+textarea.editable-item-input.homebrew-text-color.homebrew-task-input {
+    font-size: 1em;
+}
+</style>

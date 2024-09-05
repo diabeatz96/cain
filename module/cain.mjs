@@ -2,6 +2,7 @@
 import { CainActor } from './documents/actor.mjs';
 import { CainItem } from './documents/item.mjs';
 import { TalismanWindow } from './documents/talisman-window.mjs';
+import { HomebrewWindow } from './documents/homebrew-window.mjs';
 // Import sheet classes.
 import { CainActorSheet } from './sheets/actor-sheet.mjs';
 import { CainItemSheet } from './sheets/item-sheet.mjs';
@@ -17,7 +18,7 @@ import * as models from './data/_module.mjs';
 /*  Init Hook                                   */
 /* -------------------------------------------- */
 
-Hooks.once('init', function () {
+Hooks.once('init', async function () {
   // Add utility classes to the global game object so that they're more easily
   // accessible in global contexts.
   game.cain = {
@@ -54,8 +55,14 @@ Hooks.once('init', function () {
     item: models.CainItem,
     agenda: models.CainAgenda,
     blasphemy: models.CainBlasphemy,
+    blasphemyPower: models.CainBlasphemyPower,
+    agendaTask: models.CainAgendaTask,
+    agendaAbility: models.CainAgendaAbility,
+    sinMark: models.CainSinMark,
+    sinMarkAbility: models.CainSinMarkAbility,
+    affliction: models.CainAffliction,
   }
-
+  
   console.log('CAIN | Initializing Cain system');
   console.log(CONFIG)
   // Active Effects are never copied to the Actor,
@@ -104,6 +111,26 @@ Hooks.once('init', function () {
     }
   });
 
+  game.settings.register('cain', 'developerMode', {
+    name: 'Enable Developer Mode',
+    hint: 'Shows a lot of ugly debug information that allows direct modification of values.',
+    scope: 'world',
+    config: true,
+    type: Boolean,
+    default: false,
+    onChange: value => {
+      ui.players.render();
+    }
+  });
+
+  const blasphemyPowerTemplate = await getTemplate("systems/cain/templates/item/parts/item-blasphemy-power-sheet.hbs");
+  const blasphemyPowerPartialTemplate = await getTemplate("systems/cain/templates/item/parts/item-blasphemy-power-partial.hbs");
+  const sinMarkAbilityTemplate = await getTemplate("systems/cain/templates/item/parts/item-sin-mark-partial.hbs");
+
+  Handlebars.registerPartial("sinMarkAbility", sinMarkAbilityTemplate);
+  Handlebars.registerPartial("blasphemyPower", blasphemyPowerTemplate);
+  Handlebars.registerPartial("blasphemyPowerPartial", blasphemyPowerPartialTemplate);
+
   // Preload Handlebars templates.
   return preloadHandlebarsTemplates();
 });
@@ -149,6 +176,146 @@ Handlebars.registerHelper('times', function(n, block) {
   return accum;
 });
 
+Handlebars.registerHelper('formatted', function(text, category) {
+  // console.log(category);
+  const categoryTable = [
+    {
+      'CAT': 0,
+      'people': 'one',
+      'size': 'human',
+      'area': 'personal',
+      'range': 'touch',
+      'speed': 'average human',
+      'magnitude': 'small'
+    },
+    {
+      'CAT': 1,
+      'people': 'a few',
+      'size': 'heavy furniture',
+      'area': 'a few people',
+      'range': 'same room',
+      'speed': 'fast human',
+      'magnitude': 'Noticable'
+    },
+    {
+      'CAT': 2,
+      'people': 'small group',
+      'size': 'large animal',
+      'area': 'entire room',
+      'range': 'accross the street',
+      'speed': 'fast animal',
+      'magnitude': 'large'
+    },
+    {
+      'CAT': 3,
+      'people': 'large group',
+      'size': 'vehicle',
+      'area': 'few rooms',
+      'range': 'down the block',
+      'speed': 'car',
+      'magnitude': 'very large'
+    },
+    {
+      'CAT': 4,
+      'people': 'a crowd',
+      'size': 'large vehicle',
+      'area': 'whole building',
+      'range': 'a few blocks away',
+      'speed': 'train',
+      'magnitude': 'massive'
+    },
+    {
+      'CAT': 5,
+      'people': 'a huge crowd',
+      'size': 'building',
+      'area': 'city block',
+      'range': 'across town',
+      'speed': 'maglev',
+      'magnitude': 'destructive'
+    },
+    {
+      'CAT': 6,
+      'people': 'thousands',
+      'size': 'large building',
+      'area': 'whole neighborhood',
+      'range': 'visual range',
+      'speed': 'airliner',
+      'magnitude': 'overwhelming'
+    },
+    {
+      'CAT': 7,
+      'people': 'many thousands',
+      'size': 'skyscraper',
+      'area': 'whole town',
+      'range': 'over the horizon',
+      'speed': 'jet fighter',
+      'magnitude': 'cataclysmic'
+    }
+  ]
+  // Check if the text is defined and is a string
+  let parse_cat_values = (inputString => {
+    const regex = /\{<CAT>\s+(\S+)\s+(\S+)\}/g;
+
+    const matches = [...inputString.matchAll(regex)];
+
+    return matches.map(match => ({
+        string: Handlebars.escapeExpression(match[0]),
+        type: match[1],
+        modifier: match[2]
+    }));
+  });
+
+  
+
+  if (typeof text === 'string') {
+      const CatFormattingData = parse_cat_values(text);
+      //TODO: fix hardcoded category limits - it'd be nice to have the option to expand Category beyond 0-7
+      let updatedText = Handlebars.escapeExpression(text);
+      if (isNaN(category) || Number(category) < 0 || Number(category) > 7) {
+        CatFormattingData.forEach(catData => {
+          const replacementString = `<span><b> CAT${(catData.modifier <=  0 ? '' : '+') + (catData.modifier == 0 ? '' : catData.modifier)}</b></span>`;
+          updatedText = updatedText.replace(catData.string, replacementString)
+        })
+      } else {
+        CatFormattingData.forEach(catData => {
+          const catIndex = Math.max(Math.min(Number(category) + Number(catData.modifier), 7), 0);
+          const replacementString = `<span title="CAT${(catData.modifier <=  0 ? '' : '+') + (catData.modifier == 0 ? '' : catData.modifier)}"><img style="vertical-align: middle; max-height: 2em; display: inline-block; border: none;" src="systems/cain/assets/CAT/CAT${category}.png"/> <b>${categoryTable[catIndex][catData.type]}</b> <img style="vertical-align: middle; max-height: 2em; display: inline-block; border: none;" src="systems/cain/assets/CAT/CAT${category}.png"/> </span>`;
+          console.log(replacementString);
+          updatedText = updatedText.replace(catData.string, replacementString)
+        })
+      }
+
+      //Allow user text to have bolds and italics because they won't pose security issues.
+      updatedText = updatedText.split(Handlebars.escapeExpression("<b>")).join("<b>");
+      updatedText = updatedText.split(Handlebars.escapeExpression("</b>")).join("</b>");
+      updatedText = updatedText.split(Handlebars.escapeExpression("<i>")).join("<i>");
+      updatedText = updatedText.split(Handlebars.escapeExpression("</i>")).join("</i>");
+
+      // Replace all newlines with <br> tags
+      return new Handlebars.SafeString(updatedText.replace(/\n/g, '<br>'));
+  } else {
+      return text; // Return the text as is if it's not a string
+  }
+});
+
+Handlebars.registerHelper('mod', function(value, modval, options){
+  if(value===undefined || modval===undefined || parseInt(value) === NaN || !parseInt(modval) === NaN){
+    throw new Error(`Mod helper did not receive a number: val=${value}, modval=${modval}`);
+  }
+  return parseInt(value) % parseInt(modval)
+});
+
+
+Handlebars.registerHelper('json', function(context) {
+  return JSON.stringify(context);
+});
+
+Handlebars.registerHelper('CainOffset', function(value, offset, options) {
+  if(value===undefined || offset===undefined || parseInt(value)===NaN || !parseInt(offset) === NaN){
+    throw new Error(`offset helper did not receive a number: val=${value}, offset=${offset}`);
+  }
+  return parseInt(value) + parseInt(offset);
+});
 
 /* -------------------------------------------- */
 /*  Ready Hook                                  */
@@ -201,6 +368,30 @@ Hooks.once('ready', function () {
     }
   }
 
+  function addHomebrewButton() {
+    // Create the button element with the talisman icon
+    if (!game.user.isGM) return;
+    const button = $('<button title="Homebrew" class="talisman-button"><img src="systems/cain/assets/homebrew.png" alt="Homebrew Icon"></button>');
+    
+    // Add click event to open the TalismanWindow
+    button.on('click', () => {
+      new HomebrewWindow().render(true);
+    });
+
+    // Create an aside element and append the button to it
+    const aside = $('<aside class="talisman-container"></aside>').append(button);
+
+    // Insert the aside element into the action bar
+    const actionBar = $('#action-bar');
+    if (actionBar.length) {
+      actionBar.append(aside);
+      console.log('Homebrew button inserted successfully.');
+    } else {
+      console.error('Action bar not found.');
+    }
+  }
+
+
   // Function to create and insert the Risk Roll button
   function addRiskRollButton() {
     if (!game.user.isGM) return;
@@ -241,12 +432,14 @@ Hooks.once('ready', function () {
   // Add the Risk Roll and Fate Roll buttons when the action bar is first ready
   addRiskRollButton();
   addFateRollButton();
+  addHomebrewButton();
 
   // Ensure the buttons are added every time the action bar is rendered
   Hooks.on('renderHotbar', () => {
     addTalismanButton();
     addRiskRollButton();
     addFateRollButton();
+    addHomebrewButton();
   });
 
   // Register hotbar drop hook

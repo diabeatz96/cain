@@ -19,12 +19,20 @@ export class PlayerOverview extends Application {
             return {
                 name: player.name,
                 actor: actor ? actor : null,
+                agendaTasks: actor ? this._getItemsFromIDs(actor.system.currentUnboldedAgendaTasks.concat(actor.system.currentBoldedAgendaTasks)) : [],
+                agendaAbilities: actor ? this._getItemsFromIDs(actor.system.currentAgendaAbilities) : [],
+                blasphemies: actor ? this._getItemsFromIDs(actor.system.currentBlasphemies) : [],
+                blasphemyPowers: actor ? this._getItemsFromIDs(actor.system.currentBlasphemyPowers) : [],
                 message: actor ? null : "No actor assigned. Please assign an actor for player overview."
             };
         });
         console.log(playerData);
         return { playerData };
     }
+
+    _getItemsFromIDs(ids) {
+        return ids.map(id => game.items.get(id));
+    } 
 
     activateListeners(html) {
         super.activateListeners(html);
