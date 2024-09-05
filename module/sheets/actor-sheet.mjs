@@ -360,8 +360,8 @@ export class CainActorSheet extends ActorSheet {
     });
 
     html.find('.agenda-ability').on('click', (event) => {
-      const itemId = this.actor.system.currentAgenda; // Get the current agenda ID
-      this._openAgendaItemSheet(itemId);
+      const itemId = event.currentTarget.dataset.id;
+      this._openAgendaItemSheet(event.currentTarget.dataset.id);
     });
 
     // Event delegation for blasphemy-passive
