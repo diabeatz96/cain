@@ -1,5 +1,5 @@
 <div class="tab attacks" data-group="primary" data-tab="attacks">
-   {{log system}}
+  {{log system}}
   {{log system.sinType}}
   <div class="form-grid">
     <div class="form-group dark-form-group">
@@ -19,47 +19,57 @@
       {{/if}}
     </div>
   </div>
-  <div class="form-group dark-form-group collapsible">
-    <button class="collapsible-button">Attacks and Severe Attacks</button>
-    <div class="collapsible-content">
-      {{#if (eq system.sinType "redacted")}}
-        <textarea class="styled-textarea" name="system.severeAttack.description">{{system.severeAttack.description}}</textarea>
-      {{else}}
-        <p class="styled-paragraph"> darkness </p>
-      {{/if}}
-      <div class="button-group">
-        <button class="attack-button">Attack</button>
-        <button class="severe-attack-button">Severe Attack</button>
-      </div>
+  <div class="button-group">
+    <button class="attack-button demon-button">Attack</button>
+    <button class="severe-attack-button demon-button">Severe Attack</button>
+  </div>
+  <div class="form-group dark-form-group full-width">
+    <label for="system.severeAttack.description" class="centered-label">Severe Attack</label>
+    {{ editor enrichedDescription target='system.severeAttack.description' engine='prosemirror' button=true class="editor-style" editable=editable }}
+  </div>
+  <div class="form-group dark-form-group full-width flexible-height">
+    <label class="centered-label collapsible-button">Severe Ability Questions</label>
+    <div id="severe-ability-questions-section" class="collapsible-section collapsed">
+      {{#each system.severeAbilityQuestions}}
+        <div class="question-group">
+          <label for="system.severeAbilityQuestions.{{@index}}">Q{{@index}}:</label>
+          <textarea class="styled-textarea" name="system.severeAbilityQuestions.{{@index}}">{{this}}</textarea>
+          <button class="delete-question-button" onclick="deleteSevereAbilityQuestion({{@index}})">Delete</button>
+        </div>
+      {{/each}}
+      <button class="add-question-button" onclick="addSevereAbilityQuestion()">Add Question</button>
     </div>
   </div>
   <div class="form-group dark-form-group">
-    <label for="system.afflictions" class="centered-label">Afflictions</label>
-    <table class="afflictions-table">
-      <thead>
-        <tr>
-          <th>Affliction</th>
-        </tr>
-      </thead>
-      <tbody>
-        {{#each system.afflictions}}
+    <label for="system.afflictions" class="centered-label collapsible-button">Afflictions</label>
+    <div id="afflictions-section" class="collapsible-section collapsed">
+      <table class="afflictions-table">
+        <thead>
           <tr>
-            {{#if (eq ../system.sinType "redacted")}}
-              <td><input type="text" class="styled-input" name="system.afflictions.{{@index}}" value="{{this}}" /></td>
-            {{else}}
-              <td>{{this}}</td>
-            {{/if}}
+            <th>Affliction</th>
           </tr>
-        {{/each}}
-      </tbody>
-    </table>
-    <button class="roll-affliction">Roll Affliction</button>
+        </thead>
+        <tbody>
+          {{#each system.afflictions}}
+            <tr>
+              {{#if (eq ../system.sinType "redacted")}}
+                <td><input type="text" class="styled-input" name="system.afflictions.{{@index}}" value="{{this}}" /></td>
+              {{else}}
+                <td>{{this}}</td>
+              {{/if}}
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+      <button class="roll-affliction">Roll Affliction</button>
+    </div>
   </div>
 </div>
 
-
 <style>
-  .tab.attacks {
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap');
+
+.tab.attacks {
   background-color: #1a1a1a;
   color: #f5f5f5;
   padding: 20px;
@@ -88,6 +98,7 @@
   font-weight: bold;
   display: block;
   margin-bottom: 10px;
+  cursor: pointer;
 }
 
 .tab.attacks .styled-paragraph {
@@ -110,20 +121,70 @@
   justify-content: center;
   gap: 20px;
   margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 10px;
+  background-color: #2a2a2a;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.tab.attacks .attack-button, .tab.attacks .severe-attack-button {
+.tab.attacks .demon-button {
+  padding: 15px 30px;
+  background: linear-gradient(45deg, #ff0000, #8b0000);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: 'Cinzel', serif;
+  font-size: 1.5em;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 30px #ff0000;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.tab.attacks .demon-button::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255, 0, 0, 0.5), transparent 70%);
+  transition: all 0.3s ease;
+  transform: rotate(45deg);
+}
+
+.tab.attacks .demon-button:hover {
+  background: linear-gradient(45deg, #8b0000, #ff0000);
+  text-shadow: 0 0 20px #ff0000, 0 0 30px #ff0000, 0 0 40px #ff0000;
+}
+
+.tab.attacks .demon-button:hover::before {
+  top: -70%;
+  left: -70%;
+  transform: rotate(90deg);
+}
+
+.tab.attacks .demon-button:active {
+  background: linear-gradient(45deg, #ff0000, #8b0000);
+  box-shadow: 0 0 20px #ff0000, 0 0 30px #ff0000, 0 0 40px #ff0000;
+}
+
+.tab.attacks .attack-button, .tab.attacks .severe-attack-button, .tab.attacks .add-question-button, .tab.attacks .delete-question-button {
   padding: 10px 20px;
   background-color: #444;
   color: #f5f5f5;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  width: auto; /* Adjust button width */
+  width: auto;
 }
 
-.tab.attacks .attack-button:hover, .tab.attacks .severe-attack-button:hover {
-  background-color: #ff5555; /* Red hover color */
+.tab.attacks .attack-button:hover, .tab.attacks .severe-attack-button:hover, .tab.attacks .add-question-button:hover, .tab.attacks .delete-question-button:hover {
+  background-color: #ff5555;
 }
 
 .tab.attacks .afflictions-table {
@@ -159,39 +220,62 @@
 }
 
 .tab.attacks .roll-affliction:hover {
-  background-color: #ff5555; /* Red hover color */
+  background-color: #ff5555;
 }
 
-.tab.attacks .collapsible {
-  border: 1px solid #444;
-  border-radius: 4px;
-  padding: 10px;
-}
-
-.tab.attacks .collapsible-content {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.3s ease-out;
-  border-top: 1px solid #444;
-}
-
-.tab.attacks .collapsible-content.collapsed {
-  max-height: 1000px; /* Adjust this value as needed */
-}
-
-.tab.attacks .collapsible-button {
-  background-color: #444;
-  color: #f5f5f5;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  padding: 10px 20px;
+.tab.attacks .editor-style {
   width: 100%;
-  text-align: left;
+  height: 85%;
 }
 
-.tab.attacks .collapsible-button:hover {
-  background-color: #ff5555; /* Red hover color */
+.tab.attacks .centered-label {
+  text-align: center;
+  font-family: "Cinzel", sans-serif;
+  font-weight: 400;
+  font-size: 1.5em;
+  letter-spacing: 0.05em;
+  color: #ff5555;
+  background-color: #000;
+  padding: 10px;
+  border-radius: 4px;
+  text-shadow: 0 0 10px #ff5555, 0 0 20px #ff5555, 0 0 30px #ff5555;
+  cursor: pointer;
+}
+
+.tab.attacks .centered-label:hover {
+  background-color: #333;
+}
+
+.tab.attacks .full-width {
+  grid-column: span 2;
+  height: 420px;
+}
+
+.tab.attacks .flexible-height {
+  height: auto;
+}
+
+.tab.attacks .question-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.tab.attacks .question-group label {
+  margin-bottom: 0;
+}
+
+.tab.attacks .collapsible-section {
+  display: none;
+}
+
+.tab.attacks .collapsible-section.collapsed {
+  display: none;
+}
+
+.tab.attacks .collapsible-section:not(.collapsed) {
+  display: block;
 }
 
 form .tab.attacks .form-group {

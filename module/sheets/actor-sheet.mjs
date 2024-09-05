@@ -69,6 +69,29 @@ export class CainActorSheet extends ActorSheet {
         relativeTo: this.actor,
       }
     );
+    if (this.actor.system.severeAttack) {
+      context.enrichedDescription = await TextEditor.enrichHTML(
+        this.actor.system.severeAttack.description,
+        {
+          secrets: this.document.isOwner,
+          async: true,
+          rollData: this.actor.getRollData(),
+          relativeTo: this.actor,
+        }
+      );
+    }
+
+    if (this.actor.system.attack) {
+      context.enrichedDescription = await TextEditor.enrichHTML(
+        this.actor.system.attack.description,
+        {
+          secrets: this.document.isOwner,
+          async: true,
+          rollData: this.actor.getRollData(),
+          relativeTo: this.actor,
+        }
+      );
+    }
 
     if (this.actor.system.severeAttack || this.actor.system.attack) {
       context.enrichedDescription = await TextEditor.enrichHTML(
@@ -1032,6 +1055,7 @@ export class CainActorSheet extends ActorSheet {
       this.actor.update({'system.currentUnboldedAgendaTasks': newAgendaUnboldedTasks});
     }
   }
+  
   _addQuestion(event) {
     event.preventDefault();
     const questions = this.actor.system.severeAbilityQuestions || [];

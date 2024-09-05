@@ -75,7 +75,8 @@ export default class CainNPC extends CainActorBase {
 
     
     schema.afflictions = new fields.ArrayField(new fields.StringField({ required: true, initial: " " }), { required: true, initial: [] });
-  
+    schema.severeAbilityQuestions = new fields.ArrayField(new fields.StringField({ required: true, initial: " " }), { required: true, initial: [] });
+    
     return schema;
   }
 
