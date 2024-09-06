@@ -3,30 +3,32 @@
   <div class="psyche-section" style="text-align: center; margin-bottom: 20px;">
     <div style="display: flex; justify-content: center; align-items: center;">
       {{#if system.psyche}}
-        <button class="psyche-roll-button" style="margin-right: 20px;">
-          Roll Psyche ({{system.psyche}}d6)
-        </button>
+      <button class="psyche-roll-button" style="margin-right: 20px;">
+        Roll Psyche ({{system.psyche}}d6)
+      </button>
       {{else}}
-        <button class="psyche-roll-button" style="margin-right: 20px;" disabled>
-          Roll Psyche (N/A)
-        </button>
+      <button class="psyche-roll-button" style="margin-right: 20px;" disabled>
+        Roll Psyche (N/A)
+      </button>
       {{/if}}
       <div class="psyche-burst-checkboxes" style="display: flex; align-items: center;">
         <label style="margin-right: 10px;">Psyche Burst Charges:</label>
         {{#if system.psycheBurst}}
-          {{#range 0 system.psycheBurst.max}}
-            <input type="checkbox" id="checkbox-{{index}}" class="psyche-burst-checkbox" {{#if (lt index ../system.psycheBurst.value)}}checked{{/if}} />
-            <label for="checkbox-{{index}}"></label>
-          {{/range}}
+        {{#range 0 system.psycheBurst.max}}
+        <input type="checkbox" id="checkbox-{{index}}" class="psyche-burst-checkbox" {{#if (lt index
+          ../system.psycheBurst.value)}}checked{{/if}} />
+        <label for="checkbox-{{index}}"></label>
+        {{/range}}
         {{else}}
-          <p>No Psyche Burst Data</p>
+        <p>No Psyche Burst Data</p>
         {{/if}}
       </div>
     </div>
     <div class="psyche-info" style="margin-top: 20px; text-align: left;">
       <p>Using any blasphemy power requires a psyche burst. Some can spend multiple for extra benefit.</p>
       <ul>
-        <li>You can always spend a psyche burst to add +1 advantage die to any roll (yours or an ally’s) by using your blasphemies in a creative way.</li>
+        <li>You can always spend a psyche burst to add +1 advantage die to any roll (yours or an ally’s) by using your
+          blasphemies in a creative way.</li>
         <li>You always start a mission with three psyche bursts.</li>
         <li>You can recover them by resting during a hunt (see pg. 38) or through the uses of abilities.</li>
       </ul>
@@ -34,170 +36,180 @@
   </div>
   <!-- My Agenda Section -->
   <div class="my-agenda-section" style="margin-bottom: 20px;">
-    <h2 title="Drag new agenda here to swap">    
-    {{#if currentAgenda }}
+    <h2 title="Drag new agenda here to swap">
+      {{#if currentAgenda }}
       {{currentAgenda.name}}
-    {{else}}
+      {{else}}
       <p class="psychedelic-text">Drag agenda onto your sheet.</p>
-    {{/if}}
+      {{/if}}
     </h2>
     <div class="editable-agenda">
       <div class="agenda-items">
         <h3>Agenda Tasks</h3>
         <ul id="editable-agenda-items" class="items-list">
           {{#each currentUnboldedAgendaTasks}}
-            <li class='item flexrow'>
-              <p data-index="{{@index}}" class="agenda-task" style="font-weight: {{#if this.system.isBold}}bold{{else}}normal{{/if}};">{{this.system.task}}</p>
-              <div class="item-controls">
-                <a class="item-control agenda-task-to-chat" data-index="{{@index}}" title="Send to Chat">
-                  <i class="fas fa-comment"></i>
-                </a>
-                <a class="item-control remove-task-button" data-index="{{@index}}" title="Remove">
-                  <i class="fas fa-trash"></i>
-                </a>
-              </div>
-            </li>
+          <li class='item flexrow'>
+            <p data-index="{{@index}}" class="agenda-task"
+              style="font-weight: {{#if this.system.isBold}}bold{{else}}normal{{/if}};">{{this.system.task}}</p>
+            <div class="item-controls">
+              <a class="item-control agenda-task-to-chat" data-index="{{@index}}" title="Send to Chat">
+                <i class="fas fa-comment"></i>
+              </a>
+              <a class="item-control remove-task-button" data-index="{{@index}}" title="Remove">
+                <i class="fas fa-trash"></i>
+              </a>
+            </div>
+          </li>
           {{/each}}
           {{#each currentBoldedAgendaTasks}}
-            <li class='item flexrow'>
-              <p data-index="{{@index}}" class="agenda-task" style="font-weight: {{#if this.system.isBold}}bold{{else}}normal{{/if}};">{{this.system.task}}</p>
-              <div class="item-controls">
-                <a class="item-control agenda-task-to-chat" data-index="{{@index}}" data-bold title="Send to Chat">
-                  <i class="fas fa-comment"></i>
-                </a>
-                <a class="item-control remove-task-button" data-index="{{@index}}" data-bold title="Remove">
-                  <i class="fas fa-trash"></i>
-                </a>
-              </div>
-            </li>
+          <li class='item flexrow'>
+            <p data-index="{{@index}}" class="agenda-task"
+              style="font-weight: {{#if this.system.isBold}}bold{{else}}normal{{/if}};">{{this.system.task}}</p>
+            <div class="item-controls">
+              <a class="item-control agenda-task-to-chat" data-index="{{@index}}" data-bold title="Send to Chat">
+                <i class="fas fa-comment"></i>
+              </a>
+              <a class="item-control remove-task-button" data-index="{{@index}}" data-bold title="Remove">
+                <i class="fas fa-trash"></i>
+              </a>
+            </div>
+          </li>
           {{/each}}
         </ul>
         <button class="add-task-button" style="color:aliceblue">Add Task</button>
       </div>
-      
+
       <div class="agenda-abilities">
         <h3>Agenda Abilities</h3>
         <ul id="editable-agenda-abilities" class="items-list">
           {{#each currentAgendaAbilities}}
-            <li>
-              <span data-index="{{@index}}" data-id="{{this.id}}" class="agenda-ability" title="{{this.system.abilityDescription}}">{{this.system.abilityName}}</span>
-              <a class="item-control agenda-ability-to-chat" data-index="{{@index}}" title="Send to Chat">
-                <i class="fas fa-comment"></i>
-              </a>
-              <a class="item-control remove-ability-button" data-index="{{@index}}" title="Remove">
-                <i class="fas fa-trash"></i>
-              </a>
-            </li>
+          <li>
+            <span data-index="{{@index}}" data-id="{{this.id}}" class="agenda-ability"
+              title="{{this.system.abilityDescription}}">{{this.system.abilityName}}</span>
+            <a class="item-control agenda-ability-to-chat" data-index="{{@index}}" title="Send to Chat">
+              <i class="fas fa-comment"></i>
+            </a>
+            <a class="item-control remove-ability-button" data-index="{{@index}}" title="Remove">
+              <i class="fas fa-trash"></i>
+            </a>
+          </li>
           {{/each}}
         </ul>
-      <div class="form-group">
-        <div style="display: inline-block; margin-right: 10px">
-          <label for="selectedAgenda" style="font-size: smaller;">Available Abilities:</label>
+        <div class="form-group">
+          <div style="display: inline-block; margin-right: 10px">
+            <label for="selectedAgenda" style="font-size: smaller;">Available Abilities:</label>
             <select name="selectedAgenda" id="selectedAgenda">
               {{#each currentAgendaAvailableAbilities}}
-                <option value="{{this.id}}" data-description="{{this.system.abilityDescription}}">{{this.name}}</option>
+              <option value="{{this.id}}" data-description="{{this.system.abilityDescription}}">{{this.name}}</option>
               {{/each}}
             </select>
+          </div>
+          <button type="button" id="add-agenda-ability-button" class="add-agenda-ability-button" {{#unless
+            currentAgendaAvailableAbilities.length}} disabled {{/unless}}>Add Ability</button>
         </div>
-        <button type="button" id="add-agenda-ability-button" class="add-agenda-ability-button" {{#unless currentAgendaAvailableAbilities.length}} disabled {{/unless}}>Add Ability</button>
-      </div>
-      <div class="ability-description-card">
-        <h4>Ability Description</h4>
-        <p id="abilityDescription"></p>
-      </div>
+        <div class="ability-description-card">
+          <h4>Ability Description</h4>
+          <p id="abilityDescription"></p>
+        </div>
       </div>
     </div>
   </div>
   <!-- Items Section -->
   <div class="items-section" style="width: 100%;">
-  <!-- Blasphemy Powers -->
-  <div class="blasphemy" style="width: 100%;">
-    <h1>Blasphemies</h1>
-    {{#unless blasphemyData}}
-    <div class="blasphemy-powers">
-      <p class="psychedelic-text">Drag blasphemy onto your sheet.</p>
-    </div>
-    {{/unless}}
-    {{#each blasphemyData}}
-    <div class="blasphemy-powers">
-      <div class="blasphemy-header">
-        <img src={{blasphemy.img}} alt="Blasphemy Image" class="blasphemy-image">
-        <h2>{{blasphemy.system.blasphemyName}}
-          <a class="item-control remove-blasphemy-button" data-id="{{blasphemy.id}}" title="Remove">
-            <i class="fas fa-trash"></i>
-          </a>
-          <a class="animation-toggle" title="Toggle Animation">
-            <input type="checkbox" id="toggle-animation" class="toggle-animation">
-            <label for="toggle-animation">
-              <i class="fas fa-sync-alt"></i> <!-- Icon for enabled state -->
-              <i class="fas fa-ban"></i> <!-- Icon for disabled state -->
-            </label>
-          </a>
-        </h2>
+    <!-- Blasphemy Powers -->
+    <div class="blasphemy" style="width: 100%;">
+      <h1>Blasphemies</h1>
+      {{#unless blasphemyData}}
+      <div class="blasphemy-powers">
+        <p class="psychedelic-text">Drag blasphemy onto your sheet.</p>
       </div>
-      <div class="blasphemy-details">
-        <h3>Passive{{#if (gt passives.length 1)}}s{{/if}}</h3>
-        <ul class="editable-blasphemy-powers">
-          {{#each passives}}
-          <li>
-            <h4>
-              <span data-id="{{this.id}}" class="blasphemy-passive" title="{{this.system.powerDescription}}">{{this.system.powerName}}</span>
-              <a class="item-control blasphemy-power-to-chat" data-id="{{this.id}}" title="Send to Chat">
-                <i class="fas fa-comment"></i>
-              </a>
-              <a class="item-control remove-blasphemy-power-button" data-id="{{this.id}}" title="Remove">
-                <i class="fas fa-trash"></i>
-              </a>
-            </h4>
-            <div class="power-description-card">          
-              <h4>Keywords</h4>
-              <p>{{this.system.keywords}}</p>
-              <h4>Power Description</h4>
-              <p>{{formatted this.system.powerDescription ../../system.CATLEVEL.value}}</p>
-            </div>
-          </li>
-          {{/each}}
-        </ul>
-        <h3>Powers</h3>
-        <ul>
-          {{#unless powers}}
-          <li>No Powers</li>
-          {{/unless}}
-          {{#each powers}}
-          <li>
-            <h4>
-              <span data-id="{{this.id}}" class="blasphemy-power" title="{{this.system.powerDescription}}">{{this.system.powerName}}</span>
-              <a class="item-control blasphemy-power-to-chat" data-id="{{this.id}}" title="Send to Chat">
-                <i class="fas fa-comment"></i>
-              </a>
-              <a class="item-control remove-blasphemy-power-button" data-id="{{this.id}}" title="Remove">
-                <i class="fas fa-trash"></i>
-              </a>
-            </h4>
-            <div class="power-description-card">          
-              <h4>Keywords</h4>
-              <p>{{this.system.keywords}}</p>
-              <h4>Power Description</h4>
-              <p>{{formatted this.system.powerDescription ../../system.CATLEVEL.value}}</p>
-            </div>
-          </li>
-          {{/each}}
-        </ul>
-        <div class="form-group">
-          <label for="selectedPower" class="labelSelectedPower">Available Powers:</label>
-          <select name="selectedPower" class="selectedPower">
-            {{#each availablePowers}}
-            <option value="{{this.id}}" data-description="{{this.system.powerDescription}}" data-keywords="{{this.system.keywords}}">{{this.system.powerName}}</option>
+      {{/unless}}
+      {{#each blasphemyData}}
+      <div class="blasphemy-powers">
+        <div class="blasphemy-header">
+          <img src={{blasphemy.img}} alt="Blasphemy Image" class="blasphemy-image">
+          <h2>{{blasphemy.system.blasphemyName}}
+            <a class="item-control remove-blasphemy-button" data-id="{{blasphemy.id}}" title="Remove">
+              <i class="fas fa-trash"></i>
+            </a>
+            <a class="animation-toggle" title="Toggle Animation">
+              <input type="checkbox" id="toggle-animation" class="toggle-animation">
+              <label for="toggle-animation">
+                <i class="fas fa-sync-alt"></i> <!-- Icon for enabled state -->
+                <i class="fas fa-ban"></i> <!-- Icon for disabled state -->
+              </label>
+            </a>
+          </h2>
+        </div>
+        <div class="blasphemy-details">
+          <h3>Passive{{#if (gt passives.length 1)}}s{{/if}}</h3>
+          <ul class="editable-blasphemy-powers">
+            {{#each passives}}
+            <li>
+              <h4>
+                <span data-id="{{this.id}}" class="blasphemy-passive"
+                  title="{{this.system.powerDescription}}">{{this.system.powerName}}</span>
+                <a class="item-control blasphemy-power-to-chat" data-id="{{this.id}}" title="Send to Chat">
+                  <i class="fas fa-comment"></i>
+                </a>
+                <a class="item-control remove-blasphemy-power-button" data-id="{{this.id}}" title="Remove">
+                  <i class="fas fa-trash"></i>
+                </a>
+              </h4>
+              <div class="power-description-card">
+                <h4>Keywords</h4>
+                <p>{{this.system.keywords}}</p>
+                <h4>Power Description</h4>
+                <p>{{formatted this.system.powerDescription ../../system.CATLEVEL.value}}</p>
+              </div>
+            </li>
             {{/each}}
-          </select>
-          <button type="button" class="add-blasphemy-power-button" {{#unless availablePowers.length}} disabled {{/unless}}>Add Power</button>
+          </ul>
+          <h3>Powers</h3>
+          <ul>
+            {{#unless powers}}
+            <li>No Powers</li>
+            {{/unless}}
+            {{#each powers}}
+            <li>
+              <h4>
+                <span data-id="{{this.id}}" class="blasphemy-power"
+                  title="{{this.system.powerDescription}}">{{this.system.powerName}}</span>
+                <a class="item-control blasphemy-power-to-chat" data-id="{{this.id}}" title="Send to Chat">
+                  <i class="fas fa-comment"></i>
+                </a>
+                <a class="item-control remove-blasphemy-power-button" data-id="{{this.id}}" title="Remove">
+                  <i class="fas fa-trash"></i>
+                </a>
+              </h4>
+              <div class="power-description-card">
+                <h4>Keywords</h4>
+                <p>{{this.system.keywords}}</p>
+                <h4>Power Description</h4>
+                <p>{{formatted this.system.powerDescription ../../system.CATLEVEL.value}}</p>
+              </div>
+            </li>
+            {{/each}}
+          </ul>
+          <div class="form-group">
+            <label for="selectedPower" class="labelSelectedPower">Available Powers:</label>
+            <select name="selectedPower" class="selectedPower">
+              {{#each availablePowers}}
+              <option value="{{this.id}}" data-description="{{this.system.powerDescription}}"
+                data-keywords="{{this.system.keywords}}">{{this.system.powerName}}</option>
+              {{/each}}
+            </select>
+            <button type="button" class="add-blasphemy-power-button" {{#unless availablePowers.length}} disabled
+              {{/unless}}>Add Power</button>
+          </div>
+          <div class="available-power-description-card">
+            <h4>Keywords</h4>
+            <p class="powerKeywords"></p>
+            <h4>Power Description</h4>
+            <p class="powerDescription"></p>
+          </div>
         </div>
-        <div class="available-power-description-card">          
-          <h4>Keywords</h4>
-          <p class="powerKeywords"></p>
-          <h4>Power Description</h4>
-          <p class="powerDescription"></p>
-        </div>
+      </div>
       {{/each}}
       {{#if currentUnlinkedBlasphemyPowers.length}}
       <div class="blasphemy-powers">
@@ -217,12 +229,9 @@
         </ul>
       </div>
       {{/if}}
-      </div>
-    </div>
     </div>
   </div>
 </div>
-
 <style>
   /* Hover effects for agenda tasks and abilities */
   .abilities-page .agenda-task:hover,
@@ -233,11 +242,12 @@
     cursor: pointer;
     text-decoration: underline;
   }
+
   /* Existing styles for context */
   .abilities-page {
     padding: 20px;
   }
-  
+
   .abilities-page .psyche-roll-button {
     background: linear-gradient(45deg, #ff00cc, #3333ff);
     color: #fff;
@@ -251,16 +261,16 @@
     text-shadow: 1px 1px 2px #000;
     transition: background 0.3s;
   }
-  
+
   .abilities-page .psyche-roll-button:hover {
     background: linear-gradient(45deg, #3333ff, #ff00cc);
   }
-  
+
   .abilities-page .psyche-burst-checkboxes input[type="checkbox"] {
     display: none;
   }
-  
-  .abilities-page .psyche-burst-checkboxes input[type="checkbox"] + label {
+
+  .abilities-page .psyche-burst-checkboxes input[type="checkbox"]+label {
     display: inline-block;
     padding: 0;
     background: url('systems/cain/assets/brain.png') no-repeat;
@@ -269,28 +279,29 @@
     background-size: cover;
     position: relative;
   }
-  
-  .abilities-page .psyche-burst-checkboxes input[type="checkbox"] + label::before {
+
+  .abilities-page .psyche-burst-checkboxes input[type="checkbox"]+label::before {
     content: '';
     display: block;
     width: 24px;
     height: 24px;
-    border: 3px solid purple; /* Adjust the thickness here */
+    border: 3px solid purple;
+    /* Adjust the thickness here */
     border-radius: 50%;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
   }
-  
-  .abilities-page .psyche-burst-checkboxes input[type="checkbox"]:checked + label::before {
+
+  .abilities-page .psyche-burst-checkboxes input[type="checkbox"]:checked+label::before {
     background-color: purple;
   }
-  
+
   .abilities-page .items-section {
     margin-top: 20px;
   }
-  
+
   .abilities-page .items-list {
     background-color: #1a1a1a;
     color: #e0e0e0;
@@ -298,21 +309,22 @@
     padding: 20px;
     border: 1px solid #444;
   }
-  
+
   .abilities-page .item-name h4 {
     color: #ff0000;
   }
-  
+
   .abilities-page .item-controls a {
     color: #e0e0e0;
     margin-left: 5px;
   }
-  
+
   .abilities-page .item-controls a:hover {
     color: #ff0000;
   }
-  
-  .abilities-page .add-agenda-ability-button, .abilities-page .create-blasphemy-button {
+
+  .abilities-page .add-agenda-ability-button,
+  .abilities-page .create-blasphemy-button {
     background-color: #1a1a1a;
     color: #e0e0e0;
     border: 1px solid #444;
@@ -320,12 +332,14 @@
     cursor: pointer;
     margin-top: 10px;
   }
-  
-  .abilities-page .add-agenda-ability-button:hover, .abilities-page .create-blasphemy-button:hover {
+
+  .abilities-page .add-agenda-ability-button:hover,
+  .abilities-page .create-blasphemy-button:hover {
     background-color: #444;
   }
-  
-  .abilities-page .add-blasphemy-power-button, .abilities-page .create-blasphemy-button {
+
+  .abilities-page .add-blasphemy-power-button,
+  .abilities-page .create-blasphemy-button {
     background-color: #1a1a1a;
     color: #e0e0e0;
     border: 1px solid #444;
@@ -333,11 +347,12 @@
     cursor: pointer;
     margin-top: 10px;
   }
-  
-  .abilities-page .add-blasphemy-power-button:hover, .abilities-page .create-blasphemy-button:hover {
+
+  .abilities-page .add-blasphemy-power-button:hover,
+  .abilities-page .create-blasphemy-button:hover {
     background-color: #444;
   }
-  
+
   .abilities-page .psychedelic-text {
     color: #9933ff;
     font-family: "Lacquer", system-ui;
@@ -349,69 +364,81 @@
     font-weight: calc(100 + (900 - 100) * random());
     font-size: calc(16px + (32px - 16px) * random());
   }
-  
-  .abilities-page .agenda-items, .abilities-page .agenda-abilities {
+
+  .abilities-page .agenda-items,
+  .abilities-page .agenda-abilities {
     width: 48%;
   }
-  
+
   @keyframes psychedelic-animation {
     from {
       color: #ff00cc;
     }
+
     to {
       color: #3333ff;
     }
   }
-  
+
   .abilities-page .my-agenda-section {
     margin-bottom: 20px;
-    text-align: center; /* Center the My Agenda section */
+    text-align: center;
+    /* Center the My Agenda section */
   }
-  
+
   .abilities-page .editable-agenda {
-    display: flex; /* Use flexbox to align items side by side */
-    justify-content: space-around; /* Space between the two sections */
-    text-align: left; /* Align text to the left within the editable agenda */
+    display: flex;
+    /* Use flexbox to align items side by side */
+    justify-content: space-around;
+    /* Space between the two sections */
+    text-align: left;
+    /* Align text to the left within the editable agenda */
   }
-  
+
   .abilities-page .editable-agenda h3 {
     margin-top: 10px;
     margin-bottom: 10px;
     color: #e0e0e0;
     font-family: 'Courier New', Courier, monospace;
   }
-  
+
   .abilities-page .items-list {
     background-color: #1a1a1a;
     color: #e0e0e0;
     font-family: 'Courier New', Courier, monospace;
-    padding: 10px; /* Reduced padding */
+    padding: 10px;
+    /* Reduced padding */
     border: 1px solid #444;
     list-style-type: none;
     margin: 0;
     padding-left: 0;
-    width: 100%; /* Make the lists take up less space */
+    width: 100%;
+    /* Make the lists take up less space */
   }
-  
+
   .abilities-page .item {
     display: flex;
     align-items: center;
     margin-bottom: 5px;
   }
-  
+
   .abilities-page .item textarea {
     flex: 1;
-    padding: 5px; /* Reduced padding */
+    padding: 5px;
+    /* Reduced padding */
     border: 1px solid #444;
     background-color: #333;
     color: #e0e0e0;
     border-radius: 4px;
     margin-bottom: 5px;
-    font-size: 12px; /* Smaller font size */
-    width: 100%; /* Make the text areas wider */
-    resize: vertical; /* Allow vertical resizing */
+    font-size: 12px;
+    /* Smaller font size */
+    width: 100%;
+    /* Make the text areas wider */
+    resize: vertical;
+    /* Allow vertical resizing */
   }
-  
+
   .abilities-page .item button {
     margin-left: 5px;
     padding: 5px 10px;
@@ -419,27 +446,30 @@
     color: #e0e0e0;
     border: 1px solid #444;
     cursor: pointer;
-    font-size: 12px; /* Smaller font size */
+    font-size: 12px;
+    /* Smaller font size */
   }
-  
+
   .abilities-page .item button:hover {
     background-color: #444;
   }
-  
+
   .abilities-page .create-agenda-button {
     background-color: #1a1a1a;
     color: #e0e0e0;
     border: 1px solid #444;
-    padding: 5px 10px; /* Reduced padding */
+    padding: 5px 10px;
+    /* Reduced padding */
     cursor: pointer;
     margin-top: 10px;
-    font-size: 12px; /* Smaller font size */
+    font-size: 12px;
+    /* Smaller font size */
   }
-  
+
   .abilities-page .create-agenda-button:hover {
     background-color: #444;
   }
-  
+
   .abilities-page .blasphemy h3 {
     color: #ff00cc;
     font-family: "Lacquer", system-ui;
@@ -477,7 +507,7 @@
     vertical-align: middle;
   }
 
-  
+
   .abilities-page .form-group {
     margin-top: 10px;
   }
@@ -521,7 +551,7 @@
     color: #1a1a1a;
   }
 
-    .abilities-page .power-description-card {
+  .abilities-page .power-description-card {
     font-family: "Courier New", Courier, monospace;
     background-color: #1a1a1a;
     color: #ff00cc;
@@ -611,29 +641,39 @@
     transform: scale(0.4) rotate(-10deg);
     background-color: rgba(0, 0, 0, 0);
     box-shadow: 0 0 15px rgba(128, 0, 128, 0);
-    color: #4b0082; /* Initial dark purple text color */
+    color: #4b0082;
+    /* Initial dark purple text color */
   }
 
   .abilities-page .power-description-card.visible {
     opacity: 1;
-    max-height: 1000px; /* Set a high enough value to accommodate the content */
-    transform: scale(0.95); /* Remove fixed rotation */
-    background-color: rgba(75, 0, 130, 0.9); /* Dark purple background */
-    box-shadow: 0 0 30px rgba(138, 43, 226, 1), 0 0 50px rgba(75, 0, 130, 0.7); /* Psychedelic glowing effect */
-    color: #dda0dd; /* Light purple text color */
+    max-height: 1000px;
+    /* Set a high enough value to accommodate the content */
+    transform: scale(0.95);
+    /* Remove fixed rotation */
+    background-color: rgba(75, 0, 130, 0.9);
+    /* Dark purple background */
+    box-shadow: 0 0 30px rgba(138, 43, 226, 1), 0 0 50px rgba(75, 0, 130, 0.7);
+    /* Psychedelic glowing effect */
+    color: #dda0dd;
+    /* Light purple text color */
   }
 
 
-  .abilities-page .available-power-description-card{
+  .abilities-page .available-power-description-card {
     margin-top: 10px;
     opacity: 1;
-    max-height: 1000px; /* Set a high enough value to accommodate the content */
+    max-height: 1000px;
+    /* Set a high enough value to accommodate the content */
     padding: 10px;
     border: 1px solid #444;
     border-radius: 4px;
-    background-color: rgba(75, 0, 130, 0.9); /* Dark purple background */
-    box-shadow: 0 0 30px rgba(138, 43, 226, 1), 0 0 50px rgba(75, 0, 130, 0.7); /* Psychedelic glowing effect */
-    color: #dda0dd; /* Light purple text color */
+    background-color: rgba(75, 0, 130, 0.9);
+    /* Dark purple background */
+    box-shadow: 0 0 30px rgba(138, 43, 226, 1), 0 0 50px rgba(75, 0, 130, 0.7);
+    /* Psychedelic glowing effect */
+    color: #dda0dd;
+    /* Light purple text color */
   }
 
 
@@ -648,27 +688,29 @@
     display: none;
   }
 
-  .toggle-animation + label {
+  .toggle-animation+label {
     position: relative;
     cursor: pointer;
     user-select: none;
   }
 
-  .toggle-animation + label .fa-sync-alt {
-    display: inline; /* Show enabled icon by default */
+  .toggle-animation+label .fa-sync-alt {
+    display: inline;
+    /* Show enabled icon by default */
   }
 
-  .toggle-animation + label .fa-ban {
-    display: none; /* Hide disabled icon by default */
+  .toggle-animation+label .fa-ban {
+    display: none;
+    /* Hide disabled icon by default */
   }
 
-  .toggle-animation:checked + label .fa-sync-alt {
-    display: none; /* Hide enabled icon when checked */
+  .toggle-animation:checked+label .fa-sync-alt {
+    display: none;
+    /* Hide enabled icon when checked */
   }
 
-  .toggle-animation:checked + label .fa-ban {
-    display: inline; /* Show disabled icon when checked */
+  .toggle-animation:checked+label .fa-ban {
+    display: inline;
+    /* Show disabled icon when checked */
   }
-
-
 </style>
