@@ -21,7 +21,7 @@
       box-sizing: border-box;
     }
 
-    .sin-mark-ability-form .sheet-header {
+    .sin-mark-ability-form .sin-mark-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -30,11 +30,22 @@
       margin-bottom: 20px;
     }
 
+    .sin-mark-ability-form .profile-img-container {
+      display: flex;
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      margin-right: 20px;
+      object-fit: cover;
+      border: 2px solid #555;
+    }
+
     .sin-mark-ability-form .profile-img {
+      flex: 0 0 100px;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
       border: 3px solid #ff0000;
-      width: 60px;
-      height: 60px;
-      object-fit: contain;
       box-shadow: 0 0 10px #ff0000;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
@@ -116,7 +127,7 @@
       color: #ff0000;
     }
 
-    .sin-mark-ability-form .form-group label :hover {
+    .sin-mark-ability-form .form-group label:hover {
       pointer-events: 'click';
       color: #cc0000;
       text-decoration: underline;
@@ -124,13 +135,15 @@
 
   </style>
 
-  <header class='sheet-header'>
-    <img
-      class='profile-img'
-      src='{{item.img}}'
-      data-edit='img'
-      title='{{item.name}}'
-    />
+  <header class='sin-mark-header'>
+    <div class="profile-img-container">
+      <img
+        class='profile-img'
+        src='{{item.img}}'
+        data-edit='img'
+        title='{{item.name}}'
+      />
+    </div>
     <div class='header-fields'>
       <h1 class='charname'><input
           name='name'

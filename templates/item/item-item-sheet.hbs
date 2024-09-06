@@ -1,11 +1,13 @@
 <form class='{{cssClass}} item-kit' autocomplete='off'>
-  <header class='sheet-header'>
-    <img
-      class='profile-img'
-      src='{{item.img}}'
-      data-edit='img'
-      title='{{item.name}}'
-    />
+  <header class='item-kit-header'>
+    <div class="profile-img-container">
+      <img
+        class='profile-img'
+        src='{{item.img}}'
+        data-edit='img'
+        title='{{item.name}}'
+      />
+    </div>
     <div class='header-fields'>
       <h1 class='charname'><input
           name='name'
