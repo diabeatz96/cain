@@ -245,7 +245,9 @@ img {
 }
 .cain .sheet-header .profile-img {
   flex: 0 0 100px;
-  height: 100px;
+  height: 100%;
+  width: 100%;
+  max-height: fit-content;
   margin-right: 10px;
 }
 /* .cain .sheet-header .header-fields {
@@ -686,8 +688,101 @@ img {
 /* end homebrew styles */
 
 
-/* Character Sheet */
+.character-sheet {
+  .sheet-header {
+    display: flex;
+    align-items: flex-start;
+    padding: 10px;
+    max-width: 600px;
+    margin: 0 auto;
+    border: 1px solid #ccc;
+  }
 
+  .profile-section {
+    flex: 1;
+    max-width: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .sheet-header .profile-img {
+    flex: 0 0 100px;
+    height: 500px;
+    max-height: fit-content;
+    margin-right: 10px;
+  }
+
+  .header-fields {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-left: 10px;
+  }
+
+  .name-cat-section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .name-section {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  .cat-level-section {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex: 0 0 60;
+  }
+
+  .cat-level-img {
+    border-radius: 50%;
+    border: 2px solid #660066;
+  }
+
+  .xid-section,
+  .agenda-blasphemy-section {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .grid-2col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
+  }
+
+  .flex-group-center {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .mob-psycho-label {
+    font-weight: bold;
+    font-size: 1em;
+  }
+
+  .mob-psycho-input {
+    width: 100%;
+    padding: 5px;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    border-radius: 0;
+    background: none;
+  }
+
+  .mob-psycho-input:focus {
+    outline: none;
+    border-bottom: 1px solid #660066;
+  }
+}
 .mob-psycho-theme {
   /* General theme styles */
   background-color: #0d0d0d;
@@ -704,12 +799,16 @@ img {
   background: #ffffff;
 }
 
+
 .mob-psycho-header {
   background-color: #1a1a1a;
   border-bottom: 2px solid #00bfff; /* Jujutsu Kaisen inspired accent color */
   padding: 10px;
   text-transform: uppercase;
   letter-spacing: 2px;
+  display: flex;
+  align-items: flex-start;
+  padding: 20px;
 }
 
 .mob-psycho-img {

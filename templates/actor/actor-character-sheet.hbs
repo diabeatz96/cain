@@ -1,62 +1,61 @@
 <form class="{{cssClass}} {{actor.type}} flexcol mob-psycho-theme no-border" autocomplete="off">
 
   {{!-- Sheet Header --}}
-  <header class="sheet-header mob-psycho-header character-drop-target">
+  <header class="sheet-header character-sheet mob-psycho-header character-drop-target">
+    <div class="profile-section">
+      <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" />
+    </div>
 
-    <img class="profile-img mob-psycho-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="200" width="200"/>
-                                   
     <div class="header-fields mob-psycho-header-fields">
-      <h1 class="charname mob-psycho-charname"><input name="name" type="text" value="{{actor.name}}" placeholder="Name"/></h1>
-
-      <div class="grid grid-4col">
-        <div class="flex-group-center mob-psycho-flex-group">
-          <label for="system.sex" class="resource-label mob-psycho-label">Sex</label>
-          <input type="text" name="system.sex" value="{{system.sex}}" data-dtype="String" class="mob-psycho-input"/>
+      <div class="name-cat-section">
+        <div class="name-section">
+          <label for="name" class="resource-label mob-psycho-label">Name</label>
+          <input name="name" type="text" value="{{actor.name}}" placeholder="Name" class="mob-psycho-input" />
         </div>
-        
-        <div class="flex-group-center mob-psycho-flex-group">
-          <label for="system.height" class="resource-label mob-psycho-label">Height</label>
-          <input type="text" name="system.height" value="{{system.height}}" data-dtype="String" class="mob-psycho-input"/>
-        </div>
-
-        <div class="flex-group-center mob-psycho-flex-group">
-          <label for="system.weight" class="resource-label mob-psycho-label">Weight</label>
-          <input type="text" name="system.weight" value="{{system.weight}}" data-dtype="String" class="mob-psycho-input"/>
-        </div>
-
-        <div class="flex-group-center mob-psycho-flex-group">
-          <label for="system.hair" class="resource-label mob-psycho-label">Hair</label>
-          <input type="text" name="system.hair" value="{{system.hair}}" data-dtype="String" class="mob-psycho-input"/>
-        </div>
-
-        <div class="flex-group-center mob-psycho-flex-group">
-          <label for="system.eyes" class="resource-label mob-psycho-label">Eyes</label>
-          <div class="resource-content flexrow flex-center flex-between mob-psycho-resource-content">
-            <input type="text" name="system.eyes" value="{{system.eyes}}" data-dtype="String" class="mob-psycho-input"/>
-          </div>
-        </div>
-
-        <div class="flex-group-center mob-psycho-flex-group">
-          <label for="system.agenda" class="resource-label mob-psycho-label">Agenda</label>
-          <div class="resource-content flexrow flex-center flex-between mob-psycho-resource-content">
-            <input type="text" name="system.agenda" value="{{system.agenda}}" data-dtype="String" class="mob-psycho-input"/>
-          </div>
-        </div>
-
-        <div class="flex-group-center mob-psycho-flex-group">
-          <label for="system.blasphemy" class="resource-label mob-psycho-label">Blasphemy</label>
-          <div class="resource-content flexrow flex-center flex-between mob-psycho-resource-content">
-            <input type="text" name="system.blasphemy" value="{{system.blasphemy}}" data-dtype="String" class="mob-psycho-input"/>
-          </div>
-        </div>
-
-        <div class="flex-group-center mob-psycho-flex-group">
-          <label for="system.XID" class="resource-label mob-psycho-label">XID</label>
-          <div style="padding: 5px">
-            <input type="text" name="system.XID" value="{{system.XID}}" data-dtype="Number" class="mob-psycho-input"/>
-          </div>
+        <div class="cat-level-section">
+          <img class="cat-level-img" src="systems/cain/assets/CAT/CAT{{system.CATLEVEL.value}}.png" alt="Cat Level" />
         </div>
       </div>
+
+      <div class="xid-section">
+        <label for="system.XID" class="resource-label mob-psycho-label">XID</label>
+        <input type="text" name="system.XID" value="{{system.XID}}" data-dtype="Number" class="mob-psycho-input" />
+      </div>
+
+      <div class="agenda-blasphemy-section">
+        <div class="flex-group-center mob-psycho-flex-group">
+          <label for="system.agenda" class="resource-label mob-psycho-label">Agenda</label>
+          <input type="text" name="system.agenda" value="{{system.agenda}}" data-dtype="String" class="mob-psycho-input" />
+        </div>
+        <div class="flex-group-center mob-psycho-flex-group">
+          <label for="system.blasphemy" class="resource-label mob-psycho-label">Blasphemy</label>
+          <input type="text" name="system.blasphemy" value="{{system.blasphemy}}" data-dtype="String" class="mob-psycho-input" />
+        </div>
+      </div>
+
+      <div class="grid-2col">
+        <div class="flex-group-center mob-psycho-flex-group">
+          <label for="system.sex" class="resource-label mob-psycho-label">Sex</label>
+          <input type="text" name="system.sex" value="{{system.sex}}" data-dtype="String" class="mob-psycho-input" />
+        </div>
+        <div class="flex-group-center mob-psycho-flex-group">
+          <label for="system.height" class="resource-label mob-psycho-label">Height</label>
+          <input type="text" name="system.height" value="{{system.height}}" data-dtype="String" class="mob-psycho-input" />
+        </div>
+        <div class="flex-group-center mob-psycho-flex-group">
+          <label for="system.weight" class="resource-label mob-psycho-label">Weight</label>
+          <input type="text" name="system.weight" value="{{system.weight}}" data-dtype="String" class="mob-psycho-input" />
+        </div>
+        <div class="flex-group-center mob-psycho-flex-group">
+          <label for="system.hair" class="resource-label mob-psycho-label">Hair</label>
+          <input type="text" name="system.hair" value="{{system.hair}}" data-dtype="String" class="mob-psycho-input" />
+        </div>
+        <div class="flex-group-center mob-psycho-flex-group">
+          <label for="system.eyes" class="resource-label mob-psycho-label">Eyes</label>
+          <input type="text" name="system.eyes" value="{{system.eyes}}" data-dtype="String" class="mob-psycho-input" />
+        </div>
+      </div>
+    </div>
   </header>
 
   {{!-- Sheet Tab Navigation --}}
