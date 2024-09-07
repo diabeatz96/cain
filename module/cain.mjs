@@ -123,6 +123,15 @@ Hooks.once('init', async function () {
     }
   });
 
+  
+  game.settings.register('cain', 'accessibilityModeChosen', {
+    name: 'Accessibility Mode Chosen',
+      scope: 'client',
+      config: true,
+      type: Boolean,
+      default: false,
+    });
+
   game.settings.register('cain', 'accessibilityMode', {
     name: 'Enable Accessibility Mode',
     hint: 'Toggle accessibility colors and changes for the player sheet.',
@@ -347,6 +356,11 @@ Handlebars.registerHelper('CainOffset', function(value, offset, options) {
 
 Hooks.once('ready', function () {
   // Function to create and insert the Talisman button
+
+  const accessibilityModeChosen = game.settings.get('cain', 'accessibilityModeChosen');
+  if (!accessibilityModeChosen) {
+    showAccessibilityChoiceDialog();
+  }
 
   function addPlayerOverviewButton() {
     const showPlayerOverview = game.settings.get('cain', 'showPlayerOverview');
@@ -580,6 +594,76 @@ async function createItemMacro(data, slot) {
   }
   game.user.assignHotbarMacro(macro, slot);
   return false;
+}
+
+function showAccessibilityChoiceDialog() {
+  const dialogContent = `
+    <div style="text-align: center;">
+      <h2>Choose Your Preferred Style Mode</h2>
+      <div style="display: flex; justify-content: space-around; margin-top: 20px;">
+        <div>
+          <img src="systems/cain/assets/UI_Normal.png" alt="Normal Mode" style="cursor: pointer;" id="normal-mode">
+          <p>Normal Mode</p>
+        </div>
+        <div>
+          <img src="systems/cain/assets/UI_Plain.png" alt="Accessibility Mode" style="cursor: pointer;" id="accessibility-mode">
+          <p>Accessibility Mode</p>
+        </div>
+      </div>
+      <p style="margin-top: 20px;">You can always change your preferred style in the settings.</p>
+    </div>
+  `;
+
+  let dialog = new Dialog({
+    title: 'Accessibility Mode',
+    content: dialogContent,
+    buttons: {},
+    close: () => {},
+    render: html => {
+      dialog.setPosition({ width: 800, height: "auto" });
+
+      const normalModeImg = document.getElementById('normal-mode');
+      const accessibilityModeImg = document.getElementById('accessibility-mode');
+
+      normalModeImg.addEventListener('mouseover', () => {
+        normalModeImg.style.filter = 'brightness(1.2)';
+        accessibilityModeImg.style.filter = 'brightness(0.5)';
+      });
+
+      normalModeImg.addEventListener('mouseout', () => {
+        normalModeImg.style.filter = 'brightness(1)';
+        accessibilityModeImg.style.filter = 'brightness(1)';
+      });
+
+      accessibilityModeImg.addEventListener('mouseover', () => {
+        accessibilityModeImg.style.filter = 'brightness(1.2)';
+        normalModeImg.style.filter = 'brightness(0.5)';
+      });
+
+      accessibilityModeImg.addEventListener('mouseout', () => {
+        accessibilityModeImg.style.filter = 'brightness(1)';
+        normalModeImg.style.filter = 'brightness(1)';
+      });
+
+      normalModeImg.addEventListener('click', () => {
+        game.settings.set('cain', 'accessibilityMode', false);
+        game.settings.set('cain', 'accessibilityModeChosen', true);
+        applyAccessibilityMode(false);
+        ui.notifications.info('Normal Mode selected.');
+        dialog.close();
+      });
+
+      accessibilityModeImg.addEventListener('click', () => {
+        game.settings.set('cain', 'accessibilityMode', true);
+        game.settings.set('cain', 'accessibilityModeChosen', true);
+        applyAccessibilityMode(true);
+        ui.notifications.info('Accessibility Mode selected.');
+        dialog.close();
+      });
+    }
+  });
+
+  dialog.render(true);
 }
 
 /**

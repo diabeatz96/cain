@@ -3723,3 +3723,95 @@
 .accessibility-mode .homebrew-toggle-bold {
   width: 20%;
 }
+
+.accessibility-mode .chat-message {
+    background-color: #ffffff; /* White background */
+    color: #000000; /* Black text */
+    border: 1px solid #000000; /* Black border */
+    padding: 0;
+    box-shadow: none; /* No shadow */
+    font-family: 'Courier New', Courier, monospace; /* Typewriter font */
+  }
+  
+  .accessibility-mode .message-header {
+    background-color: #ffffff; /* White background */
+    padding: 5px;
+    text-transform: uppercase;
+    font-weight: bold;
+  }
+  
+  .accessibility-mode .chat-message .table-draw .table-description {
+    background-color: #ffffff; /* White background */
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px dashed #000000; /* Black dashed border */
+    color: #000000; /* Black text */
+  }
+  
+  .accessibility-mode .message-sender {
+    color: #000000; /* Black text */
+  }
+  
+  .accessibility-mode .message-metadata {
+    color: #000000; /* Black text */
+  }
+  
+  .accessibility-mode .message-timestamp {
+    color: #333333; /* Dark grey text for timestamp */
+  }
+  
+  .accessibility-mode .message-delete {
+    color: #ff0000; /* Red color for delete icon */
+  }
+  
+  .accessibility-mode .no-border {
+    border: none !important;
+  }
+  
+  .accessibility-mode .no-padding {
+    padding: unset !important;
+  }
+  
+  .accessibility-mode .flavor-text {
+    color: #000000; /* Black text */
+    font-style: italic;
+  }
+  
+  .accessibility-mode .message-content {
+    background-color: #ffffff; /* White background */
+    padding: 10px;
+  }
+  
+  .accessibility-mode .dice-formula {
+    color: #000000; /* Black text */
+  }
+  
+  .accessibility-mode .dice-tooltip {
+    background-color: #ffffff; /* White background */
+    padding: 10px;
+    border-radius: 5px;
+  }
+  
+  .accessibility-mode .part-header {
+    background-color: #ffffff; /* White background */
+    padding: 5px;
+  }
+  
+  .accessibility-mode .part-formula {
+    color: #000000; /* Black text */
+  }
+  
+  .accessibility-mode .part-total {
+    color: #000000; /* Black text */
+  }
+  
+  .accessibility-mode .dice-rolls {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .accessibility-mode .dice-total {
+    color: #000000; /* Black text */
+    font-size: 1.5em;
+    text-align: center;
+  }
