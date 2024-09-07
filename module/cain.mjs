@@ -602,8 +602,8 @@ function showAccessibilityChoiceDialog() {
       <h2>Choose Your Preferred Style Mode</h2>
       <div style="display: flex; justify-content: space-around; margin-top: 20px;">
         <div>
-          <img src="systems/cain/assets/UI_Normal.png" alt="Normal Mode" style="cursor: pointer;" id="normal-mode">
-          <p>Normal Mode</p>
+          <img src="systems/cain/assets/UI_Normal.png" alt="Styled Mode" style="cursor: pointer;" id="normal-mode">
+          <p>Stylish Mode</p>
         </div>
         <div>
           <img src="systems/cain/assets/UI_Plain.png" alt="Accessibility Mode" style="cursor: pointer;" id="accessibility-mode">
