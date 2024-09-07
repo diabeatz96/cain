@@ -127,7 +127,7 @@ Hooks.once('init', async function () {
   game.settings.register('cain', 'accessibilityModeChosen', {
     name: 'Accessibility Mode Chosen',
       scope: 'client',
-      config: true,
+      config: false,
       type: Boolean,
       default: false,
     });
