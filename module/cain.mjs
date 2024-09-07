@@ -620,7 +620,7 @@ function showAccessibilityChoiceDialog() {
     buttons: {},
     close: () => {},
     render: html => {
-      dialog.setPosition({ width: 800, height: "auto" });
+      dialog.setPosition({ width: 800, height: 550 });
 
       const normalModeImg = document.getElementById('normal-mode');
       const accessibilityModeImg = document.getElementById('accessibility-mode');
@@ -660,7 +660,7 @@ function showAccessibilityChoiceDialog() {
         ui.notifications.info('Accessibility Mode selected.');
         dialog.close();
       });
-    }
+    },
   });
 
   dialog.render(true);
