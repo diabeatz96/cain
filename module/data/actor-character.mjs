@@ -13,7 +13,6 @@ export default class CainCharacter extends CainActorBase {
       }),
     });
 
-
     schema.skills = new fields.SchemaField(Object.keys(CONFIG.CAIN.skills).reduce((obj, skill) => {
       obj[skill] = new fields.SchemaField({
         value: new fields.NumberField({ ...requiredInteger, initial: 1, min: 0, max: 3 }),
@@ -116,6 +115,14 @@ export default class CainCharacter extends CainActorBase {
     return schema;
   }
 
+  async _preCreate(data, options, user){
+    await super._preCreate(data, options, user);
+
+    this.parent.updateSource({
+      img: "systems/cain/assets/exorcist/generic_exo.png"
+    })
+  }
+
   prepareDerivedData() {
     // Loop through ability scores, and add their modifiers to our sheet output.
     for (const key in this.abilities) {
@@ -175,11 +182,6 @@ export default class CainCharacter extends CainActorBase {
 
     // Update the actor with the new data
     await actor.update(updateData);
-  }
-
-  prepareData() {
-    super.prepareData();
-    CainCharacter.migrateOldSchema(this);
   }
 
 }

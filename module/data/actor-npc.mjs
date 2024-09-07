@@ -7,6 +7,7 @@ export default class CainNPC extends CainActorBase {
     const requiredInteger = { required: true, nullable: false, integer: true };
     const schema = super.defineSchema();
 
+    schema.img = new fields.StringField({ required: true, nullable: false, initial: "systems/cain/assets/generic_sin.png" });
     schema.sinType = new fields.StringField({ required: true, nullable: false, initial: "ogre" });
     schema.sinForm = new fields.StringField({ required: true, nullable: false, initial: "Form I/Severed" });
     schema.category = new fields.NumberField({ required: true, nullable: false, initial: 0, min: 0 });
