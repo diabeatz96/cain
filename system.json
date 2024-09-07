@@ -26,7 +26,7 @@
     "verified": "12"
   },
   "esmodules": ["module/cain.mjs"],
-  "styles": ["css/cain.css"],
+  "styles": ["css/cain.css", "css/accessibility.css"],
   "languages": [
     {
       "lang": "en",

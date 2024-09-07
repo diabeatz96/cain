@@ -123,6 +123,21 @@ Hooks.once('init', async function () {
     }
   });
 
+  game.settings.register('cain', 'accessibilityMode', {
+    name: 'Enable Accessibility Mode',
+    hint: 'Toggle accessibility colors and changes for the player sheet.',
+    scope: 'client',
+    config: true,
+    type: Boolean,
+    default: false,
+    onChange: value => {
+      applyAccessibilityMode(value);
+    }
+  });
+
+  applyAccessibilityMode(game.settings.get('cain', 'accessibilityMode'));
+
+
   const blasphemyPowerTemplate = await getTemplate("systems/cain/templates/item/parts/item-blasphemy-power-sheet.hbs");
   const blasphemyPowerPartialTemplate = await getTemplate("systems/cain/templates/item/parts/item-blasphemy-power-partial.hbs");
   const sinMarkAbilityTemplate = await getTemplate("systems/cain/templates/item/parts/item-sin-mark-partial.hbs");
@@ -134,6 +149,15 @@ Hooks.once('init', async function () {
   // Preload Handlebars templates.
   return preloadHandlebarsTemplates();
 });
+
+function applyAccessibilityMode(enabled) {
+  if (enabled) {
+    $('body').addClass('accessibility-mode');
+  } else {
+    $('body').removeClass('accessibility-mode');
+  }
+}
+
 
 /* -------------------------------------------- */
 /*  Handlebars Helpers                          */
