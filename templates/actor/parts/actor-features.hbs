@@ -90,6 +90,79 @@
   .advancements-experience-box .xp-button {
     background-color: red;
   }
+
+  /* Inline styles moved to the style tag */
+  .advancements-experience-box .resource {
+    font-family: 'Courier New', Courier, monospace;
+  }
+  .xp-button-group.flexrow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .xp-button#increment-xp-value {
+    background-color: #660000;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    width: 90%;
+    display: inline-block;
+  }
+  .xp-button#decrement-xp-value {
+    background-color: #00bffe;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    width: 90%;
+    display: inline-block;
+  }
+  .xp-button#increment-max-xp-value {
+    background-color: #660000;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    width: 90%;
+    display: inline-block;
+  }
+  .xp-button#decrement-max-xp-value {
+    background-color: #00bffe;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    width: 90%;
+    display: inline-block;
+  }
+  .xp-button#session-end-xp-value {
+    background-color: #6e3274;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    width: 30%;
+    display: inline-block;
+  }
+  #xp-output {
+    display: block;
+    font-size: 1.2em;
+    margin-top: 10px;
+  }
+  .checkbox-group[data-field="xp"] {
+    margin-top: 10px;
+  }
 </style>
 
 <h3 class='resource-header'>Cat Level</h3>
@@ -106,52 +179,50 @@
   </div>
 </div>
 
-  <div class="advancements-experience-box">
-    <div class="resource" style="font-family: 'Courier New', Courier, monospace;">
-      <label for="xp"> <h2 class="resource-header">XP & Advancements</h3></label> 
-      <div class="xp-button-group flexrow" style="display: flex; justify-content: space-between; align-items: center">
-        <div class="flexcol">        
-        <button id="increment-xp-value" class="xp-button" style="background-color: #660000; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 1em; width: 90%; display: inline-block;">
+<div class="advancements-experience-box">
+  <div class="resource">
+    <label for="xp"> <h2 class="resource-header">XP & Advancements</h3></label> 
+    <div class="xp-button-group flexrow">
+      <div class="flexcol">        
+        <button id="increment-xp-value" class="xp-button">
           Gain 1 XP
         </button>
-        <button id="decrement-xp-value" class="xp-button" style="background-color: #00bffe; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 1em; width: 90%; display: inline-block;">
+        <button id="decrement-xp-value" class="xp-button">
           Lose 1 XP
         </button>
-        </div>
-        <div class="flexcol">        
-        <button id="increment-max-xp-value" class="xp-button" style="background-color: #660000; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 1em; width: 90%; display: inline-block;">
+      </div>
+      <div class="flexcol">        
+        <button id="increment-max-xp-value" class="xp-button">
           +1 Max XP
         </button>
-        <button id="decrement-max-xp-value" class="xp-button" style="background-color: #00bffe; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 1em; width: 90%; display: inline-block;">
+        <button id="decrement-max-xp-value" class="xp-button">
           -1 Max XP
         </button>
-        </div>
-
-
-        <button id="session-end-xp-value" class="xp-button" style="background-color: #6e3274; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 1em; width: 30%; display: inline-block;">
-          End Session XP
-        </button>
       </div>
-      <div>
-        <output id="xp-output" style="display: block; font-size: 1.2em; margin-top: 10px">{{system.xp.value}} / {{system.xp.max}}</output>
-      </div>
-      <div class="checkbox-group" data-field="xp" style="margin-top: 10px;">
-        {{#times system.xp.max}}
-        <input type="checkbox" id="xp-checkbox-{{@index}}" name="xp-{{@index}}" {{#if (gte system.xp.value @index)}}checked{{/if}} disabled/>
-        {{/times}}
-      </div>
+      <button id="session-end-xp-value" class="xp-button">
+        End Session XP
+      </button>
     </div>
-
-    <div class="resource">
-      <label for="system.advancements.value" class="resource-label">Advancements</label>
-      <output id="advancements-output">{{system.advancements.value}}</output>
-      <div class="checkbox-group" data-field="advancements" style="margin-top: 10px;">
-        {{#times system.advancements.max}}
-        <input type="checkbox" id="advancements-checkbox-{{@index}}" name="advancements-{{@index}}" {{#if (gte system.advancements.value @index)}}checked{{/if}}/>
-        {{/times}}
-      </div>
+    <div>
+      <output id="xp-output">{{system.xp.value}} / {{system.xp.max}}</output>
+    </div>
+    <div class="checkbox-group" data-field="xp">
+      {{#times system.xp.max}}
+      <input type="checkbox" id="xp-checkbox-{{@index}}" name="xp-{{@index}}" {{#if (gte system.xp.value @index)}}checked{{/if}} disabled/>
+      {{/times}}
     </div>
   </div>
+
+  <div class="resource">
+    <label for="system.advancements.value" class="resource-label">Advancements</label>
+    <output id="advancements-output">{{system.advancements.value}}</output>
+    <div class="checkbox-group" data-field="advancements" style="margin-top: 10px;">
+      {{#times system.advancements.max}}
+      <input type="checkbox" id="advancements-checkbox-{{@index}}" name="advancements-{{@index}}" {{#if (gte system.advancements.value @index)}}checked{{/if}}/>
+      {{/times}}
+    </div>
+  </div>
+</div>
 
 <div class="grid grid-3col">
   <div class="resource">
@@ -234,7 +305,7 @@
 </ul>
 
 <h2>ACTION ASSESSMENT METRIC</h2>
-<div class="grid grid-3col flex-group-center">
+<div class="grid grid-3col">
   <p>4+<br>SUCCESS</p>
   <p>RISKY<br>Admin rolls the risk die</p>
   <p>HARD<br>Successes on a 6</p>
