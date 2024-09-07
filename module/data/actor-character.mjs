@@ -116,6 +116,14 @@ export default class CainCharacter extends CainActorBase {
     return schema;
   }
 
+  async _preCreate(data, options, user){
+    await super._preCreate(data, options, user);
+
+    this.parent.updateSource({
+      img: "systems/cain/assets/exorcist/generic_exo.png"
+    })
+  }
+
   prepareDerivedData() {
     // Loop through ability scores, and add their modifiers to our sheet output.
     for (const key in this.abilities) {
