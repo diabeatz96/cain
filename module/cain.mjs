@@ -649,7 +649,7 @@ function showAccessibilityChoiceDialog() {
         game.settings.set('cain', 'accessibilityMode', false);
         game.settings.set('cain', 'accessibilityModeChosen', true);
         applyAccessibilityMode(false);
-        ui.notifications.info('Normal Mode selected.');
+        ui.notifications.info('Style Mode selected.');
         dialog.close();
       });
 
