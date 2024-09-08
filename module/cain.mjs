@@ -154,7 +154,6 @@ Hooks.once('init', async function () {
   Handlebars.registerPartial("sinMarkAbility", sinMarkAbilityTemplate);
   Handlebars.registerPartial("blasphemyPower", blasphemyPowerTemplate);
   Handlebars.registerPartial("blasphemyPowerPartial", blasphemyPowerPartialTemplate);
-
   // Preload Handlebars templates.
   return preloadHandlebarsTemplates();
 });
@@ -464,6 +463,8 @@ Hooks.once('ready', function () {
     }
   }
 
+  
+
   // Add the Talisman button when the action bar is first ready
   addTalismanButton();
   addPlayerOverviewButton();
@@ -482,7 +483,75 @@ Hooks.once('ready', function () {
 
   // Register hotbar drop hook
   Hooks.on('hotbarDrop', (bar, data, slot) => createItemMacro(data, slot));
+  const [brokenBlasphemies, brokenSinMarks, brokenAgendas] = testForProperLinkage();
+  if (brokenBlasphemies || brokenSinMarks || brokenAgendas) {
+    const dialogContent = `
+      <div style="text-align: center;">
+        <h2>Error in Item Linkage</h2>
+        <p> Checked for issues with linking abilities and found issues in <b>${brokenBlasphemies ? "blasphemies " : ""}${brokenAgendas ? "agendas " : ""}${brokenSinMarks ? "sin marks" : ""}</b>.  These issues may cause the system to not function properly.  To fix, re-import any broken packs by deleting them from the items tab, then importing the packs. <br> <h3>Be sure to check the box that says keep item IDs</h3><br>If it still doesn't work, please reach out on discord or github.</p>
+      </div>
+    `;
+
+    let dialog = new Dialog({
+      title: 'Error in Item Linkage',
+      content: dialogContent,
+      buttons: {ok: {label: "Understood"}},
+      close: () => {},
+    });
+    dialog.render(true);
+  }
 });
+
+function testForProperLinkage() {
+  const brokenBlasphemies = (game.items
+    .filter(item => {return item.type === "blasphemy";}) //find blasphemies
+    .map(blasphemy => {return blasphemy.system.powers;}) //get powers
+    .flat() //flatten
+    .filter(powerID => {return !game.items.get(powerID)}) //check if any of those powers are invalid
+    .length > 0); //if so, true
+  const brokenSinMarks = (game.items
+    .filter(item => {return item.type === "sinMark";}) //find sin marks
+    .map(sinMark => {return sinMark.system.abilities;}) //get abilities
+    .flat() //flatten
+    .filter(powerID => {return !game.items.get(powerID)}) //check if any of those powers are invalid
+    .length > 0); //if so, true
+  const brokenAgendas = (game.items
+    .filter(item => {return item.type === "agenda";}) //find sin marks
+    .map(agenda => {return agenda.system.abilities;}) //get abilities
+    .flat() //flatten
+    .filter(powerID => {return !game.items.get(powerID)}) //check if any of those powers are invalid
+    .length > 0); //if so, true
+    console.log("Blasphemies: " + brokenBlasphemies);
+    console.log("SinMarks: " + brokenSinMarks);
+    console.log("Agendas: " + brokenAgendas);
+  if (brokenBlasphemies) { // if one is broken, go through and create a log of all the different broken powers for debugging purposes
+    const badBlasphemies = game.items
+      .filter(item => {return item.type === "blasphemy";}) //find blasphemies
+      .filter(blasphemy => {return testItemsFromIDs(blasphemy.system.powers);}) //find those with broken abilities
+      .map(blasphemy => {return blasphemy.name;});
+    console.warn("Errors with linkage in blasphemies: " + badBlasphemies);
+  }
+  if (brokenAgendas) {
+    const badAgendas = game.items
+      .filter(item => {return item.type === "agenda";}) //find agendas
+      .filter(agenda => {return testItemsFromIDs(agenda.system.abilities);}) //find those with broken abilities
+      .map(agenda => {return agenda.name;});
+    console.warn("Errors with linkage in agendas: " + badAgendas);
+  }
+  if (brokenSinMarks) {
+    const badSinMarks = game.items
+      .filter(item => {return item.type === "sinMark";}) //find agendas
+      .filter(mark => {return testItemsFromIDs(mark.system.abilities);}) //find those with broken abilities
+      .map(mark => {return mark.name;});
+    console.warn("Errors with linkage in marks: " + badSinMarks);
+  }
+  return [brokenBlasphemies, brokenSinMarks, brokenAgendas];
+};
+
+function testItemsFromIDs(ids) {
+  return (ids.filter(id => {return !game.items.get(id);}).length > 0);
+};
+
 
 // Function to handle Risk Roll
 async function handleRiskRoll() {
