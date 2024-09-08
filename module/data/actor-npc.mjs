@@ -81,6 +81,14 @@ export default class CainNPC extends CainActorBase {
     return schema;
   }
 
+  async _preCreate(data, options, user){
+    await super._preCreate(data, options, user);
+
+    this.parent.updateSource({
+      img: "systems/cain/assets/Sins/generic_sin.png"
+    })
+  }
+
   prepareDerivedData() {
     super.prepareDerivedData();
     // Removed the call to updateFieldsBasedOnSinType
