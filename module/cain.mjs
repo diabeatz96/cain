@@ -99,6 +99,14 @@ Hooks.once('init', async function () {
     ],
   });
 
+  game.settings.register('cain', "GMTutorialFinished", {
+    name: "GM Tutorial Finished",
+    scope: "world",
+    config: false,
+    type: Boolean,
+    default: false
+  });
+
   game.settings.register('cain', 'showPlayerOverview', {
     name: 'Show Player Overview Button',
     hint: 'Allow players to see the player overview button.',
@@ -359,6 +367,11 @@ Hooks.once('ready', function () {
   const accessibilityModeChosen = game.settings.get('cain', 'accessibilityModeChosen');
   if (!accessibilityModeChosen) {
     showAccessibilityChoiceDialog();
+  }
+
+  const GMtutorialFinished = game.settings.get('cain', 'GMTutorialFinished');
+  if (!GMtutorialFinished && game.user.isGM) {
+    showGMTutorialDialog();
   }
 
   function addPlayerOverviewButton() {
@@ -663,6 +676,164 @@ async function createItemMacro(data, slot) {
   }
   game.user.assignHotbarMacro(macro, slot);
   return false;
+}
+
+function showGMTutorialDialog() {
+  const dialogContent = `
+    <div style="text-align: center;">
+      <h2>Welcome to the CAIN system!</h2>
+      <p>It looks like you're a GM and this is your first time using the CAIN system. Would you like to go through a quick tutorial?</p>
+      <p>This tutorial will guide you through the basics of the system and show you how to use some of the features.</p>
+    </div>
+  `;
+
+  let dialog = new Dialog({
+    title: 'Welcome to CAIN!',
+    content: dialogContent,
+    buttons: {
+      yes: {
+        icon: '<i class="fas fa-check"></i>',
+        label: 'Yes',
+        callback: () => {
+          game.settings.set('cain', 'GMTutorialFinished', true);
+          showGMTutorialSteps();
+        },
+      },
+      no: {
+        icon: '<i class="fas fa-times"></i>',
+        label: 'No',
+        callback: () => {
+          game.settings.set('cain', 'GMTutorialFinished', false);
+        },
+      },
+    },
+    default: 'yes',
+  });
+
+  dialog.render(true);
+}
+
+function showGMTutorialSteps() {
+  console.log('Showing GM tutorial steps');
+  const steps = [
+    {
+      title: 'Importing Game Content',
+      content: `
+        <h1> THIS IS EXTREMELY IMPORTANT FIRST STEP </h1>
+        <ul>
+          <li>Click on the compendium tab</li>
+          <li>Right click on each compendium and click import content</li>
+          <li>YOU MUST CLICK KEEP DOCUMENT IDS OR THE SYSTEM WON'T WORK</li>
+        </ul>
+        <span style="display: flex; justify-content: center;">
+          <img src="systems/cain/assets/Tutorial/doc_ids.png" alt="Keep Document IDs" style="display: inline-block; border: none;">
+        </span>
+      `,
+    },
+    {
+      title: 'Using the Talisman Window',
+      content: `
+        <p>Click on the Talisman button in the action bar to open the Talisman Window.</p>
+        <p>Use the Talisman Window to manage global talismans.</p>
+        <span style="display: flex; justify-content: center;">
+          <img src="systems/cain/assets/talisman-icon.png" alt="Talisman Icon" style="max-height: 4em; display: inline-block; border: none;">
+        </span>
+      `,
+    },
+    {
+      title: 'Using the Player Overview',
+      content: `
+        <p>Click on the Player Overview button in the action bar to open the Player Overview.</p>
+        <p>Use the Player Overview to view player stats and abilities.</p>
+        <span style="display: flex; justify-content: center;">
+          <img src="systems/cain/assets/player-overview.png" alt="Player Overview Icon" style="max-height: 4em; display: inline-block; border: none;">
+        </span>
+      `,
+    },
+    {
+      title: 'Using the Risk Roll',
+      content: `
+        <p>Click on the Risk Roll button in the action bar to roll a risky dice.</p>
+        <p>Use the Risk Roll to determine the outcome of risky actions.</p>
+        <span style="display: flex; justify-content: center;">
+          <img src="systems/cain/assets/rolls/risky.png" alt="Risk Roll Icon" style="max-height: 4em; display: inline-block; border: none;">
+        </span>
+      `,
+    },
+    {
+      title: 'Using the Fate Roll',
+      content: `
+        <p>Click on the Fate Roll button in the action bar to roll a fate dice.</p>
+        <p>Use the Fate Roll to determine the outcome of fate-related events.</p>
+        <span style="display: flex; justify-content: center;">
+          <img src="systems/cain/assets/rolls/fate.png" alt="Fate Roll Icon" style="max-height: 4em; display: inline-block; border: none;">
+        </span>
+      `,
+    },
+    {
+      title: 'Using the Homebrew Window',
+      content: `
+        <p>Click on the Homebrew button in the action bar to open the Homebrew Window.</p>
+        <p>Use the Homebrew Window to create and manage homebrew content.</p>
+        <span style="display: flex; justify-content: center;">
+          <img src="systems/cain/assets/homebrew.png" alt="Homebrew Icon" style="max-height: 4em; display: inline-block; border: none;">
+        </span>
+      `,
+    },
+    {
+      title: 'Final Tips',
+      content: `
+        <ol>
+          <li>Remember to import game content from the compendiums. WITH DOCUMENT IDS</li>
+          <li>Remember to give your players user permissions for items so they can see them</li>
+          <li>Create Sins and Exorcists in the Actors Tab</li>
+          <li>Have fun and enjoy the game!</li>
+        </ol>
+      `,
+    },
+    {
+      title: 'Finished!',
+      content: `
+        <p>That's it! You've completed the GM tutorial for the CAIN system.</p>
+        <p>Feel free to explore the system and if you have any questions post in the pilot.net discord cain-vtt channel</p>
+      `,
+    }
+  ];
+
+  let currentStep = 0;
+
+  function renderDialog() {
+    const dialogContent = `
+      <div style="text-align: center; padding: 20px;">
+        <h2 style="margin-bottom: 10px;">Step ${currentStep + 1} of ${steps.length}</h2>
+        <h3 style="margin-bottom: 20px;">${steps[currentStep].title}</h3>
+        <div style="text-align: left;">${steps[currentStep].content}</div>
+      </div>
+    `;
+    let dialog = new Dialog({
+      title: 'CAIN GM Tutorial',
+      content: dialogContent,
+      buttons: {
+        next: {
+          icon: '<i class="fas fa-arrow-right"></i>',
+          label: currentStep < steps.length - 1 ? 'Next' : 'Finish',
+          callback: () => {
+            currentStep++;
+            if (currentStep < steps.length) {
+              renderDialog();
+            } else {
+              dialog.close();
+            }
+          },
+        },
+      },
+      default: 'next',
+    });
+
+    dialog.render(true);
+  }
+
+  renderDialog();
 }
 
 function showAccessibilityChoiceDialog() {
