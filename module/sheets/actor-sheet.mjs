@@ -287,6 +287,27 @@ export class CainActorSheet extends ActorSheet {
       // Update the corresponding field value
       this.actor.update({ [`system.${field}.value`]: value });
     });
+
+    html.find('.kit-points-increase').click(ev => {
+        ev.preventDefault();
+        const actor = this.actor;
+        actor.update({ 'system.kitPoints.max': actor.system.kitPoints.max + 1 });
+    });
+    
+    // Event listener for decreasing kit points
+    html.find('.kit-points-decrease').click(ev => {
+        ev.preventDefault();
+        const actor = this.actor;
+        const newMax = actor.system.kitPoints.max - 1;
+        if (newMax >= 0) {
+            const updates = { 'system.kitPoints.max': newMax };
+            if (newMax < actor.system.kitPoints.value) {
+                updates['system.kitPoints.value'] = newMax;
+            }
+            actor.update(updates);
+        }
+    });
+
   
     let scHtml = new HTMLShortcut(html);
     // Character sheet specific listeners
