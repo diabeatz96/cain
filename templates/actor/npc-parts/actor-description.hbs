@@ -1,39 +1,37 @@
 <div class="tab description" data-group="primary" data-tab="description">
   <div class="form-grid">
     <div class="form-group dark-form-group">
-      <label for="system.appearance" class="centered-label">Appearance</label>
-      {{ editor enrichedBiography target='system.appearance' engine='prosemirror' button=true editable=editable class="mob-psycho-editor" }}
-      <textarea name="system.appearance" class="large-textarea">{{system.appearance}}</textarea>
-    </div>
-    <div class="form-group dark-form-group">
-      <label for="system.traumas" class="centered-label">Traumas</label>
+      <label for="system.traumas" class="centered-label">Trauma Questions</label>
       <div class="trauma-list">
         {{#each system.traumas as |trauma index|}}
           <div class="trauma-item">
-            <input type="checkbox" name="system.traumas[{{index}}].answered" {{#if trauma.answered}}checked{{/if}} />
-            <input type="text" name="system.traumas[{{index}}].question" value="{{trauma.question}}" class="trauma-question-input {{#if trauma.answered}}crossed-out{{/if}}" />
+            <input type="checkbox" name="system.traumas.{{index}}.answered" {{#if trauma.answered}}checked{{/if}} />
+            <input type="text" name="system.traumas.{{index}}.question" value="{{trauma.question}}" class="trauma-question-input {{#if trauma.answered}}crossed-out{{/if}}" />
           </div>
         {{/each}}
       </div>
     </div>
+    <hr class="divider">
     <div class="form-group dark-form-group full-width">
-      <label for="system.biography" class="centered-label">Biography</label>
+      <label for="system.biography" class="centered-label">Biography & Appearance</label>
       {{ editor enrichedBiography target='system.biography' engine='prosemirror' button=true editable=editable class="mob-psycho-editor" }}
     </div>
   </div>
 </div>
 
-
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Courier+New:wght@400;700&display=swap');
+
 .tab.description {
   background-color: #1a1a1a;
   color: #f5f5f5;
   padding: 20px;
+  font-family: 'Courier New', monospace;
 }
 
 .tab.description .form-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 20px;
 }
 
@@ -50,10 +48,10 @@
 
 .tab.description .centered-label {
   text-align: center;
-  font-family: "Tiny5", sans-serif;
-  font-weight: 400;
-  font-size: 1.2em; /* Slightly larger font size */
-  letter-spacing: 0.05em; /* Small spacing between letters */
+  font-family: 'Courier New', monospace;
+  font-weight: 700;
+  font-size: 1.4em; /* Larger font size */
+  letter-spacing: 0.1em; /* Increased spacing between letters */
 }
 
 .tab.description .large-textarea {
@@ -78,7 +76,7 @@
 }
 
 .tab.description .full-width {
-  grid-column: span 2;
+  grid-column: span 1;
   height: 400px; /* Increased height for better editing experience */
 }
 
@@ -97,18 +95,64 @@ form .tab.description .form-group {
   display: flex;
   align-items: center;
   gap: 10px;
+  position: relative;
 }
 
 .trauma-question-input {
   width: 100%;
-  padding: 5px;
+  padding: 10px;
   background-color: #333;
-  color: #f5f5f5;
+  color: #f5f5f5; 
   border: 1px solid #444;
   border-radius: 4px;
+  font-family: 'Courier New', monospace;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .trauma-question-input.crossed-out {
   text-decoration: line-through;
+}
+
+.divider {
+  border: 0;
+  height: 1px;
+  background: #444;
+  margin: 20px 0;
+}
+
+input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  padding: 0;
+  border: 1px solid #444;
+  border-radius: 4px;
+  background-color: #333;
+  color: #f5f5f5;
+  font-family: 'Courier New', monospace;
+  position: absolute;
+  left: -30px;
+  cursor: pointer;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+input[type="checkbox"]:checked {
+  background-color: #00ff00;
+  transform: rotate(20deg);
+}
+
+input[type="checkbox"]:checked + .trauma-question-input {
+  text-decoration: line-through;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  background-color: #333;
+  color: #f5f5f5;
+  border: 1px solid #444;
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 </style>
