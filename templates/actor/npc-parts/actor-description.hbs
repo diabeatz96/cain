@@ -13,8 +13,13 @@
     </div>
     <hr class="divider">
     <div class="form-group dark-form-group full-width">
-      <label for="system.biography" class="centered-label">Biography & Appearance</label>
+      <label for="system.biography" class="centered-label">Biography</label>
       {{ editor enrichedBiography target='system.biography' engine='prosemirror' button=true editable=editable class="mob-psycho-editor" }}
+    </div>
+    <hr class="divider">
+    <div class="form-group dark-form-group full-width">
+      <label for="system.apperance" class="centered-label">Appearance</label>
+      {{ editor enrichedAppearance target='system.apperance' engine='prosemirror' button=true editable=editable class="mob-psycho-editor" }}
     </div>
   </div>
 </div>
