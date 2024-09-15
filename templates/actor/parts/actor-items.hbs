@@ -5,6 +5,8 @@
           <img class="kit-points-selection" src="systems/cain/assets/KIT/{{#if (lt index ../system.kitPoints.value)}}KIT-filled.png{{else}}KIT-empty.png{{/if}}" data-kit="{{CainOffset index 1}}" data-tooltip="Right click to clear">
         {{/range}}
         <span class="kit-points-text">{{system.kitPoints.value}} / {{system.kitPoints.max}}</span>
+        <button type="button" class="kit-points-decrease">-</button>
+        <button type="button" class="kit-points-increase">+</button>
     </div>
     <div class="scrip" style="display: flex; align-items: center;">
         <label for="system.scrip" style="margin-right: 10px;">Scrip:</label>
@@ -121,6 +123,20 @@
     color: #00ff00;
     margin-left: 10px;
     align-self: center;
+    font-size: medium;
+  }
+
+  .kit-points-increase, .kit-points-decrease {
+    background-color: white;
+    color: black;
+    border: none;
+    padding: 5px 10px;
+    margin-left: 20px;
+    cursor: pointer;
+  }
+
+  .kit-points-increase:hover, .kit-points-decrease:hover {
+    background-color: #e0e0e0;
   }
 
   .scrip {

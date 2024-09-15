@@ -287,6 +287,27 @@ export class CainActorSheet extends ActorSheet {
       // Update the corresponding field value
       this.actor.update({ [`system.${field}.value`]: value });
     });
+
+    html.find('.kit-points-increase').click(ev => {
+        ev.preventDefault();
+        const actor = this.actor;
+        actor.update({ 'system.kitPoints.max': actor.system.kitPoints.max + 1 });
+    });
+    
+    // Event listener for decreasing kit points
+    html.find('.kit-points-decrease').click(ev => {
+        ev.preventDefault();
+        const actor = this.actor;
+        const newMax = actor.system.kitPoints.max - 1;
+        if (newMax >= 0) {
+            const updates = { 'system.kitPoints.max': newMax };
+            if (newMax < actor.system.kitPoints.value) {
+                updates['system.kitPoints.value'] = newMax;
+            }
+            actor.update(updates);
+        }
+    });
+
   
     let scHtml = new HTMLShortcut(html);
     // Character sheet specific listeners
@@ -324,7 +345,6 @@ export class CainActorSheet extends ActorSheet {
     html.find('#editable-agenda-abilities').on('change', '.editable-ability-input', this._updateAgendaAbility.bind(this));
     html.find('.blasphemy-power-to-chat').on('click', this._sendBlasphemyPowerMessage.bind(this));
     html.find('.remove-blasphemy-power-button').on('click', this._removeBlasphemyPowerButton.bind(this));
-    html.find('.remove-blasphemy-button').on('click', this._removeBlasphemyButton.bind(this));
     html.find('.remove-blasphemy-button').on('click', this._removeBlasphemyButton.bind(this));
     html.find('.remove-affliction-button').on('click', this._removeAfflictionButton.bind(this));
     scHtml.setLeftClick('.add-task-button', this._addNewTask.bind(this));
