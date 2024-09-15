@@ -217,13 +217,19 @@
         <ul class="editable-blasphemy-powers">
           {{#each currentUnlinkedBlasphemyPowers}}
           <li>
-            <span data-id="{{this.id}}" title="{{this.system.powerDescription}}">{{this.system.powerName}}</span>
+            <span data-id="{{this.id}}" class="blasphemy-power"  title="{{this.system.powerDescription}}">{{this.system.powerName}}</span>
             <a class="item-control blasphemy-power-to-chat" data-id="{{this.id}}" title="Send to Chat">
               <i class="fas fa-comment"></i>
             </a>
             <a class="item-control remove-blasphemy-power-button" data-id="{{this.id}}" title="Remove">
               <i class="fas fa-trash"></i>
             </a>
+              <div class="power-description-card">
+                <h4>Keywords</h4>
+                <p>{{this.system.keywords}}</p>
+                <h4>Power Description</h4>
+                <p>{{formatted this.system.powerDescription ../../system.CATLEVEL.value}}</p>
+              </div>
           </li>
           {{/each}}
         </ul>
