@@ -56,7 +56,16 @@ export default class CainNPC extends CainActorBase {
     schema.palace = new fields.StringField({ initial: "default" });
     schema.appearance = new fields.StringField({ required: true, nullable: false, initial: "" });
     schema.biography = new fields.StringField({ required: true, nullable: false, initial: "" });
-    schema.traumas = new fields.StringField({ required: true, nullable: false, initial: "" });
+    
+    schema.traumas = new fields.ArrayField(new fields.SchemaField({
+      question: new fields.StringField({ required: true, initial: "Question " }),
+      answered: new fields.BooleanField({ required: true, initial: false })
+    }), { required: true, initial: [
+      { question: "Question 1", answered: false },
+      { question: "Question 2", answered: false },
+      { question: "Question 3", answered: false }
+    ]});
+
     schema.pressure = new fields.StringField({ required: true, nullable: false, initial: "" });
 
     schema.complications = new fields.StringField({ required: true, nullable: false, initial: "" });

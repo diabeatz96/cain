@@ -60,6 +60,37 @@ export class CainActorSheet extends ActorSheet {
       this._prepareItems(context);
     }
 
+
+    context.enrichedAppearance = await TextEditor.enrichHTML(
+      this.actor.system.appearance,
+      {
+        secrets: this.document.isOwner,
+        async: true,
+        rollData: this.actor.getRollData(),
+        relativeTo: this.actor,
+      }
+    );
+
+    context.enrichedPalace = await TextEditor.enrichHTML(
+      this.actor.system.palace,
+      {
+        secrets: this.document.isOwner,
+        async: true,
+        rollData: this.actor.getRollData(),
+        relativeTo: this.actor,
+      }
+    );
+
+    context.enrichedPressure = await TextEditor.enrichHTML(
+      this.actor.system.pressure,
+      {
+        secrets: this.document.isOwner,
+        async: true,
+        rollData: this.actor.getRollData(),
+        relativeTo: this.actor,
+      }
+    );
+    
     context.enrichedBiography = await TextEditor.enrichHTML(
       this.actor.system.biography,
       {

@@ -2,11 +2,19 @@
   <div class="form-grid">
     <div class="form-group dark-form-group">
       <label for="system.appearance" class="centered-label">Appearance</label>
+      {{ editor enrichedBiography target='system.appearance' engine='prosemirror' button=true editable=editable class="mob-psycho-editor" }}
       <textarea name="system.appearance" class="large-textarea">{{system.appearance}}</textarea>
     </div>
     <div class="form-group dark-form-group">
       <label for="system.traumas" class="centered-label">Traumas</label>
-      <textarea name="system.traumas" class="large-textarea">{{system.traumas}}</textarea>
+      <div class="trauma-list">
+        {{#each system.traumas as |trauma index|}}
+          <div class="trauma-item">
+            <input type="checkbox" name="system.traumas[{{index}}].answered" {{#if trauma.answered}}checked{{/if}} />
+            <input type="text" name="system.traumas[{{index}}].question" value="{{trauma.question}}" class="trauma-question-input {{#if trauma.answered}}crossed-out{{/if}}" />
+          </div>
+        {{/each}}
+      </div>
     </div>
     <div class="form-group dark-form-group full-width">
       <label for="system.biography" class="centered-label">Biography</label>
@@ -14,6 +22,7 @@
     </div>
   </div>
 </div>
+
 
 <style>
 .tab.description {
@@ -76,5 +85,30 @@
 form .tab.description .form-group {
   display: block;
   margin-bottom: 20px;
+}
+
+.trauma-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.trauma-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.trauma-question-input {
+  width: 100%;
+  padding: 5px;
+  background-color: #333;
+  color: #f5f5f5;
+  border: 1px solid #444;
+  border-radius: 4px;
+}
+
+.trauma-question-input.crossed-out {
+  text-decoration: line-through;
 }
 </style>
