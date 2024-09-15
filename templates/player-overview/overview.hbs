@@ -53,25 +53,25 @@
     </table>
   </div>
 
-  <div class="afflictions-container">
+<div class="afflictions-container">
     {{#each playerData}}
     {{#if actor}}
     <div class="afflictions-column">
       <h3>{{actor.name}}'s Afflictions</h3>
       <ul class="afflictions-list">
-        {{#if actor.system.afflictions.affliction1}}<li>{{actor.system.afflictions.affliction1}}</li>{{/if}}
-        {{#if actor.system.afflictions.affliction2}}<li>{{actor.system.afflictions.affliction2}}</li>{{/if}}
-        {{#if actor.system.afflictions.affliction3}}<li>{{actor.system.afflictions.affliction3}}</li>{{/if}}
-        {{#if actor.system.afflictions.affliction4}}<li>{{actor.system.afflictions.affliction4}}</li>{{/if}}
-        {{#if actor.system.afflictions.affliction5}}<li>{{actor.system.afflictions.affliction5}}</li>{{/if}}
-        {{#unless (or actor.system.afflictions.affliction1 actor.system.afflictions.affliction2 actor.system.afflictions.affliction3 actor.system.afflictions.affliction4 actor.system.afflictions.affliction5)}}
+        {{#each afflictions}}
+        <li>
+          <strong>{{this.system.afflictionName}}</strong>: {{this.system.afflictionDescription}}
+        </li>
+        {{/each}}
+        {{#unless afflictions.length}}
         <li>No afflictions</li>
         {{/unless}}
       </ul>
     </div>
     {{/if}}
     {{/each}}
-  </div>
+</div>
 </div>
 
 <style>
