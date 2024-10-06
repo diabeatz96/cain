@@ -308,6 +308,29 @@ export class CainActorSheet extends ActorSheet {
         }
     });
 
+    // Event listener for increasing sinOverflow max
+    html.find('.sin-overflow-increase').click(ev => {
+      ev.preventDefault();
+      const actor = this.actor;
+      const newMax = Math.min(actor.system.sinOverflow.max + 1, 20);
+      actor.update({ 'system.sinOverflow.max': newMax });
+    });
+
+    // Event listener for decreasing sinOverflow max
+    html.find('.sin-overflow-decrease').click(ev => {
+      ev.preventDefault();
+      const actor = this.actor;
+      const newMax = actor.system.sinOverflow.max - 1;
+      if (newMax >= actor.system.sinOverflow.min) {
+          const updates = { 'system.sinOverflow.max': newMax };
+          if (newMax < actor.system.sinOverflow.value) {
+              updates['system.sinOverflow.value'] = newMax;
+          }
+          actor.update(updates);
+      }
+    });
+
+
   
     let scHtml = new HTMLShortcut(html);
     // Character sheet specific listeners
@@ -475,7 +498,7 @@ export class CainActorSheet extends ActorSheet {
     // Event listener for selectedAgenda
     html.find('#selectedAgenda').change(this._onAbilitySelect.bind(this));
 
-    html.find('.rollable[data-roll="1d3"]').click(async () => {
+    html.find('.roll-sin').click(async () => {
       const actor = this.actor;
       await this._rollSinOverflow(actor);
     });
@@ -486,6 +509,12 @@ export class CainActorSheet extends ActorSheet {
     // Roll 1d3
     const roll = await new Roll('1d3').roll();
     const rolledValue = roll.total;
+
+    // Send roll result to chat
+    roll.toMessage({
+      speaker: ChatMessage.getSpeaker({ actor: actor }),
+      flavor: "Sin Overflow Roll"
+    });
 
     // Get current sinOverflow value and max
     const currentSinOverflow = actor.system.sinOverflow.value;

@@ -81,9 +81,9 @@ export default class CainCharacter extends CainActorBase {
     schema.currentSinMarks = new fields.ArrayField(new fields.StringField({ required: true, initial: " " }), { required: true, initial: [] });
 
     schema.sinOverflow = new fields.SchemaField({
-      value: new fields.NumberField({ required: true, initial: 0, min: 0, max: 10 }),
-      max: new fields.NumberField({ required: true, initial: 10, min: 0, max: 10 }),
-      min : new fields.NumberField({ required: true, initial: 0, min: 0, max: 10 }),
+      value: new fields.NumberField({ required: true, initial: 0, min: 0, max: 20 }),
+      max: new fields.NumberField({ required: true, initial: 10, min: 0, max: 20 }),
+      min : new fields.NumberField({ required: true, initial: 0, min: 0, max: 20 }),
     });
 
     schema.kitPoints = new fields.SchemaField({
