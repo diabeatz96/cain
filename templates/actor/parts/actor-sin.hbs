@@ -44,6 +44,7 @@
 
 <div class="sin-marks sin-page-drop-target">
   <h3>Sin Marks</h3>
+  <textarea class="sin-mark-description-input" name="system.sinMarkDescription" placeholder="Add a description of what your marks look like...">{{system.sinMarkDescription}}</textarea>
   {{#if currentSinMarkData.length}}
     <ul>
       {{#each currentSinMarkData}}
@@ -53,17 +54,18 @@
             {{#each this.abilities}}
               <li class="flexrow sin-mark sin-mark-body-part">
                 <div class="flexcol sin-mark-content" style="flex: 1 1 0;">
-                <h3>{{this.name}}</h3><p class="sin-mark-description">{{this.description}}</p> 
+                  <h3>{{this.name}}</h3>
+                  <p class="sin-mark-description">{{this.description}}</p>
                 </div>
                 <div class="flexcol remove-sin-mark-div">
-                <button data-markindex="{{@../index}}" data-abilityindex="{{@index}}" class="{{#unless (and @first @last)}}remove-sin-mark-ability-button{{else}}delete-sin-mark{{/unless}} remove-sin-mark-button"> 
-                  <i class="fas fa-trash"></i>
-                </button>
+                  <button data-markindex="{{@../index}}" data-abilityindex="{{@index}}" class="{{#unless (and @first @last)}}remove-sin-mark-ability-button{{else}}delete-sin-mark{{/unless}} remove-sin-mark-button"> 
+                    <i class="fas fa-trash"></i>
+                  </button>
                 </div>
               </li>
             {{/each}}
           </ul>
-          <button class="evolve-mark-button" data-markindex="{{@index}}"><h2 style="position: relative; background: inherit; border: none;"><span class="glitch" data-text="SUCCOMB"> EVOLVE </span></h2></button>
+          <button class="evolve-mark-button" data-markindex="{{@index}}"><h2 style="position: relative; background: inherit; border: none;"><span class="glitch" data-text="SUCCUMB"> EVOLVE </span></h2></button>
         </li>
       {{/each}}
     </ul>
@@ -210,6 +212,18 @@
 .sin-overflow-increase:active {
   background-color: #801999;
   transform: scale(0.9);
+}
+
+.sin-mark-description-input {
+  width: 100%;
+  height: 50px;
+  margin-top: 5px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  color: #FFF;
+  font-size: 14px;
+  resize: vertical;
 }
 
 </style>

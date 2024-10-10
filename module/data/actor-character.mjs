@@ -111,6 +111,7 @@ export default class CainCharacter extends CainActorBase {
 
     schema.sinMarks = new fields.ArrayField(new fields.StringField(), { required: true, initial: [] });
     schema.sinMarkAbilities = new fields.ArrayField(new fields.StringField(), { required: true, initial: [] });
+    schema.sinMarkDescription = new fields.StringField({ required: true, initial: "" });
     
     return schema;
   }
