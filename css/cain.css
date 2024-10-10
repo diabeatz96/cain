@@ -247,7 +247,9 @@ img {
   flex: 0 0 100px;
   height: 100px;
   margin-right: 10px;
+  object-fit: cover; /* Ensure the image covers the height without stretching */
 }
+
 /* .cain .sheet-header .header-fields {
   flex: 1;
 } */
@@ -721,6 +723,9 @@ img {
   transition: transform 0.3s, filter 0.3s, box-shadow 0.3s; /* Smooth transition for hover effect */
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Add shadow for depth */
   position: relative; /* For pseudo-element positioning */
+  object-fit: cover; /* Ensure the image covers the container without stretching */
+  width: 100px; /* Set a fixed width */
+  height: 100px; /* Set a fixed height */
 }
 
 .mob-psycho-img::before {
