@@ -8,15 +8,17 @@
         <h3>{{actor.name}}</h3>
         <p>Level: {{actor.system.attributes.level.value}}</p>
         <div class="additional-info">
-          <h4>Sin Marks</h4>
-          <ul class="sin-marks-list">
-            {{#if actor.system.currentSinMarks.length}}
-              {{#each actor.system.currentSinMarks}}
-              <li>{{this}}</li>
-              {{/each}}
-            {{else}}
-              <li>No Sin Marks</li>
-            {{/if}}
+          <h4>Sin Mark Abilities</h4>
+          <ul class="sin-abilities-list">
+            {{#each sinMarkAbilities}}
+              <li class="sin-ability-item">
+                <strong>{{this.system.bodyPartName}}</strong>
+                <p>{{this.system.abilityDescription}}</p>
+              </li>
+            {{/each}}
+            {{#unless sinMarkAbilities.length}}
+              <li>No Sin Mark Abilities</li>
+            {{/unless}}
           </ul>
           <div class="bars-container">
             <h4>Sin Overflow</h4>

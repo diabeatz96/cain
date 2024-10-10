@@ -23,6 +23,8 @@ export class PlayerOverview extends Application {
                 agendaAbilities: actor ? this._getItemsFromIDs(actor.system.currentAgendaAbilities) : [],
                 blasphemies: actor ? this._getItemsFromIDs(actor.system.currentBlasphemies) : [],
                 blasphemyPowers: actor ? this._getItemsFromIDs(actor.system.currentBlasphemyPowers) : [],
+                sinMarks: actor ? this._getItemsFromIDs(actor.system.sinMarks) : [],
+                sinMarkAbilities : actor ? this._getItemsFromIDs(actor.system.sinMarkAbilities) : [],
                 afflictions: actor ? this._getItemsFromIDs(actor.system.afflictions) : [],
                 message: actor ? null : "No actor assigned. Please assign an actor for player overview."
             };
