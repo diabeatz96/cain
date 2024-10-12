@@ -8,16 +8,18 @@
         <h3>{{actor.name}}</h3>
         <p>Level: {{actor.system.attributes.level.value}}</p>
         <div class="additional-info">
-          <h4>Sin Marks</h4>
-          <ul class="sin-marks-list">
-            {{#if actor.system.currentSinMarks.length}}
-              {{#each actor.system.currentSinMarks}}
-              <li>{{this}}</li>
+            <h4>Sin Mark Abilities</h4>
+            <ul class="sin-abilities-list">
+              {{#each sinMarkAbilities}}
+                <li class="sin-ability-item">
+                  <strong class="sin-body-part">{{this.system.bodyPartName}}</strong>
+                  <p>{{this.system.abilityDescription}}</p>
+                </li>
               {{/each}}
-            {{else}}
-              <li>No Sin Marks</li>
-            {{/if}}
-          </ul>
+              {{#unless sinMarkAbilities.length}}
+                <li>No Sin Mark Abilities</li>
+              {{/unless}}
+            </ul>
           <div class="bars-container">
             <h4>Sin Overflow</h4>
             <div class="bar">
@@ -150,5 +152,18 @@
     background-color: #1e1e1e;
     border: 1px solid #333;
     border-radius: 5px;
+  }
+  .sin-abilities-list {
+  list-style-type: none;
+  padding: 0;
+  text-align: center;
+}
+
+  .sin-ability-item {
+    margin: 10px 0;
+  }
+
+  .sin-body-part {
+    text-decoration: underline;
   }
 </style>

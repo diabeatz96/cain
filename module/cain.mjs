@@ -152,6 +152,83 @@ Hooks.once('init', async function () {
     }
   });
 
+  function registerHotkeySetting(settingName, settingLabel, settingHint) {
+    game.settings.register('cain', settingName, {
+      name: settingLabel,
+      hint: settingHint,
+      scope: 'client',
+      config: true,
+      type: String,
+      default: '',
+      onChange: value => {
+        document.getElementById(`${settingName}-display`).innerText = value || 'Not Set';
+      }
+    });
+  
+    Hooks.on('renderSettingsConfig', (app, html, data) => {
+      const settingElement = html.find(`[name="cain.${settingName}"]`).parent();
+      settingElement.find('input').remove(); // Remove the text input field
+  
+      const button = $(`
+        <button type="button" id="${settingName}-button" style="
+          background-color: #4CAF50; 
+          border: none; 
+          color: white; 
+          padding: 10px 24px; 
+          text-align: center; 
+          text-decoration: none; 
+          display: inline-block; 
+          font-size: 16px; 
+          margin: 4px 2px; 
+          cursor: pointer; 
+          border-radius: 12px; 
+          transition: background-color 0.3s ease;
+        ">Set Hotkey</button>
+      `);
+  
+      const display = $(`
+        <span id="${settingName}-display" style="
+          font-size: 16px; 
+          margin-left: 10px; 
+          padding: 10px; 
+          background-color: #f1f1f1; 
+          border: 1px solid #ccc; 
+          border-radius: 12px; 
+          display: inline-block;
+        ">${game.settings.get('cain', settingName) || 'Not Set'}</span>
+      `);
+      
+      button.on('click', () => {
+        button.css('background-color', '#45a049'); // Change background color slightly
+        function handler(event) {
+          event.preventDefault(); // Prevent other keys from triggering
+          game.settings.set('cain', settingName, event.key);
+          button.css('background-color', '#4CAF50'); // Revert background color
+          window.removeEventListener('keydown', handler, true);
+        }
+        window.addEventListener('keydown', handler, true);
+      });
+  
+      settingElement.append(button);
+      settingElement.append(display);
+    });
+  }
+  
+  game.settings.register('cain', 'enableHotkeys', {
+    name: 'Enable Hotkeys',
+    hint: 'Toggle to enable or disable hotkeys.',
+    scope: 'client',
+    config: true,
+    type: Boolean,
+    default: false,
+  });
+  
+  registerHotkeySetting('hotkeyTalisman', 'Hotkey for Talisman Button', 'Set a hotkey to trigger the Talisman button.');
+  registerHotkeySetting('hotkeyPlayerOverview', 'Hotkey for Player Overview Button', 'Set a hotkey to trigger the Player Overview button.');
+  registerHotkeySetting('hotkeyRiskRoll', 'Hotkey for Risk Roll Button', 'Set a hotkey to trigger the Risk Roll button.');
+  registerHotkeySetting('hotkeyFateRoll', 'Hotkey for Fate Roll Button', 'Set a hotkey to trigger the Fate Roll button.');
+  registerHotkeySetting('hotkeyHomebrew', 'Hotkey for Homebrew Button', 'Set a hotkey to trigger the Homebrew button.');
+  
   applyAccessibilityMode(game.settings.get('cain', 'accessibilityMode'));
 
 
@@ -363,17 +440,6 @@ Handlebars.registerHelper('CainOffset', function(value, offset, options) {
 
 Hooks.once('ready', function () {
   // Function to create and insert the Talisman button
-
-  const accessibilityModeChosen = game.settings.get('cain', 'accessibilityModeChosen');
-  if (!accessibilityModeChosen) {
-    showAccessibilityChoiceDialog();
-  }
-
-  const GMtutorialFinished = game.settings.get('cain', 'GMTutorialFinished');
-  if (!GMtutorialFinished && game.user.isGM) {
-    showGMTutorialDialog();
-  }
-
   function addPlayerOverviewButton() {
     const showPlayerOverview = game.settings.get('cain', 'showPlayerOverview');
     const isGM = game.user.isGM;
@@ -421,9 +487,9 @@ Hooks.once('ready', function () {
   function addHomebrewButton() {
     // Create the button element with the talisman icon
     if (!game.user.isGM) return;
-    const button = $('<button title="Homebrew" class="talisman-button"><img src="systems/cain/assets/homebrew.png" alt="Homebrew Icon"></button>');
+    const button = $('<button title="Homebrew" class="homebrew-button"><img src="systems/cain/assets/homebrew.png" alt="Homebrew Icon"></button>');
     
-    // Add click event to open the TalismanWindow
+    // Add click event to open the HomebrewWindow
     button.on('click', () => {
       new HomebrewWindow().render(true);
     });
@@ -440,7 +506,6 @@ Hooks.once('ready', function () {
       console.error('Action bar not found.');
     }
   }
-
 
   // Function to create and insert the Risk Roll button
   function addRiskRollButton() {
@@ -476,8 +541,6 @@ Hooks.once('ready', function () {
     }
   }
 
-  
-
   // Add the Talisman button when the action bar is first ready
   addTalismanButton();
   addPlayerOverviewButton();
@@ -496,6 +559,34 @@ Hooks.once('ready', function () {
 
   // Register hotbar drop hook
   Hooks.on('hotbarDrop', (bar, data, slot) => createItemMacro(data, slot));
+
+  // Add event listeners for hotkeys
+  document.addEventListener('keydown', (event) => {
+    // Ignore key events when typing in input fields or ProseMirror editors
+    if (event.target.tagName === 'INPUT' || event.target.tagName === 'TEXTAREA' || event.target.classList.contains('ProseMirror')) return;
+
+    // Check if hotkeys are enabled
+    if (!game.settings.get('cain', 'enableHotkeys')) return;
+
+    const talismanHotkey = game.settings.get('cain', 'hotkeyTalisman');
+    const playerOverviewHotkey = game.settings.get('cain', 'hotkeyPlayerOverview');
+    const riskRollHotkey = game.settings.get('cain', 'hotkeyRiskRoll');
+    const fateRollHotkey = game.settings.get('cain', 'hotkeyFateRoll');
+    const homebrewHotkey = game.settings.get('cain', 'hotkeyHomebrew');
+
+    if (event.key === talismanHotkey) {
+      $('.talisman-button').click();
+    } else if (event.key === playerOverviewHotkey) {
+      $('.player-overview-button').click();
+    } else if (event.key === riskRollHotkey) {
+      $('.risk-roll-button').click();
+    } else if (event.key === fateRollHotkey) {
+      $('.fate-roll-button').click();
+    } else if (event.key === homebrewHotkey) {
+      $('.homebrew-button').click();
+    }
+  });
+
   const [brokenBlasphemies, brokenSinMarks, brokenAgendas] = testForProperLinkage();
   if (brokenBlasphemies || brokenSinMarks || brokenAgendas) {
     const dialogContent = `
