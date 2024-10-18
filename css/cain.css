@@ -863,6 +863,7 @@ img {
   padding: 5px;
   border-radius: 5px;
   margin: 2px; /* Dashed border for a report look */
+  gap: 4px;
 }
 
 .mob-psycho-extra-dice {
@@ -1609,3 +1610,58 @@ img {
   color: var(--text-color, #ff00ff);
 }
 
+
+.circle-checkboxes {
+  input[type="checkbox"] {
+    display: none;
+  }
+
+  input[type="checkbox"]+label {
+    display: inline-block;
+    padding: 0;
+    height: 50px;
+    width: 50px;
+    background-size: cover;
+    position: relative;
+  }
+
+  input[type="checkbox"]+label::before {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 24px;
+    border: 3px solid purple; 
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  input[type="checkbox"]:checked+label::before {
+    background-color: purple; 
+  }
+} 
+
+.ability-dots {
+  input[type="checkbox"]+label {
+    height: 30px;
+    width: 30px;
+  }
+
+  input[type="checkbox"]+label::before {
+    width: 18px;
+    height: 18px;
+    border: 3px solid rgb(10, 123, 175);
+  }
+
+  input[type="checkbox"]:checked+label::before {
+    background-color: rgb(10, 123, 175); 
+  }
+}
+
+.psyche-burst-checkboxes {
+  input[type="checkbox"]+label {
+    background: url('systems/cain/assets/brain.png') no-repeat;
+  }
+}
