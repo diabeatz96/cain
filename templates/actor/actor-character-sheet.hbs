@@ -80,14 +80,19 @@
         <aside class="sidebar mob-psycho-sidebar">
         <h3 class="mob-psycho-heading">Skills</h3>
         {{#each system.skills as |skill key|}}
-          <div class="ability flexrow flex-group-center mob-psycho-ability">
-          <label for="system.skills.{{key}}.value" class="resource-label rollable flexlarge align-left mob-psycho-label" 
-                data-roll="{{#if (eq skill.value 0)}}2d6kl1cs>=4{{else}}{{skill.value}}d6cs>=4{{#if (gt ../system.extraDice.value 0)}}+{{../system.extraDice.value}}d6cs>=4{{/if}}{{/if}}" 
-                data-label="{{localize (lookup @root.config.skills key)}}">
-            {{localize (lookup @root.config.skills key)}}
-          </label>        
-          <input type="number" name="system.skills.{{key}}.value" value="{{skill.value}}" data-dtype="Number" class="mob-psycho-input"/>
-        </div>
+          <div class="ability flexrow mob-psycho-ability flex-group-center">
+            <label for="system.skills.{{key}}.value" class="resource-label rollable mob-psycho-label" 
+                  data-roll="{{#if (eq skill.value 0)}}2d6kl1cs>=4{{else}}{{skill.value}}d6cs>=4{{#if (gt ../system.extraDice.value 0)}}+{{../system.extraDice.value}}d6cs>=4{{/if}}{{/if}}" 
+                  data-label="{{localize (lookup @root.config.skills key)}}">
+              {{localize (lookup @root.config.skills key)}}
+            </label>     
+            <div class="flexrow ability-dots circle-checkboxes">
+              {{#range 0 3}}
+                <input type="checkbox" id="ability-{{key}}-{{index}}" class="skills-checkbox" {{#if (lt index skill.value)}}checked{{/if}} data-skill_key="{{key}}" data-skill_value="{{CainOffset index 1}}"/>
+                <label for="ability-{{key}}-{{index}}"></label>
+              {{/range}}
+            </div>   
+          </div>
         {{/each}}
 
         <div class="extra-dice-section flexrow flex-group-center mob-psycho-extra-dice">
@@ -113,7 +118,7 @@
               </div>
           </div>
           {{/each}}
-        <button id="add-affliction" class="add-affliction-button">Add Affliction</button>
+        <button type="button" id="add-affliction" class="add-affliction-button">Add Affliction</button>
 
         <div class="rest-dice-section flexrow mob-psycho-rest-dice">
           <label for="system.restDiceModifier" class="resource-label flexlarge align-left mob-psycho-label">Rest Dice Modifier</label>
