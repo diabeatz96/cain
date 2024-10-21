@@ -403,6 +403,18 @@ export class CainActorSheet extends ActorSheet {
       this._clearSin.bind(this)
     );
 
+    scHtml.setChange('.skills-checkbox', (event) => {
+      let key = event.currentTarget.dataset.skill_key
+      let new_value = parseInt(event.currentTarget.dataset.skill_value)
+      let search = `system.skills.${key}.value`;
+      if(this.actor.system.skills[key].value != new_value){
+        this.updateActor(search, new_value);
+      }
+      else{
+        this.updateActor(search, new_value - 1);
+      }
+    });
+
     
     // New event listeners for agenda tasks and abilities
     html.find('.agenda-task').on('click', (event) => {
