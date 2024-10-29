@@ -38,6 +38,7 @@ export class CainActorSheet extends ActorSheet {
 
   /** @override */
   get template() {
+    console.log("getting template")
     return `systems/cain/templates/actor/actor-${this.actor.type}-sheet.hbs`;
   }
 
@@ -57,6 +58,8 @@ export class CainActorSheet extends ActorSheet {
     }
 
     if (actorData.type == 'npc') {
+      console.log(context);
+      console.log(this.actor.type)
       this._prepareItems(context);
     }
 
