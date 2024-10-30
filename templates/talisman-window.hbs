@@ -13,6 +13,7 @@
             <button class="hide-talisman" data-index="{{@index}}">
               <i class="fas fa-eye-slash"></i> Hide
             </button>
+            <button class="pin-talisman" data-index="{{@index}}"><i class="fas fa-thumbtack"></i> Pin</button>
             <input type="number" min="0" max="13" value="{{this.maxMarkAmount}}" class="talisman-max-mark" data-index="{{@index}}">
           {{/if}}
           <input type="range" min="0" max="{{this.maxMarkAmount}}" value="{{this.currMarkAmount}}" class="talisman-slider" data-index="{{@index}}">
@@ -30,6 +31,7 @@
           <button class="hide-talisman" data-index="{{@index}}">
             <i class="fas fa-eye"></i> Show
           </button>
+          <button class="pin-talisman" data-index="{{@index}}"><i class="fas fa-thumbtack"></i> Pin</button>
           <input type="number" min="0" max="13" value="{{this.maxMarkAmount}}" class="talisman-max-mark" data-index="{{@index}}">
           <input type="range" min="0" max="{{this.maxMarkAmount}}" value="{{this.currMarkAmount}}" class="talisman-slider" data-index="{{@index}}">
           <div class="talisman-marks">{{this.currMarkAmount}} / {{this.maxMarkAmount}}</div>

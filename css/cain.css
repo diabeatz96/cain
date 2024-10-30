@@ -1701,3 +1701,47 @@ img {
 .collapsible-section .header button:hover {
   background: #555;
 }
+
+.pinned-talisman-container {
+  position: absolute;
+  top: 50px;
+  left: 10px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.pinned-talisman {
+  background: #1a1a1a;
+  color: #e0e0e0;
+  border: 1px solid #444;
+  border-radius: 10px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.pinned-talisman img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 4px;
+  margin-bottom: 5px;
+}
+
+.pinned-talisman button {
+  background: #ff0000;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 5px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.pinned-talisman button:hover {
+  background: #cc0000;
+}

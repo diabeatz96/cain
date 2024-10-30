@@ -33,6 +33,9 @@ export class TalismanWindow extends Application {
 
       // Add dragstart event listener
       html.find('.talisman').on('dragstart', this._onDragStart.bind(this));
+
+      // Add pin event listener
+      html.find('.pin-talisman').on('click', this._onPinTalisman.bind(this));
     }
   }
 
@@ -147,6 +150,82 @@ export class TalismanWindow extends Application {
     this._emitUpdate();
   }
 
+  async _onPinTalisman(event) {
+    event.preventDefault();
+    const index = event.currentTarget.dataset.index;
+    const talismans = game.settings.get('cain', 'globalTalismans');
+    const talisman = talismans[index];
+  
+    // Create a pinned talisman container if it doesn't exist
+    let pinnedContainer = document.querySelector('.pinned-talisman-container');
+    if (!pinnedContainer) {
+      pinnedContainer = document.createElement('div');
+      pinnedContainer.classList.add('pinned-talisman-container');
+      document.body.appendChild(pinnedContainer); // Append to body for full screen dragging
+      console.log('Pinned talisman container created and appended to the body.');
+  
+      // Make the container draggable
+      this._makeDraggable(pinnedContainer);
+    }
+  
+    // Create a pinned talisman element
+    const pinnedTalismanHtml = `
+      <div class="pinned-talisman" data-index="${index}">
+        <img src="${talisman.imagePath}" alt="${talisman.name}" title="${talisman.name}">
+        <span>${talisman.name}</span>
+        <span>${talisman.currMarkAmount} / ${talisman.maxMarkAmount}</span>
+        <button class="unpin-talisman" data-index="${index}"><i class="fas fa-times"></i> Unpin</button>
+      </div>
+    `;
+    const div = document.createElement('div');
+    div.innerHTML = pinnedTalismanHtml;
+    const pinnedTalismanElement = div.firstElementChild;
+    pinnedContainer.appendChild(pinnedTalismanElement);
+  
+    console.log('innerHTML', div.innerHTML);
+    console.log('pinned container', pinnedContainer);
+    console.log(`Pinned talisman added: ${talisman.name}`);
+    console.log('Final pinned container', pinnedContainer);
+  
+    // Add unpin functionality
+    pinnedTalismanElement.querySelector('.unpin-talisman').addEventListener('click', this._onUnpinTalisman.bind(this));
+  }
+  
+  // Function to make an element draggable
+   _makeDraggable(element) {
+    let isDragging = false;
+    let offsetX, offsetY;
+  
+    element.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      offsetX = e.clientX - element.getBoundingClientRect().left;
+      offsetY = e.clientY - element.getBoundingClientRect().top;
+      element.style.position = 'absolute';
+      element.style.zIndex = 1000;
+    });
+  
+    document.addEventListener('mousemove', (e) => {
+      if (isDragging) {
+        element.style.left = `${e.clientX - offsetX}px`;
+        element.style.top = `${e.clientY - offsetY}px`;
+      }
+    });
+  
+    document.addEventListener('mouseup', () => {
+      isDragging = false;
+    });
+  }
+  
+  async _onUnpinTalisman(event) {
+    event.preventDefault();
+    const index = event.currentTarget.dataset.index;
+    const pinnedTalisman = document.querySelector(`.pinned-talisman[data-index="${index}"]`);
+    if (pinnedTalisman) {
+      pinnedTalisman.remove();
+      console.log(`Pinned talisman removed: ${index}`);
+    }
+  }
+
   _emitUpdate() {
     console.log('Emitting updateTalismans');
     game.socket.emit('system.cain', { action: 'updateTalismans' });
@@ -184,8 +263,6 @@ Hooks.once('ready', () => {
     await createTalismanOnCanvas(data);
   });
 
-  // Add the custom layer to the canvas
-  canvas.addLayer('customLayer', CustomLayer);
 });
 
 // Function to create a talisman on the canvas
