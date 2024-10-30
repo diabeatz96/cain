@@ -18,6 +18,7 @@ import * as models from './data/_module.mjs';
 /*  Init Hook                                   */
 /* -------------------------------------------- */
 
+
 Hooks.once('init', async function () {
   // Add utility classes to the global game object so that they're more easily
   // accessible in global contexts.
@@ -360,6 +361,7 @@ Handlebars.registerHelper('CainOffset', function(value, offset, options) {
 /* -------------------------------------------- */
 /*  Ready Hook                                  */
 /* -------------------------------------------- */
+
 
 Hooks.once('ready', function () {
   // Function to create and insert the Talisman button

@@ -4,7 +4,7 @@
     <div id="talisman-list" class="talisman-grid">
       {{#each talismans}}
       {{#unless this.isHidden}}
-      <div class="talisman">
+      <div class="talisman" draggable="true" data-index="{{@index}}">
         <input type="text" placeholder="Name" class="talisman-name" value="{{this.name}}" data-index="{{@index}}">
         <img src="{{this.imagePath}}" alt="{{this.name}}" class="talisman-image" data-index="{{@index}}">
         <div class="talisman-controls">
@@ -22,7 +22,7 @@
       {{/unless}}
       {{#if ../isGM}}
       {{#if this.isHidden}}
-      <div class="talisman">
+      <div class="talisman" draggable="true" data-index="{{@index}}">
         <input type="text" placeholder="Name" class="talisman-name" value="{{this.name}}" data-index="{{@index}}">
         <img src="{{this.imagePath}}" alt="{{this.name}}" class="talisman-image" data-index="{{@index}}">
         <div class="talisman-controls">
@@ -44,6 +44,7 @@
     {{/if}}
   </div>
 </div>
+
 <style>
   
 .talisman-window {

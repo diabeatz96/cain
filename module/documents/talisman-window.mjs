@@ -1,3 +1,5 @@
+import { CainActorSheet } from "../sheets/actor-sheet.mjs";
+
 export class TalismanWindow extends Application {
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
@@ -28,7 +30,17 @@ export class TalismanWindow extends Application {
       html.find('.talisman-image').on('contextmenu', this._onDecreaseMarks.bind(this));
       html.find('.hide-talisman').on('click', this._onHideTalisman.bind(this));
       html.find('.talisman-max-mark').on('change', this._onMaxMarkChange.bind(this)); // Add listener for max mark amount
+
+      // Add dragstart event listener
+      html.find('.talisman').on('dragstart', this._onDragStart.bind(this));
     }
+  }
+
+  async _onDragStart(event) {
+    const index = event.currentTarget.dataset.index;
+    const talismans = game.settings.get('cain', 'globalTalismans');
+    const talisman = talismans[index];
+    event.originalEvent.dataTransfer.setData('text/plain', JSON.stringify(talisman));
   }
 
   async _onNameChange(event) {
@@ -136,20 +148,57 @@ export class TalismanWindow extends Application {
   }
 
   _emitUpdate() {
+    console.log('Emitting updateTalismans');
     game.socket.emit('system.cain', { action: 'updateTalismans' });
     this.render(true); // Update the UI for the emitting client
+    for (let app of Object.values(ui.windows)) {
+      if (app instanceof CainActorSheet) {
+        app.render(true); // Force re-render
+      }
+    }
   }
 }
 
 // Register the socket listener to update the TalismanWindow for all clients
 Hooks.once('ready', () => {
   game.socket.on('system.cain', (data) => {
+    console.log('Received socket data', data);
     if (data.action === 'updateTalismans') {
       for (let app of Object.values(ui.windows)) {
         if (app instanceof TalismanWindow) {
           app.render(true); // Force re-render
         }
       }
+      // Re-render the actor sheet to update talismans
+      for (let app of Object.values(ui.windows)) {
+        if (app instanceof CainActorSheet) {
+          app.render(true); // Force re-render
+        }
+      }
     }
   });
+
+  // Add drop event listener to the canvas
+  canvas.stage.on('drop', async (event) => {
+    const data = JSON.parse(event.dataTransfer.getData('text/plain'));
+    await createTalismanOnCanvas(data);
+  });
+
+  // Add the custom layer to the canvas
+  canvas.addLayer('customLayer', CustomLayer);
 });
+
+// Function to create a talisman on the canvas
+async function createTalismanOnCanvas(talisman) {
+  const tileData = {
+    img: talisman.imagePath,
+    width: 100,
+    height: 100,
+    x: canvas.stage.mouseX,
+    y: canvas.stage.mouseY,
+    flags: {
+      talismanData: talisman
+    }
+  };
+  await canvas.scene.createEmbeddedDocuments('Tile', [tileData]);
+}

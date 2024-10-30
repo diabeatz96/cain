@@ -36,7 +36,7 @@
     </div>
   </header>
 
-  {{!-- Quick Actions and Quick Stats --}}
+  {{!-- Quick Actions and Talismans --}}
   <section class="quick-section">
     <div class="quick-actions">
       <h2>Quick Actions</h2>
@@ -50,26 +50,29 @@
       </div>
     </div>
     <div class="quick-stats">
-      <h2>Quick Stats</h2>
-      <div class="bars-grid">
-        <div class="bar-item">
-          <label for="execution-bar" class="resource-label">Execution</label>
-          <div class="bar">
-            <div id="execution-bar" class="bar-fill" style="width: 50%;"></div>
-          </div>
+      <h2>Talismans</h2>
+      <div class="talisman-selection">
+        <label for="talisman-select">Add Talisman:</label>
+        <div class="talisman-select-container">
+          <select id="talisman-select" class="styled-select">
+            {{#each globalTalismans}}
+              <option value="{{@index}}">{{this.name}}</option>
+            {{/each}}
+          </select>
+          <button type="button" id="add-talisman-button" class="styled-button">Add</button>
         </div>
-        <div class="bar-item">
-          <label for="pressure-bar" class="resource-label">Pressure</label>
-          <div class="bar">
-            <div id="pressure-bar" class="bar-fill" style="width: 30%;"></div>
+      </div>
+      <div class="talismans-grid">
+        {{#each selectedTalismans}}
+          <div class="talisman-item">
+            <label for="talisman-{{@index}}">
+              <img src="{{this.imagePath}}" alt="{{this.name}}" title="{{this.name}}">
+              <span>{{this.name}}</span>
+              <span>{{this.currMarkAmount}} / {{this.maxMarkAmount}}</span>
+            </label>
+            <button type="button" class="delete-talisman-button" data-index="{{@index}}">Delete</button>
           </div>
-        </div>
-        <div class="bar-item">
-          <label for="threat-bar" class="resource-label">Threat</label>
-          <div class="bar">
-            <div id="threat-bar" class="bar-fill" style="width: 70%;"></div>
-          </div>
-        </div>
+        {{/each}}
       </div>
     </div>
   </section>
@@ -377,28 +380,87 @@
   background-color: #00ff00;
 }
 
-.brooding-theme .resource-label {
-  font-size: 16px;
-  color: #e0e0e0;
+.brooding-theme .talisman-selection {
+  margin-top: 3px;
 }
 
-.brooding-theme .resource-content select,
-.brooding-theme .resource-content input {
-  background-color: #1a1a1a;
+.brooding-theme .talisman-select-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brooding-theme .talismans-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.brooding-theme .talisman-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #444;
+  border-radius: 4px;
+}
+
+.brooding-theme .talisman-item img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 4px;
+  margin-bottom: 5px;
+}
+
+.brooding-theme .talisman-item label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+
+.brooding-theme .styled-button {
+  background-color: #333;
   color: #e0e0e0;
+  border: 1px solid #444;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.brooding-theme .styled-button:hover {
+  background-color: #555;
+  color: #fff;
+}
+
+.brooding-theme .styled-select {
+  background-color: #1a1a1a;
+  color: white;
   border: 1px solid #444;
   padding: 5px;
   transition: border-color 0.3s;
 }
 
-.brooding-theme .resource-content select:focus,
-.brooding-theme .resource-content input:focus {
-  border-color: #00ff00;
-  outline: none;
+.brooding-theme .styled-select option {
+  background-color: #1a1a1a;
+  color: white;
 }
 
-.brooding-theme .resource-content img {
-  filter: grayscale(100%);
-  margin-left: 10px;
+.brooding-theme .delete-talisman-button {
+  background-color: #ff0000;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 5px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.brooding-theme .delete-talisman-button:hover {
+  background-color: #cc0000;
 }
 </style>

@@ -7,6 +7,7 @@ import {
   HTMLShortcut
 } from '../helpers/standard_event_assignment_shortcuts.mjs'
 
+import { TalismanWindow } from '../documents/talisman-window.mjs';
 import { SessionEndAdvancement} from  '../documents/session-end-advancement.mjs'
 import { CAIN } from '../helpers/config.mjs';
 
@@ -145,7 +146,11 @@ export class CainActorSheet extends ActorSheet {
 
     this._calculateRanges(context);
     context.sheetConstants = this.sheetConstants
+    context.globalTalismans = game.settings.get('cain', 'globalTalismans');
+    context.selectedTalismans = this.actor.system.selectedTalismans || [];
 
+    console.log(context.globalTalismans);
+    
     return context;
   }
 
@@ -224,7 +229,7 @@ export class CainActorSheet extends ActorSheet {
     }
     
   }
-  
+
   _getItemsFromIDs(ids) {
     return ids.map(id => game.items.get(id));
   } 
@@ -320,6 +325,31 @@ export class CainActorSheet extends ActorSheet {
   
       // Update the corresponding field value
       this.actor.update({ [`system.${field}.value`]: value });
+    });
+
+    // Event listener for adding talisman
+    html.find('#add-talisman-button').click(ev => {
+      const selectedIndex = html.find('#talisman-select').val();
+      const globalTalismans = game.settings.get('cain', 'globalTalismans');
+      const selectedTalisman = globalTalismans[selectedIndex];
+
+      // Add the selected talisman to the actor's selected talismans
+      const selectedTalismans = this.actor.system.selectedTalismans || [];
+      selectedTalismans.push(selectedTalisman);
+      this.actor.update({ 'system.selectedTalismans': selectedTalismans });
+    });
+
+    // Event listener for deleting talisman
+    html.find('.delete-talisman-button').click(ev => {
+      const index = ev.currentTarget.dataset.index;
+      const selectedTalismans = this.actor.system.selectedTalismans || [];
+      selectedTalismans.splice(index, 1);
+      this.actor.update({ 'system.selectedTalismans': selectedTalismans });
+    });
+  
+    // Event listener for talisman image click to open global talisman sheet
+    html.find('.talisman-item img').on('click', ev => {
+      new TalismanWindow().render(true);
     });
 
     html.find('.kit-points-increase').click(ev => {
