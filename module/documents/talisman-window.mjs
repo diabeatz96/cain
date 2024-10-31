@@ -6,8 +6,8 @@ export class TalismanWindow extends Application {
       id: 'talisman-window',
       title: 'Talismans',
       template: 'systems/cain/templates/talisman-window.hbs',
-      width: 1000,
-      height: 600,
+      width: 600, // Adjusted initial width
+      height: 400, // Adjusted initial height
       resizable: true,
     });
   }
@@ -161,11 +161,14 @@ export class TalismanWindow extends Application {
     if (!pinnedContainer) {
       pinnedContainer = document.createElement('div');
       pinnedContainer.classList.add('pinned-talisman-container');
+      pinnedContainer.style.width = '169px'; // Adjusted initial width
+      pinnedContainer.style.height = '291px'; // Adjusted initial height
       document.body.appendChild(pinnedContainer); // Append to body for full screen dragging
       console.log('Pinned talisman container created and appended to the body.');
   
-      // Make the container draggable
+      // Make the container draggable and resizable
       this._makeDraggable(pinnedContainer);
+      this._makeResizable(pinnedContainer);
     }
   
     // Create a pinned talisman element
@@ -173,7 +176,7 @@ export class TalismanWindow extends Application {
       <div class="pinned-talisman" data-index="${index}">
         <img src="${talisman.imagePath}" alt="${talisman.name}" title="${talisman.name}">
         <span>${talisman.name}</span>
-        <span>${talisman.currMarkAmount} / ${talisman.maxMarkAmount}</span>
+        <span class="talisman-marks">${talisman.currMarkAmount} / ${talisman.maxMarkAmount}</span>
         <button class="unpin-talisman" data-index="${index}"><i class="fas fa-times"></i> Unpin</button>
       </div>
     `;
@@ -192,30 +195,70 @@ export class TalismanWindow extends Application {
   }
   
   // Function to make an element draggable
-   _makeDraggable(element) {
+  _makeDraggable(element) {
     let isDragging = false;
     let offsetX, offsetY;
-  
+
     element.addEventListener('mousedown', (e) => {
+      // Check if the target is a resize handle
+      if (e.target.classList.contains('resize-handle')) return;
+
       isDragging = true;
       offsetX = e.clientX - element.getBoundingClientRect().left;
       offsetY = e.clientY - element.getBoundingClientRect().top;
       element.style.position = 'absolute';
       element.style.zIndex = 1000;
     });
-  
+
     document.addEventListener('mousemove', (e) => {
       if (isDragging) {
         element.style.left = `${e.clientX - offsetX}px`;
         element.style.top = `${e.clientY - offsetY}px`;
       }
     });
-  
+
     document.addEventListener('mouseup', () => {
       isDragging = false;
     });
   }
-  
+
+  // Function to make an element resizable
+  _makeResizable(element) {
+    const resizeHandle = document.createElement('div');
+    resizeHandle.classList.add('resize-handle');
+    resizeHandle.style.width = '10px';
+    resizeHandle.style.height = '10px';
+    resizeHandle.style.background = 'red';
+    resizeHandle.style.position = 'absolute';
+    resizeHandle.style.left = '0'; // Move to bottom left
+    resizeHandle.style.bottom = '0';
+    resizeHandle.style.cursor = 'sw-resize'; // Adjust cursor for bottom left
+    element.appendChild(resizeHandle);
+
+    resizeHandle.addEventListener('mousedown', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      const startX = e.clientX;
+      const startY = e.clientY;
+      const startWidth = parseInt(document.defaultView.getComputedStyle(element).width, 10);
+      const startHeight = parseInt(document.defaultView.getComputedStyle(element).height, 10);
+
+      const doDrag = (e) => {
+        element.style.width = `${startWidth - (e.clientX - startX)}px`;
+        element.style.height = `${startHeight + (e.clientY - startY)}px`;
+      };
+
+      const stopDrag = () => {
+        document.removeEventListener('mousemove', doDrag);
+        document.removeEventListener('mouseup', stopDrag);
+      };
+
+      document.addEventListener('mousemove', doDrag);
+      document.addEventListener('mouseup', stopDrag);
+    });
+  }
+
   async _onUnpinTalisman(event) {
     event.preventDefault();
     const index = event.currentTarget.dataset.index;
@@ -224,17 +267,39 @@ export class TalismanWindow extends Application {
       pinnedTalisman.remove();
       console.log(`Pinned talisman removed: ${index}`);
     }
+
+    // Check if the container is empty and remove it if necessary
+    const pinnedContainer = document.querySelector('.pinned-talisman-container');
+    if (pinnedContainer && pinnedContainer.querySelectorAll('.pinned-talisman').length === 0) {
+      pinnedContainer.remove();
+      console.log('Pinned talisman container removed as it is empty.');
+    }
   }
 
   _emitUpdate() {
     console.log('Emitting updateTalismans');
     game.socket.emit('system.cain', { action: 'updateTalismans' });
     this.render(true); // Update the UI for the emitting client
+    this._updatePinnedTalismans(); // Update pinned talismans
     for (let app of Object.values(ui.windows)) {
       if (app instanceof CainActorSheet) {
         app.render(true); // Force re-render
       }
     }
+  }
+
+  _updatePinnedTalismans() {
+    const talismans = game.settings.get('cain', 'globalTalismans');
+    const pinnedTalismans = document.querySelectorAll('.pinned-talisman');
+    pinnedTalismans.forEach(pinnedTalisman => {
+      const index = pinnedTalisman.dataset.index;
+      const talisman = talismans[index];
+      if (talisman) {
+        pinnedTalisman.querySelector('img').src = talisman.imagePath;
+        pinnedTalisman.querySelector('span').textContent = talisman.name;
+        pinnedTalisman.querySelector('.talisman-marks').textContent = `${talisman.currMarkAmount} / ${talisman.maxMarkAmount}`;
+      }
+    });
   }
 }
 
