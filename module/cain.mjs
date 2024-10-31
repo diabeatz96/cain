@@ -845,11 +845,11 @@ function showAccessibilityChoiceDialog() {
       <div style="display: flex; justify-content: space-around; margin-top: 20px;">
         <div>
           <img src="systems/cain/assets/UI_Normal.png" alt="Styled Mode" style="cursor: pointer;" id="normal-mode">
-          <p>Stylish Mode</p>
+          <p>UNDER//HEAVEN</p>
         </div>
         <div>
           <img src="systems/cain/assets/UI_Plain.png" alt="Accessibility Mode" style="cursor: pointer;" id="accessibility-mode">
-          <p>Accessibility Mode</p>
+          <p>CAIN</p>
         </div>
       </div>
       <p style="margin-top: 20px;">You can always change your preferred style in the settings.</p>
