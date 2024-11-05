@@ -36,6 +36,9 @@ export class TalismanWindow extends Application {
 
       // Add pin event listener
       html.find('.pin-talisman').on('click', this._onPinTalisman.bind(this));
+
+      // Add create tile event listener
+      html.find('.create-tile').on('click', this._onCreateTile.bind(this));
     }
   }
 
@@ -193,70 +196,54 @@ export class TalismanWindow extends Application {
     // Add unpin functionality
     pinnedTalismanElement.querySelector('.unpin-talisman').addEventListener('click', this._onUnpinTalisman.bind(this));
   }
-  
-  // Function to make an element draggable
-  _makeDraggable(element) {
-    let isDragging = false;
-    let offsetX, offsetY;
 
-    element.addEventListener('mousedown', (e) => {
-      // Check if the target is a resize handle
-      if (e.target.classList.contains('resize-handle')) return;
+  async _onCreateTile(event) {
+    event.preventDefault();
+    const index = event.currentTarget.dataset.index;
+    const talismans = game.settings.get('cain', 'globalTalismans');
+    const talisman = talismans[index];
 
-      isDragging = true;
-      offsetX = e.clientX - element.getBoundingClientRect().left;
-      offsetY = e.clientY - element.getBoundingClientRect().top;
-      element.style.position = 'absolute';
-      element.style.zIndex = 1000;
-    });
+    console.log('Creating tile for talisman:', talisman);
 
-    document.addEventListener('mousemove', (e) => {
-      if (isDragging) {
-        element.style.left = `${e.clientX - offsetX}px`;
-        element.style.top = `${e.clientY - offsetY}px`;
+    // Calculate the center position of the current screen
+    const centerX = canvas.stage.pivot.x + (canvas.stage.width / 2);
+    const centerY = canvas.stage.pivot.y + (canvas.stage.height / 2);
+
+    const tileData = {
+      texture: {
+        src: talisman.imagePath
+      },
+      width: 200, // Increased width
+      height: 200, // Increased height
+      x: centerX,
+      y: centerY,
+      flags: {
+        talismanData: talisman
       }
-    });
+    };
 
-    document.addEventListener('mouseup', () => {
-      isDragging = false;
-    });
+    console.log('Tile data:', tileData);
+
+    try {
+      const createdTiles = await canvas.scene.createEmbeddedDocuments('Tile', [tileData]);
+      if (createdTiles.length > 0) {
+        console.log('Tile created successfully:', createdTiles[0]);
+        ui.notifications.info(`Created tile for ${talisman.name}`);
+      } else {
+        console.error('Tile creation failed:', createdTiles);
+        ui.notifications.error('Failed to create tile.');
+      }
+    } catch (error) {
+      console.error('Error creating tile:', error);
+      ui.notifications.error('Error creating tile.');
+    }
   }
 
-  // Function to make an element resizable
-  _makeResizable(element) {
-    const resizeHandle = document.createElement('div');
-    resizeHandle.classList.add('resize-handle');
-    resizeHandle.style.width = '10px';
-    resizeHandle.style.height = '10px';
-    resizeHandle.style.background = 'red';
-    resizeHandle.style.position = 'absolute';
-    resizeHandle.style.left = '0'; // Move to bottom left
-    resizeHandle.style.bottom = '0';
-    resizeHandle.style.cursor = 'sw-resize'; // Adjust cursor for bottom left
-    element.appendChild(resizeHandle);
-
-    resizeHandle.addEventListener('mousedown', (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-
-      const startX = e.clientX;
-      const startY = e.clientY;
-      const startWidth = parseInt(document.defaultView.getComputedStyle(element).width, 10);
-      const startHeight = parseInt(document.defaultView.getComputedStyle(element).height, 10);
-
-      const doDrag = (e) => {
-        element.style.width = `${startWidth - (e.clientX - startX)}px`;
-        element.style.height = `${startHeight + (e.clientY - startY)}px`;
-      };
-
-      const stopDrag = () => {
-        document.removeEventListener('mousemove', doDrag);
-        document.removeEventListener('mouseup', stopDrag);
-      };
-
-      document.addEventListener('mousemove', doDrag);
-      document.addEventListener('mouseup', stopDrag);
-    });
+  async _updateTile(talisman) {
+    const tiles = canvas.scene.tiles.filter(tile => tile.flags.talismanData && tile.flags.talismanData.name === talisman.name);
+    for (let tile of tiles) {
+      await tile.update({ 'texture.src': talisman.imagePath });
+    }
   }
 
   async _onUnpinTalisman(event) {
@@ -281,9 +268,34 @@ export class TalismanWindow extends Application {
     game.socket.emit('system.cain', { action: 'updateTalismans' });
     this.render(true); // Update the UI for the emitting client
     this._updatePinnedTalismans(); // Update pinned talismans
+    this._updateSinSelectedTalismans(); // Update sin selected talismans
+    this._updateTiles(); // Update tiles
     for (let app of Object.values(ui.windows)) {
       if (app instanceof CainActorSheet) {
         app.render(true); // Force re-render
+      }
+    }
+  }
+
+  _updateSinSelectedTalismans() {
+    const globalTalismans = game.settings.get('cain', 'globalTalismans');
+    for (let actor of game.actors.contents) {
+      if (actor.system.selectedTalismans) {
+        const updatedTalismans = actor.system.selectedTalismans.map(talisman => {
+          const globalTalisman = globalTalismans.find(gt => gt.name === talisman.name);
+          if (globalTalisman) {
+            return {
+              ...globalTalisman,
+              currMarkAmount: talisman.currMarkAmount,
+              maxMarkAmount: globalTalisman.maxMarkAmount,
+              name: globalTalisman.name,
+              imagePath: globalTalisman.imagePath
+            };
+          } else {
+            return talisman;
+          }
+        });
+        actor.update({ 'system.selectedTalismans': updatedTalismans });
       }
     }
   }
@@ -299,6 +311,13 @@ export class TalismanWindow extends Application {
         pinnedTalisman.querySelector('span').textContent = talisman.name;
         pinnedTalisman.querySelector('.talisman-marks').textContent = `${talisman.currMarkAmount} / ${talisman.maxMarkAmount}`;
       }
+    });
+  }
+
+  _updateTiles() {
+    const talismans = game.settings.get('cain', 'globalTalismans');
+    talismans.forEach(talisman => {
+      this._updateTile(talisman);
     });
   }
 }
@@ -333,9 +352,11 @@ Hooks.once('ready', () => {
 // Function to create a talisman on the canvas
 async function createTalismanOnCanvas(talisman) {
   const tileData = {
-    img: talisman.imagePath,
-    width: 100,
-    height: 100,
+    texture: {
+      src: talisman.imagePath
+    },
+    width: 200, // Increased width
+    height: 200, // Increased height
     x: canvas.stage.mouseX,
     y: canvas.stage.mouseY,
     flags: {

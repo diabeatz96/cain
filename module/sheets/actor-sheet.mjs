@@ -328,7 +328,7 @@ export class CainActorSheet extends ActorSheet {
     });
 
     // Event listener for adding talisman
-    html.find('#add-talisman-button').click(ev => {
+    html.find('#add-talisman-button').click(async ev => {
       const selectedIndex = html.find('#talisman-select').val();
       const globalTalismans = game.settings.get('cain', 'globalTalismans');
       const selectedTalisman = globalTalismans[selectedIndex];
@@ -336,17 +336,19 @@ export class CainActorSheet extends ActorSheet {
       // Add the selected talisman to the actor's selected talismans
       const selectedTalismans = this.actor.system.selectedTalismans || [];
       selectedTalismans.push(selectedTalisman);
-      this.actor.update({ 'system.selectedTalismans': selectedTalismans });
+      await this.actor.update({ 'system.selectedTalismans': selectedTalismans });
+      this.render();
     });
 
     // Event listener for deleting talisman
-    html.find('.delete-talisman-button').click(ev => {
+    html.find('.delete-talisman-button').click(async ev => {
       const index = ev.currentTarget.dataset.index;
       const selectedTalismans = this.actor.system.selectedTalismans || [];
       selectedTalismans.splice(index, 1);
-      this.actor.update({ 'system.selectedTalismans': selectedTalismans });
+      await this.actor.update({ 'system.selectedTalismans': selectedTalismans });
+      this.render();
     });
-  
+
     // Event listener for talisman image click to open global talisman sheet
     html.find('.talisman-item img').on('click', ev => {
       new TalismanWindow().render(true);
@@ -374,6 +376,14 @@ export class CainActorSheet extends ActorSheet {
 
   
     let scHtml = new HTMLShortcut(html);
+    // NPC SPECIFIC LISTENERS
+    html.find('.quick-action-button.attack-player').click(this._attackPlayer.bind(this));
+    html.find('.quick-action-button.afflict-player').click(this._afflictPlayer.bind(this));
+    html.find('.quick-action-button.use-complication').click(this._useComplication.bind(this));
+    html.find('.quick-action-button.use-threat').click(this._useThreat.bind(this));
+    html.find('.quick-action-button.severe-attack').click(this._severeAttack.bind(this));
+    html.find('.quick-action-button.use-domain').click(this._useDomain.bind(this));
+
     // Character sheet specific listeners
     html.find('.item-description').click(this._onItemDescription.bind(this));
     html.find('.psyche-roll-button').click(this._onRollPsyche.bind(this));
@@ -2493,7 +2503,7 @@ export class CainActorSheet extends ActorSheet {
           ability2: { title: "Turning Blades, I Laughed at their Brittleness", value: "The hound’s hide becomes incredibly tough and durable, like a beast’s. • Each time an action would slash the hound’s execution talisman, roll a 1d6 fortune roll. If the roll is a 1 or 2, reduce all slashes suffered to 1. The hound’s armor has weak spots, however, and any action that is set up or part of teamwork can ignore this effect. • Mundane weapons are completely incapable of harming the hound unless they are extremely strong, like a tank cannon or a missile." },
           ability3: { title: "The Catching of the Doe", value: "The hound suppresses its nature and becomes a stealthy hunter, able to stalk its prey. At the start of the hunt, pick an exorcist. Once a scene, during any scene, the Admin may declare that the exorcist gets a glimpse of the hound following them (though it may or may not be real), giving them 1 stress, which cannot inflict an injury. The Admin can trigger this three times total a hunt. In any conflict scene, the Hound gets a free reaction at the start (roll the risk die as normal), targeting the exorcist it is stalking if possible." },
           ability4: { title: "The Annihilation of the Wicked", value: "The hound gains a special affinity for firearms. It can attack at range with guns that it wields or, more often, are fused to its form, emerging when needed. • The hound’s attacks gain long range. • As a complication, the hound pins an exorcist down by bullets, bathes them in napalm, concusses them with grenades, etc. That exorcist takes 1 stress after acting until the complication is dealt with, or takes 2 stress if acting requires moving from their current position. • As a reaction (1) the hound can permanently absorb all firearms in the same immediate area as it, immediately disarming anyone wielding one, and healing 1 tick on the execution talisman" },
-          ability5: { title: "The Fattening of Rage", value: "strengthening it. • Once a scene, if the hound slays any mundane human as part of a reaction, it can heal 1 segment on its execution talisman. • If the hound has slain at least one of its grudge targets, it increases its execution clock by +2 segments. • If the hound has slain all its original grudge targets, it also inflicts +1 stress with all reactions." },
+          ability5: { title: "The Fattening of Rage", value: "The hound feeds on the power of its Grudge, strengthening it. • Once a scene, if the hound slays any mundane human as part of a reaction, it can heal 1 segment on its execution talisman. • If the hound has slain at least one of its grudge targets, it increases its execution clock by +2 segments. • If the hound has slain all its original grudge targets, it also inflicts +1 stress with all reactions." },
           ability6: { title: "Rile Against Heaven", value: "The mere presence of the hound exacerbates the rifts between human and exorcist alike. Humans during this mission never start friendly to the exorcists and are often outwardly hostile. The Admin may make a fortune roll if they like (hostile on a 1-2, indifferent or annoyed otherwise). They may still become friendly through the exorcist’s actions. Any two exorcists that have a disagreement, no matter how minor, may declare it has boiled over into a fight. For the remainder of the hunt they cannot participate in teamwork with other and cannot set each other up. Any feuding exorcists regain a psyche burst if the other takes an injury or affliction, and both gain +1 xp at the end of the mission." },
           ability7: { title: "The Measured Weight of Death", value: "The hound gains a supernatural resilience that can only be bypassed by specific methods. Often this draws on the superstitions of its host, often along mythological lines, and doesn’t have to conform to any real logic. • The hound takes -1 slash on its execution talisman. • This effect can be removed for a scene by the exorcists taking action to expose the hound to a specific weakness. The Admin can choose or roll from the list below: 1. Silver 2. Iron 3. Extreme Heat 4. Extreme Cold 5. Water 6. Sunlight" },
           ability8: { title: "Bloodying the Steel", value: "The rage of the Hound is infectious and can drive its victims into a vicious obsessive cycle. The hound gains the Infectious Grudge affliction. exorcist gains +1D on all actions that inflict physical violence, but also takes +1 stress when they take stress from an external source. Any exorcist can voluntarily take this affliction if they are harmed by the hound. " },
@@ -2734,5 +2744,324 @@ export class CainActorSheet extends ActorSheet {
       });
     }
   }
+
+  async _attackPlayer(event) {
+    const exorcists = game.actors.filter(actor => actor.type === 'character');
+    const options = exorcists.map((exorcist, index) => `<option value="${index}">${exorcist.name}</option>`).join('');
+    const content = `
+      <form>
+        <div class="form-group">
+          <label>Choose an Exorcist to Attack:</label>
+          <select id="exorcist-select">${options}</select>
+        </div>
+      </form>
+    `;
+  
+    new Dialog({
+      title: "Attack a Player",
+      content: content,
+      buttons: {
+        attack: {
+          label: "Attack",
+          callback: async (html) => {
+            const selectedIndex = parseInt(html.find('#exorcist-select').val());
+            const selectedExorcist = exorcists[selectedIndex];
+            
+            // Roll 1d6 to determine the amount of stress inflicted
+            const roll = new Roll('1d6');
+            await roll.evaluate({ async: true });
+            const rollResult = roll.total;
+            let stressInflicted;
+  
+            if (rollResult === 1) {
+              stressInflicted = 5;
+            } else if (rollResult === 2 || rollResult === 3) {
+              stressInflicted = 3;
+            } else {
+              stressInflicted = 2;
+            }
+  
+            const newStress = selectedExorcist.system.stress.value + stressInflicted;
+            await selectedExorcist.update({ 'system.stress.value': newStress });
+            ui.notifications.info(`${selectedExorcist.name} has been attacked and their stress increased by ${stressInflicted}.`);
+          }
+        }
+      },
+      default: "attack"
+    }).render(true);
+  }
+
+// Function to afflict a player
+async _afflictPlayer(event) {
+  const exorcists = game.actors.filter(actor => actor.type === 'character');
+  const afflictions = game.items.filter(item => item.type === 'affliction');
+  const exorcistOptions = exorcists.map((exorcist, index) => `<option value="${index}">${exorcist.name}</option>`).join('');
+  const afflictionOptions = afflictions.map((affliction, index) => `<option value="${index}">${affliction.name}</option>`).join('');
+  const content = `
+    <form>
+      <div class="form-group">
+        <label>Choose an Exorcist to Afflict:</label>
+        <select id="exorcist-select">${exorcistOptions}</select>
+      </div>
+      <div class="form-group">
+        <label>Choose an Affliction:</label>
+        <select id="affliction-select">${afflictionOptions}</select>
+      </div>
+    </form>
+  `;
+
+  new Dialog({
+    title: "Afflict a Player",
+    content: content,
+    buttons: {
+      afflict: {
+        label: "Afflict",
+        callback: async (html) => {
+          const selectedExorcistIndex = parseInt(html.find('#exorcist-select').val());
+          const selectedAfflictionIndex = parseInt(html.find('#affliction-select').val());
+          const selectedExorcist = exorcists[selectedExorcistIndex];
+          const selectedAffliction = afflictions[selectedAfflictionIndex];
+          const afflictionsList = selectedExorcist.system.afflictions || [];
+          afflictionsList.push(selectedAffliction.id);
+          await selectedExorcist.update({ 'system.afflictions': afflictionsList });
+          ui.notifications.info(`${selectedExorcist.name} has been afflicted with ${selectedAffliction.name}.`);
+        }
+      }
+    },
+    default: "afflict"
+  }).render(true);
+}
+
+// Function to use a complication
+_useComplication(event) {
+  const complications = [
+    "Make something hard",
+    "Deal 1 stress at the end of the round to all exorcists",
+    "Make the sin take 1 less slash on its talisman under certain circumstances",
+    "Make the sin deal 1 more stress under certain circumstances",
+    "Change the parameters of the fight"
+  ];
+
+  const content = `
+    <div>
+      <h2>Complications</h2>
+      <p>Reminder: If you use a complication, you should set a talisman.</p>
+      <p>Rules:</p>
+      <ul>
+        <li>Make something hard</li>
+        <li>Deal 1 stress at the end of the round to all exorcists</li>
+        <li>Make the sin take 1 less slash on its talisman under certain circumstances</li>
+        <li>Make the sin deal 1 more stress under certain circumstances</li>
+        <li>Change the parameters of the fight</li>
+      </ul>
+      <p>The same effect cannot stack with itself. Complications are worse and take more effort to deal with the worse the reaction die:</p>
+      <ul>
+        <li>(5-6): 2 talisman</li>
+        <li>(2-4): 4 talisman</li>
+        <li>(1): 6 talisman</li>
+      </ul>
+      <p>A sin can add a complication up to three times per conflict scene total.</p>
+      <div class="form-group">
+        <label>Choose a Complication:</label>
+        <select id="complication-select">
+          ${complications.map((complication, index) => `<option value="${index}">${complication}</option>`).join('')}
+        </select>
+      </div>
+    </div>
+  `;
+
+  new Dialog({
+    title: "Use Complication",
+    content: content,
+    buttons: {
+      use: {
+        label: "Use Complication",
+        callback: (html) => {
+          const selectedIndex = parseInt(html.find('#complication-select').val());
+          const selectedComplication = complications[selectedIndex];
+          ui.notifications.info(`Using Complication: ${selectedComplication}`);
+        }
+      },
+      close: {
+        label: "Close"
+      }
+    },
+    default: "close"
+  }).render(true);
+}
+
+// Function to use a threat
+_useThreat(event) {
+  const threats = [
+    "Inflict harm: (1): An injury, (2-3) 5 stress, (4-6) 3 stress",
+    "Separate an exorcist completely",
+    "Cause collateral damage",
+    "Massively change the parameters of the fight",
+    "Add an Affliction"
+  ];
+
+  const exorcists = game.actors.filter(actor => actor.type === 'character');
+  const exorcistOptions = exorcists.map((exorcist, index) => `<option value="${index}">${exorcist.name}</option>`).join('');
+
+  const content = `
+    <div>
+      <h2>Threats</h2>
+      <p>Rules:</p>
+      <ul>
+        <li>Inflict harm: (1): An injury, (2-3) 5 stress, (4-6) 3 stress</li>
+        <li>Separate an exorcist completely</li>
+        <li>Cause collateral damage</li>
+        <li>Massively change the parameters of the fight</li>
+        <li>Add an Affliction</li>
+      </ul>
+      <p>When a threat is deployed, one exorcist immediately has a chance to make an action roll to negate the threat. This doesn’t take their action for the round, and any exorcist can act, even one that has already acted. The action roll has no other result other than negating the threat, and negates it on at least one success. This roll is otherwise a normal roll (it can incur consequences, be set up, or gain bonus dice as normal).</p>
+      <div class="form-group">
+        <label>Choose a Threat:</label>
+        <select id="threat-select">
+          ${threats.map((threat, index) => `<option value="${index}">${threat}</option>`).join('')}
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Choose an Exorcist:</label>
+        <select id="exorcist-select">
+          ${exorcistOptions}
+        </select>
+      </div>
+    </div>
+  `;
+
+  new Dialog({
+    title: "Use Threat",
+    content: content,
+    buttons: {
+      use: {
+        label: "Use Threat",
+        callback: async (html) => {
+          const selectedThreatIndex = parseInt(html.find('#threat-select').val());
+          const selectedExorcistIndex = parseInt(html.find('#exorcist-select').val());
+          const selectedThreat = threats[selectedThreatIndex];
+          const selectedExorcist = exorcists[selectedExorcistIndex];
+          ui.notifications.info(`Using Threat: ${selectedThreat} on ${selectedExorcist.name}`);
+
+          // Implement functionality for the selected threat
+          switch (selectedThreatIndex) {
+            case 0: // Inflict harm
+              const roll = new Roll('1d6');
+              await roll.evaluate({ async: true });
+              const rollResult = roll.total;
+              let damage;
+
+              if (rollResult === 1) {
+                damage = "an injury";
+                const injuries = selectedExorcist.system.injuries || 0;
+                await selectedExorcist.update({ 'system.injuries': injuries + 1 });
+              } else if (rollResult === 2 || rollResult === 3) {
+                damage = "5 stress";
+                const stress = selectedExorcist.system.stress.value + 5;
+                await selectedExorcist.update({ 'system.stress.value': stress });
+              } else {
+                damage = "3 stress";
+                const stress = selectedExorcist.system.stress.value + 3;
+                await selectedExorcist.update({ 'system.stress.value': stress });
+              }
+
+              ui.notifications.info(`Inflicted ${damage} on ${selectedExorcist.name}`);
+              break;
+
+            case 1: // Separate an exorcist completely
+              ui.notifications.info(`Separated ${selectedExorcist.name} completely`);
+              break;
+
+            case 2: // Cause collateral damage
+              ui.notifications.info(`Caused collateral damage`);
+              break;
+
+            case 3: // Massively change the parameters of the fight
+              ui.notifications.info(`Massively changed the parameters of the fight`);
+              break;
+
+            case 4: // Add an Affliction
+              const afflictions = game.items.filter(item => item.type === 'affliction');
+              const afflictionOptions = afflictions.map((affliction, index) => `<option value="${index}">${affliction.name}</option>`).join('');
+              const afflictionContent = `
+                <form>
+                  <div class="form-group">
+                    <label>Choose an Affliction:</label>
+                    <select id="affliction-select">${afflictionOptions}</select>
+                  </div>
+                </form>
+              `;
+
+              new Dialog({
+                title: "Add Affliction",
+                content: afflictionContent,
+                buttons: {
+                  add: {
+                    label: "Add Affliction",
+                    callback: async (html) => {
+                      const selectedAfflictionIndex = parseInt(html.find('#affliction-select').val());
+                      const selectedAffliction = afflictions[selectedAfflictionIndex];
+                      const afflictionsList = selectedExorcist.system.afflictions || [];
+                      afflictionsList.push(selectedAffliction.id);
+                      await selectedExorcist.update({ 'system.afflictions': afflictionsList });
+                      ui.notifications.info(`${selectedExorcist.name} has been afflicted with ${selectedAffliction.name}`);
+                    }
+                  },
+                  close: {
+                    label: "Close"
+                  }
+                },
+                default: "add"
+              }).render(true);
+              break;
+
+            default:
+              ui.notifications.warn("Unknown threat selected");
+              break;
+          }
+        }
+      },
+      close: {
+        label: "Close"
+      }
+    },
+    default: "close"
+  }).render(true);
+}
+
+// Function to perform a severe attack
+_severeAttack(event) {
+  this._onNpcSevereAttack(event);
+}
+
+// Function to use a domain
+_useDomain(event) {
+  const domains = this.actor.system.domains || {};
+  const domainOptions = Object.keys(domains).map(key => `<option value="${key}">${domains[key].title}</option>`).join('');
+  const content = `
+    <form>
+      <div class="form-group">
+        <label>Choose a Domain:</label>
+        <select id="domain-select">${domainOptions}</select>
+      </div>
+    </form>
+  `;
+
+  new Dialog({
+    title: "Use Domain",
+    content: content,
+    buttons: {
+      use: {
+        label: "Use",
+        callback: (html) => {
+          const selectedDomainKey = html.find('#domain-select').val();
+          const selectedDomain = domains[selectedDomainKey];
+          ui.notifications.info(`Using Domain: ${selectedDomain.title} - ${selectedDomain.value}`);
+        }
+      }
+    },
+    default: "use"
+  }).render(true);
+}
 
 }

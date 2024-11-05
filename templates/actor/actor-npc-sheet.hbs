@@ -41,12 +41,12 @@
     <div class="quick-actions">
       <h2>Quick Actions</h2>
       <div class="actions-grid">
-        <button type="button" class="quick-action-button">Action 1</button>
-        <button type="button" class="quick-action-button">Action 2</button>
-        <button type="button" class="quick-action-button">Action 3</button>
-        <button type="button" class="quick-action-button">Action 4</button>
-        <button type="button" class="quick-action-button">Action 5</button>
-        <button type="button" class="quick-action-button">Action 6</button>
+        <button type="button" class="quick-action-button attack-player">Attack a Player</button>
+        <button type="button" class="quick-action-button afflict-player">Afflict a Player</button>
+        <button type="button" class="quick-action-button use-complication">Use Complication</button>
+        <button type="button" class="quick-action-button use-threat">Use Threat</button>
+        <button type="button" class="quick-action-button severe-attack">Severe Attack</button>
+        <button type="button" class="quick-action-button use-domain">Use Domain</button>
       </div>
     </div>
     <div class="quick-stats">
@@ -67,8 +67,7 @@
           <div class="talisman-item">
             <label for="talisman-{{@index}}">
               <img src="{{this.imagePath}}" alt="{{this.name}}" title="{{this.name}}">
-              <span>{{this.name}}</span>
-              <span>{{this.currMarkAmount}} / {{this.maxMarkAmount}}</span>
+              <p> {{this.name}} </p>
             </label>
             <button type="button" class="delete-talisman-button" data-index="{{@index}}">Delete</button>
           </div>
@@ -410,7 +409,7 @@
 .brooding-theme .talisman-item img {
   width: 50px;
   height: 50px;
-  object-fit: cover;
+  object-fit: fit;
   border-radius: 4px;
   margin-bottom: 5px;
 }
