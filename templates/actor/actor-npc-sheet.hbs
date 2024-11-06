@@ -22,14 +22,14 @@
           <div class="resource-item">
             <label for="system.sinForm" class="resource-label">Sin Form</label>
             <select name="system.sinForm">
-              <option value="Form I/Severed" {{#if (eq system.sinForm "1")}}selected{{/if}}>Form I/Severed</option>
-              <option value="Form II/Fused" {{#if (eq system.sinForm "2")}}selected{{/if}}>Form II/Fused</option>
-              <option value="Form III/Bound" {{#if (eq system.sinForm "3")}}selected{{/if}}>Form III/Bound</option>
+              <option value="Form I/Severed" {{#if (eq system.sinForm "Form I/Severed")}}selected{{/if}}>Form I/Severed</option>
+              <option value="Form II/Fused" {{#if (eq system.sinForm "Form II/Fused")}}selected{{/if}}>Form II/Fused</option>
+              <option value="Form III/Bound" {{#if (eq system.sinForm "Form III/Bound")}}selected{{/if}}>Form III/Bound</option>
             </select>
           </div>
           <div class="resource-item">
             <label for="system.category" class="resource-label">Category</label>
-            <input type="text" name="system.category" value="{{system.category}}"/>
+            <input type="text" name="system.category" value="{{system.category}}" data-dtype="Number"/>
           </div>
         </div>
       </div>

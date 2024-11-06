@@ -2062,24 +2062,10 @@ export class CainActorSheet extends ActorSheet {
         <div style="margin-bottom: 10px;">
           <label for="dice-modifier" style="display: block; margin-bottom: 5px; font-weight: bold;">Dice Modifier:</label>
           <input type="number" id="dice-modifier" name="dice-modifier" value="0" style="width: 100%; padding: 5px; border-radius: 4px; border: 1px solid #444; background-color: #1a1a1a; color: #f5f5f5;">
-        </div>
-        <div style="margin-bottom: 10px;">
-          ${abilityQuestions.map((question, index) => `
-            <div style="margin-bottom: 5px;">
-              <label style="font-weight: bold;">${question}</label>
-              <div>
-                <label><input type="radio" name="question-${index}" value="yes"> Yes</label>
-                <label><input type="radio" name="question-${index}" value="no"> No</label>
-              </div>
-            </div>
-          `).join('')}
-        </div>
-        <div style="margin-bottom: 10px;">
-          <label for="yes-no-toggle" style="display: block; margin-bottom: 5px; font-weight: bold;">Yes/No Modifier:</label>
-          <select id="yes-no-toggle" name="yes-no-toggle" style="width: 100%; padding: 5px; border-radius: 4px; border: 1px solid #444; background-color: #1a1a1a; color: #f5f5f5;">
-            <option value="yes+1">Yes +1, No -1</option>
-            <option value="yes-1">Yes -1, No +1</option>
-          </select>
+          <p style="margin-top: 10px;">Add or subtract dice based on the following questions:</p>
+          <ul>
+            ${abilityQuestions.map((question, index) => `<li>${question}</li>`).join('')}
+          </ul>
         </div>
       </div>
     `;
@@ -2093,21 +2079,6 @@ export class CainActorSheet extends ActorSheet {
           label: "Roll",
           callback: () => {
             let modifier = parseInt(document.getElementById('dice-modifier').value) || 0;
-            const yesNoToggle = document.getElementById('yes-no-toggle').value;
-            const yesModifier = yesNoToggle === 'yes+1' ? 1 : -1;
-            const noModifier = yesNoToggle === 'yes+1' ? -1 : 1;
-  
-            abilityQuestions.forEach((_, index) => {
-              const selectedOption = document.querySelector(`input[name="question-${index}"]:checked`);
-              if (selectedOption) {
-                if (selectedOption.value === 'yes') {
-                  modifier += yesModifier;
-                } else if (selectedOption.value === 'no') {
-                  modifier += noModifier;
-                }
-              }
-            });
-  
             this._performSevereAttackRoll(rollFormula, modifier);
           },
           buttonClass: "severe-attack-roll-button",
@@ -2267,7 +2238,7 @@ export class CainActorSheet extends ActorSheet {
             <p>The Sin can use this ability on a '1' on the risk roll. They can only use it once a mission. Target an exorcist. Any other exorcists nearby must decide to fly to their aid. Any that don't offer aid cannot participate.</p>
       
             <h3>Ability Activation</h3>
-            <p>Start with a pool of 5d6. Then remove one dice for each of the following:</p>
+            <p>Start with a pool of 6d6. Then remove one dice for each of the following:</p>
             <ul>
               <li>Is another person aiding you?</li>
               <li>Can you grab on to something nearby?</li>
@@ -2281,7 +2252,7 @@ export class CainActorSheet extends ActorSheet {
             <p>If two or more '1's come up, the exorcist has one or more of their limbs torn off. Roll 1d3: 1: arm, 2: leg, 3: both legs. Roll 1d6 for left or right (left on 1-3, right on 4-6). They take an injury, pass out until the scene passes, then all physical activity is hard for them without teamwork. After the mission is over, they can adjust to their disability and this no longer has an effect on them (determine with Admin how your character heals).</p>
           </div>
         `,
-        rollFormula: "5d6"
+        rollFormula: "6d6"
         },
         afflictions: ["White Mold: Spreading white veins and coughing indicate mold infection. Subtract 1 from all resting rolls while afflicted and cannot eat, drink, or use consumables.", "Frozen Limbs: Physical activity or fine motor skill is hard if it requires more than one limb.", "Circling the Drain : Cannot benefit from teamwork or setup. Permanently add to your agenda: give up on something.", "Speaking spews out black sludge. All communication that requires speaking is hard", "Rotting: Black rot has taken in the body. Take 1 stress each time pressure fills up. If this inflicts an injury, it inflicts instant death.", "Permanently add to your agenda: die."],
         severeAbilityQuestions: [
@@ -2349,7 +2320,7 @@ export class CainActorSheet extends ActorSheet {
             <p>The Sin can use this ability on a '1' on the risk roll. They can only use it once a mission. Target an exorcist. Any other exorcists nearby must decide to fly to their aid. Any that don't offer aid cannot participate.</p>
       
             <h3>Ability Activation</h3>
-            <p>Start with a pool of 5d6. Then remove one dice for each of the following:</p>
+            <p>Start with a pool of 6d6. Then remove one dice for each of the following:</p>
             <ul>
               <li>Are you accepting of your powers?</li>
               <li>Are your allies close enough to touch you skin to skin?</li>
@@ -2363,7 +2334,7 @@ export class CainActorSheet extends ActorSheet {
             <p>If two or more '1's come up, the execution talisman of the shadow is 5 instead.</p>
           </div>
         `,
-        rollFormula: "5d6" },
+        rollFormula: "6d6" },
         afflictions: ["Absent Minded: Whenever you roll a ‘1’ on risk, erase 1 KP.", "Wasting Sickness: Reduce max stress by 1 each time you rest. If reduced to 0, you suffer instant death.", "Starvation: All actions are hard until you or an ally mark 1 KP and allow you to eat something. This effect resets and you must eat again after you rest.", "Itchy Fingers: Once a scene, stealing something (anything) gives you 1 psyche burst and 1d3 sin. Permanently add to your agenda: steal.", "Dreaming Desire: When pressure increases, spend 1 psyche burst to daydream about things you want or take 2 stress.", "The Want: Permanently add to your agenda: take more than you need. Or improvise: make a something hard or"],
         severeAbilityQuestions: ["Are you accepting of your powers?", "Are your allies close enough to touch you skin to skin?", "Are you willing to part with your kit?", "Is the Toad hindered, distracted, or under duress in some way?"]
       }, 
@@ -2408,7 +2379,7 @@ export class CainActorSheet extends ActorSheet {
             <p>The Sin can use this ability on a '1' on the risk roll. They can only use it once a mission. Target an exorcist. Any other exorcists nearby must decide to fly to their aid. Any that don't offer aid cannot participate.</p>
       
             <h3>Ability Activation</h3>
-            <p>Start with a pool of 5d6. Then remove one dice for each of the following:</p>
+            <p>Start with a pool of 6d6. Then remove one dice for each of the following:</p>
             <ul>
               <li>Are you far from the idol?</li>
               <li>Do you have love in your life?</li>
@@ -2424,7 +2395,7 @@ export class CainActorSheet extends ActorSheet {
             <p>If two or more '1's come up, this effect instead lasts until the rest of the hunt, and can't be ended early.</p>
           </div>
         `,
-        rollFormula: "5d6"
+        rollFormula: "6d6"
        },
        afflictions: [
         "Infatuated: Pick an ally. If you act without their setup or teamwork, you take 1 stress.",
@@ -2471,7 +2442,7 @@ export class CainActorSheet extends ActorSheet {
             <p>The Sin can use this ability on a '1' on the risk roll. They can only use it once a scene. Target an exorcist. Any other exorcists nearby must decide to fly to their aid. Any that don't offer aid cannot participate.</p>
       
             <h3>Ability Activation</h3>
-            <p>The Lord binds the targeted exorcist with divine chains, then begins a summary trial. Start with a pool of 5d6. Then remove one dice for each of the following:</p>
+            <p>The Lord binds the targeted exorcist with divine chains, then begins a summary trial. Start with a pool of 6d6. Then remove one dice for each of the following:</p>
             <ul>
               <li>Are you innocent of crimes?</li>
               <li>Are you a liar or a cheat?</li>
@@ -2485,7 +2456,7 @@ export class CainActorSheet extends ActorSheet {
             <p>For every '1' that comes up, the targeted exorcist is forced to confront their inadequacy and additionally gains 1d6 sin.</p>
           </div>
         `,
-        rollFormula: "5d6"
+        rollFormula: "6d6"
         },
         afflictions: [
           "Reality Control: Must spend 1 stress to spend any amount of KP in the kingdom.",
@@ -2532,7 +2503,7 @@ export class CainActorSheet extends ActorSheet {
               <p>The Sin can use this ability on a '1' on the risk roll. They can only use it once a mission. Target an exorcist. Any other exorcists nearby must decide to fly to their aid. Any that don't offer aid cannot participate.</p>
         
               <h3>Ability Activation</h3>
-              <p>Start with a pool of 5d6. Then remove one dice for each of the following:</p>
+              <p>Start with a pool of 6d6. Then remove one dice for each of the following:</p>
               <ul>
                 <li>Do you have a sword (or something like it)?</li>
                 <li>Are you calm, collected, and focused?</li>
@@ -2546,7 +2517,7 @@ export class CainActorSheet extends ActorSheet {
               <p>For every '1' rolled, the targeted exorcist suffers 2 additional stress and has a piece of skin cut away, causing permanent scarring (roll).</p>
             </div>
           `,
-          rollFormula: "5d6"
+          rollFormula: "6d6"
         },
         afflictions: [
           "Blood Rage: Afflicted exorcists roll +1D when inflicting harm, violence, or physical force, but must take 1 stress to take any other type of action.",
@@ -2616,7 +2587,7 @@ export class CainActorSheet extends ActorSheet {
               <p>The Sin can use this ability on a '1' on the risk roll. They can only use it once a mission. Target an exorcist. Any other exorcists nearby must decide to fly to their aid. Any that don't offer aid cannot participate.</p>
         
               <h3>Ability Activation</h3>
-              <p>Start with a pool of 5d6. Then remove one dice for each of the following:</p>
+              <p>Start with a pool of 6d6. Then remove one dice for each of the following:</p>
               <ul>
                 <li>Can you move quickly and unencumbered?</li>
                 <li>Is someone aiding you able to push or grab you?</li>
@@ -2644,7 +2615,7 @@ export class CainActorSheet extends ActorSheet {
               </ul>
             </div>
           `,
-          rollFormula: "5d6"
+          rollFormula: "6d6"
         },
         afflictions: [
           "Seethe: Pick another exorcist. For every ‘6’ that exorcist rolls on an action, gain 1 stress.",
@@ -2710,7 +2681,7 @@ export class CainActorSheet extends ActorSheet {
         },
         severeAttack: {
           description: "The Redacted",
-          rollFormula: "5d6"
+          rollFormula: "6d6"
         },
         afflictions: [
           "The Redacted",

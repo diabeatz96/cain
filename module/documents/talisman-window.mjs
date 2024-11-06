@@ -6,8 +6,8 @@ export class TalismanWindow extends Application {
       id: 'talisman-window',
       title: 'Talismans',
       template: 'systems/cain/templates/talisman-window.hbs',
-      width: 600, // Adjusted initial width
-      height: 400, // Adjusted initial height
+      width: 1000, // Adjusted initial width
+      height: 800, // Adjusted initial height
       resizable: true,
     });
   }
