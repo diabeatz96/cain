@@ -75,26 +75,25 @@
 
     {{!-- Owned Features Tab --}}
     <div class="tab" data-group="primary" data-tab="features">
-  
       <section class="grid grid-3col mob-psycho-grid">
         <aside class="sidebar mob-psycho-sidebar">
-        <h3 class="mob-psycho-heading">Skills</h3>
-        {{#each system.skills as |skill key|}}
-          <div class="ability flexrow mob-psycho-ability flex-group-center">
-            <label for="system.skills.{{key}}.value" class="resource-label rollable mob-psycho-label" 
-                  data-roll="{{#if (eq skill.value 0)}}2d6kl1cs>=4{{else}}{{skill.value}}d6cs>=4{{#if (gt ../system.extraDice.value 0)}}+{{../system.extraDice.value}}d6cs>=4{{/if}}{{/if}}" 
-                  data-label="{{localize (lookup @root.config.skills key)}}">
-              {{localize (lookup @root.config.skills key)}}
-            </label>     
-            <div class="flexrow ability-dots circle-checkboxes">
-              {{#range 0 3}}
-                <input type="checkbox" id="ability-{{key}}-{{index}}" class="skills-checkbox" {{#if (lt index skill.value)}}checked{{/if}} data-skill_key="{{key}}" data-skill_value="{{CainOffset index 1}}"/>
-                <label for="ability-{{key}}-{{index}}"></label>
-              {{/range}}
-            </div>   
-          </div>
-        {{/each}}
-
+          <h3 class="mob-psycho-heading">{{localize "CAIN.Skills"}}</h3>
+          {{#each system.skills as |skill key|}}
+            <div class="ability flexrow mob-psycho-ability flex-group-center">
+              <label for="system.skills.{{key}}.value" class="resource-label rollable mob-psycho-label" 
+                    data-roll="{{#if (eq skill.value 0)}}2d6kl1cs>=4{{else}}{{skill.value}}d6cs>=4{{#if (gt ../system.extraDice.value 0)}}+{{../system.extraDice.value}}d6cs>=4{{/if}}{{/if}}" 
+                    data-label="{{localize (concat 'CAIN.Skill.' key '.long')}}"
+                    data-tooltip="{{localize (concat 'CAIN.Skill.' key '.description')}}">
+                {{localize (concat 'CAIN.Skill.' key '.long')}}
+              </label>     
+              <div class="flexrow ability-dots circle-checkboxes">
+                {{#range 0 4}}
+                  <input type="checkbox" id="ability-{{key}}-{{index}}" class="skills-checkbox {{#if (eq index 3)}}fourth-checkbox{{/if}}" {{#if (lt index skill.value)}}checked{{/if}} data-skill_key="{{key}}" data-skill_value="{{CainOffset index 1}}"/>
+                  <label for="ability-{{key}}-{{index}}" class="{{#if (eq index 3)}}fourth-checkbox-label{{/if}}"></label>
+                {{/range}}
+              </div>   
+            </div>
+          {{/each}}
         <div class="extra-dice-section flexrow flex-group-center mob-psycho-extra-dice">
           <label for="system.extraDice.value" class="resource-label flexlarge align-left mob-psycho-label">EXTRA d6 to ROLLS</label>
           <input type="number" name="system.extraDice.value" value="{{system.extraDice.value}}" data-dtype="Number" min="0" max="6" class="mob-psycho-input"/>
@@ -236,6 +235,15 @@
   width: 100%;
   display: inline-block;
   margin-top: 10px;
+}
+
+/* Styles for the fourth checkbox */
+input[type="checkbox"].fourth-checkbox+label::before {
+  border: 3px solid rgb(255, 85, 85); /* Change this color to your desired border color */
+}
+
+input[type="checkbox"].fourth-checkbox:checked+label::before {
+  background-color: rgb(255, 85, 85); /* Change this color to your desired background color */
 }
 
 </style>
