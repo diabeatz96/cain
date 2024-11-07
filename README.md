@@ -42,6 +42,24 @@
     - Myco from the Pilot.NET/CAIN Discord for providing icon assets
     - Tom Bloom Creator of Cain
     - My sunday DND group
+    - My friend carmen for miscellaneous ideas and polish
+    - Diabeatz96, ahandleman and Benji as developers.
+
+## v1.2.0 Update
+
+v1.2.X update is a rework of the sin-sheet, adjustments to the player character sheet and addition of globaltalismans linked to tiles in game. 
+
+This update has features included but not limited too:
+- Trauma Questions can now be checked off and are now sorted out line by line on the sheet of the sin
+- Sins fields have all been updated to smart text boxes for better customization and edits.
+- Sins Now have 6 Quick Action buttons to automate several player interactions (More to be added in future updates)
+- Talismans can now be seen on Sin Sheet directly if you want to link them.
+- Sins now have expanded views of severe attack and can add your own questions for extra fun!
+- Sin page formatting improved.
+- Players stats are now shown as bubbles and not numbers. Stats were added to localization document. (Further work needed)
+- Talismans can now be put inside of the scene and can be edited as such.
+- Fixed Spelling Errors on Hound.
+- Fixed Spelling Errors in Homebrew.
 
 ## v1.1.X Update
 
