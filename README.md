@@ -45,7 +45,7 @@
     - My friend carmen for miscellaneous ideas and polish
     - Diabeatz96, ahandleman and Benji as developers.
 
-## v1.2.0 Update
+## v1.2.X Update
 
 v1.2.X update is a rework of the sin-sheet, adjustments to the player character sheet and addition of globaltalismans linked to tiles in game. 
 
