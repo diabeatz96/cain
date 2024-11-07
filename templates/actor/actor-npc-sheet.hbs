@@ -2,16 +2,13 @@
 
   {{!-- Sheet Header --}}
   <header class="sheet-header dark-header">
-    <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100"/>
-    <div class="header-fields">
-      <h1 class="charname"><input name="name" type="text" value="{{actor.name}}" placeholder="Name"/></h1>
-      <div class="resources grid grid-3col">
-        <div class="resource flex-group-center">
-          <label for="system.sinType" class="resource-label">
-            Sin Type
-            <img src="systems/cain/assets/Sins/{{system.sinType}}.png" alt="{{system.sinType}}"/>
-          </label>
-          <div class="resource-content flexrow flex-center flex-between">
+    <div class="header-top">
+      <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100"/>
+      <div class="header-fields">
+        <h1 class="charname"><input name="name" type="text" value="{{actor.name}}" placeholder="Name"/></h1>
+        <div class="header-icons">
+          <div class="resource-item">
+            <label for="system.sinType" class="resource-label">Sin Type</label>
             <select id="sinTypeSelect" name="system.sinType">
               <option value="ogre" {{#if (eq system.sinType "ogre")}}selected{{/if}}>Ogre</option>
               <option value="toad" {{#if (eq system.sinType "toad")}}selected{{/if}}>Toad</option>
@@ -22,32 +19,62 @@
               <option value="redacted" {{#if (eq system.sinType "redacted")}}selected{{/if}}>[REDACTED]</option>
             </select>
           </div>
-        </div>
-        <div class="resource flex-group-center">
-          <label for="system.sinForm" class="resource-label">
-            Sin Form
-            <img src="systems/cain/assets/items/affliction.png" alt="form" />
-          </label>
-          <div class="resource-content flexrow flex-center flex-between">
+          <div class="resource-item">
+            <label for="system.sinForm" class="resource-label">Sin Form</label>
             <select name="system.sinForm">
               <option value="Form I/Severed" {{#if (eq system.sinForm "Form I/Severed")}}selected{{/if}}>Form I/Severed</option>
               <option value="Form II/Fused" {{#if (eq system.sinForm "Form II/Fused")}}selected{{/if}}>Form II/Fused</option>
               <option value="Form III/Bound" {{#if (eq system.sinForm "Form III/Bound")}}selected{{/if}}>Form III/Bound</option>
             </select>
           </div>
-        </div>
-        <div class="resource flex-group-center">
-          <label for="system.category" class="resource-label">
-            Category
-            <img src="systems/cain/assets/items/pathos.png" alt="category image"/>
-          </label>
-          <div class="resource-content flexrow flex-center flex-between">
+          <div class="resource-item">
+            <label for="system.category" class="resource-label">Category</label>
             <input type="text" name="system.category" value="{{system.category}}" data-dtype="Number"/>
           </div>
         </div>
       </div>
     </div>
   </header>
+
+  {{!-- Quick Actions and Talismans --}}
+  <section class="quick-section">
+    <div class="quick-actions">
+      <h2>Quick Actions</h2>
+      <div class="actions-grid">
+        <button type="button" class="quick-action-button attack-player">Attack a Player</button>
+        <button type="button" class="quick-action-button afflict-player">Afflict a Player</button>
+        <button type="button" class="quick-action-button use-complication">Use Complication</button>
+        <button type="button" class="quick-action-button use-threat">Use Threat</button>
+        <button type="button" class="quick-action-button severe-attack">Severe Attack</button>
+        <button type="button" class="quick-action-button use-domain">Use Domain</button>
+      </div>
+    </div>
+    <div class="quick-stats">
+      <h2>Talismans</h2>
+      <div class="talisman-selection">
+        <label for="talisman-select">Add Talisman:</label>
+        <div class="talisman-select-container">
+          <select id="talisman-select" class="styled-select">
+            {{#each globalTalismans}}
+              <option value="{{@index}}">{{this.name}}</option>
+            {{/each}}
+          </select>
+          <button type="button" id="add-talisman-button" class="styled-button">Add</button>
+        </div>
+      </div>
+      <div class="talismans-grid">
+        {{#each selectedTalismans}}
+          <div class="talisman-item">
+            <label for="talisman-{{@index}}">
+              <img src="{{this.imagePath}}" alt="{{this.name}}" title="{{this.name}}">
+              <p> {{this.name}} </p>
+            </label>
+            <button type="button" class="delete-talisman-button" data-index="{{@index}}">Delete</button>
+          </div>
+        {{/each}}
+      </div>
+    </div>
+  </section>
 
   {{!-- Sheet Tab Navigation --}}
   <nav class="sheet-tabs tabs dark-tabs" data-group="primary">
@@ -74,11 +101,16 @@
 
   </section>
 </form>
+
+
 <style>
-  .brooding-theme {
+.brooding-theme {
   background-color: #1a1a1a;
   color: #e0e0e0;
   font-family: "Courier New", Courier, monospace;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.5);
 }
 
 .brooding-theme .dark-header {
@@ -87,21 +119,77 @@
   border-bottom: 2px solid #444;
   padding: 20px;
   box-shadow: 0 0 10px 2px #000;
+  border-radius: 10px 10px 0 0;
+}
+
+.brooding-theme .dark-header select {
+  background-color: #1a1a1a;
+  color: white;
+  border: 1px solid #444;
+  padding: 5px;
+  transition: border-color 0.3s;
+} 
+
+.brooding-theme .dark-header input {
+  background-color: #1a1a1a;
+  color: #e0e0e0;
+  border: none;
+  border-bottom: 2px solid #444;
+  padding: 5px;
+  transition: border-color 0.3s;
+}
+
+.brooding-theme .dark-header input:focus {
+  border-color: #00ff00;
+  outline: none;
+}
+
+.brooding-theme .dark-header label {
+  font-size: 16px;
+  color: #e0e0e0;
+}
+
+.brooding-theme .quick-section input {
+  background-color: #1a1a1a;
+  color: #e0e0e0;
+  border: 1px solid #444;
+  padding: 5px;
+  transition: border-color 0.3s;
+}
+
+.brooding-theme .quick-stats select {
+  background-color: #1a1a1a;
+  color: white;
+  border: 1px solid #444;
+  padding: 5px;
+  transition: border-color 0.3s;
 }
 
 .brooding-theme .dark-header select option {
   background-color: #1a1a1a;
-  color: #e0e0e0;
+  color: white;
 }
 
 .brooding-theme .profile-img {
   border: 2px solid #444;
   border-radius: 50%;
   box-shadow: 0 0 10px 2px #000;
+  transition: transform 0.3s;
+}
+
+.brooding-theme .profile-img:hover {
+  transform: scale(1.1);
 }
 
 .brooding-theme .header-fields {
   margin-left: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.brooding-theme .charname {
+  text-align: center;
 }
 
 .brooding-theme .charname input {
@@ -111,10 +199,70 @@
   border: none;
   border-bottom: 2px solid #444;
   padding: 5px;
+  transition: border-color 0.3s;
 }
 
-.brooding-theme .resources {
-  margin-top: 20px;
+.brooding-theme .charname input:focus {
+  border-color: #00ff00;
+  outline: none;
+}
+
+.brooding-theme .header-icons {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+  justify-content: center;
+}
+
+.brooding-theme .resource-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.brooding-theme .quick-section {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.brooding-theme .quick-actions,
+.brooding-theme .quick-stats {
+  width: 48%;
+  margin-bottom:
+}
+
+.brooding-theme .actions-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.brooding-theme .quick-action-button {
+  background-color: #333;
+  color: #e0e0e0;
+  border: 1px solid #444;
+  padding: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.brooding-theme .quick-action-button:hover {
+  background-color: #555;
+  color: #fff;
+}
+
+.brooding-theme .stats-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+.brooding-theme .stat-item {
+  display: flex;
+  flex-direction: column;
 }
 
 .brooding-theme .resource-label {
@@ -128,6 +276,13 @@
   color: #e0e0e0;
   border: 1px solid #444;
   padding: 5px;
+  transition: border-color 0.3s;
+}
+
+.brooding-theme .resource-content select:focus,
+.brooding-theme .resource-content input:focus {
+  border-color: #00ff00;
+  outline: none;
 }
 
 .brooding-theme .resource-content img {
@@ -191,5 +346,121 @@
   background-color: #1a1a1a;
   padding: 20px;
   box-shadow: 0 0 10px 2px #000;
+  border-radius: 0 0 10px 10px;
+}
+
+.brooding-theme .header-top {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.brooding-theme .bars-grid {
+  display: grid;
+  gap: 10px;
+}
+
+.brooding-theme .bar-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.brooding-theme .bar {
+  width: 100%;
+  background-color: #333;
+  border: 1px solid #444;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.brooding-theme .bar-fill {
+  height: 20px;
+  background-color: #00ff00;
+}
+
+.brooding-theme .talisman-selection {
+  margin-top: 3px;
+}
+
+.brooding-theme .talisman-select-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brooding-theme .talismans-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.brooding-theme .talisman-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #444;
+  border-radius: 4px;
+}
+
+.brooding-theme .talisman-item img {
+  width: 50px;
+  height: 50px;
+  object-fit: fit;
+  border-radius: 4px;
+  margin-bottom: 5px;
+}
+
+.brooding-theme .talisman-item label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+
+.brooding-theme .styled-button {
+  background-color: #333;
+  color: #e0e0e0;
+  border: 1px solid #444;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.brooding-theme .styled-button:hover {
+  background-color: #555;
+  color: #fff;
+}
+
+.brooding-theme .styled-select {
+  background-color: #1a1a1a;
+  color: white;
+  border: 1px solid #444;
+  padding: 5px;
+  transition: border-color 0.3s;
+}
+
+.brooding-theme .styled-select option {
+  background-color: #1a1a1a;
+  color: white;
+}
+
+.brooding-theme .delete-talisman-button {
+  background-color: #ff0000;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 5px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.brooding-theme .delete-talisman-button:hover {
+  background-color: #cc0000;
 }
 </style>

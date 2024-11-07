@@ -261,7 +261,7 @@
         <label for="system.skill" class="resource-label">Select Skill</label>
         <select name="system.skill" data-dtype="String">
           {{#each @root.config.skills as |skill key|}}
-            <option value="{{key}}" {{#if (eq system.skill key)}}selected{{/if}}>{{localize skill}}</option>
+            <option value="{{key}}" {{#if (eq system.skill key)}}selected{{/if}}>{{localize (concat 'CAIN.Skill.' key '.long')}}</option>
           {{/each}}
         </select>
       </div>

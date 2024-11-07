@@ -18,6 +18,7 @@ import * as models from './data/_module.mjs';
 /*  Init Hook                                   */
 /* -------------------------------------------- */
 
+
 Hooks.once('init', async function () {
   // Add utility classes to the global game object so that they're more easily
   // accessible in global contexts.
@@ -437,6 +438,7 @@ Handlebars.registerHelper('CainOffset', function(value, offset, options) {
 /* -------------------------------------------- */
 /*  Ready Hook                                  */
 /* -------------------------------------------- */
+
 
 Hooks.once('ready', function () {
   // Function to create and insert the Talisman button
@@ -934,11 +936,11 @@ function showAccessibilityChoiceDialog() {
       <div style="display: flex; justify-content: space-around; margin-top: 20px;">
         <div>
           <img src="systems/cain/assets/UI_Normal.png" alt="Styled Mode" style="cursor: pointer;" id="normal-mode">
-          <p>Stylish Mode</p>
+          <p>UNDER//HEAVEN</p>
         </div>
         <div>
           <img src="systems/cain/assets/UI_Plain.png" alt="Accessibility Mode" style="cursor: pointer;" id="accessibility-mode">
-          <p>Accessibility Mode</p>
+          <p>CAIN</p>
         </div>
       </div>
       <p style="margin-top: 20px;">You can always change your preferred style in the settings.</p>

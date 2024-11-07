@@ -28,8 +28,8 @@
     {{ editor enrichedDescription target='system.severeAttack.description' engine='prosemirror' button=true class="editor-style" editable=editable }}
   </div>
   <div class="form-group dark-form-group full-width flexible-height">
-    <label class="centered-label collapsible-button">Severe Ability Questions</label>
-    <div id="severe-ability-questions-section" class="collapsible-section collapsed">
+    <label class="centered-label">Severe Ability Questions</label>
+    <div id="severe-ability-questions-section">
       {{#each system.severeAbilityQuestions}}
         <div class="question-group">
           <label for="system.severeAbilityQuestions.{{@index}}">Q{{@index}}:</label>
@@ -41,8 +41,8 @@
     </div>
   </div>
   <div class="form-group dark-form-group">
-    <label for="system.afflictions" class="centered-label collapsible-button">Afflictions</label>
-    <div id="afflictions-section" class="collapsible-section collapsed">
+    <label for="system.afflictions" class="centered-label">Afflictions</label>
+    <div id="afflictions-section">
       <table class="afflictions-table">
         <thead>
           <tr>
@@ -264,18 +264,6 @@
 
 .tab.attacks .question-group label {
   margin-bottom: 0;
-}
-
-.tab.attacks .collapsible-section {
-  display: none;
-}
-
-.tab.attacks .collapsible-section.collapsed {
-  display: none;
-}
-
-.tab.attacks .collapsible-section:not(.collapsed) {
-  display: block;
 }
 
 form .tab.attacks .form-group {

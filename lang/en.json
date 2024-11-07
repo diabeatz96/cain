@@ -1,16 +1,62 @@
 {
   "CAIN": {
-    "Skill" : {
-      "Force": { "long": "Force", "abbr": "force" },
-      "Conditioning": { "long": "Conditioning", "abbr": "conditioning" },
-      "Coordination": { "long": "Coordination", "abbr": "coordination" },
-      "Covert": { "long": "Covert", "abbr": "covert" },
-      "Interfacing": { "long": "Interfacing", "abbr": "interfacing" },
-      "Investigation": { "long": "Investigation", "abbr": "investigation" },
-      "Surveillance": { "long": "Surveillance", "abbr": "surveillance" },
-      "Negotiation": { "long": "Negotiation", "abbr": "negotiation" },
-      "Authority": { "long": "Authority", "abbr": "authority" },
-      "Connection": { "long": "Connection", "abbr": "connection" }
+    "Skills": "Skills",
+    "Skill": {
+      "force": { 
+        "long": "Force", 
+        "abbr": "force", 
+        "description": "Apply direct and close force or violence. Smash, fight, cut, grapple."
+      },
+      "conditioning": { 
+        "long": "Conditioning", 
+        "abbr": "conditioning", 
+        "description": "Get around on foot. Sprint, climb, swim, balance."
+      },
+      "coordination": { 
+        "long": "Coordination", 
+        "abbr": "coordination", 
+        "description": "Use your hand-eye coordination. Shoot, throw, catch."
+      },
+      "covert": { 
+        "long": "Covert", 
+        "abbr": "covert", 
+        "description": "Move with stealth and act with sleight of hand. Sneak, lock pick, steal."
+      },
+      "interfacing": { 
+        "long": "Interfacing", 
+        "abbr": "interfacing", 
+        "description": "Use, understand, build, or fix technology, vehicles, or devices. Drive, hack, repair."
+      },
+      "investigation": { 
+        "long": "Investigation", 
+        "abbr": "investigation", 
+        "description": "Examine something in detail, or uncover information about it. Research, study, sleuth."
+      },
+      "surveillance": { 
+        "long": "Surveillance", 
+        "abbr": "surveillance", 
+        "description": "Use your power of observation. Survey, track, spot."
+      },
+      "negotiation": { 
+        "long": "Negotiation", 
+        "abbr": "negotiation", 
+        "description": "Rely on your words to influence others. Sway, lie, bargain."
+      },
+      "authority": { 
+        "long": "Authority", 
+        "abbr": "authority", 
+        "description": "Wield your leadership and force of will. Lead, organize, order, intimidate."
+      },
+      "connection": { 
+        "long": "Connection", 
+        "abbr": "connection", 
+        "description": "Connect to others, and draw on those connections. Intuit, empathize, network."
+      },
+      "psyche": { 
+        "long": "Psyche", 
+        "abbr": "psyche", 
+        "description": "Govern the use of your psychic powers. Only roll it when using these powers."
+      }
     },
     "Ability": {
       "Str": { "long": "Strength", "abbr": "str" },
@@ -38,13 +84,12 @@
       "Inactive": "Inactive Effects"
     }
   },
-
   "TYPES": {
     "Actor": {
       "character": "Exorcist",
       "npc": "Sin",
       "mundane": "Mundane NPC"
-    }, 
+    },
     "Item": {
       "item": "Item",
       "agenda": "Agenda",
@@ -57,7 +102,6 @@
       "affliction": "Affliction"
     }
   },
-
   "SHEET": {
     "SIN": {
       "ROLLSIN": "Roll SIN (1D3)",
