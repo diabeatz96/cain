@@ -11,7 +11,7 @@
         Roll Psyche (N/A)
       </button>
       {{/if}}
-      <div class="psyche-burst-checkboxes" style="display: flex; align-items: center;">
+      <div class="psyche-burst-checkboxes circle-checkboxes" style="display: flex; align-items: center;">
         <label style="margin-right: 10px;">Psyche Burst Charges:</label>
         {{#if system.psycheBurst}}
         {{#range 0 system.psycheBurst.max}}
@@ -270,38 +270,6 @@
 
   .abilities-page .psyche-roll-button:hover {
     background: linear-gradient(45deg, #3333ff, #ff00cc);
-  }
-
-  .abilities-page .psyche-burst-checkboxes input[type="checkbox"] {
-    display: none;
-  }
-
-  .abilities-page .psyche-burst-checkboxes input[type="checkbox"]+label {
-    display: inline-block;
-    padding: 0;
-    background: url('systems/cain/assets/brain.png') no-repeat;
-    height: 50px;
-    width: 50px;
-    background-size: cover;
-    position: relative;
-  }
-
-  .abilities-page .psyche-burst-checkboxes input[type="checkbox"]+label::before {
-    content: '';
-    display: block;
-    width: 24px;
-    height: 24px;
-    border: 3px solid purple;
-    /* Adjust the thickness here */
-    border-radius: 50%;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-
-  .abilities-page .psyche-burst-checkboxes input[type="checkbox"]:checked+label::before {
-    background-color: purple;
   }
 
   .abilities-page .items-section {

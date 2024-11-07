@@ -868,6 +868,7 @@ img {
   padding: 5px;
   border-radius: 5px;
   margin: 2px; /* Dashed border for a report look */
+  gap: 4px;
 }
 
 .mob-psycho-extra-dice {
@@ -1614,3 +1615,146 @@ img {
   color: var(--text-color, #ff00ff);
 }
 
+
+.circle-checkboxes {
+  input[type="checkbox"] {
+    display: none;
+  }
+
+  input[type="checkbox"]+label {
+    display: inline-block;
+    padding: 0;
+    height: 50px;
+    width: 50px;
+    background-size: cover;
+    position: relative;
+  }
+
+  input[type="checkbox"]+label::before {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 24px;
+    border: 3px solid purple; 
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  input[type="checkbox"]:checked+label::before {
+    background-color: purple; 
+  }
+} 
+
+.ability-dots {
+  input[type="checkbox"]+label {
+    height: 30px;
+    width: 30px;
+  }
+
+  input[type="checkbox"]+label::before {
+    width: 18px;
+    height: 18px;
+    border: 3px solid rgb(10, 123, 175);
+  }
+
+  input[type="checkbox"]:checked+label::before {
+    background-color: rgb(10, 123, 175); 
+  }
+}
+
+.psyche-burst-checkboxes {
+  input[type="checkbox"]+label {
+    background: url('systems/cain/assets/brain.png') no-repeat;
+  }
+}
+
+.collapsible-section {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 300px;
+  background: #1a1a1a;
+  color: #e0e0e0;
+  border: 1px solid #444;
+  border-radius: 10px;
+  padding: 10px;
+  z-index: 1000;
+}
+
+.collapsible-section .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.collapsible-section .content {
+  display: block;
+}
+
+.collapsible-section .header button {
+  background: #333;
+  color: #e0e0e0;
+  border: 1px solid #444;
+  padding: 5px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.collapsible-section .header button:hover {
+  background: #555;
+}
+
+.pinned-talisman-container {
+  position: absolute;
+  top: 50px;
+  left: 10px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  resize: both;
+  overflow: auto;
+}
+
+.pinned-talisman {
+  background: #1a1a1a;
+  color: #e0e0e0;
+  border: 1px solid #444;
+  border-radius: 10px;
+  padding: 1em; /* Use em units for padding */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1; /* Allow the pinned talisman to grow */
+}
+
+.pinned-talisman img {
+  width: 75%;
+  height: 75%;
+  object-fit: contain; /* Ensure the full image is displayed */
+  border-radius: 4px;
+  margin-bottom: 0.5em; /* Use em units for margin */
+}
+
+.pinned-talisman span {
+  font-size: 1em; /* Use em units for font size */
+  margin-bottom: 0.5em; /* Use em units for margin */
+}
+
+.pinned-talisman button {
+  background: #ff0000;
+  color: #fff;
+  border: none;
+  padding: 0.5em 1em; /* Use em units for padding */
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 0.5em; /* Use em units for margin */
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.pinned-talisman button:hover {
+  background: #cc0000;
+}

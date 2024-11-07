@@ -7,6 +7,7 @@ import {
   HTMLShortcut
 } from '../helpers/standard_event_assignment_shortcuts.mjs'
 
+import { TalismanWindow } from '../documents/talisman-window.mjs';
 import { SessionEndAdvancement} from  '../documents/session-end-advancement.mjs'
 import { CAIN } from '../helpers/config.mjs';
 
@@ -38,6 +39,7 @@ export class CainActorSheet extends ActorSheet {
 
   /** @override */
   get template() {
+    console.log("getting template")
     return `systems/cain/templates/actor/actor-${this.actor.type}-sheet.hbs`;
   }
 
@@ -57,9 +59,42 @@ export class CainActorSheet extends ActorSheet {
     }
 
     if (actorData.type == 'npc') {
+      console.log(context);
+      console.log(this.actor.type)
       this._prepareItems(context);
     }
 
+
+    context.enrichedAppearance = await TextEditor.enrichHTML(
+      this.actor.system.appearance,
+      {
+        secrets: this.document.isOwner,
+        async: true,
+        rollData: this.actor.getRollData(),
+        relativeTo: this.actor,
+      }
+    );
+
+    context.enrichedPalace = await TextEditor.enrichHTML(
+      this.actor.system.palace,
+      {
+        secrets: this.document.isOwner,
+        async: true,
+        rollData: this.actor.getRollData(),
+        relativeTo: this.actor,
+      }
+    );
+
+    context.enrichedPressure = await TextEditor.enrichHTML(
+      this.actor.system.pressure,
+      {
+        secrets: this.document.isOwner,
+        async: true,
+        rollData: this.actor.getRollData(),
+        relativeTo: this.actor,
+      }
+    );
+    
     context.enrichedBiography = await TextEditor.enrichHTML(
       this.actor.system.biography,
       {
@@ -111,7 +146,11 @@ export class CainActorSheet extends ActorSheet {
 
     this._calculateRanges(context);
     context.sheetConstants = this.sheetConstants
+    context.globalTalismans = game.settings.get('cain', 'globalTalismans');
+    context.selectedTalismans = this.actor.system.selectedTalismans || [];
 
+    console.log(context.globalTalismans);
+    
     return context;
   }
 
@@ -190,7 +229,7 @@ export class CainActorSheet extends ActorSheet {
     }
     
   }
-  
+
   _getItemsFromIDs(ids) {
     return ids.map(id => game.items.get(id));
   } 
@@ -288,6 +327,33 @@ export class CainActorSheet extends ActorSheet {
       this.actor.update({ [`system.${field}.value`]: value });
     });
 
+    // Event listener for adding talisman
+    html.find('#add-talisman-button').click(async ev => {
+      const selectedIndex = html.find('#talisman-select').val();
+      const globalTalismans = game.settings.get('cain', 'globalTalismans');
+      const selectedTalisman = globalTalismans[selectedIndex];
+
+      // Add the selected talisman to the actor's selected talismans
+      const selectedTalismans = this.actor.system.selectedTalismans || [];
+      selectedTalismans.push(selectedTalisman);
+      await this.actor.update({ 'system.selectedTalismans': selectedTalismans });
+      this.render();
+    });
+
+    // Event listener for deleting talisman
+    html.find('.delete-talisman-button').click(async ev => {
+      const index = ev.currentTarget.dataset.index;
+      const selectedTalismans = this.actor.system.selectedTalismans || [];
+      selectedTalismans.splice(index, 1);
+      await this.actor.update({ 'system.selectedTalismans': selectedTalismans });
+      this.render();
+    });
+
+    // Event listener for talisman image click to open global talisman sheet
+    html.find('.talisman-item img').on('click', ev => {
+      new TalismanWindow().render(true);
+    });
+
     html.find('.kit-points-increase').click(ev => {
         ev.preventDefault();
         const actor = this.actor;
@@ -333,6 +399,14 @@ export class CainActorSheet extends ActorSheet {
 
   
     let scHtml = new HTMLShortcut(html);
+    // NPC SPECIFIC LISTENERS
+    html.find('.quick-action-button.attack-player').click(this._attackPlayer.bind(this));
+    html.find('.quick-action-button.afflict-player').click(this._afflictPlayer.bind(this));
+    html.find('.quick-action-button.use-complication').click(this._useComplication.bind(this));
+    html.find('.quick-action-button.use-threat').click(this._useThreat.bind(this));
+    html.find('.quick-action-button.severe-attack').click(this._severeAttack.bind(this));
+    html.find('.quick-action-button.use-domain').click(this._useDomain.bind(this));
+
     // Character sheet specific listeners
     html.find('.item-description').click(this._onItemDescription.bind(this));
     html.find('.psyche-roll-button').click(this._onRollPsyche.bind(this));
@@ -394,6 +468,18 @@ export class CainActorSheet extends ActorSheet {
       this._sinChange.bind(this), 
       this._clearSin.bind(this)
     );
+
+    scHtml.setChange('.skills-checkbox', (event) => {
+      let key = event.currentTarget.dataset.skill_key
+      let new_value = parseInt(event.currentTarget.dataset.skill_value)
+      let search = `system.skills.${key}.value`;
+      if(this.actor.system.skills[key].value != new_value){
+        this.updateActor(search, new_value);
+      }
+      else{
+        this.updateActor(search, new_value - 1);
+      }
+    });
 
     
     // New event listeners for agenda tasks and abilities
@@ -2005,24 +2091,10 @@ export class CainActorSheet extends ActorSheet {
         <div style="margin-bottom: 10px;">
           <label for="dice-modifier" style="display: block; margin-bottom: 5px; font-weight: bold;">Dice Modifier:</label>
           <input type="number" id="dice-modifier" name="dice-modifier" value="0" style="width: 100%; padding: 5px; border-radius: 4px; border: 1px solid #444; background-color: #1a1a1a; color: #f5f5f5;">
-        </div>
-        <div style="margin-bottom: 10px;">
-          ${abilityQuestions.map((question, index) => `
-            <div style="margin-bottom: 5px;">
-              <label style="font-weight: bold;">${question}</label>
-              <div>
-                <label><input type="radio" name="question-${index}" value="yes"> Yes</label>
-                <label><input type="radio" name="question-${index}" value="no"> No</label>
-              </div>
-            </div>
-          `).join('')}
-        </div>
-        <div style="margin-bottom: 10px;">
-          <label for="yes-no-toggle" style="display: block; margin-bottom: 5px; font-weight: bold;">Yes/No Modifier:</label>
-          <select id="yes-no-toggle" name="yes-no-toggle" style="width: 100%; padding: 5px; border-radius: 4px; border: 1px solid #444; background-color: #1a1a1a; color: #f5f5f5;">
-            <option value="yes+1">Yes +1, No -1</option>
-            <option value="yes-1">Yes -1, No +1</option>
-          </select>
+          <p style="margin-top: 10px;">Add or subtract dice based on the following questions:</p>
+          <ul>
+            ${abilityQuestions.map((question, index) => `<li>${question}</li>`).join('')}
+          </ul>
         </div>
       </div>
     `;
@@ -2036,21 +2108,6 @@ export class CainActorSheet extends ActorSheet {
           label: "Roll",
           callback: () => {
             let modifier = parseInt(document.getElementById('dice-modifier').value) || 0;
-            const yesNoToggle = document.getElementById('yes-no-toggle').value;
-            const yesModifier = yesNoToggle === 'yes+1' ? 1 : -1;
-            const noModifier = yesNoToggle === 'yes+1' ? -1 : 1;
-  
-            abilityQuestions.forEach((_, index) => {
-              const selectedOption = document.querySelector(`input[name="question-${index}"]:checked`);
-              if (selectedOption) {
-                if (selectedOption.value === 'yes') {
-                  modifier += yesModifier;
-                } else if (selectedOption.value === 'no') {
-                  modifier += noModifier;
-                }
-              }
-            });
-  
             this._performSevereAttackRoll(rollFormula, modifier);
           },
           buttonClass: "severe-attack-roll-button",
@@ -2192,7 +2249,7 @@ export class CainActorSheet extends ActorSheet {
           selectedAbility3: ""
         },
         palace: "Tracking an ogre down is often a matter of finding its host, or where its host is currently residing. Once influenced by an ogre, a host usually withdraws from society and cuts off its connections, making this harder than it would usually be. An ogre’s palace typically resembles a mirror of a space significant to the ogre’s host, but long decayed and significantly expanded in size into a warren or maze-like space. Interspersed in the area is garbage, junk, and things the ogre has collected. The ogre typically barely fits inside and may have to painfully squeeze or crouch to move around, although this doesn’t seem to slow it down at all. Typical palaces resemble: • Abandoned or derelict buildings • Filthy high rise apartments • Closed or shuttered schools • Empty, dead workplaces or offices Ogre palaces are: Dark/Wet/Cold/Musty/ Reeking/Filthy",
-        traumas: "• Who or what pushed you into this hole? • Who or what is keeping you from going over the edge? • What are you most ashamed of?",
+        traumas: [{question: "Who or what pushed you into this hole?", answered: false}, {question: "Who or what is keeping you from going over the edge?", answered: false}, {question: "What are you most ashamed of?", answered: ""}],
         appearance: "Ogres are almost always extremely large, strong, and bulky and manifest a typical malformed, monstrous appearance, often due to the low self worth of their hosts. When fused with a host, the host may appear to be a worse, ‘uglier’ version, as they judge themselves. An ogre’s mere presence sucks the energy and life out of a room, even if mundane humans cannot see it, lowering the temperature. They are associated with frost, mist, mud, and ill weather. When pressed in a fight they are enormously strong and durable, able to rapidly regenerate from their wounds, tear a human in half, and ignore even extreme punishment.",
         pressure: "The very presence of an ogre begins to infect an area with a dark Miasma . When an ogre appears, the weather will typically sour in the local area over the next few days and remain that way until the ogre reaches critical mass and undergoes a sin event or is executed. This miasma typically manifests the following way: • buildings, objects, roads, and other constructions in the area begin to degrade as though they have suffered from poor maintenance for years • clouds shroud the sun and fog rolls in. Over time, the fog becomes thicker and thicker and eventually acquires a sour smell • a thick white mold begins to grow over surfaces • technology, phone lines, electricity, and internet stop working reliably, and eventually stops working all together • architecture stops conforming to sense and becomes maze-like or nonsensical • Humans spending time inside the miasmatic area begin to share in the ogre’s outlook and become more and more hostile When the exorcists arrive, the miasma should cover only part of the area the exorcists are trying to investigate, like a few blocks. Each time pressure increases, the miasma spreads to a new area. When pressure fills up completely, the situation gets out of control. T he Ogre increases in CAT by +1, and the miasma covers the entire area of the investigation - no matter where the exorcists go, the miasma follows them for the duration of the mission - even if they leave the investigation area.",
         complications: "Kill lights, summon mist, spew ceaselessly on someone, bury an exorcist in mud, slime, or vomit, pin down an exorcist, release acrid stench, smash walls, floor, or ceilings, retreat into darkness, add a bystander, use a domain.",
@@ -2210,7 +2267,7 @@ export class CainActorSheet extends ActorSheet {
             <p>The Sin can use this ability on a '1' on the risk roll. They can only use it once a mission. Target an exorcist. Any other exorcists nearby must decide to fly to their aid. Any that don't offer aid cannot participate.</p>
       
             <h3>Ability Activation</h3>
-            <p>Start with a pool of 5d6. Then remove one dice for each of the following:</p>
+            <p>Start with a pool of 6d6. Then remove one dice for each of the following:</p>
             <ul>
               <li>Is another person aiding you?</li>
               <li>Can you grab on to something nearby?</li>
@@ -2224,7 +2281,7 @@ export class CainActorSheet extends ActorSheet {
             <p>If two or more '1's come up, the exorcist has one or more of their limbs torn off. Roll 1d3: 1: arm, 2: leg, 3: both legs. Roll 1d6 for left or right (left on 1-3, right on 4-6). They take an injury, pass out until the scene passes, then all physical activity is hard for them without teamwork. After the mission is over, they can adjust to their disability and this no longer has an effect on them (determine with Admin how your character heals).</p>
           </div>
         `,
-        rollFormula: "5d6"
+        rollFormula: "6d6"
         },
         afflictions: ["White Mold: Spreading white veins and coughing indicate mold infection. Subtract 1 from all resting rolls while afflicted and cannot eat, drink, or use consumables.", "Frozen Limbs: Physical activity or fine motor skill is hard if it requires more than one limb.", "Circling the Drain : Cannot benefit from teamwork or setup. Permanently add to your agenda: give up on something.", "Speaking spews out black sludge. All communication that requires speaking is hard", "Rotting: Black rot has taken in the body. Take 1 stress each time pressure fills up. If this inflicts an injury, it inflicts instant death.", "Permanently add to your agenda: die."],
         severeAbilityQuestions: [
@@ -2276,7 +2333,7 @@ export class CainActorSheet extends ActorSheet {
         },
         palace: "A toad’s palace represents a monument to wealth, often as envisioned by its host. On the outside it may be located inside a cramped building or in a tiny apartment block, but on the inside it is typically an opulent, sprawling extravaganza. Toad palaces typically take the form of summer mansions, luxury residences, resorts, casinos, or other places that mix pleasure and commerce. The host may reside at least part time inside the palace due to its space and comfort. Over time the space becomes crammed almost to bursting with the wealth that the toad accumulates, transforming partly into treasure vaults or galleries to either protect or display their largesse. Toad palaces are typically: Opulent, gaudy, glitzy, spacious, extravagant, luxurious, comfortable",
         appearance: "Toads are bulky but surprisingly fast sins with a great degree of manual dexterity. They often have prehensile tongues or double jointed limbs, and convey these features onto any hosts they are fused with. They are capable of squeezing through tiny spaces and leaping great distances. The gaping mouths of toads have space extending properties and are capable of storing an unreal amount of physical material - many rooms worth in some cases. All toads have a strong, not entirely unpleasant odor about them - something between carpet cleaner and expensive cologne. Behavior: Unlike other sins, who typically want to",
-        traumas: "• What do you deserve that was denied to you? • While you were starving, who was feasting? • Where do you draw the line?",
+        traumas: [{question: "What do you deserve that was denied to you?", answered: false}, {question: "While you were starving, who was feasting?", answered: false}, {question: "Where do you draw the line?", answered: false}],
         pressure: "A toad’s main driving desire is to acquire as much material wealth as possible for its host. It steals as much as it can, by various means, based on its host’s desires, storing its prizes inside of its expansive gullet and regurgitating them later inside its palace. A toad’s larceny can start small, but as time goes on its appetites, both literal and figurative, become more expansive. A host that wanted a faster car in the past, for example, will eventually draw a toad to find the fastest car in town and swallow it, then the next fastest car too, and so on. As time goes on, the amount of material the toad swallows and its avarice inevitably starts to grow out of control, to unreal proportions. Instead of stealing food for its host, for example, it may swallow an entire restaurant, staff and all. In theory a high enough category toad would swallow an entire town, given time. The toad gains power from its hoard. Every time pressure increases, its greed increases too, describing the kind of things it can steal: • 0-2: High worth but mundane items. Money, cars, guns, medicine, food, fashion, high art. • 3-4: Unreal amounts of the above. • 5+: Entire stores, shops, restaurants, yachts, buses, celebrities. At 6+, the toad’s CAT increase by 1 and it gains the ability to steal conceptual or intangible items like abstract wealth, stocks in a company, light, artistic skill, or happiness.",
         complications: "Leap out of reach on muscular legs or squeeze into a tight space. Entangle in traps. Reveal hidden explosives. Trigger security, or alarms. Vomit slime or disgorge stomach contents. Add a bystander, use a domain.",
         threats: "Summon bodyguards. Steal something from the exorcists, collapse or throw something from the environment. Set off a bomb. Kick someone with powerful legs. Swallow something or someone whole. Inflict a hook. Use a domain. Do something crafty, flashy, or shocking.",
@@ -2292,7 +2349,7 @@ export class CainActorSheet extends ActorSheet {
             <p>The Sin can use this ability on a '1' on the risk roll. They can only use it once a mission. Target an exorcist. Any other exorcists nearby must decide to fly to their aid. Any that don't offer aid cannot participate.</p>
       
             <h3>Ability Activation</h3>
-            <p>Start with a pool of 5d6. Then remove one dice for each of the following:</p>
+            <p>Start with a pool of 6d6. Then remove one dice for each of the following:</p>
             <ul>
               <li>Are you accepting of your powers?</li>
               <li>Are your allies close enough to touch you skin to skin?</li>
@@ -2306,7 +2363,7 @@ export class CainActorSheet extends ActorSheet {
             <p>If two or more '1's come up, the execution talisman of the shadow is 5 instead.</p>
           </div>
         `,
-        rollFormula: "5d6" },
+        rollFormula: "6d6" },
         afflictions: ["Absent Minded: Whenever you roll a ‘1’ on risk, erase 1 KP.", "Wasting Sickness: Reduce max stress by 1 each time you rest. If reduced to 0, you suffer instant death.", "Starvation: All actions are hard until you or an ally mark 1 KP and allow you to eat something. This effect resets and you must eat again after you rest.", "Itchy Fingers: Once a scene, stealing something (anything) gives you 1 psyche burst and 1d3 sin. Permanently add to your agenda: steal.", "Dreaming Desire: When pressure increases, spend 1 psyche burst to daydream about things you want or take 2 stress.", "The Want: Permanently add to your agenda: take more than you need. Or improvise: make a something hard or"],
         severeAbilityQuestions: ["Are you accepting of your powers?", "Are your allies close enough to touch you skin to skin?", "Are you willing to part with your kit?", "Is the Toad hindered, distracted, or under duress in some way?"]
       }, 
@@ -2334,7 +2391,7 @@ export class CainActorSheet extends ActorSheet {
         },
         palace: "Idols tend to manifest their palace where their cult is located, typically in populated locations. They may have a front operation that covers the entrance to their palace and their cult in general - a news or internet program, a band, a concert hall, a religious gathering, etc. The true headquarters of their cult is typically more concealed and harder to access. At the center is usually an entrance to their palace, which the idol may invite select cult members in to visit in order to win them over. Depending on the aspiration of the sin, the interior of typical palaces is usually a monument to self-obsession and resembles: • Palatial estates • Nightclubs or concert halls • Beautiful high rise penthouse apartments • Religious halls or places of worship Idol palaces are typically: Luxurious, gilded, airy, captivating, impressive, gaudy, holy",
         appearance: "Idols commonly appear as humanlike in form. They may appear as someone desired by their host: their hosts’ ideal romantic partner, a parental figure, or a best friend. When fused with their hosts, they may enhance their hosts into ‘ideal’, more perfect versions of themselves, usually enhancing features a host deems desirable, and eliminating those seen as undesirable. They have a godly, otherworldly beauty to them that can be stunning to humans, especially the graceless. When forced into a corner, or when they want to display their power, idols are capable of taking other, more terrible forms.",
-        traumas: "• What is your dream? • Why did you give up on your dream? • Why do you think you are you incapable of being loved?",
+        traumas: [{question: "What is your dream?", answered: false}, {question: "Why did you give up on your dream?", answered: false}, {question: "Why do you think you are you incapable of being loved?", answered: false}],
         pressure: "dols gather cults around them, adding steadily to them over time. This varies from mundane admirers of the idol to people totally pulled under their spell. A lower category idol tends to pull people into a cult of a few dozen people, whereas a higher category one can pull in a cult that numbers in the hundreds or thousands. While the idol still lives, cultists are completely and unflinchingly loyal to them and their host , and will follow the commands and inclinations of their higher-ups in the cult without questioning. The idol is able to secretly add npcs to its cult. Every time pressure increases, the Admin chooses an NPC the players have met on the mission and adds them to the cult. They don’t have to reveal to this to the players.",
         complications: "Rile up a crowd, enthrall someone, blind with glory, overwhelm with emotion, force out secrets, disarm someone, spew out hallucinations, add a bystander, use a domain.",
         threats: "Summon cultists. Cause crippling pain. Overwhelm the senses. Force exorcists to sarifice something. Expose a weakness. Enthrall an exorcist. Take captives. Inflict a hook. Use a domain. Do something emotionally crushing, manipulative, or shocking.",
@@ -2351,7 +2408,7 @@ export class CainActorSheet extends ActorSheet {
             <p>The Sin can use this ability on a '1' on the risk roll. They can only use it once a mission. Target an exorcist. Any other exorcists nearby must decide to fly to their aid. Any that don't offer aid cannot participate.</p>
       
             <h3>Ability Activation</h3>
-            <p>Start with a pool of 5d6. Then remove one dice for each of the following:</p>
+            <p>Start with a pool of 6d6. Then remove one dice for each of the following:</p>
             <ul>
               <li>Are you far from the idol?</li>
               <li>Do you have love in your life?</li>
@@ -2367,7 +2424,7 @@ export class CainActorSheet extends ActorSheet {
             <p>If two or more '1's come up, this effect instead lasts until the rest of the hunt, and can't be ended early.</p>
           </div>
         `,
-        rollFormula: "5d6"
+        rollFormula: "6d6"
        },
        afflictions: [
         "Infatuated: Pick an ally. If you act without their setup or teamwork, you take 1 stress.",
@@ -2397,7 +2454,7 @@ export class CainActorSheet extends ActorSheet {
         },
         palace: "A lord’s palace is always nestled in the center of their kingdom, and therefore always requires traversing the kingdom itself to reach. More often than not, it resembles an actual palace in size and form - or something similarly important and imposing, such as a high rise skyscraper, corporate headquarters, government office, or temple. The palace of a lord is typically a bustling place full of servants or subsidiaries going about their business - minor sins, figments of the host’s imagination, or captive humans that have been absorbed into the narrative of the kingdom. Lord’s palaces are typically: Imposing, grandiose, august, monumental, stony, hallow",
         appearance: "Lords are powerful, imposing figures that present an archetypical ‘guardian’ figure to their hosts, sometimes manifesting as an authority figure like a soldier or policeman, and sometimes as something more divine, like a god or an angel. They have extremely tough armor and are excellent combatants, able to fight off any perceived threats to the new order they impose with ease.",
-        traumas: "• What did you lose? • What is the main thing you would fix about the world? • Who did you regret leaving behind when you ascended to your Kingdom?",
+        traumas: [{question: "What did you lose?", answered: false}, {question: "What is the main thing you would fix about the world?", answered: false}, {question: "Who did you regret leaving behind when you ascended to your Kingdom?", answered: false}],
         pressure: "The archetypical Lord creates a Kingdom, an alternate parasite reality growing outward from its palace that overlaps our own. The kingdom can be accessed freely by the lord and its host, and can be squirreled away in impossible spaces - accessible through closet doors, hallways, restaurant back alleys, etc. Eventually it starts to bleed over and pull parts of the real world into it, consuming space and the unwitting humans inside. From the outside, humans cannot see the kingdom even as it consumes the real world, and may merely walk down a street and unwittingly pass into an alternate reality. Inside the Kingdom, the world may appear as the world currently does, or a historical or even fantastical version of the world, such as a futuristic city, a glittering heaven, or a medieval castle - dependent on the latent desires of the host. In this world, all that the host has lost is returned to them and more. It presents an alternate reality that is both more convenient and fulfilling to the host and also conforms to their beliefs and outlook, coddling and supporting them. Events, history, and even humans may be altered drastically inside. Therefore humans that on the outside of the kingdom may be hostile to the host might be their friends inside, mistakes the host has made in the past or their own failings might be papered over or made whole - or even celebrated.",
         complications: "Twist the world or landscape, extend the Kingdom, throw false accusations, bind an exorcist in chains, blind with scorching light, extend shining armor plating, raise a glittering shield, add a bystander, use a domain.",
         threats: "Smite with fire, pass judgement from the heavens, hurl into a psychic prison, force an exorcist to confront their own crimes, grasp with an armored fist, impale with holy spikes, Inflict a hook. Use a domain. Do something righteous, scathing, or dominating.",
@@ -2414,7 +2471,7 @@ export class CainActorSheet extends ActorSheet {
             <p>The Sin can use this ability on a '1' on the risk roll. They can only use it once a scene. Target an exorcist. Any other exorcists nearby must decide to fly to their aid. Any that don't offer aid cannot participate.</p>
       
             <h3>Ability Activation</h3>
-            <p>The Lord binds the targeted exorcist with divine chains, then begins a summary trial. Start with a pool of 5d6. Then remove one dice for each of the following:</p>
+            <p>The Lord binds the targeted exorcist with divine chains, then begins a summary trial. Start with a pool of 6d6. Then remove one dice for each of the following:</p>
             <ul>
               <li>Are you innocent of crimes?</li>
               <li>Are you a liar or a cheat?</li>
@@ -2428,7 +2485,7 @@ export class CainActorSheet extends ActorSheet {
             <p>For every '1' that comes up, the targeted exorcist is forced to confront their inadequacy and additionally gains 1d6 sin.</p>
           </div>
         `,
-        rollFormula: "5d6"
+        rollFormula: "6d6"
         },
         afflictions: [
           "Reality Control: Must spend 1 stress to spend any amount of KP in the kingdom.",
@@ -2446,7 +2503,7 @@ export class CainActorSheet extends ActorSheet {
           ability2: { title: "Turning Blades, I Laughed at their Brittleness", value: "The hound’s hide becomes incredibly tough and durable, like a beast’s. • Each time an action would slash the hound’s execution talisman, roll a 1d6 fortune roll. If the roll is a 1 or 2, reduce all slashes suffered to 1. The hound’s armor has weak spots, however, and any action that is set up or part of teamwork can ignore this effect. • Mundane weapons are completely incapable of harming the hound unless they are extremely strong, like a tank cannon or a missile." },
           ability3: { title: "The Catching of the Doe", value: "The hound suppresses its nature and becomes a stealthy hunter, able to stalk its prey. At the start of the hunt, pick an exorcist. Once a scene, during any scene, the Admin may declare that the exorcist gets a glimpse of the hound following them (though it may or may not be real), giving them 1 stress, which cannot inflict an injury. The Admin can trigger this three times total a hunt. In any conflict scene, the Hound gets a free reaction at the start (roll the risk die as normal), targeting the exorcist it is stalking if possible." },
           ability4: { title: "The Annihilation of the Wicked", value: "The hound gains a special affinity for firearms. It can attack at range with guns that it wields or, more often, are fused to its form, emerging when needed. • The hound’s attacks gain long range. • As a complication, the hound pins an exorcist down by bullets, bathes them in napalm, concusses them with grenades, etc. That exorcist takes 1 stress after acting until the complication is dealt with, or takes 2 stress if acting requires moving from their current position. • As a reaction (1) the hound can permanently absorb all firearms in the same immediate area as it, immediately disarming anyone wielding one, and healing 1 tick on the execution talisman" },
-          ability5: { title: "The Fattening of Rage", value: "strengthening it. • Once a scene, if the hound slays any mundane human as part of a reaction, it can heal 1 segment on its execution talisman. • If the hound has slain at least one of its grudge targets, it increases its execution clock by +2 segments. • If the hound has slain all its original grudge targets, it also inflicts +1 stress with all reactions." },
+          ability5: { title: "The Fattening of Rage", value: "The hound feeds on the power of its Grudge, strengthening it. • Once a scene, if the hound slays any mundane human as part of a reaction, it can heal 1 segment on its execution talisman. • If the hound has slain at least one of its grudge targets, it increases its execution clock by +2 segments. • If the hound has slain all its original grudge targets, it also inflicts +1 stress with all reactions." },
           ability6: { title: "Rile Against Heaven", value: "The mere presence of the hound exacerbates the rifts between human and exorcist alike. Humans during this mission never start friendly to the exorcists and are often outwardly hostile. The Admin may make a fortune roll if they like (hostile on a 1-2, indifferent or annoyed otherwise). They may still become friendly through the exorcist’s actions. Any two exorcists that have a disagreement, no matter how minor, may declare it has boiled over into a fight. For the remainder of the hunt they cannot participate in teamwork with other and cannot set each other up. Any feuding exorcists regain a psyche burst if the other takes an injury or affliction, and both gain +1 xp at the end of the mission." },
           ability7: { title: "The Measured Weight of Death", value: "The hound gains a supernatural resilience that can only be bypassed by specific methods. Often this draws on the superstitions of its host, often along mythological lines, and doesn’t have to conform to any real logic. • The hound takes -1 slash on its execution talisman. • This effect can be removed for a scene by the exorcists taking action to expose the hound to a specific weakness. The Admin can choose or roll from the list below: 1. Silver 2. Iron 3. Extreme Heat 4. Extreme Cold 5. Water 6. Sunlight" },
           ability8: { title: "Bloodying the Steel", value: "The rage of the Hound is infectious and can drive its victims into a vicious obsessive cycle. The hound gains the Infectious Grudge affliction. exorcist gains +1D on all actions that inflict physical violence, but also takes +1 stress when they take stress from an external source. Any exorcist can voluntarily take this affliction if they are harmed by the hound. " },
@@ -2458,7 +2515,7 @@ export class CainActorSheet extends ActorSheet {
         },
         palace: "A hound’s palace is usually an extremely simple, barely coherent and indistinct landscape of whipping winds, boiling rain, unreal heat, and licking flames. Unlike other palaces, it can often change locations as the hound moves around on its hunt. The entrance is usually located somewhere derelict or wild like in abandoned buildings, drainage canals, junk yards, burnt out cars, or in tree hollows. Hound palaces are typically : Hellish, gory, barren, inhospitable, ferocious, chaotic. Pressure: Grudge",
         appearance: "Hounds are active, constantly moving sins that twitch or spasm with barely concealed rage. They often take an animalistic form and may exhibit animalistic behavior such as running on all fours and biting even if they are humanoid in form. They are typically lithe and extremely fast and strong. Humans have an innate fear of them and can sense their presence even if they can’t see a hound. Its surviving victims often describe feeling a primal dread, a sense of being hunted by a wild animal.",
-        traumas: "• Who wronged you? • How were you wronged? • What are you unwilling to sacrifice?",
+        traumas: [{question: "Who wronged you?", answered: false}, {question: "How were you wronged?", answered: false}, {question: "What are you unwilling to sacrifice?", answered: false}],
         pressure: "A hound harbors a grudge against a specific person or group of people. While its targets are alive, it does its best to track them down and kill them violently and messily. When setting up the mission, the Admin should designate three specific people to be the hound’s grudge targets (which could have expanded from its original target, or could be examples from a group it has a grudge against). A grudge can easily expand to innocent people, such as family members, friends, or co-workers of the perpetrators. • When pressure increases, the hound will track down and attempt to kill one of its targets. If the exorcists are present, they can attempt to prevent this with a conflict scene. If not, the target is (brutally) slain! • If all targets are killed, the hound picks an NPC the exorcists have met and adds them to its grudge as a new target. If pressure goes to maximum, the hound gains +1 CAT and adds all NPCs and the exorcists to its grudge.",
         complications: "Move faster than the eye can see, set everything on fire, give off massive steam or heat, become enraged, expand with additional blades, increase in size and strength, add a bystander, use a domain.",
         threats: "Cause massive collateral damage. Attempt to tear someone in half. Rip apart humans. Spit torrents of boiling blood. Hurl someone through a roof or wall. Cut everything into ribbons. Inflict a hook. Use a domain. Do something violent, obliterating, or manic.",
@@ -2475,7 +2532,7 @@ export class CainActorSheet extends ActorSheet {
               <p>The Sin can use this ability on a '1' on the risk roll. They can only use it once a mission. Target an exorcist. Any other exorcists nearby must decide to fly to their aid. Any that don't offer aid cannot participate.</p>
         
               <h3>Ability Activation</h3>
-              <p>Start with a pool of 5d6. Then remove one dice for each of the following:</p>
+              <p>Start with a pool of 6d6. Then remove one dice for each of the following:</p>
               <ul>
                 <li>Do you have a sword (or something like it)?</li>
                 <li>Are you calm, collected, and focused?</li>
@@ -2489,7 +2546,7 @@ export class CainActorSheet extends ActorSheet {
               <p>For every '1' rolled, the targeted exorcist suffers 2 additional stress and has a piece of skin cut away, causing permanent scarring (roll).</p>
             </div>
           `,
-          rollFormula: "5d6"
+          rollFormula: "6d6"
         },
         afflictions: [
           "Blood Rage: Afflicted exorcists roll +1D when inflicting harm, violence, or physical force, but must take 1 stress to take any other type of action.",
@@ -2543,8 +2600,7 @@ export class CainActorSheet extends ActorSheet {
         },
         palace: "A centipede’s palace is usually located in a protected location at the center of horde activity, usually somewhere significant to the host or close to the inciting incident. The interior of a centipede’s palace often resembles a prison or a dungeon, built to capture the centipede’s host and force them to remain witness to the horrors they have unwittingly (or otherwise) unleashed. This prison can be sterile, cold, or laboratory-like, or medieval and full of barbed hooks and rusted chains. It often manifests horrors or traps to drive out, capture, or kill invaders. Centipede palaces are typically : hostile, resentful, grotesque, gory, prison-like, chthonic",
         appearance: "entipedes are manifested catastrophes, born from the darkest images of their hosts psyche. They exist only to cause such horrific violence and death that the hosts’ previous worries evaporate. As their namesake, they typically manifest as insectile abominations, taking on all the characteristics of what a ‘monster’ should be. Their main identifying physical characteristic is their venom, which is inimical to human life and creates a (very) rapidly expanding problem for exorcists.",
-        traumas: "What are you trying to escape? • What do you hate the most about humanity? • What do you regret the most?",
-        pressure: "A centipede’s venom, when injected into the human bloodstream, causes a catalyzing psycho-biotic reaction that within the space of about an hour mutates that human into an extremely strong, aggressive, and violent monster, a mindless drone that is under the centipede’s control as a queen controls a colony of ants. These infested are able to produce their own centipede venom that they can inject into bitten humans, creating a catalyzing exponential reaction that rapidly creates a horde of these monsters. • A human infected with centipede venom will chrysalize, transform, and mutate within exactly 44 minutes. An exorcist gains the centipede bite affliction instead. • There is no cure to centipede venom, but it can be delayed. • The only reliable way to end an infestation is to kill the centipede. Executing a centipede causes its venom to lose its transformative effect and evaporate. This saves any infected exorcists and any infected but untransformed victims, who can typically recover in a few weeks. Remaining infested victims are dealt with in cleanup and should be considered deceased. Each time pressure increases, 10% of the local population in the affected area is infected and transformed (so at 3 ticks, 30% of the population is affected). If pressure reaches maximum, the centipede increases in CAT by +1 and this goes up to 90% population loss.",
+        traumas: [{question: "What are you trying to escape?", answered: false}, {question: "What do you hate the most about humanity?", answered: false}, {question: "What do you regret the most?", answered: false}],
         complications: "Burrow into the ground or walls, spit poisonous webbing, release swarms of flies, spray pools of poison, reveal hidden burrows, collapse the floor, scuttle hidden into darkness, add a bystander, use a domain.",
         threats: "Summon the horde. Rip into an exorcist. Unveil rows of hypnotic eyespots. Explode a caustic bubo. Dissolve something with acid. Commit a massacre. Inflict a hook. Use a domain. Do something messy, spiteful, or dripping with venom.",
         attackRoll: {
@@ -2560,7 +2616,7 @@ export class CainActorSheet extends ActorSheet {
               <p>The Sin can use this ability on a '1' on the risk roll. They can only use it once a mission. Target an exorcist. Any other exorcists nearby must decide to fly to their aid. Any that don't offer aid cannot participate.</p>
         
               <h3>Ability Activation</h3>
-              <p>Start with a pool of 5d6. Then remove one dice for each of the following:</p>
+              <p>Start with a pool of 6d6. Then remove one dice for each of the following:</p>
               <ul>
                 <li>Can you move quickly and unencumbered?</li>
                 <li>Is someone aiding you able to push or grab you?</li>
@@ -2588,7 +2644,7 @@ export class CainActorSheet extends ActorSheet {
               </ul>
             </div>
           `,
-          rollFormula: "5d6"
+          rollFormula: "6d6"
         },
         afflictions: [
           "Seethe: Pick another exorcist. For every ‘6’ that exorcist rolls on an action, gain 1 stress.",
@@ -2642,7 +2698,7 @@ export class CainActorSheet extends ActorSheet {
         },
         palace: "The Redacted",
         appearance: "The Redacted",
-        traumas: "The Redacted",
+        traumas: [{question: "The Redacted", answered: false}, {question: "The Redacted", answered: false}, {question: "The Redacted", answered: false}],
         pressure: "The Redacted",
         complications: "The Redacted",
         threats: "The Redacted",
@@ -2654,7 +2710,7 @@ export class CainActorSheet extends ActorSheet {
         },
         severeAttack: {
           description: "The Redacted",
-          rollFormula: "5d6"
+          rollFormula: "6d6"
         },
         afflictions: [
           "The Redacted",
@@ -2688,5 +2744,324 @@ export class CainActorSheet extends ActorSheet {
       });
     }
   }
+
+  async _attackPlayer(event) {
+    const exorcists = game.actors.filter(actor => actor.type === 'character');
+    const options = exorcists.map((exorcist, index) => `<option value="${index}">${exorcist.name}</option>`).join('');
+    const content = `
+      <form>
+        <div class="form-group">
+          <label>Choose an Exorcist to Attack:</label>
+          <select id="exorcist-select">${options}</select>
+        </div>
+      </form>
+    `;
+  
+    new Dialog({
+      title: "Attack a Player",
+      content: content,
+      buttons: {
+        attack: {
+          label: "Attack",
+          callback: async (html) => {
+            const selectedIndex = parseInt(html.find('#exorcist-select').val());
+            const selectedExorcist = exorcists[selectedIndex];
+            
+            // Roll 1d6 to determine the amount of stress inflicted
+            const roll = new Roll('1d6');
+            await roll.evaluate({ async: true });
+            const rollResult = roll.total;
+            let stressInflicted;
+  
+            if (rollResult === 1) {
+              stressInflicted = 5;
+            } else if (rollResult === 2 || rollResult === 3) {
+              stressInflicted = 3;
+            } else {
+              stressInflicted = 2;
+            }
+  
+            const newStress = selectedExorcist.system.stress.value + stressInflicted;
+            await selectedExorcist.update({ 'system.stress.value': newStress });
+            ui.notifications.info(`${selectedExorcist.name} has been attacked and their stress increased by ${stressInflicted}.`);
+          }
+        }
+      },
+      default: "attack"
+    }).render(true);
+  }
+
+// Function to afflict a player
+async _afflictPlayer(event) {
+  const exorcists = game.actors.filter(actor => actor.type === 'character');
+  const afflictions = game.items.filter(item => item.type === 'affliction');
+  const exorcistOptions = exorcists.map((exorcist, index) => `<option value="${index}">${exorcist.name}</option>`).join('');
+  const afflictionOptions = afflictions.map((affliction, index) => `<option value="${index}">${affliction.name}</option>`).join('');
+  const content = `
+    <form>
+      <div class="form-group">
+        <label>Choose an Exorcist to Afflict:</label>
+        <select id="exorcist-select">${exorcistOptions}</select>
+      </div>
+      <div class="form-group">
+        <label>Choose an Affliction:</label>
+        <select id="affliction-select">${afflictionOptions}</select>
+      </div>
+    </form>
+  `;
+
+  new Dialog({
+    title: "Afflict a Player",
+    content: content,
+    buttons: {
+      afflict: {
+        label: "Afflict",
+        callback: async (html) => {
+          const selectedExorcistIndex = parseInt(html.find('#exorcist-select').val());
+          const selectedAfflictionIndex = parseInt(html.find('#affliction-select').val());
+          const selectedExorcist = exorcists[selectedExorcistIndex];
+          const selectedAffliction = afflictions[selectedAfflictionIndex];
+          const afflictionsList = selectedExorcist.system.afflictions || [];
+          afflictionsList.push(selectedAffliction.id);
+          await selectedExorcist.update({ 'system.afflictions': afflictionsList });
+          ui.notifications.info(`${selectedExorcist.name} has been afflicted with ${selectedAffliction.name}.`);
+        }
+      }
+    },
+    default: "afflict"
+  }).render(true);
+}
+
+// Function to use a complication
+_useComplication(event) {
+  const complications = [
+    "Make something hard",
+    "Deal 1 stress at the end of the round to all exorcists",
+    "Make the sin take 1 less slash on its talisman under certain circumstances",
+    "Make the sin deal 1 more stress under certain circumstances",
+    "Change the parameters of the fight"
+  ];
+
+  const content = `
+    <div>
+      <h2>Complications</h2>
+      <p>Reminder: If you use a complication, you should set a talisman.</p>
+      <p>Rules:</p>
+      <ul>
+        <li>Make something hard</li>
+        <li>Deal 1 stress at the end of the round to all exorcists</li>
+        <li>Make the sin take 1 less slash on its talisman under certain circumstances</li>
+        <li>Make the sin deal 1 more stress under certain circumstances</li>
+        <li>Change the parameters of the fight</li>
+      </ul>
+      <p>The same effect cannot stack with itself. Complications are worse and take more effort to deal with the worse the reaction die:</p>
+      <ul>
+        <li>(5-6): 2 talisman</li>
+        <li>(2-4): 4 talisman</li>
+        <li>(1): 6 talisman</li>
+      </ul>
+      <p>A sin can add a complication up to three times per conflict scene total.</p>
+      <div class="form-group">
+        <label>Choose a Complication:</label>
+        <select id="complication-select">
+          ${complications.map((complication, index) => `<option value="${index}">${complication}</option>`).join('')}
+        </select>
+      </div>
+    </div>
+  `;
+
+  new Dialog({
+    title: "Use Complication",
+    content: content,
+    buttons: {
+      use: {
+        label: "Use Complication",
+        callback: (html) => {
+          const selectedIndex = parseInt(html.find('#complication-select').val());
+          const selectedComplication = complications[selectedIndex];
+          ui.notifications.info(`Using Complication: ${selectedComplication}`);
+        }
+      },
+      close: {
+        label: "Close"
+      }
+    },
+    default: "close"
+  }).render(true);
+}
+
+// Function to use a threat
+_useThreat(event) {
+  const threats = [
+    "Inflict harm: (1): An injury, (2-3) 5 stress, (4-6) 3 stress",
+    "Separate an exorcist completely",
+    "Cause collateral damage",
+    "Massively change the parameters of the fight",
+    "Add an Affliction"
+  ];
+
+  const exorcists = game.actors.filter(actor => actor.type === 'character');
+  const exorcistOptions = exorcists.map((exorcist, index) => `<option value="${index}">${exorcist.name}</option>`).join('');
+
+  const content = `
+    <div>
+      <h2>Threats</h2>
+      <p>Rules:</p>
+      <ul>
+        <li>Inflict harm: (1): An injury, (2-3) 5 stress, (4-6) 3 stress</li>
+        <li>Separate an exorcist completely</li>
+        <li>Cause collateral damage</li>
+        <li>Massively change the parameters of the fight</li>
+        <li>Add an Affliction</li>
+      </ul>
+      <p>When a threat is deployed, one exorcist immediately has a chance to make an action roll to negate the threat. This doesn’t take their action for the round, and any exorcist can act, even one that has already acted. The action roll has no other result other than negating the threat, and negates it on at least one success. This roll is otherwise a normal roll (it can incur consequences, be set up, or gain bonus dice as normal).</p>
+      <div class="form-group">
+        <label>Choose a Threat:</label>
+        <select id="threat-select">
+          ${threats.map((threat, index) => `<option value="${index}">${threat}</option>`).join('')}
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Choose an Exorcist:</label>
+        <select id="exorcist-select">
+          ${exorcistOptions}
+        </select>
+      </div>
+    </div>
+  `;
+
+  new Dialog({
+    title: "Use Threat",
+    content: content,
+    buttons: {
+      use: {
+        label: "Use Threat",
+        callback: async (html) => {
+          const selectedThreatIndex = parseInt(html.find('#threat-select').val());
+          const selectedExorcistIndex = parseInt(html.find('#exorcist-select').val());
+          const selectedThreat = threats[selectedThreatIndex];
+          const selectedExorcist = exorcists[selectedExorcistIndex];
+          ui.notifications.info(`Using Threat: ${selectedThreat} on ${selectedExorcist.name}`);
+
+          // Implement functionality for the selected threat
+          switch (selectedThreatIndex) {
+            case 0: // Inflict harm
+              const roll = new Roll('1d6');
+              await roll.evaluate({ async: true });
+              const rollResult = roll.total;
+              let damage;
+
+              if (rollResult === 1) {
+                damage = "an injury";
+                const injuries = selectedExorcist.system.injuries || 0;
+                await selectedExorcist.update({ 'system.injuries': injuries + 1 });
+              } else if (rollResult === 2 || rollResult === 3) {
+                damage = "5 stress";
+                const stress = selectedExorcist.system.stress.value + 5;
+                await selectedExorcist.update({ 'system.stress.value': stress });
+              } else {
+                damage = "3 stress";
+                const stress = selectedExorcist.system.stress.value + 3;
+                await selectedExorcist.update({ 'system.stress.value': stress });
+              }
+
+              ui.notifications.info(`Inflicted ${damage} on ${selectedExorcist.name}`);
+              break;
+
+            case 1: // Separate an exorcist completely
+              ui.notifications.info(`Separated ${selectedExorcist.name} completely`);
+              break;
+
+            case 2: // Cause collateral damage
+              ui.notifications.info(`Caused collateral damage`);
+              break;
+
+            case 3: // Massively change the parameters of the fight
+              ui.notifications.info(`Massively changed the parameters of the fight`);
+              break;
+
+            case 4: // Add an Affliction
+              const afflictions = game.items.filter(item => item.type === 'affliction');
+              const afflictionOptions = afflictions.map((affliction, index) => `<option value="${index}">${affliction.name}</option>`).join('');
+              const afflictionContent = `
+                <form>
+                  <div class="form-group">
+                    <label>Choose an Affliction:</label>
+                    <select id="affliction-select">${afflictionOptions}</select>
+                  </div>
+                </form>
+              `;
+
+              new Dialog({
+                title: "Add Affliction",
+                content: afflictionContent,
+                buttons: {
+                  add: {
+                    label: "Add Affliction",
+                    callback: async (html) => {
+                      const selectedAfflictionIndex = parseInt(html.find('#affliction-select').val());
+                      const selectedAffliction = afflictions[selectedAfflictionIndex];
+                      const afflictionsList = selectedExorcist.system.afflictions || [];
+                      afflictionsList.push(selectedAffliction.id);
+                      await selectedExorcist.update({ 'system.afflictions': afflictionsList });
+                      ui.notifications.info(`${selectedExorcist.name} has been afflicted with ${selectedAffliction.name}`);
+                    }
+                  },
+                  close: {
+                    label: "Close"
+                  }
+                },
+                default: "add"
+              }).render(true);
+              break;
+
+            default:
+              ui.notifications.warn("Unknown threat selected");
+              break;
+          }
+        }
+      },
+      close: {
+        label: "Close"
+      }
+    },
+    default: "close"
+  }).render(true);
+}
+
+// Function to perform a severe attack
+_severeAttack(event) {
+  this._onNpcSevereAttack(event);
+}
+
+// Function to use a domain
+_useDomain(event) {
+  const domains = this.actor.system.domains || {};
+  const domainOptions = Object.keys(domains).map(key => `<option value="${key}">${domains[key].title}</option>`).join('');
+  const content = `
+    <form>
+      <div class="form-group">
+        <label>Choose a Domain:</label>
+        <select id="domain-select">${domainOptions}</select>
+      </div>
+    </form>
+  `;
+
+  new Dialog({
+    title: "Use Domain",
+    content: content,
+    buttons: {
+      use: {
+        label: "Use",
+        callback: (html) => {
+          const selectedDomainKey = html.find('#domain-select').val();
+          const selectedDomain = domains[selectedDomainKey];
+          ui.notifications.info(`Using Domain: ${selectedDomain.title} - ${selectedDomain.value}`);
+        }
+      }
+    },
+    default: "use"
+  }).render(true);
+}
 
 }
