@@ -44,7 +44,7 @@
 
 <div class="sin-marks sin-page-drop-target">
   <h3>Sin Marks</h3>
-  <textarea class="sin-mark-description-input" name="system.sinMarkDescription" placeholder="Add a description of what your marks look like...">{{system.sinMarkDescription}}</textarea>
+  <input type="text" class="sin-mark-description-input" name="system.sinMarkDescription" placeholder="Add a short line about your sin marks appearance" value="{{system.sinMarkDescription}}">
   {{#if currentSinMarkData.length}}
     <ul>
       {{#each currentSinMarkData}}
@@ -219,11 +219,16 @@
   height: 50px;
   margin-top: 5px;
   padding: 5px;
-  border: 1px solid #ccc;
+  border: 1px solid #444; /* Adjusted to match the theme */
   border-radius: 4px;
+  background-color: #333; /* Adjusted to match the theme */
   color: #FFF;
   font-size: 14px;
-  resize: vertical;
+  box-sizing: border-box; /* Ensure padding is included in the width and height */
+}
+
+.sin-mark-description-input::placeholder {
+  color: #bbb; /* Brighter color for placeholder text */
 }
 
 </style>
