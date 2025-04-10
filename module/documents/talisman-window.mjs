@@ -66,7 +66,7 @@ export class TalismanWindow extends Application {
       imagePath: 'systems/cain/assets/Talismans/Talisman-A-0.png',
       currMarkAmount: 0,
       minMarkAmount: 0,
-      maxMarkAmount: 13,
+      maxMarkAmount: 26,
     });
     await game.settings.set('cain', 'globalTalismans', talismans);
     this._emitUpdate();
@@ -139,7 +139,7 @@ export class TalismanWindow extends Application {
     const talismans = game.settings.get('cain', 'globalTalismans');
     
     // Ensure value is between 0 and 13
-    const newMaxMarkAmount = Math.max(0, Math.min(13, value));
+    const newMaxMarkAmount = Math.max(0, Math.min(26, value));
     talismans[index].maxMarkAmount = newMaxMarkAmount;
     
     // Adjust currMarkAmount if it exceeds the new maxMarkAmount
@@ -240,9 +240,14 @@ export class TalismanWindow extends Application {
   }
 
   async _updateTile(talisman) {
-    const tiles = canvas.scene.tiles.filter(tile => tile.flags.talismanData && tile.flags.talismanData.name === talisman.name);
+    if (!talisman) return;
+    if (canvas.scene === null) return;
+    const tiles = canvas.scene.tiles.filter(tile => tile.flags.talismanData && tile.flags.talismanData.name === talisman.name) || [];
+    console.log('Tiles to update:', tiles);
+    if (tiles.length === 0) return;
     for (let tile of tiles) {
       await tile.update({ 'texture.src': talisman.imagePath });
+      console.log(`Tile updated: ${tile.id} with new texture: ${talisman.imagePath}`);
     }
   }
 
