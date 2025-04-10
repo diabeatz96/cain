@@ -396,7 +396,18 @@ export class CainActorSheet extends ActorSheet {
       }
     });
 
-
+    html.find('#increment-max-stress').click(() => {
+      const maxStress = this.actor.system.stress.max || 6;
+      this.actor.update({ 'system.stress.max': maxStress + 1 });
+    });
+  
+    // Decrement max stress
+    html.find('#decrement-max-stress').click(() => {
+      const maxStress = this.actor.system.stress.max || 6;
+      if (maxStress > 1) { // Ensure max stress doesn't go below 1
+        this.actor.update({ 'system.stress.max': maxStress - 1 });
+      }
+    });
   
     let scHtml = new HTMLShortcut(html);
     // NPC SPECIFIC LISTENERS
@@ -417,7 +428,7 @@ export class CainActorSheet extends ActorSheet {
     html.find('#increment-max-xp-value').click(this._increaseMaxXPValue.bind(this));
     html.find('#decrement-max-xp-value').click(this._decreaseMaxXPValue.bind(this));
     html.find('#session-end-xp-value').click(this._openEndSessionModal.bind(this));
-    html.find('.delete-sin-mark').click(this._deleteSinMark.bind(this));
+    html.find('.delete-sin-mark').click(this._removeSinMarkOrAbility.bind(this));
     html.find('.evolve-mark-button').click(this._evolveSinMark.bind(this));
     html.find('.roll-sin-mark').click(this._rollSinMark.bind(this));
     html.find('.talisman-name').change(this._onInputChange.bind(this));
@@ -437,7 +448,7 @@ export class CainActorSheet extends ActorSheet {
     html.find('.roll-rest-dice').click(this._RollRestDice.bind(this));
     html.find('#add-agenda-item-button').on('click', this._addAgendaItemButton.bind(this));
     html.find('#editable-agenda-abilities').on('click', '.remove-ability-button', this._removeAgendaAbilityButton.bind(this));
-    html.find('.remove-sin-mark-ability-button').click(this._removeSinMarkAbilityButton.bind(this));
+    html.find('.remove-sin-mark-ability-button').click(this._removeSinMarkOrAbility.bind(this));
     html.find('#editable-agenda-items').on('change', '.editable-item-input', this._updateAgendaItem.bind(this));
     html.find('#editable-agenda-abilities').on('change', '.editable-ability-input', this._updateAgendaAbility.bind(this));
     html.find('.blasphemy-power-to-chat').on('click', this._sendBlasphemyPowerMessage.bind(this));
@@ -961,20 +972,23 @@ export class CainActorSheet extends ActorSheet {
     );
   }
 
-  _onDropSinMarkAbility(event, sinMarkAbility) {
+  async _onDropSinMarkAbility(event, sinMarkAbility) {
+    event.preventDefault();
+
     // Ensure this.actor and this.actor.system are defined
     if (!this.actor || !this.actor.system) {
-      console.error("Actor or actor system is undefined.");
-      ui.notifications.error("Actor or actor system is undefined. Please check your setup.");
-      return;
+        console.error("Actor or actor system is undefined.");
+        ui.notifications.error("Actor or actor system is undefined. Please check your setup.");
+        return;
     }
+
     console.log("Actor and actor system are defined.");
 
     // Ensure sinMarkAbility and sinMarkAbility.system are defined
     if (!sinMarkAbility || !sinMarkAbility.system) {
-      console.error("Sin mark ability or sin mark ability system is undefined.");
-      ui.notifications.error("Sin mark ability or sin mark ability system is undefined. Please check your setup.");
-      return;
+        console.error("Sin mark ability or sin mark ability system is undefined.");
+        ui.notifications.error("Sin mark ability or sin mark ability system is undefined. Please check your setup.");
+        return;
     }
 
     console.log("Sin mark ability and sin mark ability system are defined.");
@@ -984,25 +998,52 @@ export class CainActorSheet extends ActorSheet {
 
     // Check if the sin mark ability is already in the list
     if (sinMarkAbilitiesList.includes(sinMarkAbility.id)) {
-      console.log("Sin mark ability already exists:", sinMarkAbility.id);
-      return;
+        console.log("Sin mark ability already exists:", sinMarkAbility.id);
+        return;
     }
 
     // Add the new sin mark ability to the list
     sinMarkAbilitiesList.push(sinMarkAbility.id);
     console.log("Updated Sin Mark Abilities List:", sinMarkAbilitiesList);
 
-    // Update the actor with the new list
-    this.actor.update({
-      'system.sinMarkAbilities': sinMarkAbilitiesList
-    }).then(() => {
-      console.log("Actor updated successfully.");
-    }).catch(err => {
-      console.error("Error updating actor:", err);
-      ui.notifications.error("Error updating actor. Please check the console for more details.");
-    });
-  }
+    // Normalize bodyPartName to ensure consistent capitalization
+    let sinMarkId = sinMarkAbility.system.bodyPartName.trim().toLowerCase();
+    sinMarkId = sinMarkId
+      .split(" ")
+      .map(word => (word === "or" ? word : word.charAt(0).toUpperCase() + word.slice(1)))
+      .join(" ");
+    console.log("Normalized Sin Mark ID:", sinMarkId);
 
+    const sinMarks = this.actor.system.sinMarks || [];
+    console.log("Current Sin Marks:", sinMarks);
+
+    if (!sinMarks.includes(sinMarkId)) {
+        console.log(`Sin mark for body part "${sinMarkId}" does not exist. Adding it.`);
+
+        // Fetch the sin mark item from the game items
+        const sinMark = game.items.find(item => item.type === "sinMark" && item.name === sinMarkId);
+        if (sinMark) {
+            sinMarks.push(sinMark.id);
+            console.log("Updated Sin Marks:", sinMarks);
+        } else {
+            console.error(`Sin mark for body part "${sinMarkId}" not found in game items.`);
+            ui.notifications.error(`Sin mark for body part "${sinMarkId}" not found.`);
+        }
+    } else {
+        console.log(`Sin mark for body part "${sinMarkId}" already exists.`);
+    }
+
+    // Update the actor with the new sin marks and abilities
+    await this.actor.update({
+        'system.sinMarks': sinMarks,
+        'system.sinMarkAbilities': sinMarkAbilitiesList
+    }).then(() => {
+        console.log("Actor updated successfully.");
+    }).catch(err => {
+        console.error("Error updating actor:", err);
+        ui.notifications.error("Error updating actor. Please check the console for more details.");
+    });
+}
   _onDropAffliction(event, affliction) {
       // Ensure this.actor and this.actor.system are defined
       if (!this.actor || !this.actor.system) {
@@ -1382,26 +1423,46 @@ export class CainActorSheet extends ActorSheet {
     });
   }
 
-  _removeSinMarkAbilityButton(event) {
+  async _removeSinMarkOrAbility(event) {
     event.preventDefault();
-    const sinMarkIndex = event.currentTarget.dataset.markindex;
-    console.log(sinMarkIndex);
-    const sinAbilityIndex = event.currentTarget.dataset.abilityindex;
-    console.log(sinAbilityIndex);
-    const sinMark = game.items.get(this.actor.system.sinMarks[sinMarkIndex]);
-    console.log(sinMark);
-    console.log(this.actor.system.sinMarkAbilities);
-    const sinMarkAbilities = this.actor.system.sinMarkAbilities.filter(filterID => {return sinMark.system.abilities.includes(filterID) });
-    const sinAbilityID = game.items.get(sinMarkAbilities[sinAbilityIndex]).id
 
+    // Retrieve the sin mark ID and ability ID (if present) from the button's dataset
+    const sinMarkId = event.currentTarget.dataset.markid; // Unique ID of the sin mark
+    const abilityId = event.currentTarget.dataset.abilityid; // Unique ID of the ability (optional)
 
-    //Clear out the removed ability.  Note that we don't need to worry about whether it's the last item, because we would have called _deleteSinMark then.
-    const newSinMarkAbilities = this.actor.system.sinMarkAbilities.filter(filterID => {return filterID != sinAbilityID});
-    console.log(newSinMarkAbilities);
+    console.log(sinMarkId)
+    console.log(abilityId)
 
-    this.actor.update({'system.sinMarkAbilities' : newSinMarkAbilities});
-    this.actor.render(true);
-  }
+    // Get the current sin marks and abilities
+    const sinMarks = this.actor.system.sinMarks || [];
+    const sinMarkAbilities = this.actor.system.sinMarkAbilities || [];
+
+    if (abilityId) {
+        // Remove the specific ability from the sin mark
+        const newSinMarkAbilities = sinMarkAbilities.filter(id => id !== abilityId);
+        await this.actor.update({ 'system.sinMarkAbilities': newSinMarkAbilities });
+        console.log(`Removed ability ${abilityId} from sin mark ${sinMarkId}`);
+    } else if (sinMarkId) {
+        // Remove the entire sin mark and its associated abilities
+        const sinMark = game.items.get(sinMarkId);
+        if (!sinMark) {
+            console.error(`Sin mark with ID ${sinMarkId} not found.`);
+            return;
+        }
+
+        const newSinMarks = sinMarks.filter(id => id !== sinMarkId);
+        const newSinMarkAbilities = sinMarkAbilities.filter(id => !sinMark.system.abilities.includes(id));
+
+        await this.actor.update({
+            'system.sinMarks': newSinMarks,
+            'system.sinMarkAbilities': newSinMarkAbilities
+        });
+        console.log(`Removed sin mark ${sinMarkId} and its abilities.`);
+    }
+
+    // Re-render the sheet to reflect changes
+    this.render(true);
+}
 
   _updateAgendaItem(event) {
     const index = event.target.dataset.index;
@@ -1470,20 +1531,24 @@ export class CainActorSheet extends ActorSheet {
   }
 
   _onRollButtonClick(event) {
-    const skill = document.querySelector('select[name="system.skill"]').value;
-  
+    // Scope the query to the current sheet
+    const html = this.element;
+
+    // Get the skill value from the dropdown
+    const skill = html.find('select[name="system.skill"]').val();
+
     // Get the checkbox values
-    const useDivineAgony = document.querySelector('input[name="use-divine-agony"]').checked;
-    const teamwork = document.querySelector('input[name="teamwork"]').checked;
-    const setup = document.querySelector('input[name="setup"]').checked;
-    const hard = document.querySelector('input[name="hard"]').checked;
-  
+    const useDivineAgony = html.find('input[name="use-divine-agony"]').is(':checked');
+    const teamwork = html.find('input[name="teamwork"]').is(':checked');
+    const setup = html.find('input[name="setup"]').is(':checked');
+    const hard = html.find('input[name="hard"]').is(':checked');
+
     // Get the extra dice value
-    const extraDice = parseInt(document.querySelector('input[name="extra-dice"]').value) || 0;
-  
+    const extraDice = parseInt(html.find('input[name="extra-dice"]').val()) || 0;
+
     // Perform the roll
-    this._performRoll(skill, useDivineAgony, teamwork, setup, hard, extraDice); 
-  }
+    this._performRoll(skill, useDivineAgony, teamwork, setup, hard, extraDice);
+}
   
   async _performRoll(skill, useDivineAgony, teamwork, setup, hard, extraDice) {
     const baseDice = this.actor.system.skills[skill].value;
@@ -1922,28 +1987,6 @@ export class CainActorSheet extends ActorSheet {
     
     console.log(this.actor);
     ui.notifications.info(`Rolled Sin Mark: ${selectedSinMark.name} with ability: ${selectedAbility}`);
-  
-    this.render(false); // Re-render the sheet to reflect changes
-  }
-  
-  async _deleteSinMark(event) {
-    event.preventDefault();
-    const index = event.currentTarget.dataset.markindex;
-    console.log(index);
-    const sinMarks = this.actor.system.sinMarks || [];
-    console.log(sinMarks);
-    const sinMarkAbilities = this.actor.system.sinMarkAbilities || [];
-    const sinMark = game.items.get(this.actor.system.sinMarks[index]);
-    console.log(sinMark);
-  
-    // Remove the selected Sin Mark and its abilities
-    const newSinMarks = sinMarks.slice(0, Number(index)).concat(sinMarks.slice(Number(index)+1));
-    const newSinMarkAbilities = sinMarkAbilities.filter(sinMarkAbilityID => {return !sinMark.system.abilities.includes(sinMarkAbilityID)});
-  
-    await this.actor.update({
-      'system.sinMarks': newSinMarks,
-      'system.sinMarkAbilities': newSinMarkAbilities
-    });
   
     this.render(false); // Re-render the sheet to reflect changes
   }

@@ -44,12 +44,23 @@
 
 <div class="sin-marks sin-page-drop-target">
   <h3>Sin Marks</h3>
-  <textarea class="sin-mark-description-input" name="system.sinMarkDescription" placeholder="Add a description of what your marks look like...">{{system.sinMarkDescription}}</textarea>
-  {{#if currentSinMarkData.length}}
+  <input 
+  class="sin-mark-description-input" 
+  name="system.sinMarkDescription" 
+  placeholder="Add a description of what your marks look like..." 
+  value="{{system.sinMarkDescription}}"> 
+   {{#if currentSinMarkData.length}}
     <ul>
       {{#each currentSinMarkData}}
         <li class="sin-mark-over-size">
-          <h1>{{this.sinMark.name}}</h1>
+          <div class="sin-mark-header">
+            <h1>{{this.sinMark.name}}</h1>
+            <button 
+              data-markid="{{this.id}}" 
+              class="delete-sin-mark">
+              <i class="fas fa-trash"></i>
+            </button>
+          </div>
           <ul>
             {{#each this.abilities}}
               <li class="flexrow sin-mark sin-mark-body-part">
@@ -58,7 +69,10 @@
                   <p class="sin-mark-description">{{this.description}}</p>
                 </div>
                 <div class="flexcol remove-sin-mark-div">
-                  <button data-markindex="{{@../index}}" data-abilityindex="{{@index}}" class="{{#unless (and @first @last)}}remove-sin-mark-ability-button{{else}}delete-sin-mark{{/unless}} remove-sin-mark-button"> 
+                  <button 
+                    data-markid="{{@../id}}" 
+                    data-abilityid="{{this.id}}" 
+                    class="remove-sin-mark-ability-button remove-sin-mark-button">
                     <i class="fas fa-trash"></i>
                   </button>
                 </div>
@@ -217,13 +231,44 @@
 .sin-mark-description-input {
   width: 100%;
   height: 50px;
-  margin-top: 5px;
-  padding: 5px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  color: #FFF;
+  margin-top: 10px;
+  padding: 10px;
+  border: 1px solid #555; /* Subtle border for a dark theme */
+  border-radius: 6px; /* Slightly rounded corners */
+  background-color: #2b2b2b; /* Dark background for the input field */
+  color: #e0e0e0; /* Light text color for readability */
   font-size: 14px;
-  resize: vertical;
+  font-family: 'Arial', sans-serif; /* Clean font for better readability */
+  resize: vertical; /* Allow vertical resizing */
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5); /* Subtle inner shadow for depth */
+  transition: border-color 0.3s, box-shadow 0.3s; /* Smooth transition for hover/focus effects */
+}
+
+.sin-mark-description-input:focus {
+  border-color: #cc33ff; /* Highlight border on focus */
+  box-shadow: 0 0 5px #cc33ff; /* Glow effect on focus */
+  outline: none; /* Remove default outline */
+}
+
+.sin-mark-description-input::placeholder {
+  color: #888; /* Subtle placeholder text color */
+  font-style: italic; /* Italicized placeholder for differentiation */
+}
+
+.sin-mark-header {
+  display: flex;
+  align-items: center; /* Align the button vertically with the text */
+  justify-content: space-between; /* Add spacing between the title and the button */
+}
+
+.sin-mark-header h1 {
+  margin: 0;
+  flex-grow: 1; /* Allow the title to take up available space */
+}
+
+.delete-sin-mark {
+  width: 7%;
+  margin-bottom: 4px;
 }
 
 </style>

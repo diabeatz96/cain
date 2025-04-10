@@ -59,7 +59,8 @@ export default class CainCharacter extends CainActorBase {
     });
     
     schema.stress = new fields.SchemaField({
-      value: new fields.NumberField({ required: true, initial: 0, min: 0, max: 6 }),
+      value: new fields.NumberField({ required: true, initial: 0, min: 0, max: 15 }),
+      max: new fields.NumberField({ required: true, initial: 6, min: 0, max: 15 })
     });
 
     schema.extraDice = new fields.SchemaField({

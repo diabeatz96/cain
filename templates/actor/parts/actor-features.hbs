@@ -163,6 +163,51 @@
   .checkbox-group[data-field="xp"] {
     margin-top: 10px;
   }
+  #increment-max-stress,
+  #decrement-max-stress {
+    background-color: #222; /* Darker background for subtlety */
+    color: white; /* White text for contrast */
+    border: 1px solid #444; /* Subtle border for definition */
+    border-radius: 3px; /* Slightly rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    font-size: 10px; /* Smaller font size */
+    height: 15px;
+    width: 30px; /* Fixed width for consistency */
+    text-align: center; /* Center the text */
+    transition: background-color 0.3s, transform 0.2s; /* Smooth transitions */
+    line-height: 0px;
+    margin-left: 5px;
+  }
+  
+  #increment-max-stress {
+    background-color: #660000; /* Red background for increment */
+    border-color: #990000; /* Slightly brighter red border */
+  }
+  
+  #decrement-max-stress {
+    background-color: #003366; /* Blue background for decrement */
+    border-color: #0055aa; /* Slightly brighter blue border */
+  }
+  
+  #increment-max-stress:hover {
+    background-color: #990000; /* Brighter red on hover */
+    transform: scale(1.1); /* Slight zoom effect */
+  }
+  
+  #decrement-max-stress:hover {
+    background-color: #0055aa; /* Brighter blue on hover */
+    transform: scale(1.1); /* Slight zoom effect */
+  }
+  
+  #increment-max-stress:active {
+    background-color: #440000; /* Darker red on click */
+    transform: scale(0.95); /* Slight shrink effect */
+  }
+  
+  #decrement-max-stress:active {
+    background-color: #002244; /* Darker blue on click */
+    transform: scale(0.95); /* Slight shrink effect */
+  }
 </style>
 
 <h3 class='resource-header'>Cat Level</h3>
@@ -244,9 +289,13 @@
   </div>
 
   <div class="resource">
-    <label for="stress">Stress</label>
+    <div class="flex-group">
+      <label for="stress">Stress</label>
+      <button id="increment-max-stress" class="xp-button">+1</button>
+      <button id="decrement-max-stress" class="xp-button">-1</button>
+    </div>
     <div class="checkbox-group" data-field="stress">
-      {{#times 6}}
+      {{#times system.stress.max}}
       <input type="checkbox" name="stress-{{@index}}" {{#if (gte system.stress.value @index)}}checked{{/if}}/>
       {{/times}}
     </div>
