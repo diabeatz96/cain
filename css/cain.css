@@ -871,11 +871,20 @@ img {
   gap: 4px;
 }
 
+#sidebar, .sidebar {
+  margin-top: 20px;
+}
+
 .mob-psycho-extra-dice {
   background-color: #262626;
   padding: 5px;
   border-radius: 5px;
   border: 1px dashed #00bfff; /* Dashed border for a report look */
+}
+
+#chat-controls input, .chat-controls input {
+  border: 1px solid #444 !important;
+  outline: none !important;
 }
 
 .mob-psycho-affliction {
@@ -939,6 +948,7 @@ img {
   padding: 0;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Add shadow for depth */
   font-family: 'Courier New', Courier, monospace; /* Typewriter font */
+  box-sizing: border-box;
 }
 
 .message-header {
@@ -988,6 +998,7 @@ img {
 .message-content {
   background-color: #1a1a1a; /* Dark background */
   padding: 10px;
+  box-sizing: border-box;
 }
 
 .dice-formula {
