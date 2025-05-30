@@ -17,7 +17,7 @@ import { CAIN } from '../helpers/config.mjs';
  */
 export class CainActorSheet extends ActorSheet {
   sheetConstants = {
-    "CATSessionNumbers": ["0", "2", "3", "5", "7", "X", "X"],
+    "CATSessionNumbers": ["0", "1", "2", "4", "7", "X", "X"],
     "SINVisualOffset": Math.round( Math.random() * 8) //a random offset so the EYES in the sin section don't always look exactly the same
   };
 
@@ -406,6 +406,45 @@ export class CainActorSheet extends ActorSheet {
       const maxStress = this.actor.system.stress.max || 6;
       if (maxStress > 1) { // Ensure max stress doesn't go below 1
         this.actor.update({ 'system.stress.max': maxStress - 1 });
+      }
+    });
+
+    html.find('#increment-max-injuries').click(() => {
+      const maxInjuries = this.actor.system.injuries.max || 3;
+      this.actor.update({ 'system.injuries.max': maxInjuries + 1 });
+    });
+  
+    // Decrement max injuries
+    html.find('#decrement-max-injuries').click(() => {
+      const maxInjuries = this.actor.system.injuries.max || 3;
+      if (maxInjuries > 1) { // Ensure max injuries doesn't go below 1
+        this.actor.update({ 'system.injuries.max': maxInjuries - 1 });
+      }
+    });
+
+    html.find('#increment-max-divineAgony').click(() => {
+      const maxDivineAgony = this.actor.system.divineAgony.max || 3;
+      this.actor.update({ 'system.divineAgony.max': maxDivineAgony + 1 });
+    });
+  
+    // Decrement max divine agony
+    html.find('#decrement-max-divineAgony').click(() => {
+      const maxDivineAgony = this.actor.system.divineAgony.max || 3;
+      if (maxDivineAgony > 1) { // Ensure max divine agony doesn't go below 1
+        this.actor.update({ 'system.divineAgony.max': maxDivineAgony - 1 });
+      }
+    });
+
+    html.find('#increment-max-psycheBurst').click(() => {
+      const maxPsycheBurst = this.actor.system.psycheBurst.max;
+      this.actor.update({ 'system.psycheBurst.max': maxPsycheBurst + 1 });
+    });
+  
+    // Decrement max psyche burst
+    html.find('#decrement-max-psycheBurst').click(() => {
+      const maxPsycheBurst = this.actor.system.psycheBurst.max;
+      if (maxPsycheBurst > 0) { // Ensure max psyche burst doesn't go below 0
+        this.actor.update({ 'system.psycheBurst.max': maxPsycheBurst - 1 });
       }
     });
   

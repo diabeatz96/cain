@@ -12,7 +12,6 @@
       </button>
       {{/if}}
       <div class="psyche-burst-checkboxes circle-checkboxes" style="display: flex; align-items: center;">
-        <label style="margin-right: 10px;">Psyche Burst Charges:</label>
         {{#if system.psycheBurst}}
         {{#range 0 system.psycheBurst.max}}
         <input type="checkbox" id="checkbox-{{index}}" class="psyche-burst-checkbox" {{#if (lt index
@@ -22,7 +21,10 @@
         {{else}}
         <p>No Psyche Burst Data</p>
         {{/if}}
+        <label style="margin-right: 10px;">Psyche Burst Charges</label>
       </div>
+      <button id="increment-max-psycheBurst" class="xp-button">+1</button>
+      <button id="decrement-max-psycheBurst" class="xp-button">-1</button>
     </div>
     <div class="psyche-info" style="margin-top: 20px; text-align: left;">
       <p>Using any blasphemy power requires a psyche burst. Some can spend multiple for extra benefit.</p>
@@ -246,6 +248,47 @@
   </div>
 </div>
 <style>
+
+  #increment-max-psycheBurst {
+    background-color: #222; /* Darker background for subtlety */
+    color: white; /* White text for contrast */
+    border: 1px solid #444; /* Subtle border for definition */
+    border-radius: 3px; /* Slightly rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    font-size: 10px; /* Smaller font size */
+    height: 15px;
+    width: 30px; /* Fixed width for consistency */
+    text-align: center; /* Center the text */
+    transition: background-color 0.3s, transform 0.2s; /* Smooth transitions */
+    line-height: 0px;
+    margin-left: 5px;
+  }
+
+  #decrement-max-psycheBurst {
+    background-color: #222; /* Darker background for subtlety */
+    color: white; /* White text for contrast */
+    border: 1px solid #444; /* Subtle border for definition */
+    border-radius: 3px; /* Slightly rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    font-size: 10px; /* Smaller font size */
+    height: 15px;
+    width: 30px; /* Fixed width for consistency */
+    text-align: center; /* Center the text */
+    transition: background-color 0.3s, transform 0.2s; /* Smooth transitions */
+    line-height: 0px;
+    margin-left: 5px;
+  }
+
+  #increment-max-psycheBurst {
+    background-color: #660000; /* Red background for increment */
+    border-color: #990000; /* Slightly brighter red border */
+  }
+  
+  #decrement-max-psycheBurst {
+    background-color: #003366; /* Blue background for decrement */
+    border-color: #0055aa; /* Slightly brighter blue border */
+  }
+  
   /* Hover effects for agenda tasks and abilities */
   .abilities-page .agenda-task:hover,
   .abilities-page .agenda-ability:hover,

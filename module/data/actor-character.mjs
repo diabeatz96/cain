@@ -51,11 +51,13 @@ export default class CainCharacter extends CainActorBase {
     schema.afflictions = new fields.ArrayField(new fields.StringField({ required: true, initial: " " }), { required: true, initial: [] });
     
     schema.divineAgony = new fields.SchemaField({
-      value: new fields.NumberField({ required: true, initial: 0, min: 0, max: 3 }),
+      value: new fields.NumberField({ required: true, initial: 0, min: 0, max: 10 }),
+      max: new fields.NumberField({ required: true, initial: 3, min: 0, max: 10 })
     });
     
     schema.injuries = new fields.SchemaField({
-      value: new fields.NumberField({ required: true, initial: 0, min: 0, max: 3 }),
+      value: new fields.NumberField({ required: true, initial: 0, min: 0, max: 10 }),
+      max: new fields.NumberField({ required: true, initial: 3, min: 0, max: 10 })
     });
     
     schema.stress = new fields.SchemaField({
@@ -96,8 +98,8 @@ export default class CainCharacter extends CainActorBase {
     schema.psyche = new fields.NumberField({ required: true, initial: 1, min: 1 });
 
     schema.psycheBurst = new fields.SchemaField({
-      value: new fields.NumberField({ required: true, initial: 0, min: 0, max: 3 }),
-      max: new fields.NumberField({ required: true, initial: 3, min: 0, max: 3 }),
+      value: new fields.NumberField({ required: true, initial: 3, min: 0, max: 5 }),
+      max: new fields.NumberField({ required: true, initial: 3, min: 0, max: 5 }),
     });
 
     schema.restDiceModifier = new fields.NumberField({ required: true, initial: 0, min: -3, max: 3 });

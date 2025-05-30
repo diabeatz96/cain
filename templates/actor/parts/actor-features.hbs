@@ -163,8 +163,13 @@
   .checkbox-group[data-field="xp"] {
     margin-top: 10px;
   }
+  
   #increment-max-stress,
-  #decrement-max-stress {
+  #decrement-max-stress,
+  #increment-max-injuries,
+  #decrement-max-injuries,
+  #increment-max-divineAgony,
+  #decrement-max-divineAgony {
     background-color: #222; /* Darker background for subtlety */
     color: white; /* White text for contrast */
     border: 1px solid #444; /* Subtle border for definition */
@@ -179,32 +184,44 @@
     margin-left: 5px;
   }
   
-  #increment-max-stress {
+  #increment-max-stress,
+  #increment-max-injuries,
+  #increment-max-divineAgony {
     background-color: #660000; /* Red background for increment */
     border-color: #990000; /* Slightly brighter red border */
   }
   
-  #decrement-max-stress {
+  #decrement-max-stress,
+  #decrement-max-injuries,
+  #decrement-max-divineAgony {
     background-color: #003366; /* Blue background for decrement */
     border-color: #0055aa; /* Slightly brighter blue border */
   }
   
-  #increment-max-stress:hover {
+  #increment-max-stress:hover,
+  #increment-max-injuries:hover,
+  #increment-max-divineAgony:hover {
     background-color: #990000; /* Brighter red on hover */
     transform: scale(1.1); /* Slight zoom effect */
   }
   
-  #decrement-max-stress:hover {
+  #decrement-max-stress:hover,
+  #decrement-max-injuries:hover,
+  #decrement-max-divineAgony:hover {
     background-color: #0055aa; /* Brighter blue on hover */
     transform: scale(1.1); /* Slight zoom effect */
   }
   
-  #increment-max-stress:active {
+  #increment-max-stress:active,
+  #increment-max-injuries:active,
+  #increment-max-divineAgony:active {
     background-color: #440000; /* Darker red on click */
     transform: scale(0.95); /* Slight shrink effect */
   }
   
-  #decrement-max-stress:active {
+  #decrement-max-stress:active,
+  #decrement-max-injuries:active,
+  #decrement-max-divineAgony:active {
     background-color: #002244; /* Darker blue on click */
     transform: scale(0.95); /* Slight shrink effect */
   }
@@ -271,18 +288,26 @@
 
 <div class="grid grid-3col">
   <div class="resource">
-    <label for="divineAgony">Divine Agony</label>
+    <div class="flex-group">
+      <label for="divineAgony">Divine Agony</label>
+      <button id="increment-max-divineAgony" class="xp-button">+1</button>
+      <button id="decrement-max-divineAgony" class="xp-button">-1</button>
+    </div>
     <div class="checkbox-group" data-field="divineAgony">
-      {{#times 3}}
+      {{#times system.divineAgony.max}}
       <input type="checkbox" name="divineAgony-{{@index}}" {{#if (gte system.divineAgony.value @index)}}checked{{/if}}/>
       {{/times}}
     </div>
   </div>
 
   <div class="resource">
-    <label for="injuries">Injuries</label>
+    <div class="flex-group">
+      <label for="injuries">Injuries</label>
+      <button id="increment-max-injuries" class="xp-button">+1</button>
+      <button id="decrement-max-injuries" class="xp-button">-1</button>
+    </div>
     <div class="checkbox-group" data-field="injuries">
-      {{#times 3}}
+      {{#times system.injuries.max}}
       <input type="checkbox" name="injuries-{{@index}}" {{#if (gte system.injuries.value @index)}}checked{{/if}}/>
       {{/times}}
     </div>
