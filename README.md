@@ -45,6 +45,9 @@
     - My friend carmen for miscellaneous ideas and polish
     - Diabeatz96, ahandleman and Benji as developers.
 
+## BUGESO Update
+Hello, this is a temporary fork for Cain 1.3 on foundry! I hardly know what I'm doing, but this should hopefully work! If you have any questions or concerns just @ me on discord @bugeso!
+
 ## v1.2.X Update
 
 v1.2.X update is a rework of the sin-sheet, adjustments to the player character sheet and addition of globaltalismans linked to tiles in game. 
