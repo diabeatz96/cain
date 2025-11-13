@@ -1,0 +1,39 @@
+{
+  "name": "Bar",
+  "type": "blasphemyPower",
+  "img": "systems/cain/assets/Blasphemies/palace.png",
+  "folder": "JMTIeJRElJUzQpBb",
+  "system": {
+    "blasphemyType": "Palace",
+    "powerName": "Bar",
+    "isPassive": false,
+    "keywords": [
+      "Self, 1/scene"
+    ],
+    "powerDescription": "Once a scene , you can open any closed door and open it to your (actual, physical) bar instead of the room you would expect. It is a well stocked, typical small bar, including snacks, a couple hot plates, and alcoholic and non-alcoholic drinks. It restocks between missions. The bar only exists while you are inside or hold the door, and outside items or people inside are pushed out before it disappears.\n\nWhen you rest in your bar, you can roll 1d3+1, and do one of the following, spending charges of the die you have just rolled per option:\n         \n• 1 charge: Erase 1 stress on one person \n• 2 charges: Untick 1 tick on all hooks for a person \n• 3 charges: Remove an injury \n        \nFor each, describe a drink, snack, meal, or other form of relaxation or healing you are preparing for your guest.",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff"
+  },
+  "_id": "Zj9ZuaYeEMLqyBVJ",
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "FezNQLnArNIsRQJJ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.blasphemies.Item.Zj9ZuaYeEMLqyBVJ",
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.1.1",
+    "createdTime": 1725579733078,
+    "modifiedTime": 1725579733078,
+    "lastModifiedBy": "FezNQLnArNIsRQJJ"
+  },
+  "sort": 0,
+  "_key": "!items!Zj9ZuaYeEMLqyBVJ"
+}

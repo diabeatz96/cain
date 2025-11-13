@@ -1,0 +1,30 @@
+{
+  "name": "Get someone to do your bidding",
+  "type": "agendaTask",
+  "img": "icons/svg/item-bag.svg",
+  "folder": "kzS1kPydKR6YapmP",
+  "system": {
+    "task": "Get someone to do your bidding",
+    "isBold": false,
+    "description": ""
+  },
+  "_id": "SIIaBQT8PDVSdeVe",
+  "effects": [],
+  "sort": 100000,
+  "ownership": {
+    "default": 0,
+    "FezNQLnArNIsRQJJ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.0.20",
+    "createdTime": 1724996336702,
+    "modifiedTime": 1724996336702,
+    "lastModifiedBy": "FezNQLnArNIsRQJJ"
+  },
+  "_key": "!items!SIIaBQT8PDVSdeVe"
+}

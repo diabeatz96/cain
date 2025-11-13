@@ -1,0 +1,30 @@
+{
+  "name": "[Shadow Passive]",
+  "type": "agendaAbility",
+  "img": "icons/svg/item-bag.svg",
+  "folder": "gKRq7GWryRG6tr3C",
+  "system": {
+    "abilityName": "[Shadow Passive]",
+    "abilityDescription": "When you pick this agenda, pick another character to be your rival (the feeling doesn’t have to be mutual) at the start of a mission. As long as you have rival abilities from this agenda, you must choose who your rival is.",
+    "description": ""
+  },
+  "_id": "bnbNBe70jPwYCgLY",
+  "effects": [],
+  "sort": 100000,
+  "ownership": {
+    "default": 0,
+    "FezNQLnArNIsRQJJ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.0.20",
+    "createdTime": 1724996336702,
+    "modifiedTime": 1724996336702,
+    "lastModifiedBy": "FezNQLnArNIsRQJJ"
+  },
+  "_key": "!items!bnbNBe70jPwYCgLY"
+}

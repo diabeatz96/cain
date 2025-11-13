@@ -1,0 +1,44 @@
+{
+  "name": "Guardian",
+  "type": "agenda",
+  "img": "icons/svg/item-bag.svg",
+  "folder": "vx3r0nNDRMeZCFF4",
+  "system": {
+    "agendaName": "Guardian",
+    "formula": "",
+    "unboldedTasks": [
+      "6AXyKu5d6O4qcsO2"
+    ],
+    "boldedTasks": [
+      "M6T7nKBcJ5KlrhS4"
+    ],
+    "abilities": [
+      "8yuEd6MZofAjyqkW",
+      "BYeN3gMhjAuMQLMx",
+      "guyxYfM5EcWltzTB",
+      "UPfHVBC8j5ldeBBz",
+      "aNmqdmDPoyQPo0Lu"
+    ],
+    "description": ""
+  },
+  "_id": "PnbyLushnxJtXB3P",
+  "effects": [],
+  "sort": 100000,
+  "ownership": {
+    "default": 0,
+    "yJuxhbSZPW8Smq1z": 3,
+    "FezNQLnArNIsRQJJ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.0.20",
+    "createdTime": 1724996336702,
+    "modifiedTime": 1724996336702,
+    "lastModifiedBy": "FezNQLnArNIsRQJJ"
+  },
+  "_key": "!items!PnbyLushnxJtXB3P"
+}

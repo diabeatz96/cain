@@ -1,0 +1,30 @@
+{
+  "name": "[Machine Passive]",
+  "type": "agendaAbility",
+  "img": "icons/svg/item-bag.svg",
+  "folder": "2FmkgnRy0J9tRVfL",
+  "system": {
+    "abilityName": "[Machine Passive]",
+    "abilityDescription": "If your group rests, you can choose to exclude yourself from resting.",
+    "description": ""
+  },
+  "_id": "TthJgEmT2SrcEA6o",
+  "effects": [],
+  "sort": 100000,
+  "ownership": {
+    "default": 0,
+    "FezNQLnArNIsRQJJ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.0.20",
+    "createdTime": 1724996336702,
+    "modifiedTime": 1724996336702,
+    "lastModifiedBy": "FezNQLnArNIsRQJJ"
+  },
+  "_key": "!items!TthJgEmT2SrcEA6o"
+}

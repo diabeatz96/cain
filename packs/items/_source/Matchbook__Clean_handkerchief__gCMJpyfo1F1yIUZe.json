@@ -1,0 +1,38 @@
+{
+  "folder": "qiWXqhKuDVwn6HZo",
+  "name": "Matchbook, Clean handkerchief.",
+  "type": "item",
+  "img": "systems/cain/assets/items/kp.png",
+  "system": {
+    "description": "<p style=\"text-align: center\">Matchbook (20 matches). Clean</p><p style=\"text-align: center;\">handkerchief.</p>",
+    "quantity": 20,
+    "weight": 0,
+    "roll": {
+      "diceNum": 1,
+      "diceSize": "d6",
+      "diceBonus": ""
+    },
+    "kitPoint": 1,
+    "scripValue": 0,
+    "type": "Aesthetics"
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.0.1",
+    "createdTime": 1723987411421,
+    "modifiedTime": 1723987411421,
+    "lastModifiedBy": "wAkEmoF9bl45blE0"
+  },
+  "_id": "gCMJpyfo1F1yIUZe",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "wAkEmoF9bl45blE0": 3
+  },
+  "_key": "!items!gCMJpyfo1F1yIUZe"
+}

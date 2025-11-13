@@ -1,0 +1,39 @@
+{
+  "name": "Parlor",
+  "type": "blasphemyPower",
+  "img": "systems/cain/assets/Blasphemies/palace.png",
+  "folder": "JMTIeJRElJUzQpBb",
+  "system": {
+    "blasphemyType": "Palace",
+    "powerName": "Parlor",
+    "isPassive": false,
+    "keywords": [
+      "1 scene, Investigation area"
+    ],
+    "powerDescription": "Choose one person or up to a {<CAT> people 0} sized group of people in the investigation area and speak their (real) name(s) aloud. You can bring yourself and their psychic shadow inside your palace, no matter where they are.\n        \nIf your target(s) are willing, you can choose to bring their actual psychic consciousness inside your palace, making them aware and remember what is going on while inside, as though in a dream. Their real body becomes unconscious and vulnerable. They can leave willingly.\n        \nYou can instead bring a psychic double of a willing or unwilling person into your palace. They are not affected, but the double is a copy of their mind at the time of summoning. Any memories formed by the double will not transfer over. The double cannot leave until the scene ends, or until they take harm as usual.\n        \nA person or double summoned this way is not obligated in any way to behave differently than their original.\n        \nGain or grant +1D on the next roll by yourself or an ally taking advantage of this power.",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff"
+  },
+  "_id": "EIg7u7vdKnxUILTt",
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "FezNQLnArNIsRQJJ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.blasphemies.Item.EIg7u7vdKnxUILTt",
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.1.1",
+    "createdTime": 1725579733078,
+    "modifiedTime": 1725579733078,
+    "lastModifiedBy": "FezNQLnArNIsRQJJ"
+  },
+  "sort": 0,
+  "_key": "!items!EIg7u7vdKnxUILTt"
+}

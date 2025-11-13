@@ -1,0 +1,38 @@
+{
+  "folder": "DYa1yCl9CNfOahIN",
+  "name": "Sanctioned indulgences",
+  "type": "item",
+  "img": "systems/cain/assets/items/kp.png",
+  "system": {
+    "description": "<p>Small personal indulgences, sanctioned by CASTLE. Cigarettes, coffee, candy, chewing gum, spending money. Use to roll an extra resting die when resting </p>",
+    "quantity": 1,
+    "weight": 0,
+    "roll": {
+      "diceNum": 1,
+      "diceSize": "d6",
+      "diceBonus": ""
+    },
+    "kitPoint": 1,
+    "scripValue": 2,
+    "type": "Consumables"
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.0.1",
+    "createdTime": 1723987411421,
+    "modifiedTime": 1723987411421,
+    "lastModifiedBy": "wAkEmoF9bl45blE0"
+  },
+  "_id": "IMT3ppNgtdhrq2up",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "wAkEmoF9bl45blE0": 3
+  },
+  "_key": "!items!IMT3ppNgtdhrq2up"
+}

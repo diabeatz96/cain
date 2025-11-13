@@ -1,0 +1,31 @@
+{
+  "name": "Hold Back",
+  "type": "agendaTask",
+  "img": "icons/svg/item-bag.svg",
+  "folder": "7odUq7voLNdyIkSh",
+  "system": {
+    "task": "Hold Back",
+    "isBold": true,
+    "description": ""
+  },
+  "_id": "pHRIjb6D9Ru6WhvE",
+  "effects": [],
+  "sort": 200000,
+  "ownership": {
+    "default": 0,
+    "yJuxhbSZPW8Smq1z": 3,
+    "FezNQLnArNIsRQJJ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.0.20",
+    "createdTime": 1724996336702,
+    "modifiedTime": 1724996336702,
+    "lastModifiedBy": "FezNQLnArNIsRQJJ"
+  },
+  "_key": "!items!pHRIjb6D9Ru6WhvE"
+}

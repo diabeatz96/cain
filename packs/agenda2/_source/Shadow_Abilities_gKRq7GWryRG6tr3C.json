@@ -1,0 +1,22 @@
+{
+  "name": "Shadow Abilities",
+  "sorting": "a",
+  "folder": "7dGDAYDqPc8KlKc5",
+  "type": "Item",
+  "_id": "gKRq7GWryRG6tr3C",
+  "description": "",
+  "sort": 0,
+  "color": null,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.0.20",
+    "createdTime": 1724996336678,
+    "modifiedTime": 1724996336678,
+    "lastModifiedBy": "FezNQLnArNIsRQJJ"
+  },
+  "_key": "!folders!gKRq7GWryRG6tr3C"
+}

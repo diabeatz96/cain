@@ -1,0 +1,22 @@
+{
+  "name": "Gate Powers",
+  "sorting": "a",
+  "folder": "P9Etl1hsmvf7qXCZ",
+  "type": "Item",
+  "_id": "M2IyOSZHhi0ADpIW",
+  "description": "",
+  "sort": 100000,
+  "color": null,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.1.1",
+    "createdTime": 1725579733058,
+    "modifiedTime": 1725579733058,
+    "lastModifiedBy": "FezNQLnArNIsRQJJ"
+  },
+  "_key": "!folders!M2IyOSZHhi0ADpIW"
+}

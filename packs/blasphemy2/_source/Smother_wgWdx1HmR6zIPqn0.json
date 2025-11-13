@@ -1,0 +1,41 @@
+{
+  "name": "Smother",
+  "type": "blasphemy",
+  "img": "systems/cain/assets/Blasphemies/smother.png",
+  "folder": "sYSQZZKyZVt0kEMG",
+  "system": {
+    "blasphemyName": "Smother",
+    "powers": [
+      "uxrg3sCt0SmiovAq",
+      "7ZuJGKyOWGNTDqVO",
+      "zN7tgUvvoeqUv7SV",
+      "EIbCXlvMKGeLQXNn",
+      "jI3ETrOkHPx8ityd",
+      "haRRvNWAWlkQaEHn"
+    ],
+    "description": "",
+    "primaryColor": "#000000",
+    "accentColor": "#8f8f8f",
+    "secondaryColor": "#000000",
+    "textColor": "#ffe100"
+  },
+  "_id": "wgWdx1HmR6zIPqn0",
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "FezNQLnArNIsRQJJ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.blasphemies.Item.wgWdx1HmR6zIPqn0",
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.1.1",
+    "createdTime": 1725579733078,
+    "modifiedTime": 1725579733078,
+    "lastModifiedBy": "FezNQLnArNIsRQJJ"
+  },
+  "sort": 0,
+  "_key": "!items!wgWdx1HmR6zIPqn0"
+}

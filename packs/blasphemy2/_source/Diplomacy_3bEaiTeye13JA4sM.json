@@ -1,0 +1,39 @@
+{
+  "name": "Diplomacy",
+  "type": "blasphemyPower",
+  "img": "systems/cain/assets/Blasphemies/sympathy.png",
+  "folder": "Lgov2kLYrPoRsAHF",
+  "system": {
+    "blasphemyType": "Sympathy",
+    "powerName": "Diplomacy",
+    "isPassive": false,
+    "keywords": [
+      "Instant, Short"
+    ],
+    "powerDescription": "You make a simple request of an object as if it was a person, or ask it a simple yes or no question.\n        \nFor example, you can ask a door to open or hold shut (even if it couldn’t normally lock, or you don’t have the key), a computer to turn off or find information for you, or a car to turn on without a key or drive by itself.\n        \nIf you need to make a roll for this, roll PSYCHE or use a social action, such as negotiation or authority.\n        \nYou can affect objects up to {<CAT> size 0} size with this. Objects asked questions can answer only with yes or no answers and can’t actually vocalize.",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff"
+  },
+  "_id": "3bEaiTeye13JA4sM",
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "FezNQLnArNIsRQJJ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.blasphemies.Item.3bEaiTeye13JA4sM",
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.1.1",
+    "createdTime": 1725579733078,
+    "modifiedTime": 1725579733078,
+    "lastModifiedBy": "FezNQLnArNIsRQJJ"
+  },
+  "sort": 0,
+  "_key": "!items!3bEaiTeye13JA4sM"
+}

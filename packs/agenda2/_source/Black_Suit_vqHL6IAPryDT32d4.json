@@ -1,0 +1,30 @@
+{
+  "name": "Black Suit",
+  "type": "agendaAbility",
+  "img": "icons/svg/item-bag.svg",
+  "folder": "HWYYf4u5ELcbshbY",
+  "system": {
+    "abilityName": "Black Suit",
+    "abilityDescription": "Gain +1D on actions to lead, intimidate, or give orders to mundane humans.",
+    "description": ""
+  },
+  "_id": "vqHL6IAPryDT32d4",
+  "effects": [],
+  "sort": 100000,
+  "ownership": {
+    "default": 0,
+    "FezNQLnArNIsRQJJ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.0.20",
+    "createdTime": 1724996336702,
+    "modifiedTime": 1724996336702,
+    "lastModifiedBy": "FezNQLnArNIsRQJJ"
+  },
+  "_key": "!items!vqHL6IAPryDT32d4"
+}

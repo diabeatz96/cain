@@ -1,0 +1,22 @@
+{
+  "name": "Departed Tasks",
+  "sorting": "a",
+  "folder": "OuRQfVDdEObhuHdU",
+  "type": "Item",
+  "_id": "yWiJqns0fpSkoIAL",
+  "description": "",
+  "sort": 0,
+  "color": null,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.0.20",
+    "createdTime": 1724996336678,
+    "modifiedTime": 1724996336678,
+    "lastModifiedBy": "FezNQLnArNIsRQJJ"
+  },
+  "_key": "!folders!yWiJqns0fpSkoIAL"
+}

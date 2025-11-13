@@ -1,0 +1,39 @@
+{
+  "name": "Inner Furnace",
+  "type": "blasphemyPower",
+  "img": "systems/cain/assets/Blasphemies/ardence.png",
+  "folder": "OlQPKUoRA4sfNEBM",
+  "system": {
+    "blasphemyType": "Ardence",
+    "powerName": "Inner Furnace",
+    "isPassive": true,
+    "keywords": [
+      "Passive"
+    ],
+    "powerDescription": "You can take an Unstable Power hook as part of using any Ardence power to increase the CAT of the power up to +2. When the hook fills up, you burn up from the inside, gaining an injury and ending the hook. If this injury would kill you, you explode in a {<CAT> area 0}, annihilating yourself and everything inside in a massive explosion. Nothing can survive this.",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff"
+  },
+  "_id": "VSXUAHzW9OQ0jrf3",
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "FezNQLnArNIsRQJJ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.blasphemies.Item.VSXUAHzW9OQ0jrf3",
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.1.1",
+    "createdTime": 1725579733078,
+    "modifiedTime": 1725579733078,
+    "lastModifiedBy": "FezNQLnArNIsRQJJ"
+  },
+  "sort": 0,
+  "_key": "!items!VSXUAHzW9OQ0jrf3"
+}

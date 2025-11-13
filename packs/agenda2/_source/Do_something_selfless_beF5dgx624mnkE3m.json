@@ -1,0 +1,30 @@
+{
+  "name": "Do something selfless",
+  "type": "agendaTask",
+  "img": "icons/svg/item-bag.svg",
+  "folder": "kzS1kPydKR6YapmP",
+  "system": {
+    "task": "Do something selfless",
+    "isBold": true,
+    "description": ""
+  },
+  "_id": "beF5dgx624mnkE3m",
+  "effects": [],
+  "sort": 200000,
+  "ownership": {
+    "default": 0,
+    "FezNQLnArNIsRQJJ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.0.20",
+    "createdTime": 1724996336702,
+    "modifiedTime": 1724996336702,
+    "lastModifiedBy": "FezNQLnArNIsRQJJ"
+  },
+  "_key": "!items!beF5dgx624mnkE3m"
+}

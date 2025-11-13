@@ -1,0 +1,30 @@
+{
+  "name": "Cantrip",
+  "type": "agendaAbility",
+  "img": "icons/svg/item-bag.svg",
+  "folder": "D6SdZeO7XRd9Ludz",
+  "system": {
+    "abilityName": "Cantrip",
+    "abilityDescription": "Pick a blasphemy ability. You can use it twice a hunt without spending a psyche burst, but it is always used at CAT 0 if used this way.",
+    "description": ""
+  },
+  "_id": "q3nj4sNjfyb4zLxZ",
+  "effects": [],
+  "sort": 100000,
+  "ownership": {
+    "default": 0,
+    "FezNQLnArNIsRQJJ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.0.20",
+    "createdTime": 1724996336702,
+    "modifiedTime": 1724996336702,
+    "lastModifiedBy": "FezNQLnArNIsRQJJ"
+  },
+  "_key": "!items!q3nj4sNjfyb4zLxZ"
+}

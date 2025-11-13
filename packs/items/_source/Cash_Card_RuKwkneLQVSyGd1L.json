@@ -1,0 +1,38 @@
+{
+  "folder": "W54tBb4dDKbp2nzT",
+  "name": "Cash Card",
+  "type": "item",
+  "_id": "RuKwkneLQVSyGd1L",
+  "img": "systems/cain/assets/items/kp.png",
+  "system": {
+    "description": "<p>Card that works with most currencies with pre-</p><p>loaded allowance for mundane world purchases.</p><p>Never enough to buy anything major.</p>",
+    "quantity": 1,
+    "weight": 0,
+    "roll": {
+      "diceNum": 1,
+      "diceSize": "d6",
+      "diceBonus": ""
+    },
+    "kitPoint": 0,
+    "scripValue": 1,
+    "type": "Aesthetics"
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.0.1",
+    "createdTime": 1723987411421,
+    "modifiedTime": 1723987411421,
+    "lastModifiedBy": "wAkEmoF9bl45blE0"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "wAkEmoF9bl45blE0": 3
+  },
+  "_key": "!items!RuKwkneLQVSyGd1L"
+}

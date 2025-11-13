@@ -1,0 +1,41 @@
+{
+  "name": "Gate",
+  "type": "blasphemy",
+  "img": "systems/cain/assets/Blasphemies/gate.png",
+  "folder": "P9Etl1hsmvf7qXCZ",
+  "system": {
+    "blasphemyName": "Gate",
+    "powers": [
+      "ji2R7kGfkvJc916j",
+      "Uz7yp7nW9gNLzk9i",
+      "A2EU157dRL5iyRn9",
+      "ygGsKWC1nvBz5skO",
+      "Au51pCR7aUxLYfgp",
+      "e1Tn4jexmjgN0QXF"
+    ],
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ffe100",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff"
+  },
+  "_id": "b2e3dVZBLgySdSkd",
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "FezNQLnArNIsRQJJ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.blasphemies.Item.b2e3dVZBLgySdSkd",
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.1.1",
+    "createdTime": 1725579733078,
+    "modifiedTime": 1725579733078,
+    "lastModifiedBy": "FezNQLnArNIsRQJJ"
+  },
+  "sort": 0,
+  "_key": "!items!b2e3dVZBLgySdSkd"
+}

@@ -1,0 +1,30 @@
+{
+  "name": "The Work",
+  "type": "agendaAbility",
+  "img": "icons/svg/item-bag.svg",
+  "folder": "2FmkgnRy0J9tRVfL",
+  "system": {
+    "abilityName": "The Work",
+    "abilityDescription": "You can choose to gain +1D on any roll. If you do, take 1 stress for each time you’ve used this ability this mission (including this one). You can’t use this ability for the remainder of the hunt if you rest.",
+    "description": ""
+  },
+  "_id": "o2JWuWm3JwxG7asB",
+  "effects": [],
+  "sort": 600000,
+  "ownership": {
+    "default": 0,
+    "FezNQLnArNIsRQJJ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.0.20",
+    "createdTime": 1724996336702,
+    "modifiedTime": 1724996336702,
+    "lastModifiedBy": "FezNQLnArNIsRQJJ"
+  },
+  "_key": "!items!o2JWuWm3JwxG7asB"
+}

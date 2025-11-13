@@ -1,0 +1,119 @@
+{
+  "folder": null,
+  "name": "Absentia",
+  "_id": "dATZJf2dVxns5KZd",
+  "img": "systems/cain/assets/Blasphemies/smother.png",
+  "description": "<p style=\"text-align:center\">You can gain this hook with your passive. If this hook fills up, you take an injury and black out for a few moments. When you wake up, you are missing a body part (roll1d6). It simply disappears (cleanly) as though it had never existed, leaving a stump or hole. If you have no body part left to lose (when you roll), reduce the result by 1. If the result is 0, you lose your head and suffer (gruesome) instant death instead. Missing body parts might make some rolls hard or risky, dependent on the situation. You adjust to any disability after the mission, and it has no further effect.</p>",
+  "results": [
+    {
+      "type": "text",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_id": "BMrHVUWBRn2IpNp9",
+      "text": "Eye",
+      "img": "systems/cain/assets/Blasphemies/smother.png",
+      "documentId": null,
+      "flags": {},
+      "_key": "!tables.results!dATZJf2dVxns5KZd.BMrHVUWBRn2IpNp9"
+    },
+    {
+      "type": "text",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_id": "Tnx523sknzHjjcQz",
+      "text": "Nose",
+      "img": "systems/cain/assets/Blasphemies/smother.png",
+      "documentId": null,
+      "flags": {},
+      "_key": "!tables.results!dATZJf2dVxns5KZd.Tnx523sknzHjjcQz"
+    },
+    {
+      "type": "text",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "_id": "uLAQPEv0lQjupVbH",
+      "text": "Ear",
+      "img": "systems/cain/assets/Blasphemies/smother.png",
+      "documentId": null,
+      "flags": {},
+      "_key": "!tables.results!dATZJf2dVxns5KZd.uLAQPEv0lQjupVbH"
+    },
+    {
+      "type": "text",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "_id": "wVHr5e2SIVmUHYPr",
+      "text": "Finger",
+      "img": "systems/cain/assets/Blasphemies/smother.png",
+      "documentId": null,
+      "flags": {},
+      "_key": "!tables.results!dATZJf2dVxns5KZd.wVHr5e2SIVmUHYPr"
+    },
+    {
+      "type": "text",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "drawn": false,
+      "_id": "HlLLLlp1IKKMwwpL",
+      "text": "Toe",
+      "img": "systems/cain/assets/Blasphemies/smother.png",
+      "documentId": null,
+      "flags": {},
+      "_key": "!tables.results!dATZJf2dVxns5KZd.HlLLLlp1IKKMwwpL"
+    },
+    {
+      "type": "text",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "drawn": false,
+      "_id": "pgE3Wj4gG2hLPFuW",
+      "text": "Nothing",
+      "img": "systems/cain/assets/Blasphemies/smother.png",
+      "documentId": null,
+      "flags": {},
+      "_key": "!tables.results!dATZJf2dVxns5KZd.pgE3Wj4gG2hLPFuW"
+    }
+  ],
+  "replacement": true,
+  "displayRoll": true,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.0.3",
+    "createdTime": 1723988909855,
+    "modifiedTime": 1723988909855,
+    "lastModifiedBy": "wAkEmoF9bl45blE0"
+  },
+  "formula": "1d6",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "wAkEmoF9bl45blE0": 3
+  },
+  "_key": "!tables!dATZJf2dVxns5KZd"
+}

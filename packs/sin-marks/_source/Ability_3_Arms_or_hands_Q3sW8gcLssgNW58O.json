@@ -1,0 +1,35 @@
+{
+  "folder": "FNVAIIyS7c4nL3hF",
+  "name": "Ability 3 Arms or hands",
+  "type": "sinMarkAbility",
+  "img": "systems/cain/assets/sin-marks/hand.png",
+  "system": {
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "abilityName": "Ability 3 Arms or hands",
+    "abilityDescription": "Once a mission, you can dissolve all non-living matter in a cube about the size of a room into a black sludge with a touch of your third (ring) finger.",
+    "bodyPartName": "Arms or hands"
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.0.20",
+    "createdTime": 1725278401752,
+    "modifiedTime": 1725278401752,
+    "lastModifiedBy": "C33nbucocqUlAZNM"
+  },
+  "_id": "Q3sW8gcLssgNW58O",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "C33nbucocqUlAZNM": 3
+  },
+  "_key": "!items!Q3sW8gcLssgNW58O"
+}

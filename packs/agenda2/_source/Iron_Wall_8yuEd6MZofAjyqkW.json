@@ -1,0 +1,31 @@
+{
+  "name": "Iron Wall",
+  "type": "agendaAbility",
+  "img": "icons/svg/item-bag.svg",
+  "folder": "AZpV5rwaxlytrYpT",
+  "system": {
+    "abilityName": "Iron Wall",
+    "abilityDescription": "When you defend someone close to you in a conflict scene, you can choose to divert any consequences taken by your target on to you instead of its usual effects. The second time or more you use this in the same scene, you take 1d3 stress first.",
+    "description": ""
+  },
+  "_id": "8yuEd6MZofAjyqkW",
+  "effects": [],
+  "sort": 300000,
+  "ownership": {
+    "default": 0,
+    "yJuxhbSZPW8Smq1z": 3,
+    "FezNQLnArNIsRQJJ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.0.20",
+    "createdTime": 1724996336702,
+    "modifiedTime": 1724996336702,
+    "lastModifiedBy": "FezNQLnArNIsRQJJ"
+  },
+  "_key": "!items!8yuEd6MZofAjyqkW"
+}

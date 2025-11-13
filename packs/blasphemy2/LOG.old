@@ -1,21 +1,3 @@
-2024/09/05-17:57:10.176 efd8 Recovering log #155
-2024/09/05-17:57:10.182 efd8 Delete type=0 #155
-2024/09/05-17:57:10.182 efd8 Delete type=3 #153
-2024/09/05-18:27:15.051 10d40 Level-0 table #159: started
-2024/09/05-18:27:15.051 10d40 Level-0 table #159: 0 bytes OK
-2024/09/05-18:27:15.055 10d40 Delete type=0 #157
-2024/09/05-18:27:15.068 10d40 Manual compaction at level-0 from '!folders!0Rx103v99LTFoMTP' @ 72057594037927935 : 1 .. '!items!ziiFc860EZanavt1' @ 0 : 0; will stop at '!items!ziiFc860EZanavt1' @ 650 : 1
-2024/09/05-18:27:15.068 10d40 Compacting 1@0 + 0@1 files
-2024/09/05-18:27:15.072 10d40 Generated table #160@0: 109 keys, 55914 bytes
-2024/09/05-18:27:15.072 10d40 Compacted 1@0 + 0@1 files => 55914 bytes
-2024/09/05-18:27:15.073 10d40 compacted to: files[ 0 1 1 0 0 0 0 ]
-2024/09/05-18:27:15.074 10d40 Delete type=2 #154
-2024/09/05-18:27:15.074 10d40 Manual compaction at level-0 from '!items!ziiFc860EZanavt1' @ 650 : 1 .. '!items!ziiFc860EZanavt1' @ 0 : 0; will stop at (end)
-2024/09/05-18:27:15.081 10d40 Manual compaction at level-1 from '!folders!0Rx103v99LTFoMTP' @ 72057594037927935 : 1 .. '!items!ziiFc860EZanavt1' @ 0 : 0; will stop at '!items!ziiFc860EZanavt1' @ 869 : 1
-2024/09/05-18:27:15.081 10d40 Compacting 1@1 + 1@2 files
-2024/09/05-18:27:15.084 10d40 Generated table #161@1: 109 keys, 55914 bytes
-2024/09/05-18:27:15.084 10d40 Compacted 1@1 + 1@2 files => 55914 bytes
-2024/09/05-18:27:15.086 10d40 compacted to: files[ 0 0 1 0 0 0 0 ]
-2024/09/05-18:27:15.086 10d40 Delete type=2 #148
-2024/09/05-18:27:15.086 10d40 Delete type=2 #160
-2024/09/05-18:27:15.092 10d40 Manual compaction at level-1 from '!items!ziiFc860EZanavt1' @ 869 : 1 .. '!items!ziiFc860EZanavt1' @ 0 : 0; will stop at (end)
+2025/11/13-14:39:10.338 3814 Recovering log #299
+2025/11/13-14:39:10.363 3814 Delete type=0 #299
+2025/11/13-14:39:10.371 3814 Delete type=3 #298

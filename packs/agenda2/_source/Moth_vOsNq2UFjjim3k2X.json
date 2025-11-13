@@ -1,0 +1,43 @@
+{
+  "name": "Moth",
+  "type": "agenda",
+  "img": "icons/svg/item-bag.svg",
+  "folder": "tkOnYBxozZCPLmiv",
+  "system": {
+    "agendaName": "Moth",
+    "formula": "",
+    "unboldedTasks": [
+      "xOWgaOshMBNsCU23"
+    ],
+    "boldedTasks": [
+      "lB3p0QTxx6tHMgFG"
+    ],
+    "abilities": [
+      "iMFVqxe4tfgSUrhW",
+      "o08lQzcsgyk739Sa",
+      "yroB84AsZgDiWO4T",
+      "1tCX9BiHcnevy0SS",
+      "PUunyUARUEvkngHd"
+    ],
+    "description": ""
+  },
+  "_id": "vOsNq2UFjjim3k2X",
+  "effects": [],
+  "sort": 100000,
+  "ownership": {
+    "default": 0,
+    "FezNQLnArNIsRQJJ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.0.20",
+    "createdTime": 1724996336702,
+    "modifiedTime": 1724996336702,
+    "lastModifiedBy": "FezNQLnArNIsRQJJ"
+  },
+  "_key": "!items!vOsNq2UFjjim3k2X"
+}

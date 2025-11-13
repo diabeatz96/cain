@@ -1,0 +1,22 @@
+{
+  "name": "Toad",
+  "sorting": "a",
+  "folder": "C73AFxFbUnxSxKPX",
+  "type": "Item",
+  "_id": "KztBxbJxmNLXwQP2",
+  "description": "",
+  "sort": 600000,
+  "color": null,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.0.20",
+    "createdTime": 1725476646703,
+    "modifiedTime": 1725476646703,
+    "lastModifiedBy": "FezNQLnArNIsRQJJ"
+  },
+  "_key": "!folders!KztBxbJxmNLXwQP2"
+}

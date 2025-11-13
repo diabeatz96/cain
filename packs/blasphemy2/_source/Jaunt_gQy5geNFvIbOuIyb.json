@@ -1,0 +1,22 @@
+{
+  "name": "Jaunt",
+  "sorting": "a",
+  "folder": "0Rx103v99LTFoMTP",
+  "type": "Item",
+  "_id": "gQy5geNFvIbOuIyb",
+  "description": "",
+  "sort": 1100000,
+  "color": "#e119ff",
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.1.1",
+    "createdTime": 1725579733058,
+    "modifiedTime": 1725579733058,
+    "lastModifiedBy": "FezNQLnArNIsRQJJ"
+  },
+  "_key": "!folders!gQy5geNFvIbOuIyb"
+}

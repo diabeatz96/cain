@@ -1,0 +1,39 @@
+{
+  "name": "Hell",
+  "type": "blasphemyPower",
+  "img": "systems/cain/assets/Blasphemies/ardence.png",
+  "folder": "OlQPKUoRA4sfNEBM",
+  "system": {
+    "blasphemyType": "Ardence",
+    "powerName": "Hell",
+    "isPassive": false,
+    "keywords": [
+      "Transmute, Adjacent, Until Rest"
+    ],
+    "powerDescription": "You may dump energy into the ground and anything touching the ground in a {<CAT> area 2} area, choosing hot or cold. Choose one of the following effects, which lasts until you rest. You may gain or grant +1D when you or any ally next acts to take advantage of this power: \n        \n• Simmer: Discomfort for humans, lowered or raised temperature, hot or cold surfaces, etc. \n• Poach: Major discomfort for humans, who cannot remain in the area, and discomfort for sins and exorcists. Freeze or boil water, pipes, crack glass, etc. \n• Boil: Deadly to humans, sins and exorcists take 2 stress if they remain in the area for longer than a scene. Light fires or freeze the air in rooms, melt windows or burn doors, or freeze objects. \n        \nThis power may effect the parameters of rolls, such as difficulty and risk.",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff"
+  },
+  "_id": "7AQahIuEAFRatZkk",
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "FezNQLnArNIsRQJJ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.blasphemies.Item.7AQahIuEAFRatZkk",
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.1.1",
+    "createdTime": 1725579733078,
+    "modifiedTime": 1725579733078,
+    "lastModifiedBy": "FezNQLnArNIsRQJJ"
+  },
+  "sort": 0,
+  "_key": "!items!7AQahIuEAFRatZkk"
+}

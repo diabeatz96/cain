@@ -1,0 +1,39 @@
+{
+  "name": "Forbidden Spirit",
+  "type": "blasphemyPower",
+  "img": "systems/cain/assets/Blasphemies/bind.png",
+  "folder": "qbarzQOfDH1uyB02",
+  "system": {
+    "blasphemyType": "Bind",
+    "powerName": "Forbidden Spirit",
+    "isPassive": false,
+    "keywords": [
+      "Self, Instant"
+    ],
+    "powerDescription": "You can spend a psyche burst to empower your sin for one action. As part of this action:\n\n• Once this scene, it can ignore any stress taken. This effect stacks if this power is used again. \n\n• You lift limiters on your spirit. The action gains +1D and causes it to undergo a monstrous transformation similar to its original form. It becomes a size equal to {<CAT> size 1} and can easily move, lift, strike, or throw objects or beings of an equal size. Roll PSYCHE for its effects. After the action, it reverts to its normal size.",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff"
+  },
+  "_id": "UZJGsHXfxUHysX02",
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "FezNQLnArNIsRQJJ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.blasphemies.Item.UZJGsHXfxUHysX02",
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.1.1",
+    "createdTime": 1725579733078,
+    "modifiedTime": 1725579733078,
+    "lastModifiedBy": "FezNQLnArNIsRQJJ"
+  },
+  "sort": 0,
+  "_key": "!items!UZJGsHXfxUHysX02"
+}

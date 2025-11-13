@@ -1,0 +1,39 @@
+{
+  "name": "Storm",
+  "type": "blasphemyPower",
+  "img": "systems/cain/assets/Blasphemies/ardence.png",
+  "folder": "OlQPKUoRA4sfNEBM",
+  "system": {
+    "blasphemyType": "Ardence",
+    "powerName": "Storm",
+    "isPassive": false,
+    "keywords": [
+      "Transmute, Extreme, Whole Hunt"
+    ],
+    "powerDescription": "You can spend any number of psyche bursts to send potential energy into the atmosphere, affecting the a microclimate in a {<CAT> area 2} area, with a maximum of CAT 7. Choose one of the below, plus one more per psyche burst spent. The chosen effects last for the whole mission or until dismissed. You may gain or grant +1D when you or any ally next acts to take advantage of this power: \n        \n• Clear: Clear the skies in the area, canceling any weather (including the below). \n• Rain: Rain drenches the area for the duration of an intensity you choose (drizzle, pouring, torrential). \n• Cold: The air freezes, freezing water and icing over roads and paths. Any precipitation becomes snow. \n• Fog: Thick fog rolls in, limiting visibility. \n• Gale: Whipping wind rolls through the area, blowing away fog, smoke, or dust, and making it hard to hear or be outside. \n        \nThis power may easily effect the parameters of rolls, such as difficulty and risk.\n\n Once used, lose the use of this power until you rest.",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff"
+  },
+  "_id": "FoXZxdVz3bha6PoZ",
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "FezNQLnArNIsRQJJ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.blasphemies.Item.FoXZxdVz3bha6PoZ",
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.1.1",
+    "createdTime": 1725579733078,
+    "modifiedTime": 1725579733078,
+    "lastModifiedBy": "FezNQLnArNIsRQJJ"
+  },
+  "sort": 0,
+  "_key": "!items!FoXZxdVz3bha6PoZ"
+}

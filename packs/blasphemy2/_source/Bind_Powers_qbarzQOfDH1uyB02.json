@@ -1,0 +1,22 @@
+{
+  "name": "Bind Powers",
+  "sorting": "a",
+  "folder": "c7WTyhk5MfZh8aSZ",
+  "type": "Item",
+  "_id": "qbarzQOfDH1uyB02",
+  "description": "",
+  "sort": 100000,
+  "color": null,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.1.1",
+    "createdTime": 1725579733058,
+    "modifiedTime": 1725579733058,
+    "lastModifiedBy": "FezNQLnArNIsRQJJ"
+  },
+  "_key": "!folders!qbarzQOfDH1uyB02"
+}

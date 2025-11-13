@@ -1,0 +1,30 @@
+{
+  "name": "Put people before the mission",
+  "type": "agendaTask",
+  "img": "icons/svg/item-bag.svg",
+  "folder": "LDsokMVLIzNSZJo5",
+  "system": {
+    "task": "Put people before the mission",
+    "isBold": false,
+    "description": ""
+  },
+  "_id": "cHvol2yJota3VhdU",
+  "effects": [],
+  "sort": 200000,
+  "ownership": {
+    "default": 0,
+    "FezNQLnArNIsRQJJ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.0.20",
+    "createdTime": 1724996336702,
+    "modifiedTime": 1724996336702,
+    "lastModifiedBy": "FezNQLnArNIsRQJJ"
+  },
+  "_key": "!items!cHvol2yJota3VhdU"
+}

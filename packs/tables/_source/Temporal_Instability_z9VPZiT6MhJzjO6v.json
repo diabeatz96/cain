@@ -1,0 +1,119 @@
+{
+  "name": "Temporal Instability",
+  "_id": "z9VPZiT6MhJzjO6v",
+  "img": "systems/cain/assets/Blasphemies/flux.png",
+  "description": "<p style=\"text-align:center\"><strong>Many of your powers give</strong></p><p style=\"text-align:center\"><strong>you this hook. When</strong></p><p style=\"text-align:center\"><strong>the hook resolves, roll 1d6:</strong></p>",
+  "results": [
+    {
+      "type": "text",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_id": "v81a8uGII6nj7Maa",
+      "text": "Permanently add to your agenda ‘Prove that you are the real you.” If you gain this result again, you immediately suffer sin overflow.",
+      "img": "systems/cain/assets/Blasphemies/flux.png",
+      "documentId": null,
+      "flags": {},
+      "_key": "!tables.results!z9VPZiT6MhJzjO6v.v81a8uGII6nj7Maa"
+    },
+    {
+      "type": "text",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_id": "9Nv7CPlGtngPlyKA",
+      "text": "Mysterious injuries open up. You go unconscious from pain, putting you out of the current scene, and take an injury.",
+      "img": "systems/cain/assets/Blasphemies/flux.png",
+      "documentId": null,
+      "flags": {},
+      "_key": "!tables.results!z9VPZiT6MhJzjO6v.9Nv7CPlGtngPlyKA"
+    },
+    {
+      "type": "text",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "_id": "vwR7xQw1HrRWhrQn",
+      "text": "You disappear until rest. You return if there’s a conflict scene. You have no memory of where you were. When you return, you take 2 stress.",
+      "img": "systems/cain/assets/Blasphemies/flux.png",
+      "documentId": null,
+      "flags": {},
+      "_key": "!tables.results!z9VPZiT6MhJzjO6v.vwR7xQw1HrRWhrQn"
+    },
+    {
+      "type": "text",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "_id": "nVn9zZa1ONqGxi7K",
+      "text": "You find you are wearing someone else’s clothes. Erase your entire kit this mission, but regain any spent kit points.",
+      "img": "systems/cain/assets/Blasphemies/flux.png",
+      "documentId": null,
+      "flags": {},
+      "_key": "!tables.results!z9VPZiT6MhJzjO6v.nVn9zZa1ONqGxi7K"
+    },
+    {
+      "type": "text",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "drawn": false,
+      "_id": "ZF8B5Qz05nJ344SK",
+      "text": "Your body is different. For the remainder of this mission, pick a skill you have 1 or more dice in. It now rolls 0d. After the mission, you have time to train and get used to this, reverting this effect, though keeping any physical changes.",
+      "img": "systems/cain/assets/Blasphemies/flux.png",
+      "documentId": null,
+      "flags": {},
+      "_key": "!tables.results!z9VPZiT6MhJzjO6v.ZF8B5Qz05nJ344SK"
+    },
+    {
+      "type": "text",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "drawn": false,
+      "_id": "HWTFQrooSkkvFE87",
+      "text": "Your face looks a little different. The changes are permanent.",
+      "img": "systems/cain/assets/Blasphemies/flux.png",
+      "documentId": null,
+      "flags": {},
+      "_key": "!tables.results!z9VPZiT6MhJzjO6v.HWTFQrooSkkvFE87"
+    }
+  ],
+  "replacement": true,
+  "displayRoll": true,
+  "folder": null,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.0.3",
+    "createdTime": 1723988909855,
+    "modifiedTime": 1723988909855,
+    "lastModifiedBy": "wAkEmoF9bl45blE0"
+  },
+  "formula": "1d6",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "wAkEmoF9bl45blE0": 3
+  },
+  "_key": "!tables!z9VPZiT6MhJzjO6v"
+}

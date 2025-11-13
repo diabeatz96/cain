@@ -1,0 +1,30 @@
+{
+  "name": "Enrich yourself",
+  "type": "agendaTask",
+  "img": "icons/svg/item-bag.svg",
+  "folder": "0atuofts6G8l4Jk5",
+  "system": {
+    "task": "Enrich yourself",
+    "isBold": false,
+    "description": ""
+  },
+  "_id": "XyWCO9qTI6zyuyhL",
+  "effects": [],
+  "sort": 100000,
+  "ownership": {
+    "default": 0,
+    "FezNQLnArNIsRQJJ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.0.20",
+    "createdTime": 1724996336702,
+    "modifiedTime": 1724996336702,
+    "lastModifiedBy": "FezNQLnArNIsRQJJ"
+  },
+  "_key": "!items!XyWCO9qTI6zyuyhL"
+}

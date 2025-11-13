@@ -1,0 +1,22 @@
+{
+  "name": "Idol",
+  "sorting": "a",
+  "folder": "C73AFxFbUnxSxKPX",
+  "type": "Item",
+  "_id": "ghAzg1G0Ks1Q6YIT",
+  "description": "",
+  "sort": 300000,
+  "color": null,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.0.20",
+    "createdTime": 1725476646703,
+    "modifiedTime": 1725476646703,
+    "lastModifiedBy": "FezNQLnArNIsRQJJ"
+  },
+  "_key": "!folders!ghAzg1G0Ks1Q6YIT"
+}

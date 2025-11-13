@@ -1,0 +1,30 @@
+{
+  "name": "Give something valuable away",
+  "type": "agendaTask",
+  "img": "icons/svg/item-bag.svg",
+  "folder": "0atuofts6G8l4Jk5",
+  "system": {
+    "task": "Give something valuable away",
+    "isBold": true,
+    "description": ""
+  },
+  "_id": "nZ3OLTz1rNYeMc3V",
+  "effects": [],
+  "sort": 200000,
+  "ownership": {
+    "default": 0,
+    "FezNQLnArNIsRQJJ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.0.20",
+    "createdTime": 1724996336702,
+    "modifiedTime": 1724996336702,
+    "lastModifiedBy": "FezNQLnArNIsRQJJ"
+  },
+  "_key": "!items!nZ3OLTz1rNYeMc3V"
+}

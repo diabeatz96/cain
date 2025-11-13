@@ -1,0 +1,39 @@
+{
+  "name": "Library",
+  "type": "blasphemyPower",
+  "img": "systems/cain/assets/Blasphemies/palace.png",
+  "folder": "JMTIeJRElJUzQpBb",
+  "system": {
+    "blasphemyType": "Palace",
+    "powerName": "Library",
+    "isPassive": false,
+    "keywords": [
+      "Instant, Self"
+    ],
+    "powerDescription": "This power does not take a psyche burst. Your palace has a library of information from the psychic gestalt. When you wish to gather information on or investigate any subject, you can gain +1D on the roll by accessing this library. However, afterwards the Admin rolls 1d6 for each of the following:\n        \n• Is the information rare?\n• Is the information forbidden in some way?\n• Is the information pertinent to a powerful group?\n        \nFor each ‘1’, you take 2 nonlethal stress as you read something disturbing in the library.",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff"
+  },
+  "_id": "ziiFc860EZanavt1",
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "FezNQLnArNIsRQJJ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.blasphemies.Item.ziiFc860EZanavt1",
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.1.1",
+    "createdTime": 1725579733078,
+    "modifiedTime": 1725579733078,
+    "lastModifiedBy": "FezNQLnArNIsRQJJ"
+  },
+  "sort": 0,
+  "_key": "!items!ziiFc860EZanavt1"
+}

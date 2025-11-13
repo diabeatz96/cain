@@ -1,0 +1,22 @@
+{
+  "name": "Hardline",
+  "sorting": "a",
+  "folder": "cTTx6AF4aDPaPmLF",
+  "type": "Item",
+  "_id": "DfRYbeNPE50rzCml",
+  "description": "",
+  "sort": 0,
+  "color": null,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.0.20",
+    "createdTime": 1724996336678,
+    "modifiedTime": 1724996336678,
+    "lastModifiedBy": "FezNQLnArNIsRQJJ"
+  },
+  "_key": "!folders!DfRYbeNPE50rzCml"
+}

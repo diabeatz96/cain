@@ -1,0 +1,22 @@
+{
+  "name": "Tension Powers",
+  "sorting": "a",
+  "folder": "pMGSTBtE7ko7IeIO",
+  "type": "Item",
+  "_id": "a680viXr2sP2rcjL",
+  "description": "",
+  "sort": 100000,
+  "color": null,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.1.1",
+    "createdTime": 1725579733058,
+    "modifiedTime": 1725579733058,
+    "lastModifiedBy": "FezNQLnArNIsRQJJ"
+  },
+  "_key": "!folders!a680viXr2sP2rcjL"
+}

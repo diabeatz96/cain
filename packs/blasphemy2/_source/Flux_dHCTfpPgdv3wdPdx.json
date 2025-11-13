@@ -1,0 +1,22 @@
+{
+  "name": "Flux",
+  "sorting": "a",
+  "folder": "0Rx103v99LTFoMTP",
+  "type": "Item",
+  "_id": "dHCTfpPgdv3wdPdx",
+  "description": "",
+  "sort": 300000,
+  "color": "#ff0000",
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.1.1",
+    "createdTime": 1725579733058,
+    "modifiedTime": 1725579733058,
+    "lastModifiedBy": "FezNQLnArNIsRQJJ"
+  },
+  "_key": "!folders!dHCTfpPgdv3wdPdx"
+}

@@ -1,0 +1,30 @@
+{
+  "name": "Brain Burst",
+  "type": "agendaAbility",
+  "img": "icons/svg/item-bag.svg",
+  "folder": "2FmkgnRy0J9tRVfL",
+  "system": {
+    "abilityName": "Brain Burst",
+    "abilityDescription": "When investigating or researching something, you can take 1 stress to re-roll one die on your action roll. The re-roll is final.",
+    "description": ""
+  },
+  "_id": "WEn9ZfMIOBoY4qY5",
+  "effects": [],
+  "sort": 200000,
+  "ownership": {
+    "default": 0,
+    "FezNQLnArNIsRQJJ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.0.20",
+    "createdTime": 1724996336702,
+    "modifiedTime": 1724996336702,
+    "lastModifiedBy": "FezNQLnArNIsRQJJ"
+  },
+  "_key": "!items!WEn9ZfMIOBoY4qY5"
+}

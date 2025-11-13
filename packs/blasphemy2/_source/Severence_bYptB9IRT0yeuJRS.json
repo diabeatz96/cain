@@ -1,0 +1,39 @@
+{
+  "name": "Severence",
+  "type": "blasphemyPower",
+  "img": "systems/cain/assets/Blasphemies/tension.png",
+  "folder": "a680viXr2sP2rcjL",
+  "system": {
+    "blasphemyType": "Tension",
+    "powerName": "Severence",
+    "isPassive": false,
+    "keywords": [
+      "Instant, Short"
+    ],
+    "powerDescription": "You can project a tension force of incredible strength over any edge, as obvious as a blade and as subtle as a fingernail, and use it as a cutting implement. Roll PSYCHE to cut an object or opponent up to {<CAT> size 0} with a clean and decisive blow, only spending a psyche burst on success. \n        \n• Gain +1D if you are striking to protect another person\n• Gain +1D against immobile objects or opponents",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff"
+  },
+  "_id": "bYptB9IRT0yeuJRS",
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "FezNQLnArNIsRQJJ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.blasphemies.Item.bYptB9IRT0yeuJRS",
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.1.1",
+    "createdTime": 1725579733078,
+    "modifiedTime": 1725579733078,
+    "lastModifiedBy": "FezNQLnArNIsRQJJ"
+  },
+  "sort": 0,
+  "_key": "!items!bYptB9IRT0yeuJRS"
+}

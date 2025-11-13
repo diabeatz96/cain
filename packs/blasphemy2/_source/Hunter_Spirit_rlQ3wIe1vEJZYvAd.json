@@ -1,0 +1,39 @@
+{
+  "name": "Hunter Spirit",
+  "type": "blasphemyPower",
+  "img": "systems/cain/assets/Blasphemies/bind.png",
+  "folder": "qbarzQOfDH1uyB02",
+  "system": {
+    "blasphemyType": "Bind",
+    "powerName": "Hunter Spirit",
+    "isPassive": false,
+    "keywords": [
+      "Self, 1 scene"
+    ],
+    "powerDescription": "You can spend a psyche burst to empower your sin for one scene. The next time it takes action for tracking or observation, it gains +1D. As part of this action:\n\n• It can now separate from you up to extreme range when released \n• You can communicate telepathically with it\n• It gains the ability to fly and see and smell extremely well - it can also see in the dark and in the thermal spectrum, and clearly up to long range. \n• You can concentrate, dissociating from your body, and becoming extremely vulnerable. While concentrating this way, however, you can use your sin’s senses instead of your own. You can engage and disengage this effect at will for the scene.",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff"
+  },
+  "_id": "rlQ3wIe1vEJZYvAd",
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "FezNQLnArNIsRQJJ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.blasphemies.Item.rlQ3wIe1vEJZYvAd",
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.1.1",
+    "createdTime": 1725579733078,
+    "modifiedTime": 1725579733078,
+    "lastModifiedBy": "FezNQLnArNIsRQJJ"
+  },
+  "sort": 0,
+  "_key": "!items!rlQ3wIe1vEJZYvAd"
+}

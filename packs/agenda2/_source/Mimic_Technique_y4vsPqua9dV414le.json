@@ -1,0 +1,30 @@
+{
+  "name": "Mimic Technique",
+  "type": "agendaAbility",
+  "img": "icons/svg/item-bag.svg",
+  "folder": "D6SdZeO7XRd9Ludz",
+  "system": {
+    "abilityName": "Mimic Technique",
+    "abilityDescription": "Pick a power from any Blasphemy, without having taken that blasphemy. It doesn’t change your xp or sin overflow caps.",
+    "description": ""
+  },
+  "_id": "y4vsPqua9dV414le",
+  "effects": [],
+  "sort": 300000,
+  "ownership": {
+    "default": 0,
+    "FezNQLnArNIsRQJJ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.0.20",
+    "createdTime": 1724996336702,
+    "modifiedTime": 1724996336702,
+    "lastModifiedBy": "FezNQLnArNIsRQJJ"
+  },
+  "_key": "!items!y4vsPqua9dV414le"
+}

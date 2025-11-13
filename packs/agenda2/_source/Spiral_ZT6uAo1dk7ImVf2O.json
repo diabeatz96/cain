@@ -1,0 +1,30 @@
+{
+  "name": "Spiral",
+  "type": "agendaAbility",
+  "img": "icons/svg/item-bag.svg",
+  "folder": "ei3M4rXs2KA1xF9p",
+  "system": {
+    "abilityName": "Spiral",
+    "abilityDescription": "You can always tell if someone is lying to you, though not the nature of the lie.",
+    "description": ""
+  },
+  "_id": "ZT6uAo1dk7ImVf2O",
+  "effects": [],
+  "sort": 300000,
+  "ownership": {
+    "default": 0,
+    "FezNQLnArNIsRQJJ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.0.20",
+    "createdTime": 1724996336702,
+    "modifiedTime": 1724996336702,
+    "lastModifiedBy": "FezNQLnArNIsRQJJ"
+  },
+  "_key": "!items!ZT6uAo1dk7ImVf2O"
+}

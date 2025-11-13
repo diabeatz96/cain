@@ -1,0 +1,30 @@
+{
+  "name": "Supplier Connections",
+  "type": "agendaAbility",
+  "img": "icons/svg/item-bag.svg",
+  "folder": "Ip148ymaIXFmlvC4",
+  "system": {
+    "abilityName": "Supplier Connections",
+    "abilityDescription": "You gain a 1 scrip discount on all kit ans aesthetic items, to a minimum of 1.  This discount applies to all items at CAT 4+.",
+    "description": ""
+  },
+  "_id": "mA5h8vtzQYPZZxVf",
+  "effects": [],
+  "sort": 600000,
+  "ownership": {
+    "default": 0,
+    "FezNQLnArNIsRQJJ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.0.20",
+    "createdTime": 1724996336702,
+    "modifiedTime": 1724996336702,
+    "lastModifiedBy": "FezNQLnArNIsRQJJ"
+  },
+  "_key": "!items!mA5h8vtzQYPZZxVf"
+}

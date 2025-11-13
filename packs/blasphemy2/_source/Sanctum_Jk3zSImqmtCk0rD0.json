@@ -1,0 +1,39 @@
+{
+  "name": "Sanctum",
+  "type": "blasphemyPower",
+  "img": "systems/cain/assets/Blasphemies/palace.png",
+  "folder": "JMTIeJRElJUzQpBb",
+  "system": {
+    "blasphemyType": "Palace",
+    "powerName": "Sanctum",
+    "isPassive": true,
+    "keywords": [
+      "Passive"
+    ],
+    "powerDescription": "You and allies you rest with can enter your psychic palace while resting. This improves the resting rolls of yourself and up to one ally of your choice resting with you by +1.\n        \n• The palace is a mental projection, a dream space that takes the form of a large home, residence, or mansion in a locale of your choosing. Walking off the premises merely returns to you the locale, and as a purely psychic phenomena, you can control its appearance and decor.\n• Taking harm in a palace instantly shunts a person out of it, waking them up, instead of dealing them real harm. Visitors can leave any time. \n• Entering the palace mentally requires only closing your eyes and concentrating, leaving your outside body defenseless and insensate. It can be done by you any time, and by your allies by resting with you, or with your powers",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff"
+  },
+  "_id": "Jk3zSImqmtCk0rD0",
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "FezNQLnArNIsRQJJ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.blasphemies.Item.Jk3zSImqmtCk0rD0",
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.1.1",
+    "createdTime": 1725579733078,
+    "modifiedTime": 1725579733078,
+    "lastModifiedBy": "FezNQLnArNIsRQJJ"
+  },
+  "sort": 0,
+  "_key": "!items!Jk3zSImqmtCk0rD0"
+}

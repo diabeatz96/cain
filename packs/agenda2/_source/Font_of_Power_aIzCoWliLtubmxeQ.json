@@ -1,0 +1,30 @@
+{
+  "name": "Font of Power",
+  "type": "agendaAbility",
+  "img": "icons/svg/item-bag.svg",
+  "folder": "pGqqwok1O7Sltt4L",
+  "system": {
+    "abilityName": "Font of Power",
+    "abilityDescription": "Once a hunt, you may gain 1d3 psyche bursts, which could put you over your maximum. Until you rest, you can no longer spend psyche bursts, but allies can spend your psyche bursts as their own.",
+    "description": ""
+  },
+  "_id": "aIzCoWliLtubmxeQ",
+  "effects": [],
+  "sort": 100000,
+  "ownership": {
+    "default": 0,
+    "FezNQLnArNIsRQJJ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.0.20",
+    "createdTime": 1724996336702,
+    "modifiedTime": 1724996336702,
+    "lastModifiedBy": "FezNQLnArNIsRQJJ"
+  },
+  "_key": "!items!aIzCoWliLtubmxeQ"
+}

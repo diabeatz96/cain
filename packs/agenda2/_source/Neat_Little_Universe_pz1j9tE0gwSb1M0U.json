@@ -1,0 +1,30 @@
+{
+  "name": "Neat Little Universe",
+  "type": "agendaAbility",
+  "img": "icons/svg/item-bag.svg",
+  "folder": "2FmkgnRy0J9tRVfL",
+  "system": {
+    "abilityName": "Neat Little Universe",
+    "abilityDescription": "Twice a hunt, outside conflict, you can tick any talisman on your sheet or an ally’s up or down by 1.",
+    "description": ""
+  },
+  "_id": "pz1j9tE0gwSb1M0U",
+  "effects": [],
+  "sort": 300000,
+  "ownership": {
+    "default": 0,
+    "FezNQLnArNIsRQJJ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.0.20",
+    "createdTime": 1724996336702,
+    "modifiedTime": 1724996336702,
+    "lastModifiedBy": "FezNQLnArNIsRQJJ"
+  },
+  "_key": "!items!pz1j9tE0gwSb1M0U"
+}

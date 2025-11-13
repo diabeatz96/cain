@@ -1,0 +1,31 @@
+{
+  "name": "Demonstrate your distance from humanity",
+  "type": "agendaTask",
+  "img": "icons/svg/item-bag.svg",
+  "folder": "maFMiFEozf7aQb1K",
+  "system": {
+    "task": "Demonstrate your distance from humanity",
+    "isBold": true,
+    "description": ""
+  },
+  "_id": "rUyXdWOTj1Bxixjk",
+  "effects": [],
+  "sort": 100000,
+  "ownership": {
+    "default": 0,
+    "yJuxhbSZPW8Smq1z": 3,
+    "FezNQLnArNIsRQJJ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.0.20",
+    "createdTime": 1724996336702,
+    "modifiedTime": 1724996336702,
+    "lastModifiedBy": "FezNQLnArNIsRQJJ"
+  },
+  "_key": "!items!rUyXdWOTj1Bxixjk"
+}

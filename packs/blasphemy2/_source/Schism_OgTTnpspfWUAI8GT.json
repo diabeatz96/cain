@@ -1,0 +1,39 @@
+{
+  "name": "Schism",
+  "type": "blasphemyPower",
+  "img": "systems/cain/assets/Blasphemies/flux.png",
+  "folder": "UpBuwlaCg53YoSN4",
+  "system": {
+    "blasphemyType": "Flux",
+    "powerName": "Schism",
+    "isPassive": false,
+    "keywords": [
+      "Transmute, Instant, 1 scene"
+    ],
+    "powerDescription": "You can create a bubble of altered time equal to {<CAT> area 0> area. Inside the bubble, you open a window into one day in the past or future from the moment the bubble was created. Gain or grant +1D when you or any ally next acts to take advantage of this power: \n        \n• The state of the area inside the bubble is confined only to the bubble and includes objects or people inside. You and allies can enter or exit the bubble at will. \n• Supernatural beings, including exorcists, in the present timeline caught in the bubble when it is created are unaffected. Humans and the ‘present’ timeline world caught in the bubble are ‘paused’, cease existing for its duration, and have no memory of the incident. \n• Things removed from the bubble from the past or future timeline, including living beings, simply disappear until they move back into the bubble. \n        \nThe bubble represents an ‘alternate’ timeline, so anything altered inside of it will not show up in the present or future timeline (ie leaving an object in a past timeline will not have it show up in the present).",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff"
+  },
+  "_id": "OgTTnpspfWUAI8GT",
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "FezNQLnArNIsRQJJ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.blasphemies.Item.OgTTnpspfWUAI8GT",
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.1.1",
+    "createdTime": 1725579733078,
+    "modifiedTime": 1725579733078,
+    "lastModifiedBy": "FezNQLnArNIsRQJJ"
+  },
+  "sort": 0,
+  "_key": "!items!OgTTnpspfWUAI8GT"
+}

@@ -1,0 +1,43 @@
+{
+  "name": "Torch",
+  "type": "agenda",
+  "img": "icons/svg/item-bag.svg",
+  "folder": "WRQV6GDXQL8fJdI2",
+  "system": {
+    "agendaName": "Torch",
+    "formula": "",
+    "unboldedTasks": [
+      "orPfIAwA2fqq2hqn"
+    ],
+    "boldedTasks": [
+      "hGQfLoEOo4Y6tE6c"
+    ],
+    "abilities": [
+      "XpFGgp9bT2bV7Lae",
+      "T1FrkuIgQtYE90aC",
+      "aIzCoWliLtubmxeQ",
+      "qELKXPOYruDafx2O",
+      "D6fWC6gqas4bO9QK"
+    ],
+    "description": ""
+  },
+  "_id": "kXTbimqaUp5xNIrC",
+  "effects": [],
+  "sort": 100000,
+  "ownership": {
+    "default": 0,
+    "FezNQLnArNIsRQJJ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.0.20",
+    "createdTime": 1724996336702,
+    "modifiedTime": 1724996336702,
+    "lastModifiedBy": "FezNQLnArNIsRQJJ"
+  },
+  "_key": "!items!kXTbimqaUp5xNIrC"
+}

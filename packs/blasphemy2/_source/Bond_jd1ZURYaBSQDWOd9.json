@@ -1,0 +1,39 @@
+{
+  "name": "Bond",
+  "type": "blasphemyPower",
+  "img": "systems/cain/assets/Blasphemies/sympathy.png",
+  "folder": "Lgov2kLYrPoRsAHF",
+  "system": {
+    "blasphemyType": "Sympathy",
+    "powerName": "Bond",
+    "isPassive": false,
+    "keywords": [
+      "Charm, 1 scene"
+    ],
+    "powerDescription": "For the scene, you can bond incredibly tightly with an item you are holding in one or both hands.\n        \n• You are now resonant with that item. It is still mundane.\n• You can now use it as a mundane cutting or bludgeoning weapon even if it wouldn’t normally be a weapon. It has about the power of a CAT 0 bat, or sword.\n• The item becomes virtually indestructible, and you can cause the item to recall to your hand, flying through the air, from within short distance.\n• You can discharge this power to make a strike with the object, granting it supernatural destructive power equal to CAT. Roll PSYCHE for its effects (it gains +1D on the roll as normal due to resonance). Then end this effect and destroy the item.",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff"
+  },
+  "_id": "jd1ZURYaBSQDWOd9",
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "FezNQLnArNIsRQJJ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.blasphemies.Item.jd1ZURYaBSQDWOd9",
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.1.1",
+    "createdTime": 1725579733078,
+    "modifiedTime": 1725579733078,
+    "lastModifiedBy": "FezNQLnArNIsRQJJ"
+  },
+  "sort": 0,
+  "_key": "!items!jd1ZURYaBSQDWOd9"
+}

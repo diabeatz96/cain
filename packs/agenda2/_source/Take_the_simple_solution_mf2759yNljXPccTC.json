@@ -1,0 +1,31 @@
+{
+  "name": "Take the simple solution",
+  "type": "agendaTask",
+  "img": "icons/svg/item-bag.svg",
+  "folder": "SWJ5PPJCrwiMzUjl",
+  "system": {
+    "task": "Take the simple solution",
+    "isBold": true,
+    "description": ""
+  },
+  "_id": "mf2759yNljXPccTC",
+  "effects": [],
+  "sort": 200000,
+  "ownership": {
+    "default": 0,
+    "yJuxhbSZPW8Smq1z": 3,
+    "FezNQLnArNIsRQJJ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.0.20",
+    "createdTime": 1724996336702,
+    "modifiedTime": 1724996336702,
+    "lastModifiedBy": "FezNQLnArNIsRQJJ"
+  },
+  "_key": "!items!mf2759yNljXPccTC"
+}

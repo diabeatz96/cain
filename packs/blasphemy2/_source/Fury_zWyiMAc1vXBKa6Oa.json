@@ -1,0 +1,39 @@
+{
+  "name": "Fury",
+  "type": "blasphemyPower",
+  "img": "systems/cain/assets/Blasphemies/ardence.png",
+  "folder": "OlQPKUoRA4sfNEBM",
+  "system": {
+    "blasphemyType": "Ardence",
+    "powerName": "Fury",
+    "isPassive": false,
+    "keywords": [
+      "Instant, Long"
+    ],
+    "powerDescription": "You can create a fierce blast of destructive energy at a location in range with a blast area up to {<CAT> area 0}. When you use this power, roll PSYCHE and answer the following questions, gaining +1D for each ‘yes’ answer, only spending a Psyche Burst on success. \n        \n• Are you willing to cause indiscriminate harm, not caring what you destroy, burn, or incinerate? \n• Are you willing to let your anger control the outcome? \n        \nWhatever question you answer ‘yes’ on, it affects the outcome of the action - no matter the roll. In addition, if you answered at least one ‘yes’, the area is ALWAYS equal to max CAT, and allies in the area or in short distance to you take 2 stress, which cannot be ignored.",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff"
+  },
+  "_id": "zWyiMAc1vXBKa6Oa",
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "FezNQLnArNIsRQJJ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.blasphemies.Item.zWyiMAc1vXBKa6Oa",
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.1.1",
+    "createdTime": 1725579733078,
+    "modifiedTime": 1725579733078,
+    "lastModifiedBy": "FezNQLnArNIsRQJJ"
+  },
+  "sort": 0,
+  "_key": "!items!zWyiMAc1vXBKa6Oa"
+}

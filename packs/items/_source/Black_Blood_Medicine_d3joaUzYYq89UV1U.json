@@ -1,0 +1,38 @@
+{
+  "folder": "viERhkdRMuTaByKl",
+  "name": "Black Blood Medicine",
+  "type": "item",
+  "_id": "d3joaUzYYq89UV1U",
+  "img": "systems/cain/assets/items/kp.png",
+  "system": {
+    "description": "<p>Consume on a dead exorcist that</p><p>died in the same scene and has</p><p>a (relatively) intact body to revive</p><p>them. They come back with 2</p><p>injuries. All actions are hard for</p><p>them until a rest.</p>",
+    "quantity": 1,
+    "weight": 0,
+    "roll": {
+      "diceNum": 1,
+      "diceSize": "d6",
+      "diceBonus": ""
+    },
+    "kitPoint": 2,
+    "scripValue": 6,
+    "type": "Consumable"
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.0.1",
+    "createdTime": 1723987411421,
+    "modifiedTime": 1723987411421,
+    "lastModifiedBy": "wAkEmoF9bl45blE0"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "wAkEmoF9bl45blE0": 3
+  },
+  "_key": "!items!d3joaUzYYq89UV1U"
+}

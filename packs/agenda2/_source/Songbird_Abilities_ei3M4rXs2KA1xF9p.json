@@ -1,0 +1,22 @@
+{
+  "name": "Songbird Abilities",
+  "sorting": "a",
+  "folder": "pwb8YRbSd4v3omQY",
+  "type": "Item",
+  "_id": "ei3M4rXs2KA1xF9p",
+  "description": "",
+  "sort": 0,
+  "color": null,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.0.20",
+    "createdTime": 1724996336678,
+    "modifiedTime": 1724996336678,
+    "lastModifiedBy": "FezNQLnArNIsRQJJ"
+  },
+  "_key": "!folders!ei3M4rXs2KA1xF9p"
+}

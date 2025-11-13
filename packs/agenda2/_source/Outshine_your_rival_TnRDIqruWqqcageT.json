@@ -1,0 +1,30 @@
+{
+  "name": "Outshine your rival",
+  "type": "agendaTask",
+  "img": "icons/svg/item-bag.svg",
+  "folder": "05xkG3Jv2YLtZG2w",
+  "system": {
+    "task": "Outshine your rival",
+    "isBold": false,
+    "description": ""
+  },
+  "_id": "TnRDIqruWqqcageT",
+  "effects": [],
+  "sort": 200000,
+  "ownership": {
+    "default": 0,
+    "FezNQLnArNIsRQJJ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.0.20",
+    "createdTime": 1724996336702,
+    "modifiedTime": 1724996336702,
+    "lastModifiedBy": "FezNQLnArNIsRQJJ"
+  },
+  "_key": "!items!TnRDIqruWqqcageT"
+}

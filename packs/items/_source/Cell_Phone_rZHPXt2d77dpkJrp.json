@@ -1,0 +1,38 @@
+{
+  "folder": "W54tBb4dDKbp2nzT",
+  "name": "Cell Phone",
+  "type": "item",
+  "_id": "rZHPXt2d77dpkJrp",
+  "img": "systems/cain/assets/items/kp.png",
+  "system": {
+    "description": "<p>Personal cell phone. Pay 3 instead to have one</p><p>with more options and internet browsing available.</p>",
+    "quantity": 1,
+    "weight": 0,
+    "roll": {
+      "diceNum": 1,
+      "diceSize": "d6",
+      "diceBonus": ""
+    },
+    "kitPoint": 0,
+    "scripValue": 1,
+    "type": "Possession"
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.0.1",
+    "createdTime": 1723987411421,
+    "modifiedTime": 1723987411421,
+    "lastModifiedBy": "wAkEmoF9bl45blE0"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "wAkEmoF9bl45blE0": 3
+  },
+  "_key": "!items!rZHPXt2d77dpkJrp"
+}

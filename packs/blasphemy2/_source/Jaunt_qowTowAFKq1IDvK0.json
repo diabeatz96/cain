@@ -1,0 +1,41 @@
+{
+  "name": "Jaunt",
+  "type": "blasphemy",
+  "img": "systems/cain/assets/Blasphemies/jaunt.png",
+  "folder": "gQy5geNFvIbOuIyb",
+  "system": {
+    "blasphemyName": "Jaunt",
+    "powers": [
+      "m2KjBhoI2xSxOqgg",
+      "aBkhmMuHPbWf2plQ",
+      "ZyvNy9PQUP7pQxhU",
+      "YFzuKHJlf3surMRB",
+      "Uv4u8UHqDUjzYNWu",
+      "kMoLs4tbc7jFntqx"
+    ],
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff"
+  },
+  "_id": "qowTowAFKq1IDvK0",
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "FezNQLnArNIsRQJJ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.blasphemies.Item.qowTowAFKq1IDvK0",
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.1.1",
+    "createdTime": 1725579733078,
+    "modifiedTime": 1725579733078,
+    "lastModifiedBy": "FezNQLnArNIsRQJJ"
+  },
+  "sort": 0,
+  "_key": "!items!qowTowAFKq1IDvK0"
+}

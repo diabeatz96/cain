@@ -1,0 +1,39 @@
+{
+  "name": "Transmission",
+  "type": "blasphemyPower",
+  "img": "systems/cain/assets/Blasphemies/gate.png",
+  "folder": "M2IyOSZHhi0ADpIW",
+  "system": {
+    "blasphemyType": "Gate",
+    "powerName": "Transmission",
+    "isPassive": false,
+    "keywords": [
+      "Instant, CAT+2 range"
+    ],
+    "powerDescription": "Instantly move to any other area in {<CAT> range 2} range. However, the Admin asks you the following questions and rolls 1d6 per ‘no’ answer. \n        \n• Are you familiar with your destination? \n• Can you see where you are going? \n• Are you calm and concentrated?\n        \nOn at least one ‘1’, you end up in a different location nearby your destination, but the Admin chooses where. On a double 1, you end up somewhere else briefly before arriving. Not only are you off target, but you also take 2d3 stress.",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff"
+  },
+  "_id": "e1Tn4jexmjgN0QXF",
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "FezNQLnArNIsRQJJ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.blasphemies.Item.e1Tn4jexmjgN0QXF",
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.1.1",
+    "createdTime": 1725579733078,
+    "modifiedTime": 1725579733078,
+    "lastModifiedBy": "FezNQLnArNIsRQJJ"
+  },
+  "sort": 0,
+  "_key": "!items!e1Tn4jexmjgN0QXF"
+}

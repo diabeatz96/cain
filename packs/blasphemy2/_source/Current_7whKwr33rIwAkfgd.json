@@ -1,0 +1,39 @@
+{
+  "name": "Current",
+  "type": "blasphemyPower",
+  "img": "systems/cain/assets/Blasphemies/vector.png",
+  "folder": "3xCoThoucSWjtXfY",
+  "system": {
+    "blasphemyType": "Vector",
+    "powerName": "Current",
+    "isPassive": false,
+    "keywords": [
+      "Transmute, Until rest, CAT+2 range"
+    ],
+    "powerDescription": "You create a weaker, but persistent Vector force in an area that lasts until you rest. It creates a line that goes about {<CAT> range 2} range in length and covers about the width of a street. It pushes constantly in one direction (including up or down) like a strong wind. Allies moving in that direction gain +1D on actions to move with the current. Anything moving against that direction struggles. It becomes hard for allies, and actions taken against anyone trying to struggle against the current gain +1D. You can dismiss this effect at will.",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff"
+  },
+  "_id": "7whKwr33rIwAkfgd",
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "FezNQLnArNIsRQJJ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.blasphemies.Item.7whKwr33rIwAkfgd",
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.1.1",
+    "createdTime": 1725579733078,
+    "modifiedTime": 1725579733078,
+    "lastModifiedBy": "FezNQLnArNIsRQJJ"
+  },
+  "sort": 0,
+  "_key": "!items!7whKwr33rIwAkfgd"
+}

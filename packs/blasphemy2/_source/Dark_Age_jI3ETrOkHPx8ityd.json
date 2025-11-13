@@ -1,0 +1,39 @@
+{
+  "name": "Dark Age",
+  "type": "blasphemyPower",
+  "img": "systems/cain/assets/Blasphemies/smother.png",
+  "folder": "6TP0HdriwPBV6Quy",
+  "system": {
+    "blasphemyType": "Smother",
+    "powerName": "Dark Age",
+    "isPassive": false,
+    "keywords": [
+      "Charm, Self, Until Rest"
+    ],
+    "powerDescription": "You produce a strong field from your body disabling even the simplest human advancements from working in {<CAT> area 0}. The effect moves with you. You can choose up to three of the following to suppress, ceasing their operation, then gain or grant +1D when you or any ally next acts to take advantage of this power: \n\n• Electricity \n• Internet \n• Combustion engines \n• Running Water \n• Door handles, window latches, zippers, catches \n• Open fires \n\nThese things stop working even if it would not make sense, ie suppressing running water would mean water pressure simply stops working. You can end this effect willingly, but must end all effects at once.",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff"
+  },
+  "_id": "jI3ETrOkHPx8ityd",
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "FezNQLnArNIsRQJJ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.blasphemies.Item.jI3ETrOkHPx8ityd",
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.1.1",
+    "createdTime": 1725579733078,
+    "modifiedTime": 1725579733078,
+    "lastModifiedBy": "FezNQLnArNIsRQJJ"
+  },
+  "sort": 0,
+  "_key": "!items!jI3ETrOkHPx8ityd"
+}

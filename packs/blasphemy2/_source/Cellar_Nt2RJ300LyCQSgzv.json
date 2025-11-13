@@ -1,0 +1,39 @@
+{
+  "name": "Cellar",
+  "type": "blasphemyPower",
+  "img": "systems/cain/assets/Blasphemies/palace.png",
+  "folder": "JMTIeJRElJUzQpBb",
+  "system": {
+    "blasphemyType": "Palace",
+    "powerName": "Cellar",
+    "isPassive": false,
+    "keywords": [
+      "Charm, Infinite range, Instant"
+    ],
+    "powerDescription": "You can simulate situations inside your palace before putting them into practice in reality. You can use this power and roll to set up a number of allies equal to 1/2 CAT even if you are not physically present. However, you may only set up a target if you can describe the way in which you trained or prepared with them, or a psychic copy of them, for the current situation. This setup can never be risky, but cannot lower risk. If you fail the setup roll, you may take 1d3 nonlethal stress to re-roll it, taking the second result as final.",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff"
+  },
+  "_id": "Nt2RJ300LyCQSgzv",
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "FezNQLnArNIsRQJJ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.blasphemies.Item.Nt2RJ300LyCQSgzv",
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.1.1",
+    "createdTime": 1725579733078,
+    "modifiedTime": 1725579733078,
+    "lastModifiedBy": "FezNQLnArNIsRQJJ"
+  },
+  "sort": 0,
+  "_key": "!items!Nt2RJ300LyCQSgzv"
+}

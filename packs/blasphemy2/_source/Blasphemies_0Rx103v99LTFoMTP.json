@@ -1,0 +1,22 @@
+{
+  "name": "Blasphemies",
+  "type": "Item",
+  "folder": null,
+  "sorting": "m",
+  "_id": "0Rx103v99LTFoMTP",
+  "description": "",
+  "sort": 100000,
+  "color": null,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.1.1",
+    "createdTime": 1725579733058,
+    "modifiedTime": 1725579733102,
+    "lastModifiedBy": "FezNQLnArNIsRQJJ"
+  },
+  "_key": "!folders!0Rx103v99LTFoMTP"
+}

@@ -1,0 +1,30 @@
+{
+  "name": "Gentleness",
+  "type": "agendaAbility",
+  "img": "icons/svg/item-bag.svg",
+  "folder": "E5oem2SNa88Ezz0F",
+  "system": {
+    "abilityName": "Gentleness",
+    "abilityDescription": "For one scene, you may take 1 less stress when you take stress. This ability breaks if you take any forceful or harmful action. Then lose the use of this ability until you rest.",
+    "description": ""
+  },
+  "_id": "qBQZJ2nrJqX87xAz",
+  "effects": [],
+  "sort": 300000,
+  "ownership": {
+    "default": 0,
+    "FezNQLnArNIsRQJJ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.0.20",
+    "createdTime": 1724996336702,
+    "modifiedTime": 1724996336702,
+    "lastModifiedBy": "FezNQLnArNIsRQJJ"
+  },
+  "_key": "!items!qBQZJ2nrJqX87xAz"
+}

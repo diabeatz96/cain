@@ -1,0 +1,30 @@
+{
+  "name": "Hot Blooded",
+  "type": "agendaAbility",
+  "img": "icons/svg/item-bag.svg",
+  "folder": "pGqqwok1O7Sltt4L",
+  "system": {
+    "abilityName": "Hot Blooded",
+    "abilityDescription": "Your first action in a conflict scene gains +1D and inflicts +1 more slash on any talismans.",
+    "description": ""
+  },
+  "_id": "T1FrkuIgQtYE90aC",
+  "effects": [],
+  "sort": 200000,
+  "ownership": {
+    "default": 0,
+    "FezNQLnArNIsRQJJ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.0.20",
+    "createdTime": 1724996336702,
+    "modifiedTime": 1724996336702,
+    "lastModifiedBy": "FezNQLnArNIsRQJJ"
+  },
+  "_key": "!items!T1FrkuIgQtYE90aC"
+}

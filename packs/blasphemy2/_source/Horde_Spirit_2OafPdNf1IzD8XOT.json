@@ -1,0 +1,39 @@
+{
+  "name": "Horde Spirit",
+  "type": "blasphemyPower",
+  "img": "systems/cain/assets/Blasphemies/bind.png",
+  "folder": "qbarzQOfDH1uyB02",
+  "system": {
+    "blasphemyType": "Bind",
+    "powerName": "Horde Spirit",
+    "isPassive": false,
+    "keywords": [
+      "Self, 1 scene"
+    ],
+    "powerDescription": "You can spend a psyche burst to empower your sin for one scene. The next time it takes action for traversal or movement, it gains +1D. As part of this action:\n\nYou can transform it into the form of a vehicle or rideable creature of up to {<CAT> size 0} size for one scene. It can go about {<CAT> speed 0} speed, becomes partly visible to humans and has room for a 1/2 CAT size group of human or exorcist passengers.\n\nIt can glide a short distance while in vehicle form, with or without passengers.",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff"
+  },
+  "_id": "2OafPdNf1IzD8XOT",
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "FezNQLnArNIsRQJJ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.blasphemies.Item.2OafPdNf1IzD8XOT",
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.1.1",
+    "createdTime": 1725579733078,
+    "modifiedTime": 1725579733078,
+    "lastModifiedBy": "FezNQLnArNIsRQJJ"
+  },
+  "sort": 0,
+  "_key": "!items!2OafPdNf1IzD8XOT"
+}

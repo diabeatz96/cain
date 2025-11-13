@@ -1,0 +1,30 @@
+{
+  "name": "Pincer Technique",
+  "type": "agendaAbility",
+  "img": "icons/svg/item-bag.svg",
+  "folder": "gKRq7GWryRG6tr3C",
+  "system": {
+    "abilityName": "Pincer Technique",
+    "abilityDescription": "When you participate in teamwork with your rival, you take 1 stress, but can also re-roll one of the dice once, taking the second result as final.",
+    "description": ""
+  },
+  "_id": "IFXYh9hEcf3eirg4",
+  "effects": [],
+  "sort": 300000,
+  "ownership": {
+    "default": 0,
+    "FezNQLnArNIsRQJJ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.0.20",
+    "createdTime": 1724996336702,
+    "modifiedTime": 1724996336702,
+    "lastModifiedBy": "FezNQLnArNIsRQJJ"
+  },
+  "_key": "!items!IFXYh9hEcf3eirg4"
+}

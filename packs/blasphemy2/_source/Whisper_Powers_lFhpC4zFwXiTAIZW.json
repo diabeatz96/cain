@@ -1,0 +1,22 @@
+{
+  "name": "Whisper Powers",
+  "sorting": "a",
+  "folder": "XALgYVsEyp2Hp0Ma",
+  "type": "Item",
+  "_id": "lFhpC4zFwXiTAIZW",
+  "description": "",
+  "sort": 100000,
+  "color": null,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.1.1",
+    "createdTime": 1725579733058,
+    "modifiedTime": 1725579733058,
+    "lastModifiedBy": "FezNQLnArNIsRQJJ"
+  },
+  "_key": "!folders!lFhpC4zFwXiTAIZW"
+}

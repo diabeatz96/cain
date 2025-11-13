@@ -1,0 +1,22 @@
+{
+  "name": "Palace",
+  "sorting": "a",
+  "folder": "0Rx103v99LTFoMTP",
+  "type": "Item",
+  "_id": "E9Y0pHqAXzbyUI4e",
+  "description": "",
+  "sort": 1000000,
+  "color": "#e119ff",
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.1.1",
+    "createdTime": 1725579733058,
+    "modifiedTime": 1725579733058,
+    "lastModifiedBy": "FezNQLnArNIsRQJJ"
+  },
+  "_key": "!folders!E9Y0pHqAXzbyUI4e"
+}

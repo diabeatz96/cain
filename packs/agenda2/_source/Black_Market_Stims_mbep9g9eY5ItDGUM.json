@@ -1,0 +1,30 @@
+{
+  "name": "Black Market Stims",
+  "type": "agendaAbility",
+  "img": "icons/svg/item-bag.svg",
+  "folder": "Ip148ymaIXFmlvC4",
+  "system": {
+    "abilityName": "Black Market Stims",
+    "abilityDescription": "You can spend up to 3 scrip a mission as psyche burst.",
+    "description": ""
+  },
+  "_id": "mbep9g9eY5ItDGUM",
+  "effects": [],
+  "sort": 200000,
+  "ownership": {
+    "default": 0,
+    "FezNQLnArNIsRQJJ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.0.20",
+    "createdTime": 1724996336702,
+    "modifiedTime": 1724996336702,
+    "lastModifiedBy": "FezNQLnArNIsRQJJ"
+  },
+  "_key": "!items!mbep9g9eY5ItDGUM"
+}

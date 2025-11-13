@@ -1,0 +1,31 @@
+{
+  "name": "Extra Parts",
+  "type": "agendaAbility",
+  "img": "icons/svg/item-bag.svg",
+  "folder": "rXxsu9mv02uRtInI",
+  "system": {
+    "abilityName": "Extra Parts",
+    "abilityDescription": "You can mark 1 KP for +1D on any roll that involves fixing, crafting, breaking, or modifying devices or machines.",
+    "description": ""
+  },
+  "_id": "v8nIMEpHLJDBTaSa",
+  "effects": [],
+  "sort": 200000,
+  "ownership": {
+    "default": 0,
+    "yJuxhbSZPW8Smq1z": 3,
+    "FezNQLnArNIsRQJJ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.0.20",
+    "createdTime": 1724996336702,
+    "modifiedTime": 1724996336702,
+    "lastModifiedBy": "FezNQLnArNIsRQJJ"
+  },
+  "_key": "!items!v8nIMEpHLJDBTaSa"
+}

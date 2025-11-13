@@ -1,0 +1,41 @@
+{
+  "name": "Vector",
+  "type": "blasphemy",
+  "img": "systems/cain/assets/Blasphemies/vector.png",
+  "folder": "JqiL6aTGwHxxr1n4",
+  "system": {
+    "blasphemyName": "Vector",
+    "powers": [
+      "3nM4DpbVXOE8JO9M",
+      "0y6nZzAuH3U9llBL",
+      "pRNYMYsLGynPUt1p",
+      "7whKwr33rIwAkfgd",
+      "wsuA6AnDi1NwobhZ",
+      "xTt3OO03aTN4zRZa"
+    ],
+    "description": "",
+    "primaryColor": "#333333",
+    "accentColor": "#000000",
+    "secondaryColor": "#878787",
+    "textColor": "#ffdc00"
+  },
+  "_id": "EItFkOlFvprRdpUv",
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "FezNQLnArNIsRQJJ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.blasphemies.Item.EItFkOlFvprRdpUv",
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.1.1",
+    "createdTime": 1725579733078,
+    "modifiedTime": 1725579733078,
+    "lastModifiedBy": "FezNQLnArNIsRQJJ"
+  },
+  "sort": 0,
+  "_key": "!items!EItFkOlFvprRdpUv"
+}

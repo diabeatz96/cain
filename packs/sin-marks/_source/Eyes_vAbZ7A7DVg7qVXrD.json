@@ -1,0 +1,42 @@
+{
+  "folder": "LclAAWhCgOZO6HBU",
+  "name": "Eyes",
+  "type": "sinMark",
+  "_id": "vAbZ7A7DVg7qVXrD",
+  "img": "systems/cain/assets/sin-marks/eye.png",
+  "system": {
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "bodyPartName": "Body Part Name",
+    "markAmount": 0,
+    "abilities": [
+      "lkN0NbwZOHIixYyj",
+      "GvKbSlVd7CLyw3fr",
+      "qbevVBfjwcgrzbC9",
+      "JgI9lFUNhiIskwv7",
+      "HQpJA2QldTeYyCos",
+      "HCSaymNb0thT9hEM"
+    ]
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.0.20",
+    "createdTime": 1725278401752,
+    "modifiedTime": 1725278401752,
+    "lastModifiedBy": "C33nbucocqUlAZNM"
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "C33nbucocqUlAZNM": 3
+  },
+  "_key": "!items!vAbZ7A7DVg7qVXrD"
+}

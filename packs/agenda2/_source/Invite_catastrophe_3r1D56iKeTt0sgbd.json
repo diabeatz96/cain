@@ -1,0 +1,30 @@
+{
+  "name": "Invite catastrophe",
+  "type": "agendaTask",
+  "img": "icons/svg/item-bag.svg",
+  "folder": "SZDW5zCmJ9lANlwb",
+  "system": {
+    "task": "Invite catastrophe",
+    "isBold": true,
+    "description": ""
+  },
+  "_id": "3r1D56iKeTt0sgbd",
+  "effects": [],
+  "sort": 200000,
+  "ownership": {
+    "default": 0,
+    "FezNQLnArNIsRQJJ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.0.20",
+    "createdTime": 1724996336702,
+    "modifiedTime": 1724996336702,
+    "lastModifiedBy": "FezNQLnArNIsRQJJ"
+  },
+  "_key": "!items!3r1D56iKeTt0sgbd"
+}
