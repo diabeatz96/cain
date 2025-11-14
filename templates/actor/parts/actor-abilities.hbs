@@ -1,5 +1,4 @@
 <div class="abilities-page abilities-page-drop-target">
-  <!-- Psyche Section -->
   <div class="psyche-section" style="text-align: center; margin-bottom: 20px;">
     <div style="display: flex; justify-content: center; align-items: center;">
       {{#if system.psyche}}
@@ -34,16 +33,15 @@
         <li>You always start a mission with three psyche bursts.</li>
         <li>You can recover them by resting during a hunt (see pg. 38) or through the uses of abilities.</li>
         <li>You can always use psyche for minor effects such as:</li>
-          <ul>
-            <li>producing a faint light or aura around something or someone</li>
-            <li>producing minor force at a distance (like a gust of wind)</li>
-            <li>making electrical lights or appliances flicker</li>
-            <li>warm or cool the surface of your body</li>
-          </ul>
+        <ul>
+          <li>producing a faint light or aura around something or someone</li>
+          <li>producing minor force at a distance (like a gust of wind)</li>
+          <li>making electrical lights or appliances flicker</li>
+          <li>warm or cool the surface of your body</li>
+        </ul>
       </ul>
     </div>
   </div>
-  <!-- My Agenda Section -->
   <div class="my-agenda-section" style="margin-bottom: 20px;">
     <h2 title="Drag new agenda here to swap">
       {{#if currentAgenda }}
@@ -123,9 +121,7 @@
       </div>
     </div>
   </div>
-  <!-- Items Section -->
   <div class="items-section" style="width: 100%;">
-    <!-- Blasphemy Powers -->
     <div class="blasphemy" style="width: 100%;">
       <h1>Blasphemies</h1>
       {{#unless blasphemyData}}
@@ -144,9 +140,7 @@
             <a class="animation-toggle" title="Toggle Animation">
               <input type="checkbox" id="toggle-animation" class="toggle-animation">
               <label for="toggle-animation">
-                <i class="fas fa-sync-alt"></i> <!-- Icon for enabled state -->
-                <i class="fas fa-ban"></i> <!-- Icon for disabled state -->
-              </label>
+                <i class="fas fa-sync-alt"></i> <i class="fas fa-ban"></i> </label>
             </a>
           </h2>
         </div>
@@ -166,6 +160,26 @@
                 </a>
               </h4>
               <div class="power-description-card">
+                <span class="psyche-icons-in-card">
+                  {{#if this.system.psycheBurstNoCost}}
+                  <a href="systems/cain/assets/psyche/NoPsyche.png" target="_blank">
+                    <img src="systems/cain/assets/psyche/NoPsyche.png" alt="No Psyche" class="power-psyche-icon-large"
+                      title="Has no-psyche mode">
+                  </a>
+                  {{/if}}
+                  {{#if this.system.psycheBurstCost}}
+                  <a href="systems/cain/assets/psyche/Psyche.png" target="_blank">
+                    <img src="systems/cain/assets/psyche/Psyche.png" alt="Uses Psyche" class="power-psyche-icon-large"
+                      title="Uses psyche burst">
+                  </a>
+                  {{/if}}
+                  {{#if this.system.psycheBurstMultCost}}
+                  <a href="systems/cain/assets/psyche/PsychePlus.png" target="_blank">
+                    <img src="systems/cain/assets/psyche/PsychePlus.png" alt="Plus Psyche"
+                      class="power-plus-large" title="Can use multiple bursts">
+                  </a>
+                  {{/if}}
+                </span>
                 <h4>Keywords</h4>
                 <p>{{this.system.keywords}}</p>
                 <h4>Power Description</h4>
@@ -192,6 +206,26 @@
                 </a>
               </h4>
               <div class="power-description-card">
+                <span class="psyche-icons-in-card">
+                  {{#if this.system.psycheBurstNoCost}}
+                  <a href="systems/cain/assets/psyche/NoPsyche.png" target="_blank">
+                    <img src="systems/cain/assets/psyche/NoPsyche.png" alt="No Psyche" class="power-psyche-icon-large"
+                      title="Has no-psyche mode">
+                  </a>
+                  {{/if}}
+                  {{#if this.system.psycheBurstCost}}
+                  <a href="systems/cain/assets/psyche/Psyche.png" target="_blank">
+                    <img src="systems/cain/assets/psyche/Psyche.png" alt="Uses Psyche" class="power-psyche-icon-large"
+                      title="Uses psyche burst">
+                  </a>
+                  {{/if}}
+                  {{#if this.system.psycheBurstMultCost}}
+                  <a href="systems/cain/assets/psyche/PsychePlus.png" target="_blank">
+                    <img src="systems/cain/assets/psyche/PsychePlus.png" alt="Plus Psyche"
+                      class="power-plus-large" title="Can use multiple bursts">
+                  </a>
+                  {{/if}}
+                </span>
                 <h4>Keywords</h4>
                 <p>{{this.system.keywords}}</p>
                 <h4>Power Description</h4>
@@ -226,19 +260,20 @@
         <ul class="editable-blasphemy-powers">
           {{#each currentUnlinkedBlasphemyPowers}}
           <li>
-            <span data-id="{{this.id}}" class="blasphemy-power"  title="{{this.system.powerDescription}}">{{this.system.powerName}}</span>
+            <span data-id="{{this.id}}" class="blasphemy-power"
+              title="{{this.system.powerDescription}}">{{this.system.powerName}}</span>
             <a class="item-control blasphemy-power-to-chat" data-id="{{this.id}}" title="Send to Chat">
               <i class="fas fa-comment"></i>
             </a>
             <a class="item-control remove-blasphemy-power-button" data-id="{{this.id}}" title="Remove">
               <i class="fas fa-trash"></i>
             </a>
-              <div class="power-description-card">
-                <h4>Keywords</h4>
-                <p>{{this.system.keywords}}</p>
-                <h4>Power Description</h4>
-                <p>{{formatted this.system.powerDescription ../../system.CATLEVEL.value}}</p>
-              </div>
+            <div class="power-description-card">
+              <h4>Keywords</h4>
+              <p>{{this.system.keywords}}</p>
+              <h4>Power Description</h4>
+              <p>{{formatted this.system.powerDescription ../../system.CATLEVEL.value}}</p>
+            </div>
           </li>
           {{/each}}
         </ul>
@@ -248,47 +283,68 @@
   </div>
 </div>
 <style>
-
   #increment-max-psycheBurst {
-    background-color: #222; /* Darker background for subtlety */
-    color: white; /* White text for contrast */
-    border: 1px solid #444; /* Subtle border for definition */
-    border-radius: 3px; /* Slightly rounded corners */
-    cursor: pointer; /* Pointer cursor on hover */
-    font-size: 10px; /* Smaller font size */
+    background-color: #222;
+    /* Darker background for subtlety */
+    color: white;
+    /* White text for contrast */
+    border: 1px solid #444;
+    /* Subtle border for definition */
+    border-radius: 3px;
+    /* Slightly rounded corners */
+    cursor: pointer;
+    /* Pointer cursor on hover */
+    font-size: 10px;
+    /* Smaller font size */
     height: 15px;
-    width: 30px; /* Fixed width for consistency */
-    text-align: center; /* Center the text */
-    transition: background-color 0.3s, transform 0.2s; /* Smooth transitions */
+    width: 30px;
+    /* Fixed width for consistency */
+    text-align: center;
+    /* Center the text */
+    transition: background-color 0.3s, transform 0.2s;
+    /* Smooth transitions */
     line-height: 0px;
     margin-left: 5px;
   }
 
   #decrement-max-psycheBurst {
-    background-color: #222; /* Darker background for subtlety */
-    color: white; /* White text for contrast */
-    border: 1px solid #444; /* Subtle border for definition */
-    border-radius: 3px; /* Slightly rounded corners */
-    cursor: pointer; /* Pointer cursor on hover */
-    font-size: 10px; /* Smaller font size */
+    background-color: #222;
+    /* Darker background for subtlety */
+    color: white;
+    /* White text for contrast */
+    border: 1px solid #444;
+    /* Subtle border for definition */
+    border-radius: 3px;
+    /* Slightly rounded corners */
+    cursor: pointer;
+    /* Pointer cursor on hover */
+    font-size: 10px;
+    /* Smaller font size */
     height: 15px;
-    width: 30px; /* Fixed width for consistency */
-    text-align: center; /* Center the text */
-    transition: background-color 0.3s, transform 0.2s; /* Smooth transitions */
+    width: 30px;
+    /* Fixed width for consistency */
+    text-align: center;
+    /* Center the text */
+    transition: background-color 0.3s, transform 0.2s;
+    /* Smooth transitions */
     line-height: 0px;
     margin-left: 5px;
   }
 
   #increment-max-psycheBurst {
-    background-color: #660000; /* Red background for increment */
-    border-color: #990000; /* Slightly brighter red border */
+    background-color: #660000;
+    /* Red background for increment */
+    border-color: #990000;
+    /* Slightly brighter red border */
   }
-  
+
   #decrement-max-psycheBurst {
-    background-color: #003366; /* Blue background for decrement */
-    border-color: #0055aa; /* Slightly brighter blue border */
+    background-color: #003366;
+    /* Blue background for decrement */
+    border-color: #0055aa;
+    /* Slightly brighter blue border */
   }
-  
+
   /* Hover effects for agenda tasks and abilities */
   .abilities-page .agenda-task:hover,
   .abilities-page .agenda-ability:hover,
@@ -666,6 +722,7 @@
     background-color: rgba(0, 0, 0, 0);
     box-shadow: 0 0 15px rgba(128, 0, 128, 0);
     color: #4b0082;
+    position: relative;
     /* Initial dark purple text color */
   }
 
@@ -740,4 +797,31 @@
     display: inline;
     /* Show disabled icon when checked */
   }
+
+  /* --- NEW/UPDATED ICON STYLES FOR INSIDE CARD --- */
+  /* Style to position the icons in the top-right corner of the description card */
+  .abilities-page .psyche-icons-in-card {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 5;
+    display: flex;
+    gap: 5px;
+    /* Spacing between icons */
+  }
+
+  /* Style for the larger icons inside the description card */
+  .abilities-page .power-psyche-icon-large {
+    width: 70px;
+    height: 70px;
+    filter: drop-shadow(0 0 4px #ff00cc);
+  }
+
+  /* Style for the animated Plus icon */
+  .abilities-page .power-plus-large {
+    width: 70px;
+    height: 70px;
+    filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.9));
+  }
+
 </style>
