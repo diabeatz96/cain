@@ -87,7 +87,7 @@
   "TYPES": {
     "Actor": {
       "character": "Exorcist",
-      "npc": "Sin",
+      "sin": "Sin",
       "mundane": "Mundane NPC"
     },
     "Item": {

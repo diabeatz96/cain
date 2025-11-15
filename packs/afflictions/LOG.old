@@ -1,3 +1,9 @@
-2025/11/15-03:44:18.762 8d88 Recovering log #254
-2025/11/15-03:44:18.768 8d88 Delete type=0 #254
-2025/11/15-03:44:18.768 8d88 Delete type=3 #252
+2025/11/15-15:57:02.145 7d0 Log #261: 0 ops saved to Table #275 OK
+2025/11/15-15:57:02.146 7d0 Archiving C:\Users\Memelord\AppData\Local\FoundryVTT\Data\systems\cain\packs\afflictions/000261.log: OK
+2025/11/15-15:57:02.146 7d0 Log #274: 0 ops saved to Table #276 OK
+2025/11/15-15:57:02.147 7d0 Archiving C:\Users\Memelord\AppData\Local\FoundryVTT\Data\systems\cain\packs\afflictions/000274.log: OK
+2025/11/15-15:57:02.147 7d0 Table #260: 52 entries OK
+2025/11/15-15:57:02.147 7d0 Table #272: 51 entries OK
+2025/11/15-15:57:02.150 7d0 Archiving C:\Users\Memelord\AppData\Local\FoundryVTT\Data\systems\cain\packs\afflictions/MANIFEST-000259: OK
+2025/11/15-15:57:02.150 7d0 Archiving C:\Users\Memelord\AppData\Local\FoundryVTT\Data\systems\cain\packs\afflictions/MANIFEST-000273: OK
+2025/11/15-15:57:02.154 7d0 **** Repaired leveldb C:\Users\Memelord\AppData\Local\FoundryVTT\Data\systems\cain\packs\afflictions; recovered 2 files; 29845 bytes. Some data may have been lost. ****

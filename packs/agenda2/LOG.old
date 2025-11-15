@@ -1,3 +1,9 @@
-2025/11/15-02:00:36.444 76ec Recovering log #343
-2025/11/15-02:00:36.456 76ec Delete type=0 #343
-2025/11/15-02:00:36.458 76ec Delete type=3 #342
+2025/11/15-15:57:02.077 45e8 Log #348: 0 ops saved to Table #362 OK
+2025/11/15-15:57:02.078 45e8 Archiving C:\Users\Memelord\AppData\Local\FoundryVTT\Data\systems\cain\packs\agenda2/000348.log: OK
+2025/11/15-15:57:02.078 45e8 Log #361: 0 ops saved to Table #363 OK
+2025/11/15-15:57:02.079 45e8 Archiving C:\Users\Memelord\AppData\Local\FoundryVTT\Data\systems\cain\packs\agenda2/000361.log: OK
+2025/11/15-15:57:02.080 45e8 Table #347: 393 entries OK
+2025/11/15-15:57:02.080 45e8 Table #359: 196 entries OK
+2025/11/15-15:57:02.083 45e8 Archiving C:\Users\Memelord\AppData\Local\FoundryVTT\Data\systems\cain\packs\agenda2/MANIFEST-000346: OK
+2025/11/15-15:57:02.084 45e8 Archiving C:\Users\Memelord\AppData\Local\FoundryVTT\Data\systems\cain\packs\agenda2/MANIFEST-000360: OK
+2025/11/15-15:57:02.087 45e8 **** Repaired leveldb C:\Users\Memelord\AppData\Local\FoundryVTT\Data\systems\cain\packs\agenda2; recovered 2 files; 90516 bytes. Some data may have been lost. ****
