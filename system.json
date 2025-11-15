@@ -83,7 +83,7 @@
   "socket": true,
   "manifest": "https://raw.githubusercontent.com/bugeso/cain1.3/refs/heads/main/system.json",
   "download": "https://github.com/bugeso/cain1.3/archive/refs/heads/main.zip",
-  "background": "systems/cain/assets/cain.png",
+  "background": "systems/cain/assets/cainnew.png",
   "gridDistance": 5,
   "gridUnits": "ft",
   "primaryTokenAttribute": "health",
