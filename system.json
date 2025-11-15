@@ -16,8 +16,8 @@
   "media": [
     {
       "type": "setup",
-      "url": "systems/cain/assets/cain.png",
-      "thumbnail": "systems/cain/assets/cain.png"
+      "url": "systems/cain/assets/cainnew.png",
+      "thumbnail": "systems/cain/assets/cainnew.png"
     }
   ],
   "version": "1.3.3",
