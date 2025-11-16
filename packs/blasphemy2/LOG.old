@@ -1,3 +1,17 @@
-2025/11/13-23:32:41.914 60c8 Recovering log #348
-2025/11/13-23:32:41.924 60c8 Delete type=0 #348
-2025/11/13-23:32:41.926 60c8 Delete type=3 #347
+2025/11/15-22:08:53.403 9680 Recovering log #352
+2025/11/15-22:08:53.409 9680 Delete type=0 #304
+2025/11/15-22:08:53.411 9680 Delete type=0 #352
+2025/11/15-22:08:53.412 9680 Delete type=3 #302
+2025/11/15-22:08:53.413 9680 Delete type=3 #351
+2025/11/16-02:21:26.708 8b1c Level-0 table #356: started
+2025/11/16-02:21:26.713 8b1c Level-0 table #356: 91864 bytes OK
+2025/11/16-02:21:26.715 8b1c Delete type=0 #354
+2025/11/16-02:21:26.730 8b1c Manual compaction at level-0 from '!folders!0Rx103v99LTFoMTP' @ 72057594037927935 : 1 .. '!items!ziiFc860EZanavt1' @ 0 : 0; will stop at (end)
+2025/11/16-02:21:26.736 8b1c Manual compaction at level-1 from '!folders!0Rx103v99LTFoMTP' @ 72057594037927935 : 1 .. '!items!ziiFc860EZanavt1' @ 0 : 0; will stop at '!items!ziiFc860EZanavt1' @ 1895 : 0
+2025/11/16-02:21:26.736 8b1c Compacting 1@1 + 1@2 files
+2025/11/16-02:21:26.742 8b1c Generated table #357@1: 145 keys, 84362 bytes
+2025/11/16-02:21:26.742 8b1c Compacted 1@1 + 1@2 files => 84362 bytes
+2025/11/16-02:21:26.744 8b1c compacted to: files[ 0 0 1 0 0 0 0 ]
+2025/11/16-02:21:26.744 8b1c Delete type=2 #306
+2025/11/16-02:21:26.747 8b1c Delete type=2 #356
+2025/11/16-02:21:26.762 8b1c Manual compaction at level-1 from '!items!ziiFc860EZanavt1' @ 1895 : 0 .. '!items!ziiFc860EZanavt1' @ 0 : 0; will stop at (end)
