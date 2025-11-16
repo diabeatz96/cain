@@ -1,16 +1,19 @@
 <form class="{{cssClass}} {{actor.type}} {{system.sinType}} flexcol brooding-theme" autocomplete="off">
-  {{!-- Sheet Header --}}
+  {{!-- Sheet Header: image and general information --}}
   <div class="row">
     <div class="col">
       <div class="card paper-texture">
+        <div style="position: relative;">
+          <span style="position: absolute;"></span>
+        </div>
         <div class="row">
-          <div class="col w-33">
+          <div class="col w-25">
             <h1 class="pirata-one-regular" style="text-align: center;">SIN</h1>
           </div>
-          <div class="col w-33">
-            <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100"/>
+          <div class="col w-25 m-auto">
+            <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="150" width="150"/>
           </div>
-          <div class="col w-33">
+          <div class="col w-33 m-auto">
             <div class="row">
               <span><b>Name:</b></span>
               <input class="input-text" name="name" type="text" value="{{actor.name}}" placeholder="Name"/>
@@ -44,54 +47,26 @@
       </div>
     </div>
   </div>
-  <header class="sheet-header dark-header">
-    <button type="button" class="quick-action-button attack-player">Click me!</button>
-    <div class="header-top">
-      <div class="header-fields">
-        {{!-- <h1 class="charname"><input name="name" type="text" value="{{actor.name}}" placeholder="Name"/></h1> --}}
-        <div class="header-icons">
-          <div class="resource-item">
-            <label for="system.sinType" class="resource-label">Sin Type</label>
-            <select id="sinTypeSelect" name="system.sinType">
-              <option value="ogre" {{#if (eq system.sinType "ogre")}}selected{{/if}}>Ogre</option>
-              <option value="toad" {{#if (eq system.sinType "toad")}}selected{{/if}}>Toad</option>
-              <option value="idol" {{#if (eq system.sinType "idol")}}selected{{/if}}>Idol</option>
-              <option value="lord" {{#if (eq system.sinType "lord")}}selected{{/if}}>Lord</option>
-              <option value="hound" {{#if (eq system.sinType "hound")}}selected{{/if}}>Hound</option>
-              <option value="centipede" {{#if (eq system.sinType "centipede")}}selected{{/if}}>Centipede</option>
-              <option value="redacted" {{#if (eq system.sinType "redacted")}}selected{{/if}}>[REDACTED]</option>
-            </select>
-          </div>
-          <div class="resource-item">
-            <label for="system.sinForm" class="resource-label">Sin Form</label>
-            <select name="system.sinForm">
-              <option value="Form I/Severed" {{#if (eq system.sinForm "Form I/Severed")}}selected{{/if}}>Form I/Severed</option>
-              <option value="Form II/Fused" {{#if (eq system.sinForm "Form II/Fused")}}selected{{/if}}>Form II/Fused</option>
-              <option value="Form III/Bound" {{#if (eq system.sinForm "Form III/Bound")}}selected{{/if}}>Form III/Bound</option>
-            </select>
-          </div>
-          <div class="resource-item">
-            <label for="system.category" class="resource-label">Category</label>
-            <input type="text" name="system.category" value="{{system.category}}" data-dtype="Number"/>
-          </div>
-        </div>
-      </div>
-    </div>
-  </header>
 
   {{!-- Quick Actions and Talismans --}}
   <section class="quick-section">
-    <div class="quick-actions">
-      <h2>Quick Actions</h2>
-      <div class="actions-grid">
-        <button type="button" class="quick-action-button attack-player">Attack a Player</button>
-        <button type="button" class="quick-action-button afflict-player">Afflict a Player</button>
-        <button type="button" class="quick-action-button use-complication">Use Complication</button>
-        <button type="button" class="quick-action-button use-threat">Use Threat</button>
-        <button type="button" class="quick-action-button severe-attack">Severe Attack</button>
-        <button type="button" class="quick-action-button use-domain">Use Domain</button>
+      <div class="card paper-texture2">
+          <div class="quick-actions">
+              <div class="row">
+                  <div class="col" style="writing-mode: vertical-lr; max-width: 27px;">
+                      <p class="quick-action-text">Quick Actions</p>
+                  </div>
+                  <div class="actions-grid col">
+                      <button type="button" class="quick-action-button attack-player">Attack a Player</button>
+                      <button type="button" class="quick-action-button afflict-player">Afflict a Player</button>
+                      <button type="button" class="quick-action-button use-complication">Use Complication</button>
+                      <button type="button" class="quick-action-button use-threat">Use Threat</button>
+                      <button type="button" class="quick-action-button severe-attack">Severe Attack</button>
+                      <button type="button" class="quick-action-button use-domain">Use Domain</button>
+                  </div>
+              </div>
+          </div>
       </div>
-    </div>
     <div class="quick-stats">
       <h2>Talismans</h2>
       <div class="talisman-selection">
@@ -148,6 +123,7 @@
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Pirata+One&display=swap');
+
 .brooding-theme {
   background-color: #1a1a1a;
   color: #e0e0e0;
@@ -162,7 +138,10 @@
   flex-wrap: wrap;
   margin-right: -15px;
   margin-left: -15px;
-  color: 
+}
+
+.m-auto {
+  margin: auto;
 }
 
 .col {
@@ -226,12 +205,18 @@
     background-position: 50% 50%;
   }
 
+  &.paper-texture2 {
+    background-image: url("systems/cain/assets/backgrounds/paper2.jpg");
+    background-position: 50% 50%;
+    background-blend-mode: difference;
+  }
+
   input[type="text"] {
     -webkit-appearance: none;
     appearance: none;
     margin 0;
 
-    font: inherit;
+    font-family: sans-serif;
     font-size: 22px;
     border: none;
     width: 50%;
@@ -242,30 +227,137 @@
 }
 
 .hound {
-  background-color: red !important;
+  border: 5px #ff0808 solid;
 }
 
 .centipede {
-  background-color: purple !important;
+  border: 5px #9f00ff solid;
 }
 
 .idol {
-  background-color: pink !important;
+  border: 5px #e40df2 solid;
 }
 
 .ogre {
-  background-color: darkblue !important;
+  border: 5px #0d79f2 solid;
 }
 
 .toad {
-  background-color: orange !important;
+  border: 5px #f2af0d solid;
 }
 
 .lord {
-  background-color: cyan !important;
+  border: 5px #91ffef solid;
 }
 
-.brooding-theme .dark-header {
+.profile-img {
+  border: 2px solid #444;
+  border-radius: 50%;
+  transition: transform 0.3s;
+}
+
+.profile-img:hover {
+  transform: scale(1.1);
+}
+
+select {
+  color: black;
+  font-size: 18px;
+  font-family: sans-serif;
+  border: none;
+
+  &:focus {
+    {{!-- TODO not sure how noticeable this will be --}}
+    .ogre &{
+      box-shadow: 0 0 5px #0d79f2;
+    }
+    box-shadow: 0 0 5px pink;
+  }
+}
+
+.actions-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.quick-action-text {
+    text-orientation: sideways;
+    font-family: 'Pirata One';
+    color: white;
+    font-size: 31px;
+    font-weight: bold;
+    margin-left: 16px;
+    text-align: center;
+    text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;
+
+    .hound &{
+        color: #ff0808;
+    }
+
+    .centipede &{
+        color: #9f00ff;
+    }
+
+    .idol &{
+        color: #e40df2;
+    }
+
+    .ogre &{
+        color: #0d79f2;
+    }
+
+    .toad &{
+        color: #f2af0d;
+    }
+
+    .lord &{
+        color: #91ffef;
+    }
+}
+
+.quick-action-button {
+    border: none;
+    border-radius: 5px;
+    padding: 20px 10px;
+    max-width: 25%;
+    margin: 10px;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    font-family: "Pirata One", system-ui;
+    flex-basis: 32%;
+    font-size: 28px;
+    background-color: #636363;
+
+    &:hover {
+        transform: rotate(8deg) scale(1.1);
+    }
+    .hound &{
+        background-color: #ff0808;
+    }
+
+    .centipede &{
+        background-color: #9f00ff;
+    }
+
+    .idol &{
+        background-color: #e40df2;
+    }
+
+    .ogre &{
+        background-color: #0d79f2;
+    }
+
+    .toad &{
+        background-color: #f2af0d;
+    }
+
+    .lord &{
+        background-color: #91ffef;
+    }
+}
+
+{{!-- Stashing these aside for now... --}}
+{{!-- .brooding-theme .dark-header {
   background-color: #1a1a1a;
   color: #e0e0e0;
   border-bottom: 2px solid #444;
@@ -320,16 +412,6 @@
 .brooding-theme .dark-header select option {
   background-color: #1a1a1a;
   color: white;
-}
-
-.brooding-theme .profile-img {
-  border: 2px solid #444;
-  border-radius: 50%;
-  transition: transform 0.3s;
-}
-
-.brooding-theme .profile-img:hover {
-  transform: scale(1.1);
 }
 
 .brooding-theme .header-fields {
@@ -613,5 +695,5 @@
 
 .brooding-theme .delete-talisman-button:hover {
   background-color: #cc0000;
-}
+} --}}
 </style>

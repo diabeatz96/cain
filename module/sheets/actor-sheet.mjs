@@ -1558,6 +1558,7 @@ export class CainActorSheet extends ActorSheet {
 
   _onCATSelect(leftClick, event){
     let selectedCat = event.currentTarget.dataset.cat
+    console.log('cat selected ' + selectedCat)
     if(leftClick){
       //set to new category
       this.actor.update({["system.CATLEVEL.value"]: selectedCat});
@@ -2284,12 +2285,14 @@ export class CainActorSheet extends ActorSheet {
   async updateActor(key, value){
     let obj = {}
     obj[key] = value
+    console.log(`update actor ${key} ${value}`)
     this.actor.update(obj);
   }
 
   _onSinTypeSelect(sinType) {
     const sinTypeMapping = {
       ogre: {
+        defaultImg: "systems/cain/assets/Sins/ogre.png",
         domains: {
           ability1: {
             title: "Hostile Door Patterns",
@@ -2373,6 +2376,7 @@ export class CainActorSheet extends ActorSheet {
         ]
       },
       toad: {
+        defaultImg: "systems/cain/assets/Sins/toad.png",
         domains: {
           ability1: {
             title: "Hotel for One",
@@ -2449,6 +2453,7 @@ export class CainActorSheet extends ActorSheet {
         severeAbilityQuestions: ["Are you accepting of your powers?", "Are your allies close enough to touch you skin to skin?", "Are you willing to part with your kit?", "Is the Toad hindered, distracted, or under duress in some way?"]
       }, 
       idol: {
+        defaultImg: "systems/cain/assets/Sins/idol.png",
         domains: {
           ability1: { title: "Toys for Men", value: "The idol gains the ability to play with the flesh of others like marionettes. Cultists gain +1 segment on their execution talisman (so a lone cultist would have 3) as they can keep moving even while their body is broken, jerked by invisible strings. The idol gains a new affliction: COLLECT DOLL: When afflicted, the exorcist loses control of one of their arms. It becomes doll-like in texture and appearance. Once a scene, the idol can interfere with an action the exorcist is performing as the hand interferes, forcing them to either take 1 stress or make the action hard." },
           ability2: { title: "Elevation of the Innumerable Mass", value: "The idol gains the ability to elevate members of its cult into minor sins. One of these can appear a scene when fighting the idol or its cult. Apostle (Sin). Execution talisman 4. Armed with supernatural strength and mutated blades. Reactions: Inflict stress. Attacks with: Mutated body, mundane firearms or blades. (1) 3 stress, (2/3): 2 stress, (4+): 1 stress. Or: create a complication or threat: Create a fleshy clone of itself, unleash a flurry of attacks, mutate further, move impossibly fast. Or: Exort (1-3): An ally of the apostle heals slashes on their execution clock depending on the risk die (1: 2 ticks, 2-3: 1 tick). The next time that ally inflicts stress on an exorcist, they inflict +1 stress." },
@@ -2518,6 +2523,7 @@ export class CainActorSheet extends ActorSheet {
       severeAbilityQuestions: ["Are you far from the idol?", "Do you have love in your life?", "Does someone aiding you care about you? They can describe how.", "Is the idol hindered, distracted, or under duress in some way?"],
       },
       lord: {
+        defaultImg: "systems/cain/assets/Sins/lord.png",
         domains: {
           ability1: { title: "Stricture of Manifestation", value: "The Lord or its host gain increased control over reality inside its Kingdom, granting them the following powers. It can use these as threats or complications: • Cause any object up to CAT+1 size to coalesce and appear in a few moments. • Invert or choose the direction and strength of gravity, or even make space curved • Change the weather or change the biome of an area, such as from sunny to snowy • Rearrange the interiors and layouts of buildings, streets, or corridors In addition, as a threat or a tension move, the Lord can dismiss any psychic power caused by the exorcists that has a sustained effect (like a summon or curse). This only works inside the kingdom." },
           ability2: { title: "Stricture of Superiority", value: "The Lord fights more fiercely the less exorcists play by the rules of the Kingdom. At the start of the round in a conflict scene, the Lord can take one of the following stances. Exorcists that don’t fulfill the requirements are punished. It must switch to a different stance each round. • Honorable Fighting: Exorcists that participate in teamwork or setup first take 1d3 stress. • Grand Melee: Exorcists acting without benefiting from teamwork or setup find it hard. • Duel: The Lord chooses an exorcist. That exorcist deals +1 more slashes on the Lord’s execution talisman, but all other exorcists deal 1 less slash to the Lord this round." },
@@ -2579,6 +2585,7 @@ export class CainActorSheet extends ActorSheet {
         severeAbilityQuestions: ["Are you innocent of crimes?", "Are you a liar or a cheat?", "Have you lived a life by your ideals?", "Is the Lord hindered, distracted, or under duress in any way?"],
       },
       hound: {
+        defaultImg: "systems/cain/assets/Sins/hound.png",
         domains: {
           ability1: { title: "A Shuddering Thing Through a Dark Hall", value: "The hound feeds on fear, growing physically larger and stronger from the terror of weaker wills. Once a scene, if there are mundane humans within the local area, as a complication, the hound can manifest for them and start feeding off their fear. Until the exorcists calm the humans down or remove them from the situation, the hound takes -1 slash on its execution talisman from all sources and deals +1 more stress with reactions. Exorcists that attempt to harm the hound in any way must first spend 1 stress to suppress their fear. They can suppress this effect permanently as part of any action against the hound by answering the question, asked by the admin: What is it you are most afraid of? However, if they choose to answer, the Admin also rolls two risk dice and picks the lowest result for the triggering action." },
           ability2: { title: "Turning Blades, I Laughed at their Brittleness", value: "The hound’s hide becomes incredibly tough and durable, like a beast’s. • Each time an action would slash the hound’s execution talisman, roll a 1d6 fortune roll. If the roll is a 1 or 2, reduce all slashes suffered to 1. The hound’s armor has weak spots, however, and any action that is set up or part of teamwork can ignore this effect. • Mundane weapons are completely incapable of harming the hound unless they are extremely strong, like a tank cannon or a missile." },
@@ -2640,6 +2647,7 @@ export class CainActorSheet extends ActorSheet {
         severeAbilityQuestions: ["Do you have a sword (or something like it)?", "Are you calm, collected, and focused?", "Do you have a shield (or something like it)?", "Is the hound hindered, distracted, or under duress in some way?"],
       },
       centipede: {
+        defaultImg: "systems/cain/assets/Sins/centipede.png",
         domains: {
           ability1: {
             title: "The Heralds of Venom",
@@ -2738,6 +2746,7 @@ export class CainActorSheet extends ActorSheet {
         severeAbilityQuestions: ["Can you move quickly and unencumbered?", "Is someone aiding you able to push or grab you?", "Can you forgive the centipede's host?", "Is the centipede hindered, distracted, or under duress in some way?"],
       },
       redacted: {
+        defaultImg: "systems/cain/assets/Sins/generic_sin.png",
         domains: {
           ability1: {
             title: "The Redacted",
@@ -2810,6 +2819,7 @@ export class CainActorSheet extends ActorSheet {
     if (sinTypeData) {
       const actor = this.actor;
       actor.update({
+        'img': sinTypeData.defaultImg,
         'system.domains': sinTypeData.domains,
         'system.palace': sinTypeData.palace,
         'system.appearance': sinTypeData.appearance,
