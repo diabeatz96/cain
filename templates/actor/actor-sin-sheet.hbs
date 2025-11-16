@@ -1,11 +1,54 @@
-<form class="{{cssClass}} {{actor.type}} flexcol brooding-theme" autocomplete="off">
-
+<form class="{{cssClass}} {{actor.type}} {{system.sinType}} flexcol brooding-theme" autocomplete="off">
   {{!-- Sheet Header --}}
+  <div class="row">
+    <div class="col">
+      <div class="card paper-texture">
+        <div class="row">
+          <div class="col w-33">
+            <h1 class="pirata-one-regular" style="text-align: center;">SIN</h1>
+          </div>
+          <div class="col w-33">
+            <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100"/>
+          </div>
+          <div class="col w-33">
+            <div class="row">
+              <span><b>Name:</b></span>
+              <input class="input-text" name="name" type="text" value="{{actor.name}}" placeholder="Name"/>
+            </div>
+            <div class="row">
+              <span><b>Type:</b></span>
+              <select id="sinTypeSelect" name="system.sinType">
+                <option value="ogre" {{#if (eq system.sinType "ogre")}}selected{{/if}}>Ogre</option>
+                <option value="toad" {{#if (eq system.sinType "toad")}}selected{{/if}}>Toad</option>
+                <option value="idol" {{#if (eq system.sinType "idol")}}selected{{/if}}>Idol</option>
+                <option value="lord" {{#if (eq system.sinType "lord")}}selected{{/if}}>Lord</option>
+                <option value="hound" {{#if (eq system.sinType "hound")}}selected{{/if}}>Hound</option>
+                <option value="centipede" {{#if (eq system.sinType "centipede")}}selected{{/if}}>Centipede</option>
+                <option value="redacted" {{#if (eq system.sinType "redacted")}}selected{{/if}}>[REDACTED]</option>
+              </select>
+            </div>
+            <div class="row">
+              <span><b>Form:</b></span>
+              <select name="system.sinForm">
+                <option value="Form I/Severed" {{#if (eq system.sinForm "Form I/Severed")}}selected{{/if}}>Form I/Severed</option>
+                <option value="Form II/Fused" {{#if (eq system.sinForm "Form II/Fused")}}selected{{/if}}>Form II/Fused</option>
+                <option value="Form III/Bound" {{#if (eq system.sinForm "Form III/Bound")}}selected{{/if}}>Form III/Bound</option>
+              </select>
+            </div>
+            <div class="row">
+              <span><b>Category:</b></span>
+              <input type="text" name="system.category" value="{{system.category}}" data-dtype="Number"/>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   <header class="sheet-header dark-header">
+    <button type="button" class="quick-action-button attack-player">Click me!</button>
     <div class="header-top">
-      <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100"/>
       <div class="header-fields">
-        <h1 class="charname"><input name="name" type="text" value="{{actor.name}}" placeholder="Name"/></h1>
+        {{!-- <h1 class="charname"><input name="name" type="text" value="{{actor.name}}" placeholder="Name"/></h1> --}}
         <div class="header-icons">
           <div class="resource-item">
             <label for="system.sinType" class="resource-label">Sin Type</label>
@@ -104,6 +147,7 @@
 
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Pirata+One&display=swap');
 .brooding-theme {
   background-color: #1a1a1a;
   color: #e0e0e0;
@@ -111,6 +155,114 @@
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.5);
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
+  color: 
+}
+
+.col {
+  flex-basis: 0;
+  flex-grow: 1;
+  max-width: 100%;
+
+  &.w-25 {
+    flex: 0 0 25%;
+    max-width: 25%;
+  }
+
+  &.w-33 {
+    flex: 0 0 33%;
+    max-width: 33%;
+  }
+
+  &.w-50 {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+
+  &.w-66 {
+    flex: 0 0 66%;
+    max-width: 66%;
+  }
+
+  &.w-75 {
+    flex: 0 0 75%;
+    max-width: 75%;
+  }
+}
+
+.pirata-one-regular {
+  font-family: "Pirata One", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.card {
+  border-radius: 20px;
+  background-color: rgb(134, 134, 134);
+  border: none;
+  padding: 10px;
+  margin: 10px;
+
+  span {
+    color: black;
+    font-size: 22px;
+  }
+
+  h1 {
+    font-size: 120px;
+    margin: auto;
+    color: black;
+    border-bottom: none;
+  }
+
+  &.paper-texture {
+    background-image: url("systems/cain/assets/backgrounds/paper1.jpg");
+    background-position: 50% 50%;
+  }
+
+  input[type="text"] {
+    -webkit-appearance: none;
+    appearance: none;
+    margin 0;
+
+    font: inherit;
+    font-size: 22px;
+    border: none;
+    width: 50%;
+    background-color: transparent;
+    border-radius: 0%;
+    border-bottom: black solid 2px;
+  }
+}
+
+.hound {
+  background-color: red !important;
+}
+
+.centipede {
+  background-color: purple !important;
+}
+
+.idol {
+  background-color: pink !important;
+}
+
+.ogre {
+  background-color: darkblue !important;
+}
+
+.toad {
+  background-color: orange !important;
+}
+
+.lord {
+  background-color: cyan !important;
 }
 
 .brooding-theme .dark-header {
@@ -173,7 +325,6 @@
 .brooding-theme .profile-img {
   border: 2px solid #444;
   border-radius: 50%;
-  box-shadow: 0 0 10px 2px #000;
   transition: transform 0.3s;
 }
 

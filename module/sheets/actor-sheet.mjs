@@ -9,7 +9,6 @@ import {
 
 import { TalismanWindow } from '../documents/talisman-window.mjs';
 import { SessionEndAdvancement} from  '../documents/session-end-advancement.mjs'
-import { CAIN } from '../helpers/config.mjs';
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
@@ -58,7 +57,7 @@ export class CainActorSheet extends ActorSheet {
       this._prepareCharacterData(context);
     }
 
-    if (actorData.type == 'npc') {
+    if (actorData.type == 'sin') {
       console.log(context);
       console.log(this.actor.type)
       this._prepareItems(context);
@@ -449,7 +448,7 @@ export class CainActorSheet extends ActorSheet {
     });
   
     let scHtml = new HTMLShortcut(html);
-    // NPC SPECIFIC LISTENERS
+    // SIN SPECIFIC LISTENERS
     html.find('.quick-action-button.attack-player').click(this._attackPlayer.bind(this));
     html.find('.quick-action-button.afflict-player').click(this._afflictPlayer.bind(this));
     html.find('.quick-action-button.use-complication').click(this._useComplication.bind(this));
@@ -2825,6 +2824,10 @@ export class CainActorSheet extends ActorSheet {
         'system.severeAbilityQuestions': sinTypeData.severeAbilityQuestions
       });
     }
+  }
+
+  async _allowEdit(event) {
+
   }
 
   async _attackPlayer(event) {
