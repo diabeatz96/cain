@@ -1719,6 +1719,11 @@ img {
     background-size: cover;
     position: relative;
     cursor: pointer;
+    transition: transform 0.1s ease;
+  }
+
+  input[type="checkbox"]+label:hover {
+    transform: scale(1.05);
   }
 
   input[type="checkbox"]+label::before {
@@ -1726,17 +1731,25 @@ img {
     display: block;
     width: 24px;
     height: 24px;
-    border: 3px solid purple;
+    border: 3px solid #9b59b6;
     border-radius: 50%;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    transition: background-color 0.2s ease;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 0 0 rgba(155, 89, 182, 0);
+  }
+
+  input[type="checkbox"]+label:hover::before {
+    border-color: #bb7bd6;
+    box-shadow: 0 0 8px rgba(155, 89, 182, 0.4);
   }
 
   input[type="checkbox"]:checked+label::before {
-    background-color: purple;
+    background-color: #9b59b6;
+    border-color: #9b59b6;
+    box-shadow: 0 0 10px rgba(155, 89, 182, 0.6);
   }
 
   /* V13 FontAwesome checkbox compatibility - hide FA icons for custom checkboxes */
@@ -1749,16 +1762,35 @@ img {
   input[type="checkbox"]+label {
     height: 30px;
     width: 30px;
+    transition: transform 0.1s ease;
+  }
+
+  input[type="checkbox"]+label:hover {
+    transform: scale(1.1);
   }
 
   input[type="checkbox"]+label::before {
     width: 18px;
     height: 18px;
-    border: 3px solid rgb(10, 123, 175);
+    border: 3px solid #0a7baf;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.3s ease;
+    box-shadow: 0 0 0 0 rgba(10, 123, 175, 0);
+  }
+
+  input[type="checkbox"]+label:hover::before {
+    border-color: #0d9edb;
+    box-shadow: 0 0 6px rgba(10, 123, 175, 0.5);
   }
 
   input[type="checkbox"]:checked+label::before {
-    background-color: rgb(10, 123, 175);
+    background-color: #0a7baf;
+    border-color: #0a7baf;
+    box-shadow: 0 0 8px rgba(10, 123, 175, 0.7);
   }
 
   /* V13 FontAwesome checkbox compatibility - hide FA icons for custom checkboxes */
@@ -1893,6 +1925,18 @@ img {
   box-sizing: border-box;
 }
 
+/* Select dropdown option styling - ensure readability */
+.cain select option {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  padding: 4px 8px;
+}
+
+.cain select option:checked {
+  background-color: #0a7baf !important;
+  color: #ffffff !important;
+}
+
 /* Sheet header input fields - ensure consistent styling across versions */
 .cain .sheet-header input[type="text"],
 .cain .sheet-header input[type="number"] {
@@ -1943,20 +1987,6 @@ img {
   font-family: inherit;
   cursor: pointer;
   border-radius: 3px;
-}
-
-/* Ensure custom checkboxes work in all versions */
-.cain input[type="checkbox"] {
-  /* V13 uses FontAwesome icons, but our custom checkboxes override this */
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-}
-
-/* V13 specific: Ensure standard Foundry checkboxes still work when not custom */
-.cain input[type="checkbox"]:not(.custom-checkbox) {
-  width: auto;
-  height: auto;
 }
 
 /* Prosemirror editor compatibility (TinyMCE/ProseMirror transition) */
