@@ -20,7 +20,23 @@
     background: #ffffff !important; /* White background */
     font-size: 1em !important;
   }
-  
+
+  /* Sheet header input fields - ensure text is visible in accessibility mode */
+  .sheet-header input[type="text"],
+  .sheet-header input[type="number"] {
+    background-color: #ffffff !important; /* White background */
+    color: #000000 !important; /* Black text */
+    border: 1px solid #000000 !important; /* Black border */
+  }
+
+  /* All input fields in accessibility mode */
+  input[type="text"],
+  input[type="number"] {
+    background-color: #ffffff !important; /* White background */
+    color: #000000 !important; /* Black text */
+    border: 1px solid #000000 !important; /* Black border */
+  }
+
   .grid-2col {
     gap: 15px !important;
   }
@@ -1553,7 +1569,15 @@
     border-bottom: 2px solid #000000; /* Black border */
     padding: 5px;
   }
-  
+
+  /* Sheet header input fields - ensure text is visible */
+  .brooding-theme .sheet-header input[type="text"],
+  .brooding-theme .sheet-header input[type="number"] {
+    background-color: #ffffff !important; /* White background */
+    color: #000000 !important; /* Black text */
+    border: 1px solid #000000 !important; /* Black border */
+  }
+
   .brooding-theme .resources {
     margin-top: 20px;
   }
