@@ -565,6 +565,53 @@ Hooks.once('ready', () => {
 
 });
 
+// Hook to update tiles when changing scenes
+Hooks.on('canvasReady', async () => {
+  console.log('Canvas ready - updating all talisman tiles in scene');
+
+  if (!canvas.scene) return;
+
+  const talismans = game.settings.get('cain', 'globalTalismans');
+
+  // Find all talisman tiles in the scene
+  const talismanTiles = canvas.scene.tiles.filter(tile => tile.flags?.talismanData);
+
+  console.log(`Found ${talismanTiles.length} talisman tiles in scene to update`);
+
+  for (let tile of talismanTiles) {
+    const tileIndex = tile.flags.talismanData.index;
+    const currentTalisman = talismans[tileIndex];
+
+    if (currentTalisman) {
+      console.log(`Updating tile ${tile.id} with current talisman data from index ${tileIndex}`);
+
+      // Update the tile with current global talisman data
+      await tile.update({
+        'texture.src': currentTalisman.imagePath,
+        'flags.talismanData': {
+          ...currentTalisman,
+          index: tileIndex
+        },
+        'flags.talismanName': currentTalisman.name,
+        'flags.talismanMarks': `${currentTalisman.currMarkAmount}/${currentTalisman.maxMarkAmount}`
+      });
+
+      // Update the associated label
+      const labels = canvas.scene.drawings.filter(d =>
+        d.flags?.cain?.talismanTileId === tile.id && d.flags?.cain?.talismanLabel
+      );
+
+      for (let label of labels) {
+        await label.update({
+          text: `${currentTalisman.name}\n${currentTalisman.currMarkAmount} / ${currentTalisman.maxMarkAmount}`
+        });
+      }
+    }
+  }
+
+  console.log('Scene talisman tiles updated');
+});
+
 // Add click handler for talisman tiles to open the talisman window
 Hooks.on('clickLeft', (tile, event) => {
   if (tile.document?.flags?.talismanData) {
