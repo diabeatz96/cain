@@ -39,20 +39,24 @@ export class TalismanWindow extends Application {
 
       // Add create tile event listener
       html.find('.create-tile').on('click', this._onCreateTile.bind(this));
+
+      // Add delete all tiles event listener
+      html.find('.delete-all-tiles').on('click', this._onDeleteAllTiles.bind(this));
     }
   }
 
   async _onDragStart(event) {
-    const index = event.currentTarget.dataset.index;
+    const index = parseInt(event.currentTarget.dataset.index, 10);
     const talismans = game.settings.get('cain', 'globalTalismans');
     const talisman = talismans[index];
     event.originalEvent.dataTransfer.setData('text/plain', JSON.stringify(talisman));
   }
 
   async _onNameChange(event) {
-    const index = event.currentTarget.dataset.index;
+    const index = parseInt(event.currentTarget.dataset.index, 10);
     const value = event.currentTarget.value;
     const talismans = game.settings.get('cain', 'globalTalismans');
+    console.log(`Changing talisman name at index ${index} (type: ${typeof index}) from "${talismans[index].name}" to "${value}"`);
     talismans[index].name = value;
     await game.settings.set('cain', 'globalTalismans', talismans);
     this._emitUpdate();
@@ -82,9 +86,10 @@ export class TalismanWindow extends Application {
   }
 
   async _onSliderChange(event) {
-    const index = event.currentTarget.dataset.index;
+    const index = parseInt(event.currentTarget.dataset.index, 10);
     const value = event.currentTarget.value;
     const talismans = game.settings.get('cain', 'globalTalismans');
+    console.log(`Changing talisman marks at index ${index} (type: ${typeof index}) to ${value}`);
     talismans[index].currMarkAmount = parseInt(value, 10);
     const imagePath = talismans[index].imagePath;
     talismans[index].imagePath = imagePath.replace(/-(\d+)\.png$/, `-${value}.png`);
@@ -93,7 +98,7 @@ export class TalismanWindow extends Application {
   }
 
   async _onImageClick(event) {
-    const index = event.currentTarget.dataset.index;
+    const index = parseInt(event.currentTarget.dataset.index, 10);
     const talismans = game.settings.get('cain', 'globalTalismans');
     if (talismans[index].currMarkAmount < talismans[index].maxMarkAmount) {
       talismans[index].currMarkAmount++;
@@ -109,7 +114,7 @@ export class TalismanWindow extends Application {
 
   async _onDecreaseMarks(event) {
     event.preventDefault();
-    const index = event.currentTarget.dataset.index;
+    const index = parseInt(event.currentTarget.dataset.index, 10);
     const talismans = game.settings.get('cain', 'globalTalismans');
   
     // Change image similar to how the image change function works but in reverse
@@ -126,7 +131,7 @@ export class TalismanWindow extends Application {
 
   async _onHideTalisman(event) {
     event.preventDefault();
-    const index = event.currentTarget.dataset.index;
+    const index = parseInt(event.currentTarget.dataset.index, 10);
     const talismans = game.settings.get('cain', 'globalTalismans');
     talismans[index].isHidden = !talismans[index].isHidden;
     await game.settings.set('cain', 'globalTalismans', talismans);
@@ -134,7 +139,7 @@ export class TalismanWindow extends Application {
   }
 
   async _onMaxMarkChange(event) {
-    const index = event.currentTarget.dataset.index;
+    const index = parseInt(event.currentTarget.dataset.index, 10);
     const value = parseInt(event.currentTarget.value, 10);
     const talismans = game.settings.get('cain', 'globalTalismans');
     
@@ -155,7 +160,7 @@ export class TalismanWindow extends Application {
 
   async _onPinTalisman(event) {
     event.preventDefault();
-    const index = event.currentTarget.dataset.index;
+    const index = parseInt(event.currentTarget.dataset.index, 10);
     const talismans = game.settings.get('cain', 'globalTalismans');
     const talisman = talismans[index];
   
@@ -199,36 +204,81 @@ export class TalismanWindow extends Application {
 
   async _onCreateTile(event) {
     event.preventDefault();
-    const index = event.currentTarget.dataset.index;
+    const index = parseInt(event.currentTarget.dataset.index, 10);
     const talismans = game.settings.get('cain', 'globalTalismans');
     const talisman = talismans[index];
 
     console.log('Creating tile for talisman:', talisman);
+    console.log('Index:', index, 'Type:', typeof index);
 
-    // Calculate the center position of the current screen
-    const centerX = canvas.stage.pivot.x + (canvas.stage.width / 2);
-    const centerY = canvas.stage.pivot.y + (canvas.stage.height / 2);
+    // Get the center of the current viewport
+    const viewPos = canvas.scene._viewPosition;
+    const centerX = viewPos.x;
+    const centerY = viewPos.y;
+
+    console.log('Center position:', centerX, centerY);
+
+    // Use proper talisman image size - 274x432 to match original dimensions
+    const tileWidth = 274;
+    const tileHeight = 432;
 
     const tileData = {
       texture: {
-        src: talisman.imagePath
+        src: talisman.imagePath,
+        tint: null, // No tint to prevent washing out
+        alphaThreshold: 0.0 // Show all pixels
       },
-      width: 200, // Increased width
-      height: 200, // Increased height
-      x: centerX,
-      y: centerY,
+      width: tileWidth,
+      height: tileHeight,
+      x: centerX - (tileWidth / 2), // Center the tile on the position
+      y: centerY - (tileHeight / 2),
+      z: 100,
+      alpha: 1.0,
+      hidden: false,
+      locked: false,
+      overhead: false,
+      roof: false,
+      occlusion: {
+        mode: 0, // No occlusion
+        alpha: 0
+      },
+      video: {
+        loop: true,
+        autoplay: true,
+        volume: 0
+      },
       flags: {
-        talismanData: talisman
+        talismanData: {
+          ...talisman,
+          index: index
+        },
+        talismanName: talisman.name,
+        talismanMarks: `${talisman.currMarkAmount}/${talisman.maxMarkAmount}`
       }
     };
 
     console.log('Tile data:', tileData);
+    console.log('Talisman index being stored:', index);
 
     try {
       const createdTiles = await canvas.scene.createEmbeddedDocuments('Tile', [tileData]);
       if (createdTiles.length > 0) {
-        console.log('Tile created successfully:', createdTiles[0]);
-        ui.notifications.info(`Created tile for ${talisman.name}`);
+        const tile = createdTiles[0];
+        console.log('Tile created successfully:', tile);
+        console.log('Tile flags after creation:', tile.flags);
+        console.log('Tile talismanData.index:', tile.flags?.talismanData?.index);
+
+        // Store tile ID in talisman for better management
+        talismans[index].tileIds = talismans[index].tileIds || [];
+        if (!talismans[index].tileIds.includes(tile.id)) {
+          talismans[index].tileIds.push(tile.id);
+          await game.settings.set('cain', 'globalTalismans', talismans);
+        }
+
+        // Create a text label below the tile
+        await this._createTileLabel(tile, talisman);
+
+        ui.notifications.info(`Created tile for ${talisman.name} at center of screen`);
       } else {
         console.error('Tile creation failed:', createdTiles);
         ui.notifications.error('Failed to create tile.');
@@ -239,21 +289,182 @@ export class TalismanWindow extends Application {
     }
   }
 
-  async _updateTile(talisman) {
+  async _createTileLabel(tile, talisman) {
+    // Create a drawing with text to label the tile - positioned below
+    const labelWidth = 200;
+    const labelHeight = 50;
+
+    console.log('Creating label for tile:', tile.id);
+    console.log('Tile position:', tile.x, tile.y, 'size:', tile.width, tile.height);
+
+    const labelData = {
+      x: tile.x + (tile.width / 2) - (labelWidth / 2), // Center horizontally
+      y: tile.y + tile.height + 5, // Position below the tile with small gap
+      shape: {
+        type: 'r', // Rectangle
+        width: labelWidth,
+        height: labelHeight
+      },
+      fillColor: '#000000',
+      fillAlpha: 0.8,
+      strokeWidth: 2,
+      strokeColor: '#00bfff',
+      strokeAlpha: 1.0,
+      text: `${talisman.name}\n${talisman.currMarkAmount} / ${talisman.maxMarkAmount}`,
+      fontSize: 20,
+      fontFamily: 'Signika',
+      textColor: '#ffffff',
+      textAlpha: 1.0,
+      z: 100, // Same z-index as tile
+      locked: false,
+      hidden: false,
+      flags: {
+        cain: {
+          talismanTileId: tile.id,
+          talismanLabel: true,
+          talismanIndex: talisman.index
+        }
+      }
+    };
+
+    console.log('Label data:', labelData);
+
+    try {
+      const createdDrawings = await canvas.scene.createEmbeddedDocuments('Drawing', [labelData]);
+      if (createdDrawings && createdDrawings.length > 0) {
+        console.log('Label created successfully! ID:', createdDrawings[0].id);
+        console.log('Label flags:', createdDrawings[0].flags);
+      } else {
+        console.warn('Label creation returned empty array');
+      }
+    } catch (error) {
+      console.error('Error creating label:', error);
+      ui.notifications.warn('Could not create text label - drawings may not be supported');
+    }
+  }
+
+  async _updateTile(talisman, index) {
     if (!talisman) return;
     if (canvas.scene === null) return;
-    const tiles = canvas.scene.tiles.filter(tile => tile.flags.talismanData && tile.flags.talismanData.name === talisman.name) || [];
-    console.log('Tiles to update:', tiles);
-    if (tiles.length === 0) return;
-    for (let tile of tiles) {
-      await tile.update({ 'texture.src': talisman.imagePath });
-      console.log(`Tile updated: ${tile.id} with new texture: ${talisman.imagePath}`);
+
+    console.log(`\n=== Attempting to update tiles for index ${index} (${talisman.name}) ===`);
+    console.log('Total tiles in scene:', canvas.scene.tiles.size);
+
+    // Debug: Show all tiles and their flags
+    canvas.scene.tiles.forEach(tile => {
+      if (tile.flags?.talismanData) {
+        console.log(`Tile ${tile.id}: index=${tile.flags.talismanData.index}, name=${tile.flags.talismanData.name}`);
+      }
+    });
+
+    // Find tiles by talisman INDEX (not name, so renaming doesn't break the link)
+    const tiles = canvas.scene.tiles.filter(tile =>
+      tile.flags?.talismanData && tile.flags.talismanData.index === index
+    ) || [];
+
+    console.log(`Found ${tiles.length} tiles for index ${index}`);
+    if (tiles.length === 0) {
+      console.warn(`No tiles found for index ${index}!`);
+      return;
     }
+
+    for (let tile of tiles) {
+      // Update texture and talisman data
+      await tile.update({
+        'texture.src': talisman.imagePath,
+        'flags.talismanData': {
+          ...talisman,
+          index: index
+        },
+        'flags.talismanName': talisman.name,
+        'flags.talismanMarks': `${talisman.currMarkAmount}/${talisman.maxMarkAmount}`
+      });
+      console.log(`Tile ${tile.id} updated: texture=${talisman.imagePath}, name=${talisman.name}, marks=${talisman.currMarkAmount}/${talisman.maxMarkAmount}`);
+
+      // Update associated label if it exists
+      const labels = canvas.scene.drawings.filter(d =>
+        d.flags?.cain?.talismanTileId === tile.id && d.flags?.cain?.talismanLabel
+      );
+
+      console.log(`Found ${labels.length} labels for tile ${tile.id}`);
+
+      for (let label of labels) {
+        await label.update({
+          text: `${talisman.name}\n${talisman.currMarkAmount} / ${talisman.maxMarkAmount}`
+        });
+        console.log(`Label updated: ${talisman.name} ${talisman.currMarkAmount}/${talisman.maxMarkAmount}`);
+      }
+    }
+  }
+
+  async _onDeleteAllTiles(event) {
+    event.preventDefault();
+    const index = parseInt(event.currentTarget.dataset.index, 10);
+    console.log('Delete all tiles clicked for index:', index, 'Type:', typeof index);
+    await this._deleteAllTilesForTalisman(index);
+  }
+
+  async _deleteAllTilesForTalisman(index) {
+    if (canvas.scene === null) {
+      ui.notifications.warn('No active scene');
+      return;
+    }
+
+    const talismans = game.settings.get('cain', 'globalTalismans');
+    const talisman = talismans[index];
+    if (!talisman) return;
+
+    console.log('Deleting all tiles for index:', index, 'name:', talisman.name);
+
+    // Find all tiles for this talisman by INDEX (not name)
+    const tiles = canvas.scene.tiles.filter(tile =>
+      tile.flags?.talismanData && tile.flags.talismanData.index === index
+    ) || [];
+
+    console.log('Found tiles:', tiles.length);
+
+    if (tiles.length === 0) {
+      ui.notifications.warn(`No tiles found for ${talisman.name}`);
+      return;
+    }
+
+    // Find all associated labels
+    const tileIds = tiles.map(t => t.id);
+    console.log('Tile IDs:', tileIds);
+
+    const labels = canvas.scene.drawings.filter(d =>
+      d.flags?.cain?.talismanLabel && tileIds.includes(d.flags?.cain?.talismanTileId)
+    );
+
+    console.log('Found labels:', labels.length);
+    console.log('Label IDs:', labels.map(l => l.id));
+
+    // Delete all tiles and labels
+    try {
+      await canvas.scene.deleteEmbeddedDocuments('Tile', tileIds);
+      console.log('Tiles deleted successfully');
+
+      if (labels.length > 0) {
+        const labelIds = labels.map(l => l.id);
+        await canvas.scene.deleteEmbeddedDocuments('Drawing', labelIds);
+        console.log('Labels deleted successfully');
+      }
+    } catch (error) {
+      console.error('Error deleting tiles/labels:', error);
+      ui.notifications.error('Error deleting tiles and labels');
+      return;
+    }
+
+    // Clear stored tile IDs
+    talismans[index].tileIds = [];
+    await game.settings.set('cain', 'globalTalismans', talismans);
+
+    ui.notifications.info(`Deleted ${tiles.length} tile(s) and ${labels.length} label(s) for ${talisman.name}`);
   }
 
   async _onUnpinTalisman(event) {
     event.preventDefault();
-    const index = event.currentTarget.dataset.index;
+    const index = parseInt(event.currentTarget.dataset.index, 10);
     const pinnedTalisman = document.querySelector(`.pinned-talisman[data-index="${index}"]`);
     if (pinnedTalisman) {
       pinnedTalisman.remove();
@@ -321,8 +532,8 @@ export class TalismanWindow extends Application {
 
   _updateTiles() {
     const talismans = game.settings.get('cain', 'globalTalismans');
-    talismans.forEach(talisman => {
-      this._updateTile(talisman);
+    talismans.forEach((talisman, index) => {
+      this._updateTile(talisman, index);
     });
   }
 }
@@ -352,6 +563,147 @@ Hooks.once('ready', () => {
     await createTalismanOnCanvas(data);
   });
 
+});
+
+// Hook to update tiles when changing scenes
+Hooks.on('canvasReady', async () => {
+  console.log('Canvas ready - updating all talisman tiles in scene');
+
+  if (!canvas.scene) return;
+
+  const talismans = game.settings.get('cain', 'globalTalismans');
+
+  // Find all talisman tiles in the scene
+  const talismanTiles = canvas.scene.tiles.filter(tile => tile.flags?.talismanData);
+
+  console.log(`Found ${talismanTiles.length} talisman tiles in scene to update`);
+
+  for (let tile of talismanTiles) {
+    const tileIndex = tile.flags.talismanData.index;
+    const currentTalisman = talismans[tileIndex];
+
+    if (currentTalisman) {
+      console.log(`Updating tile ${tile.id} with current talisman data from index ${tileIndex}`);
+
+      // Update the tile with current global talisman data
+      await tile.update({
+        'texture.src': currentTalisman.imagePath,
+        'flags.talismanData': {
+          ...currentTalisman,
+          index: tileIndex
+        },
+        'flags.talismanName': currentTalisman.name,
+        'flags.talismanMarks': `${currentTalisman.currMarkAmount}/${currentTalisman.maxMarkAmount}`
+      });
+
+      // Update the associated label
+      const labels = canvas.scene.drawings.filter(d =>
+        d.flags?.cain?.talismanTileId === tile.id && d.flags?.cain?.talismanLabel
+      );
+
+      for (let label of labels) {
+        await label.update({
+          text: `${currentTalisman.name}\n${currentTalisman.currMarkAmount} / ${currentTalisman.maxMarkAmount}`
+        });
+      }
+    }
+  }
+
+  console.log('Scene talisman tiles updated');
+});
+
+// Add click handler for talisman tiles to open the talisman window
+Hooks.on('clickLeft', (tile, event) => {
+  if (tile.document?.flags?.talismanData) {
+    event.stopPropagation();
+    const talismanData = tile.document.flags.talismanData;
+    console.log('Talisman tile clicked:', talismanData);
+
+    // Open the talisman window
+    const talismanWindow = Object.values(ui.windows).find(app => app instanceof TalismanWindow);
+    if (talismanWindow) {
+      talismanWindow.render(true, { focus: true });
+    } else {
+      new TalismanWindow().render(true);
+    }
+
+    ui.notifications.info(`Talisman: ${talismanData.name} (${talismanData.currMarkAmount}/${talismanData.maxMarkAmount})`);
+  }
+});
+
+// Add right-click context menu for talisman tiles
+Hooks.on('getTileDirectoryEntryContext', (html, entryOptions) => {
+  entryOptions.push({
+    name: 'Update Talisman Tile',
+    icon: '<i class="fas fa-sync"></i>',
+    condition: li => {
+      const tile = game.scenes.current.tiles.get(li.data('entryId'));
+      return tile?.flags?.talismanData;
+    },
+    callback: async li => {
+      const tile = game.scenes.current.tiles.get(li.data('entryId'));
+      const talismanData = tile.flags.talismanData;
+      const talismans = game.settings.get('cain', 'globalTalismans');
+      const currentTalisman = talismans.find(t => t.name === talismanData.name);
+
+      if (currentTalisman) {
+        await tile.update({
+          'texture.src': currentTalisman.imagePath,
+          'flags.talismanData': currentTalisman,
+          'flags.talismanName': currentTalisman.name,
+          'flags.talismanMarks': `${currentTalisman.currMarkAmount}/${currentTalisman.maxMarkAmount}`
+        });
+
+        // Update the associated label
+        const labels = canvas.scene.drawings.filter(d =>
+          d.flags?.cain?.talismanTileId === tile.id && d.flags?.cain?.talismanLabel
+        );
+        for (let label of labels) {
+          await label.update({
+            text: `${currentTalisman.name}\n${currentTalisman.currMarkAmount} / ${currentTalisman.maxMarkAmount}`
+          });
+        }
+
+        ui.notifications.info(`Updated tile for ${currentTalisman.name}`);
+      }
+    }
+  });
+});
+
+// Hook to update label position when tile is moved or resized
+Hooks.on('updateTile', async (tileDoc, changes, options, userId) => {
+  // Only update if position or size changed and this is a talisman tile
+  if ((changes.x !== undefined || changes.y !== undefined || changes.width !== undefined || changes.height !== undefined) && tileDoc.flags?.talismanData) {
+    console.log('Talisman tile moved/resized, updating label position');
+    console.log('Tile ID:', tileDoc.id);
+    console.log('New position - x:', tileDoc.x, 'y:', tileDoc.y);
+    console.log('New size - width:', tileDoc.width, 'height:', tileDoc.height);
+
+    // Find the label drawing associated with this tile
+    const labels = canvas.scene.drawings.filter(d =>
+      d.flags?.cain?.talismanTileId === tileDoc.id && d.flags?.cain?.talismanLabel
+    );
+
+    console.log('Found labels:', labels.length);
+
+    for (let label of labels) {
+      const labelWidth = label.shape?.width || 200;
+      const newX = tileDoc.x + (tileDoc.width / 2) - (labelWidth / 2);
+      const newY = tileDoc.y + tileDoc.height + 5;
+
+      console.log('Updating label from', label.x, label.y, 'to', newX, newY);
+
+      try {
+        await label.update({
+          x: newX,
+          y: newY
+        });
+        console.log('Label updated successfully');
+      } catch (error) {
+        console.error('Error updating label:', error);
+      }
+    }
+  }
 });
 
 // Function to create a talisman on the canvas
