@@ -1,4 +1,4 @@
-name: Create Release
+name: Create Release (Advanced)
 
 on:
   push:
@@ -51,6 +51,38 @@ jobs:
           else
             echo "exists=false" >> $GITHUB_OUTPUT
             echo "✅ Tag $TAG is new"
+          fi
+
+      - name: Get pull request info (if from merged PR)
+        id: pr_info
+        run: |
+          # Extract PR number from merge commit message
+          COMMIT_MSG=$(git log -1 --pretty=%B)
+          PR_NUMBER=$(echo "$COMMIT_MSG" | grep -oP "Merge pull request #\K\d+|#\K\d+(?=/merge)" | head -1)
+          
+          if [ -n "$PR_NUMBER" ]; then
+            echo "pr_number=$PR_NUMBER" >> $GITHUB_OUTPUT
+            echo "has_pr=true" >> $GITHUB_OUTPUT
+            
+            # Get PR details using GitHub API
+            PR_DATA=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+              "https://api.github.com/repos/${{ github.repository }}/pulls/$PR_NUMBER")
+            
+            PR_TITLE=$(echo "$PR_DATA" | jq -r '.title // ""')
+            PR_BODY=$(echo "$PR_DATA" | jq -r '.body // ""')
+            PR_USER=$(echo "$PR_DATA" | jq -r '.user.login // ""')
+            
+            echo "pr_title=$PR_TITLE" >> $GITHUB_OUTPUT
+            echo "pr_body<<EOF" >> $GITHUB_OUTPUT
+            echo "$PR_BODY" >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+            echo "pr_user=$PR_USER" >> $GITHUB_OUTPUT
+            
+            echo "✅ Found PR #$PR_NUMBER: $PR_TITLE"
+            echo "👤 Author: @$PR_USER"
+          else
+            echo "has_pr=false" >> $GITHUB_OUTPUT
+            echo "ℹ️ Not a merged PR (direct push to main)"
           fi
 
       - name: Get system info from system.json
@@ -119,9 +151,29 @@ jobs:
           $(cat cain.zip.sha256)
           \`\`\`
           
-          ### 📝 What's Changed
+          ### 📝 Changes in this Release
           EOF
           
+          # Add PR information if available
+          if [ "${{ steps.pr_info.outputs.has_pr }}" = "true" ]; then
+            echo "" >> release_notes.md
+            echo "**Pull Request #${{ steps.pr_info.outputs.pr_number }}**: ${{ steps.pr_info.outputs.pr_title }}" >> release_notes.md
+            echo "👤 **Author**: @${{ steps.pr_info.outputs.pr_user }}" >> release_notes.md
+            echo "" >> release_notes.md
+            
+            # Add PR body if it exists and is not empty
+            if [ -n "${{ steps.pr_info.outputs.pr_body }}" ] && [ "${{ steps.pr_info.outputs.pr_body }}" != "null" ]; then
+              echo "<details>" >> release_notes.md
+              echo "<summary>📄 Pull Request Description</summary>" >> release_notes.md
+              echo "" >> release_notes.md
+              echo "${{ steps.pr_info.outputs.pr_body }}" >> release_notes.md
+              echo "" >> release_notes.md
+              echo "</details>" >> release_notes.md
+              echo "" >> release_notes.md
+            fi
+          fi
+          
+          # Add commit history
           if [ -n "$PREV_TAG" ]; then
             echo "" >> release_notes.md
             echo "**Commits since $PREV_TAG:**" >> release_notes.md
