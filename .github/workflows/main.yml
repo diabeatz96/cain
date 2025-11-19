@@ -109,8 +109,7 @@ jobs:
       - name: Create release zip
         id: create_zip
         run: |
-          VERSION="${{ steps.get_version.outputs.version }}"
-          ZIP_NAME="cain${VERSION}.zip"
+          ZIP_NAME="cain1.3.zip"
           
           # Create a clean zip for distribution
           zip -r "$ZIP_NAME" . \
