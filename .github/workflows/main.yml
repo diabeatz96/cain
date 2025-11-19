@@ -6,6 +6,13 @@ on:
       - main
     paths:
       - 'system.json'  # Only trigger when system.json changes
+  workflow_dispatch:  # Allow manual trigger from GitHub Actions tab
+    inputs:
+      skip_version_check:
+        description: 'Skip version change check (create release even if version unchanged)'
+        required: false
+        type: boolean
+        default: false
 
 jobs:
   create_release:
@@ -100,9 +107,13 @@ jobs:
           echo "📝 Description: $DESCRIPTION"
 
       - name: Create release zip
+        id: create_zip
         run: |
+          VERSION="${{ steps.get_version.outputs.version }}"
+          ZIP_NAME="cain${VERSION}.zip"
+          
           # Create a clean zip for distribution
-          zip -r cain.zip . \
+          zip -r "$ZIP_NAME" . \
             -x "*.git*" \
             -x "*.github/*" \
             -x "node_modules/*" \
@@ -117,13 +128,20 @@ jobs:
             -x ".nyc_output/*"
           
           # Display info about the created file
-          echo "✅ Created cain.zip"
-          echo "📦 File size: $(du -h cain.zip | cut -f1)"
-          echo "📊 File count: $(zipinfo -t cain.zip | tail -1 | awk '{print $1}')"
+          echo "✅ Created $ZIP_NAME"
+          echo "📦 File size: $(du -h "$ZIP_NAME" | cut -f1)"
+          echo "📊 File count: $(zipinfo -t "$ZIP_NAME" | tail -1 | awk '{print $1}')"
           
           # Create a checksum for verification
-          sha256sum cain.zip > cain.zip.sha256
-          echo "🔐 SHA256: $(cat cain.zip.sha256)"
+          sha256sum "$ZIP_NAME" > "${ZIP_NAME}.sha256"
+          echo "🔐 SHA256: $(cat "${ZIP_NAME}.sha256")"
+          
+          # Save filename for later steps
+          echo "zip_name=$ZIP_NAME" >> $GITHUB_OUTPUT
+          
+          # Copy system.json for direct manifest installation
+          cp system.json system.json.release
+          echo "✅ Prepared system.json for manifest URL"
 
       - name: Generate release notes
         id: release_notes
@@ -131,40 +149,44 @@ jobs:
           # Get the previous tag
           PREV_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
           CURRENT_VERSION="v${{ steps.get_version.outputs.version }}"
+          ZIP_NAME="${{ steps.create_zip.outputs.zip_name }}"
           
           # Create custom release notes
           cat > release_notes.md << EOF
-          ## 🎲 ${{ steps.system_info.outputs.title }} - Version ${{ steps.get_version.outputs.version }}
+          ## ${{ steps.system_info.outputs.title }} - Version ${{ steps.get_version.outputs.version }}
           
           ${{ steps.system_info.outputs.description }}
           
-          ### 📥 Installation
+          ### Installation in Foundry VTT
           
-          1. Download \`cain.zip\` from the assets below
-          2. Extract the contents to your TTRPG system folder
-          3. Restart your application
+          1. In Foundry VTT, go to **Setup** > **Game Systems**
+          2. Click **Install System**
+          3. Paste the manifest URL: \`https://github.com/${{ github.repository }}/releases/download/v${{ steps.get_version.outputs.version }}/system.json\`
+          4. Click **Install**
           
-          ### 🔐 Verification
+          Alternatively, download \`${ZIP_NAME}\` from the assets below and extract it to your Foundry VTT \`Data/systems/\` folder.
+          
+          ### Verification
           
           **SHA256 Checksum:**
           \`\`\`
-          $(cat cain.zip.sha256)
+          $(cat "${ZIP_NAME}.sha256")
           \`\`\`
           
-          ### 📝 Changes in this Release
+          ### Changes in this Release
           EOF
           
           # Add PR information if available
           if [ "${{ steps.pr_info.outputs.has_pr }}" = "true" ]; then
             echo "" >> release_notes.md
             echo "**Pull Request #${{ steps.pr_info.outputs.pr_number }}**: ${{ steps.pr_info.outputs.pr_title }}" >> release_notes.md
-            echo "👤 **Author**: @${{ steps.pr_info.outputs.pr_user }}" >> release_notes.md
+            echo "**Author**: @${{ steps.pr_info.outputs.pr_user }}" >> release_notes.md
             echo "" >> release_notes.md
             
             # Add PR body if it exists and is not empty
             if [ -n "${{ steps.pr_info.outputs.pr_body }}" ] && [ "${{ steps.pr_info.outputs.pr_body }}" != "null" ]; then
               echo "<details>" >> release_notes.md
-              echo "<summary>📄 Pull Request Description</summary>" >> release_notes.md
+              echo "<summary>Pull Request Description</summary>" >> release_notes.md
               echo "" >> release_notes.md
               echo "${{ steps.pr_info.outputs.pr_body }}" >> release_notes.md
               echo "" >> release_notes.md
@@ -197,8 +219,9 @@ jobs:
           name: ${{ steps.system_info.outputs.title }} v${{ steps.get_version.outputs.version }}
           bodyFile: release_notes.md
           artifacts: |
-            cain.zip
-            cain.zip.sha256
+            ${{ steps.create_zip.outputs.zip_name }}
+            ${{ steps.create_zip.outputs.zip_name }}.sha256
+            system.json
           token: ${{ secrets.GITHUB_TOKEN }}
           draft: false
           prerelease: false
@@ -215,8 +238,9 @@ jobs:
           name: ${{ steps.system_info.outputs.title }} v${{ steps.get_version.outputs.version }}
           bodyFile: release_notes.md
           artifacts: |
-            cain.zip
-            cain.zip.sha256
+            ${{ steps.create_zip.outputs.zip_name }}
+            ${{ steps.create_zip.outputs.zip_name }}.sha256
+            system.json
           token: ${{ secrets.GITHUB_TOKEN }}
           allowUpdates: true
           replacesArtifacts: true
@@ -225,14 +249,30 @@ jobs:
 
       - name: Release summary
         run: |
+          ZIP_NAME="${{ steps.create_zip.outputs.zip_name }}"
+          
           echo "## 🎉 Release Published!" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
+          
+          # Show if manually triggered
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "**Trigger:** Manual (workflow_dispatch)" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "**Trigger:** Automatic (push to main)" >> $GITHUB_STEP_SUMMARY
+          fi
+          
           echo "**Version:** v${{ steps.get_version.outputs.version }}" >> $GITHUB_STEP_SUMMARY
           echo "**System:** ${{ steps.system_info.outputs.title }}" >> $GITHUB_STEP_SUMMARY
           echo "**Tag:** v${{ steps.get_version.outputs.version }}" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### 📦 Artifacts" >> $GITHUB_STEP_SUMMARY
-          echo "- cain.zip ($(du -h cain.zip | cut -f1))" >> $GITHUB_STEP_SUMMARY
-          echo "- cain.zip.sha256" >> $GITHUB_STEP_SUMMARY
+          echo "- ${ZIP_NAME} ($(du -h "$ZIP_NAME" | cut -f1))" >> $GITHUB_STEP_SUMMARY
+          echo "- ${ZIP_NAME}.sha256" >> $GITHUB_STEP_SUMMARY
+          echo "- system.json" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Foundry VTT Manifest URL" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          echo "https://github.com/${{ github.repository }}/releases/download/v${{ steps.get_version.outputs.version }}/system.json" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "🔗 [View Release](https://github.com/${{ github.repository }}/releases/tag/v${{ steps.get_version.outputs.version }})" >> $GITHUB_STEP_SUMMARY
