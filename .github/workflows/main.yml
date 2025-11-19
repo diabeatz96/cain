@@ -1,0 +1,186 @@
+name: Create Release
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'system.json'  # Only trigger when system.json changes
+
+jobs:
+  create_release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Fetch all history for proper changelog
+
+      - name: Get current version
+        id: get_version
+        run: |
+          VERSION=$(jq -r .version system.json)
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "📦 Version: $VERSION"
+          
+          # Extract major, minor, patch for potential use
+          IFS='.' read -r MAJOR MINOR PATCH <<< "$VERSION"
+          echo "major=$MAJOR" >> $GITHUB_OUTPUT
+          echo "minor=$MINOR" >> $GITHUB_OUTPUT
+          echo "patch=$PATCH" >> $GITHUB_OUTPUT
+
+      - name: Validate version format
+        run: |
+          VERSION="${{ steps.get_version.outputs.version }}"
+          if ! [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "❌ Error: Version must be in format X.Y.Z (e.g., 1.0.0)"
+            exit 1
+          fi
+          echo "✅ Version format is valid"
+
+      - name: Check if tag already exists
+        id: check_tag
+        run: |
+          TAG="v${{ steps.get_version.outputs.version }}"
+          if git rev-parse "$TAG" >/dev/null 2>&1; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+            echo "⚠️ Tag $TAG already exists"
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+            echo "✅ Tag $TAG is new"
+          fi
+
+      - name: Get system info from system.json
+        id: system_info
+        run: |
+          NAME=$(jq -r '.name // "Cain TTRPG"' system.json)
+          TITLE=$(jq -r '.title // "Cain"' system.json)
+          DESCRIPTION=$(jq -r '.description // "A TTRPG system"' system.json)
+          
+          echo "name=$NAME" >> $GITHUB_OUTPUT
+          echo "title=$TITLE" >> $GITHUB_OUTPUT
+          echo "description=$DESCRIPTION" >> $GITHUB_OUTPUT
+          
+          echo "📝 System: $TITLE"
+          echo "📝 Description: $DESCRIPTION"
+
+      - name: Create release zip
+        run: |
+          # Create a clean zip for distribution
+          zip -r cain.zip . \
+            -x "*.git*" \
+            -x "*.github/*" \
+            -x "node_modules/*" \
+            -x "*.DS_Store" \
+            -x "*.vscode/*" \
+            -x "*.idea/*" \
+            -x "*.log" \
+            -x "*.env*" \
+            -x "*.cache" \
+            -x "dist/*" \
+            -x "coverage/*" \
+            -x ".nyc_output/*"
+          
+          # Display info about the created file
+          echo "✅ Created cain.zip"
+          echo "📦 File size: $(du -h cain.zip | cut -f1)"
+          echo "📊 File count: $(zipinfo -t cain.zip | tail -1 | awk '{print $1}')"
+          
+          # Create a checksum for verification
+          sha256sum cain.zip > cain.zip.sha256
+          echo "🔐 SHA256: $(cat cain.zip.sha256)"
+
+      - name: Generate release notes
+        id: release_notes
+        run: |
+          # Get the previous tag
+          PREV_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+          CURRENT_VERSION="v${{ steps.get_version.outputs.version }}"
+          
+          # Create custom release notes
+          cat > release_notes.md << EOF
+          ## 🎲 ${{ steps.system_info.outputs.title }} - Version ${{ steps.get_version.outputs.version }}
+          
+          ${{ steps.system_info.outputs.description }}
+          
+          ### 📥 Installation
+          
+          1. Download \`cain.zip\` from the assets below
+          2. Extract the contents to your TTRPG system folder
+          3. Restart your application
+          
+          ### 🔐 Verification
+          
+          **SHA256 Checksum:**
+          \`\`\`
+          $(cat cain.zip.sha256)
+          \`\`\`
+          
+          ### 📝 What's Changed
+          EOF
+          
+          if [ -n "$PREV_TAG" ]; then
+            echo "" >> release_notes.md
+            echo "**Commits since $PREV_TAG:**" >> release_notes.md
+            echo "" >> release_notes.md
+            git log ${PREV_TAG}..HEAD --pretty=format:"- %s (%h)" --no-merges >> release_notes.md
+          fi
+          
+          echo "" >> release_notes.md
+          echo "" >> release_notes.md
+          echo "---" >> release_notes.md
+          echo "" >> release_notes.md
+          echo "**Full Changelog**: https://github.com/${{ github.repository }}/compare/${PREV_TAG}...${CURRENT_VERSION}" >> release_notes.md
+          
+          echo "✅ Release notes generated"
+
+      - name: Create GitHub Release
+        if: steps.check_tag.outputs.exists == 'false'
+        uses: ncipollo/release-action@v1
+        with:
+          tag: v${{ steps.get_version.outputs.version }}
+          name: ${{ steps.system_info.outputs.title }} v${{ steps.get_version.outputs.version }}
+          bodyFile: release_notes.md
+          artifacts: |
+            cain.zip
+            cain.zip.sha256
+          token: ${{ secrets.GITHUB_TOKEN }}
+          draft: false
+          prerelease: false
+          makeLatest: true
+          generateReleaseNotes: true
+          allowUpdates: false
+          replacesArtifacts: false
+
+      - name: Update existing release
+        if: steps.check_tag.outputs.exists == 'true'
+        uses: ncipollo/release-action@v1
+        with:
+          tag: v${{ steps.get_version.outputs.version }}
+          name: ${{ steps.system_info.outputs.title }} v${{ steps.get_version.outputs.version }}
+          bodyFile: release_notes.md
+          artifacts: |
+            cain.zip
+            cain.zip.sha256
+          token: ${{ secrets.GITHUB_TOKEN }}
+          allowUpdates: true
+          replacesArtifacts: true
+          omitBodyDuringUpdate: false
+          omitNameDuringUpdate: false
+
+      - name: Release summary
+        run: |
+          echo "## 🎉 Release Published!" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Version:** v${{ steps.get_version.outputs.version }}" >> $GITHUB_STEP_SUMMARY
+          echo "**System:** ${{ steps.system_info.outputs.title }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Tag:** v${{ steps.get_version.outputs.version }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 📦 Artifacts" >> $GITHUB_STEP_SUMMARY
+          echo "- cain.zip ($(du -h cain.zip | cut -f1))" >> $GITHUB_STEP_SUMMARY
+          echo "- cain.zip.sha256" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "🔗 [View Release](https://github.com/${{ github.repository }}/releases/tag/v${{ steps.get_version.outputs.version }})" >> $GITHUB_STEP_SUMMARY
