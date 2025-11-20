@@ -12,8 +12,12 @@
    <img src="https://img.shields.io/github/last-commit/diabeatz96/cain?style=default&logo=git&logoColor=white&color=0080ff" alt="last-commit">
    <img src="https://img.shields.io/github/languages/top/diabeatz96/cain?style=default&color=0080ff" alt="repo-top-language">
    <img src="https://img.shields.io/github/languages/count/diabeatz96/cain?style=default&color=0080ff" alt="repo-language-count">
-   <img alt="Static Badge" src="https://img.shields.io/badge/foundry-v12-blue">
+   <img alt="Static Badge" src="https://img.shields.io/badge/foundry-v11%20|%20v12%20|%20v13-blue">
 <p>
+<p align="center">
+    <strong>Main Repository:</strong> <a href="https://github.com/diabeatz96/cain">https://github.com/diabeatz96/cain</a><br>
+    <strong>Development Repository:</strong> <a href="https://github.com/bugeso/cain1.3">https://github.com/bugeso/cain1.3</a>
+</p>
 <p align="center">
    <!-- default option, no dependency badges. -->
 </p>
@@ -39,14 +43,41 @@
 <hr>
 
 ## CREDITS
-    - Myco from the Pilot.NET/CAIN Discord for providing icon assets
     - Tom Bloom Creator of Cain
+    - Adam Kostandy (Diabeatz96) - Original creator and lead developer of the repository
+    - Myco from the Pilot.NET/CAIN Discord for providing icon assets
     - My sunday DND group
     - My friend carmen for miscellaneous ideas and polish
-    - Diabeatz96, ahandleman and Benji as developers.
+    - ahandleman and Benji as developers
+    - bugeso and loupgarou for development contributions and v1.3 updates
 
-## BUGESO Update
-Hello, this is a temporary fork for Cain 1.3 on foundry! I hardly know what I'm doing, but this should hopefully work! If you have any questions or concerns just @ me on discord @bugeso!
+## v1.3.X Update for CAIN
+
+Version 1.3.X is a major update for the CAIN system focused on FoundryVTT v13 compatibility, improved accessibility, and enhanced talisman management. This version represents a collaborative effort between bugeso and loupgarou.
+
+Features include but are not limited too:
+
+- **FoundryVTT v13 Compatibility**: Full support for FoundryVTT v13 with backward compatibility for v11 and v12
+- **Enhanced Talisman System**:
+  - Talisman tiles now update automatically when switching scenes
+  - Added "Delete All Tiles" functionality for easier talisman management
+  - Enhanced create tile button with improved icons and visual feedback
+  - Talismans properly sync data when scenes change
+- **Improved Accessibility**:
+  - Enhanced input field and dropdown readability with better contrast
+  - Improved checkbox styles for better visibility
+  - Adjusted sidebar margins for more consistent layout
+  - Better text legibility across all sheet types
+- **Compendium Updates**:
+  - GFF3 Agendas fully integrated
+  - GFF3 Blasphemies fully integrated
+  - Updated afflictions compendium with new entries
+  - All compendium packs now use standardized _source JSON format
+- **Sin System Completion**: Full 1.3 sin system implementation (v1.3.3+)
+- **GitHub Actions Integration**: Automated release workflow with pull request details
+- **General Polish**: Various bug fixes, quality-of-life improvements, and much more throughout the system
+
+If you have any questions or concerns about v1.3, reach out on discord @bugeso!
 
 ## v1.2.X Update
 
@@ -106,7 +137,16 @@ If you have any questions, message in the foundry vtt channel. Thank you!
 
 ##  Overview
 
-Cain is an open-source project designed to streamline CAIN RPG player, gm and system management within FoundryVTT. Cain enhances user experiences through customizable actors, items, and effects. The projects core functionalities, encapsulated in the `cain` module, facilitate dynamic talisman management, item roll logic, and interactive character sheet customization. 
+Cain is an open-source project designed to streamline CAIN RPG player, GM and system management within FoundryVTT. Cain enhances user experiences through customizable actors, items, and effects. The project's core functionalities, encapsulated in the `cain` module, facilitate dynamic talisman management, item roll logic, and interactive character sheet customization.
+
+### FoundryVTT Compatibility
+
+The CAIN system is fully compatible with:
+- **FoundryVTT v11** - Full support with stable features
+- **FoundryVTT v12** - Full support with stable features
+- **FoundryVTT v13** - Full support (see [V13_COMPATIBILITY.md](V13_COMPATIBILITY.md) for migration notes)
+
+The system maintains backward compatibility across these versions, ensuring a smooth experience whether you're running the latest FoundryVTT release or an earlier stable version. 
 
 ---
 
@@ -175,16 +215,16 @@ https://github.com/user-attachments/assets/464240a1-7d6c-49f0-b68e-6415b091d353
 
 |    |   Feature         | Description |
 |----|-------------------|---------------------------------------------------------------|
-| ⚙️  | **Architecture**  | The project has a modular architecture with clear separation of concerns, utilizing Sass for styling and JavaScript for functionality. It follows a structured system design in FoundryVTT for efficient data processing and management.   |
-| 🔩 | **Code Quality**  | The codebase maintains high quality standards with reusable styles, compressed JavaScript libraries, and efficient data handling. It follows a consistent design system for frontend elements, enhancing maintainability and coherence across the project.|
-| 📄 | **Documentation** | Extensive documentation is provided, defining metadata, supported types, licensing terms, and localization strings. Detailed explanations are present for classes, helpers, templates, and components, aiding system management, customization, and user interface design.|
-| 🔌 | **Integrations**  | Key integrations include SASS for CSS compilation, Handlebars templates for fast rendering, and FoundryVTT for system metadata. External dependencies support dynamic image updates, active effects management, and talisman interaction within the system.|
-| 🧩 | **Modularity**    | The codebase exhibits high modularity, enabling easy extension and integration of additional features. Classes, templates, and styles are organized in a structured manner, promoting code reusability and scalability for future enhancements.|
-| 🧪 | **Testing**       | Testing frameworks and tools used are not explicitly mentioned in the provided details.|
-| ⚡️  | **Performance**   | The system promotes efficiency and resource optimization through centralized code management, dynamic data handling, and fast rendering using cached Handlebars templates. Layout elements are designed for responsive web display, enhancing user experiences in the application.|
-| 🛡️ | **Security**      | Security measures for data protection and access control are not explicitly discussed in the provided details.|
-| 📦 | **Dependencies**  | Key external libraries and dependencies include SASS for CSS compilation, Handlebars for template rendering, and FoundryVTT for managing system metadata and UI components. These libraries enhance styling, performance, and functionality within the project.|
-| 🚀 | **Scalability**   | The project demonstrates scalability with its structured architecture, modularity, and efficient resource management. The codebase is well-organized for handling increased traffic and load, facilitating easy integration of new features and extensions.|
+| ⚙️  | **Architecture**  | Modular FoundryVTT system architecture with clear separation between documents, sheets, helpers, and data models. Utilizes SASS for styling and ES6 modules for JavaScript functionality. Built on FoundryVTT v11, v12, and v13 APIs for efficient actor and item management.|
+| 🔩 | **Code Quality**  | Clean, maintainable codebase with reusable components and consistent design patterns. Uses modern JavaScript (ES6+) with class-based architecture extending FoundryVTT base classes. Follows FoundryVTT best practices for document manipulation and UI rendering.|
+| 📄 | **Documentation** | Comprehensive system.json metadata, template.json schema definitions, and localization support. Includes detailed actor templates for characters, NPCs, and sins, plus item templates for equipment, talismans, agendas, blasphemies, and afflictions.|
+| 🔌 | **Integrations**  | Native FoundryVTT v11/v12/v13 integration with Handlebars templating engine, active effects system, and compendium packs. SASS compilation for advanced styling. Supports drag-and-drop item management and automated character sheet updates.|
+| 🧩 | **Modularity**    | Highly modular structure with separate modules for actors, items, sheets, helpers, and data models. Custom document classes extend FoundryVTT base types. Template partials enable component reuse across different sheet types.|
+| 🎮 | **Game Features** | Custom sin tracking system, talisman management with tile integration, automated agenda and blasphemy application, sin-mark rolling mechanics, XP advancement system, and trauma tracking. Includes homebrew content creation tools.|
+| ⚡️  | **Performance**   | Optimized rendering through cached Handlebars templates and efficient data preparation methods. Minimal DOM manipulation and strategic use of FoundryVTT's built-in update cycles. Compressed assets and streamlined CSS.|
+| 🎨 | **UI/UX**        | Custom-styled character sheets with tabbed interfaces for stats, items, abilities, sin tracking, and talismans. Responsive design with bubble-based stat display, interactive controls, and Jujutsu Kaisen-themed talisman window.|
+| 📦 | **Dependencies**  | FoundryVTT v11/v12/v13 core API, SASS for CSS preprocessing, Handlebars for template rendering. No external npm dependencies required for runtime. Development dependencies include node-sass for build process.|
+| 🚀 | **Compatibility** | Full support for FoundryVTT v11, v12, and v13. Backward-compatible data structures with migration support between versions. Works with standard FoundryVTT modules and doesn't conflict with core functionality.|
 
 ---
 
@@ -192,38 +232,104 @@ https://github.com/user-attachments/assets/464240a1-7d6c-49f0-b68e-6415b091d353
 
 ```sh
 └── cain/
-    ├── CHANGELOG.md
-    ├── LICENSE.txt
-    ├── README.md
-    ├── assets
-    │   ├── CAT
-    │   ├── Talismans
-    │   ├── anvil-impact.png
-    │   ├── brain.png
-    │   └── talisman-icon.png
-    ├── css
-    │   └── cain.css
-    ├── lang
-    │   └── en.json
-    ├── lib
-    │   └── some-lib
-    ├── module
-    │   ├── cain.mjs
-    │   ├── data
-    │   ├── documents
-    │   ├── helpers
-    │   └── sheets
-    ├── package.json
-    ├── packs
-    │   └── .gitattributes
-    ├── src
-    │   └── scss
-    ├── system.json
-    ├── template.json
-    └── templates
-        ├── actor
-        ├── item
-        └── talisman-window.hbs
+    ├── CHANGELOG.md                     # Version history and update notes
+    ├── CODE_OF_CONDUCT.md               # Community guidelines
+    ├── LICENSE.txt                      # MIT license for code, separate license for compendium content
+    ├── README.md                        # This file
+    ├── V13_COMPATIBILITY.md             # FoundryVTT v13 compatibility notes
+    ├── assets/                          # Game assets and images
+    │   ├── Agendas/                     # Agenda artwork
+    │   ├── Blasphemies/                 # Blasphemy artwork
+    │   ├── CAT/                         # Character art and tokens
+    │   ├── exorcist/                    # Exorcist-related assets
+    │   ├── investigations/              # Investigation module assets
+    │   ├── items/                       # Item icons
+    │   ├── KIT/                         # Kit/equipment artwork
+    │   ├── psyche/                      # Psyche ability icons
+    │   ├── rolls/                       # Dice roll interface assets
+    │   ├── sheet/                       # Character sheet backgrounds
+    │   ├── sin-marks/                   # Sin mark icons
+    │   ├── Sins/                        # Sin-related artwork
+    │   ├── Talismans/                   # Talisman icons
+    │   └── Tutorial/                    # Tutorial assets
+    ├── css/
+    │   └── cain.css                     # Compiled CSS from SCSS source
+    ├── lang/
+    │   └── en.json                      # English localization strings
+    ├── lib/
+    │   └── some-lib/                    # Third-party library dependencies
+    ├── module/                          # Core JavaScript modules
+    │   ├── cain.mjs                     # Main entry point, system initialization
+    │   ├── data/                        # Data model definitions
+    │   │   ├── _module.mjs              # Data module exports
+    │   │   ├── base-actor.mjs           # Base actor data model
+    │   │   ├── base-item.mjs            # Base item data model
+    │   │   ├── base-model.mjs           # Base data model class
+    │   │   ├── actor-character.mjs      # Character actor data
+    │   │   ├── actor-mundane.mjs        # Mundane actor data
+    │   │   ├── actor-npc.mjs            # NPC actor data
+    │   │   ├── item-*.mjs               # Various item type data models
+    │   │   ├── afflictions/             # Affliction data models
+    │   │   ├── agenda/                  # Agenda data models (tasks, abilities)
+    │   │   ├── blasphemy/               # Blasphemy data models (powers)
+    │   │   └── sins/                    # Sin mark data models
+    │   ├── documents/                   # Document extension classes
+    │   │   ├── actor.mjs                # Extended Actor document class
+    │   │   ├── item.mjs                 # Extended Item document with roll logic
+    │   │   ├── homebrew-window.mjs      # Homebrew content creation UI
+    │   │   ├── player-overview.mjs      # Player overview interface
+    │   │   ├── session-end-advancement.mjs  # Session XP advancement UI
+    │   │   └── talisman-window.mjs      # Talisman management UI
+    │   ├── helpers/                     # Helper utilities
+    │   │   ├── config.mjs               # System configuration (skills, abilities, sin marks)
+    │   │   ├── effects.mjs              # Active effects management
+    │   │   ├── index-offset.mjs         # Index calculation helpers
+    │   │   ├── standard_event_assignment_shortcuts.mjs  # Event handling shortcuts
+    │   │   └── templates.mjs            # Handlebars template preloader
+    │   └── sheets/                      # Sheet application classes
+    │       ├── actor-sheet.mjs          # Base actor sheet logic
+    │       └── item-sheet.mjs           # Base item sheet logic
+    ├── package.json                     # npm build scripts for SASS compilation
+    ├── packs/                           # Compendium packs (LevelDB format)
+    │   ├── afflictions/                 # Affliction items compendium
+    │   ├── agenda2/                     # Agenda items compendium
+    │   ├── blasphemy2/                  # Blasphemy items compendium
+    │   ├── cain/                        # Core CAIN content compendium
+    │   ├── items/                       # Equipment and gear compendium
+    │   ├── sin-marks/                   # Sin mark definitions compendium
+    │   └── tables/                      # Rollable tables compendium
+    ├── src/
+    │   └── scss/                        # SCSS source files
+    │       ├── cain.scss                # Main SCSS entry point
+    │       ├── components/              # Component-specific styles (_forms, _items, _effects, _resource)
+    │       ├── global/                  # Global layout utilities (_grid, _flex, _window)
+    │       └── utils/                   # SCSS variables, mixins, colors, typography
+    ├── system.json                      # FoundryVTT system manifest
+    ├── template.json                    # Actor and Item data schema definitions
+    └── templates/                       # Handlebars templates
+        ├── actor/                       # Actor sheet templates
+        │   ├── actor-character-sheet.hbs
+        │   ├── actor-mundane-sheet.hbs
+        │   ├── actor-npc-sheet.hbs
+        │   ├── npc-parts/               # NPC sheet partials (attacks, domains, palace-pressure)
+        │   └── parts/                   # Character sheet partials (items, abilities, sin, talismans)
+        ├── item/                        # Item sheet templates
+        │   ├── item-affliction-sheet.hbs
+        │   ├── item-agenda-sheet.hbs
+        │   ├── item-agendaAbility-sheet.hbs
+        │   ├── item-agendaTask-sheet.hbs
+        │   ├── item-blasphemy-sheet.hbs
+        │   ├── item-blasphemyPower-sheet.hbs
+        │   ├── item-feature-sheet.hbs
+        │   ├── item-item-sheet.hbs
+        │   ├── item-sin-mark-sheet.hbs
+        │   ├── item-sins-sheet.hbs
+        │   ├── item-spell-sheet.hbs
+        │   └── parts/                   # Item sheet partials
+        ├── homebrew-window.hbs          # Homebrew content creation interface
+        ├── player-overview.hbs          # Player overview interface
+        ├── session-advancement.hbs      # Session XP advancement interface
+        └── talisman-window.hbs          # Global talisman management window
 ```
 
 ---
@@ -466,9 +572,13 @@ This project is protected under the [SELECT-A-LICENSE](https://choosealicense.co
 
 ##  Acknowledgments
 
-   - Myco from the Pilot.NET/CAIN Discord for providing icon assets
    - Tom Bloom Creator of Cain
+   - Adam Kostandy (Diabeatz96) - Original creator and lead developer of the repository
+   - Myco from the Pilot.NET/CAIN Discord for providing icon assets
    - My sunday DND group
+   - My friend carmen for miscellaneous ideas and polish
+   - ahandleman and Benji as developers
+   - bugeso and loupgarou for development contributions and v1.3 updates
 
 
 [**Return**](#-overview)
