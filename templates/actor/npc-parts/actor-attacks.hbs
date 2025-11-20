@@ -1,273 +1,285 @@
-<div class="tab attacks" data-group="primary" data-tab="attacks">
-  {{log system}}
-  {{log system.sinType}}
-  <div class="form-grid">
-    <div class="form-group dark-form-group">
-      {{#if (eq system.sinType "redacted")}}
-        <label for="system.complications"><strong>Complications:</strong></label>
-        <textarea class="styled-textarea" name="system.complications">{{system.complications}}</textarea>
-      {{else}}
-        <p class="styled-paragraph"><strong>Complications:</strong> {{system.complications}}</p>
-      {{/if}}
-    </div>
-    <div class="form-group dark-form-group">
-      {{#if (eq system.sinType "redacted")}}
-        <label for="system.threats"><strong>Threats:</strong></label>
-        <textarea class="styled-textarea" name="system.threats">{{system.threats}}</textarea>
-      {{else}}
-        <p class="styled-paragraph"><strong>Threats:</strong> {{system.threats}}</p>
-      {{/if}}
-    </div>
-  </div>
-  <div class="button-group">
-    <button class="attack-button demon-button">Attack</button>
-    <button class="severe-attack-button demon-button">Severe Attack</button>
-  </div>
-  <div class="form-group dark-form-group full-width">
-    <label for="system.severeAttack.description" class="centered-label">Severe Attack</label>
-    {{ editor enrichedDescription target='system.severeAttack.description' engine='prosemirror' button=true class="editor-style" editable=editable }}
-  </div>
-  <div class="form-group dark-form-group full-width flexible-height">
-    <label class="centered-label">Severe Ability Questions</label>
-    <div id="severe-ability-questions-section">
-      {{#each system.severeAbilityQuestions}}
-        <div class="question-group">
-          <label for="system.severeAbilityQuestions.{{@index}}">Q{{@index}}:</label>
-          <textarea class="styled-textarea" name="system.severeAbilityQuestions.{{@index}}">{{this}}</textarea>
-          <button class="delete-question-button" onclick="deleteSevereAbilityQuestion({{@index}})">Delete</button>
+<div class="tab attacks paper-texture" data-group="primary" data-tab="attacks">
+    {{log system}}
+    {{log system.sinType}}
+    <div class="form-grid">
+        <div class="form-group dark-form-group">
+            {{#if (eq system.sinType "redacted")}}
+                <label for="system.complications"><strong>Complications:</strong></label>
+                <textarea class="styled-textarea" name="system.complications">{{system.complications}}</textarea>
+            {{else}}
+                <p class="styled-paragraph"><strong>Complications:</strong> {{system.complications}}</p>
+            {{/if}}
         </div>
-      {{/each}}
-      <button class="add-question-button" onclick="addSevereAbilityQuestion()">Add Question</button>
+        <div class="form-group dark-form-group">
+            {{#if (eq system.sinType "redacted")}}
+                <label for="system.threats"><strong>Threats:</strong></label>
+                <textarea class="styled-textarea" name="system.threats">{{system.threats}}</textarea>
+            {{else}}
+                <p class="styled-paragraph"><strong>Threats:</strong> {{system.threats}}</p>
+            {{/if}}
+        </div>
     </div>
-  </div>
-  <div class="form-group dark-form-group">
-    <label for="system.afflictions" class="centered-label">Afflictions</label>
-    <div id="afflictions-section">
-      <table class="afflictions-table">
-        <thead>
-          <tr>
-            <th>Affliction</th>
-          </tr>
-        </thead>
-        <tbody>
-          {{#each system.afflictions}}
-            <tr>
-              {{#if (eq ../system.sinType "redacted")}}
-                <td><input type="text" class="styled-input" name="system.afflictions.{{@index}}" value="{{this}}" /></td>
-              {{else}}
-                <td>{{this}}</td>
-              {{/if}}
-            </tr>
-          {{/each}}
-        </tbody>
-      </table>
-      <button class="roll-affliction">Roll Affliction</button>
+    <div class="button-group">
+        <button class="attack-button demon-button">Attack</button>
+        <button class="severe-attack-button demon-button">Severe Attack</button>
     </div>
-  </div>
+    <div class="form-group dark-form-group full-width">
+        <label for="system.severeAttack.description" class="centered-label">Severe Attack</label>
+        {{ editor enrichedDescription target='system.severeAttack.description' engine='prosemirror' button=true
+                  class="editor-style" editable=editable }}
+    </div>
+    <div class="form-group dark-form-group full-width flexible-height">
+        <label class="centered-label">Severe Ability Questions</label>
+        <div id="severe-ability-questions-section">
+            {{#each system.severeAbilityQuestions}}
+                <div class="question-group">
+                    <label for="system.severeAbilityQuestions.{{@index}}">Q{{@index}}:</label>
+                    <textarea class="styled-textarea"
+                              name="system.severeAbilityQuestions.{{@index}}">{{this}}</textarea>
+                    <button class="delete-question-button" onclick="deleteSevereAbilityQuestion({{@index}})">Delete
+                    </button>
+                </div>
+            {{/each}}
+            <button class="add-question-button" onclick="addSevereAbilityQuestion()">Add Question</button>
+        </div>
+    </div>
+    <div class="form-group dark-form-group">
+        <label for="system.afflictions" class="centered-label">Afflictions</label>
+        <div id="afflictions-section">
+            <table class="afflictions-table">
+                <thead>
+                <tr>
+                    <th>Affliction</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{#each system.afflictions}}
+                    <tr>
+                        {{#if (eq ../system.sinType "redacted")}}
+                            <td><input type="text" class="styled-input" name="system.afflictions.{{@index}}"
+                                       value="{{this}}"/></td>
+                        {{else}}
+                            <td>{{this}}</td>
+                        {{/if}}
+                    </tr>
+                {{/each}}
+                </tbody>
+            </table>
+            <button class="roll-affliction">Roll Affliction</button>
+        </div>
+    </div>
 </div>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap');
 
-.tab.attacks {
-  background-color: #1a1a1a;
-  color: #f5f5f5;
-  padding: 20px;
-}
+    .tab.attacks {
+        border-radius: 5px 5px 0 0;
+        background-color: wheat;
+        color: black;
+        padding: 20px;
+        font-family: 'Courier New', monospace;
+    }
 
-.tab.attacks .form-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-}
+    .paper-texture {
+        background-image: url("systems/cain/assets/backgrounds/paper1.jpg");
+        background-position: 50% 50%;
+        background-blend-mode: hard-light;
+    }
 
-.tab.attacks .form-group {
-  margin-bottom: 20px;
-  text-align: center;
-}
+    .tab.attacks .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
 
-.tab.attacks .dark-form-group {
-  border: 1px solid #444;
-  padding: 10px;
-  border-radius: 4px;
-  margin-bottom: 20px;
-}
+    .tab.attacks .form-group {
+        margin-bottom: 20px;
+        text-align: center;
+    }
 
-.tab.attacks .dark-form-group label {
-  color: #f5f5f5;
-  font-weight: bold;
-  display: block;
-  margin-bottom: 10px;
-  cursor: pointer;
-}
+    .tab.attacks .dark-form-group {
+        border: 1px solid #444;
+        padding: 10px;
+        border-radius: 4px;
+        margin-bottom: 20px;
+    }
 
-.tab.attacks .styled-paragraph {
-  font-size: 1em;
-  letter-spacing: 0.05em;
-  margin-bottom: 20px;
-}
+    .tab.attacks .dark-form-group label {
+        color: #f5f5f5;
+        font-weight: bold;
+        display: block;
+        margin-bottom: 10px;
+        cursor: pointer;
+    }
 
-.tab.attacks .styled-input, .tab.attacks .styled-textarea {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #444;
-  border-radius: 4px;
-  background-color: #333;
-  color: #f5f5f5;
-}
+    .tab.attacks .styled-paragraph {
+        font-size: 1em;
+        letter-spacing: 0.05em;
+        margin-bottom: 20px;
+    }
 
-.tab.attacks .button-group {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  padding: 10px;
-  background-color: #2a2a2a;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
+    .tab.attacks .styled-input, .tab.attacks .styled-textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #444;
+        border-radius: 4px;
+        background-color: #333;
+        color: #f5f5f5;
+    }
 
-.tab.attacks .demon-button {
-  padding: 15px 30px;
-  background: linear-gradient(45deg, #ff0000, #8b0000);
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-family: 'Cinzel', serif;
-  font-size: 1.5em;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 30px #ff0000;
-  position: relative;
-  overflow: hidden;
-  transition: all 0.3s ease;
-}
+    .tab.attacks .button-group {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        padding: 10px;
+        background-color: #2a2a2a;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
 
-.tab.attacks .demon-button::before {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle, rgba(255, 0, 0, 0.5), transparent 70%);
-  transition: all 0.3s ease;
-  transform: rotate(45deg);
-}
+    .tab.attacks .demon-button {
+        padding: 15px 30px;
+        background: linear-gradient(45deg, #ff0000, #8b0000);
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-family: 'Cinzel', serif;
+        font-size: 1.5em;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 30px #ff0000;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
 
-.tab.attacks .demon-button:hover {
-  background: linear-gradient(45deg, #8b0000, #ff0000);
-  text-shadow: 0 0 20px #ff0000, 0 0 30px #ff0000, 0 0 40px #ff0000;
-}
+    .tab.attacks .demon-button::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(255, 0, 0, 0.5), transparent 70%);
+        transition: all 0.3s ease;
+        transform: rotate(45deg);
+    }
 
-.tab.attacks .demon-button:hover::before {
-  top: -70%;
-  left: -70%;
-  transform: rotate(90deg);
-}
+    .tab.attacks .demon-button:hover {
+        background: linear-gradient(45deg, #8b0000, #ff0000);
+        text-shadow: 0 0 20px #ff0000, 0 0 30px #ff0000, 0 0 40px #ff0000;
+    }
 
-.tab.attacks .demon-button:active {
-  background: linear-gradient(45deg, #ff0000, #8b0000);
-  box-shadow: 0 0 20px #ff0000, 0 0 30px #ff0000, 0 0 40px #ff0000;
-}
+    .tab.attacks .demon-button:hover::before {
+        top: -70%;
+        left: -70%;
+        transform: rotate(90deg);
+    }
 
-.tab.attacks .attack-button, .tab.attacks .severe-attack-button, .tab.attacks .add-question-button, .tab.attacks .delete-question-button {
-  padding: 10px 20px;
-  background-color: #444;
-  color: #f5f5f5;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  width: auto;
-}
+    .tab.attacks .demon-button:active {
+        background: linear-gradient(45deg, #ff0000, #8b0000);
+        box-shadow: 0 0 20px #ff0000, 0 0 30px #ff0000, 0 0 40px #ff0000;
+    }
 
-.tab.attacks .attack-button:hover, .tab.attacks .severe-attack-button:hover, .tab.attacks .add-question-button:hover, .tab.attacks .delete-question-button:hover {
-  background-color: #ff5555;
-}
+    .tab.attacks .attack-button, .tab.attacks .severe-attack-button, .tab.attacks .add-question-button, .tab.attacks .delete-question-button {
+        padding: 10px 20px;
+        background-color: #444;
+        color: #f5f5f5;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        width: auto;
+    }
 
-.tab.attacks .afflictions-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 10px;
-}
+    .tab.attacks .attack-button:hover, .tab.attacks .severe-attack-button:hover, .tab.attacks .add-question-button:hover, .tab.attacks .delete-question-button:hover {
+        background-color: #ff5555;
+    }
 
-.tab.attacks .afflictions-table th, .tab.attacks .afflictions-table td {
-  border: 1px solid #444;
-  padding: 8px;
-  text-align: left;
-}
+    .tab.attacks .afflictions-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
 
-.tab.attacks .afflictions-table th {
-  background-color: #444;
-  color: #f5f5f5;
-}
+    .tab.attacks .afflictions-table th, .tab.attacks .afflictions-table td {
+        border: 1px solid #444;
+        padding: 8px;
+        text-align: left;
+    }
 
-.tab.attacks .afflictions-table td {
-  background-color: #333;
-  color: #f5f5f5;
-}
+    .tab.attacks .afflictions-table th {
+        background-color: #444;
+        color: #f5f5f5;
+    }
 
-.tab.attacks .roll-affliction {
-  margin-top: 10px;
-  padding: 10px 20px;
-  background-color: #444;
-  color: #f5f5f5;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
+    .tab.attacks .afflictions-table td {
+        background-color: #333;
+        color: #f5f5f5;
+    }
 
-.tab.attacks .roll-affliction:hover {
-  background-color: #ff5555;
-}
+    .tab.attacks .roll-affliction {
+        margin-top: 10px;
+        padding: 10px 20px;
+        background-color: #444;
+        color: #f5f5f5;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
 
-.tab.attacks .editor-style {
-  width: 100%;
-  height: 85%;
-}
+    .tab.attacks .roll-affliction:hover {
+        background-color: #ff5555;
+    }
 
-.tab.attacks .centered-label {
-  text-align: center;
-  font-family: "Cinzel", sans-serif;
-  font-weight: 400;
-  font-size: 1.5em;
-  letter-spacing: 0.05em;
-  color: #ff5555;
-  background-color: #000;
-  padding: 10px;
-  border-radius: 4px;
-  text-shadow: 0 0 10px #ff5555, 0 0 20px #ff5555, 0 0 30px #ff5555;
-  cursor: pointer;
-}
+    .tab.attacks .editor-style {
+        width: 100%;
+        height: 85%;
+    }
 
-.tab.attacks .centered-label:hover {
-  background-color: #333;
-}
+    .tab.attacks .centered-label {
+        text-align: center;
+        font-family: "Cinzel", sans-serif;
+        font-weight: 400;
+        font-size: 1.5em;
+        letter-spacing: 0.05em;
+        color: #ff5555;
+        background-color: #000;
+        padding: 10px;
+        border-radius: 4px;
+        text-shadow: 0 0 10px #ff5555, 0 0 20px #ff5555, 0 0 30px #ff5555;
+        cursor: pointer;
+    }
 
-.tab.attacks .full-width {
-  grid-column: span 2;
-  height: 420px;
-}
+    .tab.attacks .centered-label:hover {
+        background-color: #333;
+    }
 
-.tab.attacks .flexible-height {
-  height: auto;
-}
+    .tab.attacks .full-width {
+        grid-column: span 2;
+        height: 420px;
+    }
 
-.tab.attacks .question-group {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 10px;
-}
+    .tab.attacks .flexible-height {
+        height: auto;
+    }
 
-.tab.attacks .question-group label {
-  margin-bottom: 0;
-}
+    .tab.attacks .question-group {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 10px;
+    }
 
-form .tab.attacks .form-group {
-  display: block;
-  margin-bottom: 20px;
-}
+    .tab.attacks .question-group label {
+        margin-bottom: 0;
+    }
+
+    form .tab.attacks .form-group {
+        display: block;
+        margin-bottom: 20px;
+    }
 </style>

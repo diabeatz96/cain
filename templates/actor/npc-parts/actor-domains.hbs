@@ -1,128 +1,140 @@
-<div class="tab domains" data-group="primary" data-tab="domains">
-  <div class="form-group dark-form-group">
-    <label for="system.selectedAbilities.selectedAbility1">Domain 1</label>
-    {{#if (eq system.sinType "redacted")}}
-      <textarea name="system.selectedAbilities.selectedAbility1" class="ability-textarea" data-ability="1">{{system.selectedAbilities.selectedAbility1}}</textarea>
-    {{else}}
-      <select name="system.selectedAbilities.selectedAbility1" class="ability-select" data-ability="1">
-        {{#each system.domains}}
-          <option value="{{this.value}}" {{#if (eq ../system.selectedAbilities.selectedAbility1 this.value)}}selected{{/if}}>{{this.title}}</option>
-        {{/each}}
-      </select>
-      <p class="ability-value" data-ability="1">{{system.selectedAbilities.selectedAbility1}}</p>
-    {{/if}}
-    <i class="fas fa-comment-alt ability-icon" data-ability="1" onclick="sendAbilityToChat(1)"></i>
-  </div>
-  <div class="form-group dark-form-group">
-    <label for="system.selectedAbilities.selectedAbility2">Domain 2</label>
-    {{#if (eq system.sinType "redacted")}}
-      <textarea name="system.selectedAbilities.selectedAbility2" class="ability-textarea" data-ability="2">{{system.selectedAbilities.selectedAbility2}}</textarea>
-    {{else}}
-      <select name="system.selectedAbilities.selectedAbility2" class="ability-select" data-ability="2">
-        {{#each system.domains}}
-          <option value="{{this.value}}" {{#if (eq ../system.selectedAbilities.selectedAbility2 this.value)}}selected{{/if}}>{{this.title}}</option>
-        {{/each}}
-      </select>
-      <p class="ability-value" data-ability="2">{{system.selectedAbilities.selectedAbility2}}</p>
-    {{/if}}
-    <i class="fas fa-comment-alt ability-icon" data-ability="2" onclick="sendAbilityToChat(2)"></i>
-  </div>
-  <div class="form-group dark-form-group">
-    <label for="system.selectedAbilities.selectedAbility3">Domain 3</label>
-    {{#if (eq system.sinType "redacted")}}
-      <textarea name="system.selectedAbilities.selectedAbility3" class="ability-textarea" data-ability="3">{{system.selectedAbilities.selectedAbility3}}</textarea>
-    {{else}}
-      <select name="system.selectedAbilities.selectedAbility3" class="ability-select" data-ability="3">
-        {{#each system.domains}}
-          <option value="{{this.value}}" {{#if (eq ../system.selectedAbilities.selectedAbility3 this.value)}}selected{{/if}}>{{this.title}}</option>
-        {{/each}}
-      </select>
-      <p class="ability-value" data-ability="3">{{system.selectedAbilities.selectedAbility3}}</p>
-    {{/if}}
-    <i class="fas fa-comment-alt ability-icon" data-ability="3" onclick="sendAbilityToChat(3)"></i>
-  </div>
+<div class="tab domains paper-texture" data-group="primary" data-tab="domains">
+    <div class="form-group dark-form-group">
+        <label for="system.selectedAbilities.selectedAbility1">Domain 1</label>
+        {{#if (eq system.sinType "redacted")}}
+            <textarea name="system.selectedAbilities.selectedAbility1" class="ability-textarea"
+                      data-ability="1">{{system.selectedAbilities.selectedAbility1}}</textarea>
+        {{else}}
+            <select name="system.selectedAbilities.selectedAbility1" class="ability-select" data-ability="1">
+                {{#each system.domains}}
+                    <option value="{{this.value}}"
+                            {{#if (eq ../system.selectedAbilities.selectedAbility1 this.value)}}selected{{/if}}>{{this.title}}</option>
+                {{/each}}
+            </select>
+            <p class="ability-value" data-ability="1">{{system.selectedAbilities.selectedAbility1}}</p>
+        {{/if}}
+        <i class="fas fa-comment-alt ability-icon" data-ability="1" onclick="sendAbilityToChat(1)"></i>
+    </div>
+    <div class="form-group dark-form-group">
+        <label for="system.selectedAbilities.selectedAbility2">Domain 2</label>
+        {{#if (eq system.sinType "redacted")}}
+            <textarea name="system.selectedAbilities.selectedAbility2" class="ability-textarea"
+                      data-ability="2">{{system.selectedAbilities.selectedAbility2}}</textarea>
+        {{else}}
+            <select name="system.selectedAbilities.selectedAbility2" class="ability-select" data-ability="2">
+                {{#each system.domains}}
+                    <option value="{{this.value}}"
+                            {{#if (eq ../system.selectedAbilities.selectedAbility2 this.value)}}selected{{/if}}>{{this.title}}</option>
+                {{/each}}
+            </select>
+            <p class="ability-value" data-ability="2">{{system.selectedAbilities.selectedAbility2}}</p>
+        {{/if}}
+        <i class="fas fa-comment-alt ability-icon" data-ability="2" onclick="sendAbilityToChat(2)"></i>
+    </div>
+    <div class="form-group dark-form-group">
+        <label for="system.selectedAbilities.selectedAbility3">Domain 3</label>
+        {{#if (eq system.sinType "redacted")}}
+            <textarea name="system.selectedAbilities.selectedAbility3" class="ability-textarea"
+                      data-ability="3">{{system.selectedAbilities.selectedAbility3}}</textarea>
+        {{else}}
+            <select name="system.selectedAbilities.selectedAbility3" class="ability-select" data-ability="3">
+                {{#each system.domains}}
+                    <option value="{{this.value}}"
+                            {{#if (eq ../system.selectedAbilities.selectedAbility3 this.value)}}selected{{/if}}>{{this.title}}</option>
+                {{/each}}
+            </select>
+            <p class="ability-value" data-ability="3">{{system.selectedAbilities.selectedAbility3}}</p>
+        {{/if}}
+        <i class="fas fa-comment-alt ability-icon" data-ability="3" onclick="sendAbilityToChat(3)"></i>
+    </div>
 </div>
 
 <script>
-function sendAbilityToChat(abilityNumber) {
-  const abilityElement = document.querySelector(`[data-ability="${abilityNumber}"]`);
-  const abilityValue = abilityElement.tagName === 'TEXTAREA' ? abilityElement.value : abilityElement.textContent;
-  const message = `Domain Description: ${abilityValue}`;
-  ChatMessage.create({ content: message });
-}
+    function sendAbilityToChat(abilityNumber) {
+        const abilityElement = document.querySelector(`[data-ability="${abilityNumber}"]`);
+        const abilityValue = abilityElement.tagName === 'TEXTAREA' ? abilityElement.value : abilityElement.textContent;
+        const message = `Domain Description: ${abilityValue}`;
+        ChatMessage.create({content: message});
+    }
 </script>
 
 <style>
-.tab.domains {
-  background-color: #1a1a1a;
-  color: #f5f5f5;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-}
+    .tab.domains {
+        border-radius: 5px 5px 0 0;
+        background-color: wheat;
+        color: black;
+        padding: 20px;
+        font-family: 'Courier New', monospace;
+    }
 
-.tab.domains .form-group {
-  margin-bottom: 20px;
-  text-align: center;
-  border: 1px solid #444;
-  padding: 15px;
-  border-radius: 8px;
-  background-color: #2a2a2a;
-}
+    .paper-texture {
+        background-image: url("systems/cain/assets/backgrounds/paper1.jpg");
+        background-position: 50% 50%;
+        background-blend-mode: hard-light;
+    }
 
-.tab.domains .dark-form-group label {
-  color: #f5f5f5;
-  font-weight: bold;
-  display: block;
-  margin-bottom: 10px;
-  font-size: 1.1em;
-}
+    .tab.domains .form-group {
+        margin-bottom: 20px;
+        text-align: center;
+        border: 1px solid #444;
+        padding: 15px;
+        border-radius: 8px;
+        background-color: #2a2a2a;
+    }
 
-.tab.domains .ability-select, .tab.domains .ability-textarea {
-  width: 80%;
-  border: 1px solid #444;
-  border-radius: 4px;
-  background-color: #333;
-  color: #f5f5f5;
-  font-size: 1em;
-}
+    .tab.domains .dark-form-group label {
+        color: #f5f5f5;
+        font-weight: bold;
+        display: block;
+        margin-bottom: 10px;
+        font-size: 1.1em;
+    }
 
-.tab.domains .ability-textarea {
-  height: 100px; /* Fixed vertical height */
-}
+    .tab.domains .ability-select, .tab.domains .ability-textarea {
+        width: 80%;
+        border: 1px solid #444;
+        border-radius: 4px;
+        background-color: #333;
+        color: #f5f5f5;
+        font-size: 1em;
+    }
 
-.tab.domains .ability-select {
-  appearance: none; /* Remove default arrow */
-  -webkit-appearance: none; /* Remove default arrow for Safari */
-  background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 5"><path fill="#f5f5f5" d="M2 0L0 2h4z"/></svg>');
-  background-repeat: no-repeat;
-  background-position: right 10px center;
-  background-size: 10px;
-}
+    .tab.domains .ability-textarea {
+        height: 100px; /* Fixed vertical height */
+    }
 
-.tab.domains .ability-select option {
-  background-color: #333;
-  color: #f5f5f5;
-}
+    .tab.domains .ability-select {
+        appearance: none; /* Remove default arrow */
+        -webkit-appearance: none; /* Remove default arrow for Safari */
+        background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 5"><path fill="#f5f5f5" d="M2 0L0 2h4z"/></svg>');
+        background-repeat: no-repeat;
+        background-position: right 10px center;
+        background-size: 10px;
+    }
 
-.tab.domains .ability-value {
-  margin-top: 10px;
-  font-size: 1em;
-  color: #f5f5f5;
-}
+    .tab.domains .ability-select option {
+        background-color: #333;
+        color: #f5f5f5;
+    }
 
-.tab.domains .ability-icon {
-  margin-left: 10px;
-  cursor: pointer;
-  color: #f5f5f5;
-}
+    .tab.domains .ability-value {
+        margin-top: 10px;
+        font-size: 1em;
+        color: #f5f5f5;
+    }
 
-.tab.domains .ability-icon:hover {
-  color: #aaa;
-}
+    .tab.domains .ability-icon {
+        margin-left: 10px;
+        cursor: pointer;
+        color: #f5f5f5;
+    }
 
-form .tab.domains .form-group {
-  display: block;
-  margin-bottom: 20px;
-}
+    .tab.domains .ability-icon:hover {
+        color: #aaa;
+    }
+
+    form .tab.domains .form-group {
+        display: block;
+        margin-bottom: 20px;
+    }
 </style>
