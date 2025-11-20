@@ -43,17 +43,32 @@
     </div>
   </div>
   <div class="my-agenda-section" style="margin-bottom: 20px;">
-    <h2 title="Drag new agenda here to swap">
-      {{#if currentAgenda }}
-      {{currentAgenda.name}}
-      {{else}}
-      <p class="psychedelic-text">Drag agenda onto your sheet.</p>
-      {{/if}}
+    {{#if currentAgenda }}
+    <div class="agenda-header">
+      <img src="{{currentAgenda.img}}" alt="Agenda Image" class="agenda-image">
+      <h2 title="Drag new agenda here to swap">
+        {{currentAgenda.name}}
+        <a class="item-control remove-agenda-button" data-id="{{currentAgenda.id}}" title="Remove">
+          <i class="fas fa-trash"></i>
+        </a>
+      </h2>
+    </div>
+    {{else}}
+    <h2>
+      <p class="psychedelic-text">Drag or search for agenda to add to your sheet.</p>
     </h2>
+    {{/if}}
+
+    {{!-- Search functionality for adding agendas --}}
+    <div class="agenda-search-container">
+      <input type="text" class="agenda-search-input" placeholder="Search world agendas to add to sheet..." />
+      <div class="agenda-search-results"></div>
+    </div>
     <div class="editable-agenda">
       <div class="agenda-items">
         <h3>Agenda Tasks</h3>
         <ul id="editable-agenda-items" class="items-list">
+          {{#if currentUnboldedAgendaTasks.length}}
           {{#each currentUnboldedAgendaTasks}}
           <li class='item flexrow'>
             <p data-index="{{@index}}" class="agenda-task"
@@ -68,6 +83,11 @@
             </div>
           </li>
           {{/each}}
+          {{else}}
+          <li class='item flexrow'>
+            <p style="font-style: italic; color: #888;">Click "Add Task" button below to add custom tasks, or tasks will auto-populate when you add an agenda.</p>
+          </li>
+          {{/if}}
           {{#each currentBoldedAgendaTasks}}
           <li class='item flexrow'>
             <p data-index="{{@index}}" class="agenda-task"
@@ -89,6 +109,7 @@
       <div class="agenda-abilities">
         <h3>Agenda Abilities</h3>
         <ul id="editable-agenda-abilities" class="items-list">
+          {{#if currentAgendaAbilities.length}}
           {{#each currentAgendaAbilities}}
           <li>
             <span data-index="{{@index}}" data-id="{{this.id}}" class="agenda-ability"
@@ -101,6 +122,11 @@
             </a>
           </li>
           {{/each}}
+          {{else}}
+          <li>
+            <p style="font-style: italic; color: #888;">Select abilities from the dropdown below, or they will auto-populate when you add an agenda.</p>
+          </li>
+          {{/if}}
         </ul>
         <div class="form-group">
           <div style="display: inline-block; margin-right: 10px">
@@ -124,9 +150,16 @@
   <div class="items-section" style="width: 100%;">
     <div class="blasphemy" style="width: 100%;">
       <h1>Blasphemies</h1>
+
+      {{!-- Search functionality for adding blasphemies --}}
+      <div class="blasphemy-search-container">
+        <input type="text" class="blasphemy-search-input" placeholder="Search world blasphemies to add to sheet..." />
+        <div class="blasphemy-search-results"></div>
+      </div>
+
       {{#unless blasphemyData}}
       <div class="blasphemy-powers">
-        <p class="psychedelic-text">Drag blasphemy onto your sheet.</p>
+        <p class="psychedelic-text">Drag or search for blasphemy to add to your sheet.</p>
       </div>
       {{/unless}}
       {{#each blasphemyData}}
@@ -147,51 +180,55 @@
         <div class="blasphemy-details">
           <h3>Passive{{#if (gt passives.length 1)}}s{{/if}}</h3>
           <ul class="editable-blasphemy-powers">
-            {{#each passives}}
-            <li>
-              <h4>
-                <span data-id="{{this.id}}" class="blasphemy-passive"
-                  title="{{this.system.powerDescription}}">{{this.system.powerName}}</span>
-                <a class="item-control blasphemy-power-to-chat" data-id="{{this.id}}" title="Send to Chat">
-                  <i class="fas fa-comment"></i>
-                </a>
-                <a class="item-control remove-blasphemy-power-button" data-id="{{this.id}}" title="Remove">
-                  <i class="fas fa-trash"></i>
-                </a>
-              </h4>
-              <div class="power-description-card">
-                <span class="psyche-icons-in-card">
-                  {{#if this.system.psycheBurstNoCost}}
-                  <a href="systems/cain/assets/psyche/NoPsyche.png" target="_blank">
-                    <img src="systems/cain/assets/psyche/NoPsyche.png" alt="No Psyche" class="power-psyche-icon-large"
-                      title="Has no-psyche mode">
+            {{#if passives.length}}
+              {{#each passives}}
+              <li>
+                <h4>
+                  <span data-id="{{this.id}}" class="blasphemy-passive"
+                    title="{{this.system.powerDescription}}">{{this.system.powerName}}</span>
+                  <a class="item-control blasphemy-power-to-chat" data-id="{{this.id}}" title="Send to Chat">
+                    <i class="fas fa-comment"></i>
                   </a>
-                  {{/if}}
-                  {{#if this.system.psycheBurstCost}}
-                  <a href="systems/cain/assets/psyche/Psyche.png" target="_blank">
-                    <img src="systems/cain/assets/psyche/Psyche.png" alt="Uses Psyche" class="power-psyche-icon-large"
-                      title="Uses psyche burst">
+                  <a class="item-control remove-blasphemy-power-button" data-id="{{this.id}}" title="Remove">
+                    <i class="fas fa-trash"></i>
                   </a>
-                  {{/if}}
-                  {{#if this.system.psycheBurstMultCost}}
-                  <a href="systems/cain/assets/psyche/PsychePlus.png" target="_blank">
-                    <img src="systems/cain/assets/psyche/PsychePlus.png" alt="Plus Psyche"
-                      class="power-plus-large" title="Can use multiple bursts">
-                  </a>
-                  {{/if}}
-                </span>
-                <h4>Keywords</h4>
-                <p>{{this.system.keywords}}</p>
-                <h4>Power Description</h4>
-                <p>{{formatted this.system.powerDescription ../../system.CATLEVEL.value}}</p>
-              </div>
-            </li>
-            {{/each}}
+                </h4>
+                <div class="power-description-card">
+                  <span class="psyche-icons-in-card">
+                    {{#if this.system.psycheBurstNoCost}}
+                    <a href="systems/cain/assets/psyche/NoPsyche.png" target="_blank">
+                      <img src="systems/cain/assets/psyche/NoPsyche.png" alt="No Psyche" class="power-psyche-icon-large"
+                        title="Has no-psyche mode">
+                    </a>
+                    {{/if}}
+                    {{#if this.system.psycheBurstCost}}
+                    <a href="systems/cain/assets/psyche/Psyche.png" target="_blank">
+                      <img src="systems/cain/assets/psyche/Psyche.png" alt="Uses Psyche" class="power-psyche-icon-large"
+                        title="Uses psyche burst">
+                    </a>
+                    {{/if}}
+                    {{#if this.system.psycheBurstMultCost}}
+                    <a href="systems/cain/assets/psyche/PsychePlus.png" target="_blank">
+                      <img src="systems/cain/assets/psyche/PsychePlus.png" alt="Plus Psyche"
+                        class="power-plus-large" title="Can use multiple bursts">
+                    </a>
+                    {{/if}}
+                  </span>
+                  <h4>Keywords</h4>
+                  <p>{{this.system.keywords}}</p>
+                  <h4>Power Description</h4>
+                  <p>{{formatted this.system.powerDescription ../../system.CATLEVEL.value}}</p>
+                </div>
+              </li>
+              {{/each}}
+            {{else}}
+              <li><p style="font-style: italic; color: #888;">Passives will auto-populate when you add a blasphemy.</p></li>
+            {{/if}}
           </ul>
           <h3>Powers</h3>
           <ul>
             {{#unless powers}}
-            <li>No Powers</li>
+            <li><p style="font-style: italic; color: #888;">Select powers from the dropdown below to add them to your blasphemy.</p></li>
             {{/unless}}
             {{#each powers}}
             <li>
@@ -466,6 +503,38 @@
     /* Center the My Agenda section */
   }
 
+  .abilities-page .agenda-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin-bottom: 10px;
+  }
+
+  .abilities-page .agenda-image {
+    width: 50px;
+    height: 50px;
+    vertical-align: middle;
+    margin-right: 10px;
+  }
+
+  .abilities-page .agenda-header h2 {
+    margin: 0;
+    display: inline-block;
+    position: relative;
+  }
+
+  .abilities-page .remove-agenda-button {
+    margin-left: 10px;
+    color: #ff0000;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+
+  .abilities-page .remove-agenda-button:hover {
+    color: #ff5555;
+  }
+
   .abilities-page .editable-agenda {
     display: flex;
     /* Use flexbox to align items side by side */
@@ -483,12 +552,12 @@
   }
 
   .abilities-page .items-list {
-    background-color: #1a1a1a;
+    background-color: transparent;
     color: #e0e0e0;
     font-family: 'Courier New', Courier, monospace;
     padding: 10px;
     /* Reduced padding */
-    border: 1px solid #444;
+    border: none;
     list-style-type: none;
     margin: 0;
     padding-left: 0;
@@ -822,6 +891,112 @@
     width: 70px;
     height: 70px;
     filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.9));
+  }
+
+  /* Search functionality styles for agendas and blasphemies */
+  .agenda-search-container,
+  .blasphemy-search-container {
+    margin: 10px 0 15px 0;
+    position: relative;
+  }
+
+  .agenda-search-input,
+  .blasphemy-search-input {
+    width: 100%;
+    padding: 8px 12px;
+    background-color: #1a1a1a;
+    color: #e0e0e0;
+    border: 1px solid #444;
+    border-radius: 4px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+  }
+
+  .agenda-search-input:focus,
+  .blasphemy-search-input:focus {
+    outline: none;
+    border-color: #ff00cc;
+    box-shadow: 0 0 8px rgba(255, 0, 204, 0.3);
+  }
+
+  .agenda-search-results,
+  .blasphemy-search-results {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    max-height: 300px;
+    overflow-y: auto;
+    background-color: #1a1a1a;
+    border: 1px solid #ff00cc;
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+    z-index: 1000;
+    display: none;
+  }
+
+  .agenda-search-results.active,
+  .blasphemy-search-results.active {
+    display: block;
+    box-shadow: 0 0 15px rgba(255, 0, 204, 0.3);
+  }
+
+  .agenda-search-result,
+  .blasphemy-search-result {
+    padding: 10px 12px;
+    color: #e0e0e0;
+    cursor: pointer;
+    border-bottom: 1px solid #2a2a2a;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: background-color 0.2s, color 0.2s;
+  }
+
+  .agenda-search-result:hover,
+  .blasphemy-search-result:hover {
+    background-color: #2a2a2a;
+    color: #ff00cc;
+  }
+
+  .agenda-search-result img,
+  .blasphemy-search-result img {
+    width: 32px;
+    height: 32px;
+    border-radius: 3px;
+    border: 1px solid #444;
+  }
+
+  .agenda-search-result-info,
+  .blasphemy-search-result-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .agenda-search-result-name,
+  .blasphemy-search-result-name {
+    font-weight: bold;
+    color: #fff;
+    font-family: "Lacquer", system-ui;
+    font-size: 16px;
+  }
+
+  .agenda-search-result-desc,
+  .blasphemy-search-result-desc {
+    font-size: 11px;
+    color: #888;
+    margin-top: 2px;
+    font-family: 'Courier New', Courier, monospace;
+  }
+
+  .agenda-search-no-results,
+  .blasphemy-search-no-results {
+    padding: 12px;
+    text-align: center;
+    color: #888;
+    font-style: italic;
+    font-family: "Lacquer", system-ui;
   }
 
 </style>

@@ -510,7 +510,6 @@ img {
 
 /* Agenda Header */
 .agenda-header {
-  background-color: #2b2b2b;
   border-bottom: 2px solid #444;
   padding: 1em;
   display: flex;

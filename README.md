@@ -82,11 +82,11 @@ Features are included but not limited too:
 - Added in some settings for player managment to be more accessible.
 
 
-## Migrating to v1.1.X 
+## Migrating to v1.1.X
 
 If you are coming from an older version of the system here is what you have to know:
-We have completley re-worked items, and they are **Mandatory** for the new system work. Details are below when importing the new items, and remember **KEEP DOCUMENT IDS**
-When updating, I highly, highly suggest deleting all of your old items and adding the new ones. 
+We have completley re-worked items, and they are **Mandatory** for the new system work. **NEW:** The system now automatically imports all compendium content with document IDs preserved!
+When updating, I highly, highly suggest deleting all of your old items - the new ones will be automatically imported when you reload the world. 
 In addition to this, you may have to wipe some parts of actor-sheets.
 I would take screenshots of what you had before and replicate them back to the now standard items that are needed. 
 
@@ -152,17 +152,16 @@ https://github.com/user-attachments/assets/035fbb43-5e0c-4ed6-970d-b3dd6f9d6909
 https://github.com/user-attachments/assets/88cb39a3-a235-4c6b-9f56-ebfbcff463fa
 
 
-### **Importing Compendium Information**
+### **Automatic Compendium Import**
 
-* Go to Compendium tab (Book with world looking icon).
-* Right click on each pack and click import content, **CLICK KEEP DOCUMENT IDS** then click yes.
+**NEW!** All compendium content is now automatically imported when you create a new world or first launch the game!
 
+* When you first load into your world as a GM, the system will automatically import all game content
+* A chat message will appear showing the import progress and completion
+* All document IDs are preserved automatically (no manual steps required!)
+* Includes: Kit & Items, Blasphemies, Agendas, Sin Marks, Afflictions, and Roll Tables
 
-**YOU MUST KEEP DOCUMENT IDS, THIS IS CRITICAL TO THE SYSTEM WORKING AS INTENDED.**
-
-
-
-https://github.com/user-attachments/assets/464240a1-7d6c-49f0-b68e-6415b091d353
+**No more manual importing!** Just create your world and start playing.
 
 
 ## Investigations
