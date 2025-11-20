@@ -43,15 +43,41 @@
 <hr>
 
 ## CREDITS
-    - Myco from the Pilot.NET/CAIN Discord for providing icon assets
     - Tom Bloom Creator of Cain
+    - Adam Kostandy (Diabeatz96) - Original creator and lead developer of the repository
+    - Myco from the Pilot.NET/CAIN Discord for providing icon assets
     - My sunday DND group
     - My friend carmen for miscellaneous ideas and polish
-    - Diabeatz96, ahandleman and Benji as developers
-    - bugeso and loupgarou for development contributions
+    - ahandleman and Benji as developers
+    - bugeso and loupgarou for development contributions and v1.3 updates
 
-## BUGESO Update
-Hello, this is a temporary fork for Cain 1.3 on foundry! I hardly know what I'm doing, but this should hopefully work! If you have any questions or concerns just @ me on discord @bugeso!
+## v1.3.X Update for CAIN
+
+Version 1.3.X is a major update for the CAIN system focused on FoundryVTT v13 compatibility, improved accessibility, and enhanced talisman management. This version represents a collaborative effort between bugeso and loupgarou.
+
+Features include but are not limited too:
+
+- **FoundryVTT v13 Compatibility**: Full support for FoundryVTT v13 with backward compatibility for v11 and v12
+- **Enhanced Talisman System**:
+  - Talisman tiles now update automatically when switching scenes
+  - Added "Delete All Tiles" functionality for easier talisman management
+  - Enhanced create tile button with improved icons and visual feedback
+  - Talismans properly sync data when scenes change
+- **Improved Accessibility**:
+  - Enhanced input field and dropdown readability with better contrast
+  - Improved checkbox styles for better visibility
+  - Adjusted sidebar margins for more consistent layout
+  - Better text legibility across all sheet types
+- **Compendium Updates**:
+  - GFF3 Agendas fully integrated
+  - GFF3 Blasphemies fully integrated
+  - Updated afflictions compendium with new entries
+  - All compendium packs now use standardized _source JSON format
+- **Sin System Completion**: Full 1.3 sin system implementation (v1.3.3+)
+- **GitHub Actions Integration**: Automated release workflow with pull request details
+- **General Polish**: Various bug fixes, quality-of-life improvements, and much more throughout the system
+
+If you have any questions or concerns about v1.3, reach out on discord @bugeso!
 
 ## v1.2.X Update
 
@@ -546,12 +572,13 @@ This project is protected under the [SELECT-A-LICENSE](https://choosealicense.co
 
 ##  Acknowledgments
 
-   - Myco from the Pilot.NET/CAIN Discord for providing icon assets
    - Tom Bloom Creator of Cain
+   - Adam Kostandy (Diabeatz96) - Original creator and lead developer of the repository
+   - Myco from the Pilot.NET/CAIN Discord for providing icon assets
    - My sunday DND group
    - My friend carmen for miscellaneous ideas and polish
-   - Diabeatz96, ahandleman and Benji as developers
-   - bugeso and loupgarou for development contributions
+   - ahandleman and Benji as developers
+   - bugeso and loupgarou for development contributions and v1.3 updates
 
 
 [**Return**](#-overview)
