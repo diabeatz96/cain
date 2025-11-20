@@ -1,1 +1,6 @@
 .vscode/settings.json
+
+# LevelDB temporary/log files (keep .ldb, CURRENT, and MANIFEST files for compendium data)
+packs/*/*.log
+packs/*/LOG
+packs/*/LOG.old
