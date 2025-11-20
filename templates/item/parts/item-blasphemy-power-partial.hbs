@@ -1,5 +1,27 @@
 <form class="{{cssClass}} {{system.blasphemyType}}-theme" autocomplete="off">
-  <header class="blasphemy-power-header" style="display: flex; align-items: center; justify-content: space-between;">
+  <header class="blasphemy-power-header" style="display: flex; align-items: center; justify-content: space-between; position: relative;">
+    
+    <div class="psyche-icons-in-item-header">
+        {{#if system.psycheBurstNoCost}}
+        <a href="systems/cain/assets/psyche/NoPsyche.png" target="_blank">
+            <img src="systems/cain/assets/psyche/NoPsyche.png" alt="No Psyche" class="power-psyche-icon-item"
+                title="Has no-psyche mode">
+        </a>
+        {{/if}}
+        {{#if system.psycheBurstCost}}
+        <a href="systems/cain/assets/psyche/Psyche.png" target="_blank">
+            <img src="systems/cain/assets/psyche/Psyche.png" alt="Uses Psyche" class="power-psyche-icon-item"
+                title="Uses psyche burst">
+        </a>
+        {{/if}}
+        {{#if system.psycheBurstMultCost}}
+        <a href="systems/cain/assets/psyche/PsychePlus.png" target="_blank">
+            <img src="systems/cain/assets/psyche/PsychePlus.png" alt="Plus Psyche" class="power-plus-item"
+                title="Can use multiple bursts">
+        </a>
+        {{/if}}
+    </div>
+    
     <div class="header-fields" style="flex-grow: 1; text-align: left;">
       <div class="form-group" style="margin-bottom: 10px;">
         <label class="power-label" style="font-weight: bold; font-size: 1.2em;">Power Name:</label>
@@ -22,3 +44,30 @@
     <p style="padding: 10px; border: 2px solid var(--secondary-color, #555); border-radius: 10px; background-color: var(--primary-color, #2a2a2a); font-family: 'Courier New', Courier, monospace; color: var(--text-color, #ffffff); box-shadow: 0 0 10px var(--accent-color, #ff00ff);">{{#formatted system.powerDescription}}{{/formatted}}</p>
   </section>
 </form>
+
+<style>
+    /* Position the icon container in the top right of the header */
+    .psyche-icons-in-item-header {
+        position: absolute;
+        top: 10px; /* Adjust as needed */
+        right: 110px; /* Position to the left of the round profile image */
+        z-index: 2;
+        display: flex;
+        gap: 5px;
+    }
+
+    /* Style for the icons inside the item sheet */
+    .power-psyche-icon-item {
+        width: 70px;
+        height: 70px;
+        filter: drop-shadow(0 0 4px #ff00cc);
+    }
+
+    /* Style for the animated Plus icon */
+    .power-plus-item {
+        width: 70px;
+        height: 70px;
+        filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.9));
+    }
+    
+</style>

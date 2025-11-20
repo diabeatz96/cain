@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://img.itch.zone/aW1nLzE3MTg0NDA0LnBuZw==/original/UyMCiP.png" width="400" alt="project-logo">
+  <img src="https://i.imgur.com/OX0qub4.jpeg" width="1080" alt="project-logo">
 </p>
 <p align="center">
     <h1 align="center">CAIN</h1>
@@ -44,6 +44,9 @@
     - My sunday DND group
     - My friend carmen for miscellaneous ideas and polish
     - Diabeatz96, ahandleman and Benji as developers.
+
+## BUGESO Update
+Hello, this is a temporary fork for Cain 1.3 on foundry! I hardly know what I'm doing, but this should hopefully work! If you have any questions or concerns just @ me on discord @bugeso!
 
 ## v1.2.X Update
 
