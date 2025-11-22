@@ -13,6 +13,33 @@ export class CainActor extends Actor {
   }
 
   /** @override */
+  async _preCreate(data, options, user) {
+    await super._preCreate(data, options, user);
+
+    // Set default prototype token settings for all actor types
+    const prototypeToken = {
+      actorLink: true,  // Link actor data
+      texture: {
+        src: data.img || "icons/svg/mystery-man.svg"  // Use actor image or default
+      }
+    };
+
+    this.updateSource({ prototypeToken });
+  }
+
+  /** @override */
+  async _preUpdate(changed, options, user) {
+    await super._preUpdate(changed, options, user);
+
+    // If the actor image is being updated, also update the prototype token image
+    if (changed.img && !changed.prototypeToken?.texture?.src) {
+      this.updateSource({
+        "prototypeToken.texture.src": changed.img
+      });
+    }
+  }
+
+  /** @override */
   prepareBaseData() {
     // Data modifications in this step occur before processing embedded
     // documents or derived data.

@@ -15,6 +15,13 @@
 </div>
 
 <h2> Gear </h2>
+
+{{!-- Search functionality for adding existing items --}}
+<div class="item-search-container">
+  <input type="text" class="item-search-input" placeholder="Search world items to add to sheet..." />
+  <div class="item-search-results"></div>
+</div>
+
 <ol class='items-list'>
   <li class='item flexrow items-header'>
     <div class='item-name-header'>Name </div>
@@ -148,5 +155,91 @@
     background-color: #1a1a1a;
     color: #e0e0e0;
     border: 1px solid #444;
+  }
+
+  /* Search functionality styles */
+  .item-search-container {
+    margin: 10px 0 15px 0;
+    position: relative;
+  }
+
+  .item-search-input {
+    width: 100%;
+    padding: 8px 12px;
+    background-color: #1a1a1a;
+    color: #e0e0e0;
+    border: 1px solid #444;
+    border-radius: 4px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+  }
+
+  .item-search-input:focus {
+    outline: none;
+    border-color: #666;
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.1);
+  }
+
+  .item-search-results {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    max-height: 300px;
+    overflow-y: auto;
+    background-color: #1a1a1a;
+    border: 1px solid #444;
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+    z-index: 1000;
+    display: none;
+  }
+
+  .item-search-results.active {
+    display: block;
+  }
+
+  .item-search-result {
+    padding: 8px 12px;
+    color: #e0e0e0;
+    cursor: pointer;
+    border-bottom: 1px solid #2a2a2a;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: background-color 0.2s;
+  }
+
+  .item-search-result:hover {
+    background-color: #2a2a2a;
+  }
+
+  .item-search-result img {
+    width: 24px;
+    height: 24px;
+    border-radius: 2px;
+  }
+
+  .item-search-result-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .item-search-result-name {
+    font-weight: bold;
+    color: #fff;
+  }
+
+  .item-search-result-type {
+    font-size: 11px;
+    color: #888;
+  }
+
+  .item-search-no-results {
+    padding: 12px;
+    text-align: center;
+    color: #888;
+    font-style: italic;
   }
 </style>
