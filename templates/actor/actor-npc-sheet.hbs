@@ -1,3 +1,26 @@
+{{!-- Backwards compatibility: NPC type is deprecated, use 'sin' instead --}}
+{{#if (eq actor.type "npc")}}
+<div class="deprecation-warning-banner" style="
+  background: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 100%);
+  border: 2px solid #ff4757;
+  padding: 10px 15px;
+  margin: 8px 8px 0 8px;
+  border-radius: 8px 8px 0 0;
+  color: #fff;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(255, 71, 87, 0.3);
+  font-family: 'Inter', sans-serif;
+  animation: pulse-warning 2s ease-in-out infinite;
+">
+  <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
+    <i class="fas fa-exclamation-triangle" style="font-size: 1em;"></i>
+    <strong style="font-size: 0.95em;">Deprecated Actor Type:</strong>
+    <span style="font-size: 0.9em;">
+      "NPC" has been renamed to "Sin". This actor will continue to work, but please use "Sin" for new actors.
+    </span>
+  </div>
+</div>
+{{/if}}
 <form class="{{cssClass}} {{actor.type}} {{system.sinType}} flexcol brooding-theme" autocomplete="off">
     {{!-- Sheet Header: image and general information --}}
     <div class="row">
@@ -546,6 +569,16 @@
                 background-color: #feffda;
                 color: #000;
             }
+        }
+    }
+
+    /* Deprecation warning animation */
+    @keyframes pulse-warning {
+        0%, 100% {
+            box-shadow: 0 4px 12px rgba(255, 71, 87, 0.3);
+        }
+        50% {
+            box-shadow: 0 4px 20px rgba(255, 71, 87, 0.6);
         }
     }
 </style>

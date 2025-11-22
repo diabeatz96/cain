@@ -88,7 +88,8 @@
     "Actor": {
       "character": "Exorcist",
       "sin": "Sin",
-      "mundane": "Mundane NPC"
+      "mundane": "Mundane NPC",
+      "npc": "Sin (Deprecated - Use 'Sin' instead)"
     },
     "Item": {
       "item": "Item",

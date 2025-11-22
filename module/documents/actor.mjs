@@ -82,7 +82,7 @@ export class CainActor extends Actor {
     const result = {...this};
 
     // Simplify system data.
-    result.system = this.system.toPlainObject();
+    result.system = this.system.toPlainObject?.() ?? {...this.system};
 
     // Add items.
     result.items = this.items?.size > 0 ? this.items.contents : [];
