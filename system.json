@@ -11,7 +11,7 @@
   "url": "https://github.com/bugeso/cain1.3",
   "license": "LICENSE.txt",
   "readme": "README.md",
-  "bugs": "https://github.com/diabeatz96/cain/issues",
+  "bugs": "https://github.com/bugeso/cain1.3/issues",
   "changelog": "CHANGELOG.md",
   "media": [
     {
@@ -20,7 +20,7 @@
       "thumbnail": "systems/cain/assets/cainnew.png"
     }
   ],
-  "version": "1.3.3",
+  "version": "1.3.4",
   "compatibility": {
     "minimum": 11,
     "verified": "12"

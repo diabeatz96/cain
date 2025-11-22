@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://img.itch.zone/aW1nLzE3MTg0NDA0LnBuZw==/original/UyMCiP.png" width="400" alt="project-logo">
+  <img src="https://i.imgur.com/OX0qub4.jpeg" width="1080" alt="project-logo">
 </p>
 <p align="center">
     <h1 align="center">CAIN</h1>
