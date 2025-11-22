@@ -48,7 +48,7 @@ Hooks.once('init', async function () {
   // with the Character/NPC as part of super.defineSchema()
   CONFIG.Actor.dataModels = {
     character: models.CainCharacter,
-    npc: models.CainNPC,
+    sin: models.CainNPC,
     mundane: models.CainMundane,
   }
   CONFIG.Item.documentClass = CainItem;

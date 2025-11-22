@@ -1,4 +1,9 @@
 .vscode/settings.json
+.idea/
+node_modules/
+
+# Unpacked compendium DBs
+_source/
 
 # LevelDB temporary/log files (keep .ldb, CURRENT, and MANIFEST files for compendium data)
 packs/*/*.log

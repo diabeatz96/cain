@@ -1,0 +1,549 @@
+<form class="{{cssClass}} {{actor.type}} {{system.sinType}} flexcol brooding-theme" autocomplete="off">
+    {{!-- Sheet Header: image and general information --}}
+    <div class="row">
+        <div class="col">
+            <div class="card paper-texture">
+                <div style="position: relative;">
+                    <span style="position: absolute;"></span>
+                </div>
+                <div class="row">
+                    <div class="col w-25">
+                        <h1 class="pirata-one-regular" style="text-align: center;">SIN</h1>
+                    </div>
+                    <div class="col w-25 m-auto">
+                        <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="150"
+                             width="150"/>
+                    </div>
+                    <div class="col w-33 m-auto">
+                        <div class="row">
+                            <span><b>Name:</b></span>
+                            <input class="input-text" name="name" type="text" value="{{actor.name}}"
+                                   placeholder="Name"/>
+                        </div>
+                        <div class="row">
+                            <span><b>Type:</b></span>
+                            <select id="sinTypeSelect" name="system.sinType">
+                                <option value="ogre" {{#if (eq system.sinType "ogre")}}selected{{/if}}>Ogre</option>
+                                <option value="toad" {{#if (eq system.sinType "toad")}}selected{{/if}}>Toad</option>
+                                <option value="idol" {{#if (eq system.sinType "idol")}}selected{{/if}}>Idol</option>
+                                <option value="lord" {{#if (eq system.sinType "lord")}}selected{{/if}}>Lord</option>
+                                <option value="hound" {{#if (eq system.sinType "hound")}}selected{{/if}}>Hound</option>
+                                <option value="centipede" {{#if (eq system.sinType "centipede")}}selected{{/if}}>
+                                    Centipede
+                                </option>
+                                <option value="redacted" {{#if (eq system.sinType "redacted")}}selected{{/if}}>
+                                    [REDACTED]
+                                </option>
+                            </select>
+                        </div>
+                        <div class="row">
+                            <span><b>Form:</b></span>
+                            <select name="system.sinForm">
+                                <option value="Form I/Severed"
+                                        {{#if (eq system.sinForm "Form I/Severed")}}selected{{/if}}>Form I/Severed
+                                </option>
+                                <option value="Form II/Fused"
+                                        {{#if (eq system.sinForm "Form II/Fused")}}selected{{/if}}>Form II/Fused
+                                </option>
+                                <option value="Form III/Bound"
+                                        {{#if (eq system.sinForm "Form III/Bound")}}selected{{/if}}>Form III/Bound
+                                </option>
+                            </select>
+                        </div>
+                        <div class="row">
+                            <!--                TODO: i want to use the category icon here-->
+                            <span><b>Category:</b></span>
+                            <input type="text" name="system.category" value="{{system.category}}" data-dtype="Number"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{!-- Quick Actions and Talismans --}}
+    <div class="row">
+        <section class="quick-section">
+            <div class="card paper-texture2">
+                <div class="quick-actions">
+                    <div class="row">
+                        <div class="col" style="writing-mode: vertical-lr; max-width: 27px;">
+                            <p class="quick-action-text">Quick Actions</p>
+                        </div>
+                        <div class="actions-grid col">
+                            <button type="button" class="quick-action-button attack-player">Attack a Player</button>
+                            <button type="button" class="quick-action-button afflict-player">Afflict a Player</button>
+                            <button type="button" class="quick-action-button use-complication">Use Complication</button>
+                            <button type="button" class="quick-action-button use-threat">Use Threat</button>
+                            <button type="button" class="quick-action-button severe-attack">Severe Attack</button>
+                            <button type="button" class="quick-action-button use-domain">Use Domain</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div class="row">
+        <div class="quick-stats card" style="width: 100%;">
+            <div class="row dashed-line">
+                <div class="col pl-2">
+                    <h2 class="white-text-shadow">Talismans</h2>
+                </div>
+                <div class="col px-2" style="text-align: right; margin: auto;">
+                    {{#if globalTalismans}}
+                        <div class="row" style="justify-content: flex-end;">
+                            <select id="talisman-select" class="styled-select">
+                                {{#each globalTalismans}}
+                                    <option value="{{@index}}">{{this.name}}</option>
+                                {{/each}}
+                            </select>
+                            <button type="button" id="add-talisman-button" class="add-talisman-button">
+                                <i class='fas fa-plus'></i>
+                            </button>
+                        </div>
+                    {{/if}}
+                </div>
+            </div>
+            <!--   TODO: i dont have a good idea for this area, come back to it later -->
+            <div class="talismans-grid">
+                {{#unless selectedTalismans.length}}
+                    <p class="center-p">No talismans are bound to this sin... go add some!</p>
+                {{/unless}}
+                {{#each selectedTalismans}}
+                    <div class="talisman-item">
+                        <div class="talisman-container row card">
+                            <div class="col talisman-name-col">
+                                <span class="talisman-name white-text-shadow">{{this.name}}</span>
+                            </div>
+                            <div class="col talisman-count-col">
+                                <span class="talisman-label">{{this.currMarkAmount}} / {{this.maxMarkAmount}}</span>
+                            </div>
+                            <div class="col talisman-button-col">
+                                <button type="button" class="delete-talisman-button" data-index="{{@index}}"><i class='fas fa-x'></i></button>
+                            </div>
+                        </div>
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+    </div>
+
+    {{!-- Sheet Tab Navigation --}}
+    <nav class="sheet-tabs tabs dark-tabs" data-group="primary">
+        <a class="item" data-tab="description">Description</a>
+        <a class="item" data-tab="palace-pressure">Palace / Pressure</a>
+        <a class="item" data-tab="attacks">Attacks</a>
+        <a class="item" data-tab="domains">Domains</a>
+    </nav>
+
+    {{!-- Sheet Body --}}
+    <section class="sheet-body dark-body">
+
+        {{!-- Description Tab --}}
+        {{> "systems/cain/templates/actor/npc-parts/actor-description.hbs"}}
+
+        {{!-- Palace / Pressure Tab --}}
+        {{> "systems/cain/templates/actor/npc-parts/actor-palace-pressure.hbs"}}
+
+        {{!-- Attacks Tab --}}
+        {{> "systems/cain/templates/actor/npc-parts/actor-attacks.hbs"}}
+
+        {{!-- Domains Tab --}}
+        {{> "systems/cain/templates/actor/npc-parts/actor-domains.hbs"}}
+
+    </section>
+</form>
+
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Pirata+One&display=swap');
+
+    .brooding-theme {
+        background-color: #1a1a1a;
+        color: #e0e0e0;
+        font-family: "Courier New", Courier, monospace;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.5);
+    }
+
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+        margin-right: -15px;
+        margin-left: -15px;
+    }
+
+    .m-auto {
+        margin: auto;
+    }
+
+    .col {
+        flex-basis: 0;
+        flex-grow: 1;
+        max-width: 100%;
+
+        &.w-25 {
+            flex: 0 0 25%;
+            max-width: 25%;
+        }
+
+        &.w-33 {
+            flex: 0 0 33%;
+            max-width: 33%;
+        }
+
+        &.w-50 {
+            flex: 0 0 50%;
+            max-width: 50%;
+        }
+
+        &.w-66 {
+            flex: 0 0 66%;
+            max-width: 66%;
+        }
+
+        &.w-75 {
+            flex: 0 0 75%;
+            max-width: 75%;
+        }
+    }
+
+    .pl-2 {
+        padding-left: 2em;
+    }
+
+    .px-2 {
+        padding: 0 2em;
+    }
+
+    .pirata-one-regular {
+        font-family: "Pirata One", system-ui;
+        font-weight: 400;
+        font-style: normal;
+    }
+
+    .white-text-shadow {
+        text-shadow: -2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff;
+    }
+
+    .card {
+        border-radius: 20px;
+        background-color: rgb(134, 134, 134);
+        border: none;
+        padding: 10px;
+        margin: 10px;
+
+        span {
+            color: black;
+            font-size: 22px;
+        }
+
+        h1 {
+            font-size: 120px;
+            margin: auto;
+            color: black;
+            border-bottom: none;
+        }
+
+        h2 {
+            font-size: 60px;
+            font-family: "Pirata One", system-ui;
+            margin: auto;
+            color: black;
+            border-bottom: none;
+        }
+
+        .dashed-line {
+            border-bottom: dashed #1a1a1a 4px;
+        }
+
+        &.paper-texture {
+            background-image: url("systems/cain/assets/backgrounds/paper1.jpg");
+            background-position: 50% 50%;
+        }
+
+        &.paper-texture2 {
+            background-image: url("systems/cain/assets/backgrounds/paper2.jpg");
+            background-position: 50% 50%;
+            background-blend-mode: difference;
+        }
+
+        input[type="text"] {
+            -webkit-appearance: none;
+            appearance: none;
+            margin 0;
+
+            font-family: sans-serif;
+            font-size: 22px;
+            border: none;
+            width: 50%;
+            background-color: transparent;
+            border-radius: 0%;
+            border-bottom: black solid 2px;
+        }
+    }
+
+    .hound {
+        border: 5px #ff0808 solid;
+    }
+
+    .centipede {
+        border: 5px #9f00ff solid;
+    }
+
+    .idol {
+        border: 5px #e40df2 solid;
+    }
+
+    .ogre {
+        border: 5px #0d79f2 solid;
+    }
+
+    .toad {
+        border: 5px #f2af0d solid;
+    }
+
+    .lord {
+        border: 5px #91ffef solid;
+    }
+
+    .profile-img {
+        border: 2px solid #444;
+        border-radius: 50%;
+        transition: transform 0.3s;
+    }
+
+    .profile-img:hover {
+        transform: scale(1.1);
+    }
+
+    select {
+        color: black;
+        font-size: 18px;
+        font-family: sans-serif;
+        border: none;
+
+        &:focus {
+            {{!-- TODO not sure how noticeable this will be --}}
+            .ogre & {
+                box-shadow: 0 0 5px #0d79f2;
+            }
+
+            box-shadow: 0 0 5px pink;
+        }
+    }
+
+    .styled-select {
+        height: 40px;
+        border: black solid 2px;
+        margin-right: -4px;
+        border-radius: 10px 0px 0px 10px;
+    }
+
+    .actions-grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+    }
+
+    /*.talismans-grid {*/
+    /*    display: flex;*/
+    /*    justify-content: space-between;*/
+    /*}*/
+
+    .center-p {
+        margin: auto;
+        padding: 2em 0;
+        font-size: 20px;
+        color: black;
+        font-weight: bold;
+    }
+
+    .quick-action-text {
+        text-orientation: sideways;
+        font-family: 'Pirata One';
+        color: white;
+        font-size: 31px;
+        font-weight: bold;
+        margin-left: 16px;
+        text-align: center;
+        text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;
+
+        .hound & {
+            color: #ff0808;
+        }
+
+        .centipede & {
+            color: #9f00ff;
+        }
+
+        .idol & {
+            color: #e40df2;
+        }
+
+        .ogre & {
+            color: #0d79f2;
+        }
+
+        .toad & {
+            color: #f2af0d;
+        }
+
+        .lord & {
+            color: #91ffef;
+        }
+    }
+
+    .talisman-container {
+        z-index: 0;
+        border: solid 2px black;
+        background-image: url("systems/cain/assets/backgrounds/paper2.jpg");
+        background-blend-mode: darken;
+        font-family: "Signika", sans-serif;
+        font-size: 28px;
+        font-weight: bold;
+
+        .hound & {
+            background-color: #ff0808;
+        }
+
+        .centipede & {
+            background-color: #9f00ff;
+        }
+
+        .idol & {
+            background-color: #e40df2;
+        }
+
+        .ogre & {
+            background-color: #0d79f2;
+        }
+
+        .toad & {
+            background-color: #f2af0d;
+        }
+
+        .lord & {
+            background-color: #91ffef;
+        }
+
+        .col {
+            width: 100%;
+        }
+
+        .talisman-name-col {
+
+        }
+        .talisman-count-col {
+            max-width: 80px;
+            background: white;
+            margin: auto;
+            vertical-align: bottom;
+            text-align: center;
+            border-radius: 20px;
+            padding-bottom: 4px;
+        }
+
+        .talisman-button-col {
+            text-align: end;
+            padding-right: 1em;
+            max-width: 38px;
+            color: white;
+            border-radius: 20px;
+            padding-bottom: 4px;
+            background: black;
+            margin-left: 2em;
+        }
+
+        .delete-talisman-button {
+            border: none;
+            font-size: 25px;
+            width: 20px;
+            color: white;
+            padding-top: 6px;
+            padding-left: 9px;
+        }
+    }
+
+    .add-talisman-button {
+        background: black;
+        color: white;
+        font-size: 20px;
+        max-width: 50px;
+        border: black solid 2px;
+        font-family: sans-serif;
+        border-radius: 0px 10px 10px 0px;
+    }
+
+    .quick-action-button {
+        border: none;
+        border-radius: 5px;
+        padding: 20px 10px;
+        max-width: 25%;
+        margin: 10px;
+        transition: transform 0.3s ease, background-color 0.3s ease;
+        font-family: "Pirata One", system-ui;
+        flex-basis: 32%;
+        font-size: 28px;
+        background-color: #636363;
+
+        &:hover {
+            transform: rotate(8deg) scale(1.1);
+        }
+
+        .hound & {
+            background-color: #ff0808;
+        }
+
+        .centipede & {
+            background-color: #9f00ff;
+        }
+
+        .idol & {
+            background-color: #e40df2;
+        }
+
+        .ogre & {
+            background-color: #0d79f2;
+        }
+
+        .toad & {
+            background-color: #f2af0d;
+        }
+
+        .lord & {
+            background-color: #91ffef;
+        }
+    }
+
+    .sheet-body {
+        z-index: 1;
+    }
+
+    .sheet-tabs {
+        border: none;
+        margin-bottom: -2px;
+        transition: transform 0.3s;
+        z-index: 0;
+
+        :hover {
+            transform: scale(1.04);
+        }
+
+        .item {
+            border-radius: 10px 10px 0 0;
+            height: 50px;
+            width: 24%;
+            background-color: #8a8b70;
+            padding-top: 15px;
+
+            font-weight: bold;
+            text-shadow: none;
+
+            &.active {
+                background-color: #feffda;
+            }
+        }
+    }
+</style>
