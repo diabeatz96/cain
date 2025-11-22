@@ -493,6 +493,7 @@ export class CainActorSheet extends ActorSheet {
     html.find('.remove-blasphemy-power-button').on('click', this._removeBlasphemyPowerButton.bind(this));
     html.find('.remove-blasphemy-button').on('click', this._removeBlasphemyButton.bind(this));
     html.find('.remove-affliction-button').on('click', this._removeAfflictionButton.bind(this));
+    html.find('.remove-agenda-button').on('click', this._removeAgendaButton.bind(this));
     scHtml.setLeftClick('.add-task-button', this._addNewTask.bind(this));
     
     html.find('.add-affliction-button').on('click', async event => {await this._addAffliction(event)});
@@ -541,6 +542,15 @@ export class CainActorSheet extends ActorSheet {
       const itemId = event.currentTarget.dataset.id;
       this._openAgendaItemSheet(event.currentTarget.dataset.id);
     });
+
+    // Search functionality for items
+    this._setupItemSearch(html);
+
+    // Search functionality for agendas
+    this._setupAgendaSearch(html);
+
+    // Search functionality for blasphemies
+    this._setupBlasphemySearch(html);
 
     // Event delegation for blasphemy-passive
     html.on('click', '.blasphemy-passive', (event) => {
@@ -1437,26 +1447,49 @@ export class CainActorSheet extends ActorSheet {
     const blasphemy = game.items.get(blasphemyID);
     console.log(blasphemy);
     const blasphemies = this.actor.system.currentBlasphemies || [];
-    if (!blasphemies.includes(blasphemyID)) {console.error("Tried to remove Blasphemy ID: " + blasphemyID + " but did not find it in list: " + blasphemies); return}; //Break out if we're trying to remove a non-existant blasphemy.  
+    if (!blasphemies.includes(blasphemyID)) {console.error("Tried to remove Blasphemy ID: " + blasphemyID + " but did not find it in list: " + blasphemies); return}; //Break out if we're trying to remove a non-existant blasphemy.
 
     //Handle reducing XP max if removing a 2nd blasphemy.
     let XPmax = this.actor.system.xp.max;
     if (blasphemies.length > 1) {
       XPmax -= 1;
     }
-    
+
     //Remove the blasphemy
     const index = blasphemies.indexOf(blasphemyID);
     const newBlasphemies = blasphemies.slice(0, Number(index)).concat(blasphemies.slice(Number(index)+1));
     const blasphemyPowers = this.actor.system.currentBlasphemyPowers || [];
     console.log(blasphemy);
     const newBlasphemyPowers = blasphemyPowers.filter(powerID => {return !(blasphemy.system.powers.includes(powerID));});
-    
+
     this.actor.update({
       'system.currentBlasphemies': newBlasphemies,
       'system.currentBlasphemyPowers': newBlasphemyPowers,
       'system.xp.max': XPmax,
      }).then(() => {
+      this.render(false); // Re-render the sheet to reflect changes
+    });
+  }
+
+  _removeAgendaButton(event) {
+    event.preventDefault();
+    const agendaID = event.currentTarget.dataset.id;
+    console.log('Removing agenda:', agendaID);
+
+    const currentAgenda = this.actor.system.currentAgenda;
+    if (currentAgenda !== agendaID) {
+      console.error("Tried to remove Agenda ID: " + agendaID + " but current agenda is: " + currentAgenda);
+      return;
+    }
+
+    // Clear the current agenda and all associated data
+    this.actor.update({
+      'system.currentAgenda': 'INVALID',
+      'system.currentUnboldedAgendaTasks': [],
+      'system.currentBoldedAgendaTasks': [],
+      'system.currentAgendaAbilities': []
+    }).then(() => {
+      ui.notifications.info('Agenda removed from character');
       this.render(false); // Re-render the sheet to reflect changes
     });
   }
@@ -3157,6 +3190,246 @@ _useDomain(event) {
     },
     default: "use"
   }).render(true);
+}
+
+// Search functionality for items
+_setupItemSearch(html) {
+  const searchInput = html.find('.item-search-input');
+  const searchResults = html.find('.item-search-results');
+  let searchTimeout;
+
+  searchInput.on('input', (event) => {
+    clearTimeout(searchTimeout);
+    const query = event.target.value.trim().toLowerCase();
+
+    if (query.length < 2) {
+      searchResults.removeClass('active').empty();
+      return;
+    }
+
+    searchTimeout = setTimeout(() => {
+      const worldItems = game.items.filter(item =>
+        item.type === 'item' &&
+        item.name.toLowerCase().includes(query) &&
+        !this.actor.items.has(item.id)
+      );
+
+      if (worldItems.length === 0) {
+        searchResults.html('<div class="item-search-no-results">No items found</div>');
+        searchResults.addClass('active');
+      } else {
+        const resultsHtml = worldItems.slice(0, 10).map(item => `
+          <div class="item-search-result" data-item-id="${item.id}">
+            <img src="${item.img}" alt="${item.name}" />
+            <div class="item-search-result-info">
+              <div class="item-search-result-name">${item.name}</div>
+              <div class="item-search-result-type">${item.system.type || 'Item'}</div>
+            </div>
+          </div>
+        `).join('');
+        searchResults.html(resultsHtml).addClass('active');
+      }
+    }, 300);
+  });
+
+  // Handle clicking on search results
+  searchResults.on('click', '.item-search-result', async (event) => {
+    const itemId = $(event.currentTarget).data('item-id');
+    const item = game.items.get(itemId);
+
+    if (item) {
+      await Item.create(item.toObject(), { parent: this.actor });
+      ui.notifications.info(`Added ${item.name} to ${this.actor.name}`);
+      searchInput.val('');
+      searchResults.removeClass('active').empty();
+      this.render(false);
+    }
+  });
+
+  // Close search results when clicking outside
+  $(document).on('click', (event) => {
+    if (!$(event.target).closest('.item-search-container').length) {
+      searchResults.removeClass('active');
+    }
+  });
+}
+
+// Search functionality for agendas
+_setupAgendaSearch(html) {
+  const searchInput = html.find('.agenda-search-input');
+  const searchResults = html.find('.agenda-search-results');
+  let searchTimeout;
+
+  searchInput.on('input', (event) => {
+    clearTimeout(searchTimeout);
+    const query = event.target.value.trim().toLowerCase();
+
+    if (query.length < 2) {
+      searchResults.removeClass('active').empty();
+      return;
+    }
+
+    searchTimeout = setTimeout(() => {
+      const worldAgendas = game.items.filter(item =>
+        item.type === 'agenda' &&
+        item.name.toLowerCase().includes(query)
+      );
+
+      if (worldAgendas.length === 0) {
+        searchResults.html('<div class="agenda-search-no-results">No agendas found</div>');
+        searchResults.addClass('active');
+      } else {
+        const resultsHtml = worldAgendas.slice(0, 10).map(item => `
+          <div class="agenda-search-result" data-item-id="${item.id}">
+            <img src="${item.img}" alt="${item.name}" />
+            <div class="agenda-search-result-info">
+              <div class="agenda-search-result-name">${item.name}</div>
+              <div class="agenda-search-result-desc">${item.system.agendaName || ''}</div>
+            </div>
+          </div>
+        `).join('');
+        searchResults.html(resultsHtml).addClass('active');
+      }
+    }, 300);
+  });
+
+  // Handle clicking on search results
+  searchResults.on('click', '.agenda-search-result', async (event) => {
+    const itemId = $(event.currentTarget).data('item-id');
+    const item = game.items.get(itemId);
+
+    if (item) {
+      // Get the agenda's tasks directly from unboldedTasks and boldedTasks (matching drag behavior)
+      const unboldedTasks = item.system.unboldedTasks || [];
+      const boldedTasks = item.system.boldedTasks || [];
+
+      // Merge with existing bolded tasks (matching drag behavior from line 760-766)
+      const currentBoldedTasks = this.actor.system.currentBoldedAgendaTasks || [];
+      const newBoldedTasks = currentBoldedTasks.concat(
+        boldedTasks.filter(boldedTask => !currentBoldedTasks.includes(boldedTask))
+      );
+
+      const totalTasks = unboldedTasks.length + newBoldedTasks.length;
+
+      // Set the agenda as current agenda and populate tasks (matching drag behavior from line 769-779)
+      await this.actor.update({
+        'system.agenda': item.system.agendaName,
+        'system.currentAgenda': item.id,
+        'system.currentUnboldedAgendaTasks': unboldedTasks,
+        'system.currentBoldedAgendaTasks': newBoldedTasks
+      });
+
+      ui.notifications.info(`Set ${item.name} as current agenda with ${totalTasks} tasks`);
+      searchInput.val('');
+      searchResults.removeClass('active').empty();
+      this.render(false);
+    }
+  });
+
+  // Close search results when clicking outside
+  $(document).on('click', (event) => {
+    if (!$(event.target).closest('.agenda-search-container').length) {
+      searchResults.removeClass('active');
+    }
+  });
+}
+
+// Search functionality for blasphemies
+_setupBlasphemySearch(html) {
+  const searchInput = html.find('.blasphemy-search-input');
+  const searchResults = html.find('.blasphemy-search-results');
+  let searchTimeout;
+
+  searchInput.on('input', (event) => {
+    clearTimeout(searchTimeout);
+    const query = event.target.value.trim().toLowerCase();
+
+    if (query.length < 2) {
+      searchResults.removeClass('active').empty();
+      return;
+    }
+
+    searchTimeout = setTimeout(() => {
+      const worldBlasphemies = game.items.filter(item =>
+        item.type === 'blasphemy' &&
+        item.name.toLowerCase().includes(query) &&
+        !this.actor.system.currentBlasphemies?.includes(item.id)
+      );
+
+      if (worldBlasphemies.length === 0) {
+        searchResults.html('<div class="blasphemy-search-no-results">No blasphemies found</div>');
+        searchResults.addClass('active');
+      } else {
+        const resultsHtml = worldBlasphemies.slice(0, 10).map(item => `
+          <div class="blasphemy-search-result" data-item-id="${item.id}">
+            <img src="${item.img}" alt="${item.name}" />
+            <div class="blasphemy-search-result-info">
+              <div class="blasphemy-search-result-name">${item.name}</div>
+              <div class="blasphemy-search-result-desc">${item.system.blasphemyName || ''}</div>
+            </div>
+          </div>
+        `).join('');
+        searchResults.html(resultsHtml).addClass('active');
+      }
+    }, 300);
+  });
+
+  // Handle clicking on search results
+  searchResults.on('click', '.blasphemy-search-result', async (event) => {
+    const itemId = $(event.currentTarget).data('item-id');
+    const item = game.items.get(itemId);
+
+    if (item) {
+      // Add blasphemy to current blasphemies
+      const currentBlasphemies = this.actor.system.currentBlasphemies || [];
+      if (!currentBlasphemies.includes(item.id)) {
+        currentBlasphemies.push(item.id);
+
+        // Get the current list of blasphemy powers
+        const blasphemyPowersList = this.actor.system.currentBlasphemyPowers || [];
+
+        // Get the new blasphemy powers that are passive (matching drag behavior from line 878-894)
+        const newBlasphemyPowers = this._getItemsFromIDs(item.system.powers || [])
+          .filter(power => {
+            if (!power || !power.system) {
+              console.error("Power or power system is undefined:", power);
+              ui.notifications.error("Some powers are undefined. Did you import the compendium to keep document IDs?");
+              return false;
+            }
+            return power.system.isPassive;
+          })
+          .map(power => power.id);
+
+        // Combine the current and new blasphemy powers
+        const newBlasphemyPowersList = blasphemyPowersList.concat(newBlasphemyPowers);
+
+        // Check if this raises the number of blasphemies higher than 1, if so, add one to the XP max
+        let XPmax = this.actor.system.xp.max;
+        if (currentBlasphemies.length > 1) XPmax += 1;
+
+        await this.actor.update({
+          'system.currentBlasphemies': currentBlasphemies,
+          'system.currentBlasphemyPowers': newBlasphemyPowersList,
+          'system.xp.max': XPmax
+        });
+
+        const passiveCount = newBlasphemyPowers.length;
+        ui.notifications.info(`Added ${item.name} with ${passiveCount} passive power${passiveCount !== 1 ? 's' : ''}`);
+        searchInput.val('');
+        searchResults.removeClass('active').empty();
+        this.render(false);
+      } else {
+        ui.notifications.warn(`${item.name} is already added to this character`);
+      }
+    }
+  });
+
+  // Close search results when clicking outside
+  $(document).on('click', (event) => {
+    if (!$(event.target).closest('.blasphemy-search-container').length) {
+      searchResults.removeClass('active');
+    }
+  });
 }
 
 }

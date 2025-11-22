@@ -13,7 +13,8 @@
             <button class="hide-talisman" data-index="{{@index}}">
               <i class="fas fa-eye-slash"></i> Hide
             </button>
-            <button class="create-tile" data-index="{{@index}}">Create Tile</button>
+            <button class="create-tile" data-index="{{@index}}"><i class="fas fa-map-marked-alt"></i> Create Tile</button>
+            <button class="delete-all-tiles" data-index="{{@index}}"><i class="fas fa-eraser"></i> Delete All Tiles</button>
             <input type="number" min="0" max="13" value="{{this.maxMarkAmount}}" class="talisman-max-mark" data-index="{{@index}}">
           {{/if}}
           <input type="range" min="0" max="{{this.maxMarkAmount}}" value="{{this.currMarkAmount}}" class="talisman-slider" data-index="{{@index}}">
@@ -117,7 +118,7 @@
   align-items: center;
 }
 
-.delete-talisman, .hide-talisman {
+.delete-talisman, .hide-talisman, .delete-all-tiles {
   background: #ff4500;
   color: #fff;
   border: none;
@@ -125,14 +126,41 @@
   border-radius: 5px;
   cursor: pointer;
   margin-bottom: 10px;
+  width: 100%;
+  transition: all 0.3s ease;
 }
 
-.delete-talisman:hover, .hide-talisman:hover {
-  background: #ff6347; /* Slightly lighter on hover */
+.delete-talisman:hover, .hide-talisman:hover, .delete-all-tiles:hover {
+  background: #ff6347;
+  transform: scale(1.05);
+  box-shadow: 0 0 10px rgba(255, 69, 0, 0.5);
+}
+
+.create-tile {
+  background: #00bfff;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 10px;
+  width: 100%;
+  transition: all 0.3s ease;
+}
+
+.create-tile:hover {
+  background: #1e90ff;
+  transform: scale(1.05);
+  box-shadow: 0 0 10px rgba(0, 191, 255, 0.5);
 }
 
 .talisman-slider, .talisman-max-mark {
   width: 100%;
   margin-bottom: 10px;
+}
+
+/* Talisman button icons */
+.talisman-controls button i {
+  margin-right: 5px;
 }
 </style>

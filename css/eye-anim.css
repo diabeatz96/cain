@@ -1,7 +1,9 @@
+/* Foundry VTT v11-v13 Compatible */
 .sinOverflow-icon-anim{
     width: 45px;
     height: 45px;
     border: none !important;
+    display: block;
 }
 
 .sin-icon-anim-0{

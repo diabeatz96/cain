@@ -5,8 +5,7 @@ node_modules/
 # Unpacked compendium DBs
 _source/
 
-# Binary data for compendiums
-**/MANIFEST**
-**/LOG**
-**/CURRENT
-**/**.log
+# LevelDB temporary/log files (keep .ldb, CURRENT, and MANIFEST files for compendium data)
+packs/*/*.log
+packs/*/LOG
+packs/*/LOG.old

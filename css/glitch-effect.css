@@ -1,7 +1,9 @@
+/* Foundry VTT v11-v13 Compatible */
 .glitch {
     position: relative;
     margin: 0 auto;
     background-color: inherit;
+    isolation: isolate; /* V13 layer compatibility */
   }
   .glitch::before, .glitch::after {
     animation-iteration-count: infinite;
