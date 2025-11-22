@@ -410,30 +410,53 @@ window.formatCatText = function(text, category) {
         CatFormattingData.forEach(catData => {
           // Apply the operation to the category value first
           let operatedCat = Number(category);
+          let calculationSteps = [];
+
+          // Build calculation explanation
+          calculationSteps.push(`Base CAT: ${category}`);
+
           if (catData.operation) {
             const operator = catData.operation.charAt(0);
             const operand = Number(catData.operation.slice(1));
 
             switch(operator) {
               case '/':
-                operatedCat = Math.ceil(operatedCat / operand); // Use ceil for division to round up
+                const beforeCeil = operatedCat / operand;
+                operatedCat = Math.ceil(beforeCeil);
+                calculationSteps.push(`${category} / ${operand} = ${beforeCeil.toFixed(2)} → ${operatedCat} (rounded up)`);
                 break;
               case '*':
                 operatedCat = operatedCat * operand;
+                calculationSteps.push(`${category} * ${operand} = ${operatedCat}`);
                 break;
               case '+':
                 operatedCat = operatedCat + operand;
+                calculationSteps.push(`${category} + ${operand} = ${operatedCat}`);
                 break;
               case '-':
                 operatedCat = operatedCat - operand;
+                calculationSteps.push(`${category} - ${operand} = ${operatedCat}`);
                 break;
             }
           }
 
           // Then apply the modifier
-          const catIndex = Math.max(Math.min(operatedCat + Number(catData.modifier), 7), 0);
+          const beforeModifier = operatedCat;
+          const finalCat = operatedCat + Number(catData.modifier);
+          if (Number(catData.modifier) !== 0) {
+            calculationSteps.push(`${beforeModifier} ${catData.modifier > 0 ? '+' : ''} ${catData.modifier} = ${finalCat}`);
+          }
+
+          const catIndex = Math.max(Math.min(finalCat, 7), 0);
+          if (finalCat < 0 || finalCat > 7) {
+            calculationSteps.push(`Clamped to CAT ${catIndex} (min 0, max 7)`);
+          }
+
+          calculationSteps.push(`Result: ${categoryTable[catIndex][catData.type]}`);
+
+          const tooltipText = calculationSteps.join(' | ');
           const operationText = catData.operation ? catData.operation : '';
-          const replacementString = `<span title="CAT${operationText}${(catData.modifier <=  0 ? '' : '+') + (catData.modifier == 0 ? '' : catData.modifier)}"><img style="vertical-align: middle; max-height: 2em; display: inline-block; border: none;" src="systems/cain/assets/CAT/CAT${category}.png"/> <b>${categoryTable[catIndex][catData.type]}</b> <img style="vertical-align: middle; max-height: 2em; display: inline-block; border: none;" src="systems/cain/assets/CAT/CAT${category}.png"/> </span>`;
+          const replacementString = `<span data-tooltip="${tooltipText}" style="cursor: help; border-bottom: 1px dotted #ff00cc;"><img style="vertical-align: middle; max-height: 2em; display: inline-block; border: none;" src="systems/cain/assets/CAT/CAT${category}.png"/> <b>${categoryTable[catIndex][catData.type]}</b> <img style="vertical-align: middle; max-height: 2em; display: inline-block; border: none;" src="systems/cain/assets/CAT/CAT${category}.png"/> </span>`;
           console.log(replacementString);
           updatedText = updatedText.replace(catData.string, replacementString)
         })

@@ -1377,7 +1377,8 @@ export class CainActorSheet extends ActorSheet {
     event.preventDefault();
     const id = event.currentTarget.getAttribute('data-id');
     const blasphemyPower = game.items.get(id);
-    const formattedDescription = blasphemyPower.system.powerDescription.replace(/\n/g, '<br>');
+    const catLevel = this.actor.system.CATLEVEL.value;
+    const formattedDescription = window.formatCatText(blasphemyPower.system.powerDescription, catLevel);
     const message = `<h3>${blasphemyPower.system.powerName}</h3><p>${formattedDescription}</p>`;
     ChatMessage.create({
       content: message,
@@ -1389,7 +1390,8 @@ export class CainActorSheet extends ActorSheet {
     event.preventDefault();
     const index = event.currentTarget.getAttribute('data-index');
     const agendaAbility = game.items.get(this.actor.system.currentAgendaAbilities[index]);
-    const formattedDescription = agendaAbility.system.abilityDescription.replace(/\n/g, '<br>');
+    const catLevel = this.actor.system.CATLEVEL.value;
+    const formattedDescription = window.formatCatText(agendaAbility.system.abilityDescription, catLevel);
     const message = `<h3>${agendaAbility.system.abilityName}</h3><p>${formattedDescription}</p>`;
     ChatMessage.create({
       content: message,
