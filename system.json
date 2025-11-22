@@ -8,6 +8,12 @@
       "discord": "adamkostandy, bugeso"
     }
   ],
+  "flags": {
+    "hotReload": {
+      "extensions": ["scss", "mjs", "hbs", "json"],
+        "paths": ["lang", "css", "module", "src", "templates"]
+      }
+  },
   "url": "https://github.com/bugeso/cain1.3",
   "license": "LICENSE.txt",
   "readme": "README.md",
