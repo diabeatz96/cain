@@ -1,4 +1,4 @@
-<div class="tab palace-pressure" data-group="primary" data-tab="palace-pressure">
+<div class="tab palace-pressure paper-texture" data-group="primary" data-tab="palace-pressure">
   <div class="form-grid">
     <div class="form-group dark-form-group full-width">
       <label for="system.palace" class="centered-label">Palace</label>
@@ -16,10 +16,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Courier+New:wght@400;700&display=swap');
 
 .tab.palace-pressure {
-  background-color: #1a1a1a;
-  color: #f5f5f5;
-  padding: 20px;
-  font-family: 'Courier New', monospace;
+    border-radius: 5px 5px 0 0;
+    background-color: wheat;
+    color: black;
+    padding: 20px;
+    font-family: 'Courier New', monospace;
+}
+
+.paper-texture {
+    background-image: url("systems/cain/assets/backgrounds/paper1.jpg");
+    background-position: 50% 50%;
+    background-blend-mode: hard-light;
 }
 
 .tab.palace-pressure .form-grid {
@@ -33,7 +40,7 @@
 }
 
 .tab.palace-pressure .dark-form-group label {
-  color: #f5f5f5;
+  color: black;
   font-weight: bold;
   display: block;
   margin-bottom: 10px;
@@ -51,8 +58,8 @@
   width: 100%;
   height: 150px;
   padding: 10px;
-  background-color: #333;
-  color: #f5f5f5;
+  background-color: wheat;
+  color: black;
   border: 1px solid #444;
   border-radius: 4px;
 }
@@ -61,8 +68,8 @@
   width: 100%;
   height: 200px; /* Increased height for better editing experience */
   padding: 10px;
-  background-color: #333;
-  color: #f5f5f5;
+  background-color: white;
+  color: black;
   border: 1px solid #444;
   border-radius: 4px;
   overflow-y: auto;
@@ -113,8 +120,8 @@ form .tab.palace-pressure .form-group {
 .tab.palace-pressure input[type="text"] {
   width: 100%;
   padding: 10px;
-  background-color: #333;
-  color: #f5f5f5;
+  background-color: white;
+  color: black;
   border: 1px solid #444;
   border-radius: 4px;
   font-family: 'Courier New', monospace;
