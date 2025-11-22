@@ -1,222 +1,1401 @@
-<form class='{{cssClass}}, homebrew-background' autocomplete='off'>
-  <header class='sheet-header homebrew-header '>
+<form class='{{cssClass}} homebrew-background' autocomplete='off'>
+  <header class='sheet-header homebrew-header'>
+    <h1 class="homebrew-title">
+      <i class="fas fa-flask"></i> Homebrew Laboratory
+    </h1>
+    <p class="homebrew-subtitle">Create custom content for your CAIN game</p>
   </header>
 
   {{! Sheet Tab Navigation }}
   <nav class='sheet-tabs tabs homebrew-tabs' data-group='primary'>
-    <a class='item' data-tab='agenda'>Agenda</a>
-    <a class='item' data-tab='blasphemy'>Blasphemy</a>
+    <a class='item' data-tab='agenda'><i class="fas fa-tasks"></i> Agenda</a>
+    <a class='item' data-tab='blasphemy'><i class="fas fa-book-dead"></i> Blasphemy</a>
+    <a class='item' data-tab='blasphemyPower'><i class="fas fa-hand-sparkles"></i> Powers</a>
+    <a class='item' data-tab='affliction'><i class="fas fa-skull-crossbones"></i> Afflictions</a>
+    <a class='item' data-tab='item'><i class="fas fa-briefcase"></i> Items</a>
+    <a class='item' data-tab='sinMark'><i class="fas fa-exclamation-triangle"></i> Sin Marks</a>
+    <a class='item' data-tab='history'><i class="fas fa-history"></i> History</a>
   </nav>
 
   {{! Sheet Body }}
   <section class='sheet-body homebrew-body'>
-    <div class='tab homebrew-text-color' data-group='primary' data-tab='agenda'>
-        {{!-- {{#each agendaOptions.tasks}}
-        <li class="homebrew-text-color" data-homebrew-index="{{@index}}"> {{#if this.isBold}}<b>{{/if}}{{this.task}}{{#if this.isBold}}</b>{{/if}} <button class="homebrew-text-color homebrew-toggle-bold" data-homebrew-index="{{@index}}">Toggle Bold</button></li>
-        {{/each}} --}}
-        <textarea class="editable-item-input homebrew-text-color homebrew-agenda-name-input">{{agendaOptions.name}}</textarea>
-        <ul>
-        {{#each agendaOptions.tasks}}
-            <li class='item flexrow'>
-              <textarea class="editable-item-input homebrew-text-color homebrew-task-input" data-task-index="{{@index}}" style="font-weight: {{#if this.isBold}}bold{{else}}normal{{/if}};">{{this.task}}</textarea>
-              <div class="item-controls">
-                <a class="item-control homebrew-toggle-bold homebrew-text-color" data-task-index="{{@index}}" title="Bold Text">
-                  <i class="fas fa-bold {{#if this.isBold}}fa-solid{{else}}fa-thin{{/if}}"></i>
-                </a>
-                <a class="item-control homebrew-remove-task homebrew-text-color" data-task-index="{{@index}}" title="Remove">
+
+    {{!-- AGENDA TAB --}}
+    <div class='tab homebrew-tab' data-group='primary' data-tab='agenda'>
+      <div class="creation-panel">
+        <h2><i class="fas fa-plus-circle"></i> Create Agenda</h2>
+
+        <div class="form-section">
+          <label for="agenda-name">Agenda Name</label>
+          <input type="text" id="agenda-name" class="homebrew-input" placeholder="Enter agenda name..." value="{{agendaOptions.name}}">
+        </div>
+
+        <div class="form-section">
+          <div class="section-header">
+            <h3><i class="fas fa-list-ul"></i> Agenda Tasks</h3>
+            <button type="button" class="btn-add homebrew-new-task"><i class="fas fa-plus"></i> Add Task</button>
+          </div>
+          <ul class="task-list">
+          {{#each agendaOptions.tasks}}
+            <li class='task-item'>
+              <textarea class="homebrew-input task-input" data-task-index="{{@index}}" placeholder="Task description..." style="font-weight: {{#if this.isBold}}bold{{else}}normal{{/if}};">{{this.task}}</textarea>
+              <div class="task-controls">
+                <button type="button" class="btn-icon homebrew-toggle-bold" data-task-index="{{@index}}" title="Bold Text">
+                  <i class="fas fa-bold {{#if this.isBold}}active{{/if}}"></i>
+                </button>
+                <button type="button" class="btn-icon btn-delete homebrew-remove-task" data-task-index="{{@index}}" title="Remove">
                   <i class="fas fa-trash"></i>
-                </a>
+                </button>
               </div>
             </li>
-        {{/each}}
-        </ul>
-        <button class="homebrew-text-color homebrew-new-task">Additional Task</button>
-        <ul>
-        {{#each agendaOptions.abilities}}
-            <li class='item flexrow'>
-              <textarea class="editable-item-input homebrew-text-color homebrew-ability-name-input" data-ability-index="{{@index}}">{{this.name}}</textarea>
-              <textarea class="editable-item-input homebrew-text-color homebrew-ability-input" data-ability-index="{{@index}}">{{this.abilityDescription}}</textarea>
-              <div class="item-controls">
-                <a class="item-control homebrew-remove-ability homebrew-text-color" data-ability-index="{{@index}}" title="Remove">
-                  <i class="fas fa-trash"></i>
-                </a>
-              </div>
+          {{/each}}
+          </ul>
+        </div>
+
+        <div class="form-section">
+          <div class="section-header">
+            <h3><i class="fas fa-star"></i> Agenda Abilities</h3>
+            <button type="button" class="btn-add homebrew-new-ability"><i class="fas fa-plus"></i> Add Ability</button>
+          </div>
+          <ul class="ability-list">
+          {{#each agendaOptions.abilities}}
+            <li class='ability-item'>
+              <input type="text" class="homebrew-input ability-name-input" data-ability-index="{{@index}}" placeholder="Ability name..." value="{{this.name}}">
+              <textarea class="homebrew-input ability-description-input" data-ability-index="{{@index}}" placeholder="Ability description (use {<CAT> type modifier} for CAT formatting)...">{{this.abilityDescription}}</textarea>
+              <button type="button" class="btn-icon btn-delete homebrew-remove-ability" data-ability-index="{{@index}}" title="Remove">
+                <i class="fas fa-trash"></i>
+              </button>
             </li>
-        {{/each}}
-        </ul>
-        <button class="homebrew-text-color homebrew-new-ability">Additional Ability</button>
-        <footer><button class="homebrew-text-color homebrew-submit-agenda">Create Agenda</button></footer>
+          {{/each}}
+          </ul>
+        </div>
+
+        <div class="cat-help">
+          <details>
+            <summary><i class="fas fa-question-circle"></i> CAT Formatting Help</summary>
+            <p>Use <code>{"{<CAT> size 0}"}</code> for CAT-based values. Supports operations: <code>/2</code>, <code>*2</code>, <code>+1</code>, <code>-1</code></p>
+            <p>Example: <code>{"{<CAT/2> size 0}"}</code> = half CAT level</p>
+          </details>
+        </div>
+
+        <footer class="form-footer">
+          <button type="button" class="btn-primary homebrew-submit-agenda"><i class="fas fa-check-circle"></i> Create Agenda</button>
+        </footer>
+      </div>
     </div>
-    <div class='tab homebrew-text-color' data-group='primary' data-tab='blasphemy'>
-        {{!-- {{#each agendaOptions.tasks}}
-        <li class="homebrew-text-color" data-homebrew-index="{{@index}}"> {{#if this.isBold}}<b>{{/if}}{{this.task}}{{#if this.isBold}}</b>{{/if}} <button class="homebrew-text-color homebrew-toggle-bold" data-homebrew-index="{{@index}}">Toggle Bold</button></li>
-        {{/each}} --}}
-        <textarea class="editable-item-input homebrew-text-color homebrew-blasphemy-name-input">{{blasphemyOptions.name}}</textarea>
-        <ul>
-        {{#each blasphemyOptions.powers}}
-          <li class='item flexrow'>
-              <div style="display: flex; flex-direction: column; margin-right: 10px;">
-                  <label for="power-name-{{@index}}">Power Name</label>
-                  <textarea id="power-name-{{@index}}" class="editable-item-input homebrew-text-color homebrew-power-name-input" data-power-index="{{@index}}">{{this.name}}</textarea>
+
+    {{!-- BLASPHEMY TAB --}}
+    <div class='tab homebrew-tab' data-group='primary' data-tab='blasphemy'>
+      <div class="creation-panel">
+        <h2><i class="fas fa-plus-circle"></i> Create Blasphemy</h2>
+
+        <div class="form-section">
+          <label for="blasphemy-name">Blasphemy Name</label>
+          <input type="text" id="blasphemy-name" class="homebrew-input" placeholder="Enter blasphemy name..." value="{{blasphemyOptions.name}}">
+        </div>
+
+        <div class="form-section">
+          <div class="section-header">
+            <h3><i class="fas fa-hand-sparkles"></i> Powers</h3>
+            <button type="button" class="btn-add homebrew-new-power"><i class="fas fa-plus"></i> Add Power</button>
+          </div>
+          <ul class="power-list">
+          {{#each blasphemyOptions.powers}}
+            <li class='power-item'>
+              <div class="power-header-row">
+                <input type="text" class="homebrew-input power-name-input" data-power-index="{{@index}}" placeholder="Power name..." value="{{this.name}}">
+                <label class="checkbox-label">
+                  <input type="checkbox" class="homebrew-power-passive-input" data-power-index="{{@index}}" {{#if this.isPassive}}checked{{/if}}>
+                  <span>Passive</span>
+                </label>
+                <button type="button" class="btn-icon btn-delete homebrew-remove-power" data-power-index="{{@index}}" title="Remove">
+                  <i class="fas fa-trash"></i>
+                </button>
               </div>
-              <div style="display: flex; flex-direction: column; margin-right: 10px;">
-                  <label for="power-passive-{{@index}}">Passive?</label>
-                  <input type="checkbox" id="power-passive-{{@index}}" class="homebrew-power-passive-input" data-power-index="{{@index}}" {{#if this.isPassive}} checked {{/if}}>
+              <div class="power-details">
+                <div class="psyche-burst-options">
+                  <label class="psyche-label">Psyche Burst:</label>
+                  <label class="checkbox-label small">
+                    <input type="checkbox" class="homebrew-power-psyche-cost" data-power-index="{{@index}}" {{#if this.psycheBurstCost}}checked{{/if}}>
+                    <span><i class="fas fa-circle"></i> Uses</span>
+                  </label>
+                  <label class="checkbox-label small">
+                    <input type="checkbox" class="homebrew-power-psyche-no-cost" data-power-index="{{@index}}" {{#if this.psycheBurstNoCost}}checked{{/if}}>
+                    <span><i class="fas fa-times"></i> No-Cost Mode</span>
+                  </label>
+                  <label class="checkbox-label small">
+                    <input type="checkbox" class="homebrew-power-psyche-mult" data-power-index="{{@index}}" {{#if this.psycheBurstMultCost}}checked{{/if}}>
+                    <span><i class="fas fa-plus"></i> Multiple</span>
+                  </label>
+                </div>
+                <input type="text" class="homebrew-input power-keywords-input" data-power-index="{{@index}}" placeholder="Keywords (comma-separated)..." value="{{this.keywords}}">
+                <textarea class="homebrew-input power-description-input" data-power-index="{{@index}}" placeholder="Power description (use CAT formatting)...">{{this.powerDescription}}</textarea>
               </div>
-              <div style="display: flex; flex-direction: column; margin-right: 10px;">
-                  <label for="power-tags-{{@index}}">Keywords</label>
-                  <textarea id="power-tags-{{@index}}" class="editable-item-input homebrew-text-color homebrew-power-tags-input" data-power-index="{{@index}}">{{this.keywords}}</textarea>
-              </div>
-              <div style="display: flex; flex-direction: column; margin-right: 10px;">
-                  <label for="power-description-{{@index}}">Description</label>
-                  <textarea id="power-description-{{@index}}" class="editable-item-input homebrew-text-color homebrew-power-input" data-power-index="{{@index}}">{{this.powerDescription}}</textarea>
-              </div>
-              <div class="item-controls" style="align-self: flex-end;">
-                  <a class="item-control homebrew-remove-power homebrew-text-color" data-power-index="{{@index}}" title="Remove">
-                      <i class="fas fa-trash"></i>
-                  </a>
-              </div>
-          </li>
-        {{/each}}
-        </ul>
-        <button class="homebrew-text-color homebrew-new-power">Additional Power</button>
-        <footer><button class="homebrew-text-color homebrew-submit-blasphemy">Create Blasphemy</button></footer>
+            </li>
+          {{/each}}
+          </ul>
+        </div>
+
+        <div class="cat-help">
+          <details>
+            <summary><i class="fas fa-question-circle"></i> CAT Formatting Help</summary>
+            <p>Use <code>{"{<CAT> size 0}"}</code> for CAT-based values. Supports operations: <code>/2</code>, <code>*2</code>, <code>+1</code>, <code>-1</code></p>
+          </details>
+        </div>
+
+        <footer class="form-footer">
+          <button type="button" class="btn-primary homebrew-submit-blasphemy"><i class="fas fa-check-circle"></i> Create Blasphemy</button>
+        </footer>
+      </div>
+    </div>
+
+    {{!-- BLASPHEMY POWER TAB --}}
+    <div class='tab homebrew-tab' data-group='primary' data-tab='blasphemyPower'>
+      <div class="creation-panel">
+        <h2><i class="fas fa-plus-circle"></i> Create Standalone Power</h2>
+
+        <div class="form-section">
+          <label for="power-standalone-name">Power Name</label>
+          <input type="text" id="power-standalone-name" class="homebrew-input" placeholder="Enter power name...">
+        </div>
+
+        <div class="form-section">
+          <label class="checkbox-label">
+            <input type="checkbox" id="power-standalone-passive">
+            <span>Is Passive Power</span>
+          </label>
+        </div>
+
+        <div class="form-section">
+          <label>Psyche Burst Options</label>
+          <div class="psyche-burst-options">
+            <label class="checkbox-label">
+              <input type="checkbox" id="power-standalone-psyche-cost">
+              <span><i class="fas fa-circle"></i> Uses Psyche Burst</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" id="power-standalone-psyche-no-cost">
+              <span><i class="fas fa-times"></i> Has No-Psyche Mode</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" id="power-standalone-psyche-mult">
+              <span><i class="fas fa-plus"></i> Can Use Multiple Bursts</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <label for="power-standalone-keywords">Keywords</label>
+          <input type="text" id="power-standalone-keywords" class="homebrew-input" placeholder="Keywords (comma-separated)...">
+        </div>
+
+        <div class="form-section">
+          <label for="power-standalone-description">Power Description</label>
+          <textarea id="power-standalone-description" class="homebrew-input" rows="6" placeholder="Power description (use CAT formatting)..."></textarea>
+        </div>
+
+        <div class="cat-help">
+          <details>
+            <summary><i class="fas fa-question-circle"></i> CAT Formatting Help</summary>
+            <p>Use <code>{"{<CAT> size 0}"}</code> for CAT-based values</p>
+          </details>
+        </div>
+
+        <footer class="form-footer">
+          <button type="button" class="btn-primary homebrew-submit-standalone-power"><i class="fas fa-check-circle"></i> Create Power</button>
+        </footer>
+      </div>
+    </div>
+
+    {{!-- AFFLICTION TAB --}}
+    <div class='tab homebrew-tab' data-group='primary' data-tab='affliction'>
+      <div class="creation-panel">
+        <h2><i class="fas fa-plus-circle"></i> Create Affliction</h2>
+
+        <div class="form-section">
+          <label for="affliction-name">Affliction Name</label>
+          <input type="text" id="affliction-name" class="homebrew-input" placeholder="Enter affliction name...">
+        </div>
+
+        <div class="form-section">
+          <label for="affliction-description">Description</label>
+          <textarea id="affliction-description" class="homebrew-input" rows="6" placeholder="Affliction description (use CAT formatting)..."></textarea>
+        </div>
+
+        <div class="cat-help">
+          <details>
+            <summary><i class="fas fa-question-circle"></i> CAT Formatting Help</summary>
+            <p>Use <code>{"{<CAT> size 0}"}</code> for CAT-based values</p>
+          </details>
+        </div>
+
+        <footer class="form-footer">
+          <button type="button" class="btn-primary homebrew-submit-affliction"><i class="fas fa-check-circle"></i> Create Affliction</button>
+        </footer>
+      </div>
+    </div>
+
+    {{!-- ITEM TAB --}}
+    <div class='tab homebrew-tab' data-group='primary' data-tab='item'>
+      <div class="creation-panel">
+        <h2><i class="fas fa-plus-circle"></i> Create Item</h2>
+
+        <div class="form-section">
+          <label for="item-name">Item Name</label>
+          <input type="text" id="item-name" class="homebrew-input" placeholder="Enter item name...">
+        </div>
+
+        <div class="form-section">
+          <label for="item-description">Description</label>
+          <textarea id="item-description" class="homebrew-input" rows="6" placeholder="Item description..."></textarea>
+        </div>
+
+        <div class="form-section">
+          <label for="item-quantity">Quantity</label>
+          <input type="number" id="item-quantity" class="homebrew-input" min="1" value="1">
+        </div>
+
+        <div class="form-section">
+          <label for="item-weight">Weight</label>
+          <input type="number" id="item-weight" class="homebrew-input" min="0" step="0.1" value="0">
+        </div>
+
+        <footer class="form-footer">
+          <button type="button" class="btn-primary homebrew-submit-item"><i class="fas fa-check-circle"></i> Create Item</button>
+        </footer>
+      </div>
+    </div>
+
+    {{!-- SIN MARK TAB --}}
+    <div class='tab homebrew-tab' data-group='primary' data-tab='sinMark'>
+      <div class="creation-panel">
+        <h2><i class="fas fa-plus-circle"></i> Create Sin Mark</h2>
+
+        <div class="form-section">
+          <label for="sinmark-name">Sin Mark Name</label>
+          <input type="text" id="sinmark-name" class="homebrew-input" placeholder="Enter sin mark name...">
+        </div>
+
+        <div class="form-section">
+          <label for="sinmark-description">Description</label>
+          <textarea id="sinmark-description" class="homebrew-input" rows="4" placeholder="Sin mark description..."></textarea>
+        </div>
+
+        <div class="form-section">
+          <div class="section-header">
+            <h3><i class="fas fa-star"></i> Sin Mark Abilities</h3>
+            <button type="button" class="btn-add homebrew-new-sinmark-ability"><i class="fas fa-plus"></i> Add Ability</button>
+          </div>
+          <ul class="sinmark-ability-list">
+            <!-- Sin mark abilities will be added dynamically -->
+          </ul>
+        </div>
+
+        <footer class="form-footer">
+          <button type="button" class="btn-primary homebrew-submit-sinmark"><i class="fas fa-check-circle"></i> Create Sin Mark</button>
+        </footer>
+      </div>
+    </div>
+
+    {{!-- HISTORY TAB --}}
+    <div class='tab homebrew-tab' data-group='primary' data-tab='history'>
+      <div class="history-panel">
+        <div class="history-header">
+          <h2><i class="fas fa-history"></i> Creation History</h2>
+          <div class="history-controls">
+            <button type="button" class="btn-secondary homebrew-export-all"><i class="fas fa-file-export"></i> Export All</button>
+            <button type="button" class="btn-secondary homebrew-import"><i class="fas fa-file-import"></i> Import</button>
+            <button type="button" class="btn-secondary homebrew-clear-history"><i class="fas fa-trash-alt"></i> Clear History</button>
+          </div>
+        </div>
+
+        <div class="filter-bar">
+          <label>Filter by type:</label>
+          <select id="history-filter" class="homebrew-input">
+            <option value="all">All Types</option>
+            <option value="agenda">Agendas</option>
+            <option value="blasphemy">Blasphemies</option>
+            <option value="blasphemyPower">Powers</option>
+            <option value="affliction">Afflictions</option>
+            <option value="item">Items</option>
+            <option value="sinMark">Sin Marks</option>
+          </select>
+        </div>
+
+        <div class="history-list" id="history-list">
+          <p class="empty-state"><i class="fas fa-inbox"></i> No items created yet. Start creating homebrew content!</p>
+        </div>
+      </div>
     </div>
 
   </section>
 </form>
 
 <style>
-/* General Form Styling */
-form.homebrew-background {
-    background-color: #2e2e2e; /* Dark background for contrast */
-    color: #f0f0f0; /* Light text color for readability */
-    padding: 20px;
-    border-radius: 10px;
-    width: 100%; /* Full width to fill the available space */
-    max-width: none; /* Remove max-width constraint */
-    margin: auto;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* ==================== CSS CUSTOM PROPERTIES ==================== */
+:root {
+  --agenda-color: #00bcd4;
+  --blasphemy-color: #7c4dff;
+  --power-color: #ff9800;
+  --affliction-color: #d32f2f;
+  --item-color: #4caf50;
+  --sinmark-color: #ffc107;
+  --history-color: #607d8b;
+
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #242424;
+  --bg-tertiary: #2e2e2e;
+  --bg-elevated: #323232;
+
+  --text-primary: #ffffff;
+  --text-secondary: #b0b0b0;
+  --text-muted: #808080;
+
+  --border-subtle: rgba(255, 255, 255, 0.1);
+  --border-medium: rgba(255, 255, 255, 0.15);
+
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
+
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
 }
 
-/* Header */
-header.sheet-header.homebrew-header {
-    text-align: center;
-    font-size: 1.5em;
-    font-weight: bold;
-    padding-bottom: 15px;
+/* ==================== GLOBAL STYLES ==================== */
+.homebrew-background {
+  background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
+  color: var(--text-primary);
+  padding: var(--spacing-md);
+  border-radius: 12px;
+  width: 100%;
+  max-width: none;
+  margin: auto;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  border: 1px solid var(--border-medium);
+  box-shadow: var(--shadow-lg), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  position: relative;
+  overflow-y: auto;
+  max-height: 90vh;
 }
 
-/* Navigation Tabs */
-nav.sheet-tabs.homebrew-tabs {
-    display: flex;
-    justify-content: space-around;
-    margin-bottom: 20px;
-    border-bottom: 2px solid #444;
+.homebrew-background::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 200px;
+  background: radial-gradient(ellipse at top, rgba(124, 77, 255, 0.1) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
 }
 
-nav.sheet-tabs.homebrew-tabs .item {
-    flex: 1;
-    text-align: center;
-    padding: 10px;
-    cursor: pointer;
-    color: #bbb;
-    transition: color 0.3s, background-color 0.3s;
+.homebrew-background > * {
+  position: relative;
+  z-index: 1;
 }
 
-nav.sheet-tabs.homebrew-tabs .item:hover, 
-nav.sheet-tabs.homebrew-tabs .item.active {
-    color: #f0f0f0;
-    background-color: #444;
+/* ==================== HEADER ==================== */
+.homebrew-header {
+  text-align: center;
+  padding: var(--spacing-lg) 0;
+  background: linear-gradient(135deg, rgba(124, 77, 255, 0.15) 0%, rgba(124, 77, 255, 0.05) 100%);
+  border-radius: 8px 8px 0 0;
+  margin: calc(var(--spacing-md) * -1) calc(var(--spacing-md) * -1) var(--spacing-lg) calc(var(--spacing-md) * -1);
+  border-bottom: 1px solid var(--border-medium);
+  position: relative;
+  overflow: hidden;
 }
 
-/* Tab Content */
-section.sheet-body.homebrew-body {
-    position: relative;
-    padding: 20px;
-    background-color: #383838;
-    border-radius: 10px;
+.homebrew-header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, var(--blasphemy-color) 50%, transparent 100%);
 }
 
-.tab.homebrew-text-color {
-    display: none;
+.homebrew-title {
+  font-size: 1.75em;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 var(--spacing-sm) 0;
+  font-family: 'Inter', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  text-shadow: 0 2px 8px rgba(124, 77, 255, 0.3);
 }
 
-.tab.active {
-    display: block;
+.homebrew-title i {
+  color: var(--blasphemy-color);
+  margin-right: var(--spacing-sm);
+  font-size: 1em;
+  filter: drop-shadow(0 0 8px rgba(124, 77, 255, 0.5));
+  animation: flask-glow 3s ease-in-out infinite;
 }
 
-/* List Items */
-.item.flexrow {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
+@keyframes flask-glow {
+  0%, 100% { filter: drop-shadow(0 0 8px rgba(124, 77, 255, 0.5)); }
+  50% { filter: drop-shadow(0 0 16px rgba(124, 77, 255, 0.8)); }
 }
 
-textarea.editable-item-input.homebrew-text-color {
-    flex: 1;
-    background-color: #444;
-    color: #f0f0f0;
-    border: 1px solid #666;
-    border-radius: 5px;
-    padding: 5px;
-    margin-right: 10px;
-    font-size: 1em;
+.homebrew-subtitle {
+  color: var(--text-secondary);
+  font-size: 0.9em;
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  letter-spacing: 1px;
+  font-weight: 400;
+  text-align: center;
 }
 
-.item-controls {
-    display: flex;
-    gap: 10px;
+/* ==================== NAVIGATION TABS ==================== */
+.homebrew-tabs {
+  display: flex;
+  justify-content: center;
+  margin: 0 calc(var(--spacing-md) * -1) var(--spacing-md) calc(var(--spacing-md) * -1);
+  padding: 0 var(--spacing-md);
+  background: var(--bg-secondary);
+  flex-wrap: wrap;
+  gap: var(--spacing-xs);
+  border-bottom: 1px solid var(--border-subtle);
+  position: relative;
 }
 
-.item-control.homebrew-text-color {
-    color: #bbb;
-    cursor: pointer;
-    transition: color 0.3s;
+.homebrew-tabs .item {
+  flex: 0 0 auto;
+  text-align: center;
+  padding: var(--spacing-sm) var(--spacing-md);
+  cursor: pointer;
+  color: var(--text-muted);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-bottom: 3px solid transparent;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85em;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-xs);
+  border-radius: 6px 6px 0 0;
+  position: relative;
+  overflow: hidden;
 }
 
-.item-control.homebrew-text-color:hover {
-    color: #f0f0f0;
+.homebrew-tabs .item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: currentColor;
+  transform: scaleX(0);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Buttons */
-button.homebrew-text-color {
-    background-color: #555;
-    color: #f0f0f0;
-    border: 1px solid #777;
-    border-radius: 5px;
-    padding: 10px 15px;
-    cursor: pointer;
-    transition: background-color 0.3s, color 0.3s;
-    font-size: 1em;
+.homebrew-tabs .item i {
+  font-size: 1.1em;
+  transition: transform 0.3s ease;
 }
 
-button.homebrew-text-color:hover {
-    background-color: #666;
-    color: #fff;
+.homebrew-tabs .item:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.05);
+  transform: translateY(-2px);
 }
 
-/* Footer Buttons */
-footer {
-    text-align: center;
-    margin-top: 20px;
+.homebrew-tabs .item:hover i {
+  transform: scale(1.1);
 }
 
-/* Checkbox Styling */
-input[type="checkbox"].homebrew-power-passive-input {
-    width: 20px;
-    height: 20px;
-    margin-right: 10px;
-    accent-color: #f0f0f0;
-    cursor: pointer;
+.homebrew-tabs .item:focus {
+  outline: 2px solid var(--blasphemy-color);
+  outline-offset: 2px;
 }
 
-textarea.editable-item-input.homebrew-text-color.homebrew-ability-input,
-textarea.editable-item-input.homebrew-text-color.homebrew-power-input {
-    margin-top: 5px;
+.homebrew-tabs .item.active {
+  color: var(--text-primary);
+  background: var(--bg-elevated);
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.2);
 }
 
-textarea.editable-item-input.homebrew-text-color.homebrew-task-input {
-    font-size: 1em;
+.homebrew-tabs .item.active::before {
+  transform: scaleX(1);
+}
+
+/* Color-coded tabs */
+.homebrew-tabs .item[data-tab="agenda"].active { color: var(--agenda-color); }
+.homebrew-tabs .item[data-tab="blasphemy"].active { color: var(--blasphemy-color); }
+.homebrew-tabs .item[data-tab="blasphemyPower"].active { color: var(--power-color); }
+.homebrew-tabs .item[data-tab="affliction"].active { color: var(--affliction-color); }
+.homebrew-tabs .item[data-tab="item"].active { color: var(--item-color); }
+.homebrew-tabs .item[data-tab="sinMark"].active { color: var(--sinmark-color); }
+.homebrew-tabs .item[data-tab="history"].active { color: var(--history-color); }
+
+/* ==================== TAB CONTENT ==================== */
+.homebrew-body {
+  position: relative;
+  padding: var(--spacing-md);
+  background: transparent;
+  min-height: 500px;
+}
+
+.homebrew-tab {
+  display: none;
+  animation: fadeIn 0.4s ease-out;
+}
+
+.homebrew-tab.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ==================== PANELS ==================== */
+.creation-panel, .history-panel {
+  background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+  border: 1px solid var(--border-medium);
+  border-radius: 8px;
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-md), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  position: relative;
+  overflow: hidden;
+}
+
+.creation-panel::before, .history-panel::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(180deg, var(--blasphemy-color) 0%, transparent 100%);
+}
+
+.creation-panel h2 {
+  color: var(--text-primary);
+  font-family: 'Inter', sans-serif;
+  font-size: 1.5em;
+  font-weight: 700;
+  margin: 0 0 var(--spacing-lg) 0;
+  padding-bottom: var(--spacing-sm);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  position: relative;
+  display: inline-block;
+}
+
+.creation-panel h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60%;
+  height: 3px;
+  background: linear-gradient(90deg, currentColor 0%, transparent 100%);
+}
+
+.creation-panel h2 i {
+  margin-right: var(--spacing-sm);
+  color: var(--blasphemy-color);
+  font-size: 1.1em;
+}
+
+/* ==================== FORM SECTIONS ==================== */
+.form-section {
+  margin-bottom: var(--spacing-md);
+  padding: var(--spacing-md);
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.form-section:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: var(--border-medium);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.form-section label {
+  display: block;
+  color: var(--text-secondary);
+  font-weight: 500;
+  margin-bottom: var(--spacing-sm);
+  font-size: 0.875em;
+  font-family: 'Inter', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.form-section label.required::after {
+  content: ' *';
+  color: var(--affliction-color);
+  font-weight: 700;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-md);
+  padding-bottom: var(--spacing-sm);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.section-header h3 {
+  color: var(--text-primary);
+  font-family: 'Inter', sans-serif;
+  font-size: 1.15em;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-weight: 700;
+}
+
+.section-header h3 i {
+  margin-right: var(--spacing-sm);
+  color: var(--blasphemy-color);
+  font-size: 1.1em;
+}
+
+/* ==================== INPUTS ==================== */
+.homebrew-input {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  color: var(--text-primary);
+  border: 1px solid var(--border-medium);
+  border-radius: 6px;
+  padding: 10px 12px;
+  font-size: 0.95em;
+  font-family: 'Inter', sans-serif;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.homebrew-input:hover {
+  border-color: rgba(255, 255, 255, 0.25);
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.homebrew-input:focus {
+  outline: none;
+  border-color: var(--blasphemy-color);
+  background: rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 0 3px rgba(124, 77, 255, 0.2), inset 0 1px 2px rgba(0, 0, 0, 0.2);
+  transform: translateY(-1px);
+}
+
+.homebrew-input::placeholder {
+  color: var(--text-muted);
+  opacity: 0.6;
+  font-style: italic;
+}
+
+textarea.homebrew-input {
+  resize: vertical;
+  min-height: 100px;
+  font-family: 'Courier New', Courier, monospace;
+  line-height: 1.6;
+  font-size: 1em;
+}
+
+input[type="number"].homebrew-input {
+  width: auto;
+  min-width: 100px;
+}
+
+/* ==================== BUTTONS ==================== */
+.btn-primary, .btn-secondary, .btn-add, .btn-icon {
+  position: relative;
+  background: linear-gradient(135deg, var(--bg-elevated) 0%, var(--bg-tertiary) 100%);
+  color: var(--text-primary);
+  border: 1px solid var(--border-medium);
+  border-radius: 4px;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75em;
+  font-weight: 500;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+.btn-primary::before, .btn-secondary::before, .btn-add::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, transparent 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.btn-primary:hover, .btn-secondary:hover, .btn-add:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.btn-primary:hover::before, .btn-secondary:hover::before, .btn-add:hover::before {
+  opacity: 1;
+}
+
+.btn-primary:active, .btn-secondary:active, .btn-add:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.btn-primary:focus, .btn-secondary:focus, .btn-add:focus, .btn-icon:focus {
+  outline: 2px solid var(--blasphemy-color);
+  outline-offset: 2px;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--blasphemy-color) 0%, #6a3fd6 100%);
+  border-color: var(--blasphemy-color);
+  box-shadow: 0 2px 8px rgba(124, 77, 255, 0.3), 0 0 20px rgba(124, 77, 255, 0.1);
+}
+
+.btn-primary:hover {
+  box-shadow: 0 4px 16px rgba(124, 77, 255, 0.4), 0 0 30px rgba(124, 77, 255, 0.2);
+}
+
+.btn-secondary {
+  background: linear-gradient(135deg, var(--bg-elevated) 0%, var(--bg-tertiary) 100%);
+  border-color: var(--border-medium);
+}
+
+.btn-add {
+  padding: 4px 10px;
+  font-size: 0.7em;
+  background: linear-gradient(135deg, rgba(0, 188, 212, 0.2) 0%, rgba(0, 188, 212, 0.1) 100%);
+  border: 1px dashed var(--agenda-color);
+  color: var(--agenda-color);
+}
+
+.btn-add:hover {
+  background: linear-gradient(135deg, rgba(0, 188, 212, 0.3) 0%, rgba(0, 188, 212, 0.15) 100%);
+  border-style: solid;
+}
+
+.btn-icon {
+  padding: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  border-color: var(--border-subtle);
+  min-width: 28px;
+  min-height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.btn-icon:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--border-medium);
+  transform: scale(1.1) rotate(5deg);
+}
+
+.btn-icon:active {
+  transform: scale(0.95);
+}
+
+.btn-icon i {
+  font-size: 0.9em;
+}
+
+.btn-delete {
+  background: linear-gradient(135deg, var(--affliction-color) 0%, #a32626 100%);
+  border-color: var(--affliction-color);
+  box-shadow: 0 2px 8px rgba(211, 47, 47, 0.3);
+}
+
+.btn-delete:hover {
+  box-shadow: 0 4px 16px rgba(211, 47, 47, 0.4);
+  background: linear-gradient(135deg, #e53935 0%, var(--affliction-color) 100%);
+}
+
+.btn-delete:active {
+  background: linear-gradient(135deg, #a32626 0%, #8b1f1f 100%);
+}
+
+.btn-primary:disabled, .btn-secondary:disabled, .btn-add:disabled, .btn-icon:disabled {
+  background: var(--bg-secondary);
+  border-color: var(--border-subtle);
+  color: var(--text-muted);
+  cursor: not-allowed;
+  opacity: 0.4;
+  transform: none;
+  box-shadow: none;
+}
+
+.btn-icon i.active {
+  color: var(--text-primary);
+}
+
+/* ==================== LISTS ==================== */
+.task-list, .ability-list, .power-list, .sinmark-ability-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.task-item, .ability-item, .power-item {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+  border: 1px solid var(--border-subtle);
+  border-left: 3px solid var(--agenda-color);
+  border-radius: 6px;
+  padding: var(--spacing-md);
+  margin-bottom: var(--spacing-sm);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.task-item:hover, .ability-item:hover, .power-item:hover {
+  border-color: var(--border-medium);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transform: translateX(4px);
+}
+
+.task-item:focus-within, .ability-item:focus-within, .power-item:focus-within {
+  border-left-color: var(--blasphemy-color);
+  box-shadow: 0 4px 12px rgba(124, 77, 255, 0.2), 0 0 0 3px rgba(124, 77, 255, 0.1);
+}
+
+.task-item {
+  display: flex;
+  gap: var(--spacing-sm);
+  align-items: flex-start;
+}
+
+.task-input {
+  flex: 1;
+}
+
+.task-controls {
+  display: flex;
+  gap: var(--spacing-xs);
+  flex-shrink: 0;
+}
+
+.ability-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  border-left-color: var(--agenda-color);
+  position: relative;
+  padding-bottom: 40px;
+}
+
+.ability-item .homebrew-input.ability-name-input {
+  font-weight: 600;
+  font-size: 1.05em;
+  background: linear-gradient(135deg, rgba(0, 188, 212, 0.1) 0%, rgba(0, 188, 212, 0.05) 100%);
+  border-color: rgba(0, 188, 212, 0.4);
+}
+
+.ability-item .homebrew-input.ability-description-input {
+  min-height: 80px;
+  background: rgba(0, 0, 0, 0.4);
+  border-color: rgba(0, 188, 212, 0.2);
+}
+
+.ability-item .btn-delete {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  min-width: 24px;
+  min-height: 24px;
+  width: auto;
+  padding: 4px;
+  font-size: 0.7em;
+}
+
+.ability-item .btn-delete i {
+  font-size: 0.85em;
+}
+
+.power-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  border-left-color: var(--power-color);
+  position: relative;
+  padding-bottom: 40px;
+}
+
+.power-header-row {
+  display: flex;
+  gap: var(--spacing-sm);
+  align-items: center;
+}
+
+.power-name-input {
+  flex: 1;
+  font-weight: 600;
+  font-size: 1em;
+}
+
+.power-details {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm);
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+  border: 1px solid var(--border-subtle);
+}
+
+.power-item .btn-delete {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  min-width: 24px;
+  min-height: 24px;
+  width: auto;
+  padding: 4px;
+  font-size: 0.7em;
+}
+
+.power-item .btn-delete i {
+  font-size: 0.85em;
+}
+
+/* ==================== CHECKBOXES ==================== */
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  cursor: pointer;
+  color: var(--text-primary);
+  font-weight: 400;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.875em;
+  padding: var(--spacing-sm);
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.checkbox-label:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.checkbox-label input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: var(--blasphemy-color);
+  flex-shrink: 0;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.checkbox-label input[type="checkbox"]:focus {
+  outline: 2px solid var(--blasphemy-color);
+  outline-offset: 2px;
+}
+
+.checkbox-label input[type="checkbox"]:checked {
+  transform: scale(1.1);
+}
+
+.checkbox-label.small {
+  font-size: 0.8em;
+  padding: 6px;
+}
+
+.psyche-burst-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md);
+  background: linear-gradient(135deg, rgba(124, 77, 255, 0.1) 0%, rgba(124, 77, 255, 0.05) 100%);
+  border: 1px solid rgba(124, 77, 255, 0.3);
+  border-radius: 8px;
+  box-shadow: inset 0 0 20px rgba(124, 77, 255, 0.05);
+}
+
+.psyche-label {
+  color: var(--text-secondary);
+  font-weight: 600;
+  margin-right: var(--spacing-sm);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.875em;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--blasphemy-color);
+}
+
+/* ==================== CAT HELP ==================== */
+.cat-help {
+  margin-top: var(--spacing-md);
+  padding: var(--spacing-md);
+  background: linear-gradient(135deg, rgba(0, 188, 212, 0.08) 0%, rgba(0, 188, 212, 0.03) 100%);
+  border: 1px solid rgba(0, 188, 212, 0.3);
+  border-left: 4px solid var(--agenda-color);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.cat-help details summary {
+  cursor: pointer;
+  color: var(--agenda-color);
+  font-weight: 600;
+  font-size: 0.875em;
+  padding: var(--spacing-sm);
+  transition: all 0.3s ease;
+  font-family: 'Inter', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.cat-help details summary:hover {
+  color: var(--text-primary);
+  background: rgba(0, 188, 212, 0.1);
+}
+
+.cat-help details summary:focus {
+  outline: 2px solid var(--agenda-color);
+  outline-offset: 2px;
+}
+
+.cat-help details summary i {
+  font-size: 1em;
+  transition: transform 0.3s ease;
+}
+
+.cat-help details[open] summary i {
+  transform: rotate(90deg);
+}
+
+.cat-help p {
+  margin: var(--spacing-sm) 0;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  font-size: 0.85em;
+  font-family: 'Inter', sans-serif;
+  padding-left: var(--spacing-lg);
+}
+
+.cat-help code {
+  background: rgba(0, 0, 0, 0.4);
+  color: var(--agenda-color);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-family: 'Courier New', Courier, monospace;
+  border: 1px solid rgba(0, 188, 212, 0.3);
+  font-size: 0.9em;
+  font-weight: 600;
+}
+
+/* ==================== FOOTER ==================== */
+.form-footer {
+  text-align: center;
+  margin-top: var(--spacing-lg);
+  padding-top: var(--spacing-lg);
+  border-top: 1px solid var(--border-subtle);
+  position: relative;
+}
+
+.form-footer::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, var(--blasphemy-color) 50%, transparent 100%);
+}
+
+.form-footer .btn-primary {
+  padding: var(--spacing-sm) var(--spacing-xl);
+  font-size: 0.95em;
+  font-weight: 600;
+}
+
+/* ==================== HISTORY TAB ==================== */
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-lg);
+  padding-bottom: var(--spacing-md);
+  border-bottom: 1px solid var(--border-medium);
+}
+
+.history-header h2 {
+  color: var(--text-primary);
+  font-family: 'Inter', sans-serif;
+  font-size: 1.5em;
+  font-weight: 600;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.history-header h2 i {
+  color: var(--history-color);
+}
+
+.history-controls {
+  display: flex;
+  gap: var(--spacing-sm);
+}
+
+.filter-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+  padding: var(--spacing-md);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+}
+
+.filter-bar label {
+  color: var(--text-secondary);
+  font-weight: 600;
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.875em;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.filter-bar select {
+  flex: 1;
+  max-width: 250px;
+  background: rgba(0, 0, 0, 0.3);
+  color: var(--text-primary);
+  border: 1px solid var(--border-medium);
+  border-radius: 6px;
+  padding: var(--spacing-sm) 12px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.filter-bar select:hover {
+  border-color: var(--border-medium);
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.filter-bar select:focus {
+  outline: none;
+  border-color: var(--history-color);
+  box-shadow: 0 0 0 3px rgba(96, 125, 139, 0.2);
+}
+
+.history-list {
+  min-height: 300px;
+}
+
+.empty-state {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.95em;
+  padding: var(--spacing-xl) var(--spacing-lg);
+  font-style: italic;
+  font-family: 'Inter', sans-serif;
+}
+
+.empty-state i {
+  font-size: 3em;
+  display: block;
+  margin-bottom: var(--spacing-md);
+  opacity: 0.2;
+  color: var(--history-color);
+}
+
+.history-item {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+  border: 1px solid var(--border-subtle);
+  border-left: 3px solid var(--history-color);
+  border-radius: 6px;
+  padding: var(--spacing-md);
+  margin-bottom: var(--spacing-sm);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.history-item:hover {
+  border-color: var(--border-medium);
+  border-left-color: var(--history-color);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transform: translateX(4px);
+}
+
+.history-item:focus-within {
+  border-left-color: var(--blasphemy-color);
+  box-shadow: 0 4px 12px rgba(124, 77, 255, 0.2), 0 0 0 3px rgba(124, 77, 255, 0.1);
+}
+
+.history-item-info {
+  flex: 1;
+}
+
+.history-item-name {
+  font-weight: 600;
+  font-size: 1em;
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-xs);
+  font-family: 'Inter', sans-serif;
+}
+
+.history-item-type {
+  display: inline-block;
+  padding: 2px var(--spacing-sm);
+  background: rgba(96, 125, 139, 0.2);
+  color: var(--history-color);
+  font-size: 0.75em;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-family: 'Inter', sans-serif;
+  border-radius: 4px;
+  font-weight: 600;
+  border: 1px solid rgba(96, 125, 139, 0.3);
+}
+
+.history-item-date {
+  color: var(--text-muted);
+  font-size: 0.75em;
+  margin-top: var(--spacing-xs);
+  font-family: 'Inter', sans-serif;
+}
+
+.history-item-controls {
+  display: flex;
+  gap: var(--spacing-xs);
+}
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 768px) {
+  .homebrew-tabs {
+    justify-content: flex-start;
+  }
+
+  .homebrew-tabs .item {
+    flex: 1 1 auto;
+  }
+
+  .power-header-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .history-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--spacing-md);
+  }
+
+  .history-controls {
+    justify-content: center;
+  }
+
+  .filter-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filter-bar select {
+    max-width: none;
+  }
+
+  .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .btn-primary, .btn-secondary {
+    width: 100%;
+  }
+
+  .ability-item .btn-delete,
+  .task-item .btn-delete,
+  .power-item .btn-delete {
+    width: auto !important;
+  }
+}
+
+/* ==================== SCROLLBAR ==================== */
+.homebrew-background::-webkit-scrollbar {
+  width: 12px;
+}
+
+.homebrew-background::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+  border-radius: 6px;
+}
+
+.homebrew-background::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--blasphemy-color) 0%, rgba(124, 77, 255, 0.5) 100%);
+  border-radius: 6px;
+  border: 2px solid var(--bg-primary);
+}
+
+.homebrew-background::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #8a5aff 0%, var(--blasphemy-color) 100%);
+}
+
+/* ==================== UTILITY CLASSES ==================== */
+.fade-in {
+  animation: fadeIn 0.4s ease-out;
+}
+
+.slide-up {
+  animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 </style>
