@@ -1623,15 +1623,22 @@ export class CainActorSheet extends ActorSheet {
 }
   
   async _performRoll(skill, useDivineAgony, teamwork, setup, hard, extraDice) {
-    const baseDice = this.actor.system.skills[skill].value;
+    // Handle psyche rolls differently from skill rolls
+    let baseDice;
+    if (skill === 'psyche') {
+      baseDice = this.actor.system.psyche || 0;
+    } else {
+      baseDice = this.actor.system.skills[skill].value;
+    }
+
     let totalDice = baseDice + extraDice + (teamwork ? 1 : 0) + (setup ? 1 : 0);
-  
+
     if (useDivineAgony) {
       const divineAgonyStat = this.actor.system.divineAgony.value; // Replace with the actual path to the divine agony stat
       totalDice += divineAgonyStat;
       this.actor.update({ 'system.divineAgony.value': 0 }); // Set divine agony to zero
     }
-    
+
     let roll;
     if (totalDice > 0) {
       // Custom roll formula to count successes
@@ -1640,14 +1647,14 @@ export class CainActorSheet extends ActorSheet {
       roll = new Roll(`2d6cs>=${hard ? 6 : 4}kl`);
     }
     await roll.evaluate({ async: true });
-  
+
     // Calculate successes
     let successes = roll.total;
-  
+
     if(successes === 0 && this.actor.system.divineAgony.value < 3) {
       this.actor.update({'system.divineAgony.value' : this.actor.system.divineAgony.value + 1});
     }
-  
+
     let message = `<h2>${skill.charAt(0).toUpperCase() + skill.slice(1)} Roll</h2>`;
     message += `<p>Successes: <span style="color:${successes > 0 ? 'green' : 'red'}">${successes}</span></p>`;
     message += `<p>Dice Rolled:</p><ul>`;
@@ -1655,9 +1662,9 @@ export class CainActorSheet extends ActorSheet {
       message += `<li>Die: ${r.result} ${r.result === 6 ? '🎲' : ''}</li>`;
     });
     message += `</ul>`;
-  
+
     console.log(`Successes: ${successes}`);
-  
+
     // Create the chat message using roll.toMessage() to ensure the roll noise is played
     roll.toMessage({
       flavor: message,
