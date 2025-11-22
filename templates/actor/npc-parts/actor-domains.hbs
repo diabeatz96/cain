@@ -1,6 +1,5 @@
 <div class="tab domains paper-texture" data-group="primary" data-tab="domains">
     <div class="form-group dark-form-group">
-        <label for="system.selectedAbilities.selectedAbility1">Domain 1</label>
         {{#if (eq system.sinType "redacted")}}
             <textarea name="system.selectedAbilities.selectedAbility1" class="ability-textarea"
                       data-ability="1">{{system.selectedAbilities.selectedAbility1}}</textarea>
@@ -16,7 +15,6 @@
         <i class="fas fa-comment-alt ability-icon" data-ability="1" onclick="sendAbilityToChat(1)"></i>
     </div>
     <div class="form-group dark-form-group">
-        <label for="system.selectedAbilities.selectedAbility2">Domain 2</label>
         {{#if (eq system.sinType "redacted")}}
             <textarea name="system.selectedAbilities.selectedAbility2" class="ability-textarea"
                       data-ability="2">{{system.selectedAbilities.selectedAbility2}}</textarea>
@@ -32,7 +30,6 @@
         <i class="fas fa-comment-alt ability-icon" data-ability="2" onclick="sendAbilityToChat(2)"></i>
     </div>
     <div class="form-group dark-form-group">
-        <label for="system.selectedAbilities.selectedAbility3">Domain 3</label>
         {{#if (eq system.sinType "redacted")}}
             <textarea name="system.selectedAbilities.selectedAbility3" class="ability-textarea"
                       data-ability="3">{{system.selectedAbilities.selectedAbility3}}</textarea>
@@ -77,9 +74,10 @@
         margin-bottom: 20px;
         text-align: center;
         border: 1px solid #444;
+        color: black;
         padding: 15px;
         border-radius: 8px;
-        background-color: #2a2a2a;
+        background-color: white;
     }
 
     .tab.domains .dark-form-group label {
@@ -94,9 +92,8 @@
         width: 80%;
         border: 1px solid #444;
         border-radius: 4px;
-        background-color: #333;
-        color: #f5f5f5;
-        font-size: 1em;
+        background-color: white;
+        color: black;
     }
 
     .tab.domains .ability-textarea {
@@ -110,23 +107,24 @@
         background-repeat: no-repeat;
         background-position: right 10px center;
         background-size: 10px;
+        text-align: center;
     }
 
     .tab.domains .ability-select option {
-        background-color: #333;
-        color: #f5f5f5;
+        background-color: white;
+        color: black;
     }
 
     .tab.domains .ability-value {
         margin-top: 10px;
         font-size: 1em;
-        color: #f5f5f5;
+        color: black;
     }
 
     .tab.domains .ability-icon {
         margin-left: 10px;
         cursor: pointer;
-        color: #f5f5f5;
+        color: black;
     }
 
     .tab.domains .ability-icon:hover {
