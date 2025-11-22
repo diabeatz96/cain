@@ -460,6 +460,7 @@ export class CainActorSheet extends ActorSheet {
     // Character sheet specific listeners
     html.find('.item-description').click(this._onItemDescription.bind(this));
     html.find('.psyche-roll-button').click(this._onRollPsyche.bind(this));
+    html.find('.use-psyche-burst-button').click(this._onUsePsycheBurst.bind(this));
     html.find('.psyche-burst-checkbox').change(this._onPsycheBurstChange.bind(this));
     html.find('.clear-sin-marks').click(this._clearSinMarks.bind(this));
     html.find('#increment-xp-value').click(this._increaseXPValue.bind(this));
@@ -705,7 +706,12 @@ export class CainActorSheet extends ActorSheet {
     const selectedOption = selectElement.options[selectElement.selectedIndex];
     const description = selectedOption.getAttribute('data-description');
     const keywords = selectedOption.getAttribute('data-keywords');
-    selectElement.parentElement.parentElement.querySelector('.powerDescription').innerText = description;
+
+    // Format the description with CAT values using the global formatCatText function
+    const catLevel = this.actor.system.CATLEVEL.value;
+    const formattedDescription = window.formatCatText(description, catLevel);
+
+    selectElement.parentElement.parentElement.querySelector('.powerDescription').innerHTML = formattedDescription;
     selectElement.parentElement.parentElement.querySelector('.powerKeywords').innerText = keywords ? keywords.split(',').join(', ') : '';
   }
 
@@ -1778,6 +1784,246 @@ export class CainActorSheet extends ActorSheet {
       flavor: message,
       speaker: ChatMessage.getSpeaker({ actor: this.actor }),
     });
+  }
+
+  _onUsePsycheBurst(event) {
+    event.preventDefault();
+
+    // Check if actor has any psyche burst charges
+    const currentBursts = this.actor.system.psycheBurst?.value || 0;
+    if (currentBursts <= 0) {
+      ui.notifications.warn("No Psyche Burst charges available!");
+      return;
+    }
+
+    // Get all blasphemy powers that can use psyche burst
+    const blasphemyPowers = this.actor.system.currentBlasphemyPowers || [];
+    const powers = this._getItemsFromIDs(blasphemyPowers).filter(power =>
+      power && (power.system.psycheBurstCost || power.system.psycheBurstNoCost || power.system.psycheBurstMultCost)
+    );
+
+    // Build dropdown options
+    let powerOptions = '<option value="">-- Select a Power --</option>';
+    powers.forEach(power => {
+      const costInfo = [];
+      if (power.system.psycheBurstNoCost) costInfo.push('No Cost Mode');
+      if (power.system.psycheBurstCost) costInfo.push('1 Burst');
+      if (power.system.psycheBurstMultCost) costInfo.push('Multiple Bursts');
+      powerOptions += `<option value="${power.id}">${power.system.powerName} (${costInfo.join(', ')})</option>`;
+    });
+
+    // Build common use options
+    const commonUses = [
+      '-- Select Common Use --',
+      'Add +1 advantage die to roll',
+      'Produce faint light or aura',
+      'Produce minor force at distance',
+      'Make electrical lights flicker',
+      'Warm or cool body surface'
+    ];
+
+    let commonUseOptions = commonUses.map((use, idx) =>
+      `<option value="${idx === 0 ? '' : use}">${use}</option>`
+    ).join('');
+
+    // Create stylized dialog
+    new Dialog({
+      title: "Use Psyche Burst",
+      content: `
+        <style>
+          .psyche-burst-dialog {
+            background: linear-gradient(135deg, #1a0033 0%, #330033 100%);
+            padding: 20px;
+            border: 2px solid #ff00cc;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(255, 0, 204, 0.5);
+          }
+          .psyche-burst-dialog .form-group {
+            margin-bottom: 15px;
+          }
+          .psyche-burst-dialog label {
+            color: #ff00cc;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+            text-shadow: 0 0 5px rgba(255, 0, 204, 0.7);
+          }
+          .psyche-burst-dialog select,
+          .psyche-burst-dialog input[type="text"],
+          .psyche-burst-dialog input[type="number"],
+          .psyche-burst-dialog textarea {
+            width: 100%;
+            padding: 10px 12px;
+            background: #1a0033 !important;
+            border: 1px solid #ff00cc !important;
+            border-radius: 5px;
+            color: #ffffff !important;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            box-sizing: border-box;
+            min-height: 40px;
+          }
+          .psyche-burst-dialog select {
+            height: 44px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+          }
+          .psyche-burst-dialog select option {
+            background: #1a0033;
+            color: #ffffff;
+            padding: 10px;
+            line-height: 1.6;
+          }
+          .psyche-burst-dialog textarea {
+            min-height: 60px;
+            resize: vertical;
+          }
+          .psyche-burst-dialog input[type="text"]:focus,
+          .psyche-burst-dialog select:focus,
+          .psyche-burst-dialog textarea:focus,
+          .psyche-burst-dialog input[type="number"]:focus {
+            outline: none;
+            box-shadow: 0 0 10px rgba(255, 0, 204, 0.8);
+            background: #1a0033 !important;
+            color: #ffffff !important;
+          }
+          .psyche-burst-dialog .burst-info {
+            background: rgba(255, 0, 204, 0.1);
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            color: #ff00cc;
+            font-size: 0.9em;
+          }
+          .psyche-burst-dialog .section-divider {
+            border-top: 1px solid #ff00cc;
+            margin: 20px 0;
+            opacity: 0.3;
+          }
+        </style>
+        <div class="psyche-burst-dialog">
+          <form>
+            <div class="form-group">
+              <label for="power-select">Blasphemy Power:</label>
+              <select id="power-select" name="power-select">
+                ${powerOptions}
+              </select>
+            </div>
+            <div class="section-divider"></div>
+            <div class="form-group">
+              <label for="common-use">Common Psyche Uses:</label>
+              <select id="common-use" name="common-use">
+                ${commonUseOptions}
+              </select>
+            </div>
+            <div class="section-divider"></div>
+            <div class="form-group">
+              <label for="custom-power">Or Custom Use:</label>
+              <textarea id="custom-power" name="custom-power" placeholder="Describe your creative use of psyche..."></textarea>
+            </div>
+            <div class="form-group">
+              <label for="burst-count">Number of Bursts to Use:</label>
+              <input type="number" id="burst-count" name="burst-count" min="1" max="${currentBursts}" value="1"/>
+            </div>
+            <div class="burst-info">
+              Available Psyche Bursts: <strong>${currentBursts}</strong>
+            </div>
+          </form>
+        </div>
+      `,
+      buttons: {
+        use: {
+          icon: "<i class='fas fa-bolt'></i>",
+          label: "Use Burst",
+          callback: async (html) => {
+            const selectedPowerId = html.find('[name="power-select"]').val();
+            const selectedCommonUse = html.find('[name="common-use"]').val();
+            const customPowerName = html.find('[name="custom-power"]').val().trim();
+            const burstCount = parseInt(html.find('[name="burst-count"]').val()) || 1;
+
+            let powerName = '';
+            let powerDescription = '';
+
+            // Priority: Blasphemy Power > Common Use > Custom Use
+            if (selectedPowerId) {
+              const selectedPower = powers.find(p => p.id === selectedPowerId);
+              if (selectedPower) {
+                powerName = selectedPower.system.powerName;
+                powerDescription = window.formatCatText(selectedPower.system.powerDescription, this.actor.system.CATLEVEL.value);
+              }
+            } else if (selectedCommonUse) {
+              powerName = selectedCommonUse;
+            } else if (customPowerName) {
+              powerName = customPowerName;
+            }
+
+            if (!powerName) {
+              ui.notifications.warn("Please select a power, common use, or enter a custom use!");
+              return;
+            }
+
+            if (burstCount > currentBursts) {
+              ui.notifications.warn(`Not enough Psyche Bursts! You only have ${currentBursts}.`);
+              return;
+            }
+
+            // Deduct psyche bursts
+            await this.actor.update({
+              'system.psycheBurst.value': currentBursts - burstCount
+            });
+
+            // Create chat message
+            let message = `
+              <div style="border: 2px solid #ff00cc; border-radius: 10px; padding: 10px; background: linear-gradient(135deg, #1a0033 0%, #330033 100%); box-shadow: 0 0 10px rgba(255, 0, 204, 0.5);">
+                <h2 style="color: #ff00cc; text-shadow: 0 0 5px rgba(255, 0, 204, 0.7); margin-top: 0;">Psyche Burst Used</h2>
+                <p><strong style="color: #ff00cc;">Use:</strong> ${powerName}</p>
+                <p><strong style="color: #ff00cc;">Bursts Spent:</strong> ${burstCount}</p>
+                <p><strong style="color: #ff00cc;">Remaining Bursts:</strong> ${currentBursts - burstCount}</p>
+                ${powerDescription ? `<div style="margin-top: 10px; padding: 10px; background: rgba(255, 0, 204, 0.1); border-radius: 5px;"><strong style="color: #ff00cc;">Description:</strong><br/>${powerDescription}</div>` : ''}
+              </div>
+            `;
+
+            ChatMessage.create({
+              content: message,
+              speaker: ChatMessage.getSpeaker({ actor: this.actor })
+            });
+
+            ui.notifications.info(`Used ${burstCount} Psyche Burst${burstCount > 1 ? 's' : ''} for ${powerName}`);
+          }
+        },
+        cancel: {
+          icon: "<i class='fas fa-times'></i>",
+          label: "Cancel"
+        }
+      },
+      default: "use",
+      render: (html) => {
+        // Auto-clear other inputs when selecting from any dropdown or typing custom
+        html.find('[name="power-select"]').change((e) => {
+          if (e.target.value) {
+            html.find('[name="common-use"]').val('');
+            html.find('[name="custom-power"]').val('');
+          }
+        });
+
+        html.find('[name="common-use"]').change((e) => {
+          if (e.target.value) {
+            html.find('[name="power-select"]').val('');
+            html.find('[name="custom-power"]').val('');
+          }
+        });
+
+        html.find('[name="custom-power"]').on('input', (e) => {
+          if (e.target.value.trim()) {
+            html.find('[name="power-select"]').val('');
+            html.find('[name="common-use"]').val('');
+          }
+        });
+      }
+    }, {
+      width: 550
+    }).render(true);
   }
 
   _sinChange(event) {

@@ -303,8 +303,8 @@ Handlebars.registerHelper('times', function(n, block) {
   return accum;
 });
 
-Handlebars.registerHelper('formatted', function(text, category) {
-  // console.log(category);
+// Utility function to format CAT text - can be used outside of Handlebars
+window.formatCatText = function(text, category) {
   const categoryTable = [
     {
       'CAT': 0,
@@ -381,14 +381,16 @@ Handlebars.registerHelper('formatted', function(text, category) {
   ]
   // Check if the text is defined and is a string
   let parse_cat_values = (inputString => {
-    const regex = /\{<CAT>\s+(\S+)\s+(\S+)\}/g;
+    // Updated regex to support CAT operations like CAT/2, CAT*2, CAT+1, CAT-1
+    const regex = /\{<CAT([\/\*\+\-]\d+)?>\s+(\S+)\s+(\S+)\}/g;
 
     const matches = [...inputString.matchAll(regex)];
 
     return matches.map(match => ({
         string: Handlebars.escapeExpression(match[0]),
-        type: match[1],
-        modifier: match[2]
+        operation: match[1] || '', // e.g., "/2", "*2", "+1", "-1", or empty string
+        type: match[2],
+        modifier: match[3]
     }));
   });
 
@@ -400,13 +402,38 @@ Handlebars.registerHelper('formatted', function(text, category) {
       let updatedText = Handlebars.escapeExpression(text);
       if (isNaN(category) || Number(category) < 0 || Number(category) > 7) {
         CatFormattingData.forEach(catData => {
-          const replacementString = `<span><b> CAT${(catData.modifier <=  0 ? '' : '+') + (catData.modifier == 0 ? '' : catData.modifier)}</b></span>`;
+          const operationText = catData.operation ? catData.operation : '';
+          const replacementString = `<span><b> CAT${operationText}${(catData.modifier <=  0 ? '' : '+') + (catData.modifier == 0 ? '' : catData.modifier)}</b></span>`;
           updatedText = updatedText.replace(catData.string, replacementString)
         })
       } else {
         CatFormattingData.forEach(catData => {
-          const catIndex = Math.max(Math.min(Number(category) + Number(catData.modifier), 7), 0);
-          const replacementString = `<span title="CAT${(catData.modifier <=  0 ? '' : '+') + (catData.modifier == 0 ? '' : catData.modifier)}"><img style="vertical-align: middle; max-height: 2em; display: inline-block; border: none;" src="systems/cain/assets/CAT/CAT${category}.png"/> <b>${categoryTable[catIndex][catData.type]}</b> <img style="vertical-align: middle; max-height: 2em; display: inline-block; border: none;" src="systems/cain/assets/CAT/CAT${category}.png"/> </span>`;
+          // Apply the operation to the category value first
+          let operatedCat = Number(category);
+          if (catData.operation) {
+            const operator = catData.operation.charAt(0);
+            const operand = Number(catData.operation.slice(1));
+
+            switch(operator) {
+              case '/':
+                operatedCat = Math.ceil(operatedCat / operand); // Use ceil for division to round up
+                break;
+              case '*':
+                operatedCat = operatedCat * operand;
+                break;
+              case '+':
+                operatedCat = operatedCat + operand;
+                break;
+              case '-':
+                operatedCat = operatedCat - operand;
+                break;
+            }
+          }
+
+          // Then apply the modifier
+          const catIndex = Math.max(Math.min(operatedCat + Number(catData.modifier), 7), 0);
+          const operationText = catData.operation ? catData.operation : '';
+          const replacementString = `<span title="CAT${operationText}${(catData.modifier <=  0 ? '' : '+') + (catData.modifier == 0 ? '' : catData.modifier)}"><img style="vertical-align: middle; max-height: 2em; display: inline-block; border: none;" src="systems/cain/assets/CAT/CAT${category}.png"/> <b>${categoryTable[catIndex][catData.type]}</b> <img style="vertical-align: middle; max-height: 2em; display: inline-block; border: none;" src="systems/cain/assets/CAT/CAT${category}.png"/> </span>`;
           console.log(replacementString);
           updatedText = updatedText.replace(catData.string, replacementString)
         })
@@ -419,10 +446,15 @@ Handlebars.registerHelper('formatted', function(text, category) {
       updatedText = updatedText.split(Handlebars.escapeExpression("</i>")).join("</i>");
 
       // Replace all newlines with <br> tags
-      return new Handlebars.SafeString(updatedText.replace(/\n/g, '<br>'));
+      return updatedText.replace(/\n/g, '<br>');
   } else {
       return text; // Return the text as is if it's not a string
   }
+};
+
+// Handlebars helper wrapper for formatCatText
+Handlebars.registerHelper('formatted', function(text, category) {
+  return new Handlebars.SafeString(window.formatCatText(text, category));
 });
 
 Handlebars.registerHelper('mod', function(value, modval, options){
