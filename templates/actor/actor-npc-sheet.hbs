@@ -21,7 +21,6 @@
   </div>
 </div>
 {{/if}}
-
 <form class="{{cssClass}} {{actor.type}} {{system.sinType}} flexcol brooding-theme" autocomplete="off">
     {{!-- Sheet Header: image and general information --}}
     <div class="row">
@@ -191,18 +190,18 @@
         box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.5);
     }
 
-    .row {
+    .brooding-theme .row {
         display: flex;
         flex-wrap: wrap;
         margin-right: -15px;
         margin-left: -15px;
     }
 
-    .m-auto {
+    .brooding-theme .m-auto {
         margin: auto;
     }
 
-    .col {
+    .brooding-theme .col {
         flex-basis: 0;
         flex-grow: 1;
         max-width: 100%;
@@ -233,25 +232,25 @@
         }
     }
 
-    .pl-2 {
+    .brooding-theme .pl-2 {
         padding-left: 2em;
     }
 
-    .px-2 {
+    .brooding-theme .px-2 {
         padding: 0 2em;
     }
 
-    .pirata-one-regular {
+    .brooding-theme .pirata-one-regular {
         font-family: "Pirata One", system-ui;
         font-weight: 400;
         font-style: normal;
     }
 
-    .white-text-shadow {
+    .brooding-theme .white-text-shadow {
         text-shadow: -2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff;
     }
 
-    .card {
+    .brooding-theme .card {
         border-radius: 20px;
         background-color: rgb(134, 134, 134);
         border: none;
@@ -308,41 +307,41 @@
         }
     }
 
-    .hound {
+    .brooding-theme.hound {
         border: 5px #ff0808 solid;
     }
 
-    .centipede {
+    .brooding-theme.centipede {
         border: 5px #9f00ff solid;
     }
 
-    .idol {
+    .brooding-theme.idol {
         border: 5px #e40df2 solid;
     }
 
-    .ogre {
+    .brooding-theme.ogre {
         border: 5px #0d79f2 solid;
     }
 
-    .toad {
+    .brooding-theme.toad {
         border: 5px #f2af0d solid;
     }
 
-    .lord {
+    .brooding-theme.lord {
         border: 5px #91ffef solid;
     }
 
-    .profile-img {
+    .brooding-theme .profile-img {
         border: 2px solid #444;
         border-radius: 50%;
         transition: transform 0.3s;
     }
 
-    .profile-img:hover {
+    .brooding-theme .profile-img:hover {
         transform: scale(1.1);
     }
 
-    select {
+    .brooding-theme select {
         color: black;
         font-size: 18px;
         font-family: sans-serif;
@@ -358,14 +357,14 @@
         }
     }
 
-    .styled-select {
+    .brooding-theme .styled-select {
         height: 40px;
         border: black solid 2px;
         margin-right: -4px;
         border-radius: 10px 0px 0px 10px;
     }
 
-    .actions-grid {
+    .brooding-theme .actions-grid {
         display: flex;
         flex-wrap: wrap;
         justify-content: space-evenly;
@@ -376,7 +375,7 @@
     /*    justify-content: space-between;*/
     /*}*/
 
-    .center-p {
+    .brooding-theme .center-p {
         margin: auto;
         padding: 2em 0;
         font-size: 20px;
@@ -384,7 +383,7 @@
         font-weight: bold;
     }
 
-    .quick-action-text {
+    .brooding-theme .quick-action-text {
         text-orientation: sideways;
         font-family: 'Pirata One';
         color: white;
@@ -419,7 +418,7 @@
         }
     }
 
-    .talisman-container {
+    .brooding-theme .talisman-container {
         z-index: 0;
         border: solid 2px black;
         background-image: url("systems/cain/assets/backgrounds/paper2.jpg");
@@ -490,7 +489,7 @@
         }
     }
 
-    .add-talisman-button {
+    .brooding-theme .add-talisman-button {
         background: black;
         color: white;
         font-size: 20px;
@@ -500,7 +499,7 @@
         border-radius: 0px 10px 10px 0px;
     }
 
-    .quick-action-button {
+    .brooding-theme .quick-action-button {
         border: none;
         border-radius: 5px;
         padding: 20px 10px;
@@ -541,11 +540,11 @@
         }
     }
 
-    .sheet-body {
+    .brooding-theme .sheet-body {
         z-index: 1;
     }
 
-    .sheet-tabs {
+    .brooding-theme .sheet-tabs {
         border: none;
         margin-bottom: -2px;
         transition: transform 0.3s;
