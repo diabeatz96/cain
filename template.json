@@ -1,6 +1,6 @@
 {
   "Actor": {
-    "types": ["character", "sin", "mundane"]
+    "types": ["character", "sin", "mundane", "npc"]
   },
   "Item": {
     "types": ["item", "agenda", "blasphemy", "blasphemyPower", "agendaTask", "agendaAbility", "sinMark", "sinMarkAbility", "affliction"]
