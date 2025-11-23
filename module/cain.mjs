@@ -13,6 +13,7 @@ import { PlayerOverview } from './documents/player-overview.mjs';
 
 // Import DataModel classes
 import * as models from './data/_module.mjs';
+import PathosTracker from "./components/pathos-tracker/pathos-tracker.js";
 
 /* -------------------------------------------- */
 /*  Init Hook                                   */
@@ -552,6 +553,13 @@ Hooks.once('ready', async function () {
       console.error('Action bar not found.');
     }
   }
+
+  const { ApplicationV2, HandlebarsApplicationMixin  } = foundry.applications.api;
+
+  // TODO: adding pathos ui element
+  const pathos = new PathosTracker();
+  console.log("rendering pathos");
+  pathos.render(true);
 
   function addTalismanButton() {
     // Create the button element with the talisman icon
