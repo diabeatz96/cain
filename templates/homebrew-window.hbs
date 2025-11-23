@@ -14,7 +14,9 @@
     <a class='item' data-tab='affliction'><i class="fas fa-skull-crossbones"></i> Afflictions</a>
     <a class='item' data-tab='item'><i class="fas fa-briefcase"></i> Items</a>
     <a class='item' data-tab='sinMark'><i class="fas fa-exclamation-triangle"></i> Sin Marks</a>
+    <a class='item' data-tab='import-export'><i class="fas fa-file-import"></i> Import/Export</a>
     <a class='item' data-tab='history'><i class="fas fa-history"></i> History</a>
+    <a class='item' data-tab='settings'><i class="fas fa-cog"></i> Settings</a>
   </nav>
 
   {{! Sheet Body }}
@@ -286,14 +288,125 @@
             <h3><i class="fas fa-star"></i> Sin Mark Abilities</h3>
             <button type="button" class="btn-add homebrew-new-sinmark-ability"><i class="fas fa-plus"></i> Add Ability</button>
           </div>
-          <ul class="sinmark-ability-list">
-            <!-- Sin mark abilities will be added dynamically -->
+          <ul class="ability-list">
+          {{#each sinMarkOptions.abilities}}
+            <li class='ability-item'>
+              <input type="text" class="homebrew-input homebrew-sinmark-ability-name-input" data-sinmark-ability-index="{{@index}}" placeholder="Ability name..." value="{{this.name}}">
+              <textarea class="homebrew-input homebrew-sinmark-ability-description-input" data-sinmark-ability-index="{{@index}}" placeholder="Ability description (use {<CAT> type modifier} for CAT formatting)...">{{this.abilityDescription}}</textarea>
+              <button type="button" class="btn-icon btn-delete homebrew-remove-sinmark-ability" data-sinmark-ability-index="{{@index}}" title="Remove">
+                <i class="fas fa-trash"></i>
+              </button>
+            </li>
+          {{/each}}
           </ul>
         </div>
 
         <footer class="form-footer">
           <button type="button" class="btn-primary homebrew-submit-sinmark"><i class="fas fa-check-circle"></i> Create Sin Mark</button>
         </footer>
+      </div>
+    </div>
+
+    {{!-- IMPORT/EXPORT TAB --}}
+    <div class='tab homebrew-tab' data-group='primary' data-tab='import-export'>
+      <div class="import-export-panel">
+        <h2><i class="fas fa-exchange-alt"></i> Import & Export Homebrew Content</h2>
+
+        <div class="import-export-grid">
+          {{!-- EXPORT SECTION --}}
+          <div class="export-section">
+            <div class="section-card">
+              <h3><i class="fas fa-file-export"></i> Export Content</h3>
+              <p class="section-description">Export individual items or all your homebrew content to share with others or backup your work.</p>
+
+              <div class="export-options">
+                <div class="form-section">
+                  <label>Select Items to Export:</label>
+                  <div class="export-checklist">
+                    <label class="checkbox-label">
+                      <input type="checkbox" id="export-select-all" class="export-checkbox">
+                      <span><strong>Select All</strong></span>
+                    </label>
+                  </div>
+                  <div class="export-items-list" id="export-items-list">
+                    <p class="empty-state"><i class="fas fa-inbox"></i> No items to export. Create some homebrew content first!</p>
+                  </div>
+                </div>
+
+                <button type="button" class="btn-primary homebrew-export-selected">
+                  <i class="fas fa-download"></i> Export Selected Items
+                </button>
+                <button type="button" class="btn-secondary homebrew-export-all-content">
+                  <i class="fas fa-file-archive"></i> Export All Content
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {{!-- IMPORT SECTION --}}
+          <div class="import-section">
+            <div class="section-card">
+              <h3><i class="fas fa-file-import"></i> Import Content</h3>
+              <p class="section-description">Import homebrew content from JSON files created by you or shared by others.</p>
+
+              <div class="import-instructions">
+                <h4><i class="fas fa-info-circle"></i> How to Import:</h4>
+                <ol>
+                  <li>Click the "Choose File" button below</li>
+                  <li>Select a valid homebrew JSON file from your computer</li>
+                  <li>Review the items to be imported</li>
+                  <li>Click "Import" to add them to your world</li>
+                </ol>
+
+                <div class="import-warning">
+                  <i class="fas fa-exclamation-triangle"></i>
+                  <strong>Note:</strong> Imported items will be added to your world. If an item with the same name exists, it will be overwritten.
+                </div>
+              </div>
+
+              <div class="import-controls">
+                <input type="file" id="homebrew-import-file" accept=".json" style="display: none;">
+                <button type="button" class="btn-primary homebrew-choose-file">
+                  <i class="fas fa-folder-open"></i> Choose File
+                </button>
+                <div class="selected-file" id="selected-file-name">
+                  <i class="fas fa-file"></i> No file selected
+                </div>
+              </div>
+
+              <div class="import-preview" id="import-preview" style="display: none;">
+                <h4>Preview:</h4>
+                <div class="import-preview-content" id="import-preview-content"></div>
+                <div class="form-section">
+                  <label for="import-target-folder">Import To Folder:</label>
+                  <select id="import-target-folder" class="homebrew-input">
+                    <option value="">Use Settings Default</option>
+                    {{#each availableFolders}}
+                      <option value="{{this.id}}">{{this.name}}</option>
+                    {{/each}}
+                  </select>
+                  <p class="settings-hint">Choose where imported items should be saved. Leave as default to use your configured folder settings.</p>
+                </div>
+                <button type="button" class="btn-primary homebrew-confirm-import">
+                  <i class="fas fa-check-circle"></i> Import Content
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {{!-- EXPORT FORMAT GUIDE --}}
+        <div class="format-guide">
+          <details>
+            <summary><i class="fas fa-book"></i> Export Format Guide</summary>
+            <div class="guide-content">
+              <p><strong>File Format:</strong> All exports are in JSON format for easy sharing and version control.</p>
+              <p><strong>File Naming:</strong> Exported files are automatically named with timestamps (e.g., <code>cain-homebrew-2024-01-15.json</code>)</p>
+              <p><strong>Compatibility:</strong> Exported files can be imported into any CAIN world using this system.</p>
+              <p><strong>Sharing:</strong> Share your JSON files with other GMs via Discord, Google Drive, or any file-sharing service.</p>
+            </div>
+          </details>
+        </div>
       </div>
     </div>
 
@@ -328,11 +441,176 @@
       </div>
     </div>
 
+    {{!-- SETTINGS TAB --}}
+    <div class='tab homebrew-tab' data-group='primary' data-tab='settings'>
+      <div class="creation-panel">
+        <h2><i class="fas fa-cog"></i> Homebrew Settings</h2>
+
+        <div class="form-section">
+          <h3><i class="fas fa-folder"></i> Default Save Locations</h3>
+          <p class="settings-description">Choose where to save each type of homebrew item. Items will be organized in subfolders within the selected folder.</p>
+        </div>
+
+        <div class="form-section">
+          <label for="settings-agenda-folder">Agenda Folder</label>
+          <select id="settings-agenda-folder" class="homebrew-input settings-folder-select" data-item-type="agenda">
+            <option value="">Homebrew (Default)</option>
+            {{#each availableFolders}}
+              <option value="{{this.id}}" {{#if (eq this.id ../settings.agendaFolder)}}selected{{/if}}>{{this.name}}</option>
+            {{/each}}
+          </select>
+        </div>
+
+        <div class="form-section">
+          <label for="settings-blasphemy-folder">Blasphemy Folder</label>
+          <select id="settings-blasphemy-folder" class="homebrew-input settings-folder-select" data-item-type="blasphemy">
+            <option value="">Homebrew (Default)</option>
+            {{#each availableFolders}}
+              <option value="{{this.id}}" {{#if (eq this.id ../settings.blasphemyFolder)}}selected{{/if}}>{{this.name}}</option>
+            {{/each}}
+          </select>
+        </div>
+
+        <div class="form-section">
+          <label for="settings-power-folder">Blasphemy Powers Folder</label>
+          <select id="settings-power-folder" class="homebrew-input settings-folder-select" data-item-type="blasphemyPower">
+            <option value="">Homebrew (Default)</option>
+            {{#each availableFolders}}
+              <option value="{{this.id}}" {{#if (eq this.id ../settings.powerFolder)}}selected{{/if}}>{{this.name}}</option>
+            {{/each}}
+          </select>
+        </div>
+
+        <div class="form-section">
+          <label for="settings-affliction-folder">Afflictions Folder</label>
+          <select id="settings-affliction-folder" class="homebrew-input settings-folder-select" data-item-type="affliction">
+            <option value="">Homebrew (Default)</option>
+            {{#each availableFolders}}
+              <option value="{{this.id}}" {{#if (eq this.id ../settings.afflictionFolder)}}selected{{/if}}>{{this.name}}</option>
+            {{/each}}
+          </select>
+        </div>
+
+        <div class="form-section">
+          <label for="settings-item-folder">Items Folder</label>
+          <select id="settings-item-folder" class="homebrew-input settings-folder-select" data-item-type="item">
+            <option value="">Homebrew (Default)</option>
+            {{#each availableFolders}}
+              <option value="{{this.id}}" {{#if (eq this.id ../settings.itemFolder)}}selected{{/if}}>{{this.name}}</option>
+            {{/each}}
+          </select>
+        </div>
+
+        <div class="form-section">
+          <label for="settings-sinmark-folder">Sin Marks Folder</label>
+          <select id="settings-sinmark-folder" class="homebrew-input settings-folder-select" data-item-type="sinMark">
+            <option value="">Homebrew (Default)</option>
+            {{#each availableFolders}}
+              <option value="{{this.id}}" {{#if (eq this.id ../settings.sinMarkFolder)}}selected{{/if}}>{{this.name}}</option>
+            {{/each}}
+          </select>
+        </div>
+
+        <div class="form-section">
+          <h3><i class="fas fa-file-import"></i> Import Settings</h3>
+          <label for="settings-import-folder">Default Import Folder</label>
+          <select id="settings-import-folder" class="homebrew-input settings-folder-select" data-item-type="import">
+            <option value="">Homebrew (Default)</option>
+            {{#each availableFolders}}
+              <option value="{{this.id}}" {{#if (eq this.id ../settings.importFolder)}}selected{{/if}}>{{this.name}}</option>
+            {{/each}}
+          </select>
+          <p class="settings-hint">This folder will be used when importing items, unless you select a different folder during import.</p>
+        </div>
+
+        <footer class="form-footer">
+          <button type="button" class="btn-primary homebrew-save-settings"><i class="fas fa-save"></i> Save Settings</button>
+          <button type="button" class="btn-secondary homebrew-reset-settings"><i class="fas fa-undo"></i> Reset to Defaults</button>
+        </footer>
+      </div>
+    </div>
+
   </section>
 </form>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* ==================== RESET GLOBAL .cain STYLES ==================== */
+/* Override conflicting styles from cain.css that affect homebrew window */
+.cain.homebrew-background .sheet-header {
+  display: block !important;
+  flex-direction: unset !important;
+  flex: unset !important;
+  overflow: visible !important;
+  flex-wrap: unset !important;
+  justify-content: unset !important;
+  align-items: unset !important;
+  margin-bottom: 0 !important;
+  min-height: unset !important;
+}
+
+.cain.homebrew-background .sheet-header .profile-img {
+  flex: unset !important;
+  width: auto !important;
+  height: auto !important;
+  margin-right: 0 !important;
+  object-fit: unset !important;
+  align-self: unset !important;
+}
+
+.cain.homebrew-background .sheet-header .header-fields {
+  flex: unset !important;
+  display: block !important;
+  flex-direction: unset !important;
+  justify-content: unset !important;
+  align-items: unset !important;
+  min-height: unset !important;
+}
+
+.cain.homebrew-background .sheet-tabs {
+  flex: unset !important;
+}
+
+.cain.homebrew-background .sheet-body,
+.cain.homebrew-background .sheet-body .tab,
+.cain.homebrew-background .sheet-body .tab .editor {
+  height: auto !important;
+}
+
+.cain.homebrew-background .tabs .item {
+  /* Reset any global .item styles */
+  line-height: normal !important;
+}
+
+/* Reset form element styles */
+.cain.homebrew-background input[type="text"],
+.cain.homebrew-background input[type="number"],
+.cain.homebrew-background textarea,
+.cain.homebrew-background select {
+  /* Allow homebrew-specific styles to take precedence */
+  background-color: unset !important;
+  color: unset !important;
+  border: unset !important;
+  padding: unset !important;
+  font-size: unset !important;
+  height: unset !important;
+  line-height: unset !important;
+}
+
+.cain.homebrew-background label {
+  font-weight: unset !important;
+  color: unset !important;
+  text-transform: unset !important;
+  font-size: unset !important;
+  margin-bottom: unset !important;
+  display: unset !important;
+}
+
+.cain.homebrew-background select option {
+  background-color: unset !important;
+  color: unset !important;
+  padding: unset !important;
+}
 
 /* ==================== CSS CUSTOM PROPERTIES ==================== */
 :root {
@@ -376,7 +654,7 @@
   width: 100%;
   max-width: none;
   margin: auto;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family: "Courier New", Courier, monospace;
   border: 1px solid var(--border-medium);
   box-shadow: var(--shadow-lg), inset 0 1px 0 rgba(255, 255, 255, 0.05);
   position: relative;
@@ -404,13 +682,15 @@
 /* ==================== HEADER ==================== */
 .homebrew-header {
   text-align: center;
-  padding: var(--spacing-lg) 0;
+  padding: 0;
   background: linear-gradient(135deg, rgba(124, 77, 255, 0.15) 0%, rgba(124, 77, 255, 0.05) 100%);
   border-radius: 8px 8px 0 0;
-  margin: calc(var(--spacing-md) * -1) calc(var(--spacing-md) * -1) var(--spacing-lg) calc(var(--spacing-md) * -1);
+  margin: calc(var(--spacing-md) * -1) calc(var(--spacing-md) * -1) 0 calc(var(--spacing-md) * -1);
   border-bottom: 1px solid var(--border-medium);
   position: relative;
   overflow: hidden;
+  display: block !important;
+  flex-direction: unset !important;
 }
 
 .homebrew-header::after {
@@ -428,7 +708,8 @@
   font-weight: 700;
   color: var(--text-primary);
   margin: 0 0 var(--spacing-sm) 0;
-  font-family: 'Inter', sans-serif;
+  padding: var(--spacing-md) 0 0 0;
+  font-family: "Courier New", Courier, monospace;
   text-transform: uppercase;
   letter-spacing: 3px;
   text-shadow: 0 2px 8px rgba(124, 77, 255, 0.3);
@@ -451,7 +732,8 @@
   color: var(--text-secondary);
   font-size: 0.9em;
   margin: 0;
-  font-family: 'Inter', sans-serif;
+  padding: 0 0 var(--spacing-md) 0;
+  font-family: "Courier New", Courier, monospace;
   letter-spacing: 1px;
   font-weight: 400;
   text-align: center;
@@ -478,7 +760,7 @@
   color: var(--text-muted);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   border-bottom: 3px solid transparent;
-  font-family: 'Inter', sans-serif;
+  font-family: "Courier New", Courier, monospace;
   font-size: 0.85em;
   font-weight: 500;
   text-transform: uppercase;
@@ -541,6 +823,7 @@
 .homebrew-tabs .item[data-tab="affliction"].active { color: var(--affliction-color); }
 .homebrew-tabs .item[data-tab="item"].active { color: var(--item-color); }
 .homebrew-tabs .item[data-tab="sinMark"].active { color: var(--sinmark-color); }
+.homebrew-tabs .item[data-tab="import-export"].active { color: var(--item-color); }
 .homebrew-tabs .item[data-tab="history"].active { color: var(--history-color); }
 
 /* ==================== TAB CONTENT ==================== */
@@ -576,10 +859,10 @@
   background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
   border: 1px solid var(--border-medium);
   border-radius: 8px;
-  padding: var(--spacing-lg);
+  padding: var(--spacing-xl);
   box-shadow: var(--shadow-md), inset 0 1px 0 rgba(255, 255, 255, 0.05);
   position: relative;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .creation-panel::before, .history-panel::before {
@@ -594,7 +877,7 @@
 
 .creation-panel h2 {
   color: var(--text-primary);
-  font-family: 'Inter', sans-serif;
+  font-family: "Courier New", Courier, monospace;
   font-size: 1.5em;
   font-weight: 700;
   margin: 0 0 var(--spacing-lg) 0;
@@ -643,7 +926,7 @@
   font-weight: 500;
   margin-bottom: var(--spacing-sm);
   font-size: 0.875em;
-  font-family: 'Inter', sans-serif;
+  font-family: "Courier New", Courier, monospace;
   text-transform: uppercase;
   letter-spacing: 1px;
 }
@@ -659,24 +942,30 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: var(--spacing-md);
-  padding-bottom: var(--spacing-sm);
-  border-bottom: 1px solid var(--border-subtle);
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: linear-gradient(135deg, rgba(124, 77, 255, 0.08) 0%, rgba(124, 77, 255, 0.03) 100%);
+  border-left: 3px solid var(--blasphemy-color);
+  border-radius: 0 4px 4px 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .section-header h3 {
   color: var(--text-primary);
-  font-family: 'Inter', sans-serif;
-  font-size: 1.15em;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 1em;
   margin: 0;
   text-transform: uppercase;
   letter-spacing: 1.5px;
-  font-weight: 700;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
 }
 
 .section-header h3 i {
-  margin-right: var(--spacing-sm);
   color: var(--blasphemy-color);
   font-size: 1.1em;
+  filter: drop-shadow(0 0 4px rgba(124, 77, 255, 0.5));
 }
 
 /* ==================== INPUTS ==================== */
@@ -688,7 +977,7 @@
   border-radius: 6px;
   padding: 10px 12px;
   font-size: 0.95em;
-  font-family: 'Inter', sans-serif;
+  font-family: "Courier New", Courier, monospace;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
 }
@@ -734,7 +1023,7 @@ input[type="number"].homebrew-input {
   border-radius: 4px;
   padding: 6px 12px;
   cursor: pointer;
-  font-family: 'Inter', sans-serif;
+  font-family: "Courier New", Courier, monospace;
   font-size: 0.75em;
   font-weight: 500;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -792,16 +1081,24 @@ input[type="number"].homebrew-input {
 }
 
 .btn-add {
-  padding: 4px 10px;
-  font-size: 0.7em;
+  padding: 4px 8px;
+  font-size: 0.65em;
   background: linear-gradient(135deg, rgba(0, 188, 212, 0.2) 0%, rgba(0, 188, 212, 0.1) 100%);
   border: 1px dashed var(--agenda-color);
   color: var(--agenda-color);
+  text-transform: none;
+  letter-spacing: 0.3px;
+}
+
+.btn-add i {
+  font-size: 0.9em;
+  margin-right: 4px;
 }
 
 .btn-add:hover {
   background: linear-gradient(135deg, rgba(0, 188, 212, 0.3) 0%, rgba(0, 188, 212, 0.15) 100%);
   border-style: solid;
+  transform: translateY(-1px);
 }
 
 .btn-icon {
@@ -996,7 +1293,7 @@ input[type="number"].homebrew-input {
   cursor: pointer;
   color: var(--text-primary);
   font-weight: 400;
-  font-family: 'Inter', sans-serif;
+  font-family: "Courier New", Courier, monospace;
   font-size: 0.875em;
   padding: var(--spacing-sm);
   border-radius: 6px;
@@ -1046,7 +1343,7 @@ input[type="number"].homebrew-input {
   color: var(--text-secondary);
   font-weight: 600;
   margin-right: var(--spacing-sm);
-  font-family: 'Inter', sans-serif;
+  font-family: "Courier New", Courier, monospace;
   font-size: 0.875em;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -1071,7 +1368,7 @@ input[type="number"].homebrew-input {
   font-size: 0.875em;
   padding: var(--spacing-sm);
   transition: all 0.3s ease;
-  font-family: 'Inter', sans-serif;
+  font-family: "Courier New", Courier, monospace;
   text-transform: uppercase;
   letter-spacing: 1px;
   border-radius: 6px;
@@ -1104,7 +1401,7 @@ input[type="number"].homebrew-input {
   color: var(--text-secondary);
   line-height: 1.6;
   font-size: 0.85em;
-  font-family: 'Inter', sans-serif;
+  font-family: "Courier New", Courier, monospace;
   padding-left: var(--spacing-lg);
 }
 
@@ -1145,19 +1442,264 @@ input[type="number"].homebrew-input {
   font-weight: 600;
 }
 
+/* ==================== IMPORT/EXPORT TAB ==================== */
+.import-export-panel h2 {
+  color: var(--text-primary);
+  font-family: "Courier New", Courier, monospace;
+  font-size: 1.5em;
+  font-weight: 600;
+  margin: 0 0 var(--spacing-lg) 0;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding-bottom: var(--spacing-md);
+  border-bottom: 1px solid var(--border-medium);
+}
+
+.import-export-panel h2 i {
+  color: var(--item-color);
+}
+
+.import-export-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
+}
+
+.section-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+  border: 1px solid var(--border-medium);
+  border-radius: 8px;
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.section-card h3 {
+  color: var(--text-primary);
+  font-family: "Courier New", Courier, monospace;
+  font-size: 1.2em;
+  font-weight: 600;
+  margin: 0 0 var(--spacing-sm) 0;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.section-card h3 i {
+  color: var(--item-color);
+}
+
+.section-card h4 {
+  color: var(--text-primary);
+  font-size: 1em;
+  margin: var(--spacing-md) 0 var(--spacing-sm) 0;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.section-card h4 i {
+  color: var(--agenda-color);
+}
+
+.section-description {
+  color: var(--text-secondary);
+  margin: 0 0 var(--spacing-lg) 0;
+  line-height: 1.6;
+  font-size: 0.9em;
+}
+
+.export-options, .import-controls {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.export-checklist {
+  margin-bottom: var(--spacing-sm);
+}
+
+.export-items-list {
+  max-height: 300px;
+  overflow-y: auto;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--border-subtle);
+  border-radius: 4px;
+  padding: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+.export-items-list .checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-xs);
+  margin: var(--spacing-xs) 0;
+  border-radius: 4px;
+  transition: background 0.2s ease;
+}
+
+.export-items-list .checkbox-label:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.import-instructions {
+  background: rgba(0, 188, 212, 0.05);
+  border: 1px solid rgba(0, 188, 212, 0.2);
+  border-radius: 8px;
+  padding: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+}
+
+.import-instructions ol {
+  margin: var(--spacing-sm) 0;
+  padding-left: var(--spacing-lg);
+  color: var(--text-secondary);
+  line-height: 1.8;
+}
+
+.import-instructions ol li {
+  margin: var(--spacing-xs) 0;
+}
+
+.import-warning {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-sm);
+  background: rgba(255, 193, 7, 0.1);
+  border: 1px solid rgba(255, 193, 7, 0.3);
+  border-radius: 6px;
+  padding: var(--spacing-sm);
+  margin-top: var(--spacing-md);
+  color: var(--sinmark-color);
+  font-size: 0.85em;
+}
+
+.import-warning i {
+  flex-shrink: 0;
+  font-size: 1.2em;
+  margin-top: 2px;
+}
+
+.selected-file {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--border-subtle);
+  border-radius: 4px;
+  padding: var(--spacing-sm);
+  color: var(--text-muted);
+  font-size: 0.85em;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.selected-file.has-file {
+  color: var(--text-primary);
+  border-color: var(--item-color);
+  background: rgba(76, 175, 80, 0.1);
+}
+
+.import-preview {
+  margin-top: var(--spacing-md);
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--border-medium);
+  border-radius: 8px;
+  padding: var(--spacing-md);
+}
+
+.import-preview h4 {
+  margin-top: 0;
+}
+
+.import-preview-content {
+  max-height: 200px;
+  overflow-y: auto;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--border-subtle);
+  border-radius: 4px;
+  padding: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+  font-size: 0.85em;
+  color: var(--text-secondary);
+}
+
+.format-guide {
+  background: linear-gradient(135deg, rgba(124, 77, 255, 0.08) 0%, rgba(124, 77, 255, 0.03) 100%);
+  border: 1px solid rgba(124, 77, 255, 0.2);
+  border-radius: 8px;
+  padding: var(--spacing-md);
+}
+
+.format-guide details summary {
+  cursor: pointer;
+  color: var(--blasphemy-color);
+  font-weight: 600;
+  font-size: 0.9em;
+  padding: var(--spacing-sm);
+  transition: all 0.3s ease;
+  font-family: "Courier New", Courier, monospace;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.format-guide details summary:hover {
+  color: var(--text-primary);
+  background: rgba(124, 77, 255, 0.1);
+}
+
+.format-guide details summary i {
+  font-size: 1em;
+  transition: transform 0.3s ease;
+}
+
+.format-guide details[open] summary i {
+  transform: rotate(90deg);
+}
+
+.guide-content {
+  padding: var(--spacing-md) var(--spacing-sm);
+  color: var(--text-secondary);
+  line-height: 1.6;
+  font-size: 0.85em;
+}
+
+.guide-content p {
+  margin: var(--spacing-sm) 0;
+}
+
+.guide-content code {
+  background: rgba(0, 0, 0, 0.4);
+  color: var(--item-color);
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-family: 'Courier New', Courier, monospace;
+  border: 1px solid rgba(76, 175, 80, 0.3);
+  font-size: 0.9em;
+}
+
 /* ==================== HISTORY TAB ==================== */
 .history-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: var(--spacing-lg);
+  padding: var(--spacing-md) 0;
   padding-bottom: var(--spacing-md);
   border-bottom: 1px solid var(--border-medium);
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
 }
 
 .history-header h2 {
   color: var(--text-primary);
-  font-family: 'Inter', sans-serif;
+  font-family: "Courier New", Courier, monospace;
   font-size: 1.5em;
   font-weight: 600;
   margin: 0;
@@ -1166,6 +1708,7 @@ input[type="number"].homebrew-input {
   display: flex;
   align-items: center;
   gap: var(--spacing-sm);
+  white-space: nowrap;
 }
 
 .history-header h2 i {
@@ -1175,6 +1718,7 @@ input[type="number"].homebrew-input {
 .history-controls {
   display: flex;
   gap: var(--spacing-sm);
+  flex-wrap: wrap;
 }
 
 .filter-bar {
@@ -1192,7 +1736,7 @@ input[type="number"].homebrew-input {
   color: var(--text-secondary);
   font-weight: 600;
   margin: 0;
-  font-family: 'Inter', sans-serif;
+  font-family: "Courier New", Courier, monospace;
   font-size: 0.875em;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -1200,27 +1744,39 @@ input[type="number"].homebrew-input {
 
 .filter-bar select {
   flex: 1;
-  max-width: 250px;
-  background: rgba(0, 0, 0, 0.3);
-  color: var(--text-primary);
+  min-width: 200px;
+  max-width: 400px;
+  background: #1a1a1a;
+  color: #e0e0e0;
   border: 1px solid var(--border-medium);
   border-radius: 6px;
-  padding: var(--spacing-sm) 12px;
-  font-family: 'Inter', sans-serif;
-  font-size: 0.9em;
+  padding: 10px 16px;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 1em;
+  line-height: 1.5;
+  min-height: 42px;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
+.filter-bar select option {
+  background: #1a1a1a;
+  color: #e0e0e0;
+  padding: 10px 16px;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 1em;
+}
+
 .filter-bar select:hover {
   border-color: var(--border-medium);
-  background: rgba(0, 0, 0, 0.4);
+  background: #252525;
 }
 
 .filter-bar select:focus {
   outline: none;
   border-color: var(--history-color);
   box-shadow: 0 0 0 3px rgba(96, 125, 139, 0.2);
+  background: #252525;
 }
 
 .history-list {
@@ -1233,7 +1789,7 @@ input[type="number"].homebrew-input {
   font-size: 0.95em;
   padding: var(--spacing-xl) var(--spacing-lg);
   font-style: italic;
-  font-family: 'Inter', sans-serif;
+  font-family: "Courier New", Courier, monospace;
 }
 
 .empty-state i {
@@ -1249,13 +1805,14 @@ input[type="number"].homebrew-input {
   border: 1px solid var(--border-subtle);
   border-left: 3px solid var(--history-color);
   border-radius: 6px;
-  padding: var(--spacing-md);
-  margin-bottom: var(--spacing-sm);
+  padding: var(--spacing-lg);
+  margin-bottom: var(--spacing-md);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   justify-content: space-between;
   align-items: center;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  gap: var(--spacing-md);
 }
 
 .history-item:hover {
@@ -1271,8 +1828,37 @@ input[type="number"].homebrew-input {
   box-shadow: 0 4px 12px rgba(124, 77, 255, 0.2), 0 0 0 3px rgba(124, 77, 255, 0.1);
 }
 
+.history-item-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  margin-right: var(--spacing-md);
+  background: linear-gradient(135deg, rgba(96, 125, 139, 0.2) 0%, rgba(96, 125, 139, 0.1) 100%);
+  border-radius: 8px;
+  border: 1px solid var(--border-subtle);
+}
+
+.history-item-icon i {
+  font-size: 1.2em;
+  color: var(--history-color);
+}
+
 .history-item-info {
   flex: 1;
+}
+
+.history-item-meta {
+  display: flex;
+  gap: var(--spacing-md);
+  align-items: center;
+  margin-top: var(--spacing-xs);
+}
+
+.history-item-actions {
+  display: flex;
+  gap: var(--spacing-xs);
 }
 
 .history-item-name {
@@ -1280,7 +1866,9 @@ input[type="number"].homebrew-input {
   font-size: 1em;
   color: var(--text-primary);
   margin-bottom: var(--spacing-xs);
-  font-family: 'Inter', sans-serif;
+  font-family: "Courier New", Courier, monospace;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .history-item-type {
@@ -1291,7 +1879,7 @@ input[type="number"].homebrew-input {
   font-size: 0.75em;
   text-transform: uppercase;
   letter-spacing: 1px;
-  font-family: 'Inter', sans-serif;
+  font-family: "Courier New", Courier, monospace;
   border-radius: 4px;
   font-weight: 600;
   border: 1px solid rgba(96, 125, 139, 0.3);
@@ -1300,13 +1888,7 @@ input[type="number"].homebrew-input {
 .history-item-date {
   color: var(--text-muted);
   font-size: 0.75em;
-  margin-top: var(--spacing-xs);
-  font-family: 'Inter', sans-serif;
-}
-
-.history-item-controls {
-  display: flex;
-  gap: var(--spacing-xs);
+  font-family: "Courier New", Courier, monospace;
 }
 
 /* ==================== RESPONSIVE ==================== */
@@ -1322,6 +1904,10 @@ input[type="number"].homebrew-input {
   .power-header-row {
     flex-direction: column;
     align-items: stretch;
+  }
+
+  .import-export-grid {
+    grid-template-columns: 1fr;
   }
 
   .history-header {
@@ -1377,6 +1963,77 @@ input[type="number"].homebrew-input {
 
 .homebrew-background::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(180deg, #8a5aff 0%, var(--blasphemy-color) 100%);
+}
+
+/* ==================== SETTINGS TAB ==================== */
+.settings-description {
+  color: var(--text-secondary);
+  font-size: 0.95em;
+  margin-bottom: var(--spacing-md);
+  line-height: 1.5;
+  font-family: "Courier New", Courier, monospace;
+}
+
+.settings-hint {
+  color: var(--text-muted);
+  font-size: 0.85em;
+  margin-top: var(--spacing-xs);
+  font-style: italic;
+  font-family: "Courier New", Courier, monospace;
+}
+
+.settings-folder-select {
+  width: 100%;
+  background: #1a1a1a;
+  color: #e0e0e0;
+  border: 1px solid var(--border-medium);
+  border-radius: 6px;
+  padding: 12px 16px;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 1em;
+  line-height: 1.5;
+  min-height: 44px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.settings-folder-select:hover {
+  border-color: var(--blasphemy-color);
+  background: #222;
+}
+
+.settings-folder-select:focus {
+  border-color: var(--blasphemy-color);
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(124, 77, 255, 0.2);
+}
+
+.settings-folder-select option {
+  background: #1a1a1a;
+  color: #e0e0e0;
+  padding: 12px 16px;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 1em;
+  line-height: 1.5;
+}
+
+.creation-panel h3 {
+  color: var(--text-primary);
+  font-family: "Courier New", Courier, monospace;
+  font-size: 1.2em;
+  font-weight: 600;
+  margin: var(--spacing-lg) 0 var(--spacing-md) 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding-bottom: var(--spacing-sm);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.creation-panel h3 i {
+  color: var(--blasphemy-color);
 }
 
 /* ==================== UTILITY CLASSES ==================== */

@@ -108,6 +108,30 @@ Hooks.once('init', async function () {
     default: false
   });
 
+  game.settings.register('cain', 'homebrewHistory', {
+    name: 'Homebrew Creation History',
+    scope: 'world',
+    config: false,
+    type: Array,
+    default: []
+  });
+
+  game.settings.register('cain', 'homebrewFolderSettings', {
+    name: 'Homebrew Folder Settings',
+    scope: 'world',
+    config: false,
+    type: Object,
+    default: {
+      agendaFolder: '',
+      blasphemyFolder: '',
+      powerFolder: '',
+      afflictionFolder: '',
+      itemFolder: '',
+      sinMarkFolder: '',
+      importFolder: ''
+    }
+  });
+
   game.settings.register('cain', 'hasAutoImportedCompendiums', {
     name: "Has Auto-Imported Compendiums",
     hint: "Tracks whether compendiums have been automatically imported to this world",
