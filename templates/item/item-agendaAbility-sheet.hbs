@@ -1,13 +1,50 @@
 <form class='{{cssClass}}, agenda-background' autocomplete='off'>
+  <header class='sheet-header agenda-header'>
+    <img
+      class='profile-img'
+      src='{{item.img}}'
+      data-edit='img'
+      title='{{item.name}}'
+    />
     <div class='header-fields'>
-      <h1 class='charname agenda-ability-name agenda-text-color' style="padding:10px">{{item.system.abilityName}}</h1>
+      <h1 class='charname agenda-ability-name'><input
+          name='name'
+          type='text'
+          value='{{item.name}}'
+          placeholder='Name'
+          style='color: white; background-color: transparent; border: none; border-bottom: 2px solid #555;'
+        /></h1>
     </div>
+  </header>
 
   {{! Sheet Tab Navigation }}
+  <nav class='sheet-tabs tabs agenda-tabs' data-group='primary'>
+    <a class='item' data-tab='ability'>Ability</a>
+  </nav>
+
   {{! Sheet Body }}
   <section class='sheet-body agenda-body'>
-    <p style="color: white;">
-    {{this.item.system.abilityDescription}}
-    </p>
+    <div class='tab agenda-text-color' data-group='primary' data-tab='ability'>
+      <div class='form-group'>
+        <label for='abilityName' style='color: white;'>Ability Name</label>
+        <input
+          type='text'
+          name='system.abilityName'
+          value='{{system.abilityName}}'
+          data-dtype='String'
+          style='width: 100%; color: white; background-color: #333; border: 1px solid #555; border-radius: 4px; padding: 8px;'
+        />
+      </div>
+
+      <div class='form-group'>
+        <label for='abilityDescription' style='color: white;'>Ability Description</label>
+        <textarea
+          name='system.abilityDescription'
+          data-dtype='String'
+          rows='8'
+          style='width: 100%; color: white; background-color: #333; border: 1px solid #555; border-radius: 4px; padding: 8px;'
+        >{{system.abilityDescription}}</textarea>
+      </div>
+    </div>
   </section>
 </form>

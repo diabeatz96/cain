@@ -892,6 +892,45 @@ img {
   padding: 5px;
 }
 
+/* Search input styling */
+.agenda-search-input,
+.blasphemy-search-input,
+.item-search-input {
+  width: 100%;
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  background-color: #2a2a2a;
+  color: #ffffff;
+  border: 1px solid #666666;
+  border-radius: 3px;
+  font-size: 14px;
+  font-family: 'Roboto', sans-serif;
+  transition: border-color 0.3s, background-color 0.3s;
+}
+
+.agenda-search-input:focus,
+.blasphemy-search-input:focus,
+.item-search-input:focus {
+  outline: none;
+  background-color: #333333;
+  border-color: #00bfff;
+}
+
+/* Placeholder text styling */
+.agenda-search-input::placeholder,
+.blasphemy-search-input::placeholder,
+.item-search-input::placeholder {
+  color: #999999;
+  opacity: 1;
+  font-style: normal;
+}
+
+.agenda-search-input:focus::placeholder,
+.blasphemy-search-input:focus::placeholder,
+.item-search-input:focus::placeholder {
+  color: #777777;
+}
+
 .mob-psycho-resource-content {
   background-color: #333333;
   padding: 5px;
@@ -1973,13 +2012,13 @@ img {
 /* Sheet header input fields - ensure consistent styling across versions */
 .cain .sheet-header input[type="text"],
 .cain .sheet-header input[type="number"] {
-  background: rgba(0, 0, 0, 0.05) !important;
-  border: 1px solid #7a7971 !important;
-  color: inherit !important;
-  padding: 2px 4px !important;
-  height: auto !important;
-  line-height: normal !important;
-  font-size: 12px !important;
+  background: rgba(0, 0, 0, 0.05);
+  border: 1px solid #7a7971;
+  padding: 2px 4px;
+  height: auto;
+  line-height: normal;
+  font-size: 12px;
+  /* Allow individual sheets to override color with inline styles or specific classes */
 }
 
 /* Character name input - override to maintain large size */

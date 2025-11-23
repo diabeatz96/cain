@@ -94,6 +94,18 @@
               </div>   
             </div>
           {{/each}}
+        {{!-- Psyche Roll --}}
+        <div class="ability flexrow mob-psycho-ability flex-group-center">
+          <label class="resource-label rollable mob-psycho-label"
+                data-roll="{{system.psyche}}d6cs>=4"
+                data-label="Psyche"
+                data-tooltip="Roll your psyche dice">
+            Psyche
+          </label>
+          <div class="flexrow ability-dots" style="justify-content: center; align-items: center;">
+            <span style="color: #ff00cc; font-weight: bold; font-size: 1.2em;">{{system.psyche}}d6</span>
+          </div>
+        </div>
         <div class="extra-dice-section flexrow flex-group-center mob-psycho-extra-dice">
           <label for="system.extraDice.value" class="resource-label flexlarge align-left mob-psycho-label">EXTRA d6 to ROLLS</label>
           <input type="number" name="system.extraDice.value" value="{{system.extraDice.value}}" data-dtype="Number" min="0" max="6" class="mob-psycho-input"/>
