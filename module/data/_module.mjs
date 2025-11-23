@@ -1,7 +1,7 @@
 // Export Actors
 export {default as CainActorBase} from "./base-actor.mjs";
 export {default as CainCharacter} from "./actor-character.mjs";
-export {default as CainNPC} from "./actor-npc.mjs";
+export {default as CainNPC} from "./actor-sin.mjs";
 export {default as CainMundane} from "./actor-mundane.mjs";
 
 // Export Items

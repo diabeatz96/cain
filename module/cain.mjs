@@ -48,8 +48,9 @@ Hooks.once('init', async function () {
   // with the Character/NPC as part of super.defineSchema()
   CONFIG.Actor.dataModels = {
     character: models.CainCharacter,
-    npc: models.CainNPC,
+    sin: models.CainNPC,
     mundane: models.CainMundane,
+    npc: models.CainNPC,  // Backwards compatibility - deprecated, use 'sin' instead
   }
   CONFIG.Item.documentClass = CainItem;
   CONFIG.Item.dataModels = {
@@ -102,6 +103,39 @@ Hooks.once('init', async function () {
 
   game.settings.register('cain', "GMTutorialFinished", {
     name: "GM Tutorial Finished",
+    scope: "world",
+    config: false,
+    type: Boolean,
+    default: false
+  });
+
+  game.settings.register('cain', 'homebrewHistory', {
+    name: 'Homebrew Creation History',
+    scope: 'world',
+    config: false,
+    type: Array,
+    default: []
+  });
+
+  game.settings.register('cain', 'homebrewFolderSettings', {
+    name: 'Homebrew Folder Settings',
+    scope: 'world',
+    config: false,
+    type: Object,
+    default: {
+      agendaFolder: '',
+      blasphemyFolder: '',
+      powerFolder: '',
+      afflictionFolder: '',
+      itemFolder: '',
+      sinMarkFolder: '',
+      importFolder: ''
+    }
+  });
+
+  game.settings.register('cain', 'hasAutoImportedCompendiums', {
+    name: "Has Auto-Imported Compendiums",
+    hint: "Tracks whether compendiums have been automatically imported to this world",
     scope: "world",
     config: false,
     type: Boolean,
@@ -294,8 +328,8 @@ Handlebars.registerHelper('times', function(n, block) {
   return accum;
 });
 
-Handlebars.registerHelper('formatted', function(text, category) {
-  // console.log(category);
+// Utility function to format CAT text - can be used outside of Handlebars
+window.formatCatText = function(text, category) {
   const categoryTable = [
     {
       'CAT': 0,
@@ -372,14 +406,16 @@ Handlebars.registerHelper('formatted', function(text, category) {
   ]
   // Check if the text is defined and is a string
   let parse_cat_values = (inputString => {
-    const regex = /\{<CAT>\s+(\S+)\s+(\S+)\}/g;
+    // Updated regex to support CAT operations like CAT/2, CAT*2, CAT+1, CAT-1
+    const regex = /\{<CAT([\/\*\+\-]\d+)?>\s+(\S+)\s+(\S+)\}/g;
 
     const matches = [...inputString.matchAll(regex)];
 
     return matches.map(match => ({
         string: Handlebars.escapeExpression(match[0]),
-        type: match[1],
-        modifier: match[2]
+        operation: match[1] || '', // e.g., "/2", "*2", "+1", "-1", or empty string
+        type: match[2],
+        modifier: match[3]
     }));
   });
 
@@ -391,13 +427,61 @@ Handlebars.registerHelper('formatted', function(text, category) {
       let updatedText = Handlebars.escapeExpression(text);
       if (isNaN(category) || Number(category) < 0 || Number(category) > 7) {
         CatFormattingData.forEach(catData => {
-          const replacementString = `<span><b> CAT${(catData.modifier <=  0 ? '' : '+') + (catData.modifier == 0 ? '' : catData.modifier)}</b></span>`;
+          const operationText = catData.operation ? catData.operation : '';
+          const replacementString = `<span><b> CAT${operationText}${(catData.modifier <=  0 ? '' : '+') + (catData.modifier == 0 ? '' : catData.modifier)}</b></span>`;
           updatedText = updatedText.replace(catData.string, replacementString)
         })
       } else {
         CatFormattingData.forEach(catData => {
-          const catIndex = Math.max(Math.min(Number(category) + Number(catData.modifier), 7), 0);
-          const replacementString = `<span title="CAT${(catData.modifier <=  0 ? '' : '+') + (catData.modifier == 0 ? '' : catData.modifier)}"><img style="vertical-align: middle; max-height: 2em; display: inline-block; border: none;" src="systems/cain/assets/CAT/CAT${category}.png"/> <b>${categoryTable[catIndex][catData.type]}</b> <img style="vertical-align: middle; max-height: 2em; display: inline-block; border: none;" src="systems/cain/assets/CAT/CAT${category}.png"/> </span>`;
+          // Apply the operation to the category value first
+          let operatedCat = Number(category);
+          let calculationSteps = [];
+
+          // Build calculation explanation
+          calculationSteps.push(`Base CAT: ${category}`);
+
+          if (catData.operation) {
+            const operator = catData.operation.charAt(0);
+            const operand = Number(catData.operation.slice(1));
+
+            switch(operator) {
+              case '/':
+                const beforeCeil = operatedCat / operand;
+                operatedCat = Math.ceil(beforeCeil);
+                calculationSteps.push(`${category} / ${operand} = ${beforeCeil.toFixed(2)} → ${operatedCat} (rounded up)`);
+                break;
+              case '*':
+                operatedCat = operatedCat * operand;
+                calculationSteps.push(`${category} * ${operand} = ${operatedCat}`);
+                break;
+              case '+':
+                operatedCat = operatedCat + operand;
+                calculationSteps.push(`${category} + ${operand} = ${operatedCat}`);
+                break;
+              case '-':
+                operatedCat = operatedCat - operand;
+                calculationSteps.push(`${category} - ${operand} = ${operatedCat}`);
+                break;
+            }
+          }
+
+          // Then apply the modifier
+          const beforeModifier = operatedCat;
+          const finalCat = operatedCat + Number(catData.modifier);
+          if (Number(catData.modifier) !== 0) {
+            calculationSteps.push(`${beforeModifier} ${catData.modifier > 0 ? '+' : ''} ${catData.modifier} = ${finalCat}`);
+          }
+
+          const catIndex = Math.max(Math.min(finalCat, 7), 0);
+          if (finalCat < 0 || finalCat > 7) {
+            calculationSteps.push(`Clamped to CAT ${catIndex} (min 0, max 7)`);
+          }
+
+          calculationSteps.push(`Result: ${categoryTable[catIndex][catData.type]}`);
+
+          const tooltipText = calculationSteps.join(' | ');
+          const operationText = catData.operation ? catData.operation : '';
+          const replacementString = `<span data-tooltip="${tooltipText}" style="cursor: help; border-bottom: 1px dotted #ff00cc;"><img style="vertical-align: middle; max-height: 2em; display: inline-block; border: none;" src="systems/cain/assets/CAT/CAT${category}.png"/> <b>${categoryTable[catIndex][catData.type]}</b> <img style="vertical-align: middle; max-height: 2em; display: inline-block; border: none;" src="systems/cain/assets/CAT/CAT${category}.png"/> </span>`;
           console.log(replacementString);
           updatedText = updatedText.replace(catData.string, replacementString)
         })
@@ -410,10 +494,15 @@ Handlebars.registerHelper('formatted', function(text, category) {
       updatedText = updatedText.split(Handlebars.escapeExpression("</i>")).join("</i>");
 
       // Replace all newlines with <br> tags
-      return new Handlebars.SafeString(updatedText.replace(/\n/g, '<br>'));
+      return updatedText.replace(/\n/g, '<br>');
   } else {
       return text; // Return the text as is if it's not a string
   }
+};
+
+// Handlebars helper wrapper for formatCatText
+Handlebars.registerHelper('formatted', function(text, category) {
+  return new Handlebars.SafeString(window.formatCatText(text, category));
 });
 
 Handlebars.registerHelper('mod', function(value, modval, options){
@@ -440,7 +529,7 @@ Handlebars.registerHelper('CainOffset', function(value, offset, options) {
 /* -------------------------------------------- */
 
 
-Hooks.once('ready', function () {
+Hooks.once('ready', async function () {
   // Function to create and insert the Talisman button
   function addPlayerOverviewButton() {
     const showPlayerOverview = game.settings.get('cain', 'showPlayerOverview');
@@ -562,6 +651,9 @@ Hooks.once('ready', function () {
   // Register hotbar drop hook
   Hooks.on('hotbarDrop', (bar, data, slot) => createItemMacro(data, slot));
 
+  // Automatic compendium import on world creation
+  await checkAndImportCompendiums();
+
   // Add event listeners for hotkeys
   document.addEventListener('keydown', (event) => {
     // Ignore key events when typing in input fields or ProseMirror editors
@@ -607,6 +699,115 @@ Hooks.once('ready', function () {
     dialog.render(true);
   }
 });
+
+async function checkAndImportCompendiums() {
+  // Check if this is a fresh world (no items imported yet)
+  // We use a setting to track if we've already auto-imported
+  const hasAutoImported = game.settings.get('cain', 'hasAutoImportedCompendiums');
+
+  if (hasAutoImported) {
+    console.log('CAIN | Compendiums already auto-imported');
+    return;
+  }
+
+  // Check if there are any items already in the world
+  const hasExistingItems = game.items.size > 0;
+
+  if (hasExistingItems) {
+    // Items already exist, mark as imported so we don't auto-import in the future
+    await game.settings.set('cain', 'hasAutoImportedCompendiums', true);
+    console.log('CAIN | Items already exist, skipping auto-import');
+    return;
+  }
+
+  // Only GMs can import compendiums
+  if (!game.user.isGM) {
+    console.log('CAIN | Only GMs can auto-import compendiums');
+    return;
+  }
+
+  console.log('CAIN | Starting automatic compendium import...');
+
+  // Send initial chat message
+  await ChatMessage.create({
+    speaker: { alias: "CAIN System" },
+    content: `<div style="background: #2a2a2a; border: 2px solid #ff6666; padding: 15px; border-radius: 8px; color: #fff;">
+      <h2 style="margin: 0 0 10px 0; color: #ff8888; text-shadow: 0 0 2px rgba(255,136,136,0.5);">Automatic Compendium Import</h2>
+      <p style="margin: 5px 0; color: #e0e0e0;">Starting automatic import of all game content...</p>
+      <p style="margin: 5px 0; font-size: 0.9em; color: #bbb;">This may take a moment. Please wait...</p>
+    </div>`
+  });
+
+  // Define the compendiums to import in order
+  const compendiumsToImport = [
+    { key: 'cain.items', label: 'Kit and Items' },
+    { key: 'cain.blasphemies', label: 'Blasphemies' },
+    { key: 'cain.agendas', label: 'Agendas' },
+    { key: 'cain.sin-marks', label: 'Sin Marks' },
+    { key: 'cain.afflictions', label: 'Afflictions' },
+    { key: 'cain.tables', label: 'Roll Tables' }
+  ];
+
+  let totalImported = 0;
+  const importResults = [];
+
+  try {
+    for (const compendiumInfo of compendiumsToImport) {
+      const pack = game.packs.get(compendiumInfo.key);
+
+      if (!pack) {
+        console.warn(`CAIN | Compendium ${compendiumInfo.key} not found`);
+        importResults.push(`<li style="color: #ff9900;">${compendiumInfo.label}: <b>Not Found</b></li>`);
+        continue;
+      }
+
+      console.log(`CAIN | Importing ${compendiumInfo.label}...`);
+
+      // Import all documents from the pack with keepId option to preserve document IDs
+      const documents = await pack.importAll({ keepId: true });
+      const importCount = documents.length;
+      totalImported += importCount;
+
+      importResults.push(`<li style="color: #44ff44;">${compendiumInfo.label}: <b>${importCount} items</b></li>`);
+
+      console.log(`CAIN | Imported ${importCount} items from ${compendiumInfo.label}`);
+    }
+
+    // Mark as imported
+    await game.settings.set('cain', 'hasAutoImportedCompendiums', true);
+
+    // Send completion message
+    await ChatMessage.create({
+      speaker: { alias: "CAIN System" },
+      content: `<div style="background: #2a2a2a; border: 2px solid #66ff66; padding: 15px; border-radius: 8px; color: #fff;">
+        <h2 style="margin: 0 0 10px 0; color: #88ff88; text-shadow: 0 0 2px rgba(136,255,136,0.5);">Import Complete!</h2>
+        <p style="margin: 5px 0; color: #e0e0e0;">Successfully imported all game content:</p>
+        <ul style="margin: 10px 0; padding-left: 20px; color: #e0e0e0;">
+          ${importResults.join('')}
+        </ul>
+        <p style="margin: 10px 0 5px 0; font-weight: bold; color: #e0e0e0;">Total: ${totalImported} items imported</p>
+        <p style="margin: 5px 0; font-size: 0.9em; color: #bbb;">All items are now ready to use in your world!</p>
+      </div>`
+    });
+
+    ui.notifications.info(`CAIN | Successfully imported ${totalImported} items from compendiums`);
+    console.log(`CAIN | Automatic import completed: ${totalImported} items imported`);
+
+  } catch (error) {
+    console.error('CAIN | Error during automatic import:', error);
+
+    await ChatMessage.create({
+      speaker: { alias: "CAIN System" },
+      content: `<div style="background: #2a2a2a; border: 2px solid #ff6666; padding: 15px; border-radius: 8px; color: #fff;">
+        <h2 style="margin: 0 0 10px 0; color: #ff8888; text-shadow: 0 0 2px rgba(255,136,136,0.5);">Import Error</h2>
+        <p style="margin: 5px 0; color: #e0e0e0;">An error occurred during automatic import.</p>
+        <p style="margin: 5px 0; font-size: 0.9em; color: #bbb;">Please try importing manually from the compendiums.</p>
+      </div>`
+    });
+
+    ui.notifications.error('CAIN | Error during automatic compendium import. Check console for details.');
+  }
+}
 
 function testForProperLinkage() {
   const brokenBlasphemies = (game.items
@@ -810,17 +1011,20 @@ function showGMTutorialSteps() {
   console.log('Showing GM tutorial steps');
   const steps = [
     {
-      title: 'Importing Game Content',
+      title: 'Game Content Import',
       content: `
-        <h1> THIS IS EXTREMELY IMPORTANT FIRST STEP </h1>
+        <h2>Automatic Import Complete!</h2>
+        <p>All game content has been automatically imported for you:</p>
         <ul>
-          <li>Click on the compendium tab</li>
-          <li>Right click on each compendium and click import content</li>
-          <li>YOU MUST CLICK KEEP DOCUMENT IDS OR THE SYSTEM WON'T WORK</li>
+          <li>Kit and Items</li>
+          <li>Blasphemies</li>
+          <li>Agendas</li>
+          <li>Sin Marks</li>
+          <li>Afflictions</li>
+          <li>Roll Tables</li>
         </ul>
-        <span style="display: flex; justify-content: center;">
-          <img src="systems/cain/assets/Tutorial/doc_ids.png" alt="Keep Document IDs" style="display: inline-block; border: none;">
-        </span>
+        <p><b>No manual import needed!</b> All items are ready to use in your world.</p>
+        <p style="font-size: 0.9em; color: #888;">The system automatically imported everything while preserving document IDs.</p>
       `,
     },
     {
@@ -877,7 +1081,7 @@ function showGMTutorialSteps() {
       title: 'Final Tips',
       content: `
         <ol>
-          <li>Remember to import game content from the compendiums. WITH DOCUMENT IDS</li>
+          <li>All game content has been automatically imported for you!</li>
           <li>Remember to give your players user permissions for items so they can see them</li>
           <li>Create Sins and Exorcists in the Actors Tab</li>
           <li>Have fun and enjoy the game!</li>

@@ -337,6 +337,7 @@
           {{#each @root.config.skills as |skill key|}}
             <option value="{{key}}" {{#if (eq system.skill key)}}selected{{/if}}>{{localize (concat 'CAIN.Skill.' key '.long')}}</option>
           {{/each}}
+          <option value="psyche" {{#if (eq system.skill 'psyche')}}selected{{/if}}>Psyche</option>
         </select>
       </div>
       <div class="demon-checkbox">

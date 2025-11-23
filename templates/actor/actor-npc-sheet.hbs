@@ -1,466 +1,584 @@
-<form class="{{cssClass}} {{actor.type}} flexcol brooding-theme" autocomplete="off">
-
-  {{!-- Sheet Header --}}
-  <header class="sheet-header dark-header">
-    <div class="header-top">
-      <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100"/>
-      <div class="header-fields">
-        <h1 class="charname"><input name="name" type="text" value="{{actor.name}}" placeholder="Name"/></h1>
-        <div class="header-icons">
-          <div class="resource-item">
-            <label for="system.sinType" class="resource-label">Sin Type</label>
-            <select id="sinTypeSelect" name="system.sinType">
-              <option value="ogre" {{#if (eq system.sinType "ogre")}}selected{{/if}}>Ogre</option>
-              <option value="toad" {{#if (eq system.sinType "toad")}}selected{{/if}}>Toad</option>
-              <option value="idol" {{#if (eq system.sinType "idol")}}selected{{/if}}>Idol</option>
-              <option value="lord" {{#if (eq system.sinType "lord")}}selected{{/if}}>Lord</option>
-              <option value="hound" {{#if (eq system.sinType "hound")}}selected{{/if}}>Hound</option>
-              <option value="centipede" {{#if (eq system.sinType "centipede")}}selected{{/if}}>Centipede</option>
-              <option value="redacted" {{#if (eq system.sinType "redacted")}}selected{{/if}}>[REDACTED]</option>
-            </select>
-          </div>
-          <div class="resource-item">
-            <label for="system.sinForm" class="resource-label">Sin Form</label>
-            <select name="system.sinForm">
-              <option value="Form I/Severed" {{#if (eq system.sinForm "Form I/Severed")}}selected{{/if}}>Form I/Severed</option>
-              <option value="Form II/Fused" {{#if (eq system.sinForm "Form II/Fused")}}selected{{/if}}>Form II/Fused</option>
-              <option value="Form III/Bound" {{#if (eq system.sinForm "Form III/Bound")}}selected{{/if}}>Form III/Bound</option>
-            </select>
-          </div>
-          <div class="resource-item">
-            <label for="system.category" class="resource-label">Category</label>
-            <input type="text" name="system.category" value="{{system.category}}" data-dtype="Number"/>
-          </div>
+{{!-- Backwards compatibility: NPC type is deprecated, use 'sin' instead --}}
+{{#if (eq actor.type "npc")}}
+<div class="deprecation-warning-banner" style="
+  background: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 100%);
+  border: 2px solid #ff4757;
+  padding: 10px 15px;
+  margin: 8px 8px 0 8px;
+  border-radius: 8px 8px 0 0;
+  color: #fff;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(255, 71, 87, 0.3);
+  font-family: 'Inter', sans-serif;
+  animation: pulse-warning 2s ease-in-out infinite;
+">
+  <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
+    <i class="fas fa-exclamation-triangle" style="font-size: 1em;"></i>
+    <strong style="font-size: 0.95em;">Deprecated Actor Type:</strong>
+    <span style="font-size: 0.9em;">
+      "NPC" has been renamed to "Sin". This actor will continue to work, but please use "Sin" for new actors.
+    </span>
+  </div>
+</div>
+{{/if}}
+<form class="{{cssClass}} {{actor.type}} {{system.sinType}} flexcol brooding-theme" autocomplete="off">
+    {{!-- Sheet Header: image and general information --}}
+    <div class="row">
+        <div class="col">
+            <div class="card paper-texture">
+                <div style="position: relative;">
+                    <span style="position: absolute;"></span>
+                </div>
+                <div class="row">
+                    <div class="col w-25">
+                        <h1 class="pirata-one-regular" style="text-align: center;">SIN</h1>
+                    </div>
+                    <div class="col w-25 m-auto">
+                        <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="150"
+                             width="150"/>
+                    </div>
+                    <div class="col w-33 m-auto">
+                        <div class="row">
+                            <span><b>Name:</b></span>
+                            <input class="input-text" name="name" type="text" value="{{actor.name}}"
+                                   placeholder="Name"/>
+                        </div>
+                        <div class="row">
+                            <span><b>Type:</b></span>
+                            <select id="sinTypeSelect" name="system.sinType">
+                                <option value="ogre" {{#if (eq system.sinType "ogre")}}selected{{/if}}>Ogre</option>
+                                <option value="toad" {{#if (eq system.sinType "toad")}}selected{{/if}}>Toad</option>
+                                <option value="idol" {{#if (eq system.sinType "idol")}}selected{{/if}}>Idol</option>
+                                <option value="lord" {{#if (eq system.sinType "lord")}}selected{{/if}}>Lord</option>
+                                <option value="hound" {{#if (eq system.sinType "hound")}}selected{{/if}}>Hound</option>
+                                <option value="centipede" {{#if (eq system.sinType "centipede")}}selected{{/if}}>
+                                    Centipede
+                                </option>
+                                <option value="redacted" {{#if (eq system.sinType "redacted")}}selected{{/if}}>
+                                    [REDACTED]
+                                </option>
+                            </select>
+                        </div>
+                        <div class="row">
+                            <span><b>Form:</b></span>
+                            <select name="system.sinForm">
+                                <option value="Form I/Severed"
+                                        {{#if (eq system.sinForm "Form I/Severed")}}selected{{/if}}>Form I/Severed
+                                </option>
+                                <option value="Form II/Fused"
+                                        {{#if (eq system.sinForm "Form II/Fused")}}selected{{/if}}>Form II/Fused
+                                </option>
+                                <option value="Form III/Bound"
+                                        {{#if (eq system.sinForm "Form III/Bound")}}selected{{/if}}>Form III/Bound
+                                </option>
+                            </select>
+                        </div>
+                        <div class="row">
+                            <!--                TODO: i want to use the category icon here-->
+                            <span><b>Category:</b></span>
+                            <input type="text" name="system.category" value="{{system.category}}" data-dtype="Number"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </header>
 
-  {{!-- Quick Actions and Talismans --}}
-  <section class="quick-section">
-    <div class="quick-actions">
-      <h2>Quick Actions</h2>
-      <div class="actions-grid">
-        <button type="button" class="quick-action-button attack-player">Attack a Player</button>
-        <button type="button" class="quick-action-button afflict-player">Afflict a Player</button>
-        <button type="button" class="quick-action-button use-complication">Use Complication</button>
-        <button type="button" class="quick-action-button use-threat">Use Threat</button>
-        <button type="button" class="quick-action-button severe-attack">Severe Attack</button>
-        <button type="button" class="quick-action-button use-domain">Use Domain</button>
-      </div>
+    {{!-- Quick Actions and Talismans --}}
+    <div class="row">
+        <section class="quick-section">
+            <div class="card paper-texture2">
+                <div class="quick-actions">
+                    <div class="row">
+                        <div class="col" style="writing-mode: vertical-lr; max-width: 27px;">
+                            <p class="quick-action-text">Quick Actions</p>
+                        </div>
+                        <div class="actions-grid col">
+                            <button type="button" class="quick-action-button attack-player">Attack a Player</button>
+                            <button type="button" class="quick-action-button afflict-player">Afflict a Player</button>
+                            <button type="button" class="quick-action-button use-complication">Use Complication</button>
+                            <button type="button" class="quick-action-button use-threat">Use Threat</button>
+                            <button type="button" class="quick-action-button severe-attack">Severe Attack</button>
+                            <button type="button" class="quick-action-button use-domain">Use Domain</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
-    <div class="quick-stats">
-      <h2>Talismans</h2>
-      <div class="talisman-selection">
-        <label for="talisman-select">Add Talisman:</label>
-        <div class="talisman-select-container">
-          <select id="talisman-select" class="styled-select">
-            {{#each globalTalismans}}
-              <option value="{{@index}}">{{this.name}}</option>
-            {{/each}}
-          </select>
-          <button type="button" id="add-talisman-button" class="styled-button">Add</button>
+    <div class="row">
+        <div class="quick-stats card" style="width: 100%;">
+            <div class="row dashed-line">
+                <div class="col pl-2">
+                    <h2 class="white-text-shadow">Talismans</h2>
+                </div>
+                <div class="col px-2" style="text-align: right; margin: auto;">
+                    {{#if globalTalismans}}
+                        <div class="row" style="justify-content: flex-end;">
+                            <select id="talisman-select" class="styled-select">
+                                {{#each globalTalismans}}
+                                    <option value="{{@index}}">{{this.name}}</option>
+                                {{/each}}
+                            </select>
+                            <button type="button" id="add-talisman-button" class="add-talisman-button">
+                                <i class='fas fa-plus'></i>
+                            </button>
+                        </div>
+                    {{/if}}
+                </div>
+            </div>
+            <!--   TODO: i dont have a good idea for this area, come back to it later -->
+            <div class="talismans-grid">
+                {{#unless selectedTalismans.length}}
+                    <p class="center-p">No talismans are bound to this sin... go add some!</p>
+                {{/unless}}
+                {{#each selectedTalismans}}
+                    <div class="talisman-item">
+                        <div class="talisman-container row card">
+                            <div class="col talisman-name-col">
+                                <span class="talisman-name white-text-shadow">{{this.name}}</span>
+                            </div>
+                            <div class="col talisman-count-col">
+                                <span class="talisman-label">{{this.currMarkAmount}} / {{this.maxMarkAmount}}</span>
+                            </div>
+                            <div class="col talisman-button-col">
+                                <button type="button" class="delete-talisman-button" data-index="{{@index}}"><i class='fas fa-x'></i></button>
+                            </div>
+                        </div>
+                    </div>
+                {{/each}}
+            </div>
         </div>
-      </div>
-      <div class="talismans-grid">
-        {{#each selectedTalismans}}
-          <div class="talisman-item">
-            <label for="talisman-{{@index}}">
-              <img src="{{this.imagePath}}" alt="{{this.name}}" title="{{this.name}}">
-              <p> {{this.name}} </p>
-            </label>
-            <button type="button" class="delete-talisman-button" data-index="{{@index}}">Delete</button>
-          </div>
-        {{/each}}
-      </div>
     </div>
-  </section>
 
-  {{!-- Sheet Tab Navigation --}}
-  <nav class="sheet-tabs tabs dark-tabs" data-group="primary">
-    <a class="item" data-tab="description">Description</a>
-    <a class="item" data-tab="palace-pressure">Palace / Pressure</a>
-    <a class="item" data-tab="attacks">Attacks</a>
-    <a class="item" data-tab="domains">Domains</a>
-  </nav>
+    {{!-- Sheet Tab Navigation --}}
+    <nav class="sheet-tabs tabs dark-tabs" data-group="primary">
+        <a class="item" data-tab="description">Description</a>
+        <a class="item" data-tab="palace-pressure">Palace / Pressure</a>
+        <a class="item" data-tab="attacks">Attacks</a>
+        <a class="item" data-tab="domains">Domains</a>
+    </nav>
 
-  {{!-- Sheet Body --}}
-  <section class="sheet-body dark-body">
+    {{!-- Sheet Body --}}
+    <section class="sheet-body dark-body">
 
-    {{!-- Description Tab --}}
-    {{> "systems/cain/templates/actor/npc-parts/actor-description.hbs"}}
+        {{!-- Description Tab --}}
+        {{> "systems/cain/templates/actor/npc-parts/actor-description.hbs"}}
 
-    {{!-- Palace / Pressure Tab --}}
-    {{> "systems/cain/templates/actor/npc-parts/actor-palace-pressure.hbs"}}
+        {{!-- Palace / Pressure Tab --}}
+        {{> "systems/cain/templates/actor/npc-parts/actor-palace-pressure.hbs"}}
 
-    {{!-- Attacks Tab --}}
-    {{> "systems/cain/templates/actor/npc-parts/actor-attacks.hbs"}}
+        {{!-- Attacks Tab --}}
+        {{> "systems/cain/templates/actor/npc-parts/actor-attacks.hbs"}}
 
-    {{!-- Domains Tab --}}
-    {{> "systems/cain/templates/actor/npc-parts/actor-domains.hbs"}}
+        {{!-- Domains Tab --}}
+        {{> "systems/cain/templates/actor/npc-parts/actor-domains.hbs"}}
 
-  </section>
+    </section>
 </form>
 
 
 <style>
-.brooding-theme {
-  background-color: #1a1a1a;
-  color: #e0e0e0;
-  font-family: "Courier New", Courier, monospace;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.5);
-}
+    @import url('https://fonts.googleapis.com/css2?family=Pirata+One&display=swap');
 
-.brooding-theme .dark-header {
-  background-color: #1a1a1a;
-  color: #e0e0e0;
-  border-bottom: 2px solid #444;
-  padding: 20px;
-  box-shadow: 0 0 10px 2px #000;
-  border-radius: 10px 10px 0 0;
-}
+    .brooding-theme {
+        background-color: #1a1a1a;
+        color: #e0e0e0;
+        font-family: "Courier New", Courier, monospace;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.5);
+    }
 
-.brooding-theme .dark-header select {
-  background-color: #1a1a1a;
-  color: white;
-  border: 1px solid #444;
-  padding: 5px;
-  transition: border-color 0.3s;
-} 
+    .brooding-theme .row {
+        display: flex;
+        flex-wrap: wrap;
+        margin-right: -15px;
+        margin-left: -15px;
+    }
 
-.brooding-theme .dark-header input {
-  background-color: #1a1a1a;
-  color: #e0e0e0;
-  border: none;
-  border-bottom: 2px solid #444;
-  padding: 5px;
-  transition: border-color 0.3s;
-}
+    .brooding-theme .m-auto {
+        margin: auto;
+    }
 
-.brooding-theme .dark-header input:focus {
-  border-color: #00ff00;
-  outline: none;
-}
+    .brooding-theme .col {
+        flex-basis: 0;
+        flex-grow: 1;
+        max-width: 100%;
 
-.brooding-theme .dark-header label {
-  font-size: 16px;
-  color: #e0e0e0;
-}
+        &.w-25 {
+            flex: 0 0 25%;
+            max-width: 25%;
+        }
 
-.brooding-theme .quick-section input {
-  background-color: #1a1a1a;
-  color: #e0e0e0;
-  border: 1px solid #444;
-  padding: 5px;
-  transition: border-color 0.3s;
-}
+        &.w-33 {
+            flex: 0 0 33%;
+            max-width: 33%;
+        }
 
-.brooding-theme .quick-stats select {
-  background-color: #1a1a1a;
-  color: white;
-  border: 1px solid #444;
-  padding: 5px;
-  transition: border-color 0.3s;
-}
+        &.w-50 {
+            flex: 0 0 50%;
+            max-width: 50%;
+        }
 
-.brooding-theme .dark-header select option {
-  background-color: #1a1a1a;
-  color: white;
-}
+        &.w-66 {
+            flex: 0 0 66%;
+            max-width: 66%;
+        }
 
-.brooding-theme .profile-img {
-  border: 2px solid #444;
-  border-radius: 50%;
-  box-shadow: 0 0 10px 2px #000;
-  transition: transform 0.3s;
-}
+        &.w-75 {
+            flex: 0 0 75%;
+            max-width: 75%;
+        }
+    }
 
-.brooding-theme .profile-img:hover {
-  transform: scale(1.1);
-}
+    .brooding-theme .pl-2 {
+        padding-left: 2em;
+    }
 
-.brooding-theme .header-fields {
-  margin-left: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+    .brooding-theme .px-2 {
+        padding: 0 2em;
+    }
 
-.brooding-theme .charname {
-  text-align: center;
-}
+    .brooding-theme .pirata-one-regular {
+        font-family: "Pirata One", system-ui;
+        font-weight: 400;
+        font-style: normal;
+    }
 
-.brooding-theme .charname input {
-  font-size: 24px;
-  background-color: #1a1a1a;
-  color: #e0e0e0;
-  border: none;
-  border-bottom: 2px solid #444;
-  padding: 5px;
-  transition: border-color 0.3s;
-}
+    .brooding-theme .white-text-shadow {
+        text-shadow: -2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff;
+    }
 
-.brooding-theme .charname input:focus {
-  border-color: #00ff00;
-  outline: none;
-}
+    .brooding-theme .card {
+        border-radius: 20px;
+        background-color: rgb(134, 134, 134);
+        border: none;
+        padding: 10px;
+        margin: 10px;
 
-.brooding-theme .header-icons {
-  display: flex;
-  gap: 10px;
-  margin-top: 10px;
-  justify-content: center;
-}
+        span {
+            color: black;
+            font-size: 22px;
+        }
 
-.brooding-theme .resource-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+        h1 {
+            font-size: 120px;
+            margin: auto;
+            color: black;
+            border-bottom: none;
+        }
 
-.brooding-theme .quick-section {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
+        h2 {
+            font-size: 60px;
+            font-family: "Pirata One", system-ui;
+            margin: auto;
+            color: black;
+            border-bottom: none;
+        }
 
-.brooding-theme .quick-actions,
-.brooding-theme .quick-stats {
-  width: 48%;
-  margin-bottom:
-}
+        .dashed-line {
+            border-bottom: dashed #1a1a1a 4px;
+        }
 
-.brooding-theme .actions-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-}
+        &.paper-texture {
+            background-image: url("systems/cain/assets/backgrounds/paper1.jpg");
+            background-position: 50% 50%;
+        }
 
-.brooding-theme .quick-action-button {
-  background-color: #333;
-  color: #e0e0e0;
-  border: 1px solid #444;
-  padding: 10px;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s, color 0.3s;
-}
+        &.paper-texture2 {
+            background-image: url("systems/cain/assets/backgrounds/paper2.jpg");
+            background-position: 50% 50%;
+            background-blend-mode: difference;
+        }
 
-.brooding-theme .quick-action-button:hover {
-  background-color: #555;
-  color: #fff;
-}
+        input[type="text"] {
+            -webkit-appearance: none;
+            appearance: none;
+            margin 0;
 
-.brooding-theme .stats-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 10px;
-}
+            font-family: sans-serif;
+            font-size: 22px;
+            border: none;
+            width: 50%;
+            background-color: transparent;
+            border-radius: 0%;
+            border-bottom: black solid 2px;
+        }
+    }
 
-.brooding-theme .stat-item {
-  display: flex;
-  flex-direction: column;
-}
+    .brooding-theme.hound {
+        border: 5px #ff0808 solid;
+    }
 
-.brooding-theme .resource-label {
-  font-size: 16px;
-  color: #e0e0e0;
-}
+    .brooding-theme.centipede {
+        border: 5px #9f00ff solid;
+    }
 
-.brooding-theme .resource-content select,
-.brooding-theme .resource-content input {
-  background-color: #1a1a1a;
-  color: #e0e0e0;
-  border: 1px solid #444;
-  padding: 5px;
-  transition: border-color 0.3s;
-}
+    .brooding-theme.idol {
+        border: 5px #e40df2 solid;
+    }
 
-.brooding-theme .resource-content select:focus,
-.brooding-theme .resource-content input:focus {
-  border-color: #00ff00;
-  outline: none;
-}
+    .brooding-theme.ogre {
+        border: 5px #0d79f2 solid;
+    }
 
-.brooding-theme .resource-content img {
-  filter: grayscale(100%);
-  margin-left: 10px;
-}
+    .brooding-theme.toad {
+        border: 5px #f2af0d solid;
+    }
 
-.brooding-theme .flex-group-center {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
+    .brooding-theme.lord {
+        border: 5px #91ffef solid;
+    }
 
-.brooding-theme .flexrow {
-  display: flex;
-  flex-direction: row;
-}
+    .brooding-theme .profile-img {
+        border: 2px solid #444;
+        border-radius: 50%;
+        transition: transform 0.3s;
+    }
 
-.brooding-theme .flex-center {
-  justify-content: center;
-}
+    .brooding-theme .profile-img:hover {
+        transform: scale(1.1);
+    }
 
-.brooding-theme .flex-between {
-  justify-content: space-between;
-}
+    .brooding-theme select {
+        color: black;
+        font-size: 18px;
+        font-family: sans-serif;
+        border: none;
 
-.brooding-theme .grid-3col {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-}
+        &:focus {
+            {{!-- TODO not sure how noticeable this will be --}}
+            .ogre & {
+                box-shadow: 0 0 5px #0d79f2;
+            }
 
-.brooding-theme .dark-tabs {
-  display: flex;
-  justify-content: space-around;
-  margin-top: 20px;
-  border-bottom: 2px solid #444;
-}
+            box-shadow: 0 0 5px pink;
+        }
+    }
 
-.brooding-theme .dark-tabs .item {
-  background-color: #333;
-  color: #e0e0e0;
-  padding: 10px 20px;
-  border-radius: 4px 4px 0 0;
-  cursor: pointer;
-  transition: background-color 0.3s, color 0.3s;
-}
+    .brooding-theme .styled-select {
+        height: 40px;
+        border: black solid 2px;
+        margin-right: -4px;
+        border-radius: 10px 0px 0px 10px;
+    }
 
-.brooding-theme .dark-tabs .item:hover {
-  background-color: #555;
-  color: #fff;
-}
+    .brooding-theme .actions-grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+    }
 
-.brooding-theme .dark-tabs .item.active {
-  background-color: #555;
-  color: #fff;
-  border-bottom: 2px solid #1a1a1a;
-}
+    /*.talismans-grid {*/
+    /*    display: flex;*/
+    /*    justify-content: space-between;*/
+    /*}*/
 
-.brooding-theme .dark-body {
-  background-color: #1a1a1a;
-  padding: 20px;
-  box-shadow: 0 0 10px 2px #000;
-  border-radius: 0 0 10px 10px;
-}
+    .brooding-theme .center-p {
+        margin: auto;
+        padding: 2em 0;
+        font-size: 20px;
+        color: black;
+        font-weight: bold;
+    }
 
-.brooding-theme .header-top {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-}
+    .brooding-theme .quick-action-text {
+        text-orientation: sideways;
+        font-family: 'Pirata One';
+        color: white;
+        font-size: 31px;
+        font-weight: bold;
+        margin-left: 16px;
+        text-align: center;
+        text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;
 
-.brooding-theme .bars-grid {
-  display: grid;
-  gap: 10px;
-}
+        .hound & {
+            color: #ff0808;
+        }
 
-.brooding-theme .bar-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+        .centipede & {
+            color: #9f00ff;
+        }
 
-.brooding-theme .bar {
-  width: 100%;
-  background-color: #333;
-  border: 1px solid #444;
-  border-radius: 4px;
-  overflow: hidden;
-}
+        .idol & {
+            color: #e40df2;
+        }
 
-.brooding-theme .bar-fill {
-  height: 20px;
-  background-color: #00ff00;
-}
+        .ogre & {
+            color: #0d79f2;
+        }
 
-.brooding-theme .talisman-selection {
-  margin-top: 3px;
-}
+        .toad & {
+            color: #f2af0d;
+        }
 
-.brooding-theme .talisman-select-container {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
+        .lord & {
+            color: #91ffef;
+        }
+    }
 
-.brooding-theme .talismans-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-  gap: 10px;
-  margin-top: 10px;
-}
+    .brooding-theme .talisman-container {
+        z-index: 0;
+        border: solid 2px black;
+        background-image: url("systems/cain/assets/backgrounds/paper2.jpg");
+        background-blend-mode: darken;
+        font-family: "Signika", sans-serif;
+        font-size: 28px;
+        font-weight: bold;
 
-.brooding-theme .talisman-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 10px;
-  border: 1px solid #444;
-  border-radius: 4px;
-}
+        .hound & {
+            background-color: #ff0808;
+        }
 
-.brooding-theme .talisman-item img {
-  width: 50px;
-  height: 50px;
-  object-fit: fit;
-  border-radius: 4px;
-  margin-bottom: 5px;
-}
+        .centipede & {
+            background-color: #9f00ff;
+        }
 
-.brooding-theme .talisman-item label {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  cursor: pointer;
-}
+        .idol & {
+            background-color: #e40df2;
+        }
 
-.brooding-theme .styled-button {
-  background-color: #333;
-  color: #e0e0e0;
-  border: 1px solid #444;
-  padding: 5px 10px;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s, color 0.3s;
-}
+        .ogre & {
+            background-color: #0d79f2;
+        }
 
-.brooding-theme .styled-button:hover {
-  background-color: #555;
-  color: #fff;
-}
+        .toad & {
+            background-color: #f2af0d;
+        }
 
-.brooding-theme .styled-select {
-  background-color: #1a1a1a;
-  color: white;
-  border: 1px solid #444;
-  padding: 5px;
-  transition: border-color 0.3s;
-}
+        .lord & {
+            background-color: #91ffef;
+        }
 
-.brooding-theme .styled-select option {
-  background-color: #1a1a1a;
-  color: white;
-}
+        .col {
+            width: 100%;
+        }
 
-.brooding-theme .delete-talisman-button {
-  background-color: #ff0000;
-  color: #fff;
-  border: none;
-  padding: 5px 10px;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-top: 5px;
-  transition: background-color 0.3s, color 0.3s;
-}
+        .talisman-name-col {
 
-.brooding-theme .delete-talisman-button:hover {
-  background-color: #cc0000;
-}
+        }
+        .talisman-count-col {
+            max-width: 80px;
+            background: white;
+            margin: auto;
+            vertical-align: bottom;
+            text-align: center;
+            border-radius: 20px;
+            padding-bottom: 4px;
+        }
+
+        .talisman-button-col {
+            text-align: end;
+            padding-right: 1em;
+            max-width: 38px;
+            color: white;
+            border-radius: 20px;
+            padding-bottom: 4px;
+            background: black;
+            margin-left: 2em;
+        }
+
+        .delete-talisman-button {
+            border: none;
+            font-size: 25px;
+            width: 20px;
+            color: white;
+            padding-top: 6px;
+            padding-left: 9px;
+        }
+    }
+
+    .brooding-theme .add-talisman-button {
+        background: black;
+        color: white;
+        font-size: 20px;
+        max-width: 50px;
+        border: black solid 2px;
+        font-family: sans-serif;
+        border-radius: 0px 10px 10px 0px;
+    }
+
+    .brooding-theme .quick-action-button {
+        border: none;
+        border-radius: 5px;
+        padding: 20px 10px;
+        max-width: 25%;
+        margin: 10px;
+        transition: transform 0.3s ease, background-color 0.3s ease;
+        font-family: "Pirata One", system-ui;
+        flex-basis: 32%;
+        font-size: 28px;
+        background-color: #636363;
+
+        &:hover {
+            transform: rotate(8deg) scale(1.1);
+        }
+
+        .hound & {
+            background-color: #ff0808;
+        }
+
+        .centipede & {
+            background-color: #9f00ff;
+        }
+
+        .idol & {
+            background-color: #e40df2;
+        }
+
+        .ogre & {
+            background-color: #0d79f2;
+        }
+
+        .toad & {
+            background-color: #f2af0d;
+        }
+
+        .lord & {
+            background-color: #91ffef;
+        }
+    }
+
+    .brooding-theme .sheet-body {
+        z-index: 1;
+    }
+
+    .brooding-theme .sheet-tabs {
+        border: none;
+        margin-bottom: -2px;
+        transition: transform 0.3s;
+        z-index: 0;
+
+        :hover {
+            transform: scale(1.04);
+        }
+
+        .item {
+            border-radius: 10px 10px 0 0;
+            height: 50px;
+            width: 24%;
+            background-color: #8a8b70;
+            padding-top: 15px;
+
+            font-weight: bold;
+            text-shadow: none;
+            color: #333;
+
+            &.active {
+                background-color: #feffda;
+                color: #000;
+            }
+        }
+    }
+
+    /* Deprecation warning animation */
+    @keyframes pulse-warning {
+        0%, 100% {
+            box-shadow: 0 4px 12px rgba(255, 71, 87, 0.3);
+        }
+        50% {
+            box-shadow: 0 4px 20px rgba(255, 71, 87, 0.6);
+        }
+    }
 </style>

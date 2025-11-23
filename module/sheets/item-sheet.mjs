@@ -254,4 +254,22 @@ export class CainItemSheet extends ItemSheet {
     }
   }
 
+  /** @override */
+  async _updateObject(event, formData) {
+    // Handle the form submission
+    // formData contains all the form fields with their names as keys
+
+    // Convert formData to expanded object format
+    const expanded = foundry.utils.expandObject(formData);
+
+    // For blasphemyPower items, sync the name to system.powerName
+    if (this.item.type === 'blasphemyPower' && formData.name) {
+      if (!expanded.system) expanded.system = {};
+      expanded.system.powerName = formData.name;
+    }
+
+    // Update the item with the new data
+    return await this.item.update(expanded);
+  }
+
 }

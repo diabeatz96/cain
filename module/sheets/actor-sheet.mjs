@@ -9,7 +9,6 @@ import {
 
 import { TalismanWindow } from '../documents/talisman-window.mjs';
 import { SessionEndAdvancement} from  '../documents/session-end-advancement.mjs'
-import { CAIN } from '../helpers/config.mjs';
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
@@ -58,7 +57,7 @@ export class CainActorSheet extends ActorSheet {
       this._prepareCharacterData(context);
     }
 
-    if (actorData.type == 'npc') {
+    if (actorData.type == 'sin') {
       console.log(context);
       console.log(this.actor.type)
       this._prepareItems(context);
@@ -449,7 +448,7 @@ export class CainActorSheet extends ActorSheet {
     });
   
     let scHtml = new HTMLShortcut(html);
-    // NPC SPECIFIC LISTENERS
+    // SIN SPECIFIC LISTENERS
     html.find('.quick-action-button.attack-player').click(this._attackPlayer.bind(this));
     html.find('.quick-action-button.afflict-player').click(this._afflictPlayer.bind(this));
     html.find('.quick-action-button.use-complication').click(this._useComplication.bind(this));
@@ -460,6 +459,7 @@ export class CainActorSheet extends ActorSheet {
     // Character sheet specific listeners
     html.find('.item-description').click(this._onItemDescription.bind(this));
     html.find('.psyche-roll-button').click(this._onRollPsyche.bind(this));
+    html.find('.use-psyche-burst-button').click(this._onUsePsycheBurst.bind(this));
     html.find('.psyche-burst-checkbox').change(this._onPsycheBurstChange.bind(this));
     html.find('.clear-sin-marks').click(this._clearSinMarks.bind(this));
     html.find('#increment-xp-value').click(this._increaseXPValue.bind(this));
@@ -494,6 +494,7 @@ export class CainActorSheet extends ActorSheet {
     html.find('.remove-blasphemy-power-button').on('click', this._removeBlasphemyPowerButton.bind(this));
     html.find('.remove-blasphemy-button').on('click', this._removeBlasphemyButton.bind(this));
     html.find('.remove-affliction-button').on('click', this._removeAfflictionButton.bind(this));
+    html.find('.remove-agenda-button').on('click', this._removeAgendaButton.bind(this));
     scHtml.setLeftClick('.add-task-button', this._addNewTask.bind(this));
     
     html.find('.add-affliction-button').on('click', async event => {await this._addAffliction(event)});
@@ -542,6 +543,15 @@ export class CainActorSheet extends ActorSheet {
       const itemId = event.currentTarget.dataset.id;
       this._openAgendaItemSheet(event.currentTarget.dataset.id);
     });
+
+    // Search functionality for items
+    this._setupItemSearch(html);
+
+    // Search functionality for agendas
+    this._setupAgendaSearch(html);
+
+    // Search functionality for blasphemies
+    this._setupBlasphemySearch(html);
 
     // Event delegation for blasphemy-passive
     html.on('click', '.blasphemy-passive', (event) => {
@@ -695,7 +705,12 @@ export class CainActorSheet extends ActorSheet {
     const selectedOption = selectElement.options[selectElement.selectedIndex];
     const description = selectedOption.getAttribute('data-description');
     const keywords = selectedOption.getAttribute('data-keywords');
-    selectElement.parentElement.parentElement.querySelector('.powerDescription').innerText = description;
+
+    // Format the description with CAT values using the global formatCatText function
+    const catLevel = this.actor.system.CATLEVEL.value;
+    const formattedDescription = window.formatCatText(description, catLevel);
+
+    selectElement.parentElement.parentElement.querySelector('.powerDescription').innerHTML = formattedDescription;
     selectElement.parentElement.parentElement.querySelector('.powerKeywords').innerText = keywords ? keywords.split(',').join(', ') : '';
   }
 
@@ -1361,7 +1376,8 @@ export class CainActorSheet extends ActorSheet {
     event.preventDefault();
     const id = event.currentTarget.getAttribute('data-id');
     const blasphemyPower = game.items.get(id);
-    const formattedDescription = blasphemyPower.system.powerDescription.replace(/\n/g, '<br>');
+    const catLevel = this.actor.system.CATLEVEL.value;
+    const formattedDescription = window.formatCatText(blasphemyPower.system.powerDescription, catLevel);
     const message = `<h3>${blasphemyPower.system.powerName}</h3><p>${formattedDescription}</p>`;
     ChatMessage.create({
       content: message,
@@ -1373,7 +1389,8 @@ export class CainActorSheet extends ActorSheet {
     event.preventDefault();
     const index = event.currentTarget.getAttribute('data-index');
     const agendaAbility = game.items.get(this.actor.system.currentAgendaAbilities[index]);
-    const formattedDescription = agendaAbility.system.abilityDescription.replace(/\n/g, '<br>');
+    const catLevel = this.actor.system.CATLEVEL.value;
+    const formattedDescription = window.formatCatText(agendaAbility.system.abilityDescription, catLevel);
     const message = `<h3>${agendaAbility.system.abilityName}</h3><p>${formattedDescription}</p>`;
     ChatMessage.create({
       content: message,
@@ -1438,26 +1455,49 @@ export class CainActorSheet extends ActorSheet {
     const blasphemy = game.items.get(blasphemyID);
     console.log(blasphemy);
     const blasphemies = this.actor.system.currentBlasphemies || [];
-    if (!blasphemies.includes(blasphemyID)) {console.error("Tried to remove Blasphemy ID: " + blasphemyID + " but did not find it in list: " + blasphemies); return}; //Break out if we're trying to remove a non-existant blasphemy.  
+    if (!blasphemies.includes(blasphemyID)) {console.error("Tried to remove Blasphemy ID: " + blasphemyID + " but did not find it in list: " + blasphemies); return}; //Break out if we're trying to remove a non-existant blasphemy.
 
     //Handle reducing XP max if removing a 2nd blasphemy.
     let XPmax = this.actor.system.xp.max;
     if (blasphemies.length > 1) {
       XPmax -= 1;
     }
-    
+
     //Remove the blasphemy
     const index = blasphemies.indexOf(blasphemyID);
     const newBlasphemies = blasphemies.slice(0, Number(index)).concat(blasphemies.slice(Number(index)+1));
     const blasphemyPowers = this.actor.system.currentBlasphemyPowers || [];
     console.log(blasphemy);
     const newBlasphemyPowers = blasphemyPowers.filter(powerID => {return !(blasphemy.system.powers.includes(powerID));});
-    
+
     this.actor.update({
       'system.currentBlasphemies': newBlasphemies,
       'system.currentBlasphemyPowers': newBlasphemyPowers,
       'system.xp.max': XPmax,
      }).then(() => {
+      this.render(false); // Re-render the sheet to reflect changes
+    });
+  }
+
+  _removeAgendaButton(event) {
+    event.preventDefault();
+    const agendaID = event.currentTarget.dataset.id;
+    console.log('Removing agenda:', agendaID);
+
+    const currentAgenda = this.actor.system.currentAgenda;
+    if (currentAgenda !== agendaID) {
+      console.error("Tried to remove Agenda ID: " + agendaID + " but current agenda is: " + currentAgenda);
+      return;
+    }
+
+    // Clear the current agenda and all associated data
+    this.actor.update({
+      'system.currentAgenda': 'INVALID',
+      'system.currentUnboldedAgendaTasks': [],
+      'system.currentBoldedAgendaTasks': [],
+      'system.currentAgendaAbilities': []
+    }).then(() => {
+      ui.notifications.info('Agenda removed from character');
       this.render(false); // Re-render the sheet to reflect changes
     });
   }
@@ -1559,6 +1599,7 @@ export class CainActorSheet extends ActorSheet {
 
   _onCATSelect(leftClick, event){
     let selectedCat = event.currentTarget.dataset.cat
+    console.log('cat selected ' + selectedCat)
     if(leftClick){
       //set to new category
       this.actor.update({["system.CATLEVEL.value"]: selectedCat});
@@ -1590,15 +1631,22 @@ export class CainActorSheet extends ActorSheet {
 }
   
   async _performRoll(skill, useDivineAgony, teamwork, setup, hard, extraDice) {
-    const baseDice = this.actor.system.skills[skill].value;
+    // Handle psyche rolls differently from skill rolls
+    let baseDice;
+    if (skill === 'psyche') {
+      baseDice = this.actor.system.psyche || 0;
+    } else {
+      baseDice = this.actor.system.skills[skill].value;
+    }
+
     let totalDice = baseDice + extraDice + (teamwork ? 1 : 0) + (setup ? 1 : 0);
-  
+
     if (useDivineAgony) {
       const divineAgonyStat = this.actor.system.divineAgony.value; // Replace with the actual path to the divine agony stat
       totalDice += divineAgonyStat;
       this.actor.update({ 'system.divineAgony.value': 0 }); // Set divine agony to zero
     }
-    
+
     let roll;
     if (totalDice > 0) {
       // Custom roll formula to count successes
@@ -1607,14 +1655,14 @@ export class CainActorSheet extends ActorSheet {
       roll = new Roll(`2d6cs>=${hard ? 6 : 4}kl`);
     }
     await roll.evaluate({ async: true });
-  
+
     // Calculate successes
     let successes = roll.total;
-  
+
     if(successes === 0 && this.actor.system.divineAgony.value < 3) {
       this.actor.update({'system.divineAgony.value' : this.actor.system.divineAgony.value + 1});
     }
-  
+
     let message = `<h2>${skill.charAt(0).toUpperCase() + skill.slice(1)} Roll</h2>`;
     message += `<p>Successes: <span style="color:${successes > 0 ? 'green' : 'red'}">${successes}</span></p>`;
     message += `<p>Dice Rolled:</p><ul>`;
@@ -1622,9 +1670,9 @@ export class CainActorSheet extends ActorSheet {
       message += `<li>Die: ${r.result} ${r.result === 6 ? '🎲' : ''}</li>`;
     });
     message += `</ul>`;
-  
+
     console.log(`Successes: ${successes}`);
-  
+
     // Create the chat message using roll.toMessage() to ensure the roll noise is played
     roll.toMessage({
       flavor: message,
@@ -1738,6 +1786,246 @@ export class CainActorSheet extends ActorSheet {
       flavor: message,
       speaker: ChatMessage.getSpeaker({ actor: this.actor }),
     });
+  }
+
+  _onUsePsycheBurst(event) {
+    event.preventDefault();
+
+    // Check if actor has any psyche burst charges
+    const currentBursts = this.actor.system.psycheBurst?.value || 0;
+    if (currentBursts <= 0) {
+      ui.notifications.warn("No Psyche Burst charges available!");
+      return;
+    }
+
+    // Get all blasphemy powers that can use psyche burst
+    const blasphemyPowers = this.actor.system.currentBlasphemyPowers || [];
+    const powers = this._getItemsFromIDs(blasphemyPowers).filter(power =>
+      power && (power.system.psycheBurstCost || power.system.psycheBurstNoCost || power.system.psycheBurstMultCost)
+    );
+
+    // Build dropdown options
+    let powerOptions = '<option value="">-- Select a Power --</option>';
+    powers.forEach(power => {
+      const costInfo = [];
+      if (power.system.psycheBurstNoCost) costInfo.push('No Cost Mode');
+      if (power.system.psycheBurstCost) costInfo.push('1 Burst');
+      if (power.system.psycheBurstMultCost) costInfo.push('Multiple Bursts');
+      powerOptions += `<option value="${power.id}">${power.system.powerName} (${costInfo.join(', ')})</option>`;
+    });
+
+    // Build common use options
+    const commonUses = [
+      '-- Select Common Use --',
+      'Add +1 advantage die to roll',
+      'Produce faint light or aura',
+      'Produce minor force at distance',
+      'Make electrical lights flicker',
+      'Warm or cool body surface'
+    ];
+
+    let commonUseOptions = commonUses.map((use, idx) =>
+      `<option value="${idx === 0 ? '' : use}">${use}</option>`
+    ).join('');
+
+    // Create stylized dialog
+    new Dialog({
+      title: "Use Psyche Burst",
+      content: `
+        <style>
+          .psyche-burst-dialog {
+            background: linear-gradient(135deg, #1a0033 0%, #330033 100%);
+            padding: 20px;
+            border: 2px solid #ff00cc;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(255, 0, 204, 0.5);
+          }
+          .psyche-burst-dialog .form-group {
+            margin-bottom: 15px;
+          }
+          .psyche-burst-dialog label {
+            color: #ff00cc;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+            text-shadow: 0 0 5px rgba(255, 0, 204, 0.7);
+          }
+          .psyche-burst-dialog select,
+          .psyche-burst-dialog input[type="text"],
+          .psyche-burst-dialog input[type="number"],
+          .psyche-burst-dialog textarea {
+            width: 100%;
+            padding: 10px 12px;
+            background: #1a0033 !important;
+            border: 1px solid #ff00cc !important;
+            border-radius: 5px;
+            color: #ffffff !important;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            box-sizing: border-box;
+            min-height: 40px;
+          }
+          .psyche-burst-dialog select {
+            height: 44px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+          }
+          .psyche-burst-dialog select option {
+            background: #1a0033;
+            color: #ffffff;
+            padding: 10px;
+            line-height: 1.6;
+          }
+          .psyche-burst-dialog textarea {
+            min-height: 60px;
+            resize: vertical;
+          }
+          .psyche-burst-dialog input[type="text"]:focus,
+          .psyche-burst-dialog select:focus,
+          .psyche-burst-dialog textarea:focus,
+          .psyche-burst-dialog input[type="number"]:focus {
+            outline: none;
+            box-shadow: 0 0 10px rgba(255, 0, 204, 0.8);
+            background: #1a0033 !important;
+            color: #ffffff !important;
+          }
+          .psyche-burst-dialog .burst-info {
+            background: rgba(255, 0, 204, 0.1);
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            color: #ff00cc;
+            font-size: 0.9em;
+          }
+          .psyche-burst-dialog .section-divider {
+            border-top: 1px solid #ff00cc;
+            margin: 20px 0;
+            opacity: 0.3;
+          }
+        </style>
+        <div class="psyche-burst-dialog">
+          <form>
+            <div class="form-group">
+              <label for="power-select">Blasphemy Power:</label>
+              <select id="power-select" name="power-select">
+                ${powerOptions}
+              </select>
+            </div>
+            <div class="section-divider"></div>
+            <div class="form-group">
+              <label for="common-use">Common Psyche Uses:</label>
+              <select id="common-use" name="common-use">
+                ${commonUseOptions}
+              </select>
+            </div>
+            <div class="section-divider"></div>
+            <div class="form-group">
+              <label for="custom-power">Or Custom Use:</label>
+              <textarea id="custom-power" name="custom-power" placeholder="Describe your creative use of psyche..."></textarea>
+            </div>
+            <div class="form-group">
+              <label for="burst-count">Number of Bursts to Use:</label>
+              <input type="number" id="burst-count" name="burst-count" min="1" max="${currentBursts}" value="1"/>
+            </div>
+            <div class="burst-info">
+              Available Psyche Bursts: <strong>${currentBursts}</strong>
+            </div>
+          </form>
+        </div>
+      `,
+      buttons: {
+        use: {
+          icon: "<i class='fas fa-bolt'></i>",
+          label: "Use Burst",
+          callback: async (html) => {
+            const selectedPowerId = html.find('[name="power-select"]').val();
+            const selectedCommonUse = html.find('[name="common-use"]').val();
+            const customPowerName = html.find('[name="custom-power"]').val().trim();
+            const burstCount = parseInt(html.find('[name="burst-count"]').val()) || 1;
+
+            let powerName = '';
+            let powerDescription = '';
+
+            // Priority: Blasphemy Power > Common Use > Custom Use
+            if (selectedPowerId) {
+              const selectedPower = powers.find(p => p.id === selectedPowerId);
+              if (selectedPower) {
+                powerName = selectedPower.system.powerName;
+                powerDescription = window.formatCatText(selectedPower.system.powerDescription, this.actor.system.CATLEVEL.value);
+              }
+            } else if (selectedCommonUse) {
+              powerName = selectedCommonUse;
+            } else if (customPowerName) {
+              powerName = customPowerName;
+            }
+
+            if (!powerName) {
+              ui.notifications.warn("Please select a power, common use, or enter a custom use!");
+              return;
+            }
+
+            if (burstCount > currentBursts) {
+              ui.notifications.warn(`Not enough Psyche Bursts! You only have ${currentBursts}.`);
+              return;
+            }
+
+            // Deduct psyche bursts
+            await this.actor.update({
+              'system.psycheBurst.value': currentBursts - burstCount
+            });
+
+            // Create chat message
+            let message = `
+              <div style="border: 2px solid #ff00cc; border-radius: 10px; padding: 10px; background: linear-gradient(135deg, #1a0033 0%, #330033 100%); box-shadow: 0 0 10px rgba(255, 0, 204, 0.5);">
+                <h2 style="color: #ff00cc; text-shadow: 0 0 5px rgba(255, 0, 204, 0.7); margin-top: 0;">Psyche Burst Used</h2>
+                <p><strong style="color: #ff00cc;">Use:</strong> ${powerName}</p>
+                <p><strong style="color: #ff00cc;">Bursts Spent:</strong> ${burstCount}</p>
+                <p><strong style="color: #ff00cc;">Remaining Bursts:</strong> ${currentBursts - burstCount}</p>
+                ${powerDescription ? `<div style="margin-top: 10px; padding: 10px; background: rgba(255, 0, 204, 0.1); border-radius: 5px;"><strong style="color: #ff00cc;">Description:</strong><br/>${powerDescription}</div>` : ''}
+              </div>
+            `;
+
+            ChatMessage.create({
+              content: message,
+              speaker: ChatMessage.getSpeaker({ actor: this.actor })
+            });
+
+            ui.notifications.info(`Used ${burstCount} Psyche Burst${burstCount > 1 ? 's' : ''} for ${powerName}`);
+          }
+        },
+        cancel: {
+          icon: "<i class='fas fa-times'></i>",
+          label: "Cancel"
+        }
+      },
+      default: "use",
+      render: (html) => {
+        // Auto-clear other inputs when selecting from any dropdown or typing custom
+        html.find('[name="power-select"]').change((e) => {
+          if (e.target.value) {
+            html.find('[name="common-use"]').val('');
+            html.find('[name="custom-power"]').val('');
+          }
+        });
+
+        html.find('[name="common-use"]').change((e) => {
+          if (e.target.value) {
+            html.find('[name="power-select"]').val('');
+            html.find('[name="custom-power"]').val('');
+          }
+        });
+
+        html.find('[name="custom-power"]').on('input', (e) => {
+          if (e.target.value.trim()) {
+            html.find('[name="power-select"]').val('');
+            html.find('[name="common-use"]').val('');
+          }
+        });
+      }
+    }, {
+      width: 550
+    }).render(true);
   }
 
   _sinChange(event) {
@@ -2285,12 +2573,14 @@ export class CainActorSheet extends ActorSheet {
   async updateActor(key, value){
     let obj = {}
     obj[key] = value
+    console.log(`update actor ${key} ${value}`)
     this.actor.update(obj);
   }
 
   _onSinTypeSelect(sinType) {
     const sinTypeMapping = {
       ogre: {
+        defaultImg: "systems/cain/assets/Sins/ogre.png",
         domains: {
           ability1: {
             title: "Hostile Door Patterns",
@@ -2374,6 +2664,7 @@ export class CainActorSheet extends ActorSheet {
         ]
       },
       toad: {
+        defaultImg: "systems/cain/assets/Sins/toad.png",
         domains: {
           ability1: {
             title: "Hotel for One",
@@ -2450,6 +2741,7 @@ export class CainActorSheet extends ActorSheet {
         severeAbilityQuestions: ["Are you accepting of your powers?", "Are your allies close enough to touch you skin to skin?", "Are you willing to part with your kit?", "Is the Toad hindered, distracted, or under duress in some way?"]
       }, 
       idol: {
+        defaultImg: "systems/cain/assets/Sins/idol.png",
         domains: {
           ability1: { title: "Toys for Men", value: "The idol gains the ability to play with the flesh of others like marionettes. Cultists gain +1 segment on their execution talisman (so a lone cultist would have 3) as they can keep moving even while their body is broken, jerked by invisible strings. The idol gains a new affliction: COLLECT DOLL: When afflicted, the exorcist loses control of one of their arms. It becomes doll-like in texture and appearance. Once a scene, the idol can interfere with an action the exorcist is performing as the hand interferes, forcing them to either take 1 stress or make the action hard." },
           ability2: { title: "Elevation of the Innumerable Mass", value: "The idol gains the ability to elevate members of its cult into minor sins. One of these can appear a scene when fighting the idol or its cult. Apostle (Sin). Execution talisman 4. Armed with supernatural strength and mutated blades. Reactions: Inflict stress. Attacks with: Mutated body, mundane firearms or blades. (1) 3 stress, (2/3): 2 stress, (4+): 1 stress. Or: create a complication or threat: Create a fleshy clone of itself, unleash a flurry of attacks, mutate further, move impossibly fast. Or: Exort (1-3): An ally of the apostle heals slashes on their execution clock depending on the risk die (1: 2 ticks, 2-3: 1 tick). The next time that ally inflicts stress on an exorcist, they inflict +1 stress." },
@@ -2519,6 +2811,7 @@ export class CainActorSheet extends ActorSheet {
       severeAbilityQuestions: ["Are you far from the idol?", "Do you have love in your life?", "Does someone aiding you care about you? They can describe how.", "Is the idol hindered, distracted, or under duress in some way?"],
       },
       lord: {
+        defaultImg: "systems/cain/assets/Sins/lord.png",
         domains: {
           ability1: { title: "Stricture of Manifestation", value: "The Lord or its host gain increased control over reality inside its Kingdom, granting them the following powers. It can use these as threats or complications: • Cause any object up to CAT+1 size to coalesce and appear in a few moments. • Invert or choose the direction and strength of gravity, or even make space curved • Change the weather or change the biome of an area, such as from sunny to snowy • Rearrange the interiors and layouts of buildings, streets, or corridors In addition, as a threat or a tension move, the Lord can dismiss any psychic power caused by the exorcists that has a sustained effect (like a summon or curse). This only works inside the kingdom." },
           ability2: { title: "Stricture of Superiority", value: "The Lord fights more fiercely the less exorcists play by the rules of the Kingdom. At the start of the round in a conflict scene, the Lord can take one of the following stances. Exorcists that don’t fulfill the requirements are punished. It must switch to a different stance each round. • Honorable Fighting: Exorcists that participate in teamwork or setup first take 1d3 stress. • Grand Melee: Exorcists acting without benefiting from teamwork or setup find it hard. • Duel: The Lord chooses an exorcist. That exorcist deals +1 more slashes on the Lord’s execution talisman, but all other exorcists deal 1 less slash to the Lord this round." },
@@ -2580,6 +2873,7 @@ export class CainActorSheet extends ActorSheet {
         severeAbilityQuestions: ["Are you innocent of crimes?", "Are you a liar or a cheat?", "Have you lived a life by your ideals?", "Is the Lord hindered, distracted, or under duress in any way?"],
       },
       hound: {
+        defaultImg: "systems/cain/assets/Sins/hound.png",
         domains: {
           ability1: { title: "A Shuddering Thing Through a Dark Hall", value: "The hound feeds on fear, growing physically larger and stronger from the terror of weaker wills. Once a scene, if there are mundane humans within the local area, as a complication, the hound can manifest for them and start feeding off their fear. Until the exorcists calm the humans down or remove them from the situation, the hound takes -1 slash on its execution talisman from all sources and deals +1 more stress with reactions. Exorcists that attempt to harm the hound in any way must first spend 1 stress to suppress their fear. They can suppress this effect permanently as part of any action against the hound by answering the question, asked by the admin: What is it you are most afraid of? However, if they choose to answer, the Admin also rolls two risk dice and picks the lowest result for the triggering action." },
           ability2: { title: "Turning Blades, I Laughed at their Brittleness", value: "The hound’s hide becomes incredibly tough and durable, like a beast’s. • Each time an action would slash the hound’s execution talisman, roll a 1d6 fortune roll. If the roll is a 1 or 2, reduce all slashes suffered to 1. The hound’s armor has weak spots, however, and any action that is set up or part of teamwork can ignore this effect. • Mundane weapons are completely incapable of harming the hound unless they are extremely strong, like a tank cannon or a missile." },
@@ -2641,6 +2935,7 @@ export class CainActorSheet extends ActorSheet {
         severeAbilityQuestions: ["Do you have a sword (or something like it)?", "Are you calm, collected, and focused?", "Do you have a shield (or something like it)?", "Is the hound hindered, distracted, or under duress in some way?"],
       },
       centipede: {
+        defaultImg: "systems/cain/assets/Sins/centipede.png",
         domains: {
           ability1: {
             title: "The Heralds of Venom",
@@ -2739,6 +3034,7 @@ export class CainActorSheet extends ActorSheet {
         severeAbilityQuestions: ["Can you move quickly and unencumbered?", "Is someone aiding you able to push or grab you?", "Can you forgive the centipede's host?", "Is the centipede hindered, distracted, or under duress in some way?"],
       },
       redacted: {
+        defaultImg: "systems/cain/assets/Sins/generic_sin.png",
         domains: {
           ability1: {
             title: "The Redacted",
@@ -2811,6 +3107,7 @@ export class CainActorSheet extends ActorSheet {
     if (sinTypeData) {
       const actor = this.actor;
       actor.update({
+        'img': sinTypeData.defaultImg,
         'system.domains': sinTypeData.domains,
         'system.palace': sinTypeData.palace,
         'system.appearance': sinTypeData.appearance,
@@ -2825,6 +3122,10 @@ export class CainActorSheet extends ActorSheet {
         'system.severeAbilityQuestions': sinTypeData.severeAbilityQuestions
       });
     }
+  }
+
+  async _allowEdit(event) {
+
   }
 
   async _attackPlayer(event) {
@@ -3144,6 +3445,246 @@ _useDomain(event) {
     },
     default: "use"
   }).render(true);
+}
+
+// Search functionality for items
+_setupItemSearch(html) {
+  const searchInput = html.find('.item-search-input');
+  const searchResults = html.find('.item-search-results');
+  let searchTimeout;
+
+  searchInput.on('input', (event) => {
+    clearTimeout(searchTimeout);
+    const query = event.target.value.trim().toLowerCase();
+
+    if (query.length < 2) {
+      searchResults.removeClass('active').empty();
+      return;
+    }
+
+    searchTimeout = setTimeout(() => {
+      const worldItems = game.items.filter(item =>
+        item.type === 'item' &&
+        item.name.toLowerCase().includes(query) &&
+        !this.actor.items.has(item.id)
+      );
+
+      if (worldItems.length === 0) {
+        searchResults.html('<div class="item-search-no-results">No items found</div>');
+        searchResults.addClass('active');
+      } else {
+        const resultsHtml = worldItems.slice(0, 10).map(item => `
+          <div class="item-search-result" data-item-id="${item.id}">
+            <img src="${item.img}" alt="${item.name}" />
+            <div class="item-search-result-info">
+              <div class="item-search-result-name">${item.name}</div>
+              <div class="item-search-result-type">${item.system.type || 'Item'}</div>
+            </div>
+          </div>
+        `).join('');
+        searchResults.html(resultsHtml).addClass('active');
+      }
+    }, 300);
+  });
+
+  // Handle clicking on search results
+  searchResults.on('click', '.item-search-result', async (event) => {
+    const itemId = $(event.currentTarget).data('item-id');
+    const item = game.items.get(itemId);
+
+    if (item) {
+      await Item.create(item.toObject(), { parent: this.actor });
+      ui.notifications.info(`Added ${item.name} to ${this.actor.name}`);
+      searchInput.val('');
+      searchResults.removeClass('active').empty();
+      this.render(false);
+    }
+  });
+
+  // Close search results when clicking outside
+  $(document).on('click', (event) => {
+    if (!$(event.target).closest('.item-search-container').length) {
+      searchResults.removeClass('active');
+    }
+  });
+}
+
+// Search functionality for agendas
+_setupAgendaSearch(html) {
+  const searchInput = html.find('.agenda-search-input');
+  const searchResults = html.find('.agenda-search-results');
+  let searchTimeout;
+
+  searchInput.on('input', (event) => {
+    clearTimeout(searchTimeout);
+    const query = event.target.value.trim().toLowerCase();
+
+    if (query.length < 2) {
+      searchResults.removeClass('active').empty();
+      return;
+    }
+
+    searchTimeout = setTimeout(() => {
+      const worldAgendas = game.items.filter(item =>
+        item.type === 'agenda' &&
+        item.name.toLowerCase().includes(query)
+      );
+
+      if (worldAgendas.length === 0) {
+        searchResults.html('<div class="agenda-search-no-results">No agendas found</div>');
+        searchResults.addClass('active');
+      } else {
+        const resultsHtml = worldAgendas.slice(0, 10).map(item => `
+          <div class="agenda-search-result" data-item-id="${item.id}">
+            <img src="${item.img}" alt="${item.name}" />
+            <div class="agenda-search-result-info">
+              <div class="agenda-search-result-name">${item.name}</div>
+              <div class="agenda-search-result-desc">${item.system.agendaName || ''}</div>
+            </div>
+          </div>
+        `).join('');
+        searchResults.html(resultsHtml).addClass('active');
+      }
+    }, 300);
+  });
+
+  // Handle clicking on search results
+  searchResults.on('click', '.agenda-search-result', async (event) => {
+    const itemId = $(event.currentTarget).data('item-id');
+    const item = game.items.get(itemId);
+
+    if (item) {
+      // Get the agenda's tasks directly from unboldedTasks and boldedTasks (matching drag behavior)
+      const unboldedTasks = item.system.unboldedTasks || [];
+      const boldedTasks = item.system.boldedTasks || [];
+
+      // Merge with existing bolded tasks (matching drag behavior from line 760-766)
+      const currentBoldedTasks = this.actor.system.currentBoldedAgendaTasks || [];
+      const newBoldedTasks = currentBoldedTasks.concat(
+        boldedTasks.filter(boldedTask => !currentBoldedTasks.includes(boldedTask))
+      );
+
+      const totalTasks = unboldedTasks.length + newBoldedTasks.length;
+
+      // Set the agenda as current agenda and populate tasks (matching drag behavior from line 769-779)
+      await this.actor.update({
+        'system.agenda': item.system.agendaName,
+        'system.currentAgenda': item.id,
+        'system.currentUnboldedAgendaTasks': unboldedTasks,
+        'system.currentBoldedAgendaTasks': newBoldedTasks
+      });
+
+      ui.notifications.info(`Set ${item.name} as current agenda with ${totalTasks} tasks`);
+      searchInput.val('');
+      searchResults.removeClass('active').empty();
+      this.render(false);
+    }
+  });
+
+  // Close search results when clicking outside
+  $(document).on('click', (event) => {
+    if (!$(event.target).closest('.agenda-search-container').length) {
+      searchResults.removeClass('active');
+    }
+  });
+}
+
+// Search functionality for blasphemies
+_setupBlasphemySearch(html) {
+  const searchInput = html.find('.blasphemy-search-input');
+  const searchResults = html.find('.blasphemy-search-results');
+  let searchTimeout;
+
+  searchInput.on('input', (event) => {
+    clearTimeout(searchTimeout);
+    const query = event.target.value.trim().toLowerCase();
+
+    if (query.length < 2) {
+      searchResults.removeClass('active').empty();
+      return;
+    }
+
+    searchTimeout = setTimeout(() => {
+      const worldBlasphemies = game.items.filter(item =>
+        item.type === 'blasphemy' &&
+        item.name.toLowerCase().includes(query) &&
+        !this.actor.system.currentBlasphemies?.includes(item.id)
+      );
+
+      if (worldBlasphemies.length === 0) {
+        searchResults.html('<div class="blasphemy-search-no-results">No blasphemies found</div>');
+        searchResults.addClass('active');
+      } else {
+        const resultsHtml = worldBlasphemies.slice(0, 10).map(item => `
+          <div class="blasphemy-search-result" data-item-id="${item.id}">
+            <img src="${item.img}" alt="${item.name}" />
+            <div class="blasphemy-search-result-info">
+              <div class="blasphemy-search-result-name">${item.name}</div>
+              <div class="blasphemy-search-result-desc">${item.system.blasphemyName || ''}</div>
+            </div>
+          </div>
+        `).join('');
+        searchResults.html(resultsHtml).addClass('active');
+      }
+    }, 300);
+  });
+
+  // Handle clicking on search results
+  searchResults.on('click', '.blasphemy-search-result', async (event) => {
+    const itemId = $(event.currentTarget).data('item-id');
+    const item = game.items.get(itemId);
+
+    if (item) {
+      // Add blasphemy to current blasphemies
+      const currentBlasphemies = this.actor.system.currentBlasphemies || [];
+      if (!currentBlasphemies.includes(item.id)) {
+        currentBlasphemies.push(item.id);
+
+        // Get the current list of blasphemy powers
+        const blasphemyPowersList = this.actor.system.currentBlasphemyPowers || [];
+
+        // Get the new blasphemy powers that are passive (matching drag behavior from line 878-894)
+        const newBlasphemyPowers = this._getItemsFromIDs(item.system.powers || [])
+          .filter(power => {
+            if (!power || !power.system) {
+              console.error("Power or power system is undefined:", power);
+              ui.notifications.error("Some powers are undefined. Did you import the compendium to keep document IDs?");
+              return false;
+            }
+            return power.system.isPassive;
+          })
+          .map(power => power.id);
+
+        // Combine the current and new blasphemy powers
+        const newBlasphemyPowersList = blasphemyPowersList.concat(newBlasphemyPowers);
+
+        // Check if this raises the number of blasphemies higher than 1, if so, add one to the XP max
+        let XPmax = this.actor.system.xp.max;
+        if (currentBlasphemies.length > 1) XPmax += 1;
+
+        await this.actor.update({
+          'system.currentBlasphemies': currentBlasphemies,
+          'system.currentBlasphemyPowers': newBlasphemyPowersList,
+          'system.xp.max': XPmax
+        });
+
+        const passiveCount = newBlasphemyPowers.length;
+        ui.notifications.info(`Added ${item.name} with ${passiveCount} passive power${passiveCount !== 1 ? 's' : ''}`);
+        searchInput.val('');
+        searchResults.removeClass('active').empty();
+        this.render(false);
+      } else {
+        ui.notifications.warn(`${item.name} is already added to this character`);
+      }
+    }
+  });
+
+  // Close search results when clicking outside
+  $(document).on('click', (event) => {
+    if (!$(event.target).closest('.blasphemy-search-container').length) {
+      searchResults.removeClass('active');
+    }
+  });
 }
 
 }
