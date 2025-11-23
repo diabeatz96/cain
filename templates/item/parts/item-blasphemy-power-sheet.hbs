@@ -4,48 +4,47 @@
     <img class="profile-img" src="{{this.img}}" data-edit="img" title="{{system.powerName}}" />
     <div class="header-fields">
       <div class="form-group">
-        <label for="name">Power Name</label>
-        <input name="name" type="text" value="{{system.powerName}}" placeholder="Name" />
+        <label for="name">Name</label>
+        <input name="name" type="text" value="{{name}}" placeholder="Name" data-dtype="String" style="color: white;" />
       </div>
       <div class="form-group">
         <label for="isPassive">Is Passive</label>
-        <input type="checkbox" name="system.isPassive" {{#if system.isPassive}}checked{{/if}} />
+        <input type="checkbox" name="system.isPassive" {{#if system.isPassive}}checked{{/if}} data-dtype="Boolean" />
       </div>
 
       <div class="form-group psyche-options">
         <label>Psyche Burst Options:</label>
         <div class="checkbox-row">
           <label for="psycheBurstCost">
-            <input type="checkbox" name="system.psycheBurstCost" id="psycheBurstCost" {{#if
-              system.psycheBurstCost}}checked{{/if}} />
+            <input type="checkbox" name="system.psycheBurstCost" id="psycheBurstCost" {{#if system.psycheBurstCost}}checked{{/if}} data-dtype="Boolean" />
             Uses Psyche Burst ⟡
           </label>
         </div>
         <div class="checkbox-row">
           <label for="psycheBurstNoCost">
-            <input type="checkbox" name="system.psycheBurstNoCost" id="psycheBurstNoCost" {{#if
-              system.psycheBurstNoCost}}checked{{/if}} />
+            <input type="checkbox" name="system.psycheBurstNoCost" id="psycheBurstNoCost" {{#if system.psycheBurstNoCost}}checked{{/if}} data-dtype="Boolean" />
             Has No-Psyche Mode X
           </label>
         </div>
         <div class="checkbox-row">
           <label for="psycheBurstMultCost">
-            <input type="checkbox" name="system.psycheBurstMultCost" id="psycheBurstMultCost" {{#if
-              system.psycheBurstMultCost}}checked{{/if}} />
+            <input type="checkbox" name="system.psycheBurstMultCost" id="psycheBurstMultCost" {{#if system.psycheBurstMultCost}}checked{{/if}} data-dtype="Boolean" />
             Can Use Multiple Bursts +
           </label>
         </div>
       </div>
       <div class="form-group">
         <label for="keywords">Keywords</label>
-        <input type="text" name="system.keywords" value="{{system.keywords}}" />
+        <input type="text" name="system.keywords" value="{{system.keywords}}" data-dtype="String" />
       </div>
     </div>
   </header>
 
   <section class="blasphemy-power-body">
     <h2>Description</h2>
-    <p>{{formatted system.powerDescription "description"}}</p>
+    <div class="form-group">
+      <textarea name="system.powerDescription" data-dtype="String" rows="10" style="width: 100%; padding: 10px; border: 2px solid var(--secondary-color, #555); border-radius: 10px; background-color: var(--primary-color, #2a2a2a); font-family: 'Courier New', Courier, monospace; color: var(--text-color, #ffffff); resize: vertical;">{{system.powerDescription}}</textarea>
+    </div>
 
     {{#unless disableColorPickers}}
     <div class="color-picker-container">

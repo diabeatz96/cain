@@ -2012,13 +2012,13 @@ img {
 /* Sheet header input fields - ensure consistent styling across versions */
 .cain .sheet-header input[type="text"],
 .cain .sheet-header input[type="number"] {
-  background: rgba(0, 0, 0, 0.05) !important;
-  border: 1px solid #7a7971 !important;
-  color: inherit !important;
-  padding: 2px 4px !important;
-  height: auto !important;
-  line-height: normal !important;
-  font-size: 12px !important;
+  background: rgba(0, 0, 0, 0.05);
+  border: 1px solid #7a7971;
+  padding: 2px 4px;
+  height: auto;
+  line-height: normal;
+  font-size: 12px;
+  /* Allow individual sheets to override color with inline styles or specific classes */
 }
 
 /* Character name input - override to maintain large size */

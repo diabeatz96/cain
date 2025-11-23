@@ -1,13 +1,48 @@
 <form class='{{cssClass}}, affliction-background' autocomplete='off'>
+  <header class='sheet-header'>
+    <img
+      class='profile-img'
+      src='{{item.img}}'
+      data-edit='img'
+      title='{{item.name}}'
+    />
     <div class='header-fields'>
-      <h1 class='charname affliction-name affliction-text-color' style="padding:10px">{{item.system.afflictionName}}</h1>
+      <h1 class='charname affliction-name'><input
+          name='name'
+          type='text'
+          value='{{item.name}}'
+          placeholder='Name'
+          class='affliction-text-color'
+        /></h1>
     </div>
+  </header>
 
   {{! Sheet Tab Navigation }}
+  <nav class='sheet-tabs tabs affliction-tabs' data-group='primary'>
+    <a class='item' data-tab='description'>Description</a>
+  </nav>
+
   {{! Sheet Body }}
   <section class='sheet-body affliction-body'>
-    <p>
-    {{this.item.system.afflictionDescription}}
-    </p>
+    <div class='tab affliction-text-color' data-group='primary' data-tab='description'>
+      <div class='form-group'>
+        <label for='afflictionName'>Affliction Name</label>
+        <input
+          type='text'
+          name='system.afflictionName'
+          value='{{system.afflictionName}}'
+          data-dtype='String'
+        />
+      </div>
+
+      <div class='form-group'>
+        <label for='afflictionDescription'>Description</label>
+        <textarea
+          name='system.afflictionDescription'
+          data-dtype='String'
+          rows='10'
+        >{{system.afflictionDescription}}</textarea>
+      </div>
+    </div>
   </section>
 </form>

@@ -1,6 +1,6 @@
-<form class="{{cssClass}} {{system.blasphemyType}}-theme" autocomplete="off">
+<div class="{{cssClass}} {{system.blasphemyType}}-theme blasphemy-power-partial-container">
   <header class="blasphemy-power-header" style="display: flex; align-items: center; justify-content: space-between; position: relative;">
-    
+
     <div class="psyche-icons-in-item-header">
         {{#if system.psycheBurstNoCost}}
         <a href="systems/cain/assets/psyche/NoPsyche.png" target="_blank">
@@ -21,53 +21,61 @@
         </a>
         {{/if}}
     </div>
-    
-    <div class="header-fields" style="flex-grow: 1; text-align: left;">
+
+    <div class="header-fields item-click" data-id="{{this.id}}" style="flex-grow: 1; text-align: left; cursor: pointer;">
       <div class="form-group" style="margin-bottom: 10px;">
         <label class="power-label" style="font-weight: bold; font-size: 1.2em;">Power Name:</label>
-        <span style="font-size: 2em; font-weight: bold;">{{system.powerName}}</span>
+        <div style="font-size: 1.5em; font-weight: bold; width: 100%; background: var(--primary-color, #2a2a2a); color: var(--text-color, #ffffff); border: 2px solid var(--secondary-color, #555); border-radius: 5px; padding: 5px;">{{system.powerName}}</div>
       </div>
       <div class="form-group" style="margin-bottom: 10px;">
-        <label class="power-label" for="isPassive" style="font-weight: bold; font-size: 1.2em;">Is Passive:</label>
-        <span>{{#if system.isPassive}}Yes{{else}}No{{/if}}</span>
+        <label class="power-label" style="font-weight: bold; font-size: 1.2em;">Is Passive:</label>
+        <div style="padding: 5px;">{{#if system.isPassive}}✓ Yes{{else}}✗ No{{/if}}</div>
       </div>
       <div class="form-group" style="margin-bottom: 10px;">
         <label class="power-label" style="font-weight: bold; font-size: 1.2em;">Keywords:</label>
-        <span>{{system.keywords}}</span>
+        <div style="width: 100%; background: var(--primary-color, #2a2a2a); color: var(--text-color, #ffffff); border: 2px solid var(--secondary-color, #555); border-radius: 5px; padding: 5px;">{{system.keywords}}</div>
+      </div>
+      <div class="form-group" style="margin-bottom: 10px;">
+        <label class="power-label" style="font-weight: bold; font-size: 1.2em;">Psyche Burst Options:</label>
+        <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+          {{#if system.psycheBurstCost}}<span>✓ Uses Psyche</span>{{/if}}
+          {{#if system.psycheBurstNoCost}}<span>✓ No Psyche Mode</span>{{/if}}
+          {{#if system.psycheBurstMultCost}}<span>✓ Multiple Bursts</span>{{/if}}
+        </div>
       </div>
     </div>
     <img class="profile-img item-click" src="{{this.img}}" data-id="{{this.id}}" title="{{system.powerName}}" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 3px solid var(--accent-color, #ff00ff); box-shadow: 0 0 10px var(--accent-color, #ff00ff), 0 0 20px var(--accent-color, #ff00ff); cursor: pointer;"/>
   </header>
 
-  <section class="blasphemy-power-body" style="text-align: center; padding: 20px; border-radius: 10px; background: linear-gradient(135deg, var(--primary-color, #2a2a2a), var(--secondary-color, #555));">
+  <section class="blasphemy-power-body item-click" data-id="{{this.id}}" style="text-align: center; padding: 20px; border-radius: 10px; background: linear-gradient(135deg, var(--primary-color, #2a2a2a), var(--secondary-color, #555)); cursor: pointer;">
     <h2 style="color: var(--accent-color, #ff00ff); text-shadow: 0 0 10px var(--accent-color, #ff00ff);">Description</h2>
-    <p style="padding: 10px; border: 2px solid var(--secondary-color, #555); border-radius: 10px; background-color: var(--primary-color, #2a2a2a); font-family: 'Courier New', Courier, monospace; color: var(--text-color, #ffffff); box-shadow: 0 0 10px var(--accent-color, #ff00ff);">{{#formatted system.powerDescription}}{{/formatted}}</p>
+    <div style="width: 100%; padding: 10px; border: 2px solid var(--secondary-color, #555); border-radius: 10px; background-color: var(--primary-color, #2a2a2a); font-family: 'Courier New', Courier, monospace; color: var(--text-color, #ffffff); box-shadow: 0 0 10px var(--accent-color, #ff00ff); min-height: 100px; text-align: left; white-space: pre-wrap;">{{system.powerDescription}}</div>
   </section>
-</form>
+</div>
 
 <style>
     /* Position the icon container in the top right of the header */
     .psyche-icons-in-item-header {
         position: absolute;
-        top: 10px; /* Adjust as needed */
-        right: 110px; /* Position to the left of the round profile image */
+        top: 5px;
+        right: 90px; /* Position to the left of the round profile image */
         z-index: 2;
         display: flex;
-        gap: 5px;
+        gap: 3px;
     }
 
     /* Style for the icons inside the item sheet */
     .power-psyche-icon-item {
-        width: 70px;
-        height: 70px;
-        filter: drop-shadow(0 0 4px #ff00cc);
+        width: 35px;
+        height: 35px;
+        filter: drop-shadow(0 0 3px #ff00cc);
     }
 
     /* Style for the animated Plus icon */
     .power-plus-item {
-        width: 70px;
-        height: 70px;
-        filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.9));
+        width: 35px;
+        height: 35px;
+        filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.9));
     }
     
 </style>
