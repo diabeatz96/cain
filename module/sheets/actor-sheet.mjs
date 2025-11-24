@@ -649,6 +649,54 @@ export class CainActorSheet extends ActorSheet {
       await this._rollSinOverflow(actor);
     });
 
+    // Event listeners for severe ability questions (SIN sheet attacks tab)
+    html.find('.add-btn').click(async (ev) => {
+      const questions = duplicate(this.actor.system.severeAbilityQuestions || []);
+      questions.push('');
+      await this.actor.update({'system.severeAbilityQuestions': questions});
+    });
+
+    html.find('.delete-btn').click(async (ev) => {
+      const index = parseInt(ev.currentTarget.closest('.question-row')?.querySelector('.question-label')?.textContent.replace('Q', '').replace(':', ''));
+      if (index >= 0) {
+        const questions = duplicate(this.actor.system.severeAbilityQuestions || []);
+        questions.splice(index, 1);
+        await this.actor.update({'system.severeAbilityQuestions': questions});
+      }
+    });
+
+    // Event listener for roll affliction button (SIN sheet attacks tab)
+    html.find('.roll-btn').click(async (ev) => {
+      // Roll for random affliction
+      const afflictions = this.actor.system.afflictions || [];
+      if (afflictions.length === 0) {
+        ui.notifications.warn('No afflictions available to roll.');
+        return;
+      }
+
+      const roll = await new Roll(`1d${afflictions.length}`).roll();
+      const selectedAffliction = afflictions[roll.total - 1];
+
+      const messageContent = `
+        <div style="border: 2px solid #1a5490; border-radius: 8px; padding: 12px; background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%); margin: 4px 0;">
+          <h3 style="margin: 0 0 8px 0; color: #2a7bc4; font-family: 'Pirata One', serif; font-size: 1.4em; border-bottom: 2px solid #2a7bc4; padding-bottom: 4px;">
+            ${this.actor.name} - Affliction Roll
+          </h3>
+          <div style="color: #e0e0e0; font-family: 'Courier New', monospace; line-height: 1.6; font-size: 1em;">
+            <strong>Rolled:</strong> ${roll.total}<br>
+            <strong>Affliction:</strong> ${selectedAffliction}
+          </div>
+        </div>
+      `;
+
+      roll.toMessage({
+        flavor: `${this.actor.name} rolls for Affliction`,
+        speaker: ChatMessage.getSpeaker({ actor: this.actor })
+      });
+
+      ChatMessage.create({content: messageContent});
+    });
+
 }
 
   async _rollSinOverflow(actor) {
