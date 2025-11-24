@@ -13,7 +13,7 @@ import { PlayerOverview } from './documents/player-overview.mjs';
 
 // Import DataModel classes
 import * as models from './data/_module.mjs';
-import PathosTracker from "./components/pathos-tracker/pathos-tracker.js";
+import PathosTracker from "./components/pathos-tracker/pathos-tracker.mjs";
 
 /* -------------------------------------------- */
 /*  Init Hook                                   */
@@ -557,7 +557,7 @@ Hooks.once('ready', async function () {
   const { ApplicationV2, HandlebarsApplicationMixin  } = foundry.applications.api;
 
   // TODO: adding pathos ui element
-  const pathos = new PathosTracker();
+  const pathos = new PathosTracker({ context: 'foo' });
   console.log("rendering pathos");
   pathos.render(true);
 

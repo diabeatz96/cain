@@ -1,3 +1,8 @@
 <div>
-  <span>Pathos!</span>
+  <div class="pathos-list">
+    {{#each actors}}
+      <span>{{this.name}}</span>
+      <span>has {{this.currAgony}}/{{this.maxAgony}} divine agony</span>
+    {{/each}}
+  </div>
 </div>
