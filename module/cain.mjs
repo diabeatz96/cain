@@ -51,6 +51,7 @@ Hooks.once('init', async function () {
     sin: models.CainNPC,
     mundane: models.CainMundane,
     npc: models.CainNPC,  // Backwards compatibility - deprecated, use 'sin' instead
+    opponent: models.CainOpponent,
   }
   CONFIG.Item.documentClass = CainItem;
   CONFIG.Item.dataModels = {

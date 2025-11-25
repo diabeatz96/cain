@@ -83,6 +83,13 @@
       "system": "cain",
       "type": "Item",
       "path": "packs/afflictions"
+    },
+    {
+      "name": "opponents",
+      "label": "Opponents & Drifters",
+      "system": "cain",
+      "type": "Actor",
+      "path": "packs/opponents"
     }
   ],
   "packFolders": [],
@@ -92,7 +99,8 @@
       "character": {},
       "sin": {},
       "mundane": {},
-      "npc": {}
+      "npc": {},
+      "opponent": {}
     },
     "Item": {
       "item": {},
