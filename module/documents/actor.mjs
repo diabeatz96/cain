@@ -34,6 +34,7 @@ export class CainActor extends Actor {
     // Register any relevant apps. These will re-render whenever this actor updates
     if (this.type === 'character') {
       this.apps['pathos-tracker'] = ui.pathosTracker;
+      ui.pathosTracker.render({ force: true });
     }
   }
 
