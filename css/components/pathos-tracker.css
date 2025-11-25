@@ -1,0 +1,35 @@
+@keyframes flickerAnimation {
+    0% { background-color: transparent; }
+    75% { background-color: #e40df2; }
+    100% { background-color: transparent; }
+}
+
+.pathos-tracker {
+    position: absolute;
+    color: white;
+    top: 15px !important;
+    left: 100px !important;
+    cursor: pointer;
+
+    .header-control {
+        display: none;
+    }
+
+    .window-content {
+        padding: 0px;
+    }
+
+    table {
+        margin: 0;
+    }
+
+    th, td {
+        padding: 5px 0 5px 1rem;
+    }
+
+    .divine-agony {
+        border-radius: 20px;
+        padding: 3px 0 3px 1rem;
+        animation: flickerAnimation 1s infinite;
+    }
+}

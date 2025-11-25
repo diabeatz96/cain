@@ -554,12 +554,12 @@ Hooks.once('ready', async function () {
     }
   }
 
-  const { ApplicationV2, HandlebarsApplicationMixin  } = foundry.applications.api;
+  // add the pathos tracker UI element
+  const pathos = new PathosTracker();
+  pathos.render({ force: true });
 
-  // TODO: adding pathos ui element
-  const pathos = new PathosTracker({ context: 'foo' });
-  console.log("rendering pathos");
-  pathos.render(true);
+  // register to the UI element
+  ui.pathosTracker = pathos;
 
   function addTalismanButton() {
     // Create the button element with the talisman icon

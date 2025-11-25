@@ -1,8 +1,14 @@
 <div>
   <div class="pathos-list">
-    {{#each actors}}
-      <span>{{this.name}}</span>
-      <span>has {{this.currAgony}}/{{this.maxAgony}} divine agony</span>
-    {{/each}}
+    <table class="pathos-table">
+      <tbody>
+      {{#each actors}}
+        <tr>
+          <td>{{this.name}}</td>
+          <td class="{{#if (hasMaxPathos this)}}divine-agony{{/if}}">{{this.currPathos}}/{{this.maxPathos}}</td>
+        </tr>
+      {{/each}}
+      </tbody>
+    </table>
   </div>
 </div>
