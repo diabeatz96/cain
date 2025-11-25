@@ -9,3 +9,18 @@ _source/
 packs/*/*.log
 packs/*/LOG
 packs/*/LOG.old
+
+# AI Helper Tools
+.claude/
+.cursor/
+.aider*
+.copilot/
+.github-copilot/
+.codeium/
+.tabnine/
+.anthropic/
+*.ai-context
+*.ai-session
+.ai/
+.windsurf/
+.continue/
