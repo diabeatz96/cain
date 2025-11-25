@@ -608,6 +608,7 @@ export class CainActorSheet extends ActorSheet {
           case "affliction":
             this._onDropAffliction(event, itemDrop);
             break;
+          // TODO: do on drop domain
           default:
           ui.notifications.error("Invalid drop type on ability page: " + itemDrop.type);
           console.warn("Invalid drop type on ability page: " + itemDrop.type);

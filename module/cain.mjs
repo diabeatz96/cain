@@ -63,6 +63,7 @@ Hooks.once('init', async function () {
     sinMark: models.CainSinMark,
     sinMarkAbility: models.CainSinMarkAbility,
     affliction: models.CainAffliction,
+    domain: models.CainDomain,
   }
   
   console.log('CAIN | Initializing Cain system');

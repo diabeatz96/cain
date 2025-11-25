@@ -100,7 +100,8 @@
       "agendaAbility": "Agenda Ability",
       "sinMark": "Sin Mark",
       "sinMarkAbility": "Sin Mark Ability",
-      "affliction": "Affliction"
+      "affliction": "Affliction",
+      "domain": "Domain"
     }
   },
   "SHEET": {

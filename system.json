@@ -83,6 +83,13 @@
       "system": "cain",
       "type": "Item",
       "path": "packs/afflictions"
+    },
+    {
+      "name": "domains",
+      "label": "Domains",
+      "system": "cain",
+      "type": "Item",
+      "path": "packs/domains"
     }
   ],
   "packFolders": [],
@@ -103,7 +110,8 @@
       "agendaAbility": {},
       "sinMark": {},
       "sinMarkAbility": {},
-      "affliction": {}
+      "affliction": {},
+      "domain": {}
     }
   },
   "socket": true,
