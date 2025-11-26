@@ -1,3 +1,8 @@
-2025/11/24-15:37:12.803 3d8c Recovering log #411
-2025/11/24-15:37:12.821 3d8c Delete type=0 #411
-2025/11/24-15:37:12.821 3d8c Delete type=3 #410
+2025/11/25-20:15:18.408 1458 Recovering log #426
+2025/11/25-20:15:18.412 1458 Delete type=0 #426
+2025/11/25-20:15:18.412 1458 Delete type=3 #414
+2025/11/25-20:15:24.414 420 Level-0 table #429: started
+2025/11/25-20:15:24.414 420 Level-0 table #429: 0 bytes OK
+2025/11/25-20:15:24.415 420 Delete type=0 #427
+2025/11/25-20:15:24.419 420 Manual compaction at level-0 from '!folders!0Rx103v99LTFoMTP' @ 72057594037927935 : 1 .. '!items!ziiFc860EZanavt1' @ 0 : 0; will stop at (end)
+2025/11/25-20:15:24.419 420 Manual compaction at level-1 from '!folders!0Rx103v99LTFoMTP' @ 72057594037927935 : 1 .. '!items!ziiFc860EZanavt1' @ 0 : 0; will stop at (end)

@@ -555,7 +555,8 @@ Hooks.once('ready', async function () {
   }
 
   // add the pathos tracker UI element
-  const pathos = new PathosTracker();
+  const useCompatible = game.release.generation === 12;
+  const pathos = new PathosTracker({ classes: [useCompatible ? 'v12' : null]});
   pathos.render({ force: true });
 
   // register to the UI element

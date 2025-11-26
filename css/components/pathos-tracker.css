@@ -11,6 +11,11 @@
     left: 100px !important;
     cursor: pointer;
 
+    &.v12 {
+        top: 55px !important;
+        left: 120px !important;
+    }
+
     .header-control {
         display: none;
     }
