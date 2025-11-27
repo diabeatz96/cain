@@ -9,6 +9,12 @@ class PathosTracker extends HandlebarsApplicationMixin(ApplicationV2) {
     window: {
       title: 'Divine Agony Tracker',
       positioned: true,
+      minimizable: false,
+      resizable: false,
+    },
+    position: {
+      top: 60,
+      left: 110,
     }
   }
   static PARTS = {

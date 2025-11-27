@@ -302,24 +302,50 @@ function applyAccessibilityMode(enabled) {
 // Add Divine Agony toggle to scene controls (works for v12 and v13)
 // This hook must be registered outside of ready to catch initial render
 Hooks.on('getSceneControlButtons', (controls) => {
-  // Find the token controls group
-  const tokenControls = controls.find(c => c.name === 'token');
-  if (tokenControls) {
-    tokenControls.tools.push({
-      name: 'pathos-tracker',
-      title: 'Toggle Divine Agony Tracker',
-      icon: 'fas fa-heart',
-      toggle: true,
-      active: game.settings.get('cain', 'pathosTrackerVisible'),
-      onClick: async (active) => {
-        await game.settings.set('cain', 'pathosTrackerVisible', active);
-        if (active) {
-          ui.pathosTracker.render({ force: true });
-        } else {
-          ui.pathosTracker.close();
+  // v13 uses object structure with "tokens" (plural), v12 uses array with "token" (singular)
+  const isV13 = game.release.generation >= 13;
+
+  if (isV13) {
+    // v13: controls is an object keyed by control name (plural: "tokens"), tools is also an object
+    // Reference: https://foundryvtt.com/api/functions/hookEvents.getSceneControlButtons.html
+    // v13 onChange signature: (event: Event, active: boolean) => void
+    if (controls.tokens) {
+      controls.tokens.tools['pathos-tracker'] = {
+        name: 'pathos-tracker',
+        title: 'Toggle Divine Agony Tracker',
+        icon: 'fa-solid fa-heart',
+        toggle: true,
+        active: game.settings.get('cain', 'pathosTrackerVisible'),
+        onChange: async (event, active) => {
+          await game.settings.set('cain', 'pathosTrackerVisible', active);
+          if (active) {
+            ui.pathosTracker.render({ force: true });
+          } else {
+            ui.pathosTracker.close();
+          }
         }
-      }
-    });
+      };
+    }
+  } else {
+    // v12: controls is an array, tools is an array, name is "token" (singular)
+    const tokenControls = controls.find(c => c.name === 'token');
+    if (tokenControls) {
+      tokenControls.tools.push({
+        name: 'pathos-tracker',
+        title: 'Toggle Divine Agony Tracker',
+        icon: 'fa-solid fa-heart',
+        toggle: true,
+        active: game.settings.get('cain', 'pathosTrackerVisible'),
+        onClick: async (active) => {
+          await game.settings.set('cain', 'pathosTrackerVisible', active);
+          if (active) {
+            ui.pathosTracker.render({ force: true });
+          } else {
+            ui.pathosTracker.close();
+          }
+        }
+      });
+    }
   }
 });
 
@@ -590,8 +616,7 @@ Hooks.once('ready', async function () {
   }
 
   // add the pathos tracker UI element
-  const useCompatible = game.release.generation === 12;
-  const pathos = new PathosTracker({ classes: [useCompatible ? 'v12' : null]});
+  const pathos = new PathosTracker();
 
   // Only render if visible setting is true
   if (game.settings.get('cain', 'pathosTrackerVisible')) {

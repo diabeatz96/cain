@@ -5,16 +5,8 @@
 }
 
 .pathos-tracker {
-    position: absolute;
     color: white;
-    top: 15px !important;
-    left: 100px !important;
     cursor: pointer;
-
-    &.v12 {
-        top: 55px !important;
-        left: 120px !important;
-    }
 
     /* Style window header - black theme */
     .window-header {
