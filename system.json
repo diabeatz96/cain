@@ -10,7 +10,7 @@
   ],
   "flags": {
     "hotReload": {
-      "extensions": ["scss", "mjs", "hbs", "json"],
+      "extensions": ["css", "mjs", "hbs", "json"],
         "paths": ["lang", "css", "module", "src", "templates"]
       }
   },

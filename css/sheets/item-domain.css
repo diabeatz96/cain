@@ -1,0 +1,55 @@
+.domain-card {
+    border-radius: 20px;
+    background-color: rgb(134, 134, 134);
+    border: none;
+    padding: 10px;
+    margin: 10px;
+
+    .dashed-line {
+        border-bottom: dashed #1a1a1a 4px;
+    }
+
+    .domain-name-input {
+        height: 90% !important;
+        font-size: 55px !important;
+        font-weight: bold;
+        font-family: 'Pirata One', system-ui !important;
+        text-shadow: -3px -3px 0 #000, 3px -3px 0 #000, -3px 3px 0 #000, 3px 3px 0 #000;
+
+        .hound {
+            color: #ff0808;
+        }
+
+        .centipede {
+            color: #9f00ff;
+        }
+
+        .idol {
+            color: #e40df2;
+        }
+
+        &.ogre {
+            color: #0d79f2;
+        }
+
+        .toad {
+            color: #f2af0d;
+        }
+
+        .lord {
+            color: #91ffef;
+        }
+    }
+
+    .domain-header {
+        text-align: center;
+
+        h1 {
+            font-family: 'Pirata One', system-ui;
+            color: white;
+
+            margin-left: 16px;
+            text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;
+        }
+    }
+}
