@@ -74,7 +74,7 @@
     }
 }
 
-/* Scene control button styling for Divine Agony tracker */
+/* Scene control button styling for Divine Agony tracker - v12 */
 #controls .control-tool[data-tool="pathos-tracker"] {
     position: relative;
 }
@@ -101,5 +101,40 @@
 
 #controls .control-tool[data-tool="pathos-tracker"].active::before,
 #controls .control-tool[data-tool="pathos-tracker"]:hover::before {
+    filter: grayscale(0%) brightness(1);
+}
+
+/* Scene control button styling for Divine Agony tracker - v13 */
+#scene-controls [data-tool="pathos-tracker"],
+#scene-controls [data-action="pathos-tracker"] {
+    position: relative;
+}
+
+#scene-controls [data-tool="pathos-tracker"]::before,
+#scene-controls [data-action="pathos-tracker"]::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 26px;
+    height: 26px;
+    background-image: url('/systems/cain/assets/items/divine agony.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    filter: grayscale(80%) brightness(1.2);
+    transition: filter 0.2s;
+}
+
+#scene-controls [data-tool="pathos-tracker"] i,
+#scene-controls [data-action="pathos-tracker"] i {
+    opacity: 0;
+}
+
+#scene-controls [data-tool="pathos-tracker"].active::before,
+#scene-controls [data-tool="pathos-tracker"]:hover::before,
+#scene-controls [data-action="pathos-tracker"].active::before,
+#scene-controls [data-action="pathos-tracker"]:hover::before {
     filter: grayscale(0%) brightness(1);
 }
