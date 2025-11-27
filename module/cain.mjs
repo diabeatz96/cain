@@ -188,6 +188,14 @@ Hooks.once('init', async function () {
     }
   });
 
+  game.settings.register('cain', 'pathosTrackerVisible', {
+    name: 'Pathos Tracker Visible',
+    scope: 'client',
+    config: false,
+    type: Boolean,
+    default: true,
+  });
+
   function registerHotkeySetting(settingName, settingLabel, settingHint) {
     game.settings.register('cain', settingName, {
       name: settingLabel,
@@ -287,6 +295,33 @@ function applyAccessibilityMode(enabled) {
   }
 }
 
+/* -------------------------------------------- */
+/*  Scene Control Buttons                       */
+/* -------------------------------------------- */
+
+// Add Divine Agony toggle to scene controls (works for v12 and v13)
+// This hook must be registered outside of ready to catch initial render
+Hooks.on('getSceneControlButtons', (controls) => {
+  // Find the token controls group
+  const tokenControls = controls.find(c => c.name === 'token');
+  if (tokenControls) {
+    tokenControls.tools.push({
+      name: 'pathos-tracker',
+      title: 'Toggle Divine Agony Tracker',
+      icon: 'fas fa-heart',
+      toggle: true,
+      active: game.settings.get('cain', 'pathosTrackerVisible'),
+      onClick: async (active) => {
+        await game.settings.set('cain', 'pathosTrackerVisible', active);
+        if (active) {
+          ui.pathosTracker.render({ force: true });
+        } else {
+          ui.pathosTracker.close();
+        }
+      }
+    });
+  }
+});
 
 /* -------------------------------------------- */
 /*  Handlebars Helpers                          */
@@ -557,7 +592,11 @@ Hooks.once('ready', async function () {
   // add the pathos tracker UI element
   const useCompatible = game.release.generation === 12;
   const pathos = new PathosTracker({ classes: [useCompatible ? 'v12' : null]});
-  pathos.render({ force: true });
+
+  // Only render if visible setting is true
+  if (game.settings.get('cain', 'pathosTrackerVisible')) {
+    pathos.render({ force: true });
+  }
 
   // register to the UI element
   ui.pathosTracker = pathos;
