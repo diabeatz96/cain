@@ -30,7 +30,7 @@ class PathosTracker extends HandlebarsApplicationMixin(ApplicationV2) {
   async _preparePartContext(partId, context) {
     const characters = game.actors;
     context.actors = characters
-      .filter((character) => character.type === 'character')
+      .filter((character) => character.type === 'character' && !character.system.hideFromTracker)
       .map((character) => {
         return {
           name: character.name,

@@ -42,6 +42,52 @@ export class CainActorSheet extends ActorSheet {
     return `systems/cain/templates/actor/actor-${this.actor.type}-sheet.hbs`;
   }
 
+  /** @override */
+  _getHeaderButtons() {
+    const buttons = super._getHeaderButtons();
+
+    // Add toggle tracker button for character sheets (GM only)
+    if (this.actor.type === 'character' && game.user.isGM) {
+      const isHidden = this.actor.system.hideFromTracker || false;
+      buttons.unshift({
+        label: "",
+        class: "toggle-tracker",
+        icon: isHidden ? "fas fa-eye-slash" : "fas fa-eye",
+        onclick: async (ev) => {
+          // Get current value at click time, not at button creation time
+          const currentlyHidden = this.actor.system.hideFromTracker || false;
+          const newValue = !currentlyHidden;
+          await this.actor.update({ 'system.hideFromTracker': newValue });
+
+          // Re-render the pathos tracker to reflect the change
+          if (ui.pathosTracker) {
+            ui.pathosTracker.render({ force: true });
+          }
+
+          // Update the button icon directly
+          const button = ev.currentTarget;
+          const icon = button.querySelector('i');
+          if (icon) {
+            icon.className = newValue ? "fas fa-eye-slash" : "fas fa-eye";
+          }
+          // Update tooltip
+          button.title = newValue ? "Show in Divine Agony Tracker" : "Hide from Divine Agony Tracker";
+        }
+      });
+
+      // Set initial tooltip based on current state
+      // This will be applied after render via a small delay
+      setTimeout(() => {
+        const btn = this.element?.find?.('.toggle-tracker');
+        if (btn?.length) {
+          btn.attr('title', isHidden ? "Show in Divine Agony Tracker" : "Hide from Divine Agony Tracker");
+        }
+      }, 0);
+    }
+
+    return buttons;
+  }
+
   /* -------------------------------------------- */
 
   /** @override */
@@ -149,7 +195,7 @@ export class CainActorSheet extends ActorSheet {
     context.selectedTalismans = this.actor.system.selectedTalismans || [];
 
     console.log(context.globalTalismans);
-    
+
     return context;
   }
 
@@ -265,13 +311,13 @@ export class CainActorSheet extends ActorSheet {
   /** @override */
   activateListeners(html) {
     super.activateListeners(html);
-  
+
     html.on('click', '.item-edit', (ev) => {
       const li = $(ev.currentTarget).parents('.item');
       const item = this.actor.items.get(li.data('itemId'));
       item.sheet.render(true);
     });
-  
+
     if (!this.isEditable) return;
   
     html.on('click', '.item-create', this._onItemCreate.bind(this));
