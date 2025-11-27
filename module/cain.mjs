@@ -196,6 +196,14 @@ Hooks.once('init', async function () {
     default: true,
   });
 
+  game.settings.register('cain', 'pathosTrackerPosition', {
+    name: 'Pathos Tracker Position',
+    scope: 'client',
+    config: false,
+    type: Object,
+    default: { top: 60, left: 110 },
+  });
+
   function registerHotkeySetting(settingName, settingLabel, settingHint) {
     game.settings.register('cain', settingName, {
       name: settingLabel,

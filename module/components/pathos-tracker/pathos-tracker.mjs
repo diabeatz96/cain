@@ -1,5 +1,7 @@
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
 
+// Default position if no saved position exists
+const DEFAULT_POSITION = { top: 60, left: 110 };
 
 class PathosTracker extends HandlebarsApplicationMixin(ApplicationV2) {
   static DEFAULT_OPTIONS = {
@@ -13,8 +15,8 @@ class PathosTracker extends HandlebarsApplicationMixin(ApplicationV2) {
       resizable: false,
     },
     position: {
-      top: 60,
-      left: 110,
+      top: DEFAULT_POSITION.top,
+      left: DEFAULT_POSITION.left,
     }
   }
   static PARTS = {
@@ -31,6 +33,33 @@ class PathosTracker extends HandlebarsApplicationMixin(ApplicationV2) {
         actor.apps[this.id] = this;
       }
     }
+
+    // Load saved position
+    const savedPosition = game.settings.get('cain', 'pathosTrackerPosition');
+    if (savedPosition && savedPosition.top !== undefined && savedPosition.left !== undefined) {
+      this.setPosition(savedPosition);
+    }
+  }
+
+  // Save position when window is moved
+  setPosition(position) {
+    const result = super.setPosition(position);
+
+    // Save position to settings (debounced to avoid too many writes)
+    if (this._positionSaveTimeout) {
+      clearTimeout(this._positionSaveTimeout);
+    }
+    this._positionSaveTimeout = setTimeout(() => {
+      const currentPos = this.position;
+      if (currentPos.top !== undefined && currentPos.left !== undefined) {
+        game.settings.set('cain', 'pathosTrackerPosition', {
+          top: currentPos.top,
+          left: currentPos.left
+        });
+      }
+    }, 100);
+
+    return result;
   }
 
   async _preparePartContext(partId, context) {
