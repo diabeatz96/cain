@@ -4,7 +4,7 @@
   <header class="sheet-header mob-psycho-header character-drop-target">
 
     <img class="profile-img mob-psycho-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="200" width="200"/>
-                                   
+
     <div class="header-fields mob-psycho-header-fields">
       <h1 class="charname mob-psycho-charname"><input name="name" type="text" value="{{actor.name}}" placeholder="Name"/></h1>
 
@@ -97,7 +97,7 @@
         {{!-- Psyche Roll --}}
         <div class="ability flexrow mob-psycho-ability flex-group-center">
           <label class="resource-label rollable mob-psycho-label"
-                data-roll="{{system.psyche}}d6cs>=4"
+                data-roll="{{system.psyche}}d6cs>=4{{#if (gt system.extraDice.value 0)}}+{{system.extraDice.value}}d6cs>=4{{/if}}"
                 data-label="Psyche"
                 data-tooltip="Roll your psyche dice">
             Psyche

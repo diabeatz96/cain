@@ -1,29 +1,34 @@
 <div class="tab description paper-texture" data-group="primary" data-tab="description">
-    <div class="form-grid">
-        <div class="form-group dark-form-group">
-            <label for="system.traumas" class="centered-label">Trauma Questions</label>
-            <div class="trauma-list">
-                {{#each system.traumas as |trauma index|}}
-                    <div class="trauma-item">
-                        <input type="checkbox" name="system.traumas.{{index}}.answered"
-                               {{#if trauma.answered}}checked{{/if}} />
-                        <input type="text" name="system.traumas.{{index}}.question" value="{{trauma.question}}"
-                               class="trauma-question-input {{#if trauma.answered}}crossed-out{{/if}}"/>
-                    </div>
-                {{/each}}
-            </div>
+    <!-- Trauma Questions Card -->
+    <div class="description-card">
+        <div class="card-header">
+            <h2 class="card-title">Trauma Questions</h2>
         </div>
-        <hr class="divider">
-        <div class="form-group dark-form-group full-width">
-            <label for="system.biography" class="centered-label">Biography and Appearance</label>
-            {{ editor enrichedBiography target='system.biography' engine='prosemirror' button=true editable=editable
-                      class="mob-psycho-editor" }}
+        <div class="trauma-list">
+            {{#each system.traumas as |trauma index|}}
+                <div class="trauma-item">
+                    <input type="checkbox" name="system.traumas.{{index}}.answered"
+                           {{#if trauma.answered}}checked{{/if}} class="trauma-checkbox" />
+                    <input type="text" name="system.traumas.{{index}}.question" value="{{trauma.question}}"
+                           class="trauma-question-input {{#if trauma.answered}}crossed-out{{/if}}"/>
+                </div>
+            {{/each}}
+        </div>
+    </div>
+
+    <!-- Biography and Appearance Card -->
+    <div class="description-card">
+        <div class="card-header">
+            <h2 class="card-title">Biography & Appearance</h2>
+        </div>
+        <div class="editor-container">
+            {{ editor enrichedBiography target='system.biography' engine='prosemirror' button=true editable=editable class="editor-style" }}
         </div>
     </div>
 </div>
 
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Courier+New:wght@400;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Pirata+One&display=swap');
 
     .tab.description {
         border-radius: 5px 5px 0 0;
@@ -39,128 +44,161 @@
         background-blend-mode: hard-light;
     }
 
-    .tab.description .form-grid {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 20px;
+    /* Card Styling */
+    .description-card {
+        background-image: url("systems/cain/assets/backgrounds/paper2.jpg");
+        background-position: 50% 50%;
+        background-blend-mode: darken;
+        background-color: rgb(134, 134, 134);
+        border: solid 2px black;
+        border-radius: 20px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     }
 
-    .tab.description .form-group {
-        text-align: center;
+    /* Sin Type Theme Colors */
+    .ogre .description-card {
+        background-color: #0d79f2;
     }
 
-    .tab.description .dark-form-group label {
-        color: black;
-        font-weight: bold;
-        display: block;
-        margin-bottom: 10px;
+    .idol .description-card {
+        background-color: #e40df2;
     }
 
-    .tab.description .centered-label {
-        text-align: center;
-        font-family: 'Courier New', monospace;
-        font-weight: 700;
-        font-size: 1.4em; /* Larger font size */
-        letter-spacing: 0.1em; /* Increased spacing between letters */
+    .toad .description-card {
+        background-color: #f2af0d;
     }
 
-    .tab.description .large-textarea {
-        width: 100%;
-        height: 150px;
-        padding: 10px;
-        background-color: #333;
-        color: black;
-        border: 1px solid #444;
-        border-radius: 4px;
+    .hound .description-card {
+        background-color: #ff0808;
     }
 
-    .tab.description .mob-psycho-editor {
-        width: 100%;
-        height: 400px; /* Increased height for better editing experience */
-        padding: 10px;
-        background-color: white;
-        color: black;
-        border: 1px solid #444;
-        border-radius: 4px;
-        overflow-y: auto;
+    .centipede .description-card {
+        background-color: #9f00ff;
     }
 
-    .tab.description .full-width {
-        grid-column: span 1;
-        height: 400px; /* Increased height for better editing experience */
+    .lord .description-card {
+        background-color: #91ffef;
     }
 
-    form .tab.description .form-group {
-        display: block;
+    .redacted .description-card {
+        background-color: rgb(134, 134, 134);
+    }
+
+    .card-header {
         margin-bottom: 20px;
     }
 
+    .card-title {
+        font-family: 'Pirata One', serif;
+        font-size: 48px;
+        color: black;
+        text-align: center;
+        margin: 0;
+        text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
+    }
+
+    /* Trauma Questions Styling */
     .trauma-list {
-        margin: auto;
-        width: 90%;
         display: flex;
         flex-direction: column;
-        gap: 10px;
+        gap: 12px;
+        background: rgba(255, 255, 255, 0.4);
+        border: 2px solid black;
+        border-radius: 10px;
+        padding: 20px;
     }
 
     .trauma-item {
         display: flex;
         align-items: center;
-        gap: 10px;
-        position: relative;
+        gap: 15px;
+        background: white;
+        border: 2px solid black;
+        border-radius: 8px;
+        padding: 12px;
+        transition: all 0.3s ease;
+    }
+
+    .trauma-item:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .trauma-checkbox {
+        min-width: 24px;
+        width: 24px;
+        height: 24px;
+        cursor: pointer;
+        border: 2px solid black !important;
+        border-radius: 4px;
+        background-color: white !important;
+        transition: all 0.3s ease;
+        flex-shrink: 0;
+        position: relative !important;
+        left: 0 !important;
+    }
+
+    .trauma-checkbox:checked {
+        background-color: #4CAF50 !important;
+        transform: rotate(10deg);
+    }
+
+    .trauma-checkbox:hover {
+        transform: scale(1.1);
     }
 
     .trauma-question-input {
-        width: 100%;
+        flex: 1;
         padding: 10px;
-        border-radius: 4px;
+        border: 1px solid #888;
+        border-radius: 6px;
         font-family: 'Courier New', monospace;
-        transition: background-color 0.3s ease, color 0.3s ease;
+        font-size: 16px;
+        background-color: rgba(255, 255, 255, 0.9);
+        color: black;
+        transition: all 0.3s ease;
+    }
+
+    .trauma-question-input:focus {
+        outline: none;
+        border-color: #2a7bc4;
+        box-shadow: 0 0 0 3px rgba(42, 123, 196, 0.3);
+        background-color: white;
     }
 
     .trauma-question-input.crossed-out {
         text-decoration: line-through;
+        opacity: 0.7;
     }
 
-    .divider {
-        border: 0;
-        height: 1px;
-        background: #444;
-        margin: 20px 0;
+    /* Editor Container */
+    .editor-container {
+        background: white;
+        border: 2px solid black;
+        border-radius: 10px;
+        padding: 15px;
+        min-height: 300px;
     }
 
-    .tab.description [type="checkbox"] {
-        width: 20px;
-        height: 20px;
-        margin: 0;
-        padding: 0;
-        border: 1px solid #444;
-        border-radius: 4px;
-        background-color: white;
-        font-family: 'Courier New', monospace;
-        position: absolute;
-        left: -30px;
-        cursor: pointer;
-        transition: transform 0.3s ease, background-color 0.3s ease;
-    }
-
-    .tab.description [type="checkbox"]:checked {
-        background-color: #00ff00;
-        transform: rotate(20deg);
-    }
-
-    .tab.description [type="checkbox"]:checked + .trauma-question-input {
-        text-decoration: line-through;
-    }
-
-    .tab.description [type="text"] {
+    .editor-style {
         width: 100%;
-        padding: 10px;
-        background-color: white;
-        color: black;
-        border-bottom: 1px solid #444;
+        min-height: 280px;
         font-family: 'Courier New', monospace;
-        transition: background-color 0.3s ease, color 0.3s ease;
+        font-size: 16px;
     }
 
+    /* Form overrides */
+    form .tab.description .description-card {
+        display: block;
+    }
+
+    form .tab.description .editor-container {
+        display: block;
+    }
+
+    form .tab.description .trauma-list {
+        display: flex;
+    }
 </style>

@@ -1,77 +1,98 @@
 <div class="tab attacks paper-texture" data-group="primary" data-tab="attacks">
     {{log system}}
     {{log system.sinType}}
-    <div class="form-grid">
-        <div class="form-group dark-form-group">
-            {{#if (eq system.sinType "redacted")}}
-                <label for="system.complications"><strong>Complications:</strong></label>
-                <textarea class="styled-textarea" name="system.complications">{{system.complications}}</textarea>
-            {{else}}
-                <p class="styled-paragraph"><strong>Complications:</strong> {{system.complications}}</p>
-            {{/if}}
+
+    <!-- Complications & Threats Section -->
+    <div class="attacks-card">
+        <div class="card-grid">
+            <div class="info-section">
+                <h3 class="section-header">Complications</h3>
+                <div class="content-box">
+                    {{#if (eq system.sinType "redacted")}}
+                        <textarea class="journal-textarea" name="system.complications">{{system.complications}}</textarea>
+                    {{else}}
+                        <p class="journal-text">{{system.complications}}</p>
+                    {{/if}}
+                </div>
+            </div>
+            <div class="info-section">
+                <h3 class="section-header">Threats</h3>
+                <div class="content-box">
+                    {{#if (eq system.sinType "redacted")}}
+                        <textarea class="journal-textarea" name="system.threats">{{system.threats}}</textarea>
+                    {{else}}
+                        <p class="journal-text">{{system.threats}}</p>
+                    {{/if}}
+                </div>
+            </div>
         </div>
-        <div class="form-group dark-form-group">
-            {{#if (eq system.sinType "redacted")}}
-                <label for="system.threats"><strong>Threats:</strong></label>
-                <textarea class="styled-textarea" name="system.threats">{{system.threats}}</textarea>
-            {{else}}
-                <p class="styled-paragraph"><strong>Threats:</strong> {{system.threats}}</p>
-            {{/if}}
+    </div>
+
+    <!-- Attack Buttons -->
+    <div class="attack-actions">
+        <button class="journal-button quick-action-button attack-player">
+            <span class="button-label">Attack</span>
+        </button>
+        <button class="journal-button quick-action-button severe-attack">
+            <span class="button-label">Severe Attack</span>
+        </button>
+    </div>
+
+    <!-- Severe Attack Description -->
+    <div class="attacks-card severe-attack-section">
+        <h2 class="card-title">Severe Attack</h2>
+        <div class="editor-container">
+            {{ editor enrichedDescription target='system.severeAttack.description' engine='prosemirror' button=true
+                      class="editor-style" editable=editable }}
         </div>
     </div>
-    <div class="button-group">
-        <button class="attack-button demon-button">Attack</button>
-        <button class="severe-attack-button demon-button">Severe Attack</button>
-    </div>
-    <div class="form-group dark-form-group full-width">
-        <label for="system.severeAttack.description" class="centered-label">Severe Attack</label>
-        {{ editor enrichedDescription target='system.severeAttack.description' engine='prosemirror' button=true
-                  class="editor-style" editable=editable }}
-    </div>
-    <div class="form-group dark-form-group full-width flexible-height">
-        <label class="centered-label">Severe Ability Questions</label>
+
+    <!-- Severe Ability Questions -->
+    <div class="attacks-card questions-section">
+        <h2 class="card-title">Severe Ability Questions</h2>
         <div id="severe-ability-questions-section">
             {{#each system.severeAbilityQuestions}}
-                <div class="question-group">
-                    <label for="system.severeAbilityQuestions.{{@index}}">Q{{@index}}:</label>
-                    <textarea class="styled-textarea"
+                <div class="question-row">
+                    <label class="question-label">Q{{@index}}:</label>
+                    <textarea class="journal-textarea question-input"
                               name="system.severeAbilityQuestions.{{@index}}">{{this}}</textarea>
-                    <button class="delete-question-button" onclick="deleteSevereAbilityQuestion({{@index}})">Delete
+                    <button class="icon-button delete-btn">
+                        <i class="fas fa-trash"></i>
                     </button>
                 </div>
             {{/each}}
-            <button class="add-question-button" onclick="addSevereAbilityQuestion()">Add Question</button>
+            <button class="journal-button add-btn">
+                <i class="fas fa-plus"></i> Add Question
+            </button>
         </div>
     </div>
-    <div class="form-group dark-form-group">
-        <label for="system.afflictions" class="centered-label">Afflictions</label>
+
+    <!-- Afflictions -->
+    <div class="attacks-card afflictions-section">
+        <h2 class="card-title">Afflictions</h2>
         <div id="afflictions-section">
-            <table class="afflictions-table">
-                <thead>
-                <tr>
-                    <th>Affliction</th>
-                </tr>
-                </thead>
-                <tbody>
+            <div class="afflictions-list">
                 {{#each system.afflictions}}
-                    <tr>
+                    <div class="affliction-item">
                         {{#if (eq ../system.sinType "redacted")}}
-                            <td><input type="text" class="styled-input" name="system.afflictions.{{@index}}"
-                                       value="{{this}}"/></td>
+                            <input type="text" class="affliction-input" name="system.afflictions.{{@index}}"
+                                   value="{{this}}"/>
                         {{else}}
-                            <td>{{this}}</td>
+                            <span class="affliction-text">{{this}}</span>
                         {{/if}}
-                    </tr>
+                    </div>
                 {{/each}}
-                </tbody>
-            </table>
-            <button class="roll-affliction">Roll Affliction</button>
+            </div>
+            <button class="journal-button roll-btn">
+                <i class="fas fa-dice-d20"></i> Roll Affliction
+            </button>
         </div>
     </div>
 </div>
 
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Pirata+One&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap');
 
     .tab.attacks {
         border-radius: 5px 5px 0 0;
@@ -87,194 +108,316 @@
         background-blend-mode: hard-light;
     }
 
-    .tab.attacks .form-grid {
+    /* Card Styling */
+    .attacks-card {
+        background-image: url("systems/cain/assets/backgrounds/paper2.jpg");
+        background-position: 50% 50%;
+        background-blend-mode: darken;
+        background-color: rgb(134, 134, 134);
+        border: solid 2px black;
+        border-radius: 20px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Sin Type Theme Colors */
+    .ogre .attacks-card {
+        background-color: #0d79f2;
+    }
+
+    .idol .attacks-card {
+        background-color: #e40df2;
+    }
+
+    .toad .attacks-card {
+        background-color: #f2af0d;
+    }
+
+    .hound .attacks-card {
+        background-color: #ff0808;
+    }
+
+    .centipede .attacks-card {
+        background-color: #9f00ff;
+    }
+
+    .lord .attacks-card {
+        background-color: #91ffef;
+    }
+
+    .redacted .attacks-card {
+        background-color: rgb(134, 134, 134);
+    }
+
+    .card-title {
+        font-family: 'Pirata One', serif;
+        font-size: 48px;
+        color: black;
+        text-align: center;
+        margin: 0 0 20px 0;
+        text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
+        border-bottom: dashed 3px black;
+        padding-bottom: 10px;
+    }
+
+    .section-header {
+        font-family: 'Pirata One', serif;
+        font-size: 32px;
+        color: black;
+        text-align: center;
+        margin: 0 0 15px 0;
+        text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
+        border-bottom: solid 2px black;
+        padding-bottom: 5px;
+    }
+
+    /* Grid Layout */
+    .card-grid {
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 20px;
     }
 
-    .tab.attacks .form-group {
-        margin-bottom: 20px;
-        text-align: center;
+    .info-section {
+        background: rgba(255, 255, 255, 0.3);
+        border: 2px solid black;
+        border-radius: 10px;
+        padding: 15px;
     }
 
-    .tab.attacks .dark-form-group {
+    .content-box {
+        background: white;
         border: 1px solid #444;
-        padding: 10px;
-        border-radius: 4px;
-        margin-bottom: 20px;
+        border-radius: 8px;
+        padding: 12px;
+        min-height: 100px;
     }
 
-    .tab.attacks .dark-form-group label {
-        color: #f5f5f5;
-        font-weight: bold;
-        display: block;
-        margin-bottom: 10px;
-        cursor: pointer;
-    }
-
-    .tab.attacks .styled-paragraph {
-        font-size: 1em;
-        letter-spacing: 0.05em;
-        margin-bottom: 20px;
-    }
-
-    .tab.attacks .styled-input, .tab.attacks .styled-textarea {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #444;
-        border-radius: 4px;
-        background-color: white;
+    /* Text Styles */
+    .journal-text {
+        font-family: 'Courier New', monospace;
+        font-size: 18px;
         color: black;
+        line-height: 1.6;
+        margin: 0;
+        white-space: pre-wrap;
     }
 
-    .tab.attacks .button-group {
+    .journal-textarea {
+        width: 100%;
+        font-family: 'Courier New', monospace;
+        font-size: 18px;
+        color: black;
+        background: transparent;
+        border: none;
+        resize: vertical;
+        min-height: 80px;
+        line-height: 1.6;
+    }
+
+    .journal-textarea:focus {
+        outline: none;
+        background: rgba(255, 255, 255, 0.3);
+    }
+
+    /* Button Styles */
+    .attack-actions {
         display: flex;
         justify-content: center;
-        gap: 20px;
-        margin-top: 20px;
-        margin-bottom: 20px;
-        padding: 10px;
-        background-color: #2a2a2a;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        gap: 30px;
+        margin: 20px 0;
     }
 
-    .tab.attacks .demon-button {
-        padding: 15px 30px;
-        background: linear-gradient(45deg, #ff0000, #8b0000);
-        color: #fff;
-        border: none;
-        border-radius: 8px;
+    .journal-button {
+        font-family: 'Pirata One', serif;
+        font-size: 32px;
+        color: white;
+        background-color: black;
+        border: 3px solid black;
+        border-radius: 15px;
+        padding: 15px 40px;
         cursor: pointer;
-        font-family: 'Cinzel', serif;
-        font-size: 1.5em;
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-        text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 30px #ff0000;
-        position: relative;
-        overflow: hidden;
         transition: all 0.3s ease;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     }
 
-    .tab.attacks .demon-button::before {
-        content: '';
-        position: absolute;
-        top: -50%;
-        left: -50%;
-        width: 200%;
-        height: 200%;
-        background: radial-gradient(circle, rgba(255, 0, 0, 0.5), transparent 70%);
-        transition: all 0.3s ease;
-        transform: rotate(45deg);
+    .journal-button:hover {
+        transform: translateY(-3px) rotate(-2deg);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
     }
 
-    .tab.attacks .demon-button:hover {
-        background: linear-gradient(45deg, #8b0000, #ff0000);
-        text-shadow: 0 0 20px #ff0000, 0 0 30px #ff0000, 0 0 40px #ff0000;
+    .journal-button:active {
+        transform: translateY(0) rotate(0deg);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     }
 
-    .tab.attacks .demon-button:hover::before {
-        top: -70%;
-        left: -70%;
-        transform: rotate(90deg);
+    .attack-btn {
+        background: linear-gradient(135deg, #8b0000 0%, #d32f2f 100%);
+        border-color: #5a0000;
     }
 
-    .tab.attacks .demon-button:active {
-        background: linear-gradient(45deg, #ff0000, #8b0000);
-        box-shadow: 0 0 20px #ff0000, 0 0 30px #ff0000, 0 0 40px #ff0000;
+    .attack-btn:hover {
+        background: linear-gradient(135deg, #d32f2f 0%, #8b0000 100%);
+        box-shadow: 0 6px 12px rgba(139, 0, 0, 0.6);
     }
 
-    .tab.attacks .attack-button, .tab.attacks .severe-attack-button, .tab.attacks .add-question-button, .tab.attacks .delete-question-button {
+    .severe-btn {
+        background: linear-gradient(135deg, #4a0000 0%, #8b0000 100%);
+        border-color: #2a0000;
+    }
+
+    .severe-btn:hover {
+        background: linear-gradient(135deg, #8b0000 0%, #4a0000 100%);
+        box-shadow: 0 6px 12px rgba(74, 0, 0, 0.8);
+    }
+
+    .add-btn {
+        font-size: 20px;
         padding: 10px 20px;
-        background-color: #444;
-        color: #f5f5f5;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        width: auto;
+        margin-top: 15px;
+        background: linear-gradient(135deg, #2a2a2a 0%, #444 100%);
     }
 
-    .tab.attacks .attack-button:hover, .tab.attacks .severe-attack-button:hover, .tab.attacks .add-question-button:hover, .tab.attacks .delete-question-button:hover {
-        background-color: #ff5555;
+    .add-btn:hover {
+        background: linear-gradient(135deg, #444 0%, #2a2a2a 100%);
     }
 
-    .tab.attacks .afflictions-table {
+    .roll-btn {
+        font-size: 24px;
+        padding: 12px 30px;
+        margin-top: 15px;
+        background: linear-gradient(135deg, #1a5490 0%, #2a7bc4 100%);
+        border-color: #0a3460;
+    }
+
+    .roll-btn:hover {
+        background: linear-gradient(135deg, #2a7bc4 0%, #1a5490 100%);
+        box-shadow: 0 6px 12px rgba(26, 84, 144, 0.6);
+    }
+
+    /* Editor */
+    .editor-container {
+        background: white;
+        border: 2px solid black;
+        border-radius: 10px;
+        padding: 15px;
+        min-height: 200px;
+    }
+
+    .editor-style {
         width: 100%;
-        border-collapse: collapse;
-        margin-top: 10px;
+        min-height: 180px;
+        font-family: 'Courier New', monospace;
+        font-size: 16px;
     }
 
-    .tab.attacks .afflictions-table th, .tab.attacks .afflictions-table td {
-        border: 1px solid #444;
-        padding: 8px;
-        text-align: center;
-    }
-
-    .tab.attacks .afflictions-table th {
-        background-color: white;
-        color: black;
-    }
-
-    .tab.attacks .afflictions-table td {
-        background-color: white;
-        color: black;
-    }
-
-    .tab.attacks .roll-affliction {
-        margin-top: 10px;
-        padding: 10px 20px;
-        background-color: #444;
-        color: #f5f5f5;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-
-    .tab.attacks .roll-affliction:hover {
-        background-color: #ff5555;
-    }
-
-    .tab.attacks .editor-style {
-        width: 100%;
-        height: 85%;
-    }
-
-    .tab.attacks .centered-label {
-        text-align: center;
-        font-family: "Cinzel", sans-serif;
-        font-weight: 400;
-        font-size: 1.5em;
-        letter-spacing: 0.05em;
-        color: #ff5555;
-        background-color: #000;
-        padding: 10px;
-        border-radius: 4px;
-        text-shadow: 0 0 10px #ff5555, 0 0 20px #ff5555, 0 0 30px #ff5555;
-    }
-
-    .tab.attacks .full-width {
-        grid-column: span 2;
-        height: 420px;
-    }
-
-    .tab.attacks .flexible-height {
-        height: auto;
-    }
-
-    .tab.attacks .question-group {
+    /* Questions Section */
+    .question-row {
         display: flex;
         align-items: center;
         gap: 10px;
-        margin-bottom: 10px;
+        margin-bottom: 12px;
+        background: rgba(255, 255, 255, 0.4);
+        border: 2px solid black;
+        border-radius: 10px;
+        padding: 10px;
     }
 
-    .tab.attacks .question-group label {
-        margin-bottom: 0;
+    .question-label {
+        font-family: 'Cinzel', serif;
+        font-size: 18px;
+        font-weight: 600;
+        color: black;
+        min-width: 50px;
+        text-align: center;
     }
 
-    form .tab.attacks .form-group {
-        display: block;
+    .question-input {
+        flex: 1;
+        min-height: 60px;
+        border: 1px solid #444;
+        border-radius: 5px;
+        padding: 8px;
+        background: white;
+    }
+
+    .icon-button {
+        background: black;
+        color: white;
+        border: 2px solid black;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .icon-button:hover {
+        background: #d32f2f;
+        border-color: #8b0000;
+        transform: scale(1.1);
+    }
+
+    .delete-btn i {
+        font-size: 16px;
+    }
+
+    /* Afflictions */
+    .afflictions-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 15px;
         margin-bottom: 20px;
+    }
+
+    .affliction-item {
+        background: white;
+        border: 2px solid black;
+        border-radius: 10px;
+        padding: 12px;
+        text-align: center;
+        transition: all 0.3s ease;
+    }
+
+    .affliction-item:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .affliction-text {
+        font-family: 'Courier New', monospace;
+        font-size: 18px;
+        font-weight: 600;
+        color: black;
+    }
+
+    .affliction-input {
+        width: 100%;
+        font-family: 'Courier New', monospace;
+        font-size: 18px;
+        font-weight: 600;
+        color: black;
+        background: transparent;
+        border: none;
+        text-align: center;
+    }
+
+    .affliction-input:focus {
+        outline: none;
+        background: rgba(255, 255, 255, 0.5);
+    }
+
+    /* Form overrides */
+    form .tab.attacks .attacks-card {
+        display: block;
+    }
+
+    form .tab.attacks .info-section {
+        display: block;
     }
 </style>

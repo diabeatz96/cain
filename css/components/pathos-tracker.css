@@ -1,0 +1,140 @@
+@keyframes flickerAnimation {
+    0% { background-color: transparent; }
+    75% { background-color: #e40df2; }
+    100% { background-color: transparent; }
+}
+
+.pathos-tracker {
+    color: white;
+    cursor: pointer;
+
+    /* Style window header - black theme */
+    .window-header {
+        background: #000000 !important;
+        border-bottom: 1px solid #333 !important;
+        padding: 4px 8px !important;
+    }
+
+    .window-header .window-title {
+        color: #e40df2 !important;
+        font-size: 12px !important;
+        font-weight: bold !important;
+        text-transform: uppercase !important;
+        letter-spacing: 1px !important;
+    }
+
+    /* Hide close button and other controls */
+    .header-control {
+        display: none !important;
+    }
+
+    /* Main window styling - pure black */
+    background: #000000 !important;
+    border: 1px solid #333 !important;
+    border-radius: 6px !important;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.8) !important;
+
+    .window-content {
+        padding: 8px 0 !important;
+        background: #000000 !important;
+        border: none !important;
+        border-radius: 0 !important;
+    }
+
+    .pathos-list {
+        padding: 0;
+    }
+
+    table {
+        margin: 0;
+        background: transparent;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 4px 12px;
+        background: transparent;
+        border: none;
+    }
+
+    td:first-child {
+        color: #ccc;
+    }
+
+    td:last-child {
+        text-align: right;
+        font-weight: bold;
+        color: white;
+    }
+
+    .divine-agony {
+        border-radius: 20px;
+        padding: 3px 10px 3px 10px;
+        animation: flickerAnimation 1s infinite;
+    }
+}
+
+/* Scene control button styling for Divine Agony tracker - v12 */
+#controls .control-tool[data-tool="pathos-tracker"] {
+    position: relative;
+}
+
+#controls .control-tool[data-tool="pathos-tracker"]::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 26px;
+    height: 26px;
+    background-image: url('/systems/cain/assets/items/divine agony.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    filter: grayscale(80%) brightness(1.2);
+    transition: filter 0.2s;
+}
+
+#controls .control-tool[data-tool="pathos-tracker"] i {
+    opacity: 0;
+}
+
+#controls .control-tool[data-tool="pathos-tracker"].active::before,
+#controls .control-tool[data-tool="pathos-tracker"]:hover::before {
+    filter: grayscale(0%) brightness(1);
+}
+
+/* Scene control button styling for Divine Agony tracker - v13 */
+#scene-controls [data-tool="pathos-tracker"],
+#scene-controls [data-action="pathos-tracker"] {
+    position: relative;
+}
+
+#scene-controls [data-tool="pathos-tracker"]::before,
+#scene-controls [data-action="pathos-tracker"]::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 26px;
+    height: 26px;
+    background-image: url('/systems/cain/assets/items/divine agony.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    filter: grayscale(80%) brightness(1.2);
+    transition: filter 0.2s;
+}
+
+#scene-controls [data-tool="pathos-tracker"] i,
+#scene-controls [data-action="pathos-tracker"] i {
+    opacity: 0;
+}
+
+#scene-controls [data-tool="pathos-tracker"].active::before,
+#scene-controls [data-tool="pathos-tracker"]:hover::before,
+#scene-controls [data-action="pathos-tracker"].active::before,
+#scene-controls [data-action="pathos-tracker"]:hover::before {
+    filter: grayscale(0%) brightness(1);
+}

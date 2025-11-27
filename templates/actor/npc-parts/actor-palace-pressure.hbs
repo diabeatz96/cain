@@ -1,130 +1,119 @@
 <div class="tab palace-pressure paper-texture" data-group="primary" data-tab="palace-pressure">
-  <div class="form-grid">
-    <div class="form-group dark-form-group full-width">
-      <label for="system.palace" class="centered-label">Palace</label>
-      {{ editor enrichedPalace target='system.palace' engine='prosemirror' button=true editable=editable class="mob-psycho-editor" }}
+    <!-- Palace Card -->
+    <div class="palace-pressure-card">
+        <div class="card-header">
+            <h2 class="card-title">Palace</h2>
+        </div>
+        <div class="editor-container">
+            {{ editor enrichedPalace target='system.palace' engine='prosemirror' button=true editable=editable class="editor-style" }}
+        </div>
     </div>
-    <hr class="divider">
-    <div class="form-group dark-form-group full-width">
-      <label for="system.pressure" class="centered-label">Pressure</label>
-      {{ editor enrichedPressure target='system.pressure' engine='prosemirror' button=true editable=editable class="mob-psycho-editor" }}
+
+    <!-- Pressure Card -->
+    <div class="palace-pressure-card">
+        <div class="card-header">
+            <h2 class="card-title">Pressure</h2>
+        </div>
+        <div class="editor-container">
+            {{ editor enrichedPressure target='system.pressure' engine='prosemirror' button=true editable=editable class="editor-style" }}
+        </div>
     </div>
-  </div>
 </div>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Courier+New:wght@400;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Pirata+One&display=swap');
 
-.tab.palace-pressure {
-    border-radius: 5px 5px 0 0;
-    background-color: wheat;
-    color: black;
-    padding: 20px;
-    font-family: 'Courier New', monospace;
-}
+    .tab.palace-pressure {
+        border-radius: 5px 5px 0 0;
+        background-color: wheat;
+        color: black;
+        padding: 20px;
+        font-family: 'Courier New', monospace;
+    }
 
-.paper-texture {
-    background-image: url("systems/cain/assets/backgrounds/paper1.jpg");
-    background-position: 50% 50%;
-    background-blend-mode: hard-light;
-}
+    .paper-texture {
+        background-image: url("systems/cain/assets/backgrounds/paper1.jpg");
+        background-position: 50% 50%;
+        background-blend-mode: hard-light;
+    }
 
-.tab.palace-pressure .form-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 20px;
-}
+    /* Card Styling */
+    .palace-pressure-card {
+        background-image: url("systems/cain/assets/backgrounds/paper2.jpg");
+        background-position: 50% 50%;
+        background-blend-mode: darken;
+        background-color: rgb(134, 134, 134);
+        border: solid 2px black;
+        border-radius: 20px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
 
-.tab.palace-pressure .form-group {
-  text-align: center;
-}
+    /* Sin Type Theme Colors */
+    .ogre .palace-pressure-card {
+        background-color: #0d79f2;
+    }
 
-.tab.palace-pressure .dark-form-group label {
-  color: black;
-  font-weight: bold;
-  display: block;
-  margin-bottom: 10px;
-}
+    .idol .palace-pressure-card {
+        background-color: #e40df2;
+    }
 
-.tab.palace-pressure .centered-label {
-  text-align: center;
-  font-family: 'Courier New', monospace;
-  font-weight: 700;
-  font-size: 1.4em; /* Larger font size */
-  letter-spacing: 0.1em; /* Increased spacing between letters */
-}
+    .toad .palace-pressure-card {
+        background-color: #f2af0d;
+    }
 
-.tab.palace-pressure .large-textarea {
-  width: 100%;
-  height: 150px;
-  padding: 10px;
-  background-color: wheat;
-  color: black;
-  border: 1px solid #444;
-  border-radius: 4px;
-}
+    .hound .palace-pressure-card {
+        background-color: #ff0808;
+    }
 
-.tab.palace-pressure .mob-psycho-editor {
-  width: 100%;
-  height: 200px; /* Increased height for better editing experience */
-  padding: 10px;
-  background-color: white;
-  color: black;
-  border: 1px solid #444;
-  border-radius: 4px;
-  overflow-y: auto;
-}
+    .centipede .palace-pressure-card {
+        background-color: #9f00ff;
+    }
 
-.tab.palace-pressure .full-width {
-  grid-column: span 1;
-  height: 200px; /* Increased height for better editing experience */
-}
+    .lord .palace-pressure-card {
+        background-color: #91ffef;
+    }
 
-form .tab.palace-pressure .form-group {
-  display: block;
-  margin-bottom: 20px;
-}
+    .redacted .palace-pressure-card {
+        background-color: rgb(134, 134, 134);
+    }
 
-.tab.palace-pressure .divider {
-  border: 0;
-  height: 1px;
-  background: #444;
-  margin: 20px 0;
-}
+    .card-header {
+        margin-bottom: 20px;
+    }
 
-.tab.palace-pressure input[type="checkbox"] {
-  width: 20px;
-  height: 20px;
-  margin: 0;
-  padding: 0;
-  border: 1px solid #444;
-  border-radius: 4px;
-  background-color: #333;
-  color: #f5f5f5;
-  font-family: 'Courier New', monospace;
-  position: absolute;
-  left: -30px;
-  cursor: pointer;
-  transition: transform 0.3s ease, background-color 0.3s ease;
-}
+    .card-title {
+        font-family: 'Pirata One', serif;
+        font-size: 48px;
+        color: black;
+        text-align: center;
+        margin: 0;
+        text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
+    }
 
-.tab.palace-pressure input[type="checkbox"]:checked {
-  background-color: #00ff00;
-  transform: rotate(20deg);
-}
+    /* Editor Container */
+    .editor-container {
+        background: white;
+        border: 2px solid black;
+        border-radius: 10px;
+        padding: 15px;
+        min-height: 200px;
+    }
 
-.tab.palace-pressure input[type="checkbox"]:checked + .trauma-question-input {
-  text-decoration: line-through;
-}
+    .editor-style {
+        width: 100%;
+        min-height: 180px;
+        font-family: 'Courier New', monospace;
+        font-size: 16px;
+    }
 
-.tab.palace-pressure input[type="text"] {
-  width: 100%;
-  padding: 10px;
-  background-color: white;
-  color: black;
-  border: 1px solid #444;
-  border-radius: 4px;
-  font-family: 'Courier New', monospace;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
+    /* Form overrides */
+    form .tab.palace-pressure .palace-pressure-card {
+        display: block;
+    }
+
+    form .tab.palace-pressure .editor-container {
+        display: block;
+    }
 </style>
