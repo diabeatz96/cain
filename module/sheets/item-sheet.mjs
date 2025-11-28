@@ -90,6 +90,11 @@ export class CainItemSheet extends ItemSheet {
       context.sinMarkAbilities = this.item.system.abilities.map(item => {return game.items.get(item);});
     }
 
+    if (this.item.type === "domain") {
+      const affliction = this._getItemFromID(this.item.system.afflictionEffect);
+      context.afflictionName = affliction.name;
+    }
+
     context.developerMode = game.settings.get('cain', 'developerMode');
     // Add the item's data to context.data for easier access, as well as flags.
     context.system = itemData.system;
@@ -109,6 +114,10 @@ export class CainItemSheet extends ItemSheet {
     root.style.setProperty('--text-color', this.item.system.textColor || '#000000');
 
     return context;
+  }
+
+  _getItemFromID(id) {
+    return game.items.get(id);
   }
 
   /* -------------------------------------------- */
@@ -193,7 +202,7 @@ export class CainItemSheet extends ItemSheet {
     html.find('#removeAbility').click(this._removeAbility.bind(this));
 
     if (this.item.type === "domain") {
-      html.find("#affliction-drop-target").on("drop", async event => {
+      html.find(".affliction-drop-target").on("drop", async event => {
         event.preventDefault();
         const data = JSON.parse(event.originalEvent.dataTransfer.getData('text/plain'));
         const itemDrop = await Item.fromDropData(data);

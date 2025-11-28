@@ -43,9 +43,9 @@
         <input type="checkbox" name="system.selectsExorcist" value="{{system.selectsExorcist}}"/>
       </div>
       {{#unless system.afflictionEffect}}
-        <div id="affliction-drop-target" class="affliction-drop-target">{{system.afflictionEffect.name}}</div>
+        <div class="affliction-drop-target">{{system.afflictionEffect.name}}</div>
       {{else}}
-        <span>{{system.afflictionEffect}}</span>
+        <span class="affliction-drop-target">{{afflictionName}}</span>
       {{/unless}}
     {{/if}}
   </div>
