@@ -1,6 +1,12 @@
 <form class='{{cssClass}} domain-card paper-texture2 {{system.sinSource}}' autocomplete='off'>
   <header>
     <div class='header-fields domain-header'>
+      <img
+        class='domain-img'
+        src='{{item.img}}'
+        data-edit='img'
+        title='{{item.name}}'
+      />
       <h1>
         <input
           name='name'
@@ -43,7 +49,7 @@
         <input type="checkbox" name="system.selectsExorcist" value="{{system.selectsExorcist}}"/>
       </div>
       {{#unless system.afflictionEffect}}
-        <div class="affliction-drop-target">{{system.afflictionEffect.name}}</div>
+        <div class="affliction-drop-target"></div>
       {{else}}
         <span class="affliction-drop-target">{{afflictionName}}</span>
       {{/unless}}

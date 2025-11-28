@@ -9,6 +9,13 @@
     .dashed-line {
         border-bottom: dashed #1a1a1a 4px;
     }
+
+    .domain-header {
+        display: flex;
+        .domain-img {
+            max-height: 75px;
+        }
+    }
     
     .domain-description {
         margin-top: 10px;
@@ -23,7 +30,7 @@
         background: rgb(0 0 0 / 31%);
         border-radius: 20px;
         color: white;
-        height: 90%;
+        height: 100%;
         font-size: 55px;
         font-family: 'Pirata One', system-ui;
         text-shadow: -3px -3px 0 #000, 3px -3px 0 #000, -3px 3px 0 #000, 3px 3px 0 #000;

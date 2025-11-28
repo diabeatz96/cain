@@ -1,5 +1,4 @@
 import CainItemBase from "../base-item.mjs";
-import { CainAffliction } from "../_module.mjs";
 
 export default class CainDomain extends CainItemBase {
   static defineSchema() {
@@ -11,5 +10,14 @@ export default class CainDomain extends CainItemBase {
     schema.selectsExorcist = new fields.BooleanField({required: false, nullable: false, initial: false});
     schema.afflictionEffect = new fields.StringField({required: false, nullable: true, initial: ''});
     return schema;
+  }
+
+  async _preCreate(data, options, user) {
+    await super._preCreate(data, options, user);
+
+    // ogre by default
+    this.parent.updateSource({
+      img: "systems/cain/assets/Sins/ogre.png"
+    })
   }
 }

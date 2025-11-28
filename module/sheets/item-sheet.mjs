@@ -92,7 +92,7 @@ export class CainItemSheet extends ItemSheet {
 
     if (this.item.type === "domain") {
       const affliction = this._getItemFromID(this.item.system.afflictionEffect);
-      context.afflictionName = affliction.name;
+      context.afflictionName = affliction?.name || null;
     }
 
     context.developerMode = game.settings.get('cain', 'developerMode');
@@ -210,7 +210,41 @@ export class CainItemSheet extends ItemSheet {
         console.log(`You dropped ${itemDrop.name}!`);
         this._addAfflictionToDomain(itemDrop);
       });
+
+      html.find('#sinTypeSelect').change(event => {
+        const sinType = event.target.value;
+        this._onSinTypeSelect(sinType);
+      });
     }
+  }
+
+  _onSinTypeSelect(sinType) {
+    let imgPath;
+    switch (sinType) {
+      case 'ogre':
+        imgPath = 'systems/cain/assets/Sins/ogre.png';
+        break;
+      case 'lord':
+        imgPath = 'systems/cain/assets/Sins/lord.png';
+        break;
+      case 'centipede':
+        imgPath = 'systems/cain/assets/Sins/centipede.png';
+        break;
+      case 'hound':
+        imgPath = 'systems/cain/assets/Sins/hound.png';
+        break;
+      case 'idol':
+        imgPath = 'systems/cain/assets/Sins/idol.png';
+        break;
+      case 'toad':
+        imgPath = 'systems/cain/assets/Sins/toad.png';
+        break;
+      default:
+        imgPath = 'systems/cain/assets/Sins/generic_sin.png';
+        break;
+    }
+
+    this.item.update({ img: imgPath });
   }
 
   _addAfflictionToDomain(item) {
