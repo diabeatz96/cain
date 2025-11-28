@@ -1,3 +1,4 @@
+/* TODO: system layer keeps messing my stuff up, how do i override it?*/
 .domain-card {
     border-radius: 20px;
     background-color: rgb(134, 134, 134);
@@ -8,36 +9,53 @@
     .dashed-line {
         border-bottom: dashed #1a1a1a 4px;
     }
+    
+    .domain-description {
+        margin-top: 10px;
+        background-color: #0000008a;
+        color: white;
+        font-size: 18px;
+        text-align: center;
+        padding: 10px 5px;
+    }
 
     .domain-name-input {
-        height: 90% !important;
-        font-size: 55px !important;
-        font-weight: bold;
-        font-family: 'Pirata One', system-ui !important;
+        background: rgb(0 0 0 / 31%);
+        border-radius: 20px;
+        color: white;
+        height: 90%;
+        font-size: 55px;
+        font-family: 'Pirata One', system-ui;
         text-shadow: -3px -3px 0 #000, 3px -3px 0 #000, -3px 3px 0 #000, 3px 3px 0 #000;
+    }
 
-        .hound {
-            color: #ff0808;
+    &.paper-texture2 {
+        background-image: url("/systems/cain/assets/backgrounds/paper2.jpg");
+        background-position: 50% 50%;
+        background-blend-mode: darken;
+
+        &.hound {
+            background-color: #ff0808;
         }
 
-        .centipede {
-            color: #9f00ff;
+        &.centipede {
+            background-color: #9f00ff;
         }
 
-        .idol {
-            color: #e40df2;
+        &.idol {
+            background-color: #e40df2;
         }
 
         &.ogre {
-            color: #0d79f2;
+            background-color: #0d79f2;
         }
 
-        .toad {
-            color: #f2af0d;
+        &.toad {
+            background-color: #f2af0d;
         }
 
-        .lord {
-            color: #91ffef;
+        &.lord {
+            background-color: #91ffef;
         }
     }
 
@@ -47,9 +65,20 @@
         h1 {
             font-family: 'Pirata One', system-ui;
             color: white;
-
-            margin-left: 16px;
             text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;
         }
+    }
+
+    .domain-option {
+        margin-top: 10px;
+    }
+
+    input[type="checkbox"] {
+        vertical-align: middle;
+    }
+
+    .affliction-drop-target {
+        height: 100px;
+        background-color: red;
     }
 }

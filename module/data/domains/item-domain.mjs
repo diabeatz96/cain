@@ -1,4 +1,5 @@
 import CainItemBase from "../base-item.mjs";
+import { CainAffliction } from "../_module.mjs";
 
 export default class CainDomain extends CainItemBase {
   static defineSchema() {
@@ -6,10 +7,9 @@ export default class CainDomain extends CainItemBase {
     const schema = super.defineSchema();
 
     schema.sinSource = new fields.StringField({ required: true, nullable: false, initial: "ogre" })
-    schema.domainName = new fields.StringField({ required: true, nullable: false, initial: "New Domain" });
     schema.domainDescription = new fields.StringField({required: true, nullable: false, initial: "Domain Description"});
-    schema.selectsExorcist = new fields.BooleanField({required: true, nullable: false, initial: false});
-
+    schema.selectsExorcist = new fields.BooleanField({required: false, nullable: false, initial: false});
+    schema.afflictionEffect = new fields.StringField({required: false, nullable: true, initial: ''});
     return schema;
   }
 }

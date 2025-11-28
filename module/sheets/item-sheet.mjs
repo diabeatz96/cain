@@ -191,6 +191,24 @@ export class CainItemSheet extends ItemSheet {
     // Add ability to the page
     html.find('#addAbility').click(this._addAbility.bind(this));
     html.find('#removeAbility').click(this._removeAbility.bind(this));
+
+    if (this.item.type === "domain") {
+      html.find("#affliction-drop-target").on("drop", async event => {
+        event.preventDefault();
+        const data = JSON.parse(event.originalEvent.dataTransfer.getData('text/plain'));
+        const itemDrop = await Item.fromDropData(data);
+        if (itemDrop.type !== "affliction") return;
+        console.log(`You dropped ${itemDrop.name}!`);
+        this._addAfflictionToDomain(itemDrop);
+      });
+    }
+  }
+
+  _addAfflictionToDomain(item) {
+    console.log(item.id);
+    this.item.update({'system.afflictionEffect': item.id})
+      .then(() => { console.log('updated item!', this.item); })
+    .catch(error => console.log(error));
   }
 
   _addTaskToAgenda(event) {
