@@ -92,7 +92,9 @@ export class CainItemSheet extends ItemSheet {
 
     if (this.item.type === "domain") {
       const affliction = this._getItemFromID(this.item.system.afflictionEffect);
+      console.log(affliction);
       context.afflictionName = affliction?.name || null;
+      context.afflictionDescription = affliction?.system.afflictionDescription || null;
     }
 
     context.developerMode = game.settings.get('cain', 'developerMode');
@@ -202,6 +204,8 @@ export class CainItemSheet extends ItemSheet {
     html.find('#removeAbility').click(this._removeAbility.bind(this));
 
     if (this.item.type === "domain") {
+      html.find('#remove-domain-affliction-button').click(this._removeDomainAffliction.bind(this))
+
       html.find(".affliction-drop-target").on("drop", async event => {
         event.preventDefault();
         const data = JSON.parse(event.originalEvent.dataTransfer.getData('text/plain'));
@@ -252,6 +256,11 @@ export class CainItemSheet extends ItemSheet {
     this.item.update({'system.afflictionEffect': item.id})
       .then(() => { console.log('updated item!', this.item); })
     .catch(error => console.log(error));
+  }
+
+  _removeDomainAffliction(event) {
+    event.preventDefault();
+    this.item.update({ 'system.afflictionEffect': null });
   }
 
   _addTaskToAgenda(event) {

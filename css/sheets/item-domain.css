@@ -27,6 +27,8 @@
     }
 
     .domain-name-input {
+        border: none;
+        margin-left: 10px;
         background: rgb(0 0 0 / 31%);
         border-radius: 20px;
         color: white;
@@ -70,6 +72,7 @@
         text-align: center;
 
         h1 {
+            border: none;
             font-family: 'Pirata One', system-ui;
             color: white;
             text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;
@@ -78,14 +81,87 @@
 
     .domain-option {
         margin-top: 10px;
+        color: black;
+        font-size: 15px;
     }
 
     input[type="checkbox"] {
         vertical-align: middle;
     }
 
-    .affliction-drop-target {
-        height: 100px;
-        background-color: red;
+    /* TODO: copied this over from the character sheet, we should centralize it */
+    .affliction {
+        display: flex;
+        position: relative;
+        align-items: center;
+        border-radius: 25px;
+        padding: 2px 0 2px 2px;
+        margin: 20px 0 20px 10px;
+        background-color: black;
+        color: aliceblue;
+
+        &.hound {
+            background-color: #ff0808;
+        }
+
+        &.centipede {
+            background-color: #9f00ff;
+        }
+
+        &.idol {
+            background-color: #e40df2;
+        }
+
+        &.ogre {
+            background-color: #0d79f2;
+        }
+
+        &.toad {
+            background-color: #f2af0d;
+        }
+
+        &.lord {
+            background-color: #91ffef;
+        }
+    }
+
+    .affliction-content {
+        line-height: 1.4;
+        padding: 10px 5px;
+    }
+
+    .affliction-description {
+        margin: 5px 0;
+        color:aliceblue;
+        line-height: 1.4;
+    }
+
+    .remove-affliction-div {
+        padding-left: 0 0px;
+        padding-top: 0 0px;
+        display: flex;
+        height: 100%;
+        border-top-right-radius: 25px;
+        border-bottom-right-radius: 25px;
+        max-width: 30px; /* Optional: Set a max-width if you want to prevent it from becoming too large */
+    }
+
+    .remove-affliction-button {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        height: 100%;
+        width: 30px;
+        background-color: brown;
+        border-radius: 0px;
+        border-top-right-radius: 15px;
+        border-bottom-right-radius: 15px;
+        border: 0px solid white;
+    }
+
+    .remove-affliction-button i {
+        color: black;
+        font-size: 16px;
+        text-align: center; /* Center the icon within its container */
     }
 }

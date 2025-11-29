@@ -19,7 +19,7 @@
   </header>
   <div class="row dashed-line">
   </div>
-  <div class='sheet-body domain-body'>
+  <div class='sheet-body domain-body affliction-drop-target'>
     <textarea
       class='domain-description'
       name='system.domainDescription'
@@ -46,13 +46,27 @@
       </div>
       <div class="domain-option">
         <span><b>Targets exorcist?</b></span>
-        <input type="checkbox" name="system.selectsExorcist" value="{{system.selectsExorcist}}"/>
+        <input type="checkbox" name="system.selectsExorcist" {{checked system.selectsExorcist}}/>
       </div>
+      <div class="domain-option">
       {{#unless system.afflictionEffect}}
-        <div class="affliction-drop-target"></div>
+        <span><b>If this domain targets an exorcist and inflicts an affliction, you can drag it here.</b></span>
       {{else}}
-        <span class="affliction-drop-target">{{afflictionName}}</span>
+        <div class="affliction flexrow flex-group-center mob-psycho-affliction">
+          <div class="flexcol affliction-content">
+            <h2><b>{{afflictionName}}</b></h2>
+            <div class="affliction-description" innerHtml="">
+              {{afflictionDescription}}
+            </div>
+          </div>
+          <div class="flexcol remove-affliction-div">
+            <button id="remove-domain-affliction-button" class="remove-affliction-button">
+              <i class="fas fa-trash"></i>
+            </button>
+          </div>
+        </div>
       {{/unless}}
+      </div>
     {{/if}}
   </div>
 </form>
