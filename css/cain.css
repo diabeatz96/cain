@@ -8,6 +8,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap');
 @import url('./eye-anim.css');
 @import url('./glitch-effect.css');
+@import url('./components/index.css');
 
 /*
  * CSS Layer Support for Foundry VTT v13
