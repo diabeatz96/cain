@@ -1707,7 +1707,7 @@ export class CainActorSheet extends ActorSheet {
     // Calculate successes
     let successes = roll.total;
 
-    if(successes === 0 && this.actor.system.divineAgony.value < 3) {
+    if(successes === 0 && this.actor.system.divineAgony.value < this.actor.system.divineAgony.max) {
       this.actor.update({'system.divineAgony.value' : this.actor.system.divineAgony.value + 1});
     }
 
@@ -1818,7 +1818,12 @@ export class CainActorSheet extends ActorSheet {
     console.log(roll.dice[0].results);
   
     let successes = roll.total;
-  
+
+    // Add pathos (Divine Agony) on failed psyche roll
+    if (successes === 0 && this.actor.system.divineAgony.value < this.actor.system.divineAgony.max) {
+      this.actor.update({'system.divineAgony.value': this.actor.system.divineAgony.value + 1});
+    }
+
     let message = `<h2>Psyche Roll</h2>`;
     message += `<p>Successes: <span style="color:${successes > 0 ? 'green' : 'red'}">${successes}</span></p>`;
     message += `<p>Dice Rolled:</p><ul>`;
@@ -2449,17 +2454,35 @@ export class CainActorSheet extends ActorSheet {
     }
 
     if (dataset.roll) {
-      let label = dataset.label ? ` You rolled for ${dataset.label}` : '';
+      let label = dataset.label ? `${dataset.label}` : '';
       let roll = new Roll(dataset.roll, this.actor.getRollData());
 
       console.log(roll);
       roll.roll().then(result => {
-        let rollTotal = result.total;
-        let message = '';
+        let successes = result.total;
+
+        // Check if this is a success-counting roll (contains 'cs>=')
+        // Add divine agony on failure (0 successes)
+        if (dataset.roll.includes('cs>=') && successes === 0) {
+          if (this.actor.system.divineAgony && this.actor.system.divineAgony.value < this.actor.system.divineAgony.max) {
+            this.actor.update({'system.divineAgony.value': this.actor.system.divineAgony.value + 1});
+          }
+        }
+
+        // Build a formatted message for skill rolls
+        let message = `<h2>${label} Roll</h2>`;
+        message += `<p>Successes: <span style="color:${successes > 0 ? 'green' : 'red'}">${successes}</span></p>`;
+        if (result.dice && result.dice[0]) {
+          message += `<p>Dice Rolled:</p><ul>`;
+          result.dice[0].results.forEach(r => {
+            message += `<li>Die: ${r.result} ${r.result === 6 ? '🎲' : ''}</li>`;
+          });
+          message += `</ul>`;
+        }
 
         result.toMessage({
           speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-          flavor: `${label} ${message}`,
+          flavor: message,
           rollMode: game.settings.get('core', 'rollMode'),
         });
       });
@@ -3214,7 +3237,16 @@ export class CainActorSheet extends ActorSheet {
   
             const newStress = selectedExorcist.system.stress.value + stressInflicted;
             await selectedExorcist.update({ 'system.stress.value': newStress });
-            ui.notifications.info(`${selectedExorcist.name} has been attacked and their stress increased by ${stressInflicted}.`);
+
+            // Send to chat instead of UI notification
+            ChatMessage.create({
+              speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+              content: `<div class="sin-action-message">
+                <h3>${this.actor.name} attacks ${selectedExorcist.name}!</h3>
+                <p><strong>Roll:</strong> ${rollResult}</p>
+                <p><strong>Stress Inflicted:</strong> ${stressInflicted}</p>
+              </div>`
+            });
           }
         }
       },
@@ -3255,7 +3287,15 @@ async _afflictPlayer(event) {
           const afflictionsList = selectedExorcist.system.afflictions || [];
           afflictionsList.push(selectedAffliction.id);
           await selectedExorcist.update({ 'system.afflictions': afflictionsList });
-          ui.notifications.info(`${selectedExorcist.name} has been afflicted with ${selectedAffliction.name}.`);
+
+          // Send to chat instead of UI notification
+          ChatMessage.create({
+            speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+            content: `<div class="sin-action-message">
+              <h3>${this.actor.name} afflicts ${selectedExorcist.name}!</h3>
+              <p><strong>Affliction:</strong> ${selectedAffliction.name}</p>
+            </div>`
+          });
         }
       }
     },
@@ -3310,7 +3350,15 @@ _useComplication(event) {
         callback: (html) => {
           const selectedIndex = parseInt(html.find('#complication-select').val());
           const selectedComplication = complications[selectedIndex];
-          ui.notifications.info(`Using Complication: ${selectedComplication}`);
+
+          // Send to chat instead of UI notification
+          ChatMessage.create({
+            speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+            content: `<div class="sin-action-message">
+              <h3>${this.actor.name} uses a Complication!</h3>
+              <p><strong>Effect:</strong> ${selectedComplication}</p>
+            </div>`
+          });
         }
       },
       close: {
@@ -3372,7 +3420,6 @@ _useThreat(event) {
           const selectedExorcistIndex = parseInt(html.find('#exorcist-select').val());
           const selectedThreat = threats[selectedThreatIndex];
           const selectedExorcist = exorcists[selectedExorcistIndex];
-          ui.notifications.info(`Using Threat: ${selectedThreat} on ${selectedExorcist.name}`);
 
           // Implement functionality for the selected threat
           switch (selectedThreatIndex) {
@@ -3396,19 +3443,47 @@ _useThreat(event) {
                 await selectedExorcist.update({ 'system.stress.value': stress });
               }
 
-              ui.notifications.info(`Inflicted ${damage} on ${selectedExorcist.name}`);
+              // Send to chat
+              ChatMessage.create({
+                speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+                content: `<div class="sin-action-message">
+                  <h3>${this.actor.name} uses Threat: Inflict Harm!</h3>
+                  <p><strong>Target:</strong> ${selectedExorcist.name}</p>
+                  <p><strong>Roll:</strong> ${rollResult}</p>
+                  <p><strong>Damage:</strong> ${damage}</p>
+                </div>`
+              });
               break;
 
             case 1: // Separate an exorcist completely
-              ui.notifications.info(`Separated ${selectedExorcist.name} completely`);
+              ChatMessage.create({
+                speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+                content: `<div class="sin-action-message">
+                  <h3>${this.actor.name} uses Threat: Separate!</h3>
+                  <p><strong>Target:</strong> ${selectedExorcist.name}</p>
+                  <p>${selectedExorcist.name} has been completely separated from the group!</p>
+                </div>`
+              });
               break;
 
             case 2: // Cause collateral damage
-              ui.notifications.info(`Caused collateral damage`);
+              ChatMessage.create({
+                speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+                content: `<div class="sin-action-message">
+                  <h3>${this.actor.name} uses Threat: Collateral Damage!</h3>
+                  <p>The Sin causes massive collateral damage to the environment!</p>
+                </div>`
+              });
               break;
 
             case 3: // Massively change the parameters of the fight
-              ui.notifications.info(`Massively changed the parameters of the fight`);
+              ChatMessage.create({
+                speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+                content: `<div class="sin-action-message">
+                  <h3>${this.actor.name} uses Threat: Change Parameters!</h3>
+                  <p>The parameters of the fight have been massively changed!</p>
+                </div>`
+              });
               break;
 
             case 4: // Add an Affliction
@@ -3435,7 +3510,16 @@ _useThreat(event) {
                       const afflictionsList = selectedExorcist.system.afflictions || [];
                       afflictionsList.push(selectedAffliction.id);
                       await selectedExorcist.update({ 'system.afflictions': afflictionsList });
-                      ui.notifications.info(`${selectedExorcist.name} has been afflicted with ${selectedAffliction.name}`);
+
+                      // Send to chat
+                      ChatMessage.create({
+                        speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+                        content: `<div class="sin-action-message">
+                          <h3>${this.actor.name} uses Threat: Add Affliction!</h3>
+                          <p><strong>Target:</strong> ${selectedExorcist.name}</p>
+                          <p><strong>Affliction:</strong> ${selectedAffliction.name}</p>
+                        </div>`
+                      });
                     }
                   },
                   close: {
@@ -3487,7 +3571,15 @@ _useDomain(event) {
         callback: (html) => {
           const selectedDomainKey = html.find('#domain-select').val();
           const selectedDomain = domains[selectedDomainKey];
-          ui.notifications.info(`Using Domain: ${selectedDomain.title} - ${selectedDomain.value}`);
+
+          // Send to chat instead of UI notification
+          ChatMessage.create({
+            speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+            content: `<div class="sin-action-message">
+              <h3>${this.actor.name} uses Domain: ${selectedDomain.title}!</h3>
+              <p>${selectedDomain.value}</p>
+            </div>`
+          });
         }
       }
     },
