@@ -1,6 +1,7 @@
 .vscode/settings.json
 .idea/
 node_modules/
+books
 
 # Unpacked compendium DBs
 _source/
@@ -24,3 +25,4 @@ packs/*/LOG.old
 .ai/
 .windsurf/
 .continue/
+

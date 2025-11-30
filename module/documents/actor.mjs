@@ -16,11 +16,22 @@ export class CainActor extends Actor {
   async _preCreate(data, options, user) {
     await super._preCreate(data, options, user);
 
+    // Set default image based on actor type
+    let defaultImg = "icons/svg/mystery-man.svg";
+    if (data.type === "opponent") {
+      defaultImg = "systems/cain/assets/Opponents/drifter.png";
+    }
+
+    // Set default actor image if not provided
+    if (!data.img || data.img === "icons/svg/mystery-man.svg") {
+      this.updateSource({ img: defaultImg });
+    }
+
     // Set default prototype token settings for all actor types
     const prototypeToken = {
       actorLink: true,  // Link actor data
       texture: {
-        src: data.img || "icons/svg/mystery-man.svg"  // Use actor image or default
+        src: data.img || defaultImg  // Use actor image or default
       }
     };
 
