@@ -1,0 +1,1236 @@
+<form class="{{cssClass}} opponent flexcol opponent-theme" autocomplete="off">
+    {{!-- Header --}}
+    <header class="opponent-header">
+        {{!-- Top Row: Portrait, Name, Type --}}
+        <div class="header-top">
+            <div class="portrait-frame">
+                <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}"/>
+                <div class="category-badge">
+                    <span class="cat-label">CAT</span>
+                    <input type="number" name="system.category" value="{{system.category}}" min="0" max="7" class="cat-input"/>
+                </div>
+            </div>
+            <div class="name-section">
+                <input class="name-input" name="name" type="text" value="{{actor.name}}" placeholder="Opponent Name"/>
+                <div class="type-line">
+                    <select name="system.opponentType" class="type-select">
+                        <option value="human" {{#if (eq system.opponentType "human")}}selected{{/if}}>Human</option>
+                        <option value="drifter" {{#if (eq system.opponentType "drifter")}}selected{{/if}}>Drifter</option>
+                        <option value="anomaly" {{#if (eq system.opponentType "anomaly")}}selected{{/if}}>Anomaly</option>
+                        <option value="sin-variant" {{#if (eq system.opponentType "sin-variant")}}selected{{/if}}>Sin Variant</option>
+                        <option value="pseudo-sin" {{#if (eq system.opponentType "pseudo-sin")}}selected{{/if}}>Pseudo-Sin</option>
+                        <option value="binder" {{#if (eq system.opponentType "binder")}}selected{{/if}}>Binder</option>
+                        <option value="exorcist" {{#if (eq system.opponentType "exorcist")}}selected{{/if}}>Exorcist</option>
+                        <option value="mechanical" {{#if (eq system.opponentType "mechanical")}}selected{{/if}}>Mechanical</option>
+                    </select>
+                    <span class="type-divider">—</span>
+                    <input type="text" name="system.subType" value="{{system.subType}}" placeholder="Subtype" class="subtype-input"/>
+                    <span class="type-divider">|</span>
+                    <span class="range-label">Range:</span>
+                    <select name="system.range" class="range-select">
+                        <option value="melee" {{#if (eq system.range "melee")}}selected{{/if}}>Melee</option>
+                        <option value="short" {{#if (eq system.range "short")}}selected{{/if}}>Short</option>
+                        <option value="long" {{#if (eq system.range "long")}}selected{{/if}}>Long</option>
+                        <option value="extreme" {{#if (eq system.range "extreme")}}selected{{/if}}>Extreme</option>
+                    </select>
+                </div>
+            </div>
+            <div class="action-buttons">
+                <button type="button" class="action-btn attack-btn" title="Roll Attack">
+                    <i class="fas fa-crosshairs"></i>
+                    <span>ATTACK</span>
+                </button>
+                <button type="button" class="action-btn reaction-btn" title="Roll Reaction">
+                    <i class="fas fa-bolt"></i>
+                    <span>REACT</span>
+                </button>
+                <button type="button" class="action-btn afflict-btn" title="Apply Affliction">
+                    <i class="fas fa-biohazard"></i>
+                    <span>AFFLICT</span>
+                </button>
+            </div>
+        </div>
+
+        {{!-- Tags Row --}}
+        <div class="tags-row">
+            <div class="tags-container">
+                {{#each system.tags}}
+                    {{#if this}}
+                    <span class="tag-item" data-index="{{@index}}">
+                        {{this}}
+                        <button type="button" class="tag-remove-btn" data-index="{{@index}}"><i class="fas fa-times"></i></button>
+                    </span>
+                    {{/if}}
+                {{/each}}
+                <input type="text" class="tag-input" placeholder="+ Add tag"/>
+            </div>
+        </div>
+
+        {{!-- Execution Talisman Visual Row --}}
+        <div class="et-visual-row">
+            <div class="et-mode-tabs">
+                <button type="button" class="et-mode-tab {{#if (eq system.executionTalisman.useVariant 'solo')}}active{{/if}}" data-mode="solo">
+                    Solo <input type="number" name="system.executionTalisman.solo" value="{{system.executionTalisman.solo}}" min="0" max="20" class="et-max-input" onclick="event.stopPropagation()"/>
+                </button>
+                <button type="button" class="et-mode-tab {{#if (eq system.executionTalisman.useVariant 'group')}}active{{/if}}" data-mode="group">
+                    Group <input type="number" name="system.executionTalisman.group" value="{{system.executionTalisman.group}}" min="0" max="20" class="et-max-input" onclick="event.stopPropagation()"/>
+                </button>
+                <button type="button" class="et-mode-tab {{#if (eq system.executionTalisman.useVariant 'horde')}}active{{/if}}" data-mode="horde">
+                    Horde <input type="number" name="system.executionTalisman.horde" value="{{system.executionTalisman.horde}}" min="0" max="20" class="et-max-input" onclick="event.stopPropagation()"/>
+                </button>
+            </div>
+            <div class="et-pips-container">
+                <span class="et-label">EXECUTION</span>
+                <div class="et-pips" data-current="{{system.executionTalisman.current}}" data-max="{{system.executionTalisman.max}}">
+                    {{!-- Pips will be generated by JavaScript --}}
+                </div>
+                <span class="et-counter">{{system.executionTalisman.current}} / {{system.executionTalisman.max}}</span>
+            </div>
+        </div>
+    </header>
+
+    {{!-- Tab Navigation --}}
+    <nav class="sheet-tabs tabs" data-group="primary">
+        <a class="tab-item" data-tab="overview">Overview</a>
+        <a class="tab-item" data-tab="combat">Combat</a>
+        <a class="tab-item" data-tab="abilities">Abilities</a>
+    </nav>
+
+    {{!-- Tab Content --}}
+    <section class="sheet-body">
+        {{!-- Overview Tab --}}
+        <div class="tab overview" data-group="primary" data-tab="overview">
+            <div class="content-card">
+                <h3 class="card-header">Description</h3>
+                <textarea name="system.description" rows="2" placeholder="A brief description of this opponent...">{{system.description}}</textarea>
+            </div>
+
+            <div class="two-column">
+                <div class="content-card">
+                    <h3 class="card-header">Tendencies</h3>
+                    <textarea name="system.tendencies" rows="3" placeholder="It tends to do this thing...">{{system.tendencies}}</textarea>
+                </div>
+                <div class="content-card">
+                    <h3 class="card-header">Conditional Effects</h3>
+                    <textarea name="system.conditionalEffects" rows="3" placeholder="If you do this, someone gets advantage/disadvantage...">{{system.conditionalEffects}}</textarea>
+                </div>
+            </div>
+
+            <div class="two-column">
+                <div class="content-card">
+                    <h3 class="card-header">Behavior</h3>
+                    <textarea name="system.behavior" rows="3" placeholder="How does this opponent act?">{{system.behavior}}</textarea>
+                </div>
+                <div class="content-card">
+                    <h3 class="card-header">Appearance</h3>
+                    <textarea name="system.appearance" rows="3" placeholder="Physical description...">{{system.appearance}}</textarea>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3 class="card-header">GM Notes</h3>
+                <p class="notes-hint">Lore, plot hooks, secret weaknesses, or session-specific reminders...</p>
+                <div class="editor-wrap">
+                    {{editor enrichedBiography target="system.biography" engine="prosemirror" button=true editable=editable}}
+                </div>
+            </div>
+
+            <div class="content-card source-card">
+                <div class="source-row">
+                    <i class="fas fa-book"></i>
+                    <label>Source:</label>
+                    <input type="text" name="system.source" value="{{system.source}}" placeholder="Core p.XX, Games for Freaks p.XX"/>
+                </div>
+            </div>
+        </div>
+
+        {{!-- Combat Tab --}}
+        <div class="tab combat" data-group="primary" data-tab="combat">
+            {{!-- Stress Formula Section --}}
+            <div class="content-card stress-card">
+                <h3 class="card-header"><i class="fas fa-heart-broken"></i> Stress Output</h3>
+                <div class="stress-formula-grid">
+                    <div class="stress-field">
+                        <label>Dice Formula</label>
+                        <input type="text" name="system.stressFormula.formula" value="{{system.stressFormula.formula}}" placeholder="1d6"/>
+                    </div>
+                    <div class="stress-field">
+                        <label>On Roll of 1</label>
+                        <input type="text" name="system.stressFormula.roll1" value="{{system.stressFormula.roll1}}" placeholder="4"/>
+                    </div>
+                    <div class="stress-field">
+                        <label>On Roll of 2-3</label>
+                        <input type="text" name="system.stressFormula.roll2to3" value="{{system.stressFormula.roll2to3}}" placeholder="3"/>
+                    </div>
+                    <div class="stress-field">
+                        <label>On Roll of 4+</label>
+                        <input type="text" name="system.stressFormula.roll4plus" value="{{system.stressFormula.roll4plus}}" placeholder="2"/>
+                    </div>
+                    <div class="stress-field full-width">
+                        <label>Bonus Effect</label>
+                        <input type="text" name="system.stressFormula.bonusEffect" value="{{system.stressFormula.bonusEffect}}" placeholder="+1 sin, worm hook, etc."/>
+                    </div>
+                </div>
+                <button type="button" class="stress-roll-btn">
+                    <i class="fas fa-dice"></i> Roll Stress
+                </button>
+            </div>
+
+            {{!-- Reactions Section --}}
+            <div class="content-card reactions-card">
+                <h3 class="card-header">Reactions</h3>
+                <div class="reactions-grid">
+                    <div class="reaction-field">
+                        <label><i class="fas fa-fist-raised"></i> Attacks With</label>
+                        <input type="text" name="system.reactions.attackWith" value="{{system.reactions.attackWith}}" placeholder="Batons, firearms, claws..."/>
+                    </div>
+                    <div class="reaction-field stress-field">
+                        <label><i class="fas fa-heart-broken"></i> Stress Inflicted</label>
+                        <input type="text" name="system.reactions.stressAmount" value="{{system.reactions.stressAmount}}" placeholder="2 stress, 1d6 stress..."/>
+                    </div>
+                    <div class="reaction-field">
+                        <label><i class="fas fa-exclamation-triangle"></i> Creates Complication</label>
+                        <input type="text" name="system.reactions.complication" value="{{system.reactions.complication}}" placeholder="Kills lights, triggers alarm..."/>
+                    </div>
+                    <div class="reaction-field">
+                        <label><i class="fas fa-skull-crossbones"></i> Creates Threat</label>
+                        <input type="text" name="system.reactions.threat" value="{{system.reactions.threat}}" placeholder="Fires weapon, pins target..."/>
+                    </div>
+                    <div class="reaction-field full-width">
+                        <label><i class="fas fa-dice"></i> Die Roll Attached</label>
+                        <input type="text" name="system.reactions.dieRoll" value="{{system.reactions.dieRoll}}" placeholder="On 1-2: extra effect, On 5+: reduced damage..."/>
+                    </div>
+                </div>
+            </div>
+
+            {{!-- Afflictions Section - Drag & Drop --}}
+            <div class="content-card afflictions-card opponent-affliction-drop">
+                <h3 class="card-header"><i class="fas fa-biohazard"></i> Afflictions</h3>
+                <p class="drop-hint">Drag afflictions here from compendium</p>
+                <div class="afflictions-list">
+                    {{#each currentAfflictions}}
+                        <div class="affliction-item" data-affliction-id="{{this.id}}">
+                            <img src="{{this.img}}" class="affliction-icon" alt="{{this.name}}"/>
+                            <span class="affliction-name">{{this.name}}</span>
+                            <button type="button" class="remove-btn remove-affliction-btn" data-id="{{this.id}}"><i class="fas fa-times"></i></button>
+                        </div>
+                    {{/each}}
+                </div>
+            </div>
+
+            {{!-- Capabilities --}}
+            <div class="content-card">
+                <h3 class="card-header">Capabilities</h3>
+                <div class="list-container">
+                    {{#each system.capabilities}}
+                        <div class="list-item">
+                            <span class="bullet">&#8226;</span>
+                            <input type="text" name="system.capabilities.{{@index}}" value="{{this}}" placeholder="Capability"/>
+                            <button type="button" class="remove-btn remove-capability-btn" data-index="{{@index}}"><i class="fas fa-times"></i></button>
+                        </div>
+                    {{/each}}
+                </div>
+                <button type="button" class="add-btn add-capability-btn"><i class="fas fa-plus"></i> Add Capability</button>
+            </div>
+        </div>
+
+        {{!-- Abilities Tab --}}
+        <div class="tab abilities" data-group="primary" data-tab="abilities">
+            <div class="content-card">
+                <h3 class="card-header">Special Abilities</h3>
+                <div class="abilities-container">
+                    {{#each system.specialAbilities}}
+                        <div class="ability-item" data-ability-index="{{@index}}">
+                            <div class="ability-top">
+                                <input type="text" name="system.specialAbilities.{{@index}}.name" value="{{this.name}}" placeholder="Ability Name"/>
+                                <input type="text" name="system.specialAbilities.{{@index}}.trigger" value="{{this.trigger}}" class="trigger-input" placeholder="Trigger"/>
+                                <button type="button" class="chat-btn ability-to-chat-btn" data-index="{{@index}}" title="Send to Chat"><i class="fas fa-comment"></i></button>
+                                <button type="button" class="remove-btn remove-ability-btn" data-index="{{@index}}"><i class="fas fa-times"></i></button>
+                            </div>
+                            <textarea name="system.specialAbilities.{{@index}}.description" rows="2" placeholder="Description...">{{this.description}}</textarea>
+                        </div>
+                    {{/each}}
+                </div>
+                <button type="button" class="add-btn add-ability-btn"><i class="fas fa-plus"></i> Add Ability</button>
+            </div>
+
+            <div class="content-card">
+                <h3 class="card-header">Pressure Scaling</h3>
+                <div class="pressure-row">
+                    <label class="checkbox-wrap">
+                        <input type="checkbox" name="system.scalesWithPressure" {{#if system.scalesWithPressure}}checked{{/if}}/>
+                        <span>Scales with Pressure</span>
+                    </label>
+                    <input type="text" name="system.pressureModifier" value="{{system.pressureModifier}}" placeholder="e.g., +CAT at 3+ pressure"/>
+                </div>
+            </div>
+        </div>
+    </section>
+</form>
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Pirata+One&display=swap');
+
+    /* ==================== BASE (Dark Purple Paper Theme) ==================== */
+    .opponent-theme {
+        background-image: url("systems/cain/assets/backgrounds/paper1.jpg");
+        background-color: #2d1f3d;
+        background-blend-mode: multiply;
+        background-size: cover;
+        color: #f0e6ff;
+        font-family: 'Segoe UI', Tahoma, sans-serif;
+        padding: 10px;
+        gap: 10px;
+    }
+
+    /* ==================== HEADER ==================== */
+    .opponent-header {
+        background-image: url("systems/cain/assets/backgrounds/paper2.jpg");
+        background-color: #1a1028;
+        background-blend-mode: multiply;
+        background-size: cover;
+        border: 2px solid #6a4c93;
+        border-radius: 8px;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        flex: none !important;
+        flex-grow: 0 !important;
+        flex-shrink: 0 !important;
+    }
+
+    /* Top Row: Portrait + Name + Actions */
+    .header-top {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+    }
+
+    .portrait-frame {
+        position: relative;
+        flex-shrink: 0;
+    }
+
+    .profile-img {
+        width: 70px;
+        height: 70px;
+        border: 2px solid #9d7cd8;
+        border-radius: 6px;
+        object-fit: cover;
+        box-shadow: 0 0 10px rgba(157, 124, 216, 0.6);
+        background-color: #2d1f3d;
+        display: block;
+    }
+
+    .category-badge {
+        position: absolute;
+        bottom: -6px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        align-items: center;
+        gap: 3px;
+        background: linear-gradient(180deg, #8b2020 0%, #5c0000 100%);
+        border: 2px solid #ff6666;
+        border-radius: 10px;
+        padding: 1px 6px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+    }
+
+    .cat-label {
+        font-size: 8px;
+        font-weight: bold;
+        color: #ffcccc;
+        letter-spacing: 1px;
+    }
+
+    .opponent-theme .cat-input {
+        width: 22px;
+        padding: 0;
+        text-align: center;
+        font-weight: bold;
+        font-size: 14px !important;
+        color: #fff !important;
+        background: transparent !important;
+        border: none !important;
+    }
+
+    .name-section {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 4px;
+        min-width: 0;
+    }
+
+    .opponent-theme .name-input {
+        font-family: 'Pirata One', serif;
+        font-size: 22px;
+        padding: 2px 8px;
+        background: rgba(20, 10, 30, 0.7);
+        border: none;
+        border-bottom: 2px solid #9d7cd8;
+        border-radius: 0;
+        color: #f0e6ff !important;
+        width: 100%;
+    }
+
+    .opponent-theme .name-input::placeholder {
+        color: rgba(240, 230, 255, 0.4);
+    }
+
+    .type-line {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .opponent-theme .type-select {
+        padding: 2px 8px;
+        background: rgba(106, 76, 147, 0.4);
+        border: 1px solid #6a4c93;
+        border-radius: 3px;
+        color: #d4c4f0;
+        font-size: 12px;
+        font-style: italic;
+    }
+
+    .opponent-theme .type-select option {
+        background: #2d1f3d;
+        color: #f0e6ff;
+    }
+
+    .type-divider {
+        color: #6a4c93;
+        font-size: 14px;
+    }
+
+    .opponent-theme .subtype-input {
+        flex: 1;
+        padding: 2px 8px;
+        background: rgba(106, 76, 147, 0.4);
+        border: 1px solid #6a4c93;
+        border-radius: 3px;
+        color: #d4c4f0;
+        font-size: 12px;
+        font-style: italic;
+    }
+
+    /* Action Buttons in Header */
+    .action-buttons {
+        display: flex;
+        gap: 4px;
+        flex-shrink: 0;
+    }
+
+    .action-btn {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1px;
+        padding: 6px 10px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.2s;
+        color: #fff;
+        font-weight: bold;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+    }
+
+    .action-btn i { font-size: 14px; }
+    .action-btn span { font-size: 7px; }
+
+    .attack-btn {
+        background: linear-gradient(180deg, #8b2020 0%, #4a0a0a 100%);
+        border: 2px solid #ff4444;
+        box-shadow: 0 0 6px rgba(255, 68, 68, 0.3);
+    }
+    .attack-btn:hover {
+        background: linear-gradient(180deg, #a53030 0%, #8b2020 100%);
+        box-shadow: 0 0 12px rgba(255, 68, 68, 0.6);
+        transform: translateY(-1px);
+    }
+
+    .reaction-btn {
+        background: linear-gradient(180deg, #5a2082 0%, #2d0050 100%);
+        border: 2px solid #bb88ff;
+        box-shadow: 0 0 6px rgba(187, 136, 255, 0.3);
+    }
+    .reaction-btn:hover {
+        background: linear-gradient(180deg, #6a30a2 0%, #5a2082 100%);
+        box-shadow: 0 0 12px rgba(187, 136, 255, 0.6);
+        transform: translateY(-1px);
+    }
+
+    .afflict-btn {
+        background: linear-gradient(180deg, #2d6a27 0%, #0f3a0a 100%);
+        border: 2px solid #66dd66;
+        box-shadow: 0 0 6px rgba(102, 221, 102, 0.3);
+    }
+    .afflict-btn:hover {
+        background: linear-gradient(180deg, #3d8a37 0%, #2d6a27 100%);
+        box-shadow: 0 0 12px rgba(102, 221, 102, 0.6);
+        transform: translateY(-1px);
+    }
+
+    /* ==================== EXECUTION TALISMAN VISUAL ==================== */
+    .et-visual-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        background: rgba(20, 10, 30, 0.6);
+        border: 1px solid #6a4c93;
+        border-radius: 6px;
+        padding: 6px 10px;
+    }
+
+    .et-mode-tabs {
+        display: flex;
+        gap: 4px;
+        flex-shrink: 0;
+    }
+
+    .et-mode-tab {
+        padding: 4px 8px;
+        font-size: 10px;
+        font-weight: bold;
+        background: rgba(45, 31, 61, 0.6);
+        border: 1px solid #6a4c93;
+        border-radius: 4px;
+        color: #a89cc8;
+        cursor: pointer;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+
+    .et-mode-tab:hover {
+        background: rgba(106, 76, 147, 0.4);
+        color: #f0e6ff;
+    }
+
+    .et-mode-tab.active {
+        background: linear-gradient(180deg, #6a4c93 0%, #4a3473 100%);
+        border-color: #9d7cd8;
+        color: #fff;
+    }
+
+    .opponent-theme .et-max-input {
+        width: 28px;
+        padding: 1px 2px;
+        text-align: center;
+        font-size: 11px;
+        font-weight: bold;
+        background: rgba(0,0,0,0.3);
+        border: 1px solid rgba(157, 124, 216, 0.5);
+        border-radius: 3px;
+        color: inherit;
+    }
+
+    .et-pips-container {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .et-label {
+        font-size: 9px;
+        font-weight: bold;
+        color: #9d7cd8;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+    }
+
+    .et-pips {
+        display: flex;
+        gap: 3px;
+        flex-wrap: wrap;
+        flex: 1;
+    }
+
+    .et-pip {
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: rgba(45, 31, 61, 0.8);
+        border: 2px solid #6a4c93;
+        cursor: pointer;
+        transition: all 0.15s;
+    }
+
+    .et-pip:hover {
+        border-color: #9d7cd8;
+        box-shadow: 0 0 6px rgba(157, 124, 216, 0.5);
+    }
+
+    .et-pip.filled {
+        background: linear-gradient(135deg, #ff6666 0%, #cc0000 100%);
+        border-color: #ff4444;
+        box-shadow: 0 0 8px rgba(255, 68, 68, 0.6);
+    }
+
+    .et-pip.filled:hover {
+        background: linear-gradient(135deg, #ff8888 0%, #ff4444 100%);
+    }
+
+    .et-counter {
+        font-size: 12px;
+        font-weight: bold;
+        color: #ff8080;
+        min-width: 40px;
+        text-align: right;
+    }
+
+    /* ==================== TABS ==================== */
+    .opponent-theme .sheet-tabs {
+        display: flex;
+        gap: 4px;
+        background: rgba(26, 16, 40, 0.7);
+        padding: 6px;
+        border-radius: 6px;
+        border: 1px solid #6a4c93;
+        flex: none !important;
+        flex-grow: 0 !important;
+        flex-shrink: 0 !important;
+    }
+
+    .opponent-theme .tab-item {
+        flex: 1;
+        font-family: 'Pirata One', serif;
+        font-size: 16px;
+        padding: 8px 12px;
+        text-align: center;
+        background: rgba(45, 31, 61, 0.6);
+        border: 1px solid #6a4c93;
+        border-radius: 4px;
+        color: #c9b8e8;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+
+    .opponent-theme .tab-item:hover {
+        background: rgba(106, 76, 147, 0.4);
+        color: #f0e6ff;
+    }
+
+    .opponent-theme .tab-item.active {
+        background: linear-gradient(180deg, #6a4c93 0%, #4a3473 100%);
+        color: #fff;
+        border-color: #9d7cd8;
+    }
+
+    /* ==================== BODY ==================== */
+    .opponent-theme .sheet-body {
+        flex: 1 1 auto !important;
+        min-height: 0;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .opponent-theme .tab {
+        display: none;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .opponent-theme .tab.active {
+        display: flex;
+    }
+
+    /* ==================== CARDS ==================== */
+    .opponent-theme .content-card {
+        background-image: url("systems/cain/assets/backgrounds/paper2.jpg");
+        background-color: #251838;
+        background-blend-mode: multiply;
+        background-size: cover;
+        border: 2px solid #6a4c93;
+        border-radius: 8px;
+        padding: 12px;
+    }
+
+    .opponent-theme .card-header {
+        font-family: 'Pirata One', serif;
+        font-size: 18px;
+        color: #d4c4f0;
+        text-align: center;
+        margin: 0 0 10px 0;
+        padding-bottom: 6px;
+        border-bottom: 1px solid #6a4c93;
+    }
+
+    .opponent-theme .card-header i {
+        margin-right: 6px;
+        color: #9d7cd8;
+    }
+
+    .two-column {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+    }
+
+    /* ==================== REACTIONS ==================== */
+    .reactions-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+
+    .reaction-field {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .reaction-field.full-width {
+        grid-column: 1 / -1;
+    }
+
+    .reaction-field label {
+        font-size: 11px;
+        font-weight: bold;
+        color: #c9b8e8;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .reaction-field label i {
+        color: #9d7cd8;
+        font-size: 12px;
+    }
+
+    .reaction-field.stress-field label i {
+        color: #ff6b6b;
+    }
+
+    .opponent-theme .reaction-field input {
+        padding: 8px 10px;
+        background: rgba(45, 31, 61, 0.9);
+        border: 1px solid #6a4c93;
+        border-radius: 4px;
+        color: #f0e6ff;
+        font-size: 13px;
+    }
+
+    .opponent-theme .reaction-field input::placeholder {
+        color: rgba(240, 230, 255, 0.4);
+    }
+
+    /* ==================== AFFLICTIONS ==================== */
+    .afflictions-card {
+        border-color: #2d6a27 !important;
+    }
+
+    .afflictions-card .card-header {
+        color: #88dd88;
+        border-color: #2d6a27;
+    }
+
+    .drop-hint {
+        text-align: center;
+        font-size: 11px;
+        color: rgba(136, 221, 136, 0.6);
+        font-style: italic;
+        margin-bottom: 8px;
+    }
+
+    .afflictions-list {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        min-height: 40px;
+    }
+
+    .affliction-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 10px;
+        background: rgba(45, 106, 39, 0.3);
+        border: 1px solid #2d6a27;
+        border-radius: 6px;
+    }
+
+    .affliction-icon {
+        width: 24px;
+        height: 24px;
+        border-radius: 4px;
+        object-fit: cover;
+        cursor: pointer;
+        transition: transform 0.15s;
+    }
+
+    .affliction-icon:hover {
+        transform: scale(1.1);
+    }
+
+    .affliction-name {
+        flex: 1;
+        color: #88dd88;
+        font-weight: bold;
+        font-size: 13px;
+        cursor: pointer;
+        transition: color 0.15s;
+    }
+
+    .affliction-name:hover {
+        color: #aaffaa;
+        text-decoration: underline;
+    }
+
+    /* ==================== TEXTAREAS ==================== */
+    .opponent-theme .content-card textarea {
+        width: 100%;
+        padding: 10px;
+        background: rgba(45, 31, 61, 0.9);
+        border: 1px solid #6a4c93;
+        border-radius: 6px;
+        color: #f0e6ff;
+        font-size: 13px;
+        resize: vertical;
+        line-height: 1.5;
+    }
+
+    .opponent-theme .content-card textarea::placeholder {
+        color: rgba(240, 230, 255, 0.4);
+    }
+
+    /* ==================== LISTS ==================== */
+    .list-container, .abilities-container {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin-bottom: 10px;
+    }
+
+    .opponent-theme .list-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 10px;
+        background: rgba(45, 31, 61, 0.6);
+        border: 1px solid #6a4c93;
+        border-radius: 6px;
+    }
+
+    .opponent-theme .list-item input {
+        flex: 1;
+        padding: 6px 10px;
+        background: rgba(45, 31, 61, 0.9);
+        border: 1px solid #6a4c93;
+        border-radius: 4px;
+        color: #f0e6ff;
+        font-size: 13px;
+    }
+
+    .opponent-theme .list-item .bullet {
+        color: #9d7cd8;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    /* ==================== ABILITIES ==================== */
+    .opponent-theme .ability-item {
+        padding: 12px;
+        background: rgba(45, 31, 61, 0.6);
+        border: 1px solid #6a4c93;
+        border-radius: 8px;
+    }
+
+    .ability-top {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 8px;
+    }
+
+    .opponent-theme .ability-top input {
+        flex: 1;
+        padding: 8px 10px;
+        background: rgba(45, 31, 61, 0.9);
+        border: 1px solid #6a4c93;
+        border-radius: 4px;
+        color: #f0e6ff;
+        font-size: 13px;
+    }
+
+    .opponent-theme .trigger-input {
+        max-width: 120px;
+        color: #d4c4f0 !important;
+        border-color: #9d7cd8 !important;
+        font-style: italic;
+    }
+
+    .opponent-theme .ability-item textarea {
+        width: 100%;
+        padding: 8px 10px;
+        background: rgba(45, 31, 61, 0.9);
+        border: 1px solid #6a4c93;
+        border-radius: 4px;
+        color: #f0e6ff;
+        font-size: 12px;
+        resize: vertical;
+    }
+
+    /* ==================== BUTTONS ==================== */
+    .opponent-theme .add-btn {
+        width: 100%;
+        padding: 10px;
+        font-family: 'Pirata One', serif;
+        font-size: 14px;
+        background: linear-gradient(180deg, #4a3473 0%, #2d1f4d 100%);
+        border: 1px solid #9d7cd8;
+        border-radius: 6px;
+        color: #f0e6ff;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+
+    .opponent-theme .add-btn:hover {
+        background: linear-gradient(180deg, #5a4493 0%, #3d2f5d 100%);
+        box-shadow: 0 0 8px rgba(157, 124, 216, 0.4);
+    }
+
+    .opponent-theme .remove-btn {
+        width: 24px;
+        height: 24px;
+        min-width: 24px;
+        padding: 0;
+        background: linear-gradient(180deg, #8b2020 0%, #5c1010 100%);
+        border: 1px solid #ff6666;
+        border-radius: 4px;
+        color: #fff;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 10px;
+        transition: all 0.2s;
+    }
+
+    .opponent-theme .remove-btn:hover {
+        background: linear-gradient(180deg, #a53030 0%, #8b2020 100%);
+        box-shadow: 0 0 6px rgba(255, 102, 102, 0.5);
+    }
+
+    .opponent-theme .chat-btn {
+        width: 24px;
+        height: 24px;
+        min-width: 24px;
+        padding: 0;
+        background: linear-gradient(180deg, #2d6a27 0%, #1a4a17 100%);
+        border: 1px solid #66dd66;
+        border-radius: 4px;
+        color: #fff;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 10px;
+        transition: all 0.2s;
+    }
+
+    .opponent-theme .chat-btn:hover {
+        background: linear-gradient(180deg, #3d8a37 0%, #2d6a27 100%);
+        box-shadow: 0 0 6px rgba(102, 221, 102, 0.5);
+    }
+
+    /* Notes hint */
+    .notes-hint {
+        text-align: center;
+        font-size: 11px;
+        color: rgba(212, 196, 240, 0.5);
+        font-style: italic;
+        margin-bottom: 8px;
+    }
+
+    /* ==================== PRESSURE ==================== */
+    .pressure-row {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+
+    .checkbox-wrap {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+    }
+
+    .opponent-theme .checkbox-wrap input {
+        width: 18px;
+        height: 18px;
+        accent-color: #9d7cd8;
+    }
+
+    .checkbox-wrap span {
+        font-size: 14px;
+        font-weight: bold;
+        color: #f0e6ff;
+    }
+
+    .opponent-theme .pressure-row > input[type="text"] {
+        flex: 1;
+        padding: 8px 10px;
+        background: rgba(45, 31, 61, 0.9);
+        border: 1px solid #6a4c93;
+        border-radius: 4px;
+        color: #f0e6ff;
+        font-size: 13px;
+    }
+
+    /* ==================== EDITOR ==================== */
+    .opponent-theme .editor-wrap {
+        background: rgba(45, 31, 61, 0.9);
+        border: 1px solid #6a4c93;
+        border-radius: 6px;
+        min-height: 120px;
+        padding: 10px;
+    }
+
+    .opponent-theme .editor-wrap .editor-content {
+        color: #f0e6ff;
+    }
+
+    /* ==================== SCROLLBAR ==================== */
+    .opponent-theme .sheet-body::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    .opponent-theme .sheet-body::-webkit-scrollbar-track {
+        background: rgba(26, 16, 40, 0.5);
+        border-radius: 5px;
+    }
+
+    .opponent-theme .sheet-body::-webkit-scrollbar-thumb {
+        background: linear-gradient(180deg, #6a4c93 0%, #4a3473 100%);
+        border-radius: 5px;
+        border: 2px solid #2d1f3d;
+    }
+
+    .opponent-theme .sheet-body::-webkit-scrollbar-thumb:hover {
+        background: linear-gradient(180deg, #7a5ca3 0%, #5a4483 100%);
+    }
+
+    /* ==================== FORM OVERRIDES ==================== */
+    form.opponent-theme .content-card {
+        display: block;
+    }
+
+    /* ==================== TAGS ==================== */
+    .tags-row {
+        background: rgba(20, 10, 30, 0.4);
+        border: 1px solid #6a4c93;
+        border-radius: 4px;
+        padding: 6px 10px;
+    }
+
+    .tags-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        align-items: center;
+    }
+
+    .tag-item {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 3px 8px;
+        background: linear-gradient(180deg, #4a3473 0%, #2d1f4d 100%);
+        border: 1px solid #9d7cd8;
+        border-radius: 12px;
+        font-size: 11px;
+        font-weight: bold;
+        color: #f0e6ff;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .tag-remove-btn {
+        width: 14px;
+        height: 14px;
+        padding: 0;
+        background: transparent;
+        border: none;
+        color: #ff8888;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 8px;
+        opacity: 0.6;
+        transition: opacity 0.15s;
+    }
+
+    .tag-remove-btn:hover {
+        opacity: 1;
+    }
+
+    .opponent-theme .tag-input {
+        padding: 3px 8px;
+        background: rgba(45, 31, 61, 0.6);
+        border: 1px dashed #6a4c93;
+        border-radius: 12px;
+        color: #c9b8e8;
+        font-size: 11px;
+        width: 80px;
+        transition: all 0.2s;
+    }
+
+    .opponent-theme .tag-input:focus {
+        background: rgba(45, 31, 61, 0.9);
+        border-style: solid;
+        border-color: #9d7cd8;
+        width: 120px;
+    }
+
+    .opponent-theme .tag-input::placeholder {
+        color: rgba(201, 184, 232, 0.5);
+    }
+
+    /* ==================== RANGE ==================== */
+    .range-label {
+        font-size: 11px;
+        font-weight: bold;
+        color: #9d7cd8;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .opponent-theme .range-select {
+        padding: 2px 8px;
+        background: rgba(106, 76, 147, 0.4);
+        border: 1px solid #6a4c93;
+        border-radius: 3px;
+        color: #d4c4f0;
+        font-size: 11px;
+        font-weight: bold;
+    }
+
+    .opponent-theme .range-select option {
+        background: #2d1f3d;
+        color: #f0e6ff;
+    }
+
+    /* ==================== STRESS FORMULA ==================== */
+    .stress-card {
+        border-color: #8b2020 !important;
+    }
+
+    .stress-card .card-header {
+        color: #ff8888;
+        border-color: #8b2020;
+    }
+
+    .stress-formula-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+        margin-bottom: 12px;
+    }
+
+    .stress-field {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .stress-field.full-width {
+        grid-column: 1 / -1;
+    }
+
+    .stress-field label {
+        font-size: 10px;
+        font-weight: bold;
+        color: #ffaaaa;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .opponent-theme .stress-field input {
+        padding: 8px 10px;
+        background: rgba(139, 32, 32, 0.3);
+        border: 1px solid #8b2020;
+        border-radius: 4px;
+        color: #ffcccc;
+        font-size: 13px;
+        text-align: center;
+    }
+
+    .opponent-theme .stress-field input::placeholder {
+        color: rgba(255, 136, 136, 0.4);
+    }
+
+    .stress-roll-btn {
+        width: 100%;
+        padding: 12px;
+        font-family: 'Pirata One', serif;
+        font-size: 16px;
+        background: linear-gradient(180deg, #8b2020 0%, #4a0a0a 100%);
+        border: 2px solid #ff4444;
+        border-radius: 6px;
+        color: #fff;
+        cursor: pointer;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        box-shadow: 0 0 8px rgba(255, 68, 68, 0.3);
+    }
+
+    .stress-roll-btn:hover {
+        background: linear-gradient(180deg, #a53030 0%, #8b2020 100%);
+        box-shadow: 0 0 15px rgba(255, 68, 68, 0.6);
+        transform: translateY(-1px);
+    }
+
+    .stress-roll-btn i {
+        font-size: 18px;
+    }
+
+    /* ==================== SOURCE ==================== */
+    .source-card {
+        background: rgba(45, 31, 61, 0.4) !important;
+        border-style: dashed !important;
+        padding: 8px 12px !important;
+    }
+
+    .source-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .source-row i {
+        color: #9d7cd8;
+        font-size: 14px;
+    }
+
+    .source-row label {
+        font-size: 12px;
+        font-weight: bold;
+        color: #c9b8e8;
+    }
+
+    .opponent-theme .source-row input {
+        flex: 1;
+        padding: 6px 10px;
+        background: rgba(45, 31, 61, 0.6);
+        border: 1px solid #6a4c93;
+        border-radius: 4px;
+        color: #d4c4f0;
+        font-size: 12px;
+        font-style: italic;
+    }
+</style>

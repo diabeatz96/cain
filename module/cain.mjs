@@ -13,6 +13,7 @@ import { PlayerOverview } from './documents/player-overview.mjs';
 
 // Import DataModel classes
 import * as models from './data/_module.mjs';
+import PathosTracker from "./components/pathos-tracker/pathos-tracker.mjs";
 
 /* -------------------------------------------- */
 /*  Init Hook                                   */
@@ -51,6 +52,7 @@ Hooks.once('init', async function () {
     sin: models.CainNPC,
     mundane: models.CainMundane,
     npc: models.CainNPC,  // Backwards compatibility - deprecated, use 'sin' instead
+    opponent: models.CainOpponent,
   }
   CONFIG.Item.documentClass = CainItem;
   CONFIG.Item.dataModels = {
@@ -187,6 +189,22 @@ Hooks.once('init', async function () {
     }
   });
 
+  game.settings.register('cain', 'pathosTrackerVisible', {
+    name: 'Pathos Tracker Visible',
+    scope: 'client',
+    config: false,
+    type: Boolean,
+    default: true,
+  });
+
+  game.settings.register('cain', 'pathosTrackerPosition', {
+    name: 'Pathos Tracker Position',
+    scope: 'client',
+    config: false,
+    type: Object,
+    default: { top: 60, left: 110 },
+  });
+
   function registerHotkeySetting(settingName, settingLabel, settingHint) {
     game.settings.register('cain', settingName, {
       name: settingLabel,
@@ -286,6 +304,59 @@ function applyAccessibilityMode(enabled) {
   }
 }
 
+/* -------------------------------------------- */
+/*  Scene Control Buttons                       */
+/* -------------------------------------------- */
+
+// Add Divine Agony toggle to scene controls (works for v12 and v13)
+// This hook must be registered outside of ready to catch initial render
+Hooks.on('getSceneControlButtons', (controls) => {
+  // v13 uses object structure with "tokens" (plural), v12 uses array with "token" (singular)
+  const isV13 = game.release.generation >= 13;
+
+  if (isV13) {
+    // v13: controls is an object keyed by control name (plural: "tokens"), tools is also an object
+    // Reference: https://foundryvtt.com/api/functions/hookEvents.getSceneControlButtons.html
+    // v13 onChange signature: (event: Event, active: boolean) => void
+    if (controls.tokens) {
+      controls.tokens.tools['pathos-tracker'] = {
+        name: 'pathos-tracker',
+        title: 'Toggle Divine Agony Tracker',
+        icon: 'fa-solid fa-heart',
+        toggle: true,
+        active: game.settings.get('cain', 'pathosTrackerVisible'),
+        onChange: async (event, active) => {
+          await game.settings.set('cain', 'pathosTrackerVisible', active);
+          if (active) {
+            ui.pathosTracker.render({ force: true });
+          } else {
+            ui.pathosTracker.close();
+          }
+        }
+      };
+    }
+  } else {
+    // v12: controls is an array, tools is an array, name is "token" (singular)
+    const tokenControls = controls.find(c => c.name === 'token');
+    if (tokenControls) {
+      tokenControls.tools.push({
+        name: 'pathos-tracker',
+        title: 'Toggle Divine Agony Tracker',
+        icon: 'fa-solid fa-heart',
+        toggle: true,
+        active: game.settings.get('cain', 'pathosTrackerVisible'),
+        onClick: async (active) => {
+          await game.settings.set('cain', 'pathosTrackerVisible', active);
+          if (active) {
+            ui.pathosTracker.render({ force: true });
+          } else {
+            ui.pathosTracker.close();
+          }
+        }
+      });
+    }
+  }
+});
 
 /* -------------------------------------------- */
 /*  Handlebars Helpers                          */
@@ -552,6 +623,17 @@ Hooks.once('ready', async function () {
       console.error('Action bar not found.');
     }
   }
+
+  // add the pathos tracker UI element
+  const pathos = new PathosTracker();
+
+  // Only render if visible setting is true
+  if (game.settings.get('cain', 'pathosTrackerVisible')) {
+    pathos.render({ force: true });
+  }
+
+  // register to the UI element
+  ui.pathosTracker = pathos;
 
   function addTalismanButton() {
     // Create the button element with the talisman icon

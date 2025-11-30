@@ -10,8 +10,8 @@
   ],
   "flags": {
     "hotReload": {
-      "extensions": ["scss", "mjs", "hbs", "json"],
-        "paths": ["lang", "css", "module", "src", "templates"]
+      "extensions": ["mjs", "hbs", "json", "css"],
+        "paths": ["lang", "module", "src", "templates"]
       }
   },
   "url": "https://github.com/bugeso/cain1.3",
@@ -26,7 +26,7 @@
       "thumbnail": "systems/cain/assets/cainnew.png"
     }
   ],
-  "version": "1.3.7",
+  "version": "1.3.9",
   "compatibility": {
     "minimum": 11,
     "verified": "13",
@@ -83,6 +83,13 @@
       "system": "cain",
       "type": "Item",
       "path": "packs/afflictions"
+    },
+    {
+      "name": "opponents",
+      "label": "Opponents & Drifters",
+      "system": "cain",
+      "type": "Actor",
+      "path": "packs/opponents"
     }
   ],
   "packFolders": [],
@@ -92,7 +99,8 @@
       "character": {},
       "sin": {},
       "mundane": {},
-      "npc": {}
+      "npc": {},
+      "opponent": {}
     },
     "Item": {
       "item": {},
