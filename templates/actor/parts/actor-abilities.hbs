@@ -277,23 +277,30 @@
             </li>
             {{/each}}
           </ul>
-          <div class="form-group">
-            <label for="selectedPower" class="labelSelectedPower">Available Powers:</label>
-            <select name="selectedPower" class="selectedPower">
-              {{#each availablePowers}}
-              <option value="{{this.id}}" data-description="{{this.system.powerDescription}}"
-                data-keywords="{{this.system.keywords}}">{{this.system.powerName}}</option>
-              {{/each}}
-            </select>
-            <button type="button" class="add-blasphemy-power-button" {{#unless availablePowers.length}} disabled
-              {{/unless}}>Add Power</button>
-          </div>
-          <div class="available-power-description-card">
-            <h4>Keywords</h4>
-            <p class="powerKeywords"></p>
-            <h4>Power Description</h4>
-            <p class="powerDescription"></p>
-          </div>
+          <details class="available-powers-section">
+            <summary class="available-powers-toggle">
+              <i class="fas fa-plus-circle"></i> Add More Powers (Click to expand)
+            </summary>
+            <div class="available-powers-content">
+              <div class="form-group">
+                <label for="selectedPower" class="labelSelectedPower">Available Powers:</label>
+                <select name="selectedPower" class="selectedPower">
+                  {{#each availablePowers}}
+                  <option value="{{this.id}}" data-description="{{this.system.powerDescription}}"
+                    data-keywords="{{this.system.keywords}}">{{this.system.powerName}}</option>
+                  {{/each}}
+                </select>
+                <button type="button" class="add-blasphemy-power-button" {{#unless availablePowers.length}} disabled
+                  {{/unless}}>Add Power</button>
+              </div>
+              <div class="available-power-description-card">
+                <h4>Keywords</h4>
+                <p class="powerKeywords"></p>
+                <h4>Power Description</h4>
+                <p class="powerDescription"></p>
+              </div>
+            </div>
+          </details>
         </div>
       </div>
       {{/each}}
@@ -1011,6 +1018,48 @@
     color: #888;
     font-style: italic;
     font-family: "Lacquer", system-ui;
+  }
+
+  /* Collapsible Available Powers Section */
+  .abilities-page .available-powers-section {
+    margin-top: 15px;
+    border: 1px dashed #444;
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, 0.3);
+  }
+
+  .abilities-page .available-powers-toggle {
+    padding: 8px 12px;
+    cursor: pointer;
+    color: #888;
+    font-size: 12px;
+    font-family: 'Courier New', Courier, monospace;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.2s;
+  }
+
+  .abilities-page .available-powers-toggle::-webkit-details-marker {
+    display: none;
+  }
+
+  .abilities-page .available-powers-toggle:hover {
+    color: #ff00cc;
+  }
+
+  .abilities-page .available-powers-toggle i {
+    transition: transform 0.2s;
+  }
+
+  .abilities-page .available-powers-section[open] .available-powers-toggle i {
+    transform: rotate(45deg);
+  }
+
+  .abilities-page .available-powers-content {
+    padding: 10px;
+    border-top: 1px dashed #444;
   }
 
 </style>

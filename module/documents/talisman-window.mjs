@@ -569,6 +569,9 @@ Hooks.once('ready', () => {
 Hooks.on('canvasReady', async () => {
   console.log('Canvas ready - updating all talisman tiles in scene');
 
+  // Only GM can update tiles and drawings
+  if (!game.user.isGM) return;
+
   if (!canvas.scene) return;
 
   const talismans = game.settings.get('cain', 'globalTalismans');
@@ -673,6 +676,9 @@ Hooks.on('getTileDirectoryEntryContext', (html, entryOptions) => {
 // Hook to update label position when tile is moved or resized
 Hooks.on('updateTile', async (tileDoc, changes, options, userId) => {
   // Only update if position or size changed and this is a talisman tile
+  // Only GM can update drawings/labels
+  if (!game.user.isGM) return;
+
   if ((changes.x !== undefined || changes.y !== undefined || changes.width !== undefined || changes.height !== undefined) && tileDoc.flags?.talismanData) {
     console.log('Talisman tile moved/resized, updating label position');
     console.log('Tile ID:', tileDoc.id);
