@@ -1268,7 +1268,14 @@ export class HomebrewWindow extends Application {
     // ==================== SETTINGS METHODS ====================
 
     async _getOrCreateHomebrewFolder(parentFolderId = null) {
-        let homebrewFolder = game.folders.find(f => f.name === "Homebrew" && f.type === "Item" && f.folder?.id === parentFolderId);
+        // Find existing Homebrew folder - for root level folders, folder is null
+        let homebrewFolder;
+        if (parentFolderId === null) {
+            // Looking for root-level Homebrew folder
+            homebrewFolder = game.folders.find(f => f.name === "Homebrew" && f.type === "Item" && !f.folder);
+        } else {
+            homebrewFolder = game.folders.find(f => f.name === "Homebrew" && f.type === "Item" && f.folder?.id === parentFolderId);
+        }
 
         if (!homebrewFolder) {
             homebrewFolder = await Folder.create({
