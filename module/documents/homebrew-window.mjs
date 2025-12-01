@@ -279,35 +279,30 @@ export class HomebrewWindow extends Application {
     _onChangeBlasphemyName(event) {
         event.preventDefault();
         this.blasphemyOptions.name = event.currentTarget.value;
-        this.render(true);
     }
 
     _onChangePowerName(event) {
         event.preventDefault();
         const powerIndex = event.currentTarget.getAttribute('data-power-index');
         this.blasphemyOptions.powers[powerIndex].name = event.currentTarget.value;
-        this.render(true);
     }
 
     _onChangePowerDescription(event) {
         event.preventDefault();
         const powerIndex = event.currentTarget.getAttribute('data-power-index');
         this.blasphemyOptions.powers[powerIndex].powerDescription = event.currentTarget.value;
-        this.render(true);
     }
 
     _onChangePowerPassive(event) {
         event.preventDefault();
         const powerIndex = event.currentTarget.getAttribute('data-power-index');
         this.blasphemyOptions.powers[powerIndex].isPassive = event.currentTarget.checked;
-        this.render(true);
     }
 
     _onChangePowerTags(event) {
         event.preventDefault();
         const powerIndex = event.currentTarget.getAttribute('data-power-index');
         this.blasphemyOptions.powers[powerIndex].keywords = event.currentTarget.value;
-        this.render(true);
     }
 
 
@@ -429,7 +424,6 @@ export class HomebrewWindow extends Application {
     _onChangeAgendaName(event) {
         event.preventDefault();
         this.agendaOptions.name = event.currentTarget.value;
-        this.render(true);
     }
 
 
@@ -437,21 +431,18 @@ export class HomebrewWindow extends Application {
         event.preventDefault();
         const taskIndex = event.currentTarget.getAttribute('data-task-index');
         this.agendaOptions.tasks[taskIndex].task = event.currentTarget.value;
-        this.render(true);
     }
 
     _onChangeAbilityName(event) {
         event.preventDefault();
         const abilityIndex = event.currentTarget.getAttribute('data-ability-index');
         this.agendaOptions.abilities[abilityIndex].name = event.currentTarget.value;
-        this.render(true);
     }
 
     _onChangeAbilityDescription(event) {
         event.preventDefault();
         const abilityIndex = event.currentTarget.getAttribute('data-ability-index');
         this.agendaOptions.abilities[abilityIndex].abilityDescription = event.currentTarget.value;
-        this.render(true);
     }
 
     _onToggleBold(event) {
@@ -1268,7 +1259,14 @@ export class HomebrewWindow extends Application {
     // ==================== SETTINGS METHODS ====================
 
     async _getOrCreateHomebrewFolder(parentFolderId = null) {
-        let homebrewFolder = game.folders.find(f => f.name === "Homebrew" && f.type === "Item" && f.folder?.id === parentFolderId);
+        // Find existing Homebrew folder - for root level folders, folder is null
+        let homebrewFolder;
+        if (parentFolderId === null) {
+            // Looking for root-level Homebrew folder
+            homebrewFolder = game.folders.find(f => f.name === "Homebrew" && f.type === "Item" && !f.folder);
+        } else {
+            homebrewFolder = game.folders.find(f => f.name === "Homebrew" && f.type === "Item" && f.folder?.id === parentFolderId);
+        }
 
         if (!homebrewFolder) {
             homebrewFolder = await Folder.create({
