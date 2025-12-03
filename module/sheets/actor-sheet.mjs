@@ -58,9 +58,10 @@ export class CainActorSheet extends ActorSheet {
     }
 
     if (actorData.type == 'sin') {
-      console.log(context);
-      console.log(this.actor.type)
       this._prepareItems(context);
+      if (this.actor.system.domains) {
+        ui.notifications.warn('This sin still uses an outdated domain system. This will be deprecated in a future release. Please use compendium domains.')
+      }
     }
 
 
@@ -231,9 +232,7 @@ export class CainActorSheet extends ActorSheet {
 
   _getItemsFromIDs(ids) {
     return ids.map(id => game.items.get(id));
-  } 
-  
-  
+  }
 
   _prepareItems(context) {
     const gear = [];
@@ -2579,6 +2578,7 @@ export class CainActorSheet extends ActorSheet {
   }
 
   _onSinTypeSelect(sinType) {
+    console.log('selected sin type');
     const sinTypeMapping = {
       ogre: {
         defaultImg: "systems/cain/assets/Sins/ogre.png",

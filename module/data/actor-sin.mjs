@@ -12,6 +12,10 @@ export default class CainNPC extends CainActorBase {
     schema.sinForm = new fields.StringField({ required: true, nullable: false, initial: "Form I/Severed" });
     schema.category = new fields.NumberField({ required: true, nullable: false, initial: 0, min: 0 });
 
+    // New domains: string references to compendium items
+    // TODO: migrate these fields over
+    schema.domainsV2 = new fields.ArrayField(new fields.StringField());
+
     schema.domains = new fields.SchemaField({
       ability1: new fields.SchemaField({
         title: new fields.StringField({ initial: "Hostile Door Patterns" }),
@@ -48,9 +52,9 @@ export default class CainNPC extends CainActorBase {
     });
     
     schema.selectedAbilities = new fields.SchemaField({
-      selectedAbility1: new fields.StringField({ initial: "Please choose an ability to get started" }),
-      selectedAbility2: new fields.StringField({ initial: "Please choose an ability to get started" }),
-      selectedAbility3: new fields.StringField({ initial: "Please choose an ability to get started" })
+      selectedAbility1: new fields.StringField({ initial: "" }),
+      selectedAbility2: new fields.StringField({ initial: "" }),
+      selectedAbility3: new fields.StringField({ initial: "" })
     });
     
     schema.palace = new fields.StringField({ initial: "default" });
