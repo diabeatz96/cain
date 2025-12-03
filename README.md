@@ -16,7 +16,7 @@
 <p>
 <p align="center">
     <strong>Main Repository:</strong> <a href="https://github.com/diabeatz96/cain">https://github.com/diabeatz96/cain</a><br>
-    <strong>Development Repository:</strong> <a href="https://github.com/bugeso/cain1.3">https://github.com/bugeso/cain1.3</a>
+    <strong>Development Repository:</strong> <a href="https://github.com/bugeso/cain">https://github.com/bugeso/cain1.3</a>
 </p>
 <p align="center">
    <!-- default option, no dependency badges. -->

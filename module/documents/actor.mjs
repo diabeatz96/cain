@@ -16,15 +16,48 @@ export class CainActor extends Actor {
   async _preCreate(data, options, user) {
     await super._preCreate(data, options, user);
 
+    // Set default image based on actor type
+    let defaultImg = "icons/svg/mystery-man.svg";
+    if (data.type === "opponent") {
+      defaultImg = "systems/cain/assets/Opponents/drifter.png";
+    }
+
+    // Set default actor image if not provided
+    if (!data.img || data.img === "icons/svg/mystery-man.svg") {
+      this.updateSource({ img: defaultImg });
+    }
+
     // Set default prototype token settings for all actor types
     const prototypeToken = {
       actorLink: true,  // Link actor data
       texture: {
-        src: data.img || "icons/svg/mystery-man.svg"  // Use actor image or default
+        src: data.img || defaultImg  // Use actor image or default
       }
     };
 
     this.updateSource({ prototypeToken });
+  }
+
+  async _onCreate(data, options, userid) {
+    await super._onCreate(data, options, userid);
+
+    console.log('created!')
+    // Register any relevant apps. These will re-render whenever this actor updates
+    if (this.type === 'character') {
+      this.apps['pathos-tracker'] = ui.pathosTracker;
+      ui.pathosTracker.render({ force: true });
+    }
+  }
+
+  _onDelete(options, userId) {
+    // If character, unlink pathos tracker so it doesn't get deleted
+    if (this.type === 'character') {
+      delete this.apps['pathos-tracker'];
+    }
+    super._onDelete(options, userId);
+
+    // force a re-render of the pathos element
+    ui.pathosTracker.render({ force: true });
   }
 
   /** @override */
@@ -37,6 +70,10 @@ export class CainActor extends Actor {
         "prototypeToken.texture.src": changed.img
       });
     }
+  }
+
+  async _onUpdate(changed, options, user) {
+    super._onUpdate(changed, options, user);
   }
 
   /** @override */

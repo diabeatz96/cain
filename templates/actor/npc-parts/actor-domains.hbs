@@ -1,25 +1,134 @@
 <div class="tab domains paper-texture" data-group="primary" data-tab="domains">
-    <div class="form-group dark-form-group">
-        <i class="fas fa-comment-alt ability-icon" data-ability="1" onclick="sendAbilityToChat(1)"></i>
+    <!-- Domain 1 -->
+    <div class="domain-card">
+        <div class="domain-header">
+            <h3 class="domain-title">Domain 1</h3>
+            <button class="chat-button" onclick="sendAbilityToChat(1)">
+                <i class="fas fa-comment-alt"></i> Send to Chat
+            </button>
+        </div>
+        <div class="domain-content">
+            {{#if (eq system.sinType "redacted")}}
+                <textarea name="system.selectedAbilities.selectedAbility1" class="domain-textarea"
+                          data-ability="1">{{system.selectedAbilities.selectedAbility1}}</textarea>
+            {{else}}
+                <select name="system.selectedAbilities.selectedAbility1" class="domain-select" data-ability="1">
+                    {{#each system.domains}}
+                        <option value="{{this.value}}"
+                                {{#if (eq ../system.selectedAbilities.selectedAbility1 this.value)}}selected{{/if}}>{{this.title}}</option>
+                    {{/each}}
+                </select>
+                <div class="domain-description">
+                    <p class="ability-value" data-ability="1">{{system.selectedAbilities.selectedAbility1}}</p>
+                </div>
+            {{/if}}
+        </div>
     </div>
-    <div class="form-group dark-form-group">
-        <i class="fas fa-comment-alt ability-icon" data-ability="2" onclick="sendAbilityToChat(2)"></i>
+
+    <!-- Domain 2 -->
+    <div class="domain-card">
+        <div class="domain-header">
+            <h3 class="domain-title">Domain 2</h3>
+            <button class="chat-button" onclick="sendAbilityToChat(2)">
+                <i class="fas fa-comment-alt"></i> Send to Chat
+            </button>
+        </div>
+        <div class="domain-content">
+            {{#if (eq system.sinType "redacted")}}
+                <textarea name="system.selectedAbilities.selectedAbility2" class="domain-textarea"
+                          data-ability="2">{{system.selectedAbilities.selectedAbility2}}</textarea>
+            {{else}}
+                <select name="system.selectedAbilities.selectedAbility2" class="domain-select" data-ability="2">
+                    {{#each system.domains}}
+                        <option value="{{this.value}}"
+                                {{#if (eq ../system.selectedAbilities.selectedAbility2 this.value)}}selected{{/if}}>{{this.title}}</option>
+                    {{/each}}
+                </select>
+                <div class="domain-description">
+                    <p class="ability-value" data-ability="2">{{system.selectedAbilities.selectedAbility2}}</p>
+                </div>
+            {{/if}}
+        </div>
     </div>
-    <div class="form-group dark-form-group">
-        <i class="fas fa-comment-alt ability-icon" data-ability="3" onclick="sendAbilityToChat(3)"></i>
+
+    <!-- Domain 3 -->
+    <div class="domain-card">
+        <div class="domain-header">
+            <h3 class="domain-title">Domain 3</h3>
+            <button class="chat-button" onclick="sendAbilityToChat(3)">
+                <i class="fas fa-comment-alt"></i> Send to Chat
+            </button>
+        </div>
+        <div class="domain-content">
+            {{#if (eq system.sinType "redacted")}}
+                <textarea name="system.selectedAbilities.selectedAbility3" class="domain-textarea"
+                          data-ability="3">{{system.selectedAbilities.selectedAbility3}}</textarea>
+            {{else}}
+                <select name="system.selectedAbilities.selectedAbility3" class="domain-select" data-ability="3">
+                    {{#each system.domains}}
+                        <option value="{{this.value}}"
+                                {{#if (eq ../system.selectedAbilities.selectedAbility3 this.value)}}selected{{/if}}>{{this.title}}</option>
+                    {{/each}}
+                </select>
+                <div class="domain-description">
+                    <p class="ability-value" data-ability="3">{{system.selectedAbilities.selectedAbility3}}</p>
+                </div>
+            {{/if}}
+        </div>
     </div>
 </div>
 
 <script>
     function sendAbilityToChat(abilityNumber) {
-        const abilityElement = document.querySelector(`[data-ability="${abilityNumber}"]`);
-        const abilityValue = abilityElement.tagName === 'TEXTAREA' ? abilityElement.value : abilityElement.textContent;
-        const message = `Domain Description: ${abilityValue}`;
-        ChatMessage.create({content: message});
+        const selectElement = document.querySelector(`select.domain-select[data-ability="${abilityNumber}"]`);
+        const textareaElement = document.querySelector(`textarea.domain-textarea[data-ability="${abilityNumber}"]`);
+        const abilityValueElement = document.querySelector(`p.ability-value[data-ability="${abilityNumber}"]`);
+
+        let domainName = '';
+        let domainDescription = '';
+
+        if (textareaElement) {
+            // For [REDACTED] type, use textarea value
+            domainName = '[REDACTED] Domain';
+            domainDescription = textareaElement.value;
+        } else if (selectElement && abilityValueElement) {
+            // Get the domain name from the selected option's title
+            const selectedOption = selectElement.options[selectElement.selectedIndex];
+            const optionTitle = selectedOption ? selectedOption.text : '';
+
+            // Get the full description from the ability-value paragraph
+            const fullDescription = abilityValueElement.textContent.trim();
+
+            // Extract domain name from the option title (before the colon)
+            const colonIndex = optionTitle.indexOf(':');
+            if (colonIndex !== -1) {
+                domainName = optionTitle.substring(0, colonIndex).trim();
+            } else {
+                domainName = optionTitle || 'Domain';
+            }
+
+            domainDescription = fullDescription;
+        }
+
+        // Create a nicely formatted chat message with HTML
+        const messageContent = `
+            <div style="border: 2px solid #444; border-radius: 8px; padding: 12px; background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%); margin: 4px 0;">
+                <h3 style="margin: 0 0 8px 0; color: #91ffef; font-family: 'Pirata One', serif; font-size: 1.4em; border-bottom: 2px solid #91ffef; padding-bottom: 4px;">
+                    ${domainName}
+                </h3>
+                <div style="color: #e0e0e0; font-family: 'Courier New', monospace; line-height: 1.6; font-size: 1em;">
+                    ${domainDescription}
+                </div>
+            </div>
+        `;
+
+        ChatMessage.create({content: messageContent});
     }
 </script>
 
 <style>
+    @import url('https://fonts.googleapis.com/css2?family=Pirata+One&display=swap');
+
     .tab.domains {
         border-radius: 5px 5px 0 0;
         background-color: wheat;
@@ -34,69 +143,221 @@
         background-blend-mode: hard-light;
     }
 
-    .tab.domains .form-group {
+    /* Domain Card Styling */
+    .domain-card {
+        background-image: url("systems/cain/assets/backgrounds/paper2.jpg");
+        background-position: 50% 50%;
+        background-blend-mode: darken;
+        background-color: rgb(134, 134, 134);
+        border: solid 2px black;
+        border-radius: 20px;
+        padding: 20px;
         margin-bottom: 20px;
-        text-align: center;
-        border: 1px solid #444;
-        color: black;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Sin Type Theme Colors */
+    .ogre .domain-card {
+        background-color: #0d79f2;
+    }
+
+    .idol .domain-card {
+        background-color: #e40df2;
+    }
+
+    .toad .domain-card {
+        background-color: #f2af0d;
+    }
+
+    .hound .domain-card {
+        background-color: #ff0808;
+    }
+
+    .centipede .domain-card {
+        background-color: #9f00ff;
+    }
+
+    .lord .domain-card {
+        background-color: #91ffef;
+    }
+
+    .redacted .domain-card {
+        background-color: rgb(134, 134, 134);
+    }
+
+    .domain-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+        border-bottom: dashed 3px black;
+    }
+
+    .tab.domains .domain-title {
+        font-family: 'Pirata One', serif !important;
+        font-size: 42px !important;
+        color: black !important;
+        margin: 0 !important;
+        text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff !important;
+        border-bottom: none !important;
+    }
+
+    .tab.domains .chat-button {
+        font-family: 'Pirata One', serif !important;
+        font-size: 16px !important;
+        color: white !important;
+        background: linear-gradient(135deg, #2a2a2a 0%, #444 100%) !important;
+        border: 3px solid black !important;
+        border-radius: 8px !important;
+        padding: 8px 15px !important;
+        cursor: pointer !important;
+        transition: all 0.3s ease !important;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4) !important;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5) !important;
+        white-space: nowrap !important;
+        max-width: 200px !important;
+    }
+
+    /* Sin Type Theme Colors for Chat Button */
+    .ogre .chat-button {
+        background: linear-gradient(135deg, #0d79f2 0%, #085fc2 100%) !important;
+    }
+
+    .idol .chat-button {
+        background: linear-gradient(135deg, #e40df2 0%, #b40ac2 100%) !important;
+    }
+
+    .toad .chat-button {
+        background: linear-gradient(135deg, #f2af0d 0%, #c28a0a 100%) !important;
+    }
+
+    .hound .chat-button {
+        background: linear-gradient(135deg, #ff0808 0%, #cc0606 100%) !important;
+    }
+
+    .centipede .chat-button {
+        background: linear-gradient(135deg, #9f00ff 0%, #7f00cc 100%) !important;
+    }
+
+    .lord .chat-button {
+        background: linear-gradient(135deg, #91ffef 0%, #74ccbf 100%) !important;
+    }
+
+    .redacted .chat-button {
+        background: linear-gradient(135deg, #2a2a2a 0%, #444 100%) !important;
+    }
+
+    .chat-button:hover {
+        transform: translateY(-3px) rotate(-2deg);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
+        filter: brightness(1.2);
+    }
+
+    .chat-button:active {
+        transform: translateY(0) rotate(0deg);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .chat-button i {
+        margin-right: 8px;
+    }
+
+    .domain-content {
+        background: rgba(255, 255, 255, 0.4);
+        border: 2px solid black;
+        border-radius: 10px;
         padding: 15px;
+    }
+
+    /* Select Dropdown */
+    .tab.domains .domain-select {
+        width: 100% !important;
+        border: 2px solid black !important;
+        border-radius: 8px !important;
+        background-color: white !important;
+        color: black !important;
+        font-size: 18px !important;
+        padding: 12px 40px 12px 15px !important;
+        font-family: 'Courier New', monospace !important;
+        font-weight: 600 !important;
+        margin-bottom: 15px !important;
+        appearance: none !important;
+        -webkit-appearance: none !important;
+        background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 5"><path fill="%23000000" d="M2 0L0 2h4z"/></svg>') !important;
+        background-repeat: no-repeat !important;
+        background-position: right 15px center !important;
+        background-size: 14px !important;
+        cursor: pointer !important;
+        transition: all 0.3s ease !important;
+        height: auto !important;
+        min-height: 44px !important;
+    }
+
+    .tab.domains .domain-select:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important;
+    }
+
+    .tab.domains .domain-select:focus {
+        outline: none !important;
+        border-color: #2a7bc4 !important;
+        box-shadow: 0 0 0 3px rgba(42, 123, 196, 0.3) !important;
+    }
+
+    .tab.domains .domain-select option {
+        background-color: white !important;
+        color: black !important;
+        padding: 10px !important;
+        font-size: 16px !important;
+        line-height: 1.6 !important;
+    }
+
+    /* Description Box */
+    .domain-description {
+        background: white;
+        border: 2px solid black;
         border-radius: 8px;
-        background-color: white;
+        padding: 15px;
+        min-height: 120px;
     }
 
-    .tab.domains .dark-form-group label {
-        color: #f5f5f5;
-        font-weight: bold;
+    .ability-value {
+        font-family: 'Courier New', monospace;
+        font-size: 18px;
+        color: black;
+        line-height: 1.6;
+        margin: 0;
+        white-space: pre-wrap;
+    }
+
+    /* Textarea for [REDACTED] */
+    .domain-textarea {
+        width: 100%;
+        font-family: 'Courier New', monospace;
+        font-size: 18px;
+        color: black;
+        background: white;
+        border: 2px solid black;
+        border-radius: 8px;
+        padding: 15px;
+        resize: vertical;
+        min-height: 180px;
+        line-height: 1.6;
+    }
+
+    .domain-textarea:focus {
+        outline: none;
+        border-color: #2a7bc4;
+        box-shadow: 0 0 0 3px rgba(42, 123, 196, 0.3);
+    }
+
+    /* Form overrides */
+    form .tab.domains .domain-card {
         display: block;
-        margin-bottom: 10px;
-        font-size: 1.1em;
     }
 
-    .tab.domains .ability-select, .tab.domains .ability-textarea {
-        width: 80%;
-        border: 1px solid #444;
-        border-radius: 4px;
-        background-color: white;
-        color: black;
-    }
-
-    .tab.domains .ability-textarea {
-        height: 100px; /* Fixed vertical height */
-    }
-
-    .tab.domains .ability-select {
-        appearance: none; /* Remove default arrow */
-        -webkit-appearance: none; /* Remove default arrow for Safari */
-        background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 5"><path fill="#f5f5f5" d="M2 0L0 2h4z"/></svg>');
-        background-repeat: no-repeat;
-        background-position: right 10px center;
-        background-size: 10px;
-        text-align: center;
-    }
-
-    .tab.domains .ability-select option {
-        background-color: white;
-        color: black;
-    }
-
-    .tab.domains .ability-value {
-        margin-top: 10px;
-        font-size: 1em;
-        color: black;
-    }
-
-    .tab.domains .ability-icon {
-        margin-left: 10px;
-        cursor: pointer;
-        color: black;
-    }
-
-    .tab.domains .ability-icon:hover {
-        color: #aaa;
-    }
-
-    form .tab.domains .form-group {
+    form .tab.domains .domain-content {
         display: block;
-        margin-bottom: 20px;
     }
 </style>

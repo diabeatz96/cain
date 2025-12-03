@@ -42,6 +42,52 @@ export class CainActorSheet extends ActorSheet {
     return `systems/cain/templates/actor/actor-${this.actor.type}-sheet.hbs`;
   }
 
+  /** @override */
+  _getHeaderButtons() {
+    const buttons = super._getHeaderButtons();
+
+    // Add toggle tracker button for character sheets (GM only)
+    if (this.actor.type === 'character' && game.user.isGM) {
+      const isHidden = this.actor.system.hideFromTracker || false;
+      buttons.unshift({
+        label: "",
+        class: "toggle-tracker",
+        icon: isHidden ? "fas fa-eye-slash" : "fas fa-eye",
+        onclick: async (ev) => {
+          // Get current value at click time, not at button creation time
+          const currentlyHidden = this.actor.system.hideFromTracker || false;
+          const newValue = !currentlyHidden;
+          await this.actor.update({ 'system.hideFromTracker': newValue });
+
+          // Re-render the pathos tracker to reflect the change
+          if (ui.pathosTracker) {
+            ui.pathosTracker.render({ force: true });
+          }
+
+          // Update the button icon directly
+          const button = ev.currentTarget;
+          const icon = button.querySelector('i');
+          if (icon) {
+            icon.className = newValue ? "fas fa-eye-slash" : "fas fa-eye";
+          }
+          // Update tooltip
+          button.title = newValue ? "Show in Divine Agony Tracker" : "Hide from Divine Agony Tracker";
+        }
+      });
+
+      // Set initial tooltip based on current state
+      // This will be applied after render via a small delay
+      setTimeout(() => {
+        const btn = this.element?.find?.('.toggle-tracker');
+        if (btn?.length) {
+          btn.attr('title', isHidden ? "Show in Divine Agony Tracker" : "Hide from Divine Agony Tracker");
+        }
+      }, 0);
+    }
+
+    return buttons;
+  }
+
   /* -------------------------------------------- */
 
   /** @override */
@@ -62,6 +108,11 @@ export class CainActorSheet extends ActorSheet {
       if (this.actor.system.domains) {
         ui.notifications.warn('This sin still uses an outdated domain system. This will be deprecated in a future release. Please use compendium domains.')
       }
+    }
+
+    // Prepare opponent data
+    if (actorData.type == 'opponent') {
+      this._prepareOpponentData(context);
     }
 
 
@@ -150,7 +201,7 @@ export class CainActorSheet extends ActorSheet {
     context.selectedTalismans = this.actor.system.selectedTalismans || [];
 
     console.log(context.globalTalismans);
-    
+
     return context;
   }
 
@@ -220,14 +271,22 @@ export class CainActorSheet extends ActorSheet {
   
     // Prepare currentAgendaAvailableAbilities
     if (context.currentAgenda) {
-      const validAbilities = (context.currentAgenda.system.abilities || []).filter(item => 
+      const validAbilities = (context.currentAgenda.system.abilities || []).filter(item =>
         !(context.system.currentAgendaAbilities || []).includes(item)
       );
       context.currentAgendaAvailableAbilities = this._getItemsFromIDs(validAbilities);
     } else {
       context.currentAgendaAvailableAbilities = [];
     }
-    
+
+  }
+
+  _prepareOpponentData(context) {
+    // Resolve affliction IDs to actual item objects
+    const afflictionIds = context.system.afflictions || [];
+    context.currentAfflictions = afflictionIds
+      .map(id => game.items.get(id))
+      .filter(item => item !== undefined);
   }
 
   _getItemsFromIDs(ids) {
@@ -264,13 +323,13 @@ export class CainActorSheet extends ActorSheet {
   /** @override */
   activateListeners(html) {
     super.activateListeners(html);
-  
+
     html.on('click', '.item-edit', (ev) => {
       const li = $(ev.currentTarget).parents('.item');
       const item = this.actor.items.get(li.data('itemId'));
       item.sheet.render(true);
     });
-  
+
     if (!this.isEditable) return;
   
     html.on('click', '.item-create', this._onItemCreate.bind(this));
@@ -649,7 +708,557 @@ export class CainActorSheet extends ActorSheet {
       await this._rollSinOverflow(actor);
     });
 
+    // Event listeners for severe ability questions (SIN sheet attacks tab)
+    html.find('.add-btn').click(async (ev) => {
+      const questions = duplicate(this.actor.system.severeAbilityQuestions || []);
+      questions.push('');
+      await this.actor.update({'system.severeAbilityQuestions': questions});
+    });
+
+    html.find('.delete-btn').click(async (ev) => {
+      const index = parseInt(ev.currentTarget.closest('.question-row')?.querySelector('.question-label')?.textContent.replace('Q', '').replace(':', ''));
+      if (index >= 0) {
+        const questions = duplicate(this.actor.system.severeAbilityQuestions || []);
+        questions.splice(index, 1);
+        await this.actor.update({'system.severeAbilityQuestions': questions});
+      }
+    });
+
+    // Event listener for roll affliction button (SIN sheet attacks tab)
+    html.find('.roll-btn').click(async (ev) => {
+      // Roll for random affliction
+      const afflictions = this.actor.system.afflictions || [];
+      if (afflictions.length === 0) {
+        ui.notifications.warn('No afflictions available to roll.');
+        return;
+      }
+
+      const roll = await new Roll(`1d${afflictions.length}`).roll();
+      const selectedAffliction = afflictions[roll.total - 1];
+
+      const messageContent = `
+        <div style="border: 2px solid #1a5490; border-radius: 8px; padding: 12px; background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%); margin: 4px 0;">
+          <h3 style="margin: 0 0 8px 0; color: #2a7bc4; font-family: 'Pirata One', serif; font-size: 1.4em; border-bottom: 2px solid #2a7bc4; padding-bottom: 4px;">
+            ${this.actor.name} - Affliction Roll
+          </h3>
+          <div style="color: #e0e0e0; font-family: 'Courier New', monospace; line-height: 1.6; font-size: 1em;">
+            <strong>Rolled:</strong> ${roll.total}<br>
+            <strong>Affliction:</strong> ${selectedAffliction}
+          </div>
+        </div>
+      `;
+
+      roll.toMessage({
+        flavor: `${this.actor.name} rolls for Affliction`,
+        speaker: ChatMessage.getSpeaker({ actor: this.actor })
+      });
+
+      ChatMessage.create({content: messageContent});
+    });
+
+    // ==================== OPPONENT SHEET EVENT LISTENERS ====================
+
+    // Add Affliction button (Opponent sheet)
+    html.find('.add-affliction-btn').click(async (ev) => {
+      const afflictions = duplicate(this.actor.system.afflictions || []);
+      afflictions.push('');
+      await this.actor.update({'system.afflictions': afflictions});
+    });
+
+    // Remove Affliction button (Opponent sheet)
+    html.find('.remove-affliction-btn').click(async (ev) => {
+      const index = parseInt(ev.currentTarget.dataset.index);
+      const afflictions = duplicate(this.actor.system.afflictions || []);
+      afflictions.splice(index, 1);
+      await this.actor.update({'system.afflictions': afflictions});
+    });
+
+    // Add Special Ability button (Opponent sheet)
+    html.find('.add-ability-btn').click(async (ev) => {
+      const abilities = duplicate(this.actor.system.specialAbilities || []);
+      abilities.push({ name: '', description: '', trigger: '' });
+      await this.actor.update({'system.specialAbilities': abilities});
+    });
+
+    // Remove Special Ability button (Opponent sheet)
+    html.find('.remove-ability-btn').click(async (ev) => {
+      const index = parseInt(ev.currentTarget.dataset.index);
+      const abilities = duplicate(this.actor.system.specialAbilities || []);
+      abilities.splice(index, 1);
+      await this.actor.update({'system.specialAbilities': abilities});
+    });
+
+    // Add Capability button (Opponent sheet)
+    html.find('.add-capability-btn').click(async (ev) => {
+      const capabilities = duplicate(this.actor.system.capabilities || []);
+      capabilities.push('');
+      await this.actor.update({'system.capabilities': capabilities});
+    });
+
+    // Remove Capability button (Opponent sheet)
+    html.find('.remove-capability-btn').click(async (ev) => {
+      const index = parseInt(ev.currentTarget.dataset.index);
+      const capabilities = duplicate(this.actor.system.capabilities || []);
+      capabilities.splice(index, 1);
+      await this.actor.update({'system.capabilities': capabilities});
+    });
+
+    // Attack button (Opponent sheet) - uses stressFormula
+    html.find('.attack-btn').click(async (ev) => {
+      const stressFormula = this.actor.system.stressFormula || {};
+      const formula = stressFormula.formula || '1d6';
+      const roll1 = stressFormula.roll1 || '4';
+      const roll2to3 = stressFormula.roll2to3 || '3';
+      const roll4plus = stressFormula.roll4plus || '2';
+      const bonusEffect = stressFormula.bonusEffect || '';
+
+      const roll = await new Roll(formula).roll();
+      let stressValue, stressCategory;
+
+      if (roll.total === 1) {
+        stressValue = roll1;
+        stressCategory = 'Roll of 1';
+      } else if (roll.total >= 2 && roll.total <= 3) {
+        stressValue = roll2to3;
+        stressCategory = 'Roll of 2-3';
+      } else {
+        stressValue = roll4plus;
+        stressCategory = 'Roll of 4+';
+      }
+
+      const messageContent = `
+        <div style="border: 2px solid #8b2020; border-radius: 8px; padding: 12px; background: linear-gradient(135deg, #2d1f3d 0%, #1a1028 100%); margin: 4px 0;">
+          <h3 style="margin: 0 0 8px 0; color: #ff8888; font-family: 'Pirata One', serif; font-size: 1.4em; border-bottom: 2px solid #8b2020; padding-bottom: 4px;">
+            <i class="fas fa-crosshairs"></i> ${this.actor.name} - Attack
+          </h3>
+          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;">
+            <div style="background: #4a0a0a; border: 2px solid #ff4444; border-radius: 8px; padding: 8px 16px; text-align: center;">
+              <div style="font-size: 0.7em; color: #ff8888; text-transform: uppercase; letter-spacing: 1px;">Rolled</div>
+              <div style="font-size: 1.8em; font-weight: bold; color: #fff;">${roll.total}</div>
+              <div style="font-size: 0.7em; color: #ffaaaa;">${formula}</div>
+            </div>
+            <div style="flex: 1;">
+              <div style="color: #9d7cd8; font-size: 0.9em; margin-bottom: 4px;">${stressCategory}</div>
+              <div style="font-size: 1.6em; font-weight: bold; color: #ff6666;">
+                <i class="fas fa-heart-broken"></i> ${stressValue} Stress
+              </div>
+            </div>
+          </div>
+          ${bonusEffect ? `
+          <div style="background: rgba(139, 32, 32, 0.3); border: 1px solid #8b2020; border-radius: 4px; padding: 8px; color: #ffaaaa; font-size: 0.95em;">
+            <strong>Bonus:</strong> ${bonusEffect}
+          </div>` : ''}
+        </div>
+      `;
+
+      roll.toMessage({
+        flavor: messageContent,
+        speaker: ChatMessage.getSpeaker({ actor: this.actor })
+      });
+    });
+
+    // Reaction Roll button (Opponent sheet) - Shows dialog first
+    html.find('.reaction-btn').click(async (ev) => {
+      const reactions = this.actor.system.reactions || {};
+      this._showReactionDialog(reactions);
+    });
+
+    // Afflict button (Opponent sheet) - Updated for item references
+    html.find('.afflict-btn').click(async (ev) => {
+      const afflictionIds = this.actor.system.afflictions || [];
+      if (afflictionIds.length === 0) {
+        ui.notifications.warn('No afflictions defined for this opponent.');
+        return;
+      }
+
+      const roll = await new Roll(`1d${afflictionIds.length}`).roll();
+      const selectedAfflictionId = afflictionIds[roll.total - 1];
+      const selectedAffliction = game.items.get(selectedAfflictionId);
+
+      const afflictionName = selectedAffliction ? selectedAffliction.name : 'Unknown Affliction';
+      const afflictionDesc = selectedAffliction?.system?.description || '';
+
+      const messageContent = `
+        <div style="border: 2px solid #2a5a00; border-radius: 8px; padding: 12px; background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%); margin: 4px 0;">
+          <h3 style="margin: 0 0 8px 0; color: #66cc66; font-family: 'Pirata One', serif; font-size: 1.4em; border-bottom: 2px solid #2a5a00; padding-bottom: 4px;">
+            ${this.actor.name} - Affliction
+          </h3>
+          <div style="color: #e0e0e0; font-family: 'Courier New', monospace; line-height: 1.6; font-size: 1em;">
+            <strong>Rolled:</strong> ${roll.total}<br>
+            <strong>Affliction:</strong> ${afflictionName}
+            ${afflictionDesc ? `<br><em style="color: #aaa;">${afflictionDesc}</em>` : ''}
+          </div>
+        </div>
+      `;
+
+      roll.toMessage({
+        flavor: `${this.actor.name} inflicts an affliction!`,
+        speaker: ChatMessage.getSpeaker({ actor: this.actor })
+      });
+
+      ChatMessage.create({content: messageContent});
+    });
+
+    // ==================== OPPONENT SHEET HANDLERS ====================
+
+    // ET Mode Tab Click - Switch variant mode
+    html.find('.et-mode-tab').click(async (ev) => {
+      const mode = ev.currentTarget.dataset.mode;
+      await this.actor.update({'system.executionTalisman.useVariant': mode});
+    });
+
+    // ET Pip Click - Toggle pip filled state
+    html.find('.et-pips').on('click', '.et-pip', async (ev) => {
+      const pipIndex = parseInt(ev.currentTarget.dataset.index);
+      const current = this.actor.system.executionTalisman.current;
+
+      // If clicking on filled pip at or after current, reduce to that index
+      // If clicking on unfilled pip, fill up to that index
+      let newCurrent;
+      if (pipIndex < current) {
+        newCurrent = pipIndex;
+      } else {
+        newCurrent = pipIndex + 1;
+      }
+
+      await this.actor.update({'system.executionTalisman.current': newCurrent});
+    });
+
+    // Generate ET pips dynamically
+    this._renderETPips(html);
+
+    // Remove affliction from opponent
+    html.find('.afflictions-card .remove-affliction-btn').click(async (ev) => {
+      const afflictionId = ev.currentTarget.dataset.id;
+      const currentAfflictions = this.actor.system.afflictions || [];
+      const updatedAfflictions = currentAfflictions.filter(id => id !== afflictionId);
+      await this.actor.update({'system.afflictions': updatedAfflictions});
+    });
+
+    // Click affliction name to open its item sheet
+    html.find('.affliction-item .affliction-name, .affliction-item .affliction-icon').click(async (ev) => {
+      const afflictionId = ev.currentTarget.closest('.affliction-item').dataset.afflictionId;
+      const affliction = game.items.get(afflictionId);
+      if (affliction) {
+        affliction.sheet.render(true);
+      } else {
+        ui.notifications.warn('Affliction item not found. It may have been deleted.');
+      }
+    });
+
+    // Add/Remove capabilities
+    html.find('.add-capability-btn').click(async (ev) => {
+      const capabilities = this.actor.system.capabilities || [];
+      capabilities.push('');
+      await this.actor.update({'system.capabilities': capabilities});
+    });
+
+    html.find('.remove-capability-btn').click(async (ev) => {
+      const index = parseInt(ev.currentTarget.dataset.index);
+      const capabilities = this.actor.system.capabilities || [];
+      capabilities.splice(index, 1);
+      await this.actor.update({'system.capabilities': capabilities});
+    });
+
+    // Add/Remove special abilities
+    html.find('.add-ability-btn').click(async (ev) => {
+      const abilities = this.actor.system.specialAbilities || [];
+      abilities.push({ name: '', description: '', trigger: '' });
+      await this.actor.update({'system.specialAbilities': abilities});
+    });
+
+    html.find('.remove-ability-btn').click(async (ev) => {
+      const index = parseInt(ev.currentTarget.dataset.index);
+      const abilities = this.actor.system.specialAbilities || [];
+      abilities.splice(index, 1);
+      await this.actor.update({'system.specialAbilities': abilities});
+    });
+
+    // Ability to chat button
+    html.find('.ability-to-chat-btn').click(async (ev) => {
+      const index = parseInt(ev.currentTarget.dataset.index);
+      const abilities = this.actor.system.specialAbilities || [];
+      const ability = abilities[index];
+      if (!ability) return;
+
+      const messageContent = `
+        <div style="border: 2px solid #6a4c93; border-radius: 8px; padding: 12px; background: linear-gradient(135deg, #2d1f3d 0%, #1a1028 100%); margin: 4px 0;">
+          <h3 style="margin: 0 0 8px 0; color: #d4c4f0; font-family: 'Pirata One', serif; font-size: 1.4em; border-bottom: 2px solid #6a4c93; padding-bottom: 4px;">
+            ${this.actor.name} - ${ability.name}
+          </h3>
+          ${ability.trigger ? `<div style="color: #9d7cd8; font-size: 0.9em; margin-bottom: 6px;"><strong>Trigger:</strong> ${ability.trigger}</div>` : ''}
+          <div style="color: #f0e6ff; font-family: 'Segoe UI', sans-serif; line-height: 1.5; font-size: 1em;">
+            ${ability.description}
+          </div>
+        </div>
+      `;
+
+      ChatMessage.create({
+        content: messageContent,
+        speaker: ChatMessage.getSpeaker({ actor: this.actor })
+      });
+    });
+
+    // Opponent affliction drop zone
+    html.find('.opponent-affliction-drop').on('drop', async (event) => {
+      event.preventDefault();
+      try {
+        const data = JSON.parse(event.originalEvent.dataTransfer.getData('text/plain'));
+        const itemDrop = await Item.fromDropData(data);
+
+        if (itemDrop.type !== 'affliction') {
+          ui.notifications.warn('Only affliction items can be dropped here.');
+          return;
+        }
+
+        const currentAfflictions = this.actor.system.afflictions || [];
+        if (currentAfflictions.includes(itemDrop.id)) {
+          ui.notifications.warn('This affliction is already added.');
+          return;
+        }
+
+        currentAfflictions.push(itemDrop.id);
+        await this.actor.update({'system.afflictions': currentAfflictions});
+      } catch (err) {
+        console.error('Error handling affliction drop:', err);
+      }
+    });
+
+    // Tag input - add tag on Enter
+    html.find('.tag-input').on('keydown', async (ev) => {
+      if (ev.key === 'Enter') {
+        ev.preventDefault();
+        const value = ev.currentTarget.value.trim();
+        if (!value) return;
+
+        const tags = this.actor.system.tags || [];
+        tags.push(value);
+        await this.actor.update({'system.tags': tags});
+        ev.currentTarget.value = '';
+      }
+    });
+
+    // Remove tag button
+    html.find('.tag-remove-btn').click(async (ev) => {
+      ev.preventDefault();
+      ev.stopPropagation();
+      const index = parseInt(ev.currentTarget.dataset.index);
+      const tags = this.actor.system.tags || [];
+      tags.splice(index, 1);
+      await this.actor.update({'system.tags': tags});
+    });
+
+    // Stress Roll button
+    html.find('.stress-roll-btn').click(async (ev) => {
+      await this._rollOpponentStress();
+    });
+
 }
+
+  // Helper method to render ET pips
+  _renderETPips(html) {
+    const pipsContainer = html.find('.et-pips');
+    if (pipsContainer.length === 0) return;
+
+    const current = parseInt(pipsContainer.data('current')) || 0;
+    const max = parseInt(pipsContainer.data('max')) || 0;
+
+    pipsContainer.empty();
+    for (let i = 0; i < max; i++) {
+      const filled = i < current ? 'filled' : '';
+      pipsContainer.append(`<div class="et-pip ${filled}" data-index="${i}"></div>`);
+    }
+  }
+
+  // Roll stress for opponent using stress formula
+  async _rollOpponentStress() {
+    const stressFormula = this.actor.system.stressFormula || {};
+    const formula = stressFormula.formula || '1d6';
+    const roll1 = stressFormula.roll1 || '4';
+    const roll2to3 = stressFormula.roll2to3 || '3';
+    const roll4plus = stressFormula.roll4plus || '2';
+    const bonusEffect = stressFormula.bonusEffect || '';
+
+    // Roll the dice
+    const roll = new Roll(formula);
+    await roll.evaluate();
+    const rollTotal = roll.total;
+
+    // Determine stress based on roll result
+    let stressAmount;
+    let stressCategory;
+    if (rollTotal === 1) {
+      stressAmount = roll1;
+      stressCategory = 'Roll of 1';
+    } else if (rollTotal >= 2 && rollTotal <= 3) {
+      stressAmount = roll2to3;
+      stressCategory = 'Roll of 2-3';
+    } else {
+      stressAmount = roll4plus;
+      stressCategory = 'Roll of 4+';
+    }
+
+    // Build chat message
+    const messageContent = `
+      <div style="border: 2px solid #8b2020; border-radius: 8px; padding: 12px; background: linear-gradient(135deg, #2d1f3d 0%, #1a1028 100%); margin: 4px 0;">
+        <h3 style="margin: 0 0 8px 0; color: #ff8888; font-family: 'Pirata One', serif; font-size: 1.4em; border-bottom: 2px solid #8b2020; padding-bottom: 4px;">
+          <i class="fas fa-heart-broken"></i> ${this.actor.name} - Stress Attack
+        </h3>
+        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;">
+          <div style="background: #4a0a0a; border: 2px solid #ff4444; border-radius: 8px; padding: 8px 16px; text-align: center;">
+            <div style="font-size: 0.7em; color: #ff8888; text-transform: uppercase; letter-spacing: 1px;">Rolled</div>
+            <div style="font-size: 1.8em; font-weight: bold; color: #fff;">${rollTotal}</div>
+            <div style="font-size: 0.7em; color: #ffaaaa;">${formula}</div>
+          </div>
+          <div style="flex: 1;">
+            <div style="color: #9d7cd8; font-size: 0.9em; margin-bottom: 4px;">${stressCategory}</div>
+            <div style="font-size: 1.6em; font-weight: bold; color: #ff6666;">
+              <i class="fas fa-heart-broken"></i> ${stressAmount} Stress
+            </div>
+          </div>
+        </div>
+        ${bonusEffect ? `
+        <div style="background: rgba(139, 32, 32, 0.3); border: 1px solid #8b2020; border-radius: 4px; padding: 8px; color: #ffaaaa; font-size: 0.95em;">
+          <strong>Bonus:</strong> ${bonusEffect}
+        </div>` : ''}
+      </div>
+    `;
+
+    // Display the roll in chat
+    await roll.toMessage({
+      speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+      flavor: messageContent
+    });
+  }
+
+  // Show reaction dialog for opponent
+  async _showReactionDialog(reactions) {
+    const actor = this.actor;
+
+    // Build options for what to include
+    const hasAttack = reactions.attackWith && reactions.attackWith.trim();
+    const hasStress = reactions.stressAmount && reactions.stressAmount.trim();
+    const hasComplication = reactions.complication && reactions.complication.trim();
+    const hasThreat = reactions.threat && reactions.threat.trim();
+    const hasDieRoll = reactions.dieRoll && reactions.dieRoll.trim();
+
+    const dialogContent = `
+      <form class="reaction-dialog">
+        <p style="margin-bottom: 12px;">Select what ${actor.name} does:</p>
+
+        ${hasAttack ? `
+        <div class="form-group" style="margin-bottom: 8px;">
+          <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+            <input type="checkbox" name="includeAttack" checked/>
+            <strong>Attack:</strong> ${reactions.attackWith}
+          </label>
+        </div>` : ''}
+
+        ${hasStress ? `
+        <div class="form-group" style="margin-bottom: 8px;">
+          <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+            <input type="checkbox" name="includeStress" checked/>
+            <strong>Stress:</strong> ${reactions.stressAmount}
+          </label>
+        </div>` : ''}
+
+        ${hasComplication ? `
+        <div class="form-group" style="margin-bottom: 8px;">
+          <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+            <input type="checkbox" name="includeComplication"/>
+            <strong>Complication:</strong> ${reactions.complication}
+          </label>
+        </div>` : ''}
+
+        ${hasThreat ? `
+        <div class="form-group" style="margin-bottom: 8px;">
+          <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+            <input type="checkbox" name="includeThreat"/>
+            <strong>Threat:</strong> ${reactions.threat}
+          </label>
+        </div>` : ''}
+
+        ${hasDieRoll ? `
+        <div class="form-group" style="margin-bottom: 8px;">
+          <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+            <input type="checkbox" name="includeDieRoll"/>
+            <strong>Die Roll Effect:</strong> ${reactions.dieRoll}
+          </label>
+        </div>` : ''}
+
+        <div class="form-group" style="margin-top: 12px;">
+          <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+            <input type="checkbox" name="rollDice"/>
+            <strong>Roll 1d6</strong>
+          </label>
+        </div>
+      </form>
+    `;
+
+    new Dialog({
+      title: `${actor.name} - Reaction`,
+      content: dialogContent,
+      buttons: {
+        send: {
+          icon: '<i class="fas fa-comment"></i>',
+          label: 'Send to Chat',
+          callback: async (html) => {
+            const form = html.find('form')[0];
+            const includeAttack = form.querySelector('[name="includeAttack"]')?.checked;
+            const includeStress = form.querySelector('[name="includeStress"]')?.checked;
+            const includeComplication = form.querySelector('[name="includeComplication"]')?.checked;
+            const includeThreat = form.querySelector('[name="includeThreat"]')?.checked;
+            const includeDieRoll = form.querySelector('[name="includeDieRoll"]')?.checked;
+            const rollDice = form.querySelector('[name="rollDice"]')?.checked;
+
+            let rollResult = '';
+            if (rollDice) {
+              const roll = await new Roll('1d6').roll();
+              await roll.toMessage({
+                flavor: `${actor.name} reacts!`,
+                speaker: ChatMessage.getSpeaker({ actor: actor })
+              });
+              rollResult = `<div style="margin-bottom: 8px;"><strong>Roll:</strong> ${roll.total}</div>`;
+            }
+
+            let contentParts = [];
+            if (includeAttack) contentParts.push(`<strong>Attacks with:</strong> ${reactions.attackWith}`);
+            if (includeStress) contentParts.push(`<strong>Inflicts:</strong> ${reactions.stressAmount}`);
+            if (includeComplication) contentParts.push(`<strong>Complication:</strong> ${reactions.complication}`);
+            if (includeThreat) contentParts.push(`<strong>Threat:</strong> ${reactions.threat}`);
+            if (includeDieRoll) contentParts.push(`<strong>Special:</strong> ${reactions.dieRoll}`);
+
+            if (contentParts.length === 0 && !rollResult) {
+              ui.notifications.warn('Nothing selected to send.');
+              return;
+            }
+
+            const messageContent = `
+              <div style="border: 2px solid #4a0082; border-radius: 8px; padding: 12px; background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%); margin: 4px 0;">
+                <h3 style="margin: 0 0 8px 0; color: #9966ff; font-family: 'Pirata One', serif; font-size: 1.4em; border-bottom: 2px solid #4a0082; padding-bottom: 4px;">
+                  ${actor.name} - Reaction
+                </h3>
+                <div style="color: #e0e0e0; font-family: 'Segoe UI', sans-serif; line-height: 1.6; font-size: 1em;">
+                  ${rollResult}
+                  ${contentParts.join('<br>')}
+                </div>
+              </div>
+            `;
+
+            ChatMessage.create({
+              content: messageContent,
+              speaker: ChatMessage.getSpeaker({ actor: actor })
+            });
+          }
+        },
+        cancel: {
+          icon: '<i class="fas fa-times"></i>',
+          label: 'Cancel'
+        }
+      },
+      default: 'send'
+    }).render(true);
+  }
 
   async _rollSinOverflow(actor) {
     // Roll 1d3
@@ -1659,7 +2268,7 @@ export class CainActorSheet extends ActorSheet {
     // Calculate successes
     let successes = roll.total;
 
-    if(successes === 0 && this.actor.system.divineAgony.value < 3) {
+    if(successes === 0 && this.actor.system.divineAgony.value < this.actor.system.divineAgony.max) {
       this.actor.update({'system.divineAgony.value' : this.actor.system.divineAgony.value + 1});
     }
 
@@ -1770,7 +2379,12 @@ export class CainActorSheet extends ActorSheet {
     console.log(roll.dice[0].results);
   
     let successes = roll.total;
-  
+
+    // Add pathos (Divine Agony) on failed psyche roll
+    if (successes === 0 && this.actor.system.divineAgony.value < this.actor.system.divineAgony.max) {
+      this.actor.update({'system.divineAgony.value': this.actor.system.divineAgony.value + 1});
+    }
+
     let message = `<h2>Psyche Roll</h2>`;
     message += `<p>Successes: <span style="color:${successes > 0 ? 'green' : 'red'}">${successes}</span></p>`;
     message += `<p>Dice Rolled:</p><ul>`;
@@ -2401,17 +3015,35 @@ export class CainActorSheet extends ActorSheet {
     }
 
     if (dataset.roll) {
-      let label = dataset.label ? ` You rolled for ${dataset.label}` : '';
+      let label = dataset.label ? `${dataset.label}` : '';
       let roll = new Roll(dataset.roll, this.actor.getRollData());
 
       console.log(roll);
       roll.roll().then(result => {
-        let rollTotal = result.total;
-        let message = '';
+        let successes = result.total;
+
+        // Check if this is a success-counting roll (contains 'cs>=')
+        // Add divine agony on failure (0 successes)
+        if (dataset.roll.includes('cs>=') && successes === 0) {
+          if (this.actor.system.divineAgony && this.actor.system.divineAgony.value < this.actor.system.divineAgony.max) {
+            this.actor.update({'system.divineAgony.value': this.actor.system.divineAgony.value + 1});
+          }
+        }
+
+        // Build a formatted message for skill rolls
+        let message = `<h2>${label} Roll</h2>`;
+        message += `<p>Successes: <span style="color:${successes > 0 ? 'green' : 'red'}">${successes}</span></p>`;
+        if (result.dice && result.dice[0]) {
+          message += `<p>Dice Rolled:</p><ul>`;
+          result.dice[0].results.forEach(r => {
+            message += `<li>Die: ${r.result} ${r.result === 6 ? '🎲' : ''}</li>`;
+          });
+          message += `</ul>`;
+        }
 
         result.toMessage({
           speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-          flavor: `${label} ${message}`,
+          flavor: message,
           rollMode: game.settings.get('core', 'rollMode'),
         });
       });
@@ -3167,7 +3799,16 @@ export class CainActorSheet extends ActorSheet {
   
             const newStress = selectedExorcist.system.stress.value + stressInflicted;
             await selectedExorcist.update({ 'system.stress.value': newStress });
-            ui.notifications.info(`${selectedExorcist.name} has been attacked and their stress increased by ${stressInflicted}.`);
+
+            // Send to chat instead of UI notification
+            ChatMessage.create({
+              speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+              content: `<div class="sin-action-message">
+                <h3>${this.actor.name} attacks ${selectedExorcist.name}!</h3>
+                <p><strong>Roll:</strong> ${rollResult}</p>
+                <p><strong>Stress Inflicted:</strong> ${stressInflicted}</p>
+              </div>`
+            });
           }
         }
       },
@@ -3208,7 +3849,15 @@ async _afflictPlayer(event) {
           const afflictionsList = selectedExorcist.system.afflictions || [];
           afflictionsList.push(selectedAffliction.id);
           await selectedExorcist.update({ 'system.afflictions': afflictionsList });
-          ui.notifications.info(`${selectedExorcist.name} has been afflicted with ${selectedAffliction.name}.`);
+
+          // Send to chat instead of UI notification
+          ChatMessage.create({
+            speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+            content: `<div class="sin-action-message">
+              <h3>${this.actor.name} afflicts ${selectedExorcist.name}!</h3>
+              <p><strong>Affliction:</strong> ${selectedAffliction.name}</p>
+            </div>`
+          });
         }
       }
     },
@@ -3263,7 +3912,15 @@ _useComplication(event) {
         callback: (html) => {
           const selectedIndex = parseInt(html.find('#complication-select').val());
           const selectedComplication = complications[selectedIndex];
-          ui.notifications.info(`Using Complication: ${selectedComplication}`);
+
+          // Send to chat instead of UI notification
+          ChatMessage.create({
+            speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+            content: `<div class="sin-action-message">
+              <h3>${this.actor.name} uses a Complication!</h3>
+              <p><strong>Effect:</strong> ${selectedComplication}</p>
+            </div>`
+          });
         }
       },
       close: {
@@ -3325,7 +3982,6 @@ _useThreat(event) {
           const selectedExorcistIndex = parseInt(html.find('#exorcist-select').val());
           const selectedThreat = threats[selectedThreatIndex];
           const selectedExorcist = exorcists[selectedExorcistIndex];
-          ui.notifications.info(`Using Threat: ${selectedThreat} on ${selectedExorcist.name}`);
 
           // Implement functionality for the selected threat
           switch (selectedThreatIndex) {
@@ -3349,19 +4005,47 @@ _useThreat(event) {
                 await selectedExorcist.update({ 'system.stress.value': stress });
               }
 
-              ui.notifications.info(`Inflicted ${damage} on ${selectedExorcist.name}`);
+              // Send to chat
+              ChatMessage.create({
+                speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+                content: `<div class="sin-action-message">
+                  <h3>${this.actor.name} uses Threat: Inflict Harm!</h3>
+                  <p><strong>Target:</strong> ${selectedExorcist.name}</p>
+                  <p><strong>Roll:</strong> ${rollResult}</p>
+                  <p><strong>Damage:</strong> ${damage}</p>
+                </div>`
+              });
               break;
 
             case 1: // Separate an exorcist completely
-              ui.notifications.info(`Separated ${selectedExorcist.name} completely`);
+              ChatMessage.create({
+                speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+                content: `<div class="sin-action-message">
+                  <h3>${this.actor.name} uses Threat: Separate!</h3>
+                  <p><strong>Target:</strong> ${selectedExorcist.name}</p>
+                  <p>${selectedExorcist.name} has been completely separated from the group!</p>
+                </div>`
+              });
               break;
 
             case 2: // Cause collateral damage
-              ui.notifications.info(`Caused collateral damage`);
+              ChatMessage.create({
+                speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+                content: `<div class="sin-action-message">
+                  <h3>${this.actor.name} uses Threat: Collateral Damage!</h3>
+                  <p>The Sin causes massive collateral damage to the environment!</p>
+                </div>`
+              });
               break;
 
             case 3: // Massively change the parameters of the fight
-              ui.notifications.info(`Massively changed the parameters of the fight`);
+              ChatMessage.create({
+                speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+                content: `<div class="sin-action-message">
+                  <h3>${this.actor.name} uses Threat: Change Parameters!</h3>
+                  <p>The parameters of the fight have been massively changed!</p>
+                </div>`
+              });
               break;
 
             case 4: // Add an Affliction
@@ -3388,7 +4072,16 @@ _useThreat(event) {
                       const afflictionsList = selectedExorcist.system.afflictions || [];
                       afflictionsList.push(selectedAffliction.id);
                       await selectedExorcist.update({ 'system.afflictions': afflictionsList });
-                      ui.notifications.info(`${selectedExorcist.name} has been afflicted with ${selectedAffliction.name}`);
+
+                      // Send to chat
+                      ChatMessage.create({
+                        speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+                        content: `<div class="sin-action-message">
+                          <h3>${this.actor.name} uses Threat: Add Affliction!</h3>
+                          <p><strong>Target:</strong> ${selectedExorcist.name}</p>
+                          <p><strong>Affliction:</strong> ${selectedAffliction.name}</p>
+                        </div>`
+                      });
                     }
                   },
                   close: {
@@ -3440,7 +4133,15 @@ _useDomain(event) {
         callback: (html) => {
           const selectedDomainKey = html.find('#domain-select').val();
           const selectedDomain = domains[selectedDomainKey];
-          ui.notifications.info(`Using Domain: ${selectedDomain.title} - ${selectedDomain.value}`);
+
+          // Send to chat instead of UI notification
+          ChatMessage.create({
+            speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+            content: `<div class="sin-action-message">
+              <h3>${this.actor.name} uses Domain: ${selectedDomain.title}!</h3>
+              <p>${selectedDomain.value}</p>
+            </div>`
+          });
         }
       }
     },

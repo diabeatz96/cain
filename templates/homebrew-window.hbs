@@ -29,7 +29,7 @@
 
         <div class="form-section">
           <label for="agenda-name">Agenda Name</label>
-          <input type="text" id="agenda-name" class="homebrew-input" placeholder="Enter agenda name..." value="{{agendaOptions.name}}">
+          <input type="text" id="agenda-name" class="homebrew-input homebrew-agenda-name-input" placeholder="Enter agenda name..." value="{{agendaOptions.name}}">
         </div>
 
         <div class="form-section">
@@ -40,7 +40,7 @@
           <ul class="task-list">
           {{#each agendaOptions.tasks}}
             <li class='task-item'>
-              <textarea class="homebrew-input task-input" data-task-index="{{@index}}" placeholder="Task description..." style="font-weight: {{#if this.isBold}}bold{{else}}normal{{/if}};">{{this.task}}</textarea>
+              <textarea class="homebrew-input homebrew-task-input" data-task-index="{{@index}}" placeholder="Task description..." style="font-weight: {{#if this.isBold}}bold{{else}}normal{{/if}};">{{this.task}}</textarea>
               <div class="task-controls">
                 <button type="button" class="btn-icon homebrew-toggle-bold" data-task-index="{{@index}}" title="Bold Text">
                   <i class="fas fa-bold {{#if this.isBold}}active{{/if}}"></i>
@@ -62,8 +62,8 @@
           <ul class="ability-list">
           {{#each agendaOptions.abilities}}
             <li class='ability-item'>
-              <input type="text" class="homebrew-input ability-name-input" data-ability-index="{{@index}}" placeholder="Ability name..." value="{{this.name}}">
-              <textarea class="homebrew-input ability-description-input" data-ability-index="{{@index}}" placeholder="Ability description (use {<CAT> type modifier} for CAT formatting)...">{{this.abilityDescription}}</textarea>
+              <input type="text" class="homebrew-input homebrew-ability-name-input" data-ability-index="{{@index}}" placeholder="Ability name..." value="{{this.name}}">
+              <textarea class="homebrew-input homebrew-ability-input" data-ability-index="{{@index}}" placeholder="Ability description (use {<CAT> type modifier} for CAT formatting)...">{{this.abilityDescription}}</textarea>
               <button type="button" class="btn-icon btn-delete homebrew-remove-ability" data-ability-index="{{@index}}" title="Remove">
                 <i class="fas fa-trash"></i>
               </button>
@@ -93,7 +93,7 @@
 
         <div class="form-section">
           <label for="blasphemy-name">Blasphemy Name</label>
-          <input type="text" id="blasphemy-name" class="homebrew-input" placeholder="Enter blasphemy name..." value="{{blasphemyOptions.name}}">
+          <input type="text" id="blasphemy-name" class="homebrew-input homebrew-blasphemy-name-input" placeholder="Enter blasphemy name..." value="{{blasphemyOptions.name}}">
         </div>
 
         <div class="form-section">
@@ -105,7 +105,7 @@
           {{#each blasphemyOptions.powers}}
             <li class='power-item'>
               <div class="power-header-row">
-                <input type="text" class="homebrew-input power-name-input" data-power-index="{{@index}}" placeholder="Power name..." value="{{this.name}}">
+                <input type="text" class="homebrew-input homebrew-power-name-input" data-power-index="{{@index}}" placeholder="Power name..." value="{{this.name}}">
                 <label class="checkbox-label">
                   <input type="checkbox" class="homebrew-power-passive-input" data-power-index="{{@index}}" {{#if this.isPassive}}checked{{/if}}>
                   <span>Passive</span>
@@ -130,8 +130,8 @@
                     <span><i class="fas fa-plus"></i> Multiple</span>
                   </label>
                 </div>
-                <input type="text" class="homebrew-input power-keywords-input" data-power-index="{{@index}}" placeholder="Keywords (comma-separated)..." value="{{this.keywords}}">
-                <textarea class="homebrew-input power-description-input" data-power-index="{{@index}}" placeholder="Power description (use CAT formatting)...">{{this.powerDescription}}</textarea>
+                <input type="text" class="homebrew-input homebrew-power-tags-input" data-power-index="{{@index}}" placeholder="Keywords (comma-separated)..." value="{{this.keywords}}">
+                <textarea class="homebrew-input homebrew-power-input" data-power-index="{{@index}}" placeholder="Power description (use CAT formatting)...">{{this.powerDescription}}</textarea>
               </div>
             </li>
           {{/each}}

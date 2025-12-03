@@ -1,6 +1,7 @@
 .vscode/settings.json
 .idea/
 node_modules/
+books
 
 # Unpacked compendium DBs
 _source/
@@ -9,3 +10,19 @@ _source/
 packs/*/*.log
 packs/*/LOG
 packs/*/LOG.old
+
+# AI Helper Tools
+.claude/
+.cursor/
+.aider*
+.copilot/
+.github-copilot/
+.codeium/
+.tabnine/
+.anthropic/
+*.ai-context
+*.ai-session
+.ai/
+.windsurf/
+.continue/
+
