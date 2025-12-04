@@ -1,11 +1,12 @@
 /* Foundry VTT v11-v13 Compatible CSS */
 /* Imports must be at the top, before any @layer declarations */
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Metal+Mania&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Lacquer&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Tiny5&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap');
+/* Using display=optional instead of swap to prevent layout shift when fonts load */
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=optional");
+@import url('https://fonts.googleapis.com/css2?family=Metal+Mania&display=optional');
+@import url('https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&display=optional');
+@import url('https://fonts.googleapis.com/css2?family=Lacquer&display=optional');
+@import url('https://fonts.googleapis.com/css2?family=Tiny5&display=optional');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=optional');
 @import url('./eye-anim.css');
 @import url('./glitch-effect.css');
 @import url('./components/index.css');
@@ -19,17 +20,98 @@
 
 /* V13 Layer Overrides - Place important overrides in the system layer */
 @layer system {
-  /* Chat message heading color fix for v13 dark theme */
+  /* Chat Message Styles - must be in @layer system for v13 compatibility */
+  .chat-message {
+    background-color: #1a1a1a;
+    color: #ffffff;
+    border: #000000 2px solid;
+    padding: 0;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    font-family: 'Courier New', Courier, monospace;
+  }
+
+  .chat-message .message-header {
+    background-color: #262626;
+    padding: 5px;
+    text-transform: uppercase;
+    font-weight: bold;
+  }
+
+  .chat-message .table-draw .table-description {
+    background-color: #262626;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px dashed #00bfff;
+    color: #00bfff;
+  }
+
+  .chat-message .message-sender {
+    color: #ffffff;
+  }
+
+  .chat-message .message-metadata {
+    color: #ffffff;
+  }
+
+  .chat-message .message-timestamp {
+    color: #999999;
+  }
+
+  .chat-message .message-delete {
+    color: #ff4d4d;
+  }
+
+  .chat-message .flavor-text {
+    color: #ffffff;
+    font-style: italic;
+  }
+
+  .chat-message .message-content {
+    background-color: #1a1a1a;
+    padding: 10px;
+  }
+
+  .chat-message .dice-formula {
+    color: #ffffff;
+  }
+
+  .chat-message .dice-tooltip {
+    background-color: #1a1a1a;
+    padding: 10px;
+    border-radius: 5px;
+  }
+
+  .chat-message .part-header {
+    background-color: #1a1a1a;
+    padding: 5px;
+  }
+
+  .chat-message .part-formula {
+    color: #ffffff;
+  }
+
+  .chat-message .part-total {
+    color: #ffffff;
+  }
+
+  .chat-message .dice-rolls {
+    list-style: none;
+    padding: 0;
+  }
+
+  .chat-message .dice-total {
+    color: #ffffff;
+    font-size: 1.5em;
+    text-align: center;
+  }
+
+  /* Chat message heading styles for v13 */
   #chat-log .message-content h1,
   #chat-log .message-content h2,
   #chat-log .message-content h3,
   #chat-log .message-content h4,
   #chat-log .message-content h5,
-  #chat-log .message-content h6 {
-    color: #ffffff;
-  }
-
-  /* Also target .chat-message class for broader compatibility */
+  #chat-log .message-content h6,
   .chat-message h1,
   .chat-message h2,
   .chat-message h3,
@@ -37,33 +119,39 @@
   .chat-message h5,
   .chat-message h6 {
     color: #ffffff;
+    font-family: 'Courier New', Courier, monospace;
+    font-style: normal;
+    margin-top: 0.5em;
   }
 }
 
 /* Base styles - work across all versions */
-img {
+/* Scope image border removal to CAIN system elements only */
+.cain img,
+.chat-message img {
   border: none;
 }
 
-/* Global styles */
-.window-app {
+/* Global styles - scoped to CAIN system sheets */
+.window-app.cain {
   font-family: "Roboto", sans-serif;
 }
 
-.window-app .window-content  {
+.window-app.cain .window-content {
   padding: 5px;
 }
 
-/* Window Content Style */
+/* Window Content Style - scoped to CAIN sheets */
 
-.rollable:hover, .rollable:focus {
+.cain .rollable:hover, .cain .rollable:focus {
   color: #000;
   text-shadow: 0 0 10px red;
   cursor: pointer;
 }
 
-.grid,
-.grid-2col {
+/* Grid utilities - scoped to CAIN sheets */
+.cain .grid,
+.cain .grid-2col {
   display: grid;
   grid-column: span 2/span 2;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -72,185 +160,186 @@ img {
   padding: 0;
 }
 
-.grid-3col {
+.cain .grid-3col {
   grid-column: span 3/span 3;
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
-.grid-4col {
+.cain .grid-4col {
   grid-column: span 4/span 4;
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
-.grid-5col {
+.cain .grid-5col {
   grid-column: span 5/span 5;
   grid-template-columns: repeat(5, minmax(0, 1fr));
 }
 
-.grid-6col {
+.cain .grid-6col {
   grid-column: span 6/span 6;
   grid-template-columns: repeat(6, minmax(0, 1fr));
 }
 
-.grid-7col {
+.cain .grid-7col {
   grid-column: span 7/span 7;
   grid-template-columns: repeat(7, minmax(0, 1fr));
 }
 
-.grid-8col {
+.cain .grid-8col {
   grid-column: span 8/span 8;
   grid-template-columns: repeat(8, minmax(0, 1fr));
 }
 
-.grid-9col {
+.cain .grid-9col {
   grid-column: span 9/span 9;
   grid-template-columns: repeat(9, minmax(0, 1fr));
 }
 
-.grid-10col {
+.cain .grid-10col {
   grid-column: span 10/span 10;
   grid-template-columns: repeat(10, minmax(0, 1fr));
 }
 
-.grid-11col {
+.cain .grid-11col {
   grid-column: span 11/span 11;
   grid-template-columns: repeat(11, minmax(0, 1fr));
 }
 
-.grid-12col {
+.cain .grid-12col {
   grid-column: span 12/span 12;
   grid-template-columns: repeat(12, minmax(0, 1fr));
 }
 
-.grid-start-2 {
+.cain .grid-start-2 {
   grid-column-start: 2;
 }
 
-.grid-start-3 {
+.cain .grid-start-3 {
   grid-column-start: 3;
 }
 
-.grid-start-4 {
+.cain .grid-start-4 {
   grid-column-start: 4;
 }
 
-.grid-start-5 {
+.cain .grid-start-5 {
   grid-column-start: 5;
 }
 
-.grid-start-6 {
+.cain .grid-start-6 {
   grid-column-start: 6;
 }
 
-.grid-start-7 {
+.cain .grid-start-7 {
   grid-column-start: 7;
 }
 
-.grid-start-8 {
+.cain .grid-start-8 {
   grid-column-start: 8;
 }
 
-.grid-start-9 {
+.cain .grid-start-9 {
   grid-column-start: 9;
 }
 
-.grid-start-10 {
+.cain .grid-start-10 {
   grid-column-start: 10;
 }
 
-.grid-start-11 {
+.cain .grid-start-11 {
   grid-column-start: 11;
 }
 
-.grid-start-12 {
+.cain .grid-start-12 {
   grid-column-start: 12;
 }
 
-.grid-span-2 {
+.cain .grid-span-2 {
   grid-column-end: span 2;
 }
 
-.grid-span-3 {
+.cain .grid-span-3 {
   grid-column-end: span 3;
 }
 
-.grid-span-4 {
+.cain .grid-span-4 {
   grid-column-end: span 4;
 }
 
-.grid-span-5 {
+.cain .grid-span-5 {
   grid-column-end: span 5;
 }
 
-.grid-span-6 {
+.cain .grid-span-6 {
   grid-column-end: span 6;
 }
 
-.grid-span-7 {
+.cain .grid-span-7 {
   grid-column-end: span 7;
 }
 
-.grid-span-8 {
+.cain .grid-span-8 {
   grid-column-end: span 8;
 }
 
-.grid-span-9 {
+.cain .grid-span-9 {
   grid-column-end: span 9;
 }
 
-.grid-span-10 {
+.cain .grid-span-10 {
   grid-column-end: span 10;
 }
 
-.grid-span-11 {
+.cain .grid-span-11 {
   grid-column-end: span 11;
 }
 
-.grid-span-12 {
+.cain .grid-span-12 {
   grid-column-end: span 12;
 }
 
-.flex-group-center,
-.flex-group-left,
-.flex-group-right {
+/* Flex utilities - scoped to CAIN sheets */
+.cain .flex-group-center,
+.cain .flex-group-left,
+.cain .flex-group-right {
   justify-content: center;
   align-items: center;
   text-align: center;
 }
 
-.flex-group-left {
+.cain .flex-group-left {
   justify-content: flex-start;
   text-align: left;
 }
 
-.flex-group-right {
+.cain .flex-group-right {
   justify-content: flex-end;
   text-align: right;
 }
 
-.flexshrink {
+.cain .flexshrink {
   flex: 0;
 }
 
-.flex-between {
+.cain .flex-between {
   justify-content: space-between;
 }
 
-.flexlarge {
+.cain .flexlarge {
   flex: 2;
 }
 
-.align-left {
+.cain .align-left {
   justify-content: flex-start;
   text-align: left;
 }
 
-.align-right {
+.cain .align-right {
   justify-content: flex-end;
   text-align: right;
 }
 
-.align-center {
+.cain .align-center {
   justify-content: center;
   text-align: center;
 }
@@ -989,9 +1078,7 @@ img {
   gap: 4px;
 }
 
-#sidebar, .sidebar {
-  margin-top: 0;
-}
+/* Removed: #sidebar margin override was causing layout shift issues */
 
 .mob-psycho-extra-dice {
   background-color: #262626;
@@ -1084,99 +1171,96 @@ img {
 
 /* Chat Message Styles */
 
-
 .chat-message {
-  background-color: #1a1a1a; /* Dark background */
-  color: #ffffff; /* White text */
-  border: 1e90ff 2px solid; /* Remove border */
+  background-color: #1a1a1a;
+  color: #ffffff;
+  border: #000000 2px solid;
   padding: 0;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Add shadow for depth */
-  font-family: 'Courier New', Courier, monospace; /* Typewriter font */
-  box-sizing: border-box;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  font-family: 'Courier New', Courier, monospace;
 }
 
-.message-header {
-  background-color: #262626; /* Slightly lighter dark background */
+.chat-message .message-header {
+  background-color: #262626;
   padding: 5px;
   text-transform: uppercase;
   font-weight: bold;
 }
 
 .chat-message .table-draw .table-description  {
-  background-color: #262626; /* Slightly lighter dark background */
+  background-color: #262626;
   padding: 5px;
   border-radius: 5px;
-  border: 1px dashed #00bfff; /* Dashed border for a report look */
+  border: 1px dashed #00bfff;
   color: #00bfff;
 }
 
-.message-sender {
-  color: #ffffff; /* White text */
+.chat-message .message-sender {
+  color: #ffffff;
 }
 
-.message-metadata {
-  color: #ffffff; /* White text */
+.chat-message .message-metadata {
+  color: #ffffff;
 }
 
-.message-timestamp {
-  color: #999999; /* Grey text for timestamp */
+.chat-message .message-timestamp {
+  color: #999999;
 }
 
-.message-delete {
-  color: #ff4d4d; /* Red color for delete icon */
+.chat-message .message-delete {
+  color: #ff4d4d;
 }
 
-.no-border{
-  border: none !important;
-}
-
-.no-padding{
-  padding: unset !important;
-}
-
-.flavor-text {
-  color: #ffffff; /* White text */
+.chat-message .flavor-text {
+  color: #ffffff;
   font-style: italic;
 }
 
-.message-content {
-  background-color: #1a1a1a; /* Dark background */
+.chat-message .message-content {
+  background-color: #1a1a1a;
   padding: 10px;
-  box-sizing: border-box;
 }
 
-.dice-formula {
-  color: #ffffff; /* White text */
+.chat-message .dice-formula {
+  color: #ffffff;
 }
 
-.dice-tooltip {
-  background-color: #1a1a1a; /* Dark background */
+.chat-message .dice-tooltip {
+  background-color: #1a1a1a;
   padding: 10px;
   border-radius: 5px;
 }
 
-.part-header {
-  background-color: #1a1a1a; /* Dark background */
+.chat-message .part-header {
+  background-color: #1a1a1a;
   padding: 5px;
 }
 
-.part-formula {
-  color: #ffffff; /* White text */
+.chat-message .part-formula {
+  color: #ffffff;
 }
 
-.part-total {
-  color: #ffffff; /* White text */
+.chat-message .part-total {
+  color: #ffffff;
 }
 
-.dice-rolls {
+.chat-message .dice-rolls {
   list-style: none;
   padding: 0;
 }
 
-.dice-total {
-  color: #ffffff; /* White text */
+.chat-message .dice-total {
+  color: #ffffff;
   font-size: 1.5em;
   text-align: center;
+}
+
+.cain .no-border{
+  border: none !important;
+}
+
+.cain .no-padding{
+  padding: unset !important;
 }
 
 /* Talisman CSS */
@@ -2162,5 +2246,10 @@ img {
 
 /* V13 Chat Message Heading Fix - Moved to @layer system block at top of file */
 /* See lines 19-40 for the actual implementation */
+
+/* Fix for UI shift when chat messages are posted - prevent #interface from scrolling */
+#interface {
+  overflow: hidden !important;
+}
 
 /* End v11-v13 Compatibility Section */
