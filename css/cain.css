@@ -20,17 +20,98 @@
 
 /* V13 Layer Overrides - Place important overrides in the system layer */
 @layer system {
-  /* Chat message heading color fix for v13 dark theme */
+  /* Chat Message Styles - must be in @layer system for v13 compatibility */
+  .chat-message {
+    background-color: #1a1a1a;
+    color: #ffffff;
+    border: #000000 2px solid;
+    padding: 0;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    font-family: 'Courier New', Courier, monospace;
+  }
+
+  .chat-message .message-header {
+    background-color: #262626;
+    padding: 5px;
+    text-transform: uppercase;
+    font-weight: bold;
+  }
+
+  .chat-message .table-draw .table-description {
+    background-color: #262626;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px dashed #00bfff;
+    color: #00bfff;
+  }
+
+  .chat-message .message-sender {
+    color: #ffffff;
+  }
+
+  .chat-message .message-metadata {
+    color: #ffffff;
+  }
+
+  .chat-message .message-timestamp {
+    color: #999999;
+  }
+
+  .chat-message .message-delete {
+    color: #ff4d4d;
+  }
+
+  .chat-message .flavor-text {
+    color: #ffffff;
+    font-style: italic;
+  }
+
+  .chat-message .message-content {
+    background-color: #1a1a1a;
+    padding: 10px;
+  }
+
+  .chat-message .dice-formula {
+    color: #ffffff;
+  }
+
+  .chat-message .dice-tooltip {
+    background-color: #1a1a1a;
+    padding: 10px;
+    border-radius: 5px;
+  }
+
+  .chat-message .part-header {
+    background-color: #1a1a1a;
+    padding: 5px;
+  }
+
+  .chat-message .part-formula {
+    color: #ffffff;
+  }
+
+  .chat-message .part-total {
+    color: #ffffff;
+  }
+
+  .chat-message .dice-rolls {
+    list-style: none;
+    padding: 0;
+  }
+
+  .chat-message .dice-total {
+    color: #ffffff;
+    font-size: 1.5em;
+    text-align: center;
+  }
+
+  /* Chat message heading styles for v13 */
   #chat-log .message-content h1,
   #chat-log .message-content h2,
   #chat-log .message-content h3,
   #chat-log .message-content h4,
   #chat-log .message-content h5,
-  #chat-log .message-content h6 {
-    color: #ffffff;
-  }
-
-  /* Also target .chat-message class for broader compatibility */
+  #chat-log .message-content h6,
   .chat-message h1,
   .chat-message h2,
   .chat-message h3,
@@ -38,6 +119,9 @@
   .chat-message h5,
   .chat-message h6 {
     color: #ffffff;
+    font-family: 'Courier New', Courier, monospace;
+    font-style: normal;
+    margin-top: 0.5em;
   }
 }
 
