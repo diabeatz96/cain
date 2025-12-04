@@ -104,10 +104,7 @@ export class CainActorSheet extends ActorSheet {
     }
 
     if (actorData.type == 'sin') {
-      this._prepareItems(context);
-      if (this.actor.system.domains) {
-        ui.notifications.warn('This sin still uses an outdated domain system. This will be deprecated in a future release. Please use compendium domains.')
-      }
+      this._prepareDomains(context);
     }
 
     // Prepare opponent data
@@ -303,6 +300,29 @@ export class CainActorSheet extends ActorSheet {
     }
   
     context.gear = gear;
+  }
+
+  async _prepareDomains(context) {
+    // three placeholder domains
+    const domainsArray = [null, null, null];
+
+    // domainsV2 contains domainID references, fetch the relevant compendium items
+    const domainItems = this._getItemsFromIDs(this.actor.system.domainsV2 || []);
+    domainItems.forEach((item, index) => {
+      if (item == null) {
+        domainsArray[index] = null;
+      } else {
+        domainsArray[index] = {
+          name: item.name,
+          description: item.system.domainDescription,
+          sinSource: item.system.sinSource,
+          selectsExorcist: item.system.selectsExorcist,
+          afflictionEffect: item.system.afflictionEffect,
+        };
+      }
+    });
+    console.log(domainsArray);
+    context.selectedDomains = domainsArray;
   }
 
   _calculateRanges(context) {
@@ -513,6 +533,15 @@ export class CainActorSheet extends ActorSheet {
     html.find('.quick-action-button.use-threat').click(this._useThreat.bind(this));
     html.find('.quick-action-button.severe-attack').click(this._severeAttack.bind(this));
     html.find('.quick-action-button.use-domain').click(this._useDomain.bind(this));
+    html.find('.domain-card').on('drop', async (event) => {
+      event.preventDefault();
+      console.log(event);
+      const eventIndex = Number(event.currentTarget.id);
+      const data = JSON.parse(event.originalEvent.dataTransfer.getData('text/plain'));
+      const itemDrop = await Item.fromDropData(data);
+      if (itemDrop.type !== "domain") return;
+      this._onDropDomain(itemDrop, eventIndex);
+    })
 
     // Character sheet specific listeners
     html.find('.item-description').click(this._onItemDescription.bind(this));
@@ -1738,6 +1767,18 @@ export class CainActorSheet extends ActorSheet {
         console.error("Error updating actor:", err);
         ui.notifications.error("Error updating actor. Please check the console for more details.");
       });
+  }
+
+  _onDropDomain(itemData, domainIndex) {
+    let domainsV2 = this.actor.system.domainsV2;
+    if (domainsV2.length < 3) { // if array hasn't been instanced yet...
+      domainsV2 = [null, null, null];
+    }
+    domainsV2[domainIndex] = itemData.id;
+    this.actor.update({
+      "system.domainsV2": domainsV2,
+    }).then(() => console.log(this.actor.system));
+
   }
 
   _addAgendaAbility(event) {
