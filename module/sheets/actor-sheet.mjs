@@ -644,7 +644,9 @@ export class CainActorSheet extends ActorSheet {
     // Event delegation for blasphemy-passive
     html.on('click', '.blasphemy-passive', (event) => {
       const card = event.target.parentElement.parentElement.querySelector('.power-description-card');
-      const disableAnimations = document.getElementById('toggle-animation').checked;
+      if (!card) return;
+      const toggleAnimationEl = document.getElementById('toggle-animation');
+      const disableAnimations = toggleAnimationEl ? toggleAnimationEl.checked : false;
       if (!disableAnimations) {
         const randomRotation = Math.random() * 6 - 3; // Random rotation between -3 and 3 degrees
         card.style.transform = `scale(0.95) rotate(${randomRotation}deg)`;
@@ -657,7 +659,9 @@ export class CainActorSheet extends ActorSheet {
     // Event delegation for blasphemy-power
     html.on('click', '.blasphemy-power', (event) => {
       const card = event.target.parentElement.parentElement.querySelector('.power-description-card');
-      const disableAnimations = document.getElementById('toggle-animation').checked;
+      if (!card) return;
+      const toggleAnimationEl = document.getElementById('toggle-animation');
+      const disableAnimations = toggleAnimationEl ? toggleAnimationEl.checked : false;
       if (!disableAnimations) {
         const randomRotation = Math.random() * 6 - 3; // Random rotation between -3 and 3 degrees
         card.style.transform = `scale(0.95) rotate(${randomRotation}deg)`;

@@ -27,6 +27,8 @@ export class HomebrewWindow extends Application {
                 agendaFolder: '',
                 blasphemyFolder: '',
                 powerFolder: '',
+                bondFolder: '',
+                bondAbilityFolder: '',
                 afflictionFolder: '',
                 itemFolder: '',
                 sinMarkFolder: '',
@@ -37,6 +39,8 @@ export class HomebrewWindow extends Application {
                 agendaFolder: '',
                 blasphemyFolder: '',
                 powerFolder: '',
+                bondFolder: '',
+                bondAbilityFolder: '',
                 afflictionFolder: '',
                 itemFolder: '',
                 sinMarkFolder: '',
@@ -122,6 +126,22 @@ export class HomebrewWindow extends Application {
         ]
     }
 
+    bondOptions = {
+        name: "New Bond",
+        virtueName: "New Virtue",
+        highBlasphemyLevel: 1,
+        strictures: []
+    }
+
+    bondAbilityOptions = {
+        name: "New Bond Ability",
+        bondLevel: 0,
+        abilityDescription: "",
+        isPermanent: true,
+        requiresPsycheBurst: false,
+        psycheBurstCost: 1
+    }
+
     blasphemyOptions = {
         name: "New Blasphemy",
         powers: [{
@@ -193,6 +213,8 @@ export class HomebrewWindow extends Application {
             agendaOptions: this.agendaOptions,
             blasphemyOptions: this.blasphemyOptions,
             sinMarkOptions: this.sinMarkOptions,
+            bondOptions: this.bondOptions,
+            bondAbilityOptions: this.bondAbilityOptions,
             settings: this.settings,
             availableFolders: itemFolders.map(f => ({ id: f.id, name: f.name }))
         }
@@ -230,6 +252,16 @@ export class HomebrewWindow extends Application {
       html.find('.homebrew-sinmark-ability-description-input').change(this._onChangeSinMarkAbilityDescription.bind(this));
       html.find('.homebrew-remove-sinmark-ability').click(this._onRemoveSinMarkAbility.bind(this));
       html.find('.homebrew-submit-sinmark').click(this._onSubmitSinMark.bind(this));
+
+      // Bond listeners
+      html.find('.homebrew-new-stricture').click(this._onCreateNewStricture.bind(this));
+      html.find('.homebrew-stricture-input').change(this._onChangeStricture.bind(this));
+      html.find('.homebrew-remove-stricture').click(this._onRemoveStricture.bind(this));
+      html.find('.homebrew-submit-bond').click(this._onSubmitBond.bind(this));
+
+      // Bond Ability listeners
+      html.find('#bond-ability-requires-psyche').change(this._onTogglePsycheCost.bind(this));
+      html.find('.homebrew-submit-bond-ability').click(this._onSubmitBondAbility.bind(this));
 
       // Import/Export listeners
       html.find('.homebrew-export-selected').click(this._onExportSelected.bind(this));
@@ -899,6 +931,181 @@ export class HomebrewWindow extends Application {
         this.render(true);
     }
 
+    // ==================== BOND METHODS ====================
+
+    _onCreateNewStricture(event) {
+        event.preventDefault();
+        this.bondOptions.strictures.push("");
+        this.render(true);
+    }
+
+    _onChangeStricture(event) {
+        event.preventDefault();
+        const strictureIndex = event.currentTarget.getAttribute('data-stricture-index');
+        this.bondOptions.strictures[strictureIndex] = event.currentTarget.value;
+    }
+
+    _onRemoveStricture(event) {
+        event.preventDefault();
+        const strictureIndex = event.currentTarget.getAttribute('data-stricture-index');
+        this.bondOptions.strictures.splice(strictureIndex, 1);
+        this.render(true);
+    }
+
+    async _onSubmitBond(event) {
+        event.preventDefault();
+
+        const bondName = document.getElementById('bond-name').value;
+        const virtueName = document.getElementById('bond-virtue-name').value;
+        const highBlasphemyLevel = parseInt(document.getElementById('bond-high-blasphemy-level').value) || 1;
+
+        if (!bondName || bondName.trim() === "") {
+            ui.notifications.warn("Please enter a bond name.");
+            return;
+        }
+
+        if (!virtueName || virtueName.trim() === "") {
+            ui.notifications.warn("Please enter a virtue name.");
+            return;
+        }
+
+        // Get target folder based on settings
+        const targetFolder = await this._getTargetFolder('bond');
+
+        let bondFolderFolder = game.folders.find(f => f.name === "Bonds" && f.type === "Item" && f.folder?.id === targetFolder.id);
+        if (!bondFolderFolder) {
+            bondFolderFolder = await Folder.create({
+                name: "Bonds",
+                type: "Item",
+                folder: targetFolder.id,
+                sorting: "m",
+            });
+        }
+
+        // Collect strictures from the textarea inputs
+        const strictureInputs = document.querySelectorAll('.homebrew-stricture-input');
+        const strictures = [];
+        strictureInputs.forEach(input => {
+            const value = input.value.trim();
+            if (value) {
+                strictures.push(value);
+            }
+        });
+
+        const createdBondData = {
+            name: bondName,
+            type: "bond",
+            img: "icons/svg/heart.svg",
+            folder: bondFolderFolder.id,
+            system: {
+                virtueName: virtueName,
+                strictures: strictures,
+                abilities: [],
+                highBlasphemy: "",
+                highBlasphemyLevel: highBlasphemyLevel
+            }
+        };
+
+        console.log("Creating bond:", createdBondData);
+        const createdBond = await Item.create(createdBondData);
+        console.log("Created bond:", createdBond);
+
+        // Add to history
+        this.addToHistory({
+            id: createdBond.id,
+            name: bondName,
+            type: "bond",
+            icon: "fa-heart"
+        });
+
+        ui.notifications.info(`Bond "${bondName}" created successfully!`);
+
+        // Clear the form
+        document.getElementById('bond-name').value = "";
+        document.getElementById('bond-virtue-name').value = "";
+        document.getElementById('bond-high-blasphemy-level').value = "1";
+
+        // Reset strictures
+        this.bondOptions.strictures = [];
+        this.render(true);
+    }
+
+    // ==================== BOND ABILITY METHODS ====================
+
+    _onTogglePsycheCost(event) {
+        const isChecked = event.currentTarget.checked;
+        const psycheCostField = document.getElementById('bond-ability-psyche-cost-field');
+        if (psycheCostField) {
+            psycheCostField.style.display = isChecked ? 'block' : 'none';
+        }
+    }
+
+    async _onSubmitBondAbility(event) {
+        event.preventDefault();
+
+        const abilityName = document.getElementById('bond-ability-name').value;
+        const bondLevel = parseInt(document.getElementById('bond-ability-level').value) || 0;
+        const abilityDescription = document.getElementById('bond-ability-description').value;
+        const isPermanent = document.getElementById('bond-ability-permanent').checked;
+        const requiresPsycheBurst = document.getElementById('bond-ability-requires-psyche').checked;
+        const psycheBurstCost = parseInt(document.getElementById('bond-ability-psyche-cost').value) || 0;
+
+        if (!abilityName || abilityName.trim() === "") {
+            ui.notifications.warn("Please enter an ability name.");
+            return;
+        }
+
+        // Get target folder based on settings
+        const targetFolder = await this._getTargetFolder('bondAbility');
+
+        let bondAbilityFolderFolder = game.folders.find(f => f.name === "Bond Abilities" && f.type === "Item" && f.folder?.id === targetFolder.id);
+        if (!bondAbilityFolderFolder) {
+            bondAbilityFolderFolder = await Folder.create({
+                name: "Bond Abilities",
+                type: "Item",
+                folder: targetFolder.id,
+                sorting: "m",
+            });
+        }
+
+        const createdBondAbilityData = {
+            name: abilityName,
+            type: "bondAbility",
+            img: "icons/svg/aura.svg",
+            folder: bondAbilityFolderFolder.id,
+            system: {
+                bondLevel: bondLevel,
+                abilityDescription: abilityDescription || "",
+                isPermanent: isPermanent,
+                requiresPsycheBurst: requiresPsycheBurst,
+                psycheBurstCost: requiresPsycheBurst ? psycheBurstCost : 0
+            }
+        };
+
+        console.log("Creating bond ability:", createdBondAbilityData);
+        const createdBondAbility = await Item.create(createdBondAbilityData);
+        console.log("Created bond ability:", createdBondAbility);
+
+        // Add to history
+        this.addToHistory({
+            id: createdBondAbility.id,
+            name: abilityName,
+            type: "bondAbility",
+            icon: "fa-handshake"
+        });
+
+        ui.notifications.info(`Bond Ability "${abilityName}" created successfully!`);
+
+        // Clear the form
+        document.getElementById('bond-ability-name').value = "";
+        document.getElementById('bond-ability-level').value = "0";
+        document.getElementById('bond-ability-description').value = "";
+        document.getElementById('bond-ability-permanent').checked = true;
+        document.getElementById('bond-ability-requires-psyche').checked = false;
+        document.getElementById('bond-ability-psyche-cost').value = "1";
+        document.getElementById('bond-ability-psyche-cost-field').style.display = 'none';
+    }
+
     // ==================== IMPORT/EXPORT METHODS ====================
 
     _populateExportList(html) {
@@ -950,7 +1157,7 @@ export class HomebrewWindow extends Application {
 
         for (const folder of homebrewFolders) {
             for (const item of game.items.filter(i => i.folder?.id === folder.id)) {
-                if (["agenda", "blasphemy", "blasphemyPower", "affliction", "item", "sinMark"].includes(item.type) && !itemsSet.has(item.id)) {
+                if (["agenda", "blasphemy", "blasphemyPower", "bond", "bondAbility", "affliction", "item", "sinMark"].includes(item.type) && !itemsSet.has(item.id)) {
                     items.push(item);
                     itemsSet.add(item.id);
                 }
@@ -965,6 +1172,8 @@ export class HomebrewWindow extends Application {
             "agenda": "fa-tasks",
             "blasphemy": "fa-book-dead",
             "blasphemyPower": "fa-hand-sparkles",
+            "bond": "fa-heart",
+            "bondAbility": "fa-handshake",
             "affliction": "fa-skull-crossbones",
             "item": "fa-briefcase",
             "sinMark": "fa-exclamation-triangle"
@@ -977,6 +1186,8 @@ export class HomebrewWindow extends Application {
             "agenda": "Agenda",
             "blasphemy": "Blasphemy",
             "blasphemyPower": "Power",
+            "bond": "Bond",
+            "bondAbility": "Bond Ability",
             "affliction": "Affliction",
             "item": "Item",
             "sinMark": "Sin Mark"
@@ -1285,6 +1496,8 @@ export class HomebrewWindow extends Application {
             'agenda': 'Agendas',
             'blasphemy': 'Blasphemies',
             'blasphemyPower': 'Blasphemy Powers',
+            'bond': 'Bonds',
+            'bondAbility': 'Bond Abilities',
             'affliction': 'Afflictions',
             'item': 'Items',
             'sinMark': 'Sin Marks'
@@ -1310,6 +1523,8 @@ export class HomebrewWindow extends Application {
             'agenda': this.settings.agendaFolder,
             'blasphemy': this.settings.blasphemyFolder,
             'blasphemyPower': this.settings.powerFolder,
+            'bond': this.settings.bondFolder,
+            'bondAbility': this.settings.bondAbilityFolder,
             'affliction': this.settings.afflictionFolder,
             'item': this.settings.itemFolder,
             'sinMark': this.settings.sinMarkFolder
@@ -1368,6 +1583,8 @@ export class HomebrewWindow extends Application {
                 agendaFolder: '',
                 blasphemyFolder: '',
                 powerFolder: '',
+                bondFolder: '',
+                bondAbilityFolder: '',
                 afflictionFolder: '',
                 itemFolder: '',
                 sinMarkFolder: '',

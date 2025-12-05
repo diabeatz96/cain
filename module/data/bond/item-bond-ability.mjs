@@ -6,9 +6,6 @@ export default class CainBondAbility extends CainItemBase {
         const requiredInteger = { required: true, nullable: false, integer: true };
         const schema = super.defineSchema();
 
-        // The name of this bond ability
-        schema.abilityName = new fields.StringField({ required: true, nullable: false, initial: "Bond Ability" });
-
         // The bond level required to gain this ability (0-3)
         // Level 0: Gained immediately when bonding
         // Levels 1-3: Gained after surviving missions

@@ -20,8 +20,8 @@ export default class CainBond extends CainItemBase {
         // High blasphemies are "free" - don't increase XP cap or reduce sin overflow cap
         schema.highBlasphemy = new fields.StringField({ required: false, nullable: true, initial: "" });
 
-        // The bond level at which the high blasphemy is gained (typically 2 or 3)
-        schema.highBlasphemyLevel = new fields.NumberField({ required: true, nullable: false, integer: true, initial: 2, min: 0, max: 3 });
+        // The bond level at which the high blasphemy is gained (typically 1)
+        schema.highBlasphemyLevel = new fields.NumberField({ required: true, nullable: false, integer: true, initial: 1, min: 0, max: 3 });
 
         return schema;
     }
