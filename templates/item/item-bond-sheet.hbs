@@ -115,21 +115,53 @@
       <div class='high-blasphemy-info'>
         <p class='high-blasphemy-note'>
           <i class='fas fa-star'></i>
-          High Blasphemies are gained at bond level <strong>{{system.highBlasphemyLevel}}</strong>.
-          They count as blasphemies but are "free" - they don't increase XP cap or reduce sin overflow cap.
+          High Blasphemies count as blasphemies but are "free" - they don't increase XP cap or reduce sin overflow cap.
+          Once unlocked, the High Blasphemy is automatically added to your Blasphemy Powers.
         </p>
+        <div class='form-group high-blasphemy-level-select'>
+          <label for='system.highBlasphemyLevel'>Unlocked at Bond Level:</label>
+          <select name='system.highBlasphemyLevel'>
+            <option value='0' {{#if (eq system.highBlasphemyLevel 0)}}selected{{/if}}>Level 0 - Immediate</option>
+            <option value='1' {{#if (eq system.highBlasphemyLevel 1)}}selected{{/if}}>Level 1</option>
+            <option value='2' {{#if (eq system.highBlasphemyLevel 2)}}selected{{/if}}>Level 2</option>
+            <option value='3' {{#if (eq system.highBlasphemyLevel 3)}}selected{{/if}}>Level 3</option>
+          </select>
+        </div>
       </div>
 
       {{#if highBlasphemyData}}
         <div class='high-blasphemy-display'>
           <div class='high-blasphemy-header'>
             <img src='{{highBlasphemyData.img}}' class='high-blasphemy-img'/>
-            <h3>{{highBlasphemyData.name}}</h3>
+            <div class='high-blasphemy-title-row'>
+              <h3>{{highBlasphemyData.name}}</h3>
+              <div class='high-blasphemy-tags'>
+                {{#if highBlasphemyData.system.isPassive}}
+                  <span class='hb-tag passive-tag'>Passive</span>
+                {{/if}}
+                {{#if highBlasphemyData.system.psycheBurstCost}}
+                  <span class='hb-tag psyche-tag'>Psyche Burst</span>
+                {{/if}}
+                {{#if highBlasphemyData.system.psycheBurstNoCost}}
+                  <span class='hb-tag no-cost-tag'>No-Cost Mode</span>
+                {{/if}}
+                {{#if highBlasphemyData.system.psycheBurstMultCost}}
+                  <span class='hb-tag multi-tag'>Multi-Burst</span>
+                {{/if}}
+              </div>
+            </div>
             <button type='button' class='remove-high-blasphemy' title='Remove High Blasphemy'>
               <i class='fas fa-times'></i>
             </button>
           </div>
-          <p class='high-blasphemy-description'>{{highBlasphemyData.system.abilityDescription}}</p>
+          {{#if highBlasphemyData.system.keywords.length}}
+            <div class='high-blasphemy-keywords'>
+              {{#each highBlasphemyData.system.keywords}}
+                <span class='hb-keyword'>{{this}}</span>
+              {{/each}}
+            </div>
+          {{/if}}
+          <div class='high-blasphemy-description'>{{highBlasphemyData.system.powerDescription}}</div>
         </div>
       {{else}}
         <p class='no-high-blasphemy'>No High Blasphemy Power assigned to this bond.</p>
@@ -142,15 +174,6 @@
 
       {{#if developerMode}}
         <div class='high-blasphemy-dev-controls'>
-          <div class='form-group'>
-            <label for='system.highBlasphemyLevel'>Unlock at Bond Level:</label>
-            <select name='system.highBlasphemyLevel'>
-              <option value='0' {{#if (eq system.highBlasphemyLevel 0)}}selected{{/if}}>Level 0</option>
-              <option value='1' {{#if (eq system.highBlasphemyLevel 1)}}selected{{/if}}>Level 1</option>
-              <option value='2' {{#if (eq system.highBlasphemyLevel 2)}}selected{{/if}}>Level 2</option>
-              <option value='3' {{#if (eq system.highBlasphemyLevel 3)}}selected{{/if}}>Level 3</option>
-            </select>
-          </div>
           <div class='form-group'>
             <label for='highBlasphemyUUID'>High Blasphemy Power (UUID):</label>
             <input type='text' id='highBlasphemyUUID' placeholder='Paste Blasphemy Power UUID here' value='{{system.highBlasphemy}}'/>
@@ -382,6 +405,28 @@
   color: #bb77dd;
 }
 
+.high-blasphemy-level-select {
+  margin-top: 1em;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.high-blasphemy-level-select label {
+  color: #bb77dd;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.high-blasphemy-level-select select {
+  background-color: #333;
+  color: #e0e0e0;
+  border: 1px solid #9b59b6;
+  padding: 0.4em 0.6em;
+  border-radius: 4px;
+  font-family: inherit;
+}
+
 .high-blasphemy-display {
   background-color: #2b2b2b;
   border: 2px solid #9b59b6;
@@ -391,23 +436,84 @@
 
 .high-blasphemy-header {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 1em;
   margin-bottom: 0.5em;
 }
 
-.high-blasphemy-header h3 {
+.high-blasphemy-title-row {
   flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3em;
+}
+
+.high-blasphemy-title-row h3 {
+  color: #bb77dd;
+  margin: 0;
+  font-size: 1.2em;
+}
+
+.high-blasphemy-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3em;
+}
+
+.hb-tag {
+  font-size: 0.7em;
+  padding: 0.2em 0.5em;
+  border-radius: 3px;
+  font-weight: bold;
+}
+
+.passive-tag {
+  background-color: #5cb85c;
+  color: #fff;
+}
+
+.psyche-tag {
+  background-color: #d9534f;
+  color: #fff;
+}
+
+.no-cost-tag {
+  background-color: #f0ad4e;
+  color: #000;
+}
+
+.multi-tag {
+  background-color: #5bc0de;
+  color: #000;
+}
+
+.high-blasphemy-keywords {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3em;
+  margin-bottom: 0.5em;
+}
+
+.hb-keyword {
+  background-color: #444;
+  color: #ccc;
+  font-size: 0.75em;
+  padding: 0.2em 0.5em;
+  border-radius: 3px;
+  font-style: italic;
 }
 
 .remove-high-blasphemy {
   background-color: transparent;
   color: #888;
   border: none;
-  padding: 0.3em 0.5em;
+  padding: 0.2em 0.4em;
   cursor: pointer;
-  font-size: 0.9em;
+  font-size: 0.75em;
   border-radius: 4px;
+  flex-shrink: 0;
+  width: auto;
+  min-width: unset;
 }
 
 .remove-high-blasphemy:hover {
@@ -420,11 +526,18 @@
   height: 60px;
   border-radius: 50%;
   border: 2px solid #9b59b6;
+  flex-shrink: 0;
 }
 
-.high-blasphemy-header h3 {
-  color: #bb77dd;
-  margin: 0;
+.high-blasphemy-description {
+  background-color: #222;
+  padding: 0.8em;
+  border-radius: 4px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  font-size: 0.9em;
+  max-height: 200px;
+  overflow-y: auto;
 }
 
 /* Developer controls */

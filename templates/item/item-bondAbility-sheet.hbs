@@ -13,10 +13,6 @@
           value='{{item.name}}'
           placeholder='Ability Name'
         /></h1>
-      <div class='form-group'>
-        <label for='system.abilityName'>Ability Name</label>
-        <input type='text' name='system.abilityName' value='{{system.abilityName}}' data-dtype='String'/>
-      </div>
     </div>
   </header>
 
@@ -76,6 +72,10 @@
   overflow: hidden;
 }
 
+.bond-ability-sheet .sheet-header {
+  flex: none;
+}
+
 .bond-ability-header {
   background-color: #1a1a1a;
   border-bottom: 2px solid #4a90d9;
@@ -97,14 +97,19 @@
   flex-grow: 1;
 }
 
+.bond-ability-header .charname {
+  margin-bottom: 0.5em;
+}
+
 .bond-ability-header .charname input {
-  font-size: 1.3em;
+  font-size: 1.1em;
   width: 100%;
   background-color: #252525;
   color: #e0e0e0;
   border: 1px solid #444;
-  padding: 0.5em;
+  padding: 0.3em 0.5em;
   border-radius: 4px;
+  height: 2em;
 }
 
 .bond-ability-header .form-group {
@@ -154,6 +159,11 @@
   padding: 0.5em;
   border-radius: 4px;
   font-family: inherit;
+}
+
+.bond-ability-body select {
+  height: 2.5em;
+  line-height: 1.4;
 }
 
 .bond-ability-body textarea {

@@ -11,6 +11,8 @@
     <a class='item' data-tab='agenda'><i class="fas fa-tasks"></i> Agenda</a>
     <a class='item' data-tab='blasphemy'><i class="fas fa-book-dead"></i> Blasphemy</a>
     <a class='item' data-tab='blasphemyPower'><i class="fas fa-hand-sparkles"></i> Powers</a>
+    <a class='item' data-tab='bond'><i class="fas fa-heart"></i> Bond</a>
+    <a class='item' data-tab='bondAbility'><i class="fas fa-handshake"></i> Bond Abilities</a>
     <a class='item' data-tab='affliction'><i class="fas fa-skull-crossbones"></i> Afflictions</a>
     <a class='item' data-tab='item'><i class="fas fa-briefcase"></i> Items</a>
     <a class='item' data-tab='sinMark'><i class="fas fa-exclamation-triangle"></i> Sin Marks</a>
@@ -75,8 +77,26 @@
         <div class="cat-help">
           <details>
             <summary><i class="fas fa-question-circle"></i> CAT Formatting Help</summary>
-            <p>Use <code>{"{<CAT> size 0}"}</code> for CAT-based values. Supports operations: <code>/2</code>, <code>*2</code>, <code>+1</code>, <code>-1</code></p>
-            <p>Example: <code>{"{<CAT/2> size 0}"}</code> = half CAT level</p>
+            <div class="cat-help-content">
+              <p><strong>Syntax:</strong> <code>{"{<CAT> type modifier}"}</code> or <code>{"{<CAT operation> type modifier}"}</code></p>
+              <p><strong>Valid types:</strong></p>
+              <ul class="cat-type-list">
+                <li><code>people</code> - one, a few, small group, large group, a crowd, a huge crowd, thousands, many thousands</li>
+                <li><code>size</code> - human, heavy furniture, large animal, vehicle, large vehicle, building, large building, skyscraper</li>
+                <li><code>area</code> - personal, a few people, entire room, few rooms, whole building, city block, whole neighborhood, whole town</li>
+                <li><code>range</code> - touch, same room, across the street, down the block, a few blocks away, across town, visual range, over the horizon</li>
+                <li><code>speed</code> - average human, fast human, fast animal, car, train, maglev, airliner, jet fighter</li>
+                <li><code>magnitude</code> - small, noticeable, large, very large, massive, destructive, overwhelming, cataclysmic</li>
+              </ul>
+              <p><strong>Modifier:</strong> A number (0, +1, -1, +2, etc.) that adjusts the CAT level</p>
+              <p><strong>Operations (optional):</strong> <code>/2</code>, <code>*2</code>, <code>+1</code>, <code>-1</code> applied before modifier</p>
+              <p><strong>Examples:</strong></p>
+              <ul class="cat-example-list">
+                <li><code>{"{<CAT> size 0}"}</code> - size at current CAT level</li>
+                <li><code>{"{<CAT> people +1}"}</code> - people at CAT+1</li>
+                <li><code>{"{<CAT/2> area 0}"}</code> - area at half CAT (rounded up)</li>
+              </ul>
+            </div>
           </details>
         </div>
 
@@ -141,7 +161,11 @@
         <div class="cat-help">
           <details>
             <summary><i class="fas fa-question-circle"></i> CAT Formatting Help</summary>
-            <p>Use <code>{"{<CAT> size 0}"}</code> for CAT-based values. Supports operations: <code>/2</code>, <code>*2</code>, <code>+1</code>, <code>-1</code></p>
+            <div class="cat-help-content">
+              <p><strong>Syntax:</strong> <code>{"{<CAT> type modifier}"}</code> or <code>{"{<CAT operation> type modifier}"}</code></p>
+              <p><strong>Valid types:</strong> <code>people</code>, <code>size</code>, <code>area</code>, <code>range</code>, <code>speed</code>, <code>magnitude</code></p>
+              <p><strong>Examples:</strong> <code>{"{<CAT> size 0}"}</code>, <code>{"{<CAT> people +1}"}</code>, <code>{"{<CAT/2> area 0}"}</code></p>
+            </div>
           </details>
         </div>
 
@@ -199,12 +223,138 @@
         <div class="cat-help">
           <details>
             <summary><i class="fas fa-question-circle"></i> CAT Formatting Help</summary>
-            <p>Use <code>{"{<CAT> size 0}"}</code> for CAT-based values</p>
+            <div class="cat-help-content">
+              <p><strong>Syntax:</strong> <code>{"{<CAT> type modifier}"}</code> or <code>{"{<CAT operation> type modifier}"}</code></p>
+              <p><strong>Valid types:</strong> <code>people</code>, <code>size</code>, <code>area</code>, <code>range</code>, <code>speed</code>, <code>magnitude</code></p>
+              <p><strong>Examples:</strong> <code>{"{<CAT> size 0}"}</code>, <code>{"{<CAT> people +1}"}</code>, <code>{"{<CAT/2> area 0}"}</code></p>
+            </div>
           </details>
         </div>
 
         <footer class="form-footer">
           <button type="button" class="btn-primary homebrew-submit-standalone-power"><i class="fas fa-check-circle"></i> Create Power</button>
+        </footer>
+      </div>
+    </div>
+
+    {{!-- BOND TAB --}}
+    <div class='tab homebrew-tab' data-group='primary' data-tab='bond'>
+      <div class="creation-panel bond-panel">
+        <h2><i class="fas fa-plus-circle"></i> Create Bond (Virtue)</h2>
+
+        <div class="form-section">
+          <label for="bond-name">Bond Name</label>
+          <input type="text" id="bond-name" class="homebrew-input" placeholder="Enter bond name (e.g., 'Bond of Justice')...">
+        </div>
+
+        <div class="form-section">
+          <label for="bond-virtue-name">Virtue Name</label>
+          <input type="text" id="bond-virtue-name" class="homebrew-input" placeholder="Enter virtue name (e.g., 'Justice')...">
+        </div>
+
+        <div class="form-section">
+          <label for="bond-high-blasphemy-level">High Blasphemy Unlock Level</label>
+          <select id="bond-high-blasphemy-level" class="homebrew-input">
+            <option value="0">Level 0 - Immediate</option>
+            <option value="1" selected>Level 1</option>
+            <option value="2">Level 2</option>
+            <option value="3">Level 3</option>
+          </select>
+          <p class="settings-hint">The bond level at which the associated High Blasphemy is unlocked.</p>
+        </div>
+
+        <div class="form-section">
+          <div class="section-header">
+            <h3><i class="fas fa-scroll"></i> Strictures</h3>
+            <button type="button" class="btn-add homebrew-new-stricture"><i class="fas fa-plus"></i> Add Stricture</button>
+          </div>
+          <p class="settings-hint">Rules that must be followed while bonding with this virtue. Breaking a stricture costs 1d3 stress.</p>
+          <ul class="stricture-list" id="bond-stricture-list">
+          {{#each bondOptions.strictures}}
+            <li class='stricture-item'>
+              <span class="stricture-number"></span>
+              <textarea class="homebrew-input homebrew-stricture-input" data-stricture-index="{{@index}}" placeholder="Enter stricture (e.g., 'Never lie', 'Always help the innocent')...">{{this}}</textarea>
+              <button type="button" class="btn-icon btn-delete homebrew-remove-stricture" data-stricture-index="{{@index}}" title="Remove Stricture">
+                <i class="fas fa-trash"></i>
+              </button>
+            </li>
+          {{else}}
+            <li class="stricture-empty-state">
+              <i class="fas fa-scroll"></i>
+              <span>No strictures added yet. Click "Add Stricture" to define the rules of this bond.</span>
+            </li>
+          {{/each}}
+          </ul>
+        </div>
+
+        <div class="bond-info">
+          <details>
+            <summary><i class="fas fa-info-circle"></i> Bond System Info</summary>
+            <div class="bond-info-content">
+              <p><strong>Bonds</strong> represent a character's connection to a Virtue. As bonds level up (0-3), characters gain abilities.</p>
+              <p><strong>Strictures</strong> are rules that must be followed while bonding. Breaking them costs 1d3 stress.</p>
+              <p><strong>High Blasphemies</strong> are special powers gained at the specified bond level - they're "free" and don't increase XP cap.</p>
+              <p><strong>Bond Abilities</strong> should be created separately using the Bond Abilities tab, then linked to this bond.</p>
+            </div>
+          </details>
+        </div>
+
+        <footer class="form-footer">
+          <button type="button" class="btn-primary homebrew-submit-bond"><i class="fas fa-check-circle"></i> Create Bond</button>
+        </footer>
+      </div>
+    </div>
+
+    {{!-- BOND ABILITY TAB --}}
+    <div class='tab homebrew-tab' data-group='primary' data-tab='bondAbility'>
+      <div class="creation-panel bond-ability-panel">
+        <h2><i class="fas fa-plus-circle"></i> Create Bond Ability</h2>
+
+        <div class="form-section">
+          <label for="bond-ability-name">Ability Name</label>
+          <input type="text" id="bond-ability-name" class="homebrew-input" placeholder="Enter ability name...">
+        </div>
+
+        <div class="form-section">
+          <label for="bond-ability-level">Bond Level Required</label>
+          <select id="bond-ability-level" class="homebrew-input">
+            <option value="0">Level 0 - Immediate</option>
+            <option value="1">Level 1 - 1 Mission Survived</option>
+            <option value="2">Level 2 - 2 Missions Survived</option>
+            <option value="3">Level 3 - 3 Missions Survived (Max)</option>
+          </select>
+        </div>
+
+        <div class="form-section">
+          <label for="bond-ability-description">Ability Description</label>
+          <textarea id="bond-ability-description" class="homebrew-input" rows="6" placeholder="Describe what this ability does..."></textarea>
+        </div>
+
+        <div class="form-section">
+          <label class="checkbox-label">
+            <input type="checkbox" id="bond-ability-permanent" checked>
+            <span>Permanent Ability</span>
+          </label>
+          <p class="settings-hint">Permanent abilities persist even when not actively bonding with this virtue.</p>
+        </div>
+
+        <div class="form-section psyche-section">
+          <h3><i class="fas fa-brain"></i> Psyche Burst Requirements</h3>
+          <label class="checkbox-label">
+            <input type="checkbox" id="bond-ability-requires-psyche">
+            <span>Requires Psyche Burst</span>
+          </label>
+          <p class="settings-hint">Check this if the ability requires spending Psyche Bursts to activate.</p>
+
+          <div class="psyche-cost-field" id="bond-ability-psyche-cost-field" style="display: none;">
+            <label for="bond-ability-psyche-cost">Psyche Burst Cost</label>
+            <input type="number" id="bond-ability-psyche-cost" class="homebrew-input" value="1" min="0">
+            <p class="settings-hint">Set to 0 for "all remaining Psyche Bursts (minimum 1)"</p>
+          </div>
+        </div>
+
+        <footer class="form-footer">
+          <button type="button" class="btn-primary homebrew-submit-bond-ability"><i class="fas fa-check-circle"></i> Create Bond Ability</button>
         </footer>
       </div>
     </div>
@@ -227,7 +377,11 @@
         <div class="cat-help">
           <details>
             <summary><i class="fas fa-question-circle"></i> CAT Formatting Help</summary>
-            <p>Use <code>{"{<CAT> size 0}"}</code> for CAT-based values</p>
+            <div class="cat-help-content">
+              <p><strong>Syntax:</strong> <code>{"{<CAT> type modifier}"}</code> or <code>{"{<CAT operation> type modifier}"}</code></p>
+              <p><strong>Valid types:</strong> <code>people</code>, <code>size</code>, <code>area</code>, <code>range</code>, <code>speed</code>, <code>magnitude</code></p>
+              <p><strong>Examples:</strong> <code>{"{<CAT> size 0}"}</code>, <code>{"{<CAT> people +1}"}</code>, <code>{"{<CAT/2> area 0}"}</code></p>
+            </div>
           </details>
         </div>
 
@@ -429,6 +583,8 @@
             <option value="agenda">Agendas</option>
             <option value="blasphemy">Blasphemies</option>
             <option value="blasphemyPower">Powers</option>
+            <option value="bond">Bonds</option>
+            <option value="bondAbility">Bond Abilities</option>
             <option value="affliction">Afflictions</option>
             <option value="item">Items</option>
             <option value="sinMark">Sin Marks</option>
@@ -617,6 +773,8 @@
   --agenda-color: #00bcd4;
   --blasphemy-color: #7c4dff;
   --power-color: #ff9800;
+  --bond-color: #e91e63;
+  --bond-ability-color: #9c27b0;
   --affliction-color: #d32f2f;
   --item-color: #4caf50;
   --sinmark-color: #ffc107;
@@ -820,6 +978,8 @@
 .homebrew-tabs .item[data-tab="agenda"].active { color: var(--agenda-color); }
 .homebrew-tabs .item[data-tab="blasphemy"].active { color: var(--blasphemy-color); }
 .homebrew-tabs .item[data-tab="blasphemyPower"].active { color: var(--power-color); }
+.homebrew-tabs .item[data-tab="bond"].active { color: var(--bond-color); }
+.homebrew-tabs .item[data-tab="bondAbility"].active { color: var(--bond-ability-color); }
 .homebrew-tabs .item[data-tab="affliction"].active { color: var(--affliction-color); }
 .homebrew-tabs .item[data-tab="item"].active { color: var(--item-color); }
 .homebrew-tabs .item[data-tab="sinMark"].active { color: var(--sinmark-color); }
@@ -912,6 +1072,7 @@
   border: 1px solid var(--border-subtle);
   border-radius: 6px;
   transition: all 0.3s ease;
+  overflow: visible;
 }
 
 .form-section:hover {
@@ -947,6 +1108,9 @@
   border-left: 3px solid var(--blasphemy-color);
   border-radius: 0 4px 4px 0;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+  overflow: visible;
 }
 
 .section-header h3 {
@@ -960,12 +1124,23 @@
   display: flex;
   align-items: center;
   gap: var(--spacing-sm);
+  flex-shrink: 1;
+  min-width: 0;
 }
 
 .section-header h3 i {
   color: var(--blasphemy-color);
   font-size: 1.1em;
   filter: drop-shadow(0 0 4px rgba(124, 77, 255, 0.5));
+}
+
+.section-header .btn-add {
+  padding: 6px 12px;
+  font-size: 0.85em;
+  white-space: nowrap;
+  flex-shrink: 0;
+  min-width: fit-content;
+  max-width: fit-content;
 }
 
 /* ==================== INPUTS ==================== */
@@ -1012,6 +1187,46 @@ textarea.homebrew-input {
 input[type="number"].homebrew-input {
   width: auto;
   min-width: 100px;
+}
+
+/* Select dropdown specific styling */
+select.homebrew-input {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.3) !important;
+  color: #ffffff !important;
+  border: 1px solid var(--border-medium) !important;
+  border-radius: 6px;
+  padding: 10px 12px !important;
+  font-size: 0.95em !important;
+  font-family: "Courier New", Courier, monospace;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23ffffff' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 12px center !important;
+  padding-right: 36px !important;
+  height: auto !important;
+  line-height: 1.4 !important;
+}
+
+select.homebrew-input:hover {
+  border-color: rgba(255, 255, 255, 0.25) !important;
+  background-color: rgba(0, 0, 0, 0.4) !important;
+}
+
+select.homebrew-input:focus {
+  outline: none;
+  border-color: var(--blasphemy-color) !important;
+  background-color: rgba(0, 0, 0, 0.5) !important;
+  box-shadow: 0 0 0 3px rgba(124, 77, 255, 0.2);
+}
+
+select.homebrew-input option {
+  background-color: #1a1a1a !important;
+  color: #ffffff !important;
+  padding: 10px !important;
 }
 
 /* ==================== BUTTONS ==================== */
@@ -1081,8 +1296,8 @@ input[type="number"].homebrew-input {
 }
 
 .btn-add {
-  padding: 4px 8px;
-  font-size: 0.65em;
+  padding: 6px 12px;
+  font-size: 0.85em;
   background: linear-gradient(135deg, rgba(0, 188, 212, 0.2) 0%, rgba(0, 188, 212, 0.1) 100%);
   border: 1px dashed var(--agenda-color);
   color: var(--agenda-color);
@@ -1930,8 +2145,14 @@ input[type="number"].homebrew-input {
   }
 
   .section-header {
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+  }
+
+  .section-header .btn-add {
+    margin-left: auto;
   }
 
   .btn-primary, .btn-secondary {
@@ -2034,6 +2255,275 @@ input[type="number"].homebrew-input {
 
 .creation-panel h3 i {
   color: var(--blasphemy-color);
+}
+
+/* ==================== BOND PANELS ==================== */
+.bond-panel::before,
+.bond-ability-panel::before {
+  background: linear-gradient(180deg, var(--bond-color) 0%, transparent 100%);
+}
+
+.bond-panel h2 i,
+.bond-ability-panel h2 i {
+  color: var(--bond-color);
+}
+
+.bond-panel .section-header,
+.bond-ability-panel .section-header {
+  background: linear-gradient(135deg, rgba(233, 30, 99, 0.08) 0%, rgba(233, 30, 99, 0.03) 100%);
+  border-left-color: var(--bond-color);
+}
+
+.bond-panel .section-header h3 i,
+.bond-ability-panel .section-header h3 i {
+  color: var(--bond-color);
+  filter: drop-shadow(0 0 4px rgba(233, 30, 99, 0.5));
+}
+
+.bond-panel .btn-add,
+.bond-ability-panel .btn-add {
+  background: linear-gradient(135deg, rgba(233, 30, 99, 0.2) 0%, rgba(233, 30, 99, 0.1) 100%);
+  border-color: var(--bond-color);
+  color: var(--bond-color);
+}
+
+.bond-panel .btn-add:hover,
+.bond-ability-panel .btn-add:hover {
+  background: linear-gradient(135deg, rgba(233, 30, 99, 0.3) 0%, rgba(233, 30, 99, 0.15) 100%);
+}
+
+/* Stricture list styles */
+.stricture-list {
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 8px 0 0 0 !important;
+  counter-reset: stricture-counter;
+}
+
+.stricture-item {
+  display: flex !important;
+  flex-direction: row !important;
+  gap: 12px !important;
+  align-items: center !important;
+  background: #2a2a35 !important;
+  border: 1px solid rgba(233, 30, 99, 0.4) !important;
+  border-left: 3px solid #e91e63 !important;
+  border-radius: 6px !important;
+  padding: 12px !important;
+  margin-bottom: 8px !important;
+  box-shadow: none !important;
+  counter-increment: stricture-counter;
+  position: relative !important;
+}
+
+.stricture-item:hover {
+  background: #32323d !important;
+  border-color: #e91e63 !important;
+}
+
+.stricture-item::before,
+.stricture-item::after {
+  display: none !important;
+}
+
+.stricture-item textarea.homebrew-input {
+  flex: 1 1 auto !important;
+  min-height: 40px !important;
+  max-height: 120px !important;
+  background: rgba(0, 0, 0, 0.4) !important;
+  border: 1px solid rgba(233, 30, 99, 0.3) !important;
+  border-radius: 4px !important;
+  padding: 8px 10px !important;
+  color: #ffffff !important;
+  font-size: 0.9em !important;
+  resize: vertical !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+.stricture-item textarea.homebrew-input:focus {
+  border-color: #e91e63 !important;
+  outline: none !important;
+  box-shadow: 0 0 0 2px rgba(233, 30, 99, 0.2) !important;
+  transform: none !important;
+}
+
+.stricture-item .btn-icon.btn-delete {
+  flex: 0 0 auto !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 32px !important;
+  height: 32px !important;
+  min-width: 32px !important;
+  min-height: 32px !important;
+  background: rgba(244, 67, 54, 0.15) !important;
+  border: 1px solid rgba(244, 67, 54, 0.4) !important;
+  border-radius: 4px !important;
+  color: #f44336 !important;
+  padding: 0 !important;
+  cursor: pointer !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+.stricture-item .btn-icon.btn-delete:hover {
+  background: rgba(244, 67, 54, 0.3) !important;
+  border-color: #f44336 !important;
+}
+
+.stricture-item .btn-icon.btn-delete i {
+  font-size: 0.85em !important;
+}
+
+.stricture-number {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 26px !important;
+  height: 26px !important;
+  min-width: 26px !important;
+  background: #e91e63 !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  font-size: 0.8em !important;
+  border-radius: 50% !important;
+  flex-shrink: 0 !important;
+  box-shadow: none !important;
+}
+
+.stricture-number::before {
+  content: counter(stricture-counter);
+}
+
+.stricture-empty-state {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  padding: 20px !important;
+  background: rgba(233, 30, 99, 0.05) !important;
+  border: 1px dashed rgba(233, 30, 99, 0.3) !important;
+  border-radius: 8px !important;
+  color: #888 !important;
+  font-style: italic !important;
+  justify-content: center !important;
+}
+
+.stricture-empty-state i {
+  font-size: 1.3em !important;
+  color: #e91e63 !important;
+  opacity: 0.5 !important;
+}
+
+/* Bond info section */
+.bond-info {
+  margin-top: var(--spacing-md);
+  padding: var(--spacing-md);
+  background: linear-gradient(135deg, rgba(233, 30, 99, 0.08) 0%, rgba(233, 30, 99, 0.03) 100%);
+  border: 1px solid rgba(233, 30, 99, 0.3);
+  border-left: 4px solid var(--bond-color);
+  border-radius: 8px;
+}
+
+.bond-info details summary {
+  cursor: pointer;
+  color: var(--bond-color);
+  font-weight: 600;
+  font-size: 0.875em;
+  padding: var(--spacing-sm);
+  transition: all 0.3s ease;
+  font-family: "Courier New", Courier, monospace;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.bond-info details summary:hover {
+  color: var(--text-primary);
+  background: rgba(233, 30, 99, 0.1);
+}
+
+.bond-info-content {
+  padding: var(--spacing-md) var(--spacing-sm);
+}
+
+.bond-info-content p {
+  margin: var(--spacing-sm) 0;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  font-size: 0.85em;
+  font-family: "Courier New", Courier, monospace;
+  padding-left: var(--spacing-lg);
+}
+
+/* Psyche section in bond ability panel */
+.psyche-section {
+  background: linear-gradient(135deg, rgba(156, 39, 176, 0.1) 0%, rgba(156, 39, 176, 0.05) 100%);
+  border: 1px solid rgba(156, 39, 176, 0.3);
+  border-radius: 8px;
+}
+
+.psyche-section h3 {
+  color: var(--bond-ability-color);
+  margin-top: 0;
+}
+
+.psyche-section h3 i {
+  color: var(--bond-ability-color);
+}
+
+.psyche-cost-field {
+  margin-top: var(--spacing-md);
+  padding-top: var(--spacing-md);
+  border-top: 1px solid rgba(156, 39, 176, 0.2);
+}
+
+/* CAT help content styling */
+.cat-help-content {
+  padding: var(--spacing-md) var(--spacing-sm);
+}
+
+.cat-help-content p {
+  margin: var(--spacing-sm) 0;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  font-size: 0.85em;
+  font-family: "Courier New", Courier, monospace;
+}
+
+.cat-type-list,
+.cat-example-list {
+  list-style: none;
+  padding: 0;
+  margin: var(--spacing-sm) 0 var(--spacing-md) var(--spacing-lg);
+}
+
+.cat-type-list li,
+.cat-example-list li {
+  color: var(--text-secondary);
+  font-size: 0.85em;
+  padding: var(--spacing-xs) 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.cat-type-list li:last-child,
+.cat-example-list li:last-child {
+  border-bottom: none;
+}
+
+.cat-type-list code,
+.cat-example-list code {
+  background: rgba(0, 0, 0, 0.4);
+  color: var(--agenda-color);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: 'Courier New', Courier, monospace;
+  border: 1px solid rgba(0, 188, 212, 0.3);
+  font-size: 0.9em;
+  font-weight: 600;
 }
 
 /* ==================== UTILITY CLASSES ==================== */
