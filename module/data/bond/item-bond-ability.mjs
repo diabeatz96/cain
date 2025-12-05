@@ -6,16 +6,25 @@ export default class CainBondAbility extends CainItemBase {
         const requiredInteger = { required: true, nullable: false, integer: true };
         const schema = super.defineSchema();
 
-        schema.bondAbilities = new fields.ObjectField({
-                required: true,
-                nullable: false,
-                initial: {
-                    "0": "Bond Ability 1",
-                    "1": "Bond Ability 1",
-                    "2": "Bond Ability 2",
-                    "3": "Bond Ability 3",
-                },
-            });
+        // The name of this bond ability
+        schema.abilityName = new fields.StringField({ required: true, nullable: false, initial: "Bond Ability" });
+
+        // The bond level required to gain this ability (0-3)
+        // Level 0: Gained immediately when bonding
+        // Levels 1-3: Gained after surviving missions
+        schema.bondLevel = new fields.NumberField({ required: true, nullable: false, integer: true, initial: 0, min: 0, max: 3 });
+
+        // Description of what this ability does
+        schema.abilityDescription = new fields.StringField({ required: true, nullable: false, initial: "" });
+
+        // Whether this ability is permanent (persists even when not actively bonding)
+        schema.isPermanent = new fields.BooleanField({ required: true, nullable: false, initial: true });
+
+        // Optional: If this is a high blasphemy ability, it may require spending psyche bursts
+        schema.requiresPsycheBurst = new fields.BooleanField({ required: true, nullable: false, initial: false });
+
+        // If requiresPsycheBurst is true, how many bursts are required (0 = all remaining, min 1)
+        schema.psycheBurstCost = new fields.NumberField({ required: true, nullable: false, integer: true, initial: 0, min: 0 });
 
         return schema;
     }

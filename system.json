@@ -90,6 +90,13 @@
       "system": "cain",
       "type": "Actor",
       "path": "packs/opponents"
+    },
+    {
+      "name": "virtues",
+      "label": "Virtues (Bonds)",
+      "system": "cain",
+      "type": "Item",
+      "path": "packs/virtues"
     }
   ],
   "packFolders": [],

@@ -1,0 +1,197 @@
+<form class='{{cssClass}} bond-ability-sheet' autocomplete='off'>
+  <header class='sheet-header bond-ability-header'>
+    <img
+      class='profile-img'
+      src='{{item.img}}'
+      data-edit='img'
+      title='{{item.name}}'
+    />
+    <div class='header-fields'>
+      <h1 class='charname'><input
+          name='name'
+          type='text'
+          value='{{item.name}}'
+          placeholder='Ability Name'
+        /></h1>
+      <div class='form-group'>
+        <label for='system.abilityName'>Ability Name</label>
+        <input type='text' name='system.abilityName' value='{{system.abilityName}}' data-dtype='String'/>
+      </div>
+    </div>
+  </header>
+
+  <section class='sheet-body bond-ability-body'>
+    <div class='form-group'>
+      <label for='system.bondLevel'>Bond Level Required</label>
+      <select name='system.bondLevel'>
+        <option value='0' {{#if (eq system.bondLevel 0)}}selected{{/if}}>Level 0 - Immediate</option>
+        <option value='1' {{#if (eq system.bondLevel 1)}}selected{{/if}}>Level 1 - 1 Mission Survived</option>
+        <option value='2' {{#if (eq system.bondLevel 2)}}selected{{/if}}>Level 2 - 2 Missions Survived</option>
+        <option value='3' {{#if (eq system.bondLevel 3)}}selected{{/if}}>Level 3 - 3 Missions Survived (Max)</option>
+      </select>
+    </div>
+
+    <div class='form-group'>
+      <label for='system.abilityDescription'>Ability Description</label>
+      <textarea name='system.abilityDescription' rows='6' placeholder='Describe what this ability does...'>{{system.abilityDescription}}</textarea>
+    </div>
+
+    <div class='form-group checkbox-group'>
+      <label>
+        <input type='checkbox' name='system.isPermanent' {{#if system.isPermanent}}checked{{/if}}/>
+        Permanent Ability
+      </label>
+      <p class='hint'>Permanent abilities persist even when not actively bonding with this virtue.</p>
+    </div>
+
+    <div class='psyche-burst-section'>
+      <h3>Psyche Burst Requirements</h3>
+      <div class='form-group checkbox-group'>
+        <label>
+          <input type='checkbox' name='system.requiresPsycheBurst' {{#if system.requiresPsycheBurst}}checked{{/if}}/>
+          Requires Psyche Burst
+        </label>
+        <p class='hint'>Check this if the ability requires spending Psyche Bursts to activate.</p>
+      </div>
+
+      {{#if system.requiresPsycheBurst}}
+        <div class='form-group'>
+          <label for='system.psycheBurstCost'>Psyche Burst Cost</label>
+          <input type='number' name='system.psycheBurstCost' value='{{system.psycheBurstCost}}' min='0' data-dtype='Number'/>
+          <p class='hint'>Set to 0 for "all remaining Psyche Bursts (minimum 1)"</p>
+        </div>
+      {{/if}}
+    </div>
+  </section>
+</form>
+
+<style>
+.bond-ability-sheet {
+  background-color: #1a1a1a;
+  color: #e0e0e0;
+  font-family: 'Courier New', Courier, monospace;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.bond-ability-header {
+  background-color: #1a1a1a;
+  border-bottom: 2px solid #4a90d9;
+  padding: 1em;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.bond-ability-header .profile-img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin-right: 1em;
+  border: 2px solid #4a90d9;
+}
+
+.bond-ability-header .header-fields {
+  flex-grow: 1;
+}
+
+.bond-ability-header .charname input {
+  font-size: 1.3em;
+  width: 100%;
+  background-color: #252525;
+  color: #e0e0e0;
+  border: 1px solid #444;
+  padding: 0.5em;
+  border-radius: 4px;
+}
+
+.bond-ability-header .form-group {
+  margin-top: 0.5em;
+}
+
+.bond-ability-header .form-group label {
+  color: #4a90d9;
+  font-size: 0.85em;
+}
+
+.bond-ability-header .form-group input {
+  background-color: #252525;
+  color: #e0e0e0;
+  border: 1px solid #444;
+  padding: 0.3em;
+  border-radius: 4px;
+  width: 100%;
+}
+
+.bond-ability-body {
+  background-color: #1a1a1a;
+  padding: 1em;
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+.bond-ability-body .form-group {
+  margin-bottom: 1em;
+}
+
+.bond-ability-body label {
+  display: block;
+  color: #4a90d9;
+  margin-bottom: 0.3em;
+  font-weight: bold;
+}
+
+.bond-ability-body select,
+.bond-ability-body input[type='text'],
+.bond-ability-body input[type='number'],
+.bond-ability-body textarea {
+  width: 100%;
+  background-color: #252525;
+  color: #e0e0e0;
+  border: 1px solid #444;
+  padding: 0.5em;
+  border-radius: 4px;
+  font-family: inherit;
+}
+
+.bond-ability-body textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.bond-ability-body .checkbox-group label {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  cursor: pointer;
+}
+
+.bond-ability-body .checkbox-group input[type='checkbox'] {
+  width: auto;
+}
+
+.bond-ability-body .hint {
+  color: #888;
+  font-size: 0.85em;
+  font-style: italic;
+  margin-top: 0.3em;
+}
+
+.psyche-burst-section {
+  margin-top: 1.5em;
+  padding: 1em;
+  background-color: #252525;
+  border: 1px solid #444;
+  border-radius: 4px;
+}
+
+.psyche-burst-section h3 {
+  color: #d9534f;
+  margin-top: 0;
+  margin-bottom: 1em;
+  border-bottom: 1px solid #444;
+  padding-bottom: 0.5em;
+}
+</style>

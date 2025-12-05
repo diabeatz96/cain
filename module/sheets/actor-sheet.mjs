@@ -278,6 +278,28 @@ export class CainActorSheet extends ActorSheet {
       context.currentAgendaAvailableAbilities = [];
     }
 
+    // Prepare character bonds data
+    context.characterBonds = (context.system.bonds || []).map(bondEntry => {
+      const bondItem = game.items.get(bondEntry.bondId);
+      if (!bondItem) return null;
+
+      // Get bond abilities and attach them to the bond object
+      const abilities = (bondItem.system.abilities || [])
+        .map(id => game.items.get(id))
+        .filter(item => item)
+        .sort((a, b) => a.system.bondLevel - b.system.bondLevel);
+
+      return {
+        ...bondItem.toObject(),
+        _id: bondItem.id,
+        abilities: abilities,
+        system: {
+          ...bondItem.system,
+          currentLevel: bondEntry.currentLevel
+        }
+      };
+    }).filter(bond => bond !== null);
+
   }
 
   _prepareOpponentData(context) {
@@ -603,6 +625,13 @@ export class CainActorSheet extends ActorSheet {
       this._openAgendaItemSheet(event.currentTarget.dataset.id);
     });
 
+    // Bond event listeners
+    html.find('.open-bond-sheet').on('click', this._openBondSheet.bind(this));
+    html.find('.remove-bond').on('click', this._removeBond.bind(this));
+    html.find('.bond-level-checkbox').on('change', this._updateBondLevel.bind(this));
+    html.find('.bond-ability-chat').on('click', this._sendBondAbilityToChat.bind(this));
+    html.find('.bond-ability-spend-psyche').on('click', this._spendPsycheBurst.bind(this));
+
     // Search functionality for items
     this._setupItemSearch(html);
 
@@ -666,6 +695,9 @@ export class CainActorSheet extends ActorSheet {
             break;
           case "affliction":
             this._onDropAffliction(event, itemDrop);
+            break;
+          case "bond":
+            this._onDropBond(event, itemDrop);
             break;
           default:
           ui.notifications.error("Invalid drop type on ability page: " + itemDrop.type);
@@ -1740,6 +1772,25 @@ export class CainActorSheet extends ActorSheet {
       });
   }
 
+  _onDropBond(event, bond) {
+    // Ensure this.actor and this.actor.system are defined
+    if (!this.actor || !this.actor.system) {
+      console.error("Actor or actor system is undefined.");
+      ui.notifications.error("Actor or actor system is undefined. Please check your setup.");
+      return;
+    }
+
+    // Ensure bond and bond.system are defined
+    if (!bond || !bond.system) {
+      console.error("Bond or bond system is undefined.");
+      ui.notifications.error("Bond or bond system is undefined. Please check your setup.");
+      return;
+    }
+
+    // Use the existing method to add the bond
+    this._addBondToCharacter(bond.id);
+  }
+
   _addAgendaAbility(event) {
     event.preventDefault();
     const abilityID = event.currentTarget.parentElement.querySelector('#selectedAgenda').value;
@@ -2109,6 +2160,212 @@ export class CainActorSheet extends ActorSheet {
       ui.notifications.info('Agenda removed from character');
       this.render(false); // Re-render the sheet to reflect changes
     });
+  }
+
+  // Bond management methods
+  _openBondSheet(event) {
+    event.preventDefault();
+    const bondId = event.currentTarget.dataset.bondId;
+    const bondItem = game.items.get(bondId);
+    if (bondItem) {
+      bondItem.sheet.render(true);
+    }
+  }
+
+  _removeBond(event) {
+    event.preventDefault();
+    const bondId = event.currentTarget.dataset.bondId;
+    const bonds = this.actor.system.bonds || [];
+    const newBonds = bonds.filter(b => b.bondId !== bondId);
+
+    this.actor.update({ 'system.bonds': newBonds }).then(() => {
+      ui.notifications.info('Bond removed from character');
+      this.render(false);
+    });
+  }
+
+  async _updateBondLevel(event) {
+    const checkbox = event.currentTarget;
+    const bondId = checkbox.dataset.bondId;
+    const levelStr = checkbox.dataset.level;
+    const level = parseInt(levelStr, 10);
+    const isChecked = checkbox.checked;
+
+    // Validate that we got valid data
+    if (!bondId || isNaN(level)) {
+      console.error('Invalid bond level data:', { bondId, levelStr, level });
+      return;
+    }
+
+    const bonds = this.actor.system.bonds || [];
+    const bondIndex = bonds.findIndex(b => b.bondId === bondId);
+
+    if (bondIndex === -1) {
+      console.error('Bond not found:', bondId);
+      return;
+    }
+
+    const oldLevel = bonds[bondIndex].currentLevel;
+
+    // Calculate new level based on checkbox state
+    // If checking a box, set level to that value + 1
+    // If unchecking, set level to that value
+    const newLevel = isChecked ? level + 1 : level;
+    const clampedLevel = Math.min(3, Math.max(0, newLevel));
+
+    // Create a proper copy of the bonds array with updated level
+    const newBonds = bonds.map((bond, idx) => {
+      if (idx === bondIndex) {
+        return { bondId: bond.bondId, currentLevel: clampedLevel };
+      }
+      return { bondId: bond.bondId, currentLevel: bond.currentLevel };
+    });
+
+    // Check if we need to add/remove high blasphemy power
+    const bondItem = game.items.get(bondId);
+    if (bondItem && bondItem.system.highBlasphemy) {
+      const highBlasphemyLevel = bondItem.system.highBlasphemyLevel || 2;
+      const highBlasphemyPowerId = bondItem.system.highBlasphemy;
+
+      // If we're reaching or exceeding the required level, add the power
+      if (clampedLevel >= highBlasphemyLevel && oldLevel < highBlasphemyLevel) {
+        const currentPowers = this.actor.system.currentBlasphemyPowers || [];
+        if (!currentPowers.includes(highBlasphemyPowerId)) {
+          const newPowers = [...currentPowers, highBlasphemyPowerId];
+          await this.actor.update({
+            'system.bonds': newBonds,
+            'system.currentBlasphemyPowers': newPowers
+          });
+          const powerItem = game.items.get(highBlasphemyPowerId);
+          ui.notifications.info(`Gained High Blasphemy Power: ${powerItem?.name || 'Unknown'}`);
+          this.render(false);
+          return;
+        }
+      }
+
+      // If we're dropping below the required level, remove the power
+      if (clampedLevel < highBlasphemyLevel && oldLevel >= highBlasphemyLevel) {
+        const currentPowers = this.actor.system.currentBlasphemyPowers || [];
+        if (currentPowers.includes(highBlasphemyPowerId)) {
+          const newPowers = currentPowers.filter(id => id !== highBlasphemyPowerId);
+          await this.actor.update({
+            'system.bonds': newBonds,
+            'system.currentBlasphemyPowers': newPowers
+          });
+          const powerItem = game.items.get(highBlasphemyPowerId);
+          ui.notifications.info(`Lost High Blasphemy Power: ${powerItem?.name || 'Unknown'}`);
+          this.render(false);
+          return;
+        }
+      }
+    }
+
+    await this.actor.update({ 'system.bonds': newBonds });
+    this.render(false);
+  }
+
+  async _addBondToCharacter(bondId) {
+    const bonds = this.actor.system.bonds || [];
+
+    // Check if bond already exists
+    if (bonds.some(b => b.bondId === bondId)) {
+      ui.notifications.warn('This bond is already added to the character');
+      return;
+    }
+
+    const newBonds = [...bonds, { bondId: bondId, currentLevel: 0 }];
+
+    await this.actor.update({ 'system.bonds': newBonds });
+    ui.notifications.info('Bond added to character');
+    this.render(false);
+  }
+
+  async _sendBondAbilityToChat(event) {
+    event.preventDefault();
+    const abilityId = event.currentTarget.dataset.abilityId;
+    const abilityItem = game.items.get(abilityId);
+
+    if (!abilityItem) {
+      ui.notifications.error('Ability not found');
+      return;
+    }
+
+    // Build chat message content
+    let content = `
+      <div class="bond-ability-chat-card">
+        <h3>${abilityItem.system.abilityName || abilityItem.name}</h3>
+        <p class="ability-level-info"><strong>Bond Level Required:</strong> ${abilityItem.system.bondLevel}</p>
+        ${abilityItem.system.isPermanent ? '<p class="permanent-tag"><i class="fas fa-star"></i> Permanent Ability</p>' : ''}
+        <div class="ability-description">${abilityItem.system.abilityDescription}</div>
+        ${abilityItem.system.requiresPsycheBurst ? `
+          <p class="psyche-cost"><i class="fas fa-brain"></i>
+            ${abilityItem.system.psycheBurstCost === 0 ?
+              'Requires all remaining Psyche Bursts (min 1)' :
+              `Requires ${abilityItem.system.psycheBurstCost} Psyche Burst(s)`}
+          </p>
+        ` : ''}
+      </div>
+    `;
+
+    // Create chat message
+    await ChatMessage.create({
+      speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+      content: content,
+      flavor: `${this.actor.name} uses a Bond Ability`
+    });
+  }
+
+  async _spendPsycheBurst(event) {
+    event.preventDefault();
+    const abilityId = event.currentTarget.dataset.abilityId;
+    const costStr = event.currentTarget.dataset.cost;
+    const cost = parseInt(costStr, 10);
+    const abilityItem = game.items.get(abilityId);
+
+    if (!abilityItem) {
+      ui.notifications.error('Ability not found');
+      return;
+    }
+
+    const currentBursts = this.actor.system.psycheBurst.value;
+    let actualCost = cost;
+
+    // Cost of 0 means "all remaining psyche bursts (minimum 1)"
+    if (cost === 0) {
+      if (currentBursts < 1) {
+        ui.notifications.error('You need at least 1 Psyche Burst to use this ability');
+        return;
+      }
+      actualCost = currentBursts;
+    } else {
+      if (currentBursts < cost) {
+        ui.notifications.error(`Not enough Psyche Bursts. You have ${currentBursts}, but need ${cost}.`);
+        return;
+      }
+    }
+
+    // Spend the psyche bursts
+    const newBursts = currentBursts - actualCost;
+    await this.actor.update({ 'system.psycheBurst.value': newBursts });
+
+    // Send ability use to chat
+    let content = `
+      <div class="bond-ability-chat-card psyche-spent">
+        <h3><i class="fas fa-brain"></i> ${abilityItem.system.abilityName || abilityItem.name}</h3>
+        <p class="psyche-spent-info"><strong>Spent ${actualCost} Psyche Burst${actualCost > 1 ? 's' : ''}</strong></p>
+        <div class="ability-description">${abilityItem.system.abilityDescription}</div>
+        <p class="remaining-bursts">Remaining Psyche Bursts: ${newBursts}/${this.actor.system.psycheBurst.max}</p>
+      </div>
+    `;
+
+    await ChatMessage.create({
+      speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+      content: content,
+      flavor: `${this.actor.name} activates a Bond Ability!`
+    });
+
+    ui.notifications.info(`Spent ${actualCost} Psyche Burst(s) to use ${abilityItem.system.abilityName || abilityItem.name}`);
+    this.render(false);
   }
 
   async _removeSinMarkOrAbility(event) {
