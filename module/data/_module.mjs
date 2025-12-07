@@ -20,3 +20,5 @@ export {default as CainSinMark} from "./sins/item-sin-mark.mjs";
 export {default as CainSinMarkAbility} from "./sins/item-sin-mark-ability.mjs";
 export {default as CainAffliction} from "./afflictions/item-affliction.mjs";
 export {default as CainDomain } from "./domains/item-domain.mjs";
+export {default as CainBond} from "./bond/item-bond.mjs";
+export {default as CainBondAbility} from "./bond/item-bond-ability.mjs";

@@ -3538,7 +3538,7 @@ nav.sheet-tabs.homebrew-tabs .item.active {
     background-color: #000000; /* Black background */
 }
 
-/* Tab Content */
+/* Tab Content - scoped to homebrew window */
 section.sheet-body.homebrew-body {
     position: relative;
     padding: 20px;
@@ -3546,16 +3546,16 @@ section.sheet-body.homebrew-body {
     border-radius: 10px;
 }
 
-.tab.homebrew-text-color {
+.homebrew-window .tab.homebrew-text-color {
     display: none;
 }
 
-.tab.active {
+.homebrew-window .tab.active {
     display: block;
 }
 
-/* List Items */
-.item.flexrow {
+/* List Items - scoped to homebrew window */
+.homebrew-window .item.flexrow {
     display: flex;
     align-items: center;
     margin-bottom: 10px;
@@ -3572,7 +3572,7 @@ textarea.editable-item-input.homebrew-text-color {
     font-size: 1em;
 }
 
-.item-controls {
+.homebrew-window .item-controls {
     display: flex;
     gap: 10px;
 }
@@ -3604,8 +3604,8 @@ button.homebrew-text-color:hover {
     color: #ffffff; /* White text */
 }
 
-/* Footer Buttons */
-footer {
+/* Footer Buttons - scoped to homebrew window */
+.homebrew-window footer {
     text-align: center;
     margin-top: 20px;
 }
@@ -3728,95 +3728,95 @@ textarea.editable-item-input.homebrew-text-color.homebrew-task-input {
   width: 20%;
 }
 
-.chat-message {
-    background-color: #ffffff; /* White background */
-    color: #000000; /* Black text */
-    border: 1px solid #000000; /* Black border */
-    padding: 0;
-    box-shadow: none; /* No shadow */
-    font-family: 'Courier New', Courier, monospace; /* Typewriter font */
-  }
-  
-  .message-header {
-    background-color: #ffffff; /* White background */
-    padding: 5px;
-    text-transform: uppercase;
-    font-weight: bold;
-  }
-  
-  .chat-message .table-draw .table-description {
-    background-color: #ffffff; /* White background */
-    padding: 5px;
-    border-radius: 5px;
-    border: 1px dashed #000000; /* Black dashed border */
-    color: #000000; /* Black text */
-  }
-  
-  .message-sender {
-    color: #000000; /* Black text */
-  }
-  
-  .message-metadata {
-    color: #000000; /* Black text */
-  }
-  
-  .message-timestamp {
-    color: #333333; /* Dark grey text for timestamp */
-  }
-  
-  .message-delete {
-    color: #ff0000; /* Red color for delete icon */
-  }
-  
-  .no-border {
-    border: none !important;
-  }
-  
-  .no-padding {
-    padding: unset !important;
-  }
-  
-  .flavor-text {
-    color: #000000; /* Black text */
-    font-style: italic;
-  }
-  
-  .message-content {
-    background-color: #ffffff; /* White background */
-    padding: 10px;
-  }
-  
-  .dice-formula {
-    color: #000000; /* Black text */
-  }
-  
-  .dice-tooltip {
-    background-color: #ffffff; /* White background */
-    padding: 10px;
-    border-radius: 5px;
-  }
-  
-  .part-header {
-    background-color: #ffffff; /* White background */
-    padding: 5px;
-  }
-  
-  .part-formula {
-    color: #000000; /* Black text */
-  }
-  
-  .part-total {
-    color: #000000; /* Black text */
-  }
-  
-  .dice-rolls {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .dice-total {
-    color: #000000; /* Black text */
-    font-size: 1.5em;
-    text-align: center;
-  }
+/* Chat message styles for accessibility mode ONLY */
+.accessibility-mode .chat-message {
+  background-color: #ffffff;
+  color: #000000;
+  border: 1px solid #000000;
+  padding: 0;
+  box-shadow: none;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.accessibility-mode .chat-message .message-header {
+  background-color: #ffffff;
+  padding: 5px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.accessibility-mode .chat-message .table-draw .table-description {
+  background-color: #ffffff;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px dashed #000000;
+  color: #000000;
+}
+
+.accessibility-mode .chat-message .message-sender {
+  color: #000000;
+}
+
+.accessibility-mode .chat-message .message-metadata {
+  color: #000000;
+}
+
+.accessibility-mode .chat-message .message-timestamp {
+  color: #333333;
+}
+
+.accessibility-mode .chat-message .message-delete {
+  color: #ff0000;
+}
+
+.accessibility-mode .cain .no-border {
+  border: none !important;
+}
+
+.accessibility-mode .cain .no-padding {
+  padding: unset !important;
+}
+
+.accessibility-mode .chat-message .flavor-text {
+  color: #000000;
+  font-style: italic;
+}
+
+.accessibility-mode .chat-message .message-content {
+  background-color: #ffffff;
+  padding: 10px;
+}
+
+.accessibility-mode .chat-message .dice-formula {
+  color: #000000;
+}
+
+.accessibility-mode .chat-message .dice-tooltip {
+  background-color: #ffffff;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.accessibility-mode .chat-message .part-header {
+  background-color: #ffffff;
+  padding: 5px;
+}
+
+.accessibility-mode .chat-message .part-formula {
+  color: #000000;
+}
+
+.accessibility-mode .chat-message .part-total {
+  color: #000000;
+}
+
+.accessibility-mode .chat-message .dice-rolls {
+  list-style: none;
+  padding: 0;
+}
+
+.accessibility-mode .chat-message .dice-total {
+  color: #000000;
+  font-size: 1.5em;
+  text-align: center;
 }

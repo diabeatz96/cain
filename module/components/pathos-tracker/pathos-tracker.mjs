@@ -17,6 +17,8 @@ class PathosTracker extends HandlebarsApplicationMixin(ApplicationV2) {
     position: {
       top: DEFAULT_POSITION.top,
       left: DEFAULT_POSITION.left,
+      width: "auto",
+      height: "auto",
     }
   }
   static PARTS = {
@@ -41,23 +43,27 @@ class PathosTracker extends HandlebarsApplicationMixin(ApplicationV2) {
     }
   }
 
-  // Save position when window is moved
+  // Save position when window is moved by user (not during re-renders)
   setPosition(position) {
     const result = super.setPosition(position);
 
-    // Save position to settings (debounced to avoid too many writes)
-    if (this._positionSaveTimeout) {
-      clearTimeout(this._positionSaveTimeout);
-    }
-    this._positionSaveTimeout = setTimeout(() => {
-      const currentPos = this.position;
-      if (currentPos.top !== undefined && currentPos.left !== undefined) {
-        game.settings.set('cain', 'pathosTrackerPosition', {
-          top: currentPos.top,
-          left: currentPos.left
-        });
+    // Only save position if this was triggered by user interaction (has top/left in position param)
+    // Skip saving during internal re-renders to prevent UI shift issues
+    if (position && (position.top !== undefined || position.left !== undefined)) {
+      // Save position to settings (debounced to avoid too many writes)
+      if (this._positionSaveTimeout) {
+        clearTimeout(this._positionSaveTimeout);
       }
-    }, 100);
+      this._positionSaveTimeout = setTimeout(() => {
+        const currentPos = this.position;
+        if (currentPos.top !== undefined && currentPos.left !== undefined) {
+          game.settings.set('cain', 'pathosTrackerPosition', {
+            top: currentPos.top,
+            left: currentPos.left
+          });
+        }
+      }, 100);
+    }
 
     return result;
   }

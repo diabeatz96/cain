@@ -101,7 +101,9 @@
       "sinMark": "Sin Mark",
       "sinMarkAbility": "Sin Mark Ability",
       "affliction": "Affliction",
-      "domain": "Domain"
+      "domain": "Domain",
+      "bond": "Bond",
+      "bondAbility": "Bond Ability"
     }
   },
   "SHEET": {

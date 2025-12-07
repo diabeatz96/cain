@@ -66,8 +66,10 @@ Hooks.once('init', async function () {
     sinMarkAbility: models.CainSinMarkAbility,
     affliction: models.CainAffliction,
     domain: models.CainDomain,
+    bond: models.CainBond,
+    bondAbility: models.CainBondAbility,
   }
-  
+
   console.log('CAIN | Initializing Cain system');
   console.log(CONFIG)
   // Active Effects are never copied to the Actor,
@@ -606,15 +608,17 @@ Hooks.once('ready', async function () {
   function addPlayerOverviewButton() {
     const showPlayerOverview = game.settings.get('cain', 'showPlayerOverview');
     const isGM = game.user.isGM;
-  
+
     // If the user is not a GM and the setting is false, do not add the button
     if (!isGM && !showPlayerOverview) return;
-  
+    // Check if button already exists to prevent duplicates
+    if ($('.player-overview-button').length) return;
+
     const button = $('<button title="Player Overview" class="player-overview-button"><img src="systems/cain/assets/player-overview.png" alt="Player Overview"></button>');
     button.on('click', () => {
       new PlayerOverview().render(true);
     });
-  
+
     const aside = $('<aside class="talisman-container"></aside>').append(button);
     const actionBar = $('#action-bar');
     if (actionBar.length) {
@@ -637,9 +641,12 @@ Hooks.once('ready', async function () {
   ui.pathosTracker = pathos;
 
   function addTalismanButton() {
+    // Check if button already exists to prevent duplicates
+    if ($('.talisman-button').length) return;
+
     // Create the button element with the talisman icon
     const button = $('<button title="Global Talismans" class="talisman-button"><img src="systems/cain/assets/talisman-icon.png" alt="Talisman Icon"></button>');
-    
+
     // Add click event to open the TalismanWindow
     button.on('click', () => {
       new TalismanWindow().render(true);
@@ -659,10 +666,12 @@ Hooks.once('ready', async function () {
   }
 
   function addHomebrewButton() {
-    // Create the button element with the talisman icon
     if (!game.user.isGM) return;
+    // Check if button already exists to prevent duplicates
+    if ($('.homebrew-button').length) return;
+
     const button = $('<button title="Homebrew" class="homebrew-button"><img src="systems/cain/assets/homebrew.png" alt="Homebrew Icon"></button>');
-    
+
     // Add click event to open the HomebrewWindow
     button.on('click', () => {
       new HomebrewWindow().render(true);
@@ -684,6 +693,8 @@ Hooks.once('ready', async function () {
   // Function to create and insert the Risk Roll button
   function addRiskRollButton() {
     if (!game.user.isGM) return;
+    // Check if button already exists to prevent duplicates
+    if ($('.risk-roll-button').length) return;
 
     const riskRollButton = $('<button title="Risky Dice" class="risk-roll-button"><img src="systems/cain/assets/rolls/risky.png" alt="Risk Roll Icon"></button>');
     riskRollButton.on('click', handleRiskRoll);
@@ -701,6 +712,8 @@ Hooks.once('ready', async function () {
   // Function to create and insert the Fate Roll button
   function addFateRollButton() {
     if (!game.user.isGM) return;
+    // Check if button already exists to prevent duplicates
+    if ($('.fate-roll-button').length) return;
 
     const fateRollButton = $('<button title = "Fate Roll" class="fate-roll-button"><img src="systems/cain/assets/rolls/fate.png" alt="Fate Roll Icon"></button>');
     fateRollButton.on('click', handleFateRoll);
@@ -733,6 +746,49 @@ Hooks.once('ready', async function () {
 
   // Register hotbar drop hook
   Hooks.on('hotbarDrop', (bar, data, slot) => createItemMacro(data, slot));
+
+  // FIX: Prevent #interface from scrolling (causes UI shift on chat messages)
+  //
+  // In Foundry VTT v12, there is an unexplained behavior where the #interface element
+  // scrolls by ~12 pixels when a new chat message is posted. This causes the entire UI
+  // (sidebar, navigation, controls, hotbar, etc.) to visually shift upward.
+  //
+  // Despite extensive investigation, no CSS-based solution was found - the scroll appears
+  // to be triggered programmatically by Foundry's core chat rendering logic, possibly via
+  // scrollIntoView() or similar. CSS overflow:hidden alone does not prevent this.
+  //
+  // The solution requires a multi-layered JavaScript approach:
+  // 1. Force overflow:hidden via inline style (highest CSS specificity)
+  // 2. Scroll event listener to immediately reset scrollTop to 0
+  // 3. MutationObserver to catch DOM changes that might trigger scroll
+  //
+  // This ensures any scroll attempt on #interface is immediately reversed.
+  const interfaceEl = document.getElementById('interface');
+  if (interfaceEl) {
+    // Force overflow hidden via inline style (highest specificity)
+    interfaceEl.style.overflow = 'hidden';
+
+    // Use MutationObserver to catch and reset any scroll attempts
+    const scrollObserver = new MutationObserver(() => {
+      if (interfaceEl.scrollTop !== 0) {
+        interfaceEl.scrollTop = 0;
+      }
+    });
+
+    // Also use a scroll event listener as backup
+    interfaceEl.addEventListener('scroll', () => {
+      if (interfaceEl.scrollTop !== 0) {
+        interfaceEl.scrollTop = 0;
+      }
+    }, { passive: false });
+
+    // Watch for attribute changes that might affect scroll
+    scrollObserver.observe(interfaceEl, {
+      attributes: true,
+      childList: true,
+      subtree: true
+    });
+  }
 
   // Automatic compendium import on world creation
   await checkAndImportCompendiums();
