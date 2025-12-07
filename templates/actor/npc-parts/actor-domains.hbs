@@ -4,14 +4,12 @@
     {{#if this.name}}
       <div class="domain-header">
         <h3 class="domain-title">{{this.name}}</h3>
-        <button class="chat-button" onclick="sendAbilityToChat({{@index}})">
+        <button class="chat-button" id="{{@index}}">
           <i class="fas fa-comment-alt"></i> Send to Chat
         </button>
       </div>
-      <div class="domain-content">
-        <div class="domain-description">
+      <div class="domain-description">
           <p class="ability-value" data-ability="{{@index}}">{{this.description}}</p>
-        </div>
       </div>
     {{else}}
       <div>
@@ -24,6 +22,7 @@
 
 <script>
     function sendAbilityToChat(abilityNumber) {
+      console.log(selectedDomains[abilityNumber]);
         const selectElement = document.querySelector(`select.domain-select[data-ability="${abilityNumber}"]`);
         const textareaElement = document.querySelector(`textarea.domain-textarea[data-ability="${abilityNumber}"]`);
         const abilityValueElement = document.querySelector(`p.ability-value[data-ability="${abilityNumber}"]`);

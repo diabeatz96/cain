@@ -532,16 +532,17 @@ export class CainActorSheet extends ActorSheet {
     html.find('.quick-action-button.use-complication').click(this._useComplication.bind(this));
     html.find('.quick-action-button.use-threat').click(this._useThreat.bind(this));
     html.find('.quick-action-button.severe-attack').click(this._severeAttack.bind(this));
-    html.find('.quick-action-button.use-domain').click(this._useDomain.bind(this));
+    html.find('.quick-action-button.use-domain').click(this._useQuickDomain.bind(this));
     html.find('.domain-card').on('drop', async (event) => {
       event.preventDefault();
-      console.log(event);
       const eventIndex = Number(event.currentTarget.id);
       const data = JSON.parse(event.originalEvent.dataTransfer.getData('text/plain'));
       const itemDrop = await Item.fromDropData(data);
       if (itemDrop.type !== "domain") return;
       this._onDropDomain(itemDrop, eventIndex);
     })
+
+    html.find('.chat-button').click(this._useDomain.bind(this));
 
     // Character sheet specific listeners
     html.find('.item-description').click(this._onItemDescription.bind(this));
@@ -4152,42 +4153,102 @@ _severeAttack(event) {
   this._onNpcSevereAttack(event);
 }
 
-// Function to use a domain
+// Function to use a domain via domain page
 _useDomain(event) {
-  const domains = this.actor.system.domains || {};
-  const domainOptions = Object.keys(domains).map(key => `<option value="${key}">${domains[key].title}</option>`).join('');
-  const content = `
-    <form>
-      <div class="form-group">
-        <label>Choose a Domain:</label>
-        <select id="domain-select">${domainOptions}</select>
-      </div>
-    </form>
+  event.preventDefault();
+  const eventIndex = Number(event.currentTarget.id);
+  this.sendDomainToChat(this.actor.system.domainsV2[eventIndex]);
+}
+
+// Function to use a domain via quick actions
+async _useQuickDomain(event) {
+  const domainIds = this.actor.system.domainsV2;
+  const selectedDomains = this._getItemsFromIDs(domainIds || []);
+
+  if (selectedDomains.length === 0) {
+    ui.notifications.warn('Need to add a domain before using quick domain actions!');
+    return;
+  }
+
+  const domainSelect = selectedDomains.map((domain) => `<option value="${domain.id}">${domain.name}</option>`).join('');
+  const content = `<select name="domain-select">${domainSelect}</select>`;
+
+  const data = await foundry.applications.api.DialogV2.input({
+    window: {
+      title: "Select domain to use"
+    },
+    content,
+    ok: {
+      label: "Select"
+    }
+  });
+
+  this.sendDomainToChat(data["domain-select"]);
+}
+
+async sendDomainToChat(domainId) {
+  const selectedDomain = this._getItemsFromIDs([domainId])[0];
+
+  let targetID;
+  let afflictionID;
+
+  // Open a dialog to select an exorcist if needed
+  if (selectedDomain.system.selectsExorcist) {
+    const exorcistList = game.actors.filter((actor) => actor.type === 'character');
+    const actorSelect = exorcistList.map((actor) => `<option value="${actor.id}">${actor.name}</option>`).join('');
+    const content = `
+      <select name="actor-select">${actorSelect}</select>        
   `;
 
-  new Dialog({
-    title: "Use Domain",
-    content: content,
-    buttons: {
-      use: {
-        label: "Use",
-        callback: (html) => {
-          const selectedDomainKey = html.find('#domain-select').val();
-          const selectedDomain = domains[selectedDomainKey];
-
-          // Send to chat instead of UI notification
-          ChatMessage.create({
-            speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-            content: `<div class="sin-action-message">
-              <h3>${this.actor.name} uses Domain: ${selectedDomain.title}!</h3>
-              <p>${selectedDomain.value}</p>
-            </div>`
-          });
-        }
+    const data = await foundry.applications.api.DialogV2.input({
+      window: {
+        title: "Select exorcist to afflict"
+      },
+      content,
+      ok: {
+        label: "Select"
       }
-    },
-    default: "use"
-  }).render(true);
+    });
+    if (data) {
+      targetID = data['actor-select'];
+      afflictionID = selectedDomain.system.afflictionEffect;
+    }
+  }
+
+  let targetInfo = "";
+
+  // build chat element to mention affected target
+  if (targetID && afflictionID) {
+    const targetActor = game.actors.get(targetID);
+    const affliction = game.items.get(afflictionID);
+
+    targetInfo = `
+          <div style="color: #e0e0e0; font-family: 'Courier New', monospace; line-height: 1.6; font-size: 1em; border-top: 2px solid #91ffef; padding-top: 10px;">
+             <span><b>${targetActor.name}</b> was struck with <b>${affliction.name}</b></span>  
+          </div>
+      `
+
+    // Update the actor's afflictions with the newly inflicted one
+    const newAfflictions = targetActor.system.afflictions;
+    newAfflictions.push(afflictionID);
+    targetActor.update({
+      'system.afflictions': newAfflictions,
+    });
+  }
+
+  const messageContent = `
+            <div style="border: 2px solid #444; border-radius: 8px; padding: 12px; background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%); margin: 4px 0;">
+                <h3 style="margin: 0 0 8px 0; color: #91ffef; font-family: 'Pirata One', serif; font-size: 1.4em; border-bottom: 2px solid #91ffef; padding-bottom: 4px;">
+                    ${selectedDomain.name}
+                </h3>
+                <div style="color: #e0e0e0; font-family: 'Courier New', monospace; line-height: 1.6; font-size: 1em;">
+                    ${selectedDomain.system.domainDescription}
+                </div>
+                ${targetInfo}
+            </div>
+        `;
+
+  ChatMessage.create({content: messageContent});
 }
 
 // Search functionality for items
