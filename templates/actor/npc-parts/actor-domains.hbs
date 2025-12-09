@@ -4,9 +4,14 @@
     {{#if this.name}}
       <div class="domain-header">
         <h3 class="domain-title">{{this.name}}</h3>
-        <button class="chat-button" id="{{@index}}">
-          <i class="fas fa-comment-alt"></i> Send to Chat
-        </button>
+        <div class="domain-buttons">
+          <button class="chat-button" data-index="{{@index}}">
+            <i class="fas fa-comment-alt"></i> Send to Chat
+          </button>
+          <button class="remove-domain-button" data-index="{{@index}}" title="Remove Domain">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
       </div>
       <div class="domain-description">
           <p class="ability-value" data-ability="{{@index}}">{{this.description}}</p>
@@ -19,6 +24,11 @@
     {{/if}}
   </div>
   {{/each}}
+
+  <div class="domains-info-note">
+    <i class="fas fa-info-circle"></i>
+    <span>Domains are separate items. If you don't see any domains, import them from the Domains compendium first, then drag them here.</span>
+  </div>
 
 <script>
     function sendAbilityToChat(abilityNumber) {
@@ -144,6 +154,12 @@
         border-bottom: dashed 3px black;
     }
 
+    .domain-buttons {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+    }
+
     .tab.domains .domain-title {
         font-family: 'Pirata One', serif !important;
         font-size: 42px !important;
@@ -213,6 +229,41 @@
         margin-right: 8px;
     }
 
+    .tab.domains .remove-domain-button {
+        font-family: 'Pirata One', serif !important;
+        font-size: 16px !important;
+        color: white !important;
+        background: linear-gradient(135deg, #8B0000 0%, #5c0000 100%) !important;
+        border: 3px solid black !important;
+        border-radius: 8px !important;
+        padding: 8px 12px !important;
+        cursor: pointer !important;
+        transition: all 0.3s ease !important;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4) !important;
+        white-space: nowrap !important;
+        min-width: 36px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+
+    .tab.domains .remove-domain-button:hover {
+        transform: translateY(-3px) rotate(2deg);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
+        filter: brightness(1.2);
+        background: linear-gradient(135deg, #a50000 0%, #700000 100%) !important;
+    }
+
+    .tab.domains .remove-domain-button:active {
+        transform: translateY(0) rotate(0deg);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .tab.domains .remove-domain-button i {
+        margin: 0;
+        font-size: 14px;
+    }
+
     .domain-content {
         background: rgba(255, 255, 255, 0.4);
         border: 2px solid black;
@@ -264,18 +315,19 @@
     }
 
     /* Description Box */
-    .domain-description {
-        background: white;
+    .tab.domains .domain-description {
+        background: white !important;
+        background-color: white !important;
         border: 2px solid black;
         border-radius: 8px;
         padding: 15px;
         min-height: 120px;
     }
 
-    .ability-value {
-        font-family: 'Courier New', monospace;
-        font-size: 18px;
-        color: black;
+    .tab.domains .ability-value {
+        font-family: 'Courier New', monospace !important;
+        font-size: 18px !important;
+        color: #1a1a1a !important;
         line-height: 1.6;
         margin: 0;
         white-space: pre-wrap;
@@ -309,5 +361,26 @@
 
     form .tab.domains .domain-content {
         display: block;
+    }
+
+    /* Info Note */
+    .domains-info-note {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: rgba(0, 0, 0, 0.6);
+        color: #e0e0e0;
+        padding: 12px 15px;
+        border-radius: 8px;
+        font-size: 14px;
+        font-family: 'Courier New', monospace;
+        margin-top: 10px;
+        border: 2px dashed rgba(255, 255, 255, 0.3);
+    }
+
+    .domains-info-note i {
+        color: #91ffef;
+        font-size: 18px;
+        flex-shrink: 0;
     }
 </style>

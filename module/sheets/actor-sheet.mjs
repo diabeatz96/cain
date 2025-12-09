@@ -543,6 +543,7 @@ export class CainActorSheet extends ActorSheet {
     })
 
     html.find('.chat-button').click(this._useDomain.bind(this));
+    html.find('.remove-domain-button').click(this._removeDomain.bind(this));
 
     // Character sheet specific listeners
     html.find('.item-description').click(this._onItemDescription.bind(this));
@@ -4156,8 +4157,29 @@ _severeAttack(event) {
 // Function to use a domain via domain page
 _useDomain(event) {
   event.preventDefault();
-  const eventIndex = Number(event.currentTarget.id);
+  const eventIndex = Number(event.currentTarget.dataset.index);
   this.sendDomainToChat(this.actor.system.domainsV2[eventIndex]);
+}
+
+// Function to remove a domain from the Sin sheet
+_removeDomain(event) {
+  event.preventDefault();
+  const eventIndex = Number(event.currentTarget.dataset.index);
+  let domainsV2 = [...(this.actor.system.domainsV2 || [null, null, null])];
+
+  // Ensure array has 3 slots
+  while (domainsV2.length < 3) {
+    domainsV2.push(null);
+  }
+
+  // Set the domain at this index to null
+  domainsV2[eventIndex] = null;
+
+  this.actor.update({
+    "system.domainsV2": domainsV2,
+  }).then(() => {
+    ui.notifications.info("Domain removed.");
+  });
 }
 
 // Function to use a domain via quick actions

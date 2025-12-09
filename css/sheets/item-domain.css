@@ -81,8 +81,27 @@
 
     .domain-option {
         margin-top: 10px;
-        color: black;
+        color: #1a1a1a;
         font-size: 15px;
+    }
+
+    .domain-option span,
+    .domain-option b,
+    .domain-option label {
+        color: #1a1a1a;
+    }
+
+    .domain-option select {
+        background-color: rgba(255, 255, 255, 0.9);
+        color: #1a1a1a;
+        border: 1px solid #333;
+        border-radius: 4px;
+        padding: 4px 8px;
+    }
+
+    .domain-option select option {
+        background-color: #fff;
+        color: #1a1a1a;
     }
 
     input[type="checkbox"] {
