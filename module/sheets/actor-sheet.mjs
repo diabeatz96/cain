@@ -1816,6 +1816,7 @@ export class CainActorSheet extends ActorSheet {
     this.actor.update({
       "system.domainsV2": domainsV2,
     }).then(() => console.log(this.actor.system));
+  }
 
   _onDropBond(event, bond) {
     // Ensure this.actor and this.actor.system are defined

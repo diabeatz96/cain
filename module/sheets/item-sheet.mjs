@@ -96,6 +96,8 @@ export class CainItemSheet extends ItemSheet {
       console.log(affliction);
       context.afflictionName = affliction?.name || null;
       context.afflictionDescription = affliction?.system.afflictionDescription || null;
+    }
+
     if (this.item.type === "bond") {
       // Get bond abilities and sort by bond level
       context.bondAbilities = this.item.system.abilities
