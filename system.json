@@ -97,6 +97,13 @@
       "system": "cain",
       "type": "Item",
       "path": "packs/domains"
+    },
+    {
+      "name": "virtues",
+      "label": "Virtues (Bonds)",
+      "system": "cain",
+      "type": "Item",
+      "path": "packs/virtues"
     }
   ],
   "packFolders": [],

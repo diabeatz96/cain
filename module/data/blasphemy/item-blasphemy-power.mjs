@@ -22,6 +22,9 @@ export default class CainBlasphemyPower extends CainItemBase {
         schema.psycheBurstMultCost= new fields.BooleanField({
           required: true, nullable: false, initial: false
         });
+        schema.isHighBlasphemy = new fields.BooleanField({
+          required: true, nullable: false, initial: false
+        });
         return schema;
       }
 }

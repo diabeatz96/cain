@@ -46,6 +46,7 @@
     - Tom Bloom Creator of Cain
     - Adam Kostandy (Diabeatz96) - Original creator and lead developer of the repository
     - Myco from the Pilot.NET/CAIN Discord for providing icon assets
+    - Ghostie for making several icons for the system
     - My sunday DND group
     - My friend carmen for miscellaneous ideas and polish
     - ahandleman and Benji as developers
@@ -574,6 +575,7 @@ This project is protected under the [SELECT-A-LICENSE](https://choosealicense.co
    - Tom Bloom Creator of Cain
    - Adam Kostandy (Diabeatz96) - Original creator and lead developer of the repository
    - Myco from the Pilot.NET/CAIN Discord for providing icon assets
+   - Ghostie for making several icons for the system
    - My sunday DND group
    - My friend carmen for miscellaneous ideas and polish
    - ahandleman and Benji as developers

@@ -63,7 +63,7 @@
   <nav class="sheet-tabs tabs mob-psycho-tabs" data-group="primary">
     {{!-- Default tab is specified in actor-sheet.mjs --}}
     <a class="item mob-psycho-tab-item" data-tab="features">Stats & Advancements</a>
-    <a class="item mob-psycho-tab-item" data-tab="description">Description</a>
+    <a class="item mob-psycho-tab-item" data-tab="description">Bio & Bonds</a>
     <a class="item mob-psycho-tab-item" data-tab="items">Kit and Items</a>
     <a class="item mob-psycho-tab-item" data-tab="abilities">Abilities</a>
     <a class="item mob-psycho-tab-item" data-tab="sin">Sin</a>
@@ -148,12 +148,106 @@
       </section>
     </div>
 
-    {{!-- Biography Tab --}}
+    {{!-- Bio & Bonds Tab --}}
     <div class="tab biography mob-psycho-tab" data-group="primary" data-tab="description">
-      {{!-- Editors must receive enriched text data from getData to properly handle rolls --}}
-      
-      {{editor enrichedBiography target="system.biography" button=True engine="prosemirror" button=true editable=editable class="mob-psycho-editor"}}
-      
+      {{!-- Biography Section --}}
+      <section class="bio-section">
+        <h3 class="mob-psycho-heading">Biography</h3>
+        {{editor enrichedBiography target="system.biography" button=True engine="prosemirror" button=true editable=editable class="mob-psycho-editor"}}
+      </section>
+
+      {{!-- Bonds Section --}}
+      <section class="bonds-section">
+        <h3 class="mob-psycho-heading">Bonds</h3>
+        <p class="bonds-info">
+          <i class="fas fa-info-circle"></i>
+          Pick a virtue to bond with at the start of a mission. Surviving missions increases your bond level (max 3).
+          Bond benefits are permanent even when not actively bonding.
+        </p>
+
+        <div class="character-bonds-list">
+          {{#each characterBonds}}
+            <div class="character-bond-entry" data-bond-id="{{this._id}}">
+              <div class="bond-header-row">
+                <img src="{{this.img}}" class="bond-img" alt="{{this.name}}"/>
+                <div class="bond-info">
+                  <h4 class="bond-name">{{this.name}}</h4>
+                  <span class="virtue-name">Virtue: {{this.system.virtueName}}</span>
+                </div>
+                <div class="bond-level-tracker">
+                  <span class="bond-level-label">Bond Level:</span>
+                  <div class="bond-level-dots">
+                    <input type="checkbox" class="bond-level-checkbox" data-bond-id="{{this._id}}" data-level="0" {{#if (gte this.system.currentLevel 1)}}checked{{/if}}/>
+                    <input type="checkbox" class="bond-level-checkbox" data-bond-id="{{this._id}}" data-level="1" {{#if (gte this.system.currentLevel 2)}}checked{{/if}}/>
+                    <input type="checkbox" class="bond-level-checkbox" data-bond-id="{{this._id}}" data-level="2" {{#if (gte this.system.currentLevel 3)}}checked{{/if}}/>
+                  </div>
+                </div>
+              </div>
+
+              {{!-- Strictures at top --}}
+              {{#if this.system.strictures.length}}
+                <div class="bond-strictures-reminder">
+                  <strong><i class="fas fa-exclamation-triangle"></i> Strictures:</strong>
+                  <ul>
+                    {{#each this.system.strictures}}
+                      <li>{{this}}</li>
+                    {{/each}}
+                  </ul>
+                </div>
+              {{/if}}
+
+              {{!-- Show current level abilities --}}
+              <div class="bond-current-abilities">
+                {{#each this.abilities}}
+                  {{#if (lte this.system.bondLevel ../system.currentLevel)}}
+                    <div class="bond-ability-unlocked" data-ability-id="{{this._id}}" data-bond-id="{{../_id}}">
+                      <div class="bond-ability-header-row">
+                        <span class="ability-level">Lvl {{this.system.bondLevel}}</span>
+                        <strong class="ability-name">{{this.name}}</strong>
+                        {{#if this.system.isPermanent}}
+                          <span class="ability-permanent-tag">Permanent</span>
+                        {{/if}}
+                      </div>
+                      <p class="ability-description">{{this.system.abilityDescription}}</p>
+                      {{#if this.system.requiresPsycheBurst}}
+                        <p class="ability-psyche-cost">
+                          <i class="fas fa-brain"></i>
+                          {{#if (eq this.system.psycheBurstCost 0)}}
+                            Requires all remaining Psyche Bursts (min 1)
+                          {{else}}
+                            Requires {{this.system.psycheBurstCost}} Psyche Burst(s)
+                          {{/if}}
+                        </p>
+                      {{/if}}
+                      <div class="ability-actions">
+                        <button type="button" class="bond-ability-chat" data-ability-id="{{this._id}}" title="Send to Chat">
+                          <i class="fas fa-comment"></i>
+                        </button>
+                        {{#if this.system.requiresPsycheBurst}}
+                          <button type="button" class="bond-ability-spend-psyche" data-ability-id="{{this._id}}" data-cost="{{this.system.psycheBurstCost}}" title="Spend Psyche Burst">
+                            <i class="fas fa-brain"></i> Use
+                          </button>
+                        {{/if}}
+                      </div>
+                    </div>
+                  {{/if}}
+                {{/each}}
+              </div>
+
+              <div class="bond-actions">
+                <button type="button" class="open-bond-sheet" data-bond-id="{{this._id}}">
+                  <i class="fas fa-book-open"></i> View Full Bond
+                </button>
+                <button type="button" class="remove-bond" data-bond-id="{{this._id}}">
+                  <i class="fas fa-trash"></i> Remove
+                </button>
+              </div>
+            </div>
+          {{else}}
+            <p class="no-bonds">No bonds assigned. Drag a Bond item here to add one.</p>
+          {{/each}}
+        </div>
+      </section>
     </div>
 
     {{!-- Owned Items Tab --}}
@@ -256,6 +350,263 @@ input[type="checkbox"].fourth-checkbox+label::before {
 
 input[type="checkbox"].fourth-checkbox:checked+label::before {
   background-color: rgb(255, 85, 85); /* Change this color to your desired background color */
+}
+
+/* Bio & Bonds Tab Styles */
+.bio-section {
+  margin-bottom: 1.5em;
+}
+
+.bio-section .editor {
+  min-height: 400px;
+}
+
+.bio-section .editor .editor-content {
+  min-height: 380px;
+}
+
+.bonds-section {
+  margin-top: 2em;
+  padding: 1em;
+  background-color: #1a1a1a;
+  border-radius: 8px;
+}
+
+.bonds-info {
+  color: #e0e0e0;
+  font-style: italic;
+  margin-bottom: 1em;
+  padding: 0.5em;
+  background-color: #252525;
+  border-radius: 4px;
+  border-left: 3px solid #e94560;
+}
+
+.bonds-info i {
+  color: #e94560;
+  margin-right: 0.5em;
+}
+
+.character-bonds-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.character-bond-entry {
+  background-color: #252525;
+  border-radius: 8px;
+  padding: 1em;
+}
+
+.bond-header-row {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  margin-bottom: 0.5em;
+}
+
+.bond-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 2px solid #e94560;
+}
+
+.bond-info {
+  flex-grow: 1;
+}
+
+.bond-name {
+  margin: 0;
+  color: #fff;
+  font-size: 1.2em;
+}
+
+.virtue-name {
+  color: #e94560;
+  font-size: 0.9em;
+}
+
+.bond-level-tracker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.bond-level-label {
+  color: #aaa;
+  font-size: 0.8em;
+  margin-bottom: 0.3em;
+}
+
+.bond-level-dots {
+  display: flex;
+  gap: 0.3em;
+}
+
+.bond-level-checkbox {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.bond-current-abilities {
+  margin: 0.5em 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+
+.bond-ability-unlocked {
+  background-color: #1a1a1a;
+  border-radius: 4px;
+  padding: 0.5em;
+  color: #e0e0e0;
+}
+
+.bond-ability-header-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  margin-bottom: 0.3em;
+}
+
+.ability-level {
+  background-color: #e94560;
+  color: #fff;
+  padding: 0.1em 0.4em;
+  border-radius: 3px;
+  font-size: 0.75em;
+  flex-shrink: 0;
+}
+
+.ability-name {
+  flex-grow: 1;
+}
+
+.ability-permanent-tag {
+  background-color: #5cb85c;
+  color: #fff;
+  padding: 0.1em 0.4em;
+  border-radius: 3px;
+  font-size: 0.7em;
+  flex-shrink: 0;
+}
+
+.ability-description {
+  margin: 0.5em 0;
+  font-size: 0.9em;
+  line-height: 1.5;
+  padding: 0.5em;
+  background-color: #202020;
+  border-radius: 4px;
+  min-height: 3em;
+}
+
+.ability-psyche-cost {
+  color: #d9534f;
+  font-style: italic;
+  font-size: 0.85em;
+  margin: 0.3em 0;
+}
+
+.ability-psyche-cost i {
+  margin-right: 0.3em;
+}
+
+.ability-actions {
+  display: flex;
+  gap: 0.3em;
+  margin-top: 0.4em;
+  justify-content: flex-end;
+}
+
+.ability-actions button {
+  padding: 0.2em 0.5em;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 0.8em;
+}
+
+.bond-ability-chat {
+  background-color: #4a90d9;
+  color: #fff;
+}
+
+.bond-ability-chat:hover {
+  background-color: #357abd;
+}
+
+.bond-ability-spend-psyche {
+  background-color: #d9534f;
+  color: #fff;
+}
+
+.bond-ability-spend-psyche:hover {
+  background-color: #c9302c;
+}
+
+.bond-strictures-reminder {
+  background-color: #1a1a1a;
+  border-left: 3px solid #f39c12;
+  border-radius: 4px;
+  padding: 0.5em;
+  margin: 0.5em 0;
+  color: #f39c12;
+  font-size: 0.9em;
+}
+
+.bond-strictures-reminder ul {
+  margin: 0.3em 0 0 1.5em;
+  padding: 0;
+}
+
+.bond-strictures-reminder li {
+  margin-bottom: 0.2em;
+}
+
+.bond-actions {
+  display: flex;
+  gap: 0.5em;
+  margin-top: 0.5em;
+}
+
+.bond-actions button {
+  padding: 0.4em 0.8em;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85em;
+}
+
+.open-bond-sheet {
+  background-color: #333;
+  color: #fff;
+  border: none;
+}
+
+.open-bond-sheet:hover {
+  background-color: #e94560;
+}
+
+.remove-bond {
+  background-color: #1a1a1a;
+  color: #888;
+  border: none;
+}
+
+.remove-bond:hover {
+  background-color: #d9534f;
+  color: #fff;
+}
+
+.no-bonds {
+  color: #888;
+  font-style: italic;
+  text-align: center;
+  padding: 2em;
 }
 
 </style>

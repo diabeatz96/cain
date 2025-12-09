@@ -885,7 +885,8 @@ async function checkAndImportCompendiums() {
     { key: 'cain.sin-marks', label: 'Sin Marks' },
     { key: 'cain.afflictions', label: 'Afflictions' },
     { key: 'cain.tables', label: 'Roll Tables' },
-    { key: 'cain.domains', label: 'Domains' }
+    { key: 'cain.domains', label: 'Domains' },
+    { key: 'cain.virtues', label: 'Virtues (Bonds)' }
   ];
 
   let totalImported = 0;
