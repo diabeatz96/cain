@@ -1,0 +1,72 @@
+<form class='{{cssClass}} domain-card paper-texture2 {{system.sinSource}}' autocomplete='off'>
+  <header>
+    <div class='header-fields domain-header'>
+      <img
+        class='domain-img'
+        src='{{item.img}}'
+        data-edit='img'
+        title='{{item.name}}'
+      />
+      <h1>
+        <input
+          name='name'
+          type='text'
+          value='{{item.name}}'
+          placeholder='Name'
+          class='domain-name-input {{system.sinSource}}' />
+      </h1>
+    </div>
+  </header>
+  <div class="row dashed-line">
+  </div>
+  <div class='sheet-body domain-body affliction-drop-target'>
+    <textarea
+      class='domain-description'
+      name='system.domainDescription'
+      data-dtype='String'
+      rows='10'
+    >{{system.domainDescription}}</textarea>
+    {{#if editable}}
+      <hr>
+      <div class="domain-option">
+        <span><b>Sin Source:</b></span>
+        <select id="sinTypeSelect" name="system.sinSource">
+          <option value="ogre" {{#if (eq system.sinSource "ogre")}}selected{{/if}}>Ogre</option>
+          <option value="toad" {{#if (eq system.sinSource "toad")}}selected{{/if}}>Toad</option>
+          <option value="idol" {{#if (eq system.sinSource "idol")}}selected{{/if}}>Idol</option>
+          <option value="lord" {{#if (eq system.sinSource "lord")}}selected{{/if}}>Lord</option>
+          <option value="hound" {{#if (eq system.sinSource "hound")}}selected{{/if}}>Hound</option>
+          <option value="centipede" {{#if (eq system.sinSource "centipede")}}selected{{/if}}>
+            Centipede
+          </option>
+          <option value="redacted" {{#if (eq system.sinSource "redacted")}}selected{{/if}}>
+            [REDACTED]
+          </option>
+        </select>
+      </div>
+      <div class="domain-option">
+        <span><b>Targets exorcist?</b></span>
+        <input type="checkbox" name="system.selectsExorcist" {{checked system.selectsExorcist}}/>
+      </div>
+      <div class="domain-option">
+      {{#unless system.afflictionEffect}}
+        <span><b>If this domain targets an exorcist and inflicts an affliction, you can drag it here.</b></span>
+      {{else}}
+        <div class="affliction flexrow flex-group-center mob-psycho-affliction">
+          <div class="flexcol affliction-content">
+            <h2><b>{{afflictionName}}</b></h2>
+            <div class="affliction-description" innerHtml="">
+              {{afflictionDescription}}
+            </div>
+          </div>
+          <div class="flexcol remove-affliction-div">
+            <button id="remove-domain-affliction-button" class="remove-affliction-button">
+              <i class="fas fa-trash"></i>
+            </button>
+          </div>
+        </div>
+      {{/unless}}
+      </div>
+    {{/if}}
+  </div>
+</form>

@@ -91,6 +91,11 @@ export class CainItemSheet extends ItemSheet {
       context.sinMarkAbilities = this.item.system.abilities.map(item => {return game.items.get(item);});
     }
 
+    if (this.item.type === "domain") {
+      const affliction = this._getItemFromID(this.item.system.afflictionEffect);
+      console.log(affliction);
+      context.afflictionName = affliction?.name || null;
+      context.afflictionDescription = affliction?.system.afflictionDescription || null;
     if (this.item.type === "bond") {
       // Get bond abilities and sort by bond level
       context.bondAbilities = this.item.system.abilities
@@ -126,6 +131,10 @@ export class CainItemSheet extends ItemSheet {
     root.style.setProperty('--text-color', this.item.system.textColor || '#000000');
 
     return context;
+  }
+
+  _getItemFromID(id) {
+    return game.items.get(id);
   }
 
   /* -------------------------------------------- */
@@ -209,6 +218,64 @@ export class CainItemSheet extends ItemSheet {
     html.find('#addAbility').click(this._addAbility.bind(this));
     html.find('#removeAbility').click(this._removeAbility.bind(this));
 
+    if (this.item.type === "domain") {
+      html.find('#remove-domain-affliction-button').click(this._removeDomainAffliction.bind(this))
+
+      html.find(".affliction-drop-target").on("drop", async event => {
+        event.preventDefault();
+        const data = JSON.parse(event.originalEvent.dataTransfer.getData('text/plain'));
+        const itemDrop = await Item.fromDropData(data);
+        if (itemDrop.type !== "affliction") return;
+        console.log(`You dropped ${itemDrop.name}!`);
+        this._addAfflictionToDomain(itemDrop);
+      });
+
+      html.find('#sinTypeSelect').change(event => {
+        const sinType = event.target.value;
+        this._onSinTypeSelect(sinType);
+      });
+    }
+  }
+
+  _onSinTypeSelect(sinType) {
+    let imgPath;
+    switch (sinType) {
+      case 'ogre':
+        imgPath = 'systems/cain/assets/Sins/ogre.png';
+        break;
+      case 'lord':
+        imgPath = 'systems/cain/assets/Sins/lord.png';
+        break;
+      case 'centipede':
+        imgPath = 'systems/cain/assets/Sins/centipede.png';
+        break;
+      case 'hound':
+        imgPath = 'systems/cain/assets/Sins/hound.png';
+        break;
+      case 'idol':
+        imgPath = 'systems/cain/assets/Sins/idol.png';
+        break;
+      case 'toad':
+        imgPath = 'systems/cain/assets/Sins/toad.png';
+        break;
+      default:
+        imgPath = 'systems/cain/assets/Sins/generic_sin.png';
+        break;
+    }
+
+    this.item.update({ img: imgPath });
+  }
+
+  _addAfflictionToDomain(item) {
+    console.log(item.id);
+    this.item.update({'system.afflictionEffect': item.id})
+      .then(() => { console.log('updated item!', this.item); })
+    .catch(error => console.log(error));
+  }
+
+  _removeDomainAffliction(event) {
+    event.preventDefault();
+    this.item.update({ 'system.afflictionEffect': null });
     // Bond-specific listeners
     html.find('#addStricture').click(this._addStricture.bind(this));
     html.find('.remove-stricture').click(this._removeStricture.bind(this));

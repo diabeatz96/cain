@@ -104,9 +104,7 @@ export class CainActorSheet extends ActorSheet {
     }
 
     if (actorData.type == 'sin') {
-      console.log(context);
-      console.log(this.actor.type)
-      this._prepareItems(context);
+      this._prepareDomains(context);
     }
 
     // Prepare opponent data
@@ -312,9 +310,7 @@ export class CainActorSheet extends ActorSheet {
 
   _getItemsFromIDs(ids) {
     return ids.map(id => game.items.get(id));
-  } 
-  
-  
+  }
 
   _prepareItems(context) {
     const gear = [];
@@ -326,6 +322,29 @@ export class CainActorSheet extends ActorSheet {
     }
   
     context.gear = gear;
+  }
+
+  async _prepareDomains(context) {
+    // three placeholder domains
+    const domainsArray = [null, null, null];
+
+    // domainsV2 contains domainID references, fetch the relevant compendium items
+    const domainItems = this._getItemsFromIDs(this.actor.system.domainsV2 || []);
+    domainItems.forEach((item, index) => {
+      if (item == null) {
+        domainsArray[index] = null;
+      } else {
+        domainsArray[index] = {
+          name: item.name,
+          description: item.system.domainDescription,
+          sinSource: item.system.sinSource,
+          selectsExorcist: item.system.selectsExorcist,
+          afflictionEffect: item.system.afflictionEffect,
+        };
+      }
+    });
+    console.log(domainsArray);
+    context.selectedDomains = domainsArray;
   }
 
   _calculateRanges(context) {
@@ -535,7 +554,18 @@ export class CainActorSheet extends ActorSheet {
     html.find('.quick-action-button.use-complication').click(this._useComplication.bind(this));
     html.find('.quick-action-button.use-threat').click(this._useThreat.bind(this));
     html.find('.quick-action-button.severe-attack').click(this._severeAttack.bind(this));
-    html.find('.quick-action-button.use-domain').click(this._useDomain.bind(this));
+    html.find('.quick-action-button.use-domain').click(this._useQuickDomain.bind(this));
+    html.find('.domain-card').on('drop', async (event) => {
+      event.preventDefault();
+      const eventIndex = Number(event.currentTarget.id);
+      const data = JSON.parse(event.originalEvent.dataTransfer.getData('text/plain'));
+      const itemDrop = await Item.fromDropData(data);
+      if (itemDrop.type !== "domain") return;
+      this._onDropDomain(itemDrop, eventIndex);
+    })
+
+    html.find('.chat-button').click(this._useDomain.bind(this));
+    html.find('.remove-domain-button').click(this._removeDomain.bind(this));
 
     // Character sheet specific listeners
     html.find('.item-description').click(this._onItemDescription.bind(this));
@@ -700,6 +730,7 @@ export class CainActorSheet extends ActorSheet {
           case "affliction":
             this._onDropAffliction(event, itemDrop);
             break;
+          // TODO: do on drop domain
           case "bond":
             this._onDropBond(event, itemDrop);
             break;
@@ -1775,6 +1806,16 @@ export class CainActorSheet extends ActorSheet {
         ui.notifications.error("Error updating actor. Please check the console for more details.");
       });
   }
+
+  _onDropDomain(itemData, domainIndex) {
+    let domainsV2 = this.actor.system.domainsV2;
+    if (domainsV2.length < 3) { // if array hasn't been instanced yet...
+      domainsV2 = [null, null, null];
+    }
+    domainsV2[domainIndex] = itemData.id;
+    this.actor.update({
+      "system.domainsV2": domainsV2,
+    }).then(() => console.log(this.actor.system));
 
   _onDropBond(event, bond) {
     // Ensure this.actor and this.actor.system are defined
@@ -3471,6 +3512,7 @@ export class CainActorSheet extends ActorSheet {
   }
 
   _onSinTypeSelect(sinType) {
+    console.log('selected sin type');
     const sinTypeMapping = {
       ogre: {
         defaultImg: "systems/cain/assets/Sins/ogre.png",
@@ -4371,42 +4413,123 @@ _severeAttack(event) {
   this._onNpcSevereAttack(event);
 }
 
-// Function to use a domain
+// Function to use a domain via domain page
 _useDomain(event) {
-  const domains = this.actor.system.domains || {};
-  const domainOptions = Object.keys(domains).map(key => `<option value="${key}">${domains[key].title}</option>`).join('');
-  const content = `
-    <form>
-      <div class="form-group">
-        <label>Choose a Domain:</label>
-        <select id="domain-select">${domainOptions}</select>
-      </div>
-    </form>
+  event.preventDefault();
+  const eventIndex = Number(event.currentTarget.dataset.index);
+  this.sendDomainToChat(this.actor.system.domainsV2[eventIndex]);
+}
+
+// Function to remove a domain from the Sin sheet
+_removeDomain(event) {
+  event.preventDefault();
+  const eventIndex = Number(event.currentTarget.dataset.index);
+  let domainsV2 = [...(this.actor.system.domainsV2 || [null, null, null])];
+
+  // Ensure array has 3 slots
+  while (domainsV2.length < 3) {
+    domainsV2.push(null);
+  }
+
+  // Set the domain at this index to null
+  domainsV2[eventIndex] = null;
+
+  this.actor.update({
+    "system.domainsV2": domainsV2,
+  }).then(() => {
+    ui.notifications.info("Domain removed.");
+  });
+}
+
+// Function to use a domain via quick actions
+async _useQuickDomain(event) {
+  const domainIds = this.actor.system.domainsV2;
+  const selectedDomains = this._getItemsFromIDs(domainIds || []);
+
+  if (selectedDomains.length === 0) {
+    ui.notifications.warn('Need to add a domain before using quick domain actions!');
+    return;
+  }
+
+  const domainSelect = selectedDomains.map((domain) => `<option value="${domain.id}">${domain.name}</option>`).join('');
+  const content = `<select name="domain-select">${domainSelect}</select>`;
+
+  const data = await foundry.applications.api.DialogV2.input({
+    window: {
+      title: "Select domain to use"
+    },
+    content,
+    ok: {
+      label: "Select"
+    }
+  });
+
+  this.sendDomainToChat(data["domain-select"]);
+}
+
+async sendDomainToChat(domainId) {
+  const selectedDomain = this._getItemsFromIDs([domainId])[0];
+
+  let targetID;
+  let afflictionID;
+
+  // Open a dialog to select an exorcist if needed
+  if (selectedDomain.system.selectsExorcist) {
+    const exorcistList = game.actors.filter((actor) => actor.type === 'character');
+    const actorSelect = exorcistList.map((actor) => `<option value="${actor.id}">${actor.name}</option>`).join('');
+    const content = `
+      <select name="actor-select">${actorSelect}</select>        
   `;
 
-  new Dialog({
-    title: "Use Domain",
-    content: content,
-    buttons: {
-      use: {
-        label: "Use",
-        callback: (html) => {
-          const selectedDomainKey = html.find('#domain-select').val();
-          const selectedDomain = domains[selectedDomainKey];
-
-          // Send to chat instead of UI notification
-          ChatMessage.create({
-            speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-            content: `<div class="sin-action-message">
-              <h3>${this.actor.name} uses Domain: ${selectedDomain.title}!</h3>
-              <p>${selectedDomain.value}</p>
-            </div>`
-          });
-        }
+    const data = await foundry.applications.api.DialogV2.input({
+      window: {
+        title: "Select exorcist to afflict"
+      },
+      content,
+      ok: {
+        label: "Select"
       }
-    },
-    default: "use"
-  }).render(true);
+    });
+    if (data) {
+      targetID = data['actor-select'];
+      afflictionID = selectedDomain.system.afflictionEffect;
+    }
+  }
+
+  let targetInfo = "";
+
+  // build chat element to mention affected target
+  if (targetID && afflictionID) {
+    const targetActor = game.actors.get(targetID);
+    const affliction = game.items.get(afflictionID);
+
+    targetInfo = `
+          <div style="color: #e0e0e0; font-family: 'Courier New', monospace; line-height: 1.6; font-size: 1em; border-top: 2px solid #91ffef; padding-top: 10px;">
+             <span><b>${targetActor.name}</b> was struck with <b>${affliction.name}</b></span>  
+          </div>
+      `
+
+    // Update the actor's afflictions with the newly inflicted one
+    const newAfflictions = targetActor.system.afflictions;
+    newAfflictions.push(afflictionID);
+    targetActor.update({
+      'system.afflictions': newAfflictions,
+    });
+  }
+
+  const messageContent = `
+            <div style="border: 2px solid #444; border-radius: 8px; padding: 12px; background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%); margin: 4px 0;">
+                <h3 style="margin: 0 0 8px 0; color: #91ffef; font-family: 'Pirata One', serif; font-size: 1.4em; border-bottom: 2px solid #91ffef; padding-bottom: 4px;">
+                    ${selectedDomain.name}
+                </h3>
+                <div style="color: #e0e0e0; font-family: 'Courier New', monospace; line-height: 1.6; font-size: 1em;">
+                    ${selectedDomain.system.domainDescription}
+                </div>
+                ${targetInfo}
+            </div>
+        `;
+
+  ChatMessage.create({content: messageContent});
 }
 
 // Search functionality for items

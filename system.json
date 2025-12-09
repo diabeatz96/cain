@@ -11,7 +11,7 @@
   "flags": {
     "hotReload": {
       "extensions": ["mjs", "hbs", "json", "css"],
-        "paths": ["lang", "module", "src", "templates"]
+        "paths": ["lang", "module", "src", "css", "templates"]
       }
   },
   "url": "https://github.com/bugeso/cain1.3",
@@ -92,6 +92,13 @@
       "path": "packs/opponents"
     },
     {
+      "name": "domains",
+      "label": "Domains",
+      "system": "cain",
+      "type": "Item",
+      "path": "packs/domains"
+    },
+    {
       "name": "virtues",
       "label": "Virtues (Bonds)",
       "system": "cain",
@@ -120,7 +127,8 @@
       "agendaAbility": {},
       "sinMark": {},
       "sinMarkAbility": {},
-      "affliction": {}
+      "affliction": {},
+      "domain": {}
     }
   },
   "socket": true,
