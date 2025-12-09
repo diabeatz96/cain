@@ -27,6 +27,8 @@ export class HomebrewWindow extends Application {
                 agendaFolder: '',
                 blasphemyFolder: '',
                 powerFolder: '',
+                bondFolder: '',
+                bondAbilityFolder: '',
                 afflictionFolder: '',
                 itemFolder: '',
                 sinMarkFolder: '',
@@ -37,6 +39,8 @@ export class HomebrewWindow extends Application {
                 agendaFolder: '',
                 blasphemyFolder: '',
                 powerFolder: '',
+                bondFolder: '',
+                bondAbilityFolder: '',
                 afflictionFolder: '',
                 itemFolder: '',
                 sinMarkFolder: '',
@@ -122,6 +126,22 @@ export class HomebrewWindow extends Application {
         ]
     }
 
+    bondOptions = {
+        name: "New Bond",
+        virtueName: "New Virtue",
+        highBlasphemyLevel: 1,
+        strictures: []
+    }
+
+    bondAbilityOptions = {
+        name: "New Bond Ability",
+        bondLevel: 0,
+        abilityDescription: "",
+        isPermanent: true,
+        requiresPsycheBurst: false,
+        psycheBurstCost: 1
+    }
+
     blasphemyOptions = {
         name: "New Blasphemy",
         powers: [{
@@ -193,6 +213,8 @@ export class HomebrewWindow extends Application {
             agendaOptions: this.agendaOptions,
             blasphemyOptions: this.blasphemyOptions,
             sinMarkOptions: this.sinMarkOptions,
+            bondOptions: this.bondOptions,
+            bondAbilityOptions: this.bondAbilityOptions,
             settings: this.settings,
             availableFolders: itemFolders.map(f => ({ id: f.id, name: f.name }))
         }
@@ -231,6 +253,16 @@ export class HomebrewWindow extends Application {
       html.find('.homebrew-remove-sinmark-ability').click(this._onRemoveSinMarkAbility.bind(this));
       html.find('.homebrew-submit-sinmark').click(this._onSubmitSinMark.bind(this));
 
+      // Bond listeners
+      html.find('.homebrew-new-stricture').click(this._onCreateNewStricture.bind(this));
+      html.find('.homebrew-stricture-input').change(this._onChangeStricture.bind(this));
+      html.find('.homebrew-remove-stricture').click(this._onRemoveStricture.bind(this));
+      html.find('.homebrew-submit-bond').click(this._onSubmitBond.bind(this));
+
+      // Bond Ability listeners
+      html.find('#bond-ability-requires-psyche').change(this._onTogglePsycheCost.bind(this));
+      html.find('.homebrew-submit-bond-ability').click(this._onSubmitBondAbility.bind(this));
+
       // Import/Export listeners
       html.find('.homebrew-export-selected').click(this._onExportSelected.bind(this));
       html.find('.homebrew-export-all-content').click(this._onExportAll.bind(this));
@@ -259,21 +291,80 @@ export class HomebrewWindow extends Application {
 
     _onCreateNewPower(event) {
         event.preventDefault();
+        const newIndex = this.blasphemyOptions.powers.length;
         this.blasphemyOptions.powers.push({
-            name: "New Power",
+            name: "",
             isPassive: false,
-            keywords: "default",
-            power: "Ability Description"    
-            });
-        this.render(true);
+            keywords: "",
+            powerDescription: ""
+        });
+
+        // Add new power to DOM without re-rendering
+        const powerList = this.element.find('.power-list');
+        const newPowerHtml = `
+            <li class='power-item'>
+                <div class="power-header-row">
+                    <input type="text" class="homebrew-input homebrew-power-name-input" data-power-index="${newIndex}" placeholder="Power name..." value="">
+                    <label class="checkbox-label">
+                        <input type="checkbox" class="homebrew-power-passive-input" data-power-index="${newIndex}">
+                        <span>Passive</span>
+                    </label>
+                    <button type="button" class="btn-icon btn-delete homebrew-remove-power" data-power-index="${newIndex}" title="Remove">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+                <div class="power-details">
+                    <div class="psyche-burst-options">
+                        <label class="psyche-label">Psyche Burst:</label>
+                        <label class="checkbox-label small">
+                            <input type="checkbox" class="homebrew-power-psyche-cost" data-power-index="${newIndex}">
+                            <span><i class="fas fa-circle"></i> Uses</span>
+                        </label>
+                        <label class="checkbox-label small">
+                            <input type="checkbox" class="homebrew-power-psyche-no-cost" data-power-index="${newIndex}">
+                            <span><i class="fas fa-times"></i> No-Cost Mode</span>
+                        </label>
+                        <label class="checkbox-label small">
+                            <input type="checkbox" class="homebrew-power-psyche-mult" data-power-index="${newIndex}">
+                            <span><i class="fas fa-plus"></i> Multiple</span>
+                        </label>
+                    </div>
+                    <input type="text" class="homebrew-input homebrew-power-tags-input" data-power-index="${newIndex}" placeholder="Keywords (comma-separated)..." value="">
+                    <textarea class="homebrew-input homebrew-power-input" data-power-index="${newIndex}" placeholder="Power description (use CAT formatting)..."></textarea>
+                </div>
+            </li>
+        `;
+        powerList.append(newPowerHtml);
+
+        // Re-bind events for the new elements
+        const newItem = powerList.find(`.power-item:last`);
+        newItem.find('.homebrew-power-name-input').change(this._onChangePowerName.bind(this));
+        newItem.find('.homebrew-power-passive-input').change(this._onChangePowerPassive.bind(this));
+        newItem.find('.homebrew-power-psyche-cost').change(this._onChangePowerPsycheCost.bind(this));
+        newItem.find('.homebrew-power-psyche-no-cost').change(this._onChangePowerPsycheNoCost.bind(this));
+        newItem.find('.homebrew-power-psyche-mult').change(this._onChangePowerPsycheMult.bind(this));
+        newItem.find('.homebrew-power-tags-input').change(this._onChangePowerTags.bind(this));
+        newItem.find('.homebrew-power-input').change(this._onChangePowerDescription.bind(this));
+        newItem.find('.homebrew-remove-power').click(this._onRemovePower.bind(this));
+
+        // Focus the new input
+        newItem.find('.homebrew-power-name-input').focus();
     }
 
     _onRemovePower(event) {
         event.preventDefault();
-        const powerIndex = event.currentTarget.getAttribute('data-power-index');
-        const newPowers = this.blasphemyOptions.powers.slice(0, powerIndex).concat(this.blasphemyOptions.powers.slice(Number(powerIndex)+1));
-        this.blasphemyOptions.powers = newPowers;
-        this.render(true);
+        const powerIndex = parseInt(event.currentTarget.getAttribute('data-power-index'));
+        this.blasphemyOptions.powers.splice(powerIndex, 1);
+
+        // Remove from DOM and re-index remaining items
+        const powerList = this.element.find('.power-list');
+        const items = powerList.find('.power-item');
+        items.eq(powerIndex).remove();
+
+        // Re-index remaining items
+        powerList.find('.power-item').each((index, item) => {
+            $(item).find('[data-power-index]').attr('data-power-index', index);
+        });
     }
 
     _onChangeBlasphemyName(event) {
@@ -389,36 +480,104 @@ export class HomebrewWindow extends Application {
 
     _onCreateNewTask(event) {
         event.preventDefault();
+        const newIndex = this.agendaOptions.tasks.length;
         this.agendaOptions.tasks.push({
-            task: "New Task",
-            isBold: true    
-            });
-        this.render(true);
+            task: "",
+            isBold: false
+        });
+
+        // Add new task to DOM without re-rendering
+        const taskList = this.element.find('.task-list');
+        const newTaskHtml = `
+            <li class='task-item'>
+                <textarea class="homebrew-input homebrew-task-input" data-task-index="${newIndex}" placeholder="Task description..." style="font-weight: normal;"></textarea>
+                <div class="task-controls">
+                    <button type="button" class="btn-icon homebrew-toggle-bold" data-task-index="${newIndex}" title="Bold Text">
+                        <i class="fas fa-bold"></i>
+                    </button>
+                    <button type="button" class="btn-icon btn-delete homebrew-remove-task" data-task-index="${newIndex}" title="Remove">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </li>
+        `;
+        taskList.append(newTaskHtml);
+
+        // Re-bind events for the new elements
+        const newItem = taskList.find(`.task-item:last`);
+        newItem.find('.homebrew-task-input').change(this._onChangeTaskName.bind(this));
+        newItem.find('.homebrew-toggle-bold').click(this._onToggleBold.bind(this));
+        newItem.find('.homebrew-remove-task').click(this._onRemoveTask.bind(this));
+
+        // Focus the new textarea
+        newItem.find('.homebrew-task-input').focus();
     }
 
     _onCreateNewAbility(event) {
         event.preventDefault();
+        const newIndex = this.agendaOptions.abilities.length;
         this.agendaOptions.abilities.push({
-            name: "New Ability",
-            ability: "Ability Description"    
-            });
-        this.render(true);
+            name: "",
+            abilityDescription: ""
+        });
+
+        // Add new ability to DOM without re-rendering
+        const abilityList = this.element.find('.ability-list');
+        const newAbilityHtml = `
+            <li class='ability-item'>
+                <input type="text" class="homebrew-input homebrew-ability-name-input" data-ability-index="${newIndex}" placeholder="Ability name..." value="">
+                <textarea class="homebrew-input homebrew-ability-input" data-ability-index="${newIndex}" placeholder="Ability description (use {<CAT> type modifier} for CAT formatting)..."></textarea>
+                <button type="button" class="btn-icon btn-delete homebrew-remove-ability" data-ability-index="${newIndex}" title="Remove">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </li>
+        `;
+        abilityList.append(newAbilityHtml);
+
+        // Re-bind events for the new elements
+        const newItem = abilityList.find(`.ability-item:last`);
+        newItem.find('.homebrew-ability-name-input').change(this._onChangeAbilityName.bind(this));
+        newItem.find('.homebrew-ability-input').change(this._onChangeAbilityDescription.bind(this));
+        newItem.find('.homebrew-remove-ability').click(this._onRemoveAbility.bind(this));
+
+        // Focus the new input
+        newItem.find('.homebrew-ability-name-input').focus();
     }
 
     _onRemoveTask(event) {
         event.preventDefault();
-        const taskIndex = event.currentTarget.getAttribute('data-task-index');
-        const newTasks = this.agendaOptions.tasks.slice(0, taskIndex).concat(this.agendaOptions.tasks.slice(Number(taskIndex)+1));
-        this.agendaOptions.tasks = newTasks;
-        this.render(true);
+        const taskIndex = parseInt(event.currentTarget.getAttribute('data-task-index'));
+        this.agendaOptions.tasks.splice(taskIndex, 1);
+
+        // Remove from DOM and re-index remaining items
+        const taskList = this.element.find('.task-list');
+        const items = taskList.find('.task-item');
+        items.eq(taskIndex).remove();
+
+        // Re-index remaining items
+        taskList.find('.task-item').each((index, item) => {
+            $(item).find('.homebrew-task-input').attr('data-task-index', index);
+            $(item).find('.homebrew-toggle-bold').attr('data-task-index', index);
+            $(item).find('.homebrew-remove-task').attr('data-task-index', index);
+        });
     }
 
     _onRemoveAbility(event) {
         event.preventDefault();
-        const abilityIndex = event.currentTarget.getAttribute('data-ability-index');
-        const newAbilities = this.agendaOptions.abilities.slice(0, abilityIndex).concat(this.agendaOptions.abilities.slice(Number(abilityIndex)+1));
-        this.agendaOptions.abilities = newAbilities;
-        this.render(true);
+        const abilityIndex = parseInt(event.currentTarget.getAttribute('data-ability-index'));
+        this.agendaOptions.abilities.splice(abilityIndex, 1);
+
+        // Remove from DOM and re-index remaining items
+        const abilityList = this.element.find('.ability-list');
+        const items = abilityList.find('.ability-item');
+        items.eq(abilityIndex).remove();
+
+        // Re-index remaining items
+        abilityList.find('.ability-item').each((index, item) => {
+            $(item).find('.homebrew-ability-name-input').attr('data-ability-index', index);
+            $(item).find('.homebrew-ability-input').attr('data-ability-index', index);
+            $(item).find('.homebrew-remove-ability').attr('data-ability-index', index);
+        });
     }
 
     _onChangeAgendaName(event) {
@@ -449,7 +608,20 @@ export class HomebrewWindow extends Application {
         event.preventDefault();
         const taskIndex = event.currentTarget.getAttribute('data-task-index');
         this.agendaOptions.tasks[taskIndex].isBold = !this.agendaOptions.tasks[taskIndex].isBold;
-        this.render(true);
+
+        // Update the textarea style and button icon without re-rendering
+        const taskList = this.element.find('.task-list');
+        const taskItem = taskList.find(`.task-item`).eq(taskIndex);
+        const textarea = taskItem.find('.homebrew-task-input');
+        const boldIcon = taskItem.find('.homebrew-toggle-bold i');
+
+        if (this.agendaOptions.tasks[taskIndex].isBold) {
+            textarea.css('font-weight', 'bold');
+            boldIcon.addClass('active');
+        } else {
+            textarea.css('font-weight', 'normal');
+            boldIcon.removeClass('active');
+        }
     }
 
     async _onSubmitAgenda(event) {
@@ -761,33 +933,65 @@ export class HomebrewWindow extends Application {
 
     _onCreateNewSinMarkAbility(event) {
         event.preventDefault();
+        const newIndex = this.sinMarkOptions.abilities.length;
         this.sinMarkOptions.abilities.push({
-            name: "New Ability",
-            abilityDescription: "Ability Description"
+            name: "",
+            abilityDescription: ""
         });
-        this.render(true);
+
+        // Add new ability to DOM without re-rendering
+        const abilityList = this.element.find('[data-tab="sinMark"] .ability-list');
+        const newAbilityHtml = `
+            <li class='ability-item'>
+                <input type="text" class="homebrew-input homebrew-sinmark-ability-name-input" data-sinmark-ability-index="${newIndex}" placeholder="Ability name..." value="">
+                <textarea class="homebrew-input homebrew-sinmark-ability-description-input" data-sinmark-ability-index="${newIndex}" placeholder="Ability description (use {<CAT> type modifier} for CAT formatting)..."></textarea>
+                <button type="button" class="btn-icon btn-delete homebrew-remove-sinmark-ability" data-sinmark-ability-index="${newIndex}" title="Remove">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </li>
+        `;
+        abilityList.append(newAbilityHtml);
+
+        // Re-bind events for the new elements
+        const newItem = abilityList.find(`.ability-item:last`);
+        newItem.find('.homebrew-sinmark-ability-name-input').change(this._onChangeSinMarkAbilityName.bind(this));
+        newItem.find('.homebrew-sinmark-ability-description-input').change(this._onChangeSinMarkAbilityDescription.bind(this));
+        newItem.find('.homebrew-remove-sinmark-ability').click(this._onRemoveSinMarkAbility.bind(this));
+
+        // Focus the new input
+        newItem.find('.homebrew-sinmark-ability-name-input').focus();
     }
 
     _onRemoveSinMarkAbility(event) {
         event.preventDefault();
-        const abilityIndex = event.currentTarget.getAttribute('data-sinmark-ability-index');
-        const newAbilities = this.sinMarkOptions.abilities.slice(0, abilityIndex).concat(this.sinMarkOptions.abilities.slice(Number(abilityIndex)+1));
-        this.sinMarkOptions.abilities = newAbilities;
-        this.render(true);
+        const abilityIndex = parseInt(event.currentTarget.getAttribute('data-sinmark-ability-index'));
+        this.sinMarkOptions.abilities.splice(abilityIndex, 1);
+
+        // Remove from DOM and re-index remaining items
+        const abilityList = this.element.find('[data-tab="sinMark"] .ability-list');
+        const items = abilityList.find('.ability-item');
+        items.eq(abilityIndex).remove();
+
+        // Re-index remaining items
+        abilityList.find('.ability-item').each((index, item) => {
+            $(item).find('.homebrew-sinmark-ability-name-input').attr('data-sinmark-ability-index', index);
+            $(item).find('.homebrew-sinmark-ability-description-input').attr('data-sinmark-ability-index', index);
+            $(item).find('.homebrew-remove-sinmark-ability').attr('data-sinmark-ability-index', index);
+        });
     }
 
     _onChangeSinMarkAbilityName(event) {
         event.preventDefault();
         const abilityIndex = event.currentTarget.getAttribute('data-sinmark-ability-index');
         this.sinMarkOptions.abilities[abilityIndex].name = event.currentTarget.value;
-        this.render(true);
+        // No render needed - just update the data
     }
 
     _onChangeSinMarkAbilityDescription(event) {
         event.preventDefault();
         const abilityIndex = event.currentTarget.getAttribute('data-sinmark-ability-index');
         this.sinMarkOptions.abilities[abilityIndex].abilityDescription = event.currentTarget.value;
-        this.render(true);
+        // No render needed - just update the data
     }
 
     async _onSubmitSinMark(event) {
@@ -899,6 +1103,228 @@ export class HomebrewWindow extends Application {
         this.render(true);
     }
 
+    // ==================== BOND METHODS ====================
+
+    _onCreateNewStricture(event) {
+        event.preventDefault();
+        const newIndex = this.bondOptions.strictures.length;
+        this.bondOptions.strictures.push("");
+
+        // Add new stricture to DOM without re-rendering
+        const strictureList = this.element.find('#bond-stricture-list');
+        const emptyState = strictureList.find('.stricture-empty-state');
+        if (emptyState.length) {
+            emptyState.remove();
+        }
+
+        const newStrictureHtml = `
+            <li class='stricture-item'>
+                <span class="stricture-number"></span>
+                <textarea class="homebrew-input homebrew-stricture-input" data-stricture-index="${newIndex}" placeholder="Enter stricture (e.g., 'Never lie', 'Always help the innocent')..."></textarea>
+                <button type="button" class="btn-icon btn-delete homebrew-remove-stricture" data-stricture-index="${newIndex}" title="Remove Stricture">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </li>
+        `;
+        strictureList.append(newStrictureHtml);
+
+        // Re-bind events for the new elements
+        const newItem = strictureList.find(`.stricture-item:last`);
+        newItem.find('.homebrew-stricture-input').change(this._onChangeStricture.bind(this));
+        newItem.find('.homebrew-remove-stricture').click(this._onRemoveStricture.bind(this));
+
+        // Focus the new textarea
+        newItem.find('.homebrew-stricture-input').focus();
+    }
+
+    _onChangeStricture(event) {
+        event.preventDefault();
+        const strictureIndex = event.currentTarget.getAttribute('data-stricture-index');
+        this.bondOptions.strictures[strictureIndex] = event.currentTarget.value;
+    }
+
+    _onRemoveStricture(event) {
+        event.preventDefault();
+        const strictureIndex = parseInt(event.currentTarget.getAttribute('data-stricture-index'));
+        this.bondOptions.strictures.splice(strictureIndex, 1);
+
+        // Remove from DOM and re-index remaining items
+        const strictureList = this.element.find('#bond-stricture-list');
+        const items = strictureList.find('.stricture-item');
+        items.eq(strictureIndex).remove();
+
+        // Re-index remaining items
+        strictureList.find('.stricture-item').each((index, item) => {
+            $(item).find('.homebrew-stricture-input').attr('data-stricture-index', index);
+            $(item).find('.homebrew-remove-stricture').attr('data-stricture-index', index);
+        });
+
+        // Show empty state if no strictures left
+        if (this.bondOptions.strictures.length === 0) {
+            const emptyHtml = `
+                <li class="stricture-empty-state">
+                    <i class="fas fa-scroll"></i>
+                    <span>No strictures added yet. Click "Add Stricture" to define the rules of this bond.</span>
+                </li>
+            `;
+            strictureList.append(emptyHtml);
+        }
+    }
+
+    async _onSubmitBond(event) {
+        event.preventDefault();
+
+        const bondName = document.getElementById('bond-name').value;
+        const virtueName = document.getElementById('bond-virtue-name').value;
+        const highBlasphemyLevel = parseInt(document.getElementById('bond-high-blasphemy-level').value) || 1;
+
+        if (!bondName || bondName.trim() === "") {
+            ui.notifications.warn("Please enter a bond name.");
+            return;
+        }
+
+        if (!virtueName || virtueName.trim() === "") {
+            ui.notifications.warn("Please enter a virtue name.");
+            return;
+        }
+
+        // Get target folder based on settings
+        const targetFolder = await this._getTargetFolder('bond');
+
+        let bondFolderFolder = game.folders.find(f => f.name === "Bonds" && f.type === "Item" && f.folder?.id === targetFolder.id);
+        if (!bondFolderFolder) {
+            bondFolderFolder = await Folder.create({
+                name: "Bonds",
+                type: "Item",
+                folder: targetFolder.id,
+                sorting: "m",
+            });
+        }
+
+        // Collect strictures from the textarea inputs
+        const strictureInputs = document.querySelectorAll('.homebrew-stricture-input');
+        const strictures = [];
+        strictureInputs.forEach(input => {
+            const value = input.value.trim();
+            if (value) {
+                strictures.push(value);
+            }
+        });
+
+        const createdBondData = {
+            name: bondName,
+            type: "bond",
+            img: "icons/svg/heart.svg",
+            folder: bondFolderFolder.id,
+            system: {
+                virtueName: virtueName,
+                strictures: strictures,
+                abilities: [],
+                highBlasphemy: "",
+                highBlasphemyLevel: highBlasphemyLevel
+            }
+        };
+
+        console.log("Creating bond:", createdBondData);
+        const createdBond = await Item.create(createdBondData);
+        console.log("Created bond:", createdBond);
+
+        // Add to history
+        this.addToHistory({
+            id: createdBond.id,
+            name: bondName,
+            type: "bond",
+            icon: "fa-heart"
+        });
+
+        ui.notifications.info(`Bond "${bondName}" created successfully!`);
+
+        // Clear the form
+        document.getElementById('bond-name').value = "";
+        document.getElementById('bond-virtue-name').value = "";
+        document.getElementById('bond-high-blasphemy-level').value = "1";
+
+        // Reset strictures
+        this.bondOptions.strictures = [];
+        this.render(true);
+    }
+
+    // ==================== BOND ABILITY METHODS ====================
+
+    _onTogglePsycheCost(event) {
+        const isChecked = event.currentTarget.checked;
+        const psycheCostField = document.getElementById('bond-ability-psyche-cost-field');
+        if (psycheCostField) {
+            psycheCostField.style.display = isChecked ? 'block' : 'none';
+        }
+    }
+
+    async _onSubmitBondAbility(event) {
+        event.preventDefault();
+
+        const abilityName = document.getElementById('bond-ability-name').value;
+        const bondLevel = parseInt(document.getElementById('bond-ability-level').value) || 0;
+        const abilityDescription = document.getElementById('bond-ability-description').value;
+        const isPermanent = document.getElementById('bond-ability-permanent').checked;
+        const requiresPsycheBurst = document.getElementById('bond-ability-requires-psyche').checked;
+        const psycheBurstCost = parseInt(document.getElementById('bond-ability-psyche-cost').value) || 0;
+
+        if (!abilityName || abilityName.trim() === "") {
+            ui.notifications.warn("Please enter an ability name.");
+            return;
+        }
+
+        // Get target folder based on settings
+        const targetFolder = await this._getTargetFolder('bondAbility');
+
+        let bondAbilityFolderFolder = game.folders.find(f => f.name === "Bond Abilities" && f.type === "Item" && f.folder?.id === targetFolder.id);
+        if (!bondAbilityFolderFolder) {
+            bondAbilityFolderFolder = await Folder.create({
+                name: "Bond Abilities",
+                type: "Item",
+                folder: targetFolder.id,
+                sorting: "m",
+            });
+        }
+
+        const createdBondAbilityData = {
+            name: abilityName,
+            type: "bondAbility",
+            img: "icons/svg/aura.svg",
+            folder: bondAbilityFolderFolder.id,
+            system: {
+                bondLevel: bondLevel,
+                abilityDescription: abilityDescription || "",
+                isPermanent: isPermanent,
+                requiresPsycheBurst: requiresPsycheBurst,
+                psycheBurstCost: requiresPsycheBurst ? psycheBurstCost : 0
+            }
+        };
+
+        console.log("Creating bond ability:", createdBondAbilityData);
+        const createdBondAbility = await Item.create(createdBondAbilityData);
+        console.log("Created bond ability:", createdBondAbility);
+
+        // Add to history
+        this.addToHistory({
+            id: createdBondAbility.id,
+            name: abilityName,
+            type: "bondAbility",
+            icon: "fa-handshake"
+        });
+
+        ui.notifications.info(`Bond Ability "${abilityName}" created successfully!`);
+
+        // Clear the form
+        document.getElementById('bond-ability-name').value = "";
+        document.getElementById('bond-ability-level').value = "0";
+        document.getElementById('bond-ability-description').value = "";
+        document.getElementById('bond-ability-permanent').checked = true;
+        document.getElementById('bond-ability-requires-psyche').checked = false;
+        document.getElementById('bond-ability-psyche-cost').value = "1";
+        document.getElementById('bond-ability-psyche-cost-field').style.display = 'none';
+    }
+
     // ==================== IMPORT/EXPORT METHODS ====================
 
     _populateExportList(html) {
@@ -950,7 +1376,7 @@ export class HomebrewWindow extends Application {
 
         for (const folder of homebrewFolders) {
             for (const item of game.items.filter(i => i.folder?.id === folder.id)) {
-                if (["agenda", "blasphemy", "blasphemyPower", "affliction", "item", "sinMark"].includes(item.type) && !itemsSet.has(item.id)) {
+                if (["agenda", "blasphemy", "blasphemyPower", "bond", "bondAbility", "affliction", "item", "sinMark"].includes(item.type) && !itemsSet.has(item.id)) {
                     items.push(item);
                     itemsSet.add(item.id);
                 }
@@ -965,6 +1391,8 @@ export class HomebrewWindow extends Application {
             "agenda": "fa-tasks",
             "blasphemy": "fa-book-dead",
             "blasphemyPower": "fa-hand-sparkles",
+            "bond": "fa-heart",
+            "bondAbility": "fa-handshake",
             "affliction": "fa-skull-crossbones",
             "item": "fa-briefcase",
             "sinMark": "fa-exclamation-triangle"
@@ -977,6 +1405,8 @@ export class HomebrewWindow extends Application {
             "agenda": "Agenda",
             "blasphemy": "Blasphemy",
             "blasphemyPower": "Power",
+            "bond": "Bond",
+            "bondAbility": "Bond Ability",
             "affliction": "Affliction",
             "item": "Item",
             "sinMark": "Sin Mark"
@@ -1285,6 +1715,8 @@ export class HomebrewWindow extends Application {
             'agenda': 'Agendas',
             'blasphemy': 'Blasphemies',
             'blasphemyPower': 'Blasphemy Powers',
+            'bond': 'Bonds',
+            'bondAbility': 'Bond Abilities',
             'affliction': 'Afflictions',
             'item': 'Items',
             'sinMark': 'Sin Marks'
@@ -1310,6 +1742,8 @@ export class HomebrewWindow extends Application {
             'agenda': this.settings.agendaFolder,
             'blasphemy': this.settings.blasphemyFolder,
             'blasphemyPower': this.settings.powerFolder,
+            'bond': this.settings.bondFolder,
+            'bondAbility': this.settings.bondAbilityFolder,
             'affliction': this.settings.afflictionFolder,
             'item': this.settings.itemFolder,
             'sinMark': this.settings.sinMarkFolder
@@ -1368,6 +1802,8 @@ export class HomebrewWindow extends Application {
                 agendaFolder: '',
                 blasphemyFolder: '',
                 powerFolder: '',
+                bondFolder: '',
+                bondAbilityFolder: '',
                 afflictionFolder: '',
                 itemFolder: '',
                 sinMarkFolder: '',

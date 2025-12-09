@@ -123,6 +123,88 @@
     font-style: normal;
     margin-top: 0.5em;
   }
+
+  /* Bond Ability Chat Card Styles */
+  .bond-ability-chat-card {
+    background-color: #16213e;
+    border: 1px solid #e94560;
+    border-radius: 6px;
+    padding: 0.75em;
+    margin: 0.25em 0;
+  }
+
+  .bond-ability-chat-card h3 {
+    color: #e94560;
+    margin: 0 0 0.5em 0;
+    font-size: 1.1em;
+    border-bottom: 1px solid #0f3460;
+    padding-bottom: 0.3em;
+  }
+
+  .bond-ability-chat-card .ability-level-info {
+    color: #4a90d9;
+    font-size: 0.85em;
+    margin: 0.3em 0;
+  }
+
+  .bond-ability-chat-card .permanent-tag {
+    color: #5cb85c;
+    font-size: 0.85em;
+    margin: 0.3em 0;
+  }
+
+  .bond-ability-chat-card .permanent-tag i {
+    margin-right: 0.3em;
+  }
+
+  .bond-ability-chat-card .ability-description {
+    color: #e0e0e0;
+    font-size: 0.9em;
+    line-height: 1.4;
+    margin: 0.5em 0;
+    padding: 0.5em;
+    background-color: #0f3460;
+    border-radius: 4px;
+  }
+
+  .bond-ability-chat-card .psyche-cost {
+    color: #d9534f;
+    font-style: italic;
+    font-size: 0.85em;
+    margin: 0.5em 0 0 0;
+  }
+
+  .bond-ability-chat-card .psyche-cost i {
+    margin-right: 0.3em;
+  }
+
+  /* Psyche Spent variation */
+  .bond-ability-chat-card.psyche-spent {
+    border-color: #d9534f;
+    background-color: #1a1a2e;
+  }
+
+  .bond-ability-chat-card.psyche-spent h3 {
+    color: #d9534f;
+  }
+
+  .bond-ability-chat-card .psyche-spent-info {
+    color: #d9534f;
+    font-size: 0.9em;
+    margin: 0.3em 0;
+    padding: 0.3em 0.5em;
+    background-color: rgba(217, 83, 79, 0.2);
+    border-radius: 3px;
+    display: inline-block;
+  }
+
+  .bond-ability-chat-card .remaining-bursts {
+    color: #888;
+    font-size: 0.8em;
+    margin: 0.5em 0 0 0;
+    text-align: right;
+    font-style: italic;
+  }
 }
 
 /* Base styles - work across all versions */

@@ -21,6 +21,7 @@ export class CainItemSheet extends ItemSheet {
           initial: 'description',
         },
       ],
+      dragDrop: [{ dropSelector: null }],
     });
   }
 
@@ -88,6 +89,22 @@ export class CainItemSheet extends ItemSheet {
       console.log("Context:", context)
       console.log("Item:", this.item)
       context.sinMarkAbilities = this.item.system.abilities.map(item => {return game.items.get(item);});
+    }
+
+    if (this.item.type === "bond") {
+      // Get bond abilities and sort by bond level
+      context.bondAbilities = this.item.system.abilities
+        .map(id => game.items.get(id))
+        .filter(item => item) // Filter out null/undefined
+        .sort((a, b) => a.system.bondLevel - b.system.bondLevel);
+
+      // Get strictures as an array for easier iteration
+      context.stricturesList = this.item.system.strictures || [];
+
+      // Get high blasphemy data if set
+      if (this.item.system.highBlasphemy) {
+        context.highBlasphemyData = game.items.get(this.item.system.highBlasphemy);
+      }
     }
 
     context.developerMode = game.settings.get('cain', 'developerMode');
@@ -191,6 +208,12 @@ export class CainItemSheet extends ItemSheet {
     // Add ability to the page
     html.find('#addAbility').click(this._addAbility.bind(this));
     html.find('#removeAbility').click(this._removeAbility.bind(this));
+
+    // Bond-specific listeners
+    html.find('#addStricture').click(this._addStricture.bind(this));
+    html.find('.remove-stricture').click(this._removeStricture.bind(this));
+    html.find('#setHighBlasphemy').click(this._setHighBlasphemy.bind(this));
+    html.find('.remove-high-blasphemy').click(this._removeHighBlasphemy.bind(this));
   }
 
   _addTaskToAgenda(event) {
@@ -254,6 +277,61 @@ export class CainItemSheet extends ItemSheet {
     }
   }
 
+  async _addStricture(event) {
+    event.preventDefault();
+    const strictureInput = event.currentTarget.parentElement.querySelector('#newStricture');
+    const strictureText = strictureInput?.value?.trim();
+    if (strictureText) {
+      const strictures = this.item.system.strictures || [];
+      strictures.push(strictureText);
+      await this.item.update({ 'system.strictures': strictures });
+      strictureInput.value = '';
+      ui.notifications.info(`Added stricture: ${strictureText}`);
+    } else {
+      ui.notifications.error('Please enter a stricture');
+    }
+  }
+
+  async _removeStricture(event) {
+    event.preventDefault();
+    const index = parseInt(event.currentTarget.dataset.index);
+    const strictures = this.item.system.strictures || [];
+    if (index >= 0 && index < strictures.length) {
+      const removed = strictures.splice(index, 1);
+      await this.item.update({ 'system.strictures': strictures });
+      ui.notifications.info(`Removed stricture`);
+    }
+  }
+
+  async _setHighBlasphemy(event) {
+    event.preventDefault();
+    const uuidInput = event.currentTarget.parentElement.querySelector('#highBlasphemyUUID');
+    const uuid = uuidInput?.value?.trim();
+    if (uuid) {
+      // Try to get the item - could be an ID or UUID
+      let blasphemyPowerItem = game.items.get(uuid);
+      if (!blasphemyPowerItem) {
+        blasphemyPowerItem = await fromUuid(uuid);
+      }
+      if (blasphemyPowerItem && blasphemyPowerItem.type === 'blasphemyPower') {
+        await this.item.update({ 'system.highBlasphemy': blasphemyPowerItem.id });
+        ui.notifications.info(`Set high blasphemy power: ${blasphemyPowerItem.name}`);
+      } else {
+        ui.notifications.error('Invalid blasphemy power UUID/ID - must be a Blasphemy Power item');
+      }
+    } else {
+      // Clear the high blasphemy
+      await this.item.update({ 'system.highBlasphemy': '' });
+      ui.notifications.info('Cleared high blasphemy power');
+    }
+  }
+
+  async _removeHighBlasphemy(event) {
+    event.preventDefault();
+    await this.item.update({ 'system.highBlasphemy': '' });
+    ui.notifications.info('Removed high blasphemy power');
+  }
+
   /** @override */
   async _updateObject(event, formData) {
     // Handle the form submission
@@ -270,6 +348,61 @@ export class CainItemSheet extends ItemSheet {
 
     // Update the item with the new data
     return await this.item.update(expanded);
+  }
+
+  /** @override */
+  async _onDrop(event) {
+    event.preventDefault();
+
+    // Only handle drops for bond items
+    if (this.item.type !== 'bond') return;
+
+    // Get the dropped data
+    let data;
+    try {
+      data = JSON.parse(event.dataTransfer.getData('text/plain'));
+    } catch (err) {
+      return;
+    }
+
+    // Handle different drop types
+    if (data.type === 'Item') {
+      return this._onDropItem(event, data);
+    }
+  }
+
+  async _onDropItem(event, data) {
+    // Only handle for bond items
+    if (this.item.type !== 'bond') return;
+
+    // Get the dropped item
+    const droppedItem = await Item.fromDropData(data);
+    if (!droppedItem) return;
+
+    // Handle bondAbility drops - add to abilities array
+    if (droppedItem.type === 'bondAbility') {
+      const abilities = this.item.system.abilities || [];
+
+      // Check if already added
+      if (abilities.includes(droppedItem.id)) {
+        ui.notifications.warn(`${droppedItem.name} is already added to this bond.`);
+        return;
+      }
+
+      abilities.push(droppedItem.id);
+      await this.item.update({ 'system.abilities': abilities });
+      ui.notifications.info(`Added ability: ${droppedItem.name}`);
+      return;
+    }
+
+    // Handle blasphemyPower drops - set as high blasphemy
+    if (droppedItem.type === 'blasphemyPower') {
+      await this.item.update({ 'system.highBlasphemy': droppedItem.id });
+      ui.notifications.info(`Set high blasphemy power: ${droppedItem.name}`);
+      return;
+    }
+
+    ui.notifications.warn('You can only drop Bond Abilities or Blasphemy Powers onto a Bond sheet.');
   }
 
 }

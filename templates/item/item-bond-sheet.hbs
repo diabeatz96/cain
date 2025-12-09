@@ -1,0 +1,704 @@
+<form class='{{cssClass}} bond-sheet' autocomplete='off'>
+  <header class='sheet-header bond-header'>
+    <img
+      class='profile-img'
+      src='{{item.img}}'
+      data-edit='img'
+      title='{{item.name}}'
+    />
+    <div class='header-fields'>
+      <h1 class='charname bond-name'><input
+          name='name'
+          type='text'
+          value='{{item.name}}'
+          placeholder='Bond Name'
+        /></h1>
+      <div class='form-group'>
+        <label for='system.virtueName'>Virtue Name</label>
+        <input type='text' name='system.virtueName' value='{{system.virtueName}}' data-dtype='String'/>
+      </div>
+    </div>
+  </header>
+
+  {{! Sheet Tab Navigation }}
+  <nav class='sheet-tabs tabs bond-tabs' data-group='primary'>
+    <a class='item' data-tab='abilities'>Abilities</a>
+    <a class='item' data-tab='strictures'>Strictures</a>
+    <a class='item' data-tab='highblasphemy'>High Blasphemy</a>
+  </nav>
+
+  {{! Sheet Body }}
+  <section class='sheet-body bond-body'>
+    {{! Abilities Tab }}
+    <div class='tab bond-text-color' data-group='primary' data-tab='abilities'>
+      <div class='bond-abilities-list'>
+        {{#each bondAbilities}}
+          <div class='bond-ability-entry' data-level='{{this.system.bondLevel}}'>
+            <div class='bond-ability-header'>
+              <span class='bond-level'>Level {{this.system.bondLevel}}</span>
+              <span class='bond-ability-name'>{{this.system.abilityName}}</span>
+              {{#if this.system.isPermanent}}
+                <span class='bond-permanent-tag'>Permanent</span>
+              {{/if}}
+            </div>
+            <p class='bond-ability-description'>{{this.system.abilityDescription}}</p>
+            {{#if this.system.requiresPsycheBurst}}
+              <p class='bond-psyche-cost'>
+                <i class='fas fa-brain'></i>
+                {{#if (eq this.system.psycheBurstCost 0)}}
+                  Requires all remaining Psyche Bursts (min 1)
+                {{else}}
+                  Requires {{this.system.psycheBurstCost}} Psyche Burst(s)
+                {{/if}}
+              </p>
+            {{/if}}
+          </div>
+        {{else}}
+          <p class='no-abilities'>No abilities assigned to this bond.</p>
+        {{/each}}
+      </div>
+
+      <div class='drop-zone-hint abilities-drop'>
+        <i class='fas fa-plus-circle'></i>
+        <span>Drag & drop Bond Abilities here</span>
+      </div>
+
+      {{#if developerMode}}
+        <div class='bond-dev-controls'>
+          <h4>Developer Controls</h4>
+          <div class='form-group'>
+            <label for='abilityUUID'>Add Ability (UUID):</label>
+            <input type='text' id='abilityUUID' placeholder='Paste Bond Ability UUID here'/>
+          </div>
+          <div class='button-row'>
+            <button type='button' id='addAbility'>Add Ability</button>
+            <button type='button' id='removeAbility'>Remove Last Ability</button>
+          </div>
+        </div>
+      {{/if}}
+    </div>
+
+    {{! Strictures Tab }}
+    <div class='tab bond-text-color' data-group='primary' data-tab='strictures'>
+      <div class='strictures-info'>
+        <p class='strictures-note'>
+          <i class='fas fa-exclamation-triangle'></i>
+          You must follow these strictures while attempting to increase your bond level.
+          Breaking a stricture costs <strong>1d3 stress</strong> (cannot be reduced, cannot cause injuries).
+        </p>
+      </div>
+      <ul class='strictures-list'>
+        {{#each stricturesList}}
+          <li class='stricture-item'>
+            <span class='stricture-text'>{{this}}</span>
+            <button type='button' class='remove-stricture' data-index='{{@index}}' title='Remove stricture'>
+              <i class='fas fa-trash'></i>
+            </button>
+          </li>
+        {{else}}
+          <li class='no-strictures'>No strictures defined for this bond.</li>
+        {{/each}}
+      </ul>
+
+      <div class='stricture-controls'>
+        <div class='form-group stricture-input-group'>
+          <input type='text' id='newStricture' placeholder='Enter new stricture...'/>
+          <button type='button' id='addStricture' title='Add stricture'>
+            <i class='fas fa-plus'></i> Add
+          </button>
+        </div>
+      </div>
+    </div>
+
+    {{! High Blasphemy Tab }}
+    <div class='tab bond-text-color' data-group='primary' data-tab='highblasphemy'>
+      <div class='high-blasphemy-info'>
+        <p class='high-blasphemy-note'>
+          <i class='fas fa-star'></i>
+          High Blasphemies count as blasphemies but are "free" - they don't increase XP cap or reduce sin overflow cap.
+          Once unlocked, the High Blasphemy is automatically added to your Blasphemy Powers.
+        </p>
+        <div class='form-group high-blasphemy-level-select'>
+          <label for='system.highBlasphemyLevel'>Unlocked at Bond Level:</label>
+          <select name='system.highBlasphemyLevel'>
+            <option value='0' {{#if (eq system.highBlasphemyLevel 0)}}selected{{/if}}>Level 0 - Immediate</option>
+            <option value='1' {{#if (eq system.highBlasphemyLevel 1)}}selected{{/if}}>Level 1</option>
+            <option value='2' {{#if (eq system.highBlasphemyLevel 2)}}selected{{/if}}>Level 2</option>
+            <option value='3' {{#if (eq system.highBlasphemyLevel 3)}}selected{{/if}}>Level 3</option>
+          </select>
+        </div>
+      </div>
+
+      {{#if highBlasphemyData}}
+        <div class='high-blasphemy-display'>
+          <div class='high-blasphemy-header'>
+            <img src='{{highBlasphemyData.img}}' class='high-blasphemy-img'/>
+            <div class='high-blasphemy-title-row'>
+              <h3>{{highBlasphemyData.name}}</h3>
+              <div class='high-blasphemy-tags'>
+                {{#if highBlasphemyData.system.isPassive}}
+                  <span class='hb-tag passive-tag'>Passive</span>
+                {{/if}}
+                {{#if highBlasphemyData.system.psycheBurstCost}}
+                  <span class='hb-tag psyche-tag'>Psyche Burst</span>
+                {{/if}}
+                {{#if highBlasphemyData.system.psycheBurstNoCost}}
+                  <span class='hb-tag no-cost-tag'>No-Cost Mode</span>
+                {{/if}}
+                {{#if highBlasphemyData.system.psycheBurstMultCost}}
+                  <span class='hb-tag multi-tag'>Multi-Burst</span>
+                {{/if}}
+              </div>
+            </div>
+            <button type='button' class='remove-high-blasphemy' title='Remove High Blasphemy'>
+              <i class='fas fa-times'></i>
+            </button>
+          </div>
+          {{#if highBlasphemyData.system.keywords.length}}
+            <div class='high-blasphemy-keywords'>
+              {{#each highBlasphemyData.system.keywords}}
+                <span class='hb-keyword'>{{this}}</span>
+              {{/each}}
+            </div>
+          {{/if}}
+          <div class='high-blasphemy-description'>{{highBlasphemyData.system.powerDescription}}</div>
+        </div>
+      {{else}}
+        <p class='no-high-blasphemy'>No High Blasphemy Power assigned to this bond.</p>
+      {{/if}}
+
+      <div class='drop-zone-hint blasphemy-drop'>
+        <i class='fas fa-plus-circle'></i>
+        <span>Drag & drop a Blasphemy Power here to set as High Blasphemy</span>
+      </div>
+
+      {{#if developerMode}}
+        <div class='high-blasphemy-dev-controls'>
+          <div class='form-group'>
+            <label for='highBlasphemyUUID'>High Blasphemy Power (UUID):</label>
+            <input type='text' id='highBlasphemyUUID' placeholder='Paste Blasphemy Power UUID here' value='{{system.highBlasphemy}}'/>
+          </div>
+          <button type='button' id='setHighBlasphemy'>Set High Blasphemy Power</button>
+        </div>
+      {{/if}}
+    </div>
+  </section>
+</form>
+
+<style>
+.bond-sheet {
+  background-color: #1a1a1a;
+  color: #e0e0e0;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.bond-header {
+  background-color: #2b2b2b;
+  border-bottom: 2px solid #4a90d9;
+  padding: 1em;
+  display: flex;
+  align-items: center;
+}
+
+.bond-header .profile-img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-right: 1em;
+  border: 2px solid #4a90d9;
+}
+
+.bond-header .header-fields {
+  flex-grow: 1;
+}
+
+.bond-header .charname input {
+  font-size: 1.5em;
+  width: 100%;
+  background-color: #333;
+  color: #e0e0e0;
+  border: 1px solid #555;
+  padding: 0.5em;
+  border-radius: 4px;
+}
+
+.bond-header .form-group {
+  margin-top: 0.5em;
+}
+
+.bond-header .form-group label {
+  color: #4a90d9;
+  font-size: 0.9em;
+}
+
+.bond-header .form-group input {
+  background-color: #333;
+  color: #e0e0e0;
+  border: 1px solid #555;
+  padding: 0.3em;
+  border-radius: 4px;
+  width: 100%;
+}
+
+.bond-tabs {
+  background-color: #2b2b2b;
+  border-bottom: 2px solid #444;
+  display: flex;
+  justify-content: space-around;
+  padding: 0.5em 0;
+}
+
+.bond-tabs .item {
+  color: #e0e0e0;
+  padding: 0.5em 1em;
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  transition: border-bottom 0.3s;
+}
+
+.bond-tabs .item:hover,
+.bond-tabs .item.active {
+  border-bottom: 2px solid #4a90d9;
+}
+
+.bond-body {
+  background-color: #1a1a1a;
+  padding: 1em;
+}
+
+.bond-body .tab {
+  display: none;
+}
+
+.bond-body .tab.active {
+  display: block;
+}
+
+.bond-text-color {
+  color: #e0e0e0;
+}
+
+/* Abilities styles */
+.bond-abilities-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.bond-ability-entry {
+  background-color: #2b2b2b;
+  border: 1px solid #444;
+  border-left: 4px solid #4a90d9;
+  border-radius: 4px;
+  padding: 1em;
+}
+
+.bond-ability-entry[data-level="0"] { border-left-color: #4a90d9; }
+.bond-ability-entry[data-level="1"] { border-left-color: #5cb85c; }
+.bond-ability-entry[data-level="2"] { border-left-color: #f0ad4e; }
+.bond-ability-entry[data-level="3"] { border-left-color: #d9534f; }
+
+.bond-ability-header {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  margin-bottom: 0.5em;
+}
+
+.bond-level {
+  background-color: #4a90d9;
+  color: #fff;
+  padding: 0.2em 0.5em;
+  border-radius: 3px;
+  font-size: 0.8em;
+  font-weight: bold;
+}
+
+.bond-ability-entry[data-level="0"] .bond-level { background-color: #4a90d9; }
+.bond-ability-entry[data-level="1"] .bond-level { background-color: #5cb85c; }
+.bond-ability-entry[data-level="2"] .bond-level { background-color: #f0ad4e; }
+.bond-ability-entry[data-level="3"] .bond-level { background-color: #d9534f; }
+
+.bond-ability-name {
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+.bond-permanent-tag {
+  background-color: #5cb85c;
+  color: #fff;
+  padding: 0.2em 0.5em;
+  border-radius: 3px;
+  font-size: 0.7em;
+}
+
+.bond-ability-description {
+  margin: 0.5em 0;
+  line-height: 1.4;
+}
+
+.bond-psyche-cost {
+  color: #d9534f;
+  font-style: italic;
+}
+
+.no-abilities, .no-strictures, .no-high-blasphemy {
+  color: #888;
+  font-style: italic;
+  padding: 1em;
+  text-align: center;
+}
+
+/* Strictures styles */
+.strictures-info {
+  margin-bottom: 1em;
+}
+
+.strictures-note {
+  background-color: #3a3a2a;
+  border: 1px solid #f0ad4e;
+  border-radius: 4px;
+  padding: 1em;
+  color: #f0ad4e;
+}
+
+.strictures-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.stricture-item {
+  background-color: #2b2b2b;
+  border: 1px solid #444;
+  border-radius: 4px;
+  padding: 0.8em 1em;
+  margin-bottom: 0.5em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.stricture-text {
+  flex-grow: 1;
+}
+
+.remove-stricture {
+  background-color: #d9534f;
+  color: #fff;
+  border: none;
+  padding: 0.3em 0.5em;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+/* High Blasphemy styles */
+.high-blasphemy-info {
+  margin-bottom: 1em;
+}
+
+.high-blasphemy-note {
+  background-color: #2a2a3a;
+  border: 1px solid #9b59b6;
+  border-radius: 4px;
+  padding: 1em;
+  color: #bb77dd;
+}
+
+.high-blasphemy-level-select {
+  margin-top: 1em;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.high-blasphemy-level-select label {
+  color: #bb77dd;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.high-blasphemy-level-select select {
+  background-color: #333;
+  color: #e0e0e0;
+  border: 1px solid #9b59b6;
+  padding: 0.4em 0.6em;
+  border-radius: 4px;
+  font-family: inherit;
+}
+
+.high-blasphemy-display {
+  background-color: #2b2b2b;
+  border: 2px solid #9b59b6;
+  border-radius: 8px;
+  padding: 1em;
+}
+
+.high-blasphemy-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1em;
+  margin-bottom: 0.5em;
+}
+
+.high-blasphemy-title-row {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3em;
+}
+
+.high-blasphemy-title-row h3 {
+  color: #bb77dd;
+  margin: 0;
+  font-size: 1.2em;
+}
+
+.high-blasphemy-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3em;
+}
+
+.hb-tag {
+  font-size: 0.7em;
+  padding: 0.2em 0.5em;
+  border-radius: 3px;
+  font-weight: bold;
+}
+
+.passive-tag {
+  background-color: #5cb85c;
+  color: #fff;
+}
+
+.psyche-tag {
+  background-color: #d9534f;
+  color: #fff;
+}
+
+.no-cost-tag {
+  background-color: #f0ad4e;
+  color: #000;
+}
+
+.multi-tag {
+  background-color: #5bc0de;
+  color: #000;
+}
+
+.high-blasphemy-keywords {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3em;
+  margin-bottom: 0.5em;
+}
+
+.hb-keyword {
+  background-color: #444;
+  color: #ccc;
+  font-size: 0.75em;
+  padding: 0.2em 0.5em;
+  border-radius: 3px;
+  font-style: italic;
+}
+
+.remove-high-blasphemy {
+  background-color: transparent;
+  color: #888;
+  border: none;
+  padding: 0.2em 0.4em;
+  cursor: pointer;
+  font-size: 0.75em;
+  border-radius: 4px;
+  flex-shrink: 0;
+  width: auto;
+  min-width: unset;
+}
+
+.remove-high-blasphemy:hover {
+  color: #d9534f;
+  background-color: rgba(217, 83, 79, 0.1);
+}
+
+.high-blasphemy-img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 2px solid #9b59b6;
+  flex-shrink: 0;
+}
+
+.high-blasphemy-description {
+  background-color: #222;
+  padding: 0.8em;
+  border-radius: 4px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  font-size: 0.9em;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+/* Developer controls */
+.bond-dev-controls,
+.stricture-dev-controls,
+.high-blasphemy-dev-controls {
+  margin-top: 1.5em;
+  padding: 1em;
+  background-color: #333;
+  border: 1px dashed #666;
+  border-radius: 4px;
+}
+
+.bond-dev-controls h4 {
+  color: #f0ad4e;
+  margin-top: 0;
+}
+
+.bond-dev-controls .form-group,
+.stricture-dev-controls .form-group,
+.high-blasphemy-dev-controls .form-group {
+  margin-bottom: 0.5em;
+}
+
+.bond-dev-controls label,
+.stricture-dev-controls label,
+.high-blasphemy-dev-controls label {
+  display: block;
+  color: #aaa;
+  margin-bottom: 0.3em;
+}
+
+.bond-dev-controls input,
+.stricture-dev-controls input,
+.high-blasphemy-dev-controls input,
+.high-blasphemy-dev-controls select {
+  width: 100%;
+  background-color: #222;
+  color: #e0e0e0;
+  border: 1px solid #555;
+  padding: 0.5em;
+  border-radius: 4px;
+}
+
+.button-row {
+  display: flex;
+  gap: 0.5em;
+  margin-top: 0.5em;
+}
+
+.bond-dev-controls button,
+.stricture-dev-controls button,
+.high-blasphemy-dev-controls button {
+  background-color: #4a90d9;
+  color: #fff;
+  border: none;
+  padding: 0.5em 1em;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.bond-dev-controls button:hover,
+.stricture-dev-controls button:hover,
+.high-blasphemy-dev-controls button:hover {
+  background-color: #357abd;
+}
+
+/* Drop zone hints */
+.drop-zone-hint {
+  margin-top: 1em;
+  padding: 1em;
+  border: 2px dashed #555;
+  border-radius: 8px;
+  text-align: center;
+  color: #888;
+  background-color: #252525;
+  transition: all 0.3s ease;
+}
+
+.drop-zone-hint i {
+  margin-right: 0.5em;
+}
+
+.drop-zone-hint:hover {
+  border-color: #4a90d9;
+  color: #4a90d9;
+  background-color: #2a2a3a;
+}
+
+.abilities-drop:hover {
+  border-color: #4a90d9;
+}
+
+.blasphemy-drop:hover {
+  border-color: #9b59b6;
+  color: #bb77dd;
+}
+
+/* Stricture controls */
+.stricture-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.stricture-item .stricture-text {
+  flex-grow: 1;
+}
+
+.stricture-item .remove-stricture {
+  flex-shrink: 0;
+  background-color: transparent;
+  color: #888;
+  border: none;
+  padding: 0.2em 0.4em;
+  cursor: pointer;
+  font-size: 0.75em;
+  width: auto;
+  min-width: unset;
+}
+
+.stricture-item .remove-stricture:hover {
+  color: #d9534f;
+}
+
+.stricture-controls {
+  margin-top: 1em;
+  padding-top: 1em;
+  border-top: 1px solid #444;
+}
+
+.stricture-input-group {
+  display: flex;
+  gap: 0.5em;
+  align-items: center;
+}
+
+.stricture-input-group input {
+  flex: 1 1 auto;
+  min-width: 0;
+  background-color: #333;
+  color: #e0e0e0;
+  border: 1px solid #555;
+  padding: 0.4em 0.6em;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+.stricture-input-group button {
+  flex-shrink: 0;
+  background-color: #4a90d9;
+  color: #fff;
+  border: none;
+  padding: 0.3em 0.6em;
+  border-radius: 4px;
+  cursor: pointer;
+  white-space: nowrap;
+  font-size: 0.85em;
+}
+
+.stricture-input-group button:hover {
+  background-color: #357abd;
+}
+</style>
