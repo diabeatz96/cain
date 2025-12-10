@@ -11,7 +11,7 @@
   "flags": {
     "hotReload": {
       "extensions": ["mjs", "hbs", "json", "css"],
-        "paths": ["lang", "module", "src", "templates"]
+        "paths": ["lang", "module", "src", "css", "templates"]
       }
   },
   "url": "https://github.com/bugeso/cain1.3",
@@ -26,7 +26,7 @@
       "thumbnail": "systems/cain/assets/cainnew.png"
     }
   ],
-  "version": "1.3.11",
+  "version": "1.3.12",
   "compatibility": {
     "minimum": 11,
     "verified": "13",
@@ -90,6 +90,20 @@
       "system": "cain",
       "type": "Actor",
       "path": "packs/opponents"
+    },
+    {
+      "name": "domains",
+      "label": "Domains",
+      "system": "cain",
+      "type": "Item",
+      "path": "packs/domains"
+    },
+    {
+      "name": "virtues",
+      "label": "Virtues (Bonds)",
+      "system": "cain",
+      "type": "Item",
+      "path": "packs/virtues"
     }
   ],
   "packFolders": [],
@@ -107,11 +121,14 @@
       "agenda": {},
       "blasphemy": {},
       "blasphemyPower": {},
+      "bond": {},
+      "bondAbility": {},
       "agendaTask": {},
       "agendaAbility": {},
       "sinMark": {},
       "sinMarkAbility": {},
-      "affliction": {}
+      "affliction": {},
+      "domain": {}
     }
   },
   "socket": true,

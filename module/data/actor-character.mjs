@@ -116,6 +116,16 @@ export default class CainCharacter extends CainActorBase {
     schema.sinMarkAbilities = new fields.ArrayField(new fields.StringField(), { required: true, initial: [] });
     schema.sinMarkDescription = new fields.StringField({ required: true, initial: "" });
 
+    // Bonds - array of bond references with current level tracking
+    // Each entry is an object with bondId (reference to bond item) and currentLevel (0-3)
+    schema.bonds = new fields.ArrayField(
+      new fields.SchemaField({
+        bondId: new fields.StringField({ required: true }),
+        currentLevel: new fields.NumberField({ required: true, initial: 0, min: 0, max: 3 })
+      }),
+      { required: true, initial: [] }
+    );
+
     // Whether to hide this character from the Divine Agony tracker
     schema.hideFromTracker = new fields.BooleanField({ required: true, initial: false });
 

@@ -1,0 +1,186 @@
+/* TODO: system layer keeps messing my stuff up, how do i override it?*/
+.domain-card {
+    border-radius: 20px;
+    background-color: rgb(134, 134, 134);
+    border: none;
+    padding: 10px;
+    margin: 10px;
+
+    .dashed-line {
+        border-bottom: dashed #1a1a1a 4px;
+    }
+
+    .domain-header {
+        display: flex;
+        .domain-img {
+            max-height: 75px;
+        }
+    }
+    
+    .domain-description {
+        margin-top: 10px;
+        background-color: #0000008a;
+        color: white;
+        font-size: 18px;
+        text-align: center;
+        padding: 10px 5px;
+    }
+
+    .domain-name-input {
+        border: none;
+        margin-left: 10px;
+        background: rgb(0 0 0 / 31%);
+        border-radius: 20px;
+        color: white;
+        height: 100%;
+        font-size: 55px;
+        font-family: 'Pirata One', system-ui;
+        text-shadow: -3px -3px 0 #000, 3px -3px 0 #000, -3px 3px 0 #000, 3px 3px 0 #000;
+    }
+
+    &.paper-texture2 {
+        background-image: url("/systems/cain/assets/backgrounds/paper2.jpg");
+        background-position: 50% 50%;
+        background-blend-mode: darken;
+
+        &.hound {
+            background-color: #ff0808;
+        }
+
+        &.centipede {
+            background-color: #9f00ff;
+        }
+
+        &.idol {
+            background-color: #e40df2;
+        }
+
+        &.ogre {
+            background-color: #0d79f2;
+        }
+
+        &.toad {
+            background-color: #f2af0d;
+        }
+
+        &.lord {
+            background-color: #91ffef;
+        }
+    }
+
+    .domain-header {
+        text-align: center;
+
+        h1 {
+            border: none;
+            font-family: 'Pirata One', system-ui;
+            color: white;
+            text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;
+        }
+    }
+
+    .domain-option {
+        margin-top: 10px;
+        color: #1a1a1a;
+        font-size: 15px;
+    }
+
+    .domain-option span,
+    .domain-option b,
+    .domain-option label {
+        color: #1a1a1a;
+    }
+
+    .domain-option select {
+        background-color: rgba(255, 255, 255, 0.9);
+        color: #1a1a1a;
+        border: 1px solid #333;
+        border-radius: 4px;
+        padding: 4px 8px;
+    }
+
+    .domain-option select option {
+        background-color: #fff;
+        color: #1a1a1a;
+    }
+
+    input[type="checkbox"] {
+        vertical-align: middle;
+    }
+
+    /* TODO: copied this over from the character sheet, we should centralize it */
+    .affliction {
+        display: flex;
+        position: relative;
+        align-items: center;
+        border-radius: 25px;
+        padding: 2px 0 2px 2px;
+        margin: 20px 0 20px 10px;
+        background-color: black;
+        color: aliceblue;
+
+        &.hound {
+            background-color: #ff0808;
+        }
+
+        &.centipede {
+            background-color: #9f00ff;
+        }
+
+        &.idol {
+            background-color: #e40df2;
+        }
+
+        &.ogre {
+            background-color: #0d79f2;
+        }
+
+        &.toad {
+            background-color: #f2af0d;
+        }
+
+        &.lord {
+            background-color: #91ffef;
+        }
+    }
+
+    .affliction-content {
+        line-height: 1.4;
+        padding: 10px 5px;
+    }
+
+    .affliction-description {
+        margin: 5px 0;
+        color:aliceblue;
+        line-height: 1.4;
+    }
+
+    .remove-affliction-div {
+        padding-left: 0 0px;
+        padding-top: 0 0px;
+        display: flex;
+        height: 100%;
+        border-top-right-radius: 25px;
+        border-bottom-right-radius: 25px;
+        max-width: 30px; /* Optional: Set a max-width if you want to prevent it from becoming too large */
+    }
+
+    .remove-affliction-button {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        height: 100%;
+        width: 30px;
+        background-color: brown;
+        border-radius: 0px;
+        border-top-right-radius: 15px;
+        border-bottom-right-radius: 15px;
+        border: 0px solid white;
+    }
+
+    .remove-affliction-button i {
+        color: black;
+        font-size: 16px;
+        text-align: center; /* Center the icon within its container */
+    }
+}

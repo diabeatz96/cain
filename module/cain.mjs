@@ -65,8 +65,11 @@ Hooks.once('init', async function () {
     sinMark: models.CainSinMark,
     sinMarkAbility: models.CainSinMarkAbility,
     affliction: models.CainAffliction,
+    domain: models.CainDomain,
+    bond: models.CainBond,
+    bondAbility: models.CainBondAbility,
   }
-  
+
   console.log('CAIN | Initializing Cain system');
   console.log(CONFIG)
   // Active Effects are never copied to the Actor,
@@ -881,7 +884,9 @@ async function checkAndImportCompendiums() {
     { key: 'cain.agendas', label: 'Agendas' },
     { key: 'cain.sin-marks', label: 'Sin Marks' },
     { key: 'cain.afflictions', label: 'Afflictions' },
-    { key: 'cain.tables', label: 'Roll Tables' }
+    { key: 'cain.tables', label: 'Roll Tables' },
+    { key: 'cain.domains', label: 'Domains' },
+    { key: 'cain.virtues', label: 'Virtues (Bonds)' }
   ];
 
   let totalImported = 0;
