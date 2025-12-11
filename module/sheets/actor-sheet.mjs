@@ -10,11 +10,14 @@ import {
 import { TalismanWindow } from '../documents/talisman-window.mjs';
 import { SessionEndAdvancement} from  '../documents/session-end-advancement.mjs'
 
+// Use v13 namespaced ActorSheet with fallback for v11/v12
+const BaseActorSheet = foundry?.appv1?.sheets?.ActorSheet ?? ActorSheet;
+
 /**
  * Extend the basic ActorSheet with some very simple modifications
  * @extends {ActorSheet}
  */
-export class CainActorSheet extends ActorSheet {
+export class CainActorSheet extends BaseActorSheet {
   sheetConstants = {
     "CATSessionNumbers": ["0", "1", "2", "4", "7", "X", "X"],
     "SINVisualOffset": Math.round( Math.random() * 8) //a random offset so the EYES in the sin section don't always look exactly the same

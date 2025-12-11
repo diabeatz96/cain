@@ -4,7 +4,10 @@
  * @return {Promise}
  */
 export const preloadHandlebarsTemplates = async function () {
-  return loadTemplates([
+  // Use v13 namespaced loadTemplates with fallback for v11/v12
+  const loadTemplatesFn = foundry?.applications?.handlebars?.loadTemplates ?? loadTemplates;
+
+  return loadTemplatesFn([
     // Talismans
     'systems/cain/templates/talisman-window.hbs',
     // Player Overview
@@ -29,5 +32,7 @@ export const preloadHandlebarsTemplates = async function () {
     // Sin mark partials
     'systems/cain/templates/item/item-sinMark-sheet.hbs',
     'systems/cain/templates/item/item-sinMarkAbility-sheet.hbs',
+    // Dice roller
+    'systems/cain/templates/dice/chat-dice-panel.hbs',
   ]);
 };
