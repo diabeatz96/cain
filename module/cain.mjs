@@ -408,7 +408,7 @@ window.formatCatText = function(text, category) {
     {
       'CAT': 0,
       'people': 'one',
-      'size': 'human',
+      'size': 'human size',
       'area': 'personal',
       'range': 'touch',
       'speed': 'average human',
@@ -421,14 +421,14 @@ window.formatCatText = function(text, category) {
       'area': 'a few people',
       'range': 'same room',
       'speed': 'fast human',
-      'magnitude': 'Noticable'
+      'magnitude': 'noticable'
     },
     {
       'CAT': 2,
       'people': 'small group',
       'size': 'large animal',
       'area': 'entire room',
-      'range': 'accross the street',
+      'range': 'across the street',
       'speed': 'fast animal',
       'magnitude': 'large'
     },
@@ -436,7 +436,7 @@ window.formatCatText = function(text, category) {
       'CAT': 3,
       'people': 'large group',
       'size': 'vehicle',
-      'area': 'few rooms',
+      'area': 'a few rooms',
       'range': 'down the block',
       'speed': 'car',
       'magnitude': 'very large'
@@ -454,25 +454,25 @@ window.formatCatText = function(text, category) {
       'CAT': 5,
       'people': 'a huge crowd',
       'size': 'building',
-      'area': 'city block',
+      'area': 'a city block',
       'range': 'across town',
       'speed': 'maglev',
       'magnitude': 'destructive'
     },
     {
       'CAT': 6,
-      'people': 'thousands',
+      'people': 'thousands of people',
       'size': 'large building',
-      'area': 'whole neighborhood',
+      'area': 'a whole neighborhood',
       'range': 'visual range',
       'speed': 'airliner',
       'magnitude': 'overwhelming'
     },
     {
       'CAT': 7,
-      'people': 'many thousands',
+      'people': 'many thousands of people',
       'size': 'skyscraper',
-      'area': 'whole town',
+      'area': 'a whole town',
       'range': 'over the horizon',
       'speed': 'jet fighter',
       'magnitude': 'cataclysmic'
