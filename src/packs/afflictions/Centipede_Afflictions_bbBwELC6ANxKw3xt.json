@@ -1,0 +1,22 @@
+{
+  "name": "Centipede Afflictions",
+  "sorting": "a",
+  "folder": "eJFe9MKe0F63AM6D",
+  "type": "Item",
+  "_id": "bbBwELC6ANxKw3xt",
+  "description": "",
+  "sort": 2000000,
+  "color": null,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.3",
+    "createdTime": 1763196405742,
+    "modifiedTime": 1763196405742,
+    "lastModifiedBy": "6ClVUxrA2eebq5C2"
+  },
+  "_key": "!folders!bbBwELC6ANxKw3xt"
+}

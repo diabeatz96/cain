@@ -1,0 +1,36 @@
+{
+  "folder": "vQcKDwo7wyItn23I",
+  "name": "Ability 3 Jaw",
+  "type": "sinMarkAbility",
+  "img": "systems/cain/assets/sin-marks/jaw.png",
+  "system": {
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "abilityName": "Ability 3 Jaw",
+    "abilityDescription": "You can whisper short messages into the\nwind of 6 words or less that a target of your choice can hear in their ear within long distance. The target cannot reply.",
+    "bodyPartName": "Jaw"
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.351",
+    "systemId": "cain",
+    "systemVersion": "1.0.20",
+    "createdTime": 1725278401752,
+    "modifiedTime": 1725278401752,
+    "lastModifiedBy": "C33nbucocqUlAZNM",
+    "exportSource": null
+  },
+  "_id": "EitdI2rR7ihhOxCY",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "C33nbucocqUlAZNM": 3
+  },
+  "_key": "!items!EitdI2rR7ihhOxCY"
+}

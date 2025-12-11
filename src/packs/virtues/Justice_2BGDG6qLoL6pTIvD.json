@@ -1,0 +1,46 @@
+{
+  "folder": null,
+  "name": "Justice",
+  "type": "bond",
+  "_id": "2BGDG6qLoL6pTIvD",
+  "img": "systems/cain/assets/Virtues/justice.png",
+  "system": {
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "virtueName": "THE EXECUTIONER",
+    "strictures": [
+      "You cannot ignore orders from a superior.",
+      "Always roll 0d on any action that would break the law."
+    ],
+    "abilities": [
+      "kJ1mKqLXxRLOTigK",
+      "0tz1FeV7jepffEg5",
+      "LDaOPYmJ3DMzV7tr",
+      "v1IYBSYTDFR7VnCE"
+    ],
+    "highBlasphemy": "YhcejRyJeEJnds4g",
+    "highBlasphemyLevel": 1
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.351",
+    "systemId": "cain",
+    "systemVersion": "1.3.11",
+    "createdTime": 1765324318303,
+    "modifiedTime": 1765324318303,
+    "lastModifiedBy": "SYIh5BFClzglmca2",
+    "exportSource": null
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "SYIh5BFClzglmca2": 3
+  },
+  "_key": "!items!2BGDG6qLoL6pTIvD"
+}

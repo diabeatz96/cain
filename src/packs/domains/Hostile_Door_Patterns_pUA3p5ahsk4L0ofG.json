@@ -1,0 +1,37 @@
+{
+  "folder": "qaJ31pcfTlOIf7xZ",
+  "name": "Hostile Door Patterns",
+  "type": "domain",
+  "_id": "pUA3p5ahsk4L0ofG",
+  "img": "systems/cain/assets/Sins/ogre.png",
+  "system": {
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "sinSource": "ogre",
+    "domainDescription": "The world itself begins to turn against the exorcists. As a complication or a tension move, the ogre supernaturally erases entrances, exits, roads, vehicles, or light sources in an area of about CAT+2. These return when the scene passes or if the complication is dealt with. Once a hunt, as a tension move, if an exorcist opens any door, the entire group suddenly finds themself in an area of twisting corridors, pitch black darkness, and distant but troubling noises. The area is both dangerous and hostile to them. Finding an exit and escaping will require playing out a scene or two, and the Admin can set out talismans as needed.",
+    "selectsExorcist": false,
+    "afflictionEffect": ""
+  },
+  "effects": [],
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "NRvfoxvJ6O6uKrea": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "cain",
+    "systemVersion": "1.3.10",
+    "createdTime": 1765084447773,
+    "modifiedTime": 1765084461621,
+    "lastModifiedBy": "NRvfoxvJ6O6uKrea"
+  },
+  "_key": "!items!pUA3p5ahsk4L0ofG"
+}

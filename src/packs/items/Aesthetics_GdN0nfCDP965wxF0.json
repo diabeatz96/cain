@@ -1,0 +1,22 @@
+{
+  "name": "Aesthetics",
+  "sorting": "a",
+  "folder": null,
+  "type": "Item",
+  "_id": "GdN0nfCDP965wxF0",
+  "description": "",
+  "sort": 100000,
+  "color": null,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.0.1",
+    "createdTime": 1723987411394,
+    "modifiedTime": 1723987411394,
+    "lastModifiedBy": "wAkEmoF9bl45blE0"
+  },
+  "_key": "!folders!GdN0nfCDP965wxF0"
+}

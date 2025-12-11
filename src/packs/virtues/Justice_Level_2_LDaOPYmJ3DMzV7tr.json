@@ -1,0 +1,38 @@
+{
+  "folder": "cOWi6G8eetLjF6LS",
+  "name": "Justice Level 2",
+  "type": "bondAbility",
+  "img": "systems/cain/assets/Virtues/justice.png",
+  "system": {
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "bondLevel": 2,
+    "abilityDescription": "Lower sin by 1 after halving it. If you executed a sin rather than sparing it, then lower sin by 1 again. If you spared a sin or failed to execute it, increase sin by 1d3 after halving it instead.",
+    "isPermanent": true,
+    "requiresPsycheBurst": false,
+    "psycheBurstCost": 0
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.351",
+    "systemId": "cain",
+    "systemVersion": "1.3.11",
+    "createdTime": 1765324318303,
+    "modifiedTime": 1765324318303,
+    "lastModifiedBy": "SYIh5BFClzglmca2",
+    "exportSource": null
+  },
+  "_id": "LDaOPYmJ3DMzV7tr",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "SYIh5BFClzglmca2": 3
+  },
+  "_key": "!items!LDaOPYmJ3DMzV7tr"
+}

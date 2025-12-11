@@ -1,0 +1,35 @@
+{
+  "name": "Healer",
+  "type": "agendaAbility",
+  "img": "icons/svg/item-bag.svg",
+  "folder": "E5oem2SNa88Ezz0F",
+  "system": {
+    "abilityName": "Healer",
+    "abilityDescription": "The first time you rest in a hunt, gain an extra resting die.",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff"
+  },
+  "_id": "nwxU6qaaxXBiVjyY",
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "6ClVUxrA2eebq5C2": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.agendas.Item.nwxU6qaaxXBiVjyY",
+    "duplicateSource": null,
+    "coreVersion": "13.351",
+    "systemId": "cain",
+    "systemVersion": "1.3.4",
+    "createdTime": 1763281210755,
+    "modifiedTime": 1763281210755,
+    "lastModifiedBy": "6ClVUxrA2eebq5C2",
+    "exportSource": null
+  },
+  "sort": 0,
+  "_key": "!items!nwxU6qaaxXBiVjyY"
+}

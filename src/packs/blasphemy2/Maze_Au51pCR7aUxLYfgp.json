@@ -1,0 +1,43 @@
+{
+  "name": "Maze",
+  "type": "blasphemyPower",
+  "img": "systems/cain/assets/Blasphemies/gate.png",
+  "folder": "M2IyOSZHhi0ADpIW",
+  "system": {
+    "blasphemyType": "Gate",
+    "powerName": "Maze",
+    "isPassive": false,
+    "keywords": [
+      "Transmute, Self, CAT area, Entire hunt"
+    ],
+    "powerDescription": "You rearrange an area equal to {<CAT> area 0} around you, causing the rearrangement of human built structures in the area. Gain or grant +1D when you or any ally next acts to take advantage of this power: \n        \n• Create or remove doors and windows, or change the existing arrangement of doors and windows \n• Add corridors, or rearrange the floor plan of rooms \n• Change the direction of gravity inside of a room. For example, you could make a wall the ‘floor’ \n• make a room larger or smaller \n• Arrange or remove the furniture inside a room any way you like \n        \nYou cannot remove rooms entirely, make any room smaller than a closet or larger than a ballroom, or add anything that does not already exist in a building other than corridors. This could cause a structure to be bigger on the inside than outside. \n        \nFor each choice, the Admin rolls 1d6. If they roll at least one ‘1’ the Admin gains one use of this power against you at your current CAT and can activate it any time they like.",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ffff00",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "psycheBurstCost": true,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false
+  },
+  "_id": "Au51pCR7aUxLYfgp",
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "6ClVUxrA2eebq5C2": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.blasphemies.Item.Au51pCR7aUxLYfgp",
+    "duplicateSource": null,
+    "coreVersion": "13.351",
+    "systemId": "cain",
+    "systemVersion": "1.3.3",
+    "createdTime": 1763277232656,
+    "modifiedTime": 1763277232656,
+    "lastModifiedBy": "6ClVUxrA2eebq5C2",
+    "exportSource": null
+  },
+  "sort": 0,
+  "_key": "!items!Au51pCR7aUxLYfgp"
+}

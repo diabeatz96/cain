@@ -1,0 +1,35 @@
+{
+  "name": "Centerweight",
+  "type": "agendaAbility",
+  "img": "icons/svg/item-bag.svg",
+  "folder": "AZpV5rwaxlytrYpT",
+  "system": {
+    "abilityName": "Centerweight",
+    "abilityDescription": "When resting, allies that spend resting dice can use the results of your resting dice (but still spend their own dice).",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff"
+  },
+  "_id": "UPfHVBC8j5ldeBBz",
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "6ClVUxrA2eebq5C2": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.agendas.Item.UPfHVBC8j5ldeBBz",
+    "duplicateSource": null,
+    "coreVersion": "13.351",
+    "systemId": "cain",
+    "systemVersion": "1.3.4",
+    "createdTime": 1763281210755,
+    "modifiedTime": 1763281210755,
+    "lastModifiedBy": "6ClVUxrA2eebq5C2",
+    "exportSource": null
+  },
+  "sort": 0,
+  "_key": "!items!UPfHVBC8j5ldeBBz"
+}

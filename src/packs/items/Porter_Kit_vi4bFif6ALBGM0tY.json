@@ -1,0 +1,39 @@
+{
+  "folder": "W54tBb4dDKbp2nzT",
+  "name": "Porter Kit",
+  "type": "item",
+  "img": "systems/cain/assets/items/kp.png",
+  "system": {
+    "description": "<p>Conspicuous. Official kit of junior exorcists working as</p><p>porters in its cavernous internal facilities</p><p>Spend 1 KP to pull out one of the following:</p><p>Sturdy backpack, foldable ladder, pitons, ice pick, 30ft</p><p>of good quality cord for securing cargo, flashlight</p>",
+    "quantity": 1,
+    "weight": 0,
+    "roll": {
+      "diceNum": 1,
+      "diceSize": "d6",
+      "diceBonus": ""
+    },
+    "kitPoint": 1,
+    "scripValue": 3,
+    "type": "Possession"
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.351",
+    "systemId": "cain",
+    "systemVersion": "1.0.1",
+    "createdTime": 1723987411421,
+    "modifiedTime": 1723987411421,
+    "lastModifiedBy": "wAkEmoF9bl45blE0",
+    "exportSource": null
+  },
+  "_id": "vi4bFif6ALBGM0tY",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "wAkEmoF9bl45blE0": 3
+  },
+  "_key": "!items!vi4bFif6ALBGM0tY"
+}

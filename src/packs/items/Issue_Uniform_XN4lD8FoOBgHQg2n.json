@@ -1,0 +1,39 @@
+{
+  "folder": "GdN0nfCDP965wxF0",
+  "name": "Issue Uniform",
+  "type": "item",
+  "img": "systems/cain/assets/items/kp.png",
+  "system": {
+    "description": "<p><span>Issue Cassock or habit. Tailored to fit. Made of very fine material, comfortable. Includes optional head or face coverings for modesty</span></p>",
+    "quantity": 1,
+    "weight": 0,
+    "roll": {
+      "diceNum": 1,
+      "diceSize": "d6",
+      "diceBonus": ""
+    },
+    "kitPoint": 0,
+    "scripValue": 1,
+    "type": "Aesthetics"
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.351",
+    "systemId": "cain",
+    "systemVersion": "1.0.1",
+    "createdTime": 1723987411421,
+    "modifiedTime": 1723987411421,
+    "lastModifiedBy": "wAkEmoF9bl45blE0",
+    "exportSource": null
+  },
+  "_id": "XN4lD8FoOBgHQg2n",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "wAkEmoF9bl45blE0": 3
+  },
+  "_key": "!items!XN4lD8FoOBgHQg2n"
+}

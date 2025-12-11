@@ -1,0 +1,22 @@
+{
+  "name": "Hardline Tasks",
+  "sorting": "a",
+  "folder": "DfRYbeNPE50rzCml",
+  "type": "Item",
+  "_id": "ELbVEZ1rid6ek5fh",
+  "description": "",
+  "sort": 0,
+  "color": null,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.4",
+    "createdTime": 1763281210710,
+    "modifiedTime": 1763281210710,
+    "lastModifiedBy": "6ClVUxrA2eebq5C2"
+  },
+  "_key": "!folders!ELbVEZ1rid6ek5fh"
+}

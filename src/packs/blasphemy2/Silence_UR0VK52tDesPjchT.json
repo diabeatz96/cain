@@ -1,0 +1,49 @@
+{
+  "name": "Silence",
+  "type": "blasphemyPower",
+  "img": "systems/cain/assets/Blasphemies/tongue.png",
+  "folder": "oH68DZ4n3W1cGAc4",
+  "system": {
+    "blasphemyType": "Tongue",
+    "powerName": "Silence",
+    "isPassive": false,
+    "keywords": [
+      "Transmute, 1 scene, long"
+    ],
+    "powerDescription": "You say ‘silence’ and choose an area up to {<CAT> size 0} with its center at a point in range. Everything in the area completely stops producing noise. Anything mundane that would make a loud noise as part of normal part of its operation completely stops functioning, such as vehicle engines, creaky door hinges, guns, explosives, fireworks, etc. Your powers from this blasphemy or any other blasphemy or psychic effect that would create a loud noise do not work inside this area.\n• Gain or grant +1D when next acting on this power.\n• This power can easily affect the parameters of rolls.",
+    "description": "",
+    "primaryColor": "#000000",
+    "accentColor": "#ff0000",
+    "secondaryColor": "#4a4a4a",
+    "textColor": "#ffffff",
+    "psycheBurstCost": true,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false
+  },
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "6ClVUxrA2eebq5C2": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.351",
+    "systemId": "cain",
+    "systemVersion": "1.3.3",
+    "createdTime": 1763277232656,
+    "modifiedTime": 1763277232656,
+    "lastModifiedBy": "6ClVUxrA2eebq5C2",
+    "exportSource": {
+      "worldId": "cain-setup",
+      "uuid": null,
+      "coreVersion": "12.343",
+      "systemId": "cain",
+      "systemVersion": "1.3.3"
+    }
+  },
+  "sort": 300000,
+  "_id": "UR0VK52tDesPjchT",
+  "_key": "!items!UR0VK52tDesPjchT"
+}

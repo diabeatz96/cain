@@ -7,7 +7,7 @@ books
 _source/
 
 # Compiled compendium packs (built from src/packs/)
-packs/
+/packs/
 
 # Keep the directory structure
 !packs/.gitkeep

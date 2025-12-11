@@ -1,0 +1,43 @@
+{
+  "name": "Surrender",
+  "type": "blasphemyPower",
+  "img": "systems/cain/assets/Blasphemies/bind.png",
+  "folder": "qbarzQOfDH1uyB02",
+  "system": {
+    "blasphemyType": "Bind",
+    "powerName": "Surrender",
+    "isPassive": false,
+    "keywords": [
+      "Charm, Self, until rest"
+    ],
+    "powerDescription": "You draw on your sin's energy to partially fuse with its essence. Your body mutates slightly to accommodate this change. Immediately manifest a temporary sin mark and roll for the location and ability, which you gain until you end this ability early or rest. You may gain 1 sin to re-roll the mark ability, any number of times, any time while this power is active.\n\nIf you hit sin overflow while this effect is active and successfully resist, you manifest the chosen sin mark permanently instead of rolling for it.",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#0064ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "psycheBurstCost": true,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false
+  },
+  "_id": "nsdM6CA3XQWCMb1m",
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "6ClVUxrA2eebq5C2": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.blasphemies.Item.nsdM6CA3XQWCMb1m",
+    "duplicateSource": null,
+    "coreVersion": "13.351",
+    "systemId": "cain",
+    "systemVersion": "1.3.3",
+    "createdTime": 1763277232656,
+    "modifiedTime": 1763277232656,
+    "lastModifiedBy": "6ClVUxrA2eebq5C2",
+    "exportSource": null
+  },
+  "sort": 0,
+  "_key": "!items!nsdM6CA3XQWCMb1m"
+}

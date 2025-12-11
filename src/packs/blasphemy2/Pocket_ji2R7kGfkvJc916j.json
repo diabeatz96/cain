@@ -1,0 +1,49 @@
+{
+  "name": "Pocket",
+  "type": "blasphemyPower",
+  "img": "systems/cain/assets/Blasphemies/gate.png",
+  "folder": "M2IyOSZHhi0ADpIW",
+  "system": {
+    "blasphemyType": "Gate",
+    "powerName": "Pocket",
+    "isPassive": true,
+    "keywords": [
+      "Passive"
+    ],
+    "powerDescription": "You can fit a compressed tear in space into a piece of clothing that you are wearing. \n        \n• You gain +1 KP \n• You can stow or retrieve items inside your pocket, which can hold a combined total of items worth up to 3 KP. Once inside, the items are stored in an extra dimensional space and hidden and safe, no matter their size. The pocket is attached to your clothes and if they are destroyed, items inside pop out.",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ffff00",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "psycheBurstCost": false,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false
+  },
+  "_id": "ji2R7kGfkvJc916j",
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "6ClVUxrA2eebq5C2": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.blasphemies.Item.ji2R7kGfkvJc916j",
+    "duplicateSource": null,
+    "coreVersion": "13.351",
+    "systemId": "cain",
+    "systemVersion": "1.3.3",
+    "createdTime": 1763277232656,
+    "modifiedTime": 1763277232656,
+    "lastModifiedBy": "6ClVUxrA2eebq5C2",
+    "exportSource": {
+      "worldId": "testworld",
+      "uuid": null,
+      "coreVersion": "12.331",
+      "systemId": "cain",
+      "systemVersion": "1.0.20"
+    }
+  },
+  "sort": 0,
+  "_key": "!items!ji2R7kGfkvJc916j"
+}

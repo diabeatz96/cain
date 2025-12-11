@@ -1,0 +1,39 @@
+{
+  "folder": "viERhkdRMuTaByKl",
+  "name": "Seed of the Ymir Tree",
+  "type": "item",
+  "img": "systems/cain/assets/items/kp.png",
+  "system": {
+    "description": "<p>During a rest, you can spend</p><p>two resting dice to heal an injury,</p><p>removing it.</p>",
+    "quantity": 1,
+    "weight": 0,
+    "roll": {
+      "diceNum": 1,
+      "diceSize": "d6",
+      "diceBonus": ""
+    },
+    "kitPoint": 2,
+    "scripValue": 4,
+    "type": "Consumable"
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.351",
+    "systemId": "cain",
+    "systemVersion": "1.0.1",
+    "createdTime": 1723987411421,
+    "modifiedTime": 1723987411421,
+    "lastModifiedBy": "wAkEmoF9bl45blE0",
+    "exportSource": null
+  },
+  "_id": "HEqWZw9K7qzC6G6K",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "wAkEmoF9bl45blE0": 3
+  },
+  "_key": "!items!HEqWZw9K7qzC6G6K"
+}

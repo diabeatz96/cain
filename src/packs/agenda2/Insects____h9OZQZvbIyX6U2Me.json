@@ -1,0 +1,41 @@
+{
+  "name": "Insects!!!",
+  "type": "agendaAbility",
+  "img": "systems/cain/assets/Agendas/beast.png",
+  "folder": "IulApzPobXdDiffe",
+  "system": {
+    "abilityName": "Insects!!!",
+    "abilityDescription": "You have +1D when inflicting harm or violence against human opponents.",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff"
+  },
+  "_id": "h9OZQZvbIyX6U2Me",
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "6ClVUxrA2eebq5C2": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.agendas.Item.h9OZQZvbIyX6U2Me",
+    "duplicateSource": null,
+    "coreVersion": "13.351",
+    "systemId": "cain",
+    "systemVersion": "1.3.4",
+    "createdTime": 1763281210755,
+    "modifiedTime": 1763281210755,
+    "lastModifiedBy": "6ClVUxrA2eebq5C2",
+    "exportSource": {
+      "worldId": "cain-setup",
+      "uuid": null,
+      "coreVersion": "12.343",
+      "systemId": "cain",
+      "systemVersion": "1.3.2"
+    }
+  },
+  "sort": 0,
+  "_key": "!items!h9OZQZvbIyX6U2Me"
+}

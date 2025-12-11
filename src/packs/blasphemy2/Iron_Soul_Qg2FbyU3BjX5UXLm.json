@@ -1,0 +1,43 @@
+{
+  "name": "Iron Soul",
+  "type": "blasphemyPower",
+  "img": "systems/cain/assets/Blasphemies/tension.png",
+  "folder": "a680viXr2sP2rcjL",
+  "system": {
+    "blasphemyType": "Tension",
+    "powerName": "Iron Soul",
+    "isPassive": true,
+    "keywords": [
+      "Passive"
+    ],
+    "powerDescription": "When you would fill up your execution talisman and gain an injury, roll 1d6. On a 4+, go to 1 stress under maximum instead and ignore any excess, then lose the use of this passive until you rest.",
+    "description": "",
+    "primaryColor": "#595959",
+    "accentColor": "#ff0000",
+    "secondaryColor": "#000000",
+    "textColor": "#ffffff",
+    "psycheBurstCost": false,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false
+  },
+  "_id": "Qg2FbyU3BjX5UXLm",
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "6ClVUxrA2eebq5C2": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.blasphemies.Item.Qg2FbyU3BjX5UXLm",
+    "duplicateSource": null,
+    "coreVersion": "13.351",
+    "systemId": "cain",
+    "systemVersion": "1.3.3",
+    "createdTime": 1763277232656,
+    "modifiedTime": 1763277232656,
+    "lastModifiedBy": "6ClVUxrA2eebq5C2",
+    "exportSource": null
+  },
+  "sort": 0,
+  "_key": "!items!Qg2FbyU3BjX5UXLm"
+}

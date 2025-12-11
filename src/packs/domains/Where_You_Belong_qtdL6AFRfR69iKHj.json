@@ -1,0 +1,37 @@
+{
+  "folder": "qaJ31pcfTlOIf7xZ",
+  "name": "Where You Belong",
+  "type": "domain",
+  "_id": "qtdL6AFRfR69iKHj",
+  "img": "systems/cain/assets/Sins/ogre.png",
+  "system": {
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "sinSource": "ogre",
+    "domainDescription": "The ogre can control mud, water, and ambient temperature to killing effect. The ogre can sink into any sufficiently large pool of mud and reappear in short distance as part of any reaction it takes. Whenever pressure increases, the ogre can change the weather in a CAT+2 area until the remainder of the mission, making it extremely hostile (freezing cold, rain, etc). It becomes hard or risky (or both) to perform any activity outside in the area that requires concentration, focus, or manual dexterity without sufficient protection from the weather.",
+    "selectsExorcist": false,
+    "afflictionEffect": ""
+  },
+  "effects": [],
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "NRvfoxvJ6O6uKrea": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "cain",
+    "systemVersion": "1.3.10",
+    "createdTime": 1765084676746,
+    "modifiedTime": 1765084680053,
+    "lastModifiedBy": "NRvfoxvJ6O6uKrea"
+  },
+  "_key": "!items!qtdL6AFRfR69iKHj"
+}

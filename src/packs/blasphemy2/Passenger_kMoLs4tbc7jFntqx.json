@@ -1,0 +1,43 @@
+{
+  "name": "Passenger",
+  "type": "blasphemyPower",
+  "img": "systems/cain/assets/Blasphemies/jaunt.png",
+  "folder": "UXTunmuZ7HRpBPrp",
+  "system": {
+    "blasphemyType": "Jaunt",
+    "powerName": "Passenger",
+    "isPassive": false,
+    "keywords": [
+      "Curse, extreme range, 1 scene"
+    ],
+    "powerDescription": "You choose a group of willing people with a size equal to or less than 1/2 CAT in extreme range, who must be able to either hear you (even telepathically) or see you. You pull their psychic presence into your body for the duration. Their body becomes limp, vulnerable and insensate. However: \n        \n• they now share control of your body with you, including all senses. \n• You can surrender control of your body to them to allow them to make action rolls using their skills or action ratings, but your body (gear, access, etc). \n• You can set them up as normal or aid them on these skills. \n        \nThey cannot use psychic powers while possessing you this way, and you suffer any harm or consequences from their actions.",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "psycheBurstCost": true,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false
+  },
+  "_id": "kMoLs4tbc7jFntqx",
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "6ClVUxrA2eebq5C2": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.blasphemies.Item.kMoLs4tbc7jFntqx",
+    "duplicateSource": null,
+    "coreVersion": "13.351",
+    "systemId": "cain",
+    "systemVersion": "1.3.3",
+    "createdTime": 1763277232656,
+    "modifiedTime": 1763277232656,
+    "lastModifiedBy": "6ClVUxrA2eebq5C2",
+    "exportSource": null
+  },
+  "sort": 0,
+  "_key": "!items!kMoLs4tbc7jFntqx"
+}

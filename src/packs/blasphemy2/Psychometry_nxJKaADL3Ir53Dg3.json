@@ -1,0 +1,43 @@
+{
+  "name": "Psychometry",
+  "type": "blasphemyPower",
+  "img": "systems/cain/assets/Blasphemies/sympathy.png",
+  "folder": "Lgov2kLYrPoRsAHF",
+  "system": {
+    "blasphemyType": "Sympathy",
+    "powerName": "Psychometry",
+    "isPassive": false,
+    "keywords": [
+      "Instant, Adjacent"
+    ],
+    "powerDescription": "You can touch objects to remotely view their memories. You can view back a number of days equal to your CAT. Roll PSYCHE, then ask a question plus an additional question per success.\n        \n• Where has this object been?\n• Who has touched this object?\n• What has this object been used for?\n• What else is this object connected to?\n        \nMemories of an object are impressionist and and imprecise, and they are only usually ‘aware’ of their very immediate surroundings.\n\nAfter using this power, lose its use until you rest.",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "psycheBurstCost": false,
+    "psycheBurstNoCost": true,
+    "psycheBurstMultCost": false
+  },
+  "_id": "nxJKaADL3Ir53Dg3",
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "6ClVUxrA2eebq5C2": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.blasphemies.Item.nxJKaADL3Ir53Dg3",
+    "duplicateSource": null,
+    "coreVersion": "13.351",
+    "systemId": "cain",
+    "systemVersion": "1.3.3",
+    "createdTime": 1763277232656,
+    "modifiedTime": 1763277232656,
+    "lastModifiedBy": "6ClVUxrA2eebq5C2",
+    "exportSource": null
+  },
+  "sort": 0,
+  "_key": "!items!nxJKaADL3Ir53Dg3"
+}
