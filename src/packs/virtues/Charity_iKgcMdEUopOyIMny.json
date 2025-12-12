@@ -1,0 +1,46 @@
+{
+  "folder": null,
+  "name": "Charity",
+  "type": "bond",
+  "_id": "iKgcMdEUopOyIMny",
+  "img": "systems/cain/assets/Virtues/charity.png",
+  "system": {
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "virtueName": "The Twins",
+    "strictures": [
+      "When possible, you must participate in teamwork or set up.",
+      "You roll 0d when trying to hide, stealth, or avoid notice."
+    ],
+    "abilities": [
+      "k7silt5Cn9fwmzBp",
+      "sato6hVI2cUAWUIg",
+      "flb7MTLu7TPgdQb4",
+      "Q7kOKupjPb4xWhwC"
+    ],
+    "highBlasphemy": "hXStdM0Fh3Tkzpp4",
+    "highBlasphemyLevel": 1
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.351",
+    "systemId": "cain",
+    "systemVersion": "1.3.11",
+    "createdTime": 1765324318303,
+    "modifiedTime": 1765324318303,
+    "lastModifiedBy": "SYIh5BFClzglmca2",
+    "exportSource": null
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "SYIh5BFClzglmca2": 3
+  },
+  "_key": "!items!iKgcMdEUopOyIMny"
+}

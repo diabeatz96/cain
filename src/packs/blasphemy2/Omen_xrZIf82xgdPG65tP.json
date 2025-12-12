@@ -1,0 +1,43 @@
+{
+  "name": "Omen",
+  "type": "blasphemyPower",
+  "img": "systems/cain/assets/Blasphemies/whisper.png",
+  "folder": "lFhpC4zFwXiTAIZW",
+  "system": {
+    "blasphemyType": "Whisper",
+    "powerName": "Omen",
+    "isPassive": false,
+    "keywords": [
+      "Instant, Self"
+    ],
+    "powerDescription": "Ask your shadow ‘What will happen if I X’, where X is a simple course of activity you plan to take in the next hour or so (open this door, attend the meeting, attack this person, go down this street). The shadow gives you a brief impression of the future: \n        \n• Gain +1D when you or an ally next acts on the answer. \n• Pre-roll the risk die before you take the action. You can decide to back out of the action if you like, but if you follow the same course of activity in the future, use the prerolled risk die.",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#0064ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "psycheBurstCost": true,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false
+  },
+  "_id": "xrZIf82xgdPG65tP",
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "6ClVUxrA2eebq5C2": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.blasphemies.Item.xrZIf82xgdPG65tP",
+    "duplicateSource": null,
+    "coreVersion": "13.351",
+    "systemId": "cain",
+    "systemVersion": "1.3.3",
+    "createdTime": 1763277232656,
+    "modifiedTime": 1763277232656,
+    "lastModifiedBy": "6ClVUxrA2eebq5C2",
+    "exportSource": null
+  },
+  "sort": 0,
+  "_key": "!items!xrZIf82xgdPG65tP"
+}

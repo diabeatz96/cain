@@ -1,0 +1,22 @@
+{
+  "name": "Departed Abilities",
+  "sorting": "a",
+  "folder": "OuRQfVDdEObhuHdU",
+  "type": "Item",
+  "_id": "RyzqdBLIyb328nLl",
+  "description": "",
+  "sort": 0,
+  "color": null,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.4",
+    "createdTime": 1763281210710,
+    "modifiedTime": 1763281210710,
+    "lastModifiedBy": "6ClVUxrA2eebq5C2"
+  },
+  "_key": "!folders!RyzqdBLIyb328nLl"
+}

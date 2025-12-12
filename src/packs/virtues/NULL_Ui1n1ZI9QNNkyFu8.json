@@ -1,0 +1,44 @@
+{
+  "folder": "YJEqn8qNXySL3k4k",
+  "name": "NULL",
+  "type": "blasphemyPower",
+  "_id": "Ui1n1ZI9QNNkyFu8",
+  "img": "systems/cain/assets/Virtues/faith.png",
+  "system": {
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ffea00",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "blasphemyType": "New Blasphemy",
+    "powerName": "NULL",
+    "isPassive": false,
+    "keywords": [
+      "Instant, Charm"
+    ],
+    "powerDescription": "Duration: Instant, 1 scene | Type: Charm\n\nSpend all your remaining psyche bursts (min 1). For the duration of the scene, you become completely immune to psychic phenomena. Anything inflicting physical harm, like the physical attacks of Sins, can affect you normally. For example, you could be harmed by a thrown piece of furniture or a bullet, but not by a blast of purely psychic energy or a form of mind control.\n\nYou cannot be affected by afflictions (though they still remain on you, their abilities are merely suppressed for the scene).\n\nIn return, for the duration, you cannot use or be affected by any blasphemy other than this one, including those from your allies, and any currently affecting you end.\n\nUnlike other powers, you cannot end this effect early.",
+    "psycheBurstCost": false,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": true,
+    "isHighBlasphemy": true
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.351",
+    "systemId": "cain",
+    "systemVersion": "1.3.11",
+    "createdTime": 1765324318303,
+    "modifiedTime": 1765324318303,
+    "lastModifiedBy": "SYIh5BFClzglmca2",
+    "exportSource": null
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "SYIh5BFClzglmca2": 3
+  },
+  "_key": "!items!Ui1n1ZI9QNNkyFu8"
+}

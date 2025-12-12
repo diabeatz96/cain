@@ -1,0 +1,37 @@
+{
+  "folder": "702hTAEZluNgDVB5",
+  "name": "Taking the Ears",
+  "type": "domain",
+  "_id": "w5EDZxtRdNBbr5rA",
+  "img": "systems/cain/assets/Sins/idol.png",
+  "system": {
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "sinSource": "idol",
+    "domainDescription": "The idol’s voice and psychic presence is overwhelming, like an ocean battering down a rickety door. \n\n• As a threat or a tension move, the Idol can speak to a group of mundane humans. If successful, they are immediately added to the cult and become a group of cultists. If cultists are already present, increase their execution talisman by 2 instead. \n\n• As a threat, the idol can begin to speak an unspeakable word. If the threat is successful, one exorcist that hears it takes 2d3 stress and the deafened affliction for the rest of the mission (can’t hear, may make activities reliant on hearing hard or impossible). Characters that are already deaf are immune to this. At the end of the mission, roll a 1d6 fortune. On a 1 or 2, the character is permanently deafened but has time to adjust before the next mission, making it have no further deleterious effects.",
+    "selectsExorcist": false,
+    "afflictionEffect": ""
+  },
+  "effects": [],
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "NRvfoxvJ6O6uKrea": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "cain",
+    "systemVersion": "1.3.10",
+    "createdTime": 1765085207197,
+    "modifiedTime": 1765085218570,
+    "lastModifiedBy": "NRvfoxvJ6O6uKrea"
+  },
+  "_key": "!items!w5EDZxtRdNBbr5rA"
+}

@@ -1,0 +1,44 @@
+{
+  "folder": "YJEqn8qNXySL3k4k",
+  "name": "SHAKE",
+  "type": "blasphemyPower",
+  "_id": "5dh6Tyq3ZEBLySG9",
+  "img": "systems/cain/assets/Virtues/prudence.png",
+  "system": {
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#0062ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "blasphemyType": "New Blasphemy",
+    "powerName": "SHAKE",
+    "isPassive": false,
+    "keywords": [
+      ""
+    ],
+    "powerDescription": "SHAKE\nDuration: 1 scene, short\nRange: {<CAT> range 0}\n\nYou may spend all your remaining psyche bursts to instantly enforce a game from the list below on yourself and all other humans, sins, or exorcists in range. Breaking the rules of the game causes excruciating pain, hemorrhaging, and eventually death.\n\nAs long as the rule applies:\n• For you and allies, actions become harder when you must avoid breaking the rule with your actions\n• If through your actions you or an ally intentionally breaks the rule, you take 2d3 stress, which cannot be reduced in any way and could inflict injuries as normal\n\nIn return:\n• If the target, through their actions, breaks a rule intentionally, they take 1d3 slashes on their execution talisman. Humans are killed instantly. They are aware of this effect.\n• You may set up an ally for free, three times, while the rule is active, and without rolling. Describe how you are taking advantage of the rule. Any normal effects of setup apply to these special setup actions, and you can take them without counting as an action in a conflict scene.\n\nYou cannot end this effect early, and it lasts for the scene.\n\nGAMES:\n• The Floor is Lava (Don't Touch the Ground)\n• King of the Hill (Must stay inside a small area)\n• Reverse Tag (Don't touch a sin, human, or exorcist)\n• Look No Hands (Don't Use Your Hands)\n• No Talking Contest (Don't speak or make loud noises)\n• Marco Polo (Don't open eyes. Targets must say 'Polo' when you say 'Marco' and cannot stray from {<CAT> range -2} from you)\n• Red Light Green Light (Those affected by the rule see a phantom red and green light and are forced to stop moving on red light)",
+    "psycheBurstCost": false,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false,
+    "isHighBlasphemy": true
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.351",
+    "systemId": "cain",
+    "systemVersion": "1.3.11",
+    "createdTime": 1765324318303,
+    "modifiedTime": 1765324318303,
+    "lastModifiedBy": "SYIh5BFClzglmca2",
+    "exportSource": null
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "SYIh5BFClzglmca2": 3
+  },
+  "_key": "!items!5dh6Tyq3ZEBLySG9"
+}

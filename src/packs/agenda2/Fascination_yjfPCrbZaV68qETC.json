@@ -1,0 +1,35 @@
+{
+  "name": "Fascination",
+  "type": "agendaAbility",
+  "img": "icons/svg/item-bag.svg",
+  "folder": "ei3M4rXs2KA1xF9p",
+  "system": {
+    "abilityName": "Fascination",
+    "abilityDescription": "You can declare your fascination with another character in the group at the start of any hunt. When that character rolls a 6 on risk, you lose 1 stress. When they roll a 1, you gain 1 stress. This stress cannot cause you an injury.",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff"
+  },
+  "_id": "yjfPCrbZaV68qETC",
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "6ClVUxrA2eebq5C2": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.agendas.Item.yjfPCrbZaV68qETC",
+    "duplicateSource": null,
+    "coreVersion": "13.351",
+    "systemId": "cain",
+    "systemVersion": "1.3.4",
+    "createdTime": 1763281210755,
+    "modifiedTime": 1763281210755,
+    "lastModifiedBy": "6ClVUxrA2eebq5C2",
+    "exportSource": null
+  },
+  "sort": 0,
+  "_key": "!items!yjfPCrbZaV68qETC"
+}

@@ -1,0 +1,43 @@
+{
+  "name": "Storm",
+  "type": "blasphemyPower",
+  "img": "systems/cain/assets/Blasphemies/ardence.png",
+  "folder": "OlQPKUoRA4sfNEBM",
+  "system": {
+    "blasphemyType": "Ardence",
+    "powerName": "Storm",
+    "isPassive": false,
+    "keywords": [
+      "Transmute, Extreme, Whole Hunt"
+    ],
+    "powerDescription": "You can spend any number of psyche bursts to send potential energy into the atmosphere, affecting the a microclimate in a {<CAT> area 2} area, with a maximum of CAT 7. Choose one of the below, plus one more per psyche burst spent. The chosen effects last for the whole mission or until dismissed. You may gain or grant +1D when you or any ally next acts to take advantage of this power: \n        \n• Clear: Clear the skies in the area, canceling any weather (including the below). \n• Rain: Rain drenches the area for the duration of an intensity you choose (drizzle, pouring, torrential). \n• Cold: The air freezes, freezing water and icing over roads and paths. Any precipitation becomes snow. \n• Fog: Thick fog rolls in, limiting visibility. \n• Gale: Whipping wind rolls through the area, blowing away fog, smoke, or dust, and making it hard to hear or be outside. \n        \nThis power may easily effect the parameters of rolls, such as difficulty and risk.\n\n Once used, lose the use of this power until you rest.",
+    "description": "",
+    "primaryColor": "#333333",
+    "accentColor": "#ff0000",
+    "secondaryColor": "#000000",
+    "textColor": "#ffffff",
+    "psycheBurstCost": false,
+    "psycheBurstNoCost": true,
+    "psycheBurstMultCost": false
+  },
+  "_id": "FoXZxdVz3bha6PoZ",
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "6ClVUxrA2eebq5C2": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.blasphemies.Item.FoXZxdVz3bha6PoZ",
+    "duplicateSource": null,
+    "coreVersion": "13.351",
+    "systemId": "cain",
+    "systemVersion": "1.3.3",
+    "createdTime": 1763277232656,
+    "modifiedTime": 1763277232656,
+    "lastModifiedBy": "6ClVUxrA2eebq5C2",
+    "exportSource": null
+  },
+  "sort": 0,
+  "_key": "!items!FoXZxdVz3bha6PoZ"
+}

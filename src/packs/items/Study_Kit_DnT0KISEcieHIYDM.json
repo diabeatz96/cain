@@ -1,0 +1,39 @@
+{
+  "folder": "W54tBb4dDKbp2nzT",
+  "name": "Study Kit",
+  "type": "item",
+  "img": "systems/cain/assets/items/kp.png",
+  "system": {
+    "description": "<p>Official kit of students of all ages continuing their</p><p>education in school facilities while on-job.</p><p>Spend 1 KP to pull out one of the following:</p><p>Electronic dictionary, translation guide, local map,</p><p>pencil case, notebook, textbook on a relevant subject</p><p>(2KP)</p>",
+    "quantity": 1,
+    "weight": 0,
+    "roll": {
+      "diceNum": 1,
+      "diceSize": "d6",
+      "diceBonus": ""
+    },
+    "kitPoint": 1,
+    "scripValue": 3,
+    "type": "Possession"
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.351",
+    "systemId": "cain",
+    "systemVersion": "1.0.1",
+    "createdTime": 1723987411421,
+    "modifiedTime": 1723987411421,
+    "lastModifiedBy": "wAkEmoF9bl45blE0",
+    "exportSource": null
+  },
+  "_id": "DnT0KISEcieHIYDM",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "wAkEmoF9bl45blE0": 3
+  },
+  "_key": "!items!DnT0KISEcieHIYDM"
+}

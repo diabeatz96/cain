@@ -1,0 +1,37 @@
+{
+  "folder": "KlldzazwNjHSuowx",
+  "name": "Wolf Down the Earth",
+  "type": "domain",
+  "_id": "JCxawAXHc1q9kXr8",
+  "img": "systems/cain/assets/Sins/toad.png",
+  "system": {
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "sinSource": "toad",
+    "domainDescription": "The Toad is able to unhinge its jaw to a void-like space and swallow huge chunks of the scenery. \n\n• It can burrow through solid rock when moving around. \n\n• The toad inflicts +1 more stress to its target if it is slowed, off balance, immobile, or entangled in some way. \n\n• Once a scene, as a threat, it can attempt to devour an area close to it, obliterating all inanimate matter, no matter its toughness. The size of this area depends on the Toad’s CAT. One or two exorcists caught in the area take 2d3 stress if the toad is allowed to execute on the threat.",
+    "selectsExorcist": false,
+    "afflictionEffect": ""
+  },
+  "effects": [],
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "NRvfoxvJ6O6uKrea": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "cain",
+    "systemVersion": "1.3.10",
+    "createdTime": 1765084847344,
+    "modifiedTime": 1765084860864,
+    "lastModifiedBy": "NRvfoxvJ6O6uKrea"
+  },
+  "_key": "!items!JCxawAXHc1q9kXr8"
+}

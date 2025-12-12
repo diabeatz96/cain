@@ -3,11 +3,14 @@ import {
   prepareActiveEffectCategories,
 } from '../helpers/effects.mjs';
 
+// Use v13 namespaced ItemSheet with fallback for v11/v12
+const BaseItemSheet = foundry?.appv1?.sheets?.ItemSheet ?? ItemSheet;
+
 /**
  * Extend the basic ItemSheet with some very simple modifications
  * @extends {ItemSheet}
  */
-export class CainItemSheet extends ItemSheet {
+export class CainItemSheet extends BaseItemSheet {
   /** @override */
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {

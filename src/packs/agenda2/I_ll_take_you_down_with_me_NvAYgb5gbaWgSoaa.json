@@ -1,0 +1,41 @@
+{
+  "name": "I’ll take you down with me",
+  "type": "agendaAbility",
+  "img": "systems/cain/assets/Agendas/beast.png",
+  "folder": "IulApzPobXdDiffe",
+  "system": {
+    "abilityName": "I’ll take you down with me",
+    "abilityDescription": "Regain 1 psyche burst when you take an injury, fill out a hook, or take an affliction.",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff"
+  },
+  "_id": "NvAYgb5gbaWgSoaa",
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "6ClVUxrA2eebq5C2": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.agendas.Item.NvAYgb5gbaWgSoaa",
+    "duplicateSource": null,
+    "coreVersion": "13.351",
+    "systemId": "cain",
+    "systemVersion": "1.3.4",
+    "createdTime": 1763281210755,
+    "modifiedTime": 1763281210755,
+    "lastModifiedBy": "6ClVUxrA2eebq5C2",
+    "exportSource": {
+      "worldId": "cain-setup",
+      "uuid": null,
+      "coreVersion": "12.343",
+      "systemId": "cain",
+      "systemVersion": "1.3.2"
+    }
+  },
+  "sort": 0,
+  "_key": "!items!NvAYgb5gbaWgSoaa"
+}

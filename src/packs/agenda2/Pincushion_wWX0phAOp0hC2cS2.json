@@ -1,0 +1,41 @@
+{
+  "folder": "u4GgREpGt0WPc2hs",
+  "name": "Pincushion",
+  "type": "agendaAbility",
+  "_id": "wWX0phAOp0hC2cS2",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "abilityName": "Pincushion",
+    "abilityDescription": "Exorcists in short range from you can always take injuries or afflictions in your place. If they do, they gain 1 xp, but no more than once a mission."
+  },
+  "effects": [],
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "6ClVUxrA2eebq5C2": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.351",
+    "systemId": "cain",
+    "systemVersion": "1.3.4",
+    "createdTime": 1763281210755,
+    "modifiedTime": 1763281210755,
+    "lastModifiedBy": "6ClVUxrA2eebq5C2",
+    "exportSource": {
+      "worldId": "cain-setup",
+      "uuid": null,
+      "coreVersion": "12.343",
+      "systemId": "cain",
+      "systemVersion": "1.3.4"
+    }
+  },
+  "_key": "!items!wWX0phAOp0hC2cS2"
+}

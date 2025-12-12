@@ -1,0 +1,43 @@
+{
+  "name": "Precognition",
+  "type": "blasphemyPower",
+  "img": "systems/cain/assets/Blasphemies/whisper.png",
+  "folder": "lFhpC4zFwXiTAIZW",
+  "system": {
+    "blasphemyType": "Whisper",
+    "powerName": "Precognition",
+    "isPassive": false,
+    "keywords": [
+      "Instant, Self"
+    ],
+    "powerDescription": "When the Admin is describing a scene or you are about to take a course of action, you can ‘flash back’. Make an action roll or play a scene out in the past, where you had a vision of the present moment. This cannot completely alter the established facts of the present (you can’t have knocked someone out in the past if you just finished having a conversation with them in the present, for example), but could change the situation or alter present details, or it could set up yourself or any ally. For example you could have made preparations for the current moment (locked or unlocked a door, stowed some gear, made a phone call, etc). If you use this power for gear, mark KP for it as normal.\n        \nIf the situation is complicated, also take 1 nonlethal stress. If it’s convoluted or far fetched, take 3 nonlethal stress.",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#0064ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "psycheBurstCost": true,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false
+  },
+  "_id": "s8yT2dFmSa9mYFDV",
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "6ClVUxrA2eebq5C2": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.blasphemies.Item.s8yT2dFmSa9mYFDV",
+    "duplicateSource": null,
+    "coreVersion": "13.351",
+    "systemId": "cain",
+    "systemVersion": "1.3.3",
+    "createdTime": 1763277232656,
+    "modifiedTime": 1763277232656,
+    "lastModifiedBy": "6ClVUxrA2eebq5C2",
+    "exportSource": null
+  },
+  "sort": 0,
+  "_key": "!items!s8yT2dFmSa9mYFDV"
+}

@@ -1,0 +1,22 @@
+{
+  "name": "Agendas/Tasks",
+  "type": "Item",
+  "folder": null,
+  "sorting": "m",
+  "_id": "cTTx6AF4aDPaPmLF",
+  "description": "",
+  "sort": 100000,
+  "color": null,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.4",
+    "createdTime": 1763281210710,
+    "modifiedTime": 1763281210803,
+    "lastModifiedBy": "6ClVUxrA2eebq5C2"
+  },
+  "_key": "!folders!cTTx6AF4aDPaPmLF"
+}

@@ -1,0 +1,35 @@
+{
+  "name": "Focused",
+  "type": "agendaAbility",
+  "img": "icons/svg/item-bag.svg",
+  "folder": "E5oem2SNa88Ezz0F",
+  "system": {
+    "abilityName": "Focused",
+    "abilityDescription": "Once a hunt, you may use a blasphemy that affects only you or your allies without spending psyche burst, and it gains +1 CAT.",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff"
+  },
+  "_id": "luoyZeRT2waM8BAt",
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "6ClVUxrA2eebq5C2": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.agendas.Item.luoyZeRT2waM8BAt",
+    "duplicateSource": null,
+    "coreVersion": "13.351",
+    "systemId": "cain",
+    "systemVersion": "1.3.4",
+    "createdTime": 1763281210755,
+    "modifiedTime": 1763281210755,
+    "lastModifiedBy": "6ClVUxrA2eebq5C2",
+    "exportSource": null
+  },
+  "sort": 0,
+  "_key": "!items!luoyZeRT2waM8BAt"
+}

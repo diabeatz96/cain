@@ -1,0 +1,22 @@
+{
+  "name": "Wire Powers",
+  "sorting": "a",
+  "folder": "N4kSOm5XD4H0OLlf",
+  "type": "Item",
+  "_id": "BOq223UVar0okTAH",
+  "description": "",
+  "sort": 0,
+  "color": null,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.3",
+    "createdTime": 1763277232621,
+    "modifiedTime": 1763277232621,
+    "lastModifiedBy": "6ClVUxrA2eebq5C2"
+  },
+  "_key": "!folders!BOq223UVar0okTAH"
+}

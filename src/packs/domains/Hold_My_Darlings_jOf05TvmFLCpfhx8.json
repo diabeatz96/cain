@@ -1,0 +1,37 @@
+{
+  "folder": "702hTAEZluNgDVB5",
+  "name": "Hold My Darlings",
+  "type": "domain",
+  "_id": "jOf05TvmFLCpfhx8",
+  "img": "systems/cain/assets/Sins/idol.png",
+  "system": {
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "sinSource": "idol",
+    "domainDescription": "The idol cultivates a special, insidious bond to its cult members. \n\n• Once a scene, when the idol would take slashes on its execution talisman from an exorcist’s action, it can supernaturally transfer the harm to any cultist or group of cultists present in the scene instead. This includes any NPCs added to the idol’s cult. \n\n• The idol can see through the eyes of any cult member as if they were its own, and can speak through the mouths of cult members with its voice.",
+    "selectsExorcist": false,
+    "afflictionEffect": ""
+  },
+  "effects": [],
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "NRvfoxvJ6O6uKrea": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "cain",
+    "systemVersion": "1.3.10",
+    "createdTime": 1765085110217,
+    "modifiedTime": 1765085124287,
+    "lastModifiedBy": "NRvfoxvJ6O6uKrea"
+  },
+  "_key": "!items!jOf05TvmFLCpfhx8"
+}

@@ -1,0 +1,37 @@
+{
+  "folder": "qaJ31pcfTlOIf7xZ",
+  "name": "The Lash Calls you Brother",
+  "type": "domain",
+  "_id": "95LePxGYiYNeLNRj",
+  "img": "systems/cain/assets/Sins/ogre.png",
+  "system": {
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "sinSource": "ogre",
+    "domainDescription": "At the start of a mission, the Ogre chooses an exorcist and creates a creature formed from the guilt and shame of that exorcist. The Admin secretly asks the targeted exorcist the following questions: \n\n• Which ally are you embarrassed to be around? • What's the worst thing you ever did? \n\n• What do you hate the most about yourself? The creature takes a form that plays off these answers. It is a trace with the following execution talisman.",
+    "selectsExorcist": false,
+    "afflictionEffect": ""
+  },
+  "effects": [],
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "NRvfoxvJ6O6uKrea": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "cain",
+    "systemVersion": "1.3.10",
+    "createdTime": 1765084618690,
+    "modifiedTime": 1765084658731,
+    "lastModifiedBy": "NRvfoxvJ6O6uKrea"
+  },
+  "_key": "!items!95LePxGYiYNeLNRj"
+}

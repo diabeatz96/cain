@@ -1,0 +1,22 @@
+{
+  "name": "Wire",
+  "sorting": "a",
+  "folder": "0Rx103v99LTFoMTP",
+  "type": "Item",
+  "_id": "N4kSOm5XD4H0OLlf",
+  "description": "",
+  "sort": 850000,
+  "color": "#0064ff",
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.3",
+    "createdTime": 1763277232621,
+    "modifiedTime": 1763277232621,
+    "lastModifiedBy": "6ClVUxrA2eebq5C2"
+  },
+  "_key": "!folders!N4kSOm5XD4H0OLlf"
+}

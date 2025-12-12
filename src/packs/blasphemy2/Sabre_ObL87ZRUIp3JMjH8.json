@@ -1,0 +1,43 @@
+{
+  "name": "Sabre",
+  "type": "blasphemyPower",
+  "img": "systems/cain/assets/Blasphemies/ardence.png",
+  "folder": "OlQPKUoRA4sfNEBM",
+  "system": {
+    "blasphemyType": "Ardence",
+    "powerName": "Sabre",
+    "isPassive": false,
+    "keywords": [
+      "Instant, CAT range"
+    ],
+    "powerDescription": "Release a blast of energy in a highly destructive beam. The beam goes in a straight line a range equal to {<CAT> distance_normal}, piercing through walls, doors, and obstructions effortlessly. It is extremely loud and bright. Roll PSYCHE for its effects, only spending a psyche burst on success. \n\nFor every ‘6’ result you roll, this ability inflicts 1 extra slash on a talisman, but you also take 2 stress, which could kill you or cause you an injury. This stress cannot be reduced or ignored in any way.",
+    "description": "",
+    "primaryColor": "#333333",
+    "accentColor": "#ff0000",
+    "secondaryColor": "#000000",
+    "textColor": "#ffffff",
+    "psycheBurstCost": true,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false
+  },
+  "_id": "ObL87ZRUIp3JMjH8",
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "6ClVUxrA2eebq5C2": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.blasphemies.Item.ObL87ZRUIp3JMjH8",
+    "duplicateSource": null,
+    "coreVersion": "13.351",
+    "systemId": "cain",
+    "systemVersion": "1.3.3",
+    "createdTime": 1763277232656,
+    "modifiedTime": 1763277232656,
+    "lastModifiedBy": "6ClVUxrA2eebq5C2",
+    "exportSource": null
+  },
+  "sort": 0,
+  "_key": "!items!ObL87ZRUIp3JMjH8"
+}

@@ -1,0 +1,44 @@
+{
+  "folder": "YJEqn8qNXySL3k4k",
+  "name": "STRENGTH",
+  "type": "blasphemyPower",
+  "_id": "ub1oQl9OudD6yVpX",
+  "img": "systems/cain/assets/Virtues/fortitude.png",
+  "system": {
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff0000",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "blasphemyType": "New Blasphemy",
+    "powerName": "STRENGTH",
+    "isPassive": false,
+    "keywords": [
+      "Charm, 1SCENE"
+    ],
+    "powerDescription": "STRENGTH\nDuration: 1 scene | Type: Charm\n\nA rare mutation of the Amplify blasphemy, this ability allows the very flesh and blood of its wielder to be infused with grace, pushing them past impossible limits. Without proper training, using this blasphemy will cause internal organs to violently burst from the body.\n\nSpend all your remaining psyche bursts (min 1). For the remainder of the scene, your mundane physical abilities are now equal to {<CAT> magnitude 0} and fighting sins with mundane forces is no longer hard.\n\n• You can push any physical action to {<CAT> magnitude +2} instead by gaining 2d3 stress. This could inflict an injury.\n• All weapons you use break after use unless specifically tempered. You can temper any weapon between missions by spending 1 scrip per weapon.\n• At the end of the scene, you take an injury and become comatose until your group rests. You recover at the start of the rest period and can otherwise rest normally.",
+    "psycheBurstCost": false,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": true,
+    "isHighBlasphemy": true
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.351",
+    "systemId": "cain",
+    "systemVersion": "1.3.11",
+    "createdTime": 1765324318303,
+    "modifiedTime": 1765324318303,
+    "lastModifiedBy": "SYIh5BFClzglmca2",
+    "exportSource": null
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "SYIh5BFClzglmca2": 3
+  },
+  "_key": "!items!ub1oQl9OudD6yVpX"
+}

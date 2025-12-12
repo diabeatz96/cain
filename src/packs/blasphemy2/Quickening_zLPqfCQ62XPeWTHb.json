@@ -1,0 +1,43 @@
+{
+  "name": "Quickening",
+  "type": "blasphemyPower",
+  "img": "systems/cain/assets/Blasphemies/flux.png",
+  "folder": "UpBuwlaCg53YoSN4",
+  "system": {
+    "blasphemyType": "Flux",
+    "powerName": "Quickening",
+    "isPassive": false,
+    "keywords": [
+      "Instant, Adjacent"
+    ],
+    "powerDescription": "You can accelerate the natural healing of your body or those of others, giving you the following benefits: \n        \n• Immediately heal 1d3 stress on yourself or another target. If your target is injured, increase this by +1. \n• You may heal a {<CAT> people 0} sized group of dying or injured humans in short range. Dying humans are stabilized and no longer in danger of expiring, but fall unconscious. Otherwise, badly injured humans are healed to the point of being able to (slowly) move by themselves. Minor injuries are fully healed.\n        \nThen, gain temporal instability.",
+    "description": "",
+    "primaryColor": "#808080",
+    "accentColor": "#ff0000",
+    "secondaryColor": "#4a4a4a",
+    "textColor": "#000000",
+    "psycheBurstCost": true,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false
+  },
+  "_id": "zLPqfCQ62XPeWTHb",
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "6ClVUxrA2eebq5C2": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.blasphemies.Item.zLPqfCQ62XPeWTHb",
+    "duplicateSource": null,
+    "coreVersion": "13.351",
+    "systemId": "cain",
+    "systemVersion": "1.3.3",
+    "createdTime": 1763277232656,
+    "modifiedTime": 1763277232656,
+    "lastModifiedBy": "6ClVUxrA2eebq5C2",
+    "exportSource": null
+  },
+  "sort": 0,
+  "_key": "!items!zLPqfCQ62XPeWTHb"
+}

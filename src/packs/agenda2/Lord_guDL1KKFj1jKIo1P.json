@@ -1,0 +1,22 @@
+{
+  "name": "Lord",
+  "sorting": "a",
+  "folder": "C73AFxFbUnxSxKPX",
+  "type": "Item",
+  "_id": "guDL1KKFj1jKIo1P",
+  "description": "",
+  "sort": 700000,
+  "color": null,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.4",
+    "createdTime": 1763281210710,
+    "modifiedTime": 1763281210710,
+    "lastModifiedBy": "6ClVUxrA2eebq5C2"
+  },
+  "_key": "!folders!guDL1KKFj1jKIo1P"
+}

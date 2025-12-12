@@ -1,0 +1,35 @@
+{
+  "name": "It’s Nothing",
+  "type": "agendaAbility",
+  "img": "icons/svg/item-bag.svg",
+  "folder": "0AAItoCZR2Rwg7oe",
+  "system": {
+    "abilityName": "It’s Nothing",
+    "abilityDescription": "You can ignore taking an injury by saying ‘It’s Nothing’. Gain a hook ‘It’s Nothing’. This hook fills up any time you say ‘It’s Nothing’ as well as the normal ways (taking this hook again, time passing, rolling a ‘1’). Segments on the hook can’t be erased in any way. When the hook fills out, you collapse and suffer instant death, which you cannot ignore. If you end a mission with this hook, you gain a permanent cosmetic scar.",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff"
+  },
+  "_id": "6rC0A5tLWW3ALLFX",
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "6ClVUxrA2eebq5C2": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.agendas.Item.6rC0A5tLWW3ALLFX",
+    "duplicateSource": null,
+    "coreVersion": "13.351",
+    "systemId": "cain",
+    "systemVersion": "1.3.4",
+    "createdTime": 1763281210755,
+    "modifiedTime": 1763281210755,
+    "lastModifiedBy": "6ClVUxrA2eebq5C2",
+    "exportSource": null
+  },
+  "sort": 0,
+  "_key": "!items!6rC0A5tLWW3ALLFX"
+}

@@ -1,0 +1,43 @@
+{
+  "name": "Stasis",
+  "type": "blasphemyPower",
+  "img": "systems/cain/assets/Blasphemies/tension.png",
+  "folder": "a680viXr2sP2rcjL",
+  "system": {
+    "blasphemyType": "Tension",
+    "powerName": "Stasis",
+    "isPassive": false,
+    "keywords": [
+      "Curse, 1 scene, Adjacent"
+    ],
+    "powerDescription": "With a gesture, you can lock yourself or a CAT sized group of humans or exorcists in a tension cage that covers them like a second skin, paralyzing them. If a human is hostile or unwilling, roll PSYCHE , and only spend the burst on success.\n        \nOnce trapped, your target is locked in, unable to move or act for the scene, and is immune to all harm and effects from the outside. The effect only ends once the scene passes and you cannot end it earlier. They can be moved around like a (very stiff) object and are fully sensate while inside, though they can see as though looking through a thick pane of glass and don’t need to breathe.",
+    "description": "",
+    "primaryColor": "#595959",
+    "accentColor": "#ff0000",
+    "secondaryColor": "#000000",
+    "textColor": "#ffffff",
+    "psycheBurstCost": true,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false
+  },
+  "_id": "CeL4cgPpWTmtSQbS",
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "6ClVUxrA2eebq5C2": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.blasphemies.Item.CeL4cgPpWTmtSQbS",
+    "duplicateSource": null,
+    "coreVersion": "13.351",
+    "systemId": "cain",
+    "systemVersion": "1.3.3",
+    "createdTime": 1763277232656,
+    "modifiedTime": 1763277232656,
+    "lastModifiedBy": "6ClVUxrA2eebq5C2",
+    "exportSource": null
+  },
+  "sort": 0,
+  "_key": "!items!CeL4cgPpWTmtSQbS"
+}
