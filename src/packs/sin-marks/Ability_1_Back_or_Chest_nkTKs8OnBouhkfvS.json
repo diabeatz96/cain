@@ -1,0 +1,36 @@
+{
+  "folder": "TfYGSjPO3wbAxfeu",
+  "name": "Ability 1 Back or Chest",
+  "type": "sinMarkAbility",
+  "_id": "nkTKs8OnBouhkfvS",
+  "img": "systems/cain/assets/sin-marks/back.png",
+  "system": {
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "abilityName": "Ability 1 Back or Chest",
+    "abilityDescription": "You can roll an extra resting die while resting. If you do, gain the same amount of sin.",
+    "bodyPartName": "Back or Chest"
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.351",
+    "systemId": "cain",
+    "systemVersion": "1.0.20",
+    "createdTime": 1725278401752,
+    "modifiedTime": 1725278401752,
+    "lastModifiedBy": "C33nbucocqUlAZNM",
+    "exportSource": null
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "C33nbucocqUlAZNM": 3
+  },
+  "_key": "!items!nkTKs8OnBouhkfvS"
+}

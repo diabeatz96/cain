@@ -1,0 +1,49 @@
+{
+  "name": "Shuffle",
+  "type": "blasphemyPower",
+  "img": "systems/cain/assets/Blasphemies/track.png",
+  "folder": "1Dy0NDGyGSp1Jj0k",
+  "system": {
+    "blasphemyType": "Track",
+    "powerName": "Shuffle",
+    "isPassive": false,
+    "keywords": [
+      "Transmute, Instant, CAT area"
+    ],
+    "powerDescription": "You may choose any number of objects, vehicles, or people in the affected area. Anything swapped may have a size up to 1/2 CAT (min 0). You instantly swap their positions and momentum. You must swap things of approximately the same size and mass. If attempting otherwise, or if you need to roll for effects such as harm, roll PSYCHE and only spend a burst on success. When you or an ally next acts to gain advantage of this power, they may gain +1D.",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ffdc00",
+    "secondaryColor": "#000000",
+    "textColor": "#ffffff",
+    "psycheBurstCost": true,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false
+  },
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "6ClVUxrA2eebq5C2": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.351",
+    "systemId": "cain",
+    "systemVersion": "1.3.3",
+    "createdTime": 1763277232656,
+    "modifiedTime": 1763277232656,
+    "lastModifiedBy": "6ClVUxrA2eebq5C2",
+    "exportSource": {
+      "worldId": "cain-setup",
+      "uuid": null,
+      "coreVersion": "12.343",
+      "systemId": "cain",
+      "systemVersion": "1.3.3"
+    }
+  },
+  "sort": 100000,
+  "_id": "XktWFJvobtNpxRox",
+  "_key": "!items!XktWFJvobtNpxRox"
+}

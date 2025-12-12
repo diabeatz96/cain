@@ -1,0 +1,22 @@
+{
+  "name": "PRUDENCE",
+  "sorting": "a",
+  "folder": "RTKDID8BYVEW4thq",
+  "type": "Item",
+  "_id": "n6PGZKfKRmdL4DYF",
+  "description": "",
+  "sort": 0,
+  "color": null,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.11",
+    "createdTime": 1765324318290,
+    "modifiedTime": 1765324318290,
+    "lastModifiedBy": "SYIh5BFClzglmca2"
+  },
+  "_key": "!folders!n6PGZKfKRmdL4DYF"
+}

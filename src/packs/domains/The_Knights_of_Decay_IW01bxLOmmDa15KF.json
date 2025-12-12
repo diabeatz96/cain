@@ -1,0 +1,37 @@
+{
+  "folder": "Rk4VeSSngMEqx7VT",
+  "name": "The Knights of Decay",
+  "type": "domain",
+  "_id": "IW01bxLOmmDa15KF",
+  "img": "systems/cain/assets/Sins/centipede.png",
+  "system": {
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "sinSource": "centipede",
+    "domainDescription": "The horde gains dangerous, armored infested. When the infested appear in a scene, one of these usually appear.\n\nJUGGERNAUT\nJuggernaut: Sin/human\n. Execution talisman 3. At 3+ pressure, increase by CAT.\n• Practically immune to mundane weapons unless its armor is exposed.\n• Blind and easily distracted\nReactions:\nInflict stress\n. Attacks with: Armored bulk, spines, mandibles. (1) 4 stress, (2/3): 3 stress, (4+) 2 stress.\nOr create a complication or threat : Grab someone with a mutated claw, charge someonethrough a wall or floor, knock someone out ordaze someone.\nOr Hive shroud (1/2): Complication: Start releasing acidic clouds that obscure and burn. All its allies take -1 slash on execution talismans until the Juggernaut is dealt with. Does not stack.",
+    "selectsExorcist": false,
+    "afflictionEffect": ""
+  },
+  "effects": [],
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "NRvfoxvJ6O6uKrea": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "cain",
+    "systemVersion": "1.3.10",
+    "createdTime": 1765086121824,
+    "modifiedTime": 1765086337313,
+    "lastModifiedBy": "NRvfoxvJ6O6uKrea"
+  },
+  "_key": "!items!IW01bxLOmmDa15KF"
+}

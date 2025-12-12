@@ -1,0 +1,44 @@
+{
+  "folder": "YJEqn8qNXySL3k4k",
+  "name": "IMMACULATE DEFIANCE OF HEAVEN",
+  "type": "blasphemyPower",
+  "_id": "9M9lOBSxvMOYaavT",
+  "img": "systems/cain/assets/Virtues/faith.png",
+  "system": {
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ffbb00",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "blasphemyType": "New Blasphemy",
+    "powerName": "IMMACULATE DEFIANCE OF HEAVEN",
+    "isPassive": false,
+    "keywords": [
+      "Permanent"
+    ],
+    "powerDescription": "Type: Passive/Permanent\n\nThis power has the same function as Null, except it is permanent. It has the following effects:\n\n• You can no longer use or be affected by blasphemies.\n• Your sin resets to 0. You no longer gain or use sin or can enter sin overflow for any reason.\n• You can now spend 1d3 stress instead of a psyche burst to gain +1D on any action by using your powerful physical abilities.\n• Fighting sins with mundane abilities is no longer hard. In addition, your mundane physical abilities are about 1/2 {<CAT> magnitude 0} in capability.\n• You gain +1 max injury.\n• Your natural lifespan extends by 10d10 years.",
+    "psycheBurstCost": false,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false,
+    "isHighBlasphemy": true
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.351",
+    "systemId": "cain",
+    "systemVersion": "1.3.11",
+    "createdTime": 1765324318303,
+    "modifiedTime": 1765324318303,
+    "lastModifiedBy": "SYIh5BFClzglmca2",
+    "exportSource": null
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "SYIh5BFClzglmca2": 3
+  },
+  "_key": "!items!9M9lOBSxvMOYaavT"
+}

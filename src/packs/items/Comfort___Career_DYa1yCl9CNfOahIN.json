@@ -1,0 +1,22 @@
+{
+  "name": "Comfort / Career",
+  "sorting": "a",
+  "folder": null,
+  "type": "Item",
+  "_id": "DYa1yCl9CNfOahIN",
+  "description": "",
+  "sort": 0,
+  "color": null,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "cain",
+    "systemVersion": "1.0.1",
+    "createdTime": 1723987411394,
+    "modifiedTime": 1723987411394,
+    "lastModifiedBy": "wAkEmoF9bl45blE0"
+  },
+  "_key": "!folders!DYa1yCl9CNfOahIN"
+}

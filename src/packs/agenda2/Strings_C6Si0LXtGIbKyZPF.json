@@ -1,0 +1,35 @@
+{
+  "name": "Strings",
+  "type": "agendaAbility",
+  "img": "icons/svg/item-bag.svg",
+  "folder": "ei3M4rXs2KA1xF9p",
+  "system": {
+    "abilityName": "Strings",
+    "abilityDescription": "When you rest with a consenting partner, you can spend quality time with them (the nature of which is up to them). If they choose to do so, they add +1 to all their resting results. However, until you next rest, you can force them to participate in teamwork with you or set you up once.",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff"
+  },
+  "_id": "C6Si0LXtGIbKyZPF",
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "6ClVUxrA2eebq5C2": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.agendas.Item.C6Si0LXtGIbKyZPF",
+    "duplicateSource": null,
+    "coreVersion": "13.351",
+    "systemId": "cain",
+    "systemVersion": "1.3.4",
+    "createdTime": 1763281210755,
+    "modifiedTime": 1763281210755,
+    "lastModifiedBy": "6ClVUxrA2eebq5C2",
+    "exportSource": null
+  },
+  "sort": 0,
+  "_key": "!items!C6Si0LXtGIbKyZPF"
+}

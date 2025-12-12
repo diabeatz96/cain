@@ -1,0 +1,49 @@
+{
+  "name": "Die",
+  "type": "blasphemyPower",
+  "img": "systems/cain/assets/Blasphemies/tongue.png",
+  "folder": "oH68DZ4n3W1cGAc4",
+  "system": {
+    "blasphemyType": "Tongue",
+    "powerName": "Die",
+    "isPassive": false,
+    "keywords": [
+      "Curse, Instant"
+    ],
+    "powerDescription": "You say ‘die’ and instantly kill all humans in an area up to {<CAT> area 0}, centered on you. This is not optional, you don’t get to choose who to kill or spare, and you don’t require a roll to do so. If you used this power at least once to kill one person, at the end of a hunt, permanently fill in a sin box. If you used it at least once to kill more than one person, permanently fill in 1d3 sin boxes.",
+    "description": "",
+    "primaryColor": "#000000",
+    "accentColor": "#ff0000",
+    "secondaryColor": "#4a4a4a",
+    "textColor": "#ffffff",
+    "psycheBurstCost": true,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false
+  },
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "6ClVUxrA2eebq5C2": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.351",
+    "systemId": "cain",
+    "systemVersion": "1.3.3",
+    "createdTime": 1763277232656,
+    "modifiedTime": 1763277232656,
+    "lastModifiedBy": "6ClVUxrA2eebq5C2",
+    "exportSource": {
+      "worldId": "cain-setup",
+      "uuid": null,
+      "coreVersion": "12.343",
+      "systemId": "cain",
+      "systemVersion": "1.3.3"
+    }
+  },
+  "sort": 600000,
+  "_id": "nsnvj5PMZeoQl60l",
+  "_key": "!items!nsnvj5PMZeoQl60l"
+}

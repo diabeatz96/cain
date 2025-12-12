@@ -1,0 +1,49 @@
+{
+  "name": "Mother's Embrace",
+  "type": "blasphemyPower",
+  "img": "systems/cain/assets/Blasphemies/mother.png",
+  "folder": "CxnL3eibXF8cUybW",
+  "system": {
+    "blasphemyType": "MOTHER",
+    "powerName": "Mother's Embrace",
+    "isPassive": true,
+    "keywords": [
+      ""
+    ],
+    "powerDescription": "When you sin overflow, you may gain a <b>Mother's Mark</b> instead of a regular sin mark, and roll 2d6, picking the lowest, if you choose to keep control.\n\n<b>Mother's Marks</b>\nA mother's mark does not lower sin overflow cap, but still counts as a sin mark in all other aspects. It has no other gameplay effects. Roll 1d6 for its aspect. You can gain the same mark more than once.\n\n<b>1. New eye</b> in center of forehead. Looks around on its own. You cannot see through it. <i>It is not yours.</i>\n<b>2. Large patch of skin or hair</b> loses all color, then gains banded stripes.\n<b>3. New pupil</b> in eye.\n<b>4. New tongue.</b>\n<b>5. New limb.</b> Elongated and double jointed.\n<b>6. Spiraling patterns,</b> warping the skin and muscle. Patterns change and shift over time.\n\nIf you lose control and have at least one Mother's Mark, you become subsumed into Mother, becoming a <b>Mother's Favorite</b> instead of an Imago. This is not a kind fate.",
+    "description": "",
+    "primaryColor": "#000000",
+    "accentColor": "#9427cc",
+    "secondaryColor": "#000000",
+    "textColor": "#ffffff",
+    "psycheBurstCost": false,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false
+  },
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "6ClVUxrA2eebq5C2": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Item.8EFCqDhw1Y4bZwDV",
+    "duplicateSource": null,
+    "coreVersion": "13.351",
+    "systemId": "cain",
+    "systemVersion": "1.3.3",
+    "createdTime": 1763277232656,
+    "modifiedTime": 1763277232656,
+    "lastModifiedBy": "6ClVUxrA2eebq5C2",
+    "exportSource": {
+      "worldId": "cain-setup",
+      "uuid": null,
+      "coreVersion": "12.343",
+      "systemId": "cain",
+      "systemVersion": "1.3.3"
+    }
+  },
+  "sort": 100000,
+  "_id": "8EFCqDhw1Y4bZwDV",
+  "_key": "!items!8EFCqDhw1Y4bZwDV"
+}

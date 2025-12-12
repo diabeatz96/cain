@@ -1,0 +1,39 @@
+{
+  "folder": "W54tBb4dDKbp2nzT",
+  "name": "Driver Kit",
+  "type": "item",
+  "img": "systems/cain/assets/items/kp.png",
+  "system": {
+    "description": "<p>Conspicuous. Allocated with approval</p><p>You have good quality driving gloves (1KP) and</p><p>access to a car on missions. The car has a 10</p><p>talisman for harm and can fit four people</p><p>comfortably. If it's totaled, you are docked 2 scrip for</p><p>a replacement.</p>",
+    "quantity": 1,
+    "weight": 0,
+    "roll": {
+      "diceNum": 1,
+      "diceSize": "d6",
+      "diceBonus": ""
+    },
+    "kitPoint": 1,
+    "scripValue": 6,
+    "type": "Possession"
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.351",
+    "systemId": "cain",
+    "systemVersion": "1.0.1",
+    "createdTime": 1723987411421,
+    "modifiedTime": 1723987411421,
+    "lastModifiedBy": "wAkEmoF9bl45blE0",
+    "exportSource": null
+  },
+  "_id": "KQhwFoosryFiHlrh",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "wAkEmoF9bl45blE0": 3
+  },
+  "_key": "!items!KQhwFoosryFiHlrh"
+}

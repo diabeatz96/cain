@@ -1,0 +1,38 @@
+{
+  "folder": "n6PGZKfKRmdL4DYF",
+  "name": "Prudence Level 0",
+  "type": "bondAbility",
+  "_id": "21jf4CRwOJKHlVjj",
+  "img": "systems/cain/assets/Virtues/prudence.png",
+  "system": {
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "bondLevel": 0,
+    "abilityDescription": "When you shake hands with a willing human on a deal or promise, if someone breaks it, they suffer instant death. This applies to you, and both you and your target are aware of the effects.",
+    "isPermanent": true,
+    "requiresPsycheBurst": false,
+    "psycheBurstCost": 0
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.351",
+    "systemId": "cain",
+    "systemVersion": "1.3.11",
+    "createdTime": 1765324318303,
+    "modifiedTime": 1765324318303,
+    "lastModifiedBy": "SYIh5BFClzglmca2",
+    "exportSource": null
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "SYIh5BFClzglmca2": 3
+  },
+  "_key": "!items!21jf4CRwOJKHlVjj"
+}

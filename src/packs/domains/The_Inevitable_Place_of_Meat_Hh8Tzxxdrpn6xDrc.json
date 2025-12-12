@@ -1,0 +1,37 @@
+{
+  "folder": "qaJ31pcfTlOIf7xZ",
+  "name": "The Inevitable Place of Meat",
+  "type": "domain",
+  "_id": "Hh8Tzxxdrpn6xDrc",
+  "img": "systems/cain/assets/Sins/ogre.png",
+  "system": {
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "sinSource": "ogre",
+    "domainDescription": "The ogre can temporarily cause the miasma to accelerate its effects.\n\n • The touch of the ogre can rapidly rot and decay objects, plant matter, and constructions, destroying them and dissolving them into mud and slime. • Exorcists inside the miasma start to superficially rot if they spend scenes there - hair falling out, sunken skin, dead skin cells, nails falling out, etc. They recover from this damage after the mission. \n\n• As a tension move the ogre can cause an exorcist inside the miasma to start decaying. They gain the Rotting affliction (see afflictions).\n\n • Exorcists subtract 1 from all their healing rolls.",
+    "selectsExorcist": false,
+    "afflictionEffect": ""
+  },
+  "effects": [],
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "NRvfoxvJ6O6uKrea": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "cain",
+    "systemVersion": "1.3.10",
+    "createdTime": 1765084576637,
+    "modifiedTime": 1765084589065,
+    "lastModifiedBy": "NRvfoxvJ6O6uKrea"
+  },
+  "_key": "!items!Hh8Tzxxdrpn6xDrc"
+}

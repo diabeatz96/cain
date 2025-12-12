@@ -1,0 +1,498 @@
+{
+  "folder": null,
+  "name": "Resonances",
+  "_id": "XY3o3oqawjUe6Wba",
+  "img": "systems/cain/assets/Blasphemies/sympathy.png",
+  "description": "<p style=\"text-align:center\">At the start of the mission, roll on the resonance table. When you make this roll, 1d3, then</p><p style=\"text-align:center\">1d6, then check the resonance tables after this blasphemy entry. When you are making an action roll and you are using an item you are resonant with, you gain a +1D bonus. You can spend a psyche burst any time to roll an additional resonance. You can keep up to three at a time, and only benefit from one at a time.</p>",
+  "results": [
+    {
+      "type": "text",
+      "weight": 1,
+      "range": [
+        11,
+        11
+      ],
+      "drawn": false,
+      "_id": "OkD0Da4NlTgWH6a8",
+      "img": "systems/cain/assets/Blasphemies/sympathy.png",
+      "flags": {},
+      "_stats": {
+        "coreVersion": "13.351",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "description": "Phones",
+      "name": "",
+      "_key": "!tables.results!XY3o3oqawjUe6Wba.OkD0Da4NlTgWH6a8"
+    },
+    {
+      "type": "text",
+      "weight": 1,
+      "range": [
+        12,
+        12
+      ],
+      "drawn": false,
+      "_id": "nGUSBqK26SClw7oa",
+      "img": "systems/cain/assets/Blasphemies/sympathy.png",
+      "flags": {},
+      "_stats": {
+        "coreVersion": "13.351",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "description": "Lights",
+      "name": "",
+      "_key": "!tables.results!XY3o3oqawjUe6Wba.nGUSBqK26SClw7oa"
+    },
+    {
+      "type": "text",
+      "weight": 1,
+      "range": [
+        13,
+        13
+      ],
+      "drawn": false,
+      "_id": "HJ35iNBSPsPj0quI",
+      "img": "systems/cain/assets/Blasphemies/sympathy.png",
+      "flags": {},
+      "_stats": {
+        "coreVersion": "13.351",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "description": "Knives",
+      "name": "",
+      "_key": "!tables.results!XY3o3oqawjUe6Wba.HJ35iNBSPsPj0quI"
+    },
+    {
+      "type": "text",
+      "weight": 1,
+      "range": [
+        14,
+        14
+      ],
+      "drawn": false,
+      "_id": "t5Q8s6OjEv5HDfhY",
+      "img": "systems/cain/assets/Blasphemies/sympathy.png",
+      "flags": {},
+      "_stats": {
+        "coreVersion": "13.351",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "description": "Keys",
+      "name": "",
+      "_key": "!tables.results!XY3o3oqawjUe6Wba.t5Q8s6OjEv5HDfhY"
+    },
+    {
+      "type": "text",
+      "weight": 1,
+      "range": [
+        15,
+        15
+      ],
+      "drawn": false,
+      "_id": "7kjCIaOlUgNbPajB",
+      "img": "assets/CAIN-ICONS/sympathy.png",
+      "flags": {},
+      "_stats": {
+        "coreVersion": "13.351",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "description": "Books",
+      "name": "",
+      "_key": "!tables.results!XY3o3oqawjUe6Wba.7kjCIaOlUgNbPajB"
+    },
+    {
+      "type": "text",
+      "weight": 1,
+      "range": [
+        16,
+        16
+      ],
+      "drawn": false,
+      "_id": "xHNypUS7aHGM6yGs",
+      "img": "systems/cain/assets/Blasphemies/sympathy.png",
+      "flags": {},
+      "_stats": {
+        "coreVersion": "13.351",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "description": "Baseball Bats",
+      "name": "",
+      "_key": "!tables.results!XY3o3oqawjUe6Wba.xHNypUS7aHGM6yGs"
+    },
+    {
+      "type": "text",
+      "weight": 1,
+      "range": [
+        21,
+        21
+      ],
+      "drawn": false,
+      "_id": "vUioJN7nYEnBImRn",
+      "img": "systems/cain/assets/Blasphemies/sympathy.png",
+      "flags": {},
+      "_stats": {
+        "coreVersion": "13.351",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "description": "Balls",
+      "name": "",
+      "_key": "!tables.results!XY3o3oqawjUe6Wba.vUioJN7nYEnBImRn"
+    },
+    {
+      "type": "text",
+      "weight": 1,
+      "range": [
+        22,
+        22
+      ],
+      "drawn": false,
+      "_id": "UozO5dP2XDzmRDEZ",
+      "img": "systems/cain/assets/Blasphemies/sympathy.png",
+      "flags": {},
+      "_stats": {
+        "coreVersion": "13.351",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "description": "Guns",
+      "name": "",
+      "_key": "!tables.results!XY3o3oqawjUe6Wba.UozO5dP2XDzmRDEZ"
+    },
+    {
+      "type": "text",
+      "weight": 1,
+      "range": [
+        23,
+        23
+      ],
+      "drawn": false,
+      "_id": "n7LcjYWCyaq3JcQq",
+      "img": "assets/CAIN-ICONS/sympathy.png",
+      "flags": {},
+      "_stats": {
+        "coreVersion": "13.351",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "description": "Mugs",
+      "name": "",
+      "_key": "!tables.results!XY3o3oqawjUe6Wba.n7LcjYWCyaq3JcQq"
+    },
+    {
+      "type": "text",
+      "weight": 1,
+      "range": [
+        24,
+        24
+      ],
+      "drawn": false,
+      "_id": "u21Uuc26Oczt7mBM",
+      "img": "systems/cain/assets/Blasphemies/sympathy.png",
+      "flags": {},
+      "_stats": {
+        "coreVersion": "13.351",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "description": "Computers",
+      "name": "",
+      "_key": "!tables.results!XY3o3oqawjUe6Wba.u21Uuc26Oczt7mBM"
+    },
+    {
+      "type": "text",
+      "weight": 1,
+      "range": [
+        25,
+        25
+      ],
+      "drawn": false,
+      "_id": "EwbTAuITvAcgYwd6",
+      "img": "systems/cain/assets/Blasphemies/sympathy.png",
+      "flags": {},
+      "_stats": {
+        "coreVersion": "13.351",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "description": "Shoes",
+      "name": "",
+      "_key": "!tables.results!XY3o3oqawjUe6Wba.EwbTAuITvAcgYwd6"
+    },
+    {
+      "type": "text",
+      "weight": 1,
+      "range": [
+        26,
+        26
+      ],
+      "drawn": false,
+      "_id": "KksWpWAOavTik8hv",
+      "img": "systems/cain/assets/Blasphemies/sympathy.png",
+      "flags": {},
+      "_stats": {
+        "coreVersion": "13.351",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "description": "Power Tools",
+      "name": "",
+      "_key": "!tables.results!XY3o3oqawjUe6Wba.KksWpWAOavTik8hv"
+    },
+    {
+      "type": "text",
+      "weight": 1,
+      "range": [
+        31,
+        31
+      ],
+      "drawn": false,
+      "_id": "Kff4YuDOgda7LpvM",
+      "img": "systems/cain/assets/Blasphemies/sympathy.png",
+      "flags": {},
+      "_stats": {
+        "coreVersion": "13.351",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "description": "Ropes",
+      "name": "",
+      "_key": "!tables.results!XY3o3oqawjUe6Wba.Kff4YuDOgda7LpvM"
+    },
+    {
+      "type": "text",
+      "weight": 1,
+      "range": [
+        32,
+        32
+      ],
+      "drawn": false,
+      "_id": "CDXOZMFCMnYnjVJS",
+      "img": "systems/cain/assets/Blasphemies/sympathy.png",
+      "flags": {},
+      "_stats": {
+        "coreVersion": "13.351",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "description": "Hammers",
+      "name": "",
+      "_key": "!tables.results!XY3o3oqawjUe6Wba.CDXOZMFCMnYnjVJS"
+    },
+    {
+      "type": "text",
+      "weight": 1,
+      "range": [
+        33,
+        33
+      ],
+      "drawn": false,
+      "_id": "cPA9YNCVvBZKzhMz",
+      "img": "systems/cain/assets/Blasphemies/sympathy.png",
+      "flags": {},
+      "_stats": {
+        "coreVersion": "13.351",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "description": "Cars",
+      "name": "",
+      "_key": "!tables.results!XY3o3oqawjUe6Wba.cPA9YNCVvBZKzhMz"
+    },
+    {
+      "type": "text",
+      "weight": 1,
+      "range": [
+        34,
+        34
+      ],
+      "drawn": false,
+      "_id": "YR6i96XTZrsDpKRG",
+      "img": "assets/CAIN-ICONS/sympathy.png",
+      "flags": {},
+      "_stats": {
+        "coreVersion": "13.351",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "description": "Doors",
+      "name": "",
+      "_key": "!tables.results!XY3o3oqawjUe6Wba.YR6i96XTZrsDpKRG"
+    },
+    {
+      "type": "text",
+      "weight": 1,
+      "range": [
+        35,
+        35
+      ],
+      "drawn": false,
+      "_id": "khwVuonv3SgoCQxT",
+      "img": "systems/cain/assets/Blasphemies/sympathy.png",
+      "flags": {},
+      "_stats": {
+        "coreVersion": "13.351",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "description": "Bags",
+      "name": "",
+      "_key": "!tables.results!XY3o3oqawjUe6Wba.khwVuonv3SgoCQxT"
+    },
+    {
+      "type": "text",
+      "weight": 1,
+      "range": [
+        36,
+        36
+      ],
+      "drawn": false,
+      "_id": "QPlPjb17aVTR57eA",
+      "img": "systems/cain/assets/Blasphemies/sympathy.png",
+      "flags": {},
+      "_stats": {
+        "coreVersion": "13.351",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "description": "Gloves",
+      "name": "",
+      "_key": "!tables.results!XY3o3oqawjUe6Wba.QPlPjb17aVTR57eA"
+    }
+  ],
+  "replacement": true,
+  "displayRoll": true,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.351",
+    "systemId": "cain",
+    "systemVersion": "1.0.3",
+    "createdTime": 1723988909855,
+    "modifiedTime": 1723988909855,
+    "lastModifiedBy": "wAkEmoF9bl45blE0",
+    "exportSource": null
+  },
+  "formula": "(1d3 * 10) + 1d6",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "wAkEmoF9bl45blE0": 3
+  },
+  "_key": "!tables!XY3o3oqawjUe6Wba"
+}

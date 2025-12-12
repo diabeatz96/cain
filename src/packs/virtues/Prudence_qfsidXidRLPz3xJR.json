@@ -1,0 +1,46 @@
+{
+  "folder": null,
+  "name": "Prudence",
+  "type": "bond",
+  "_id": "qfsidXidRLPz3xJR",
+  "img": "systems/cain/assets/Virtues/prudence.png",
+  "system": {
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "virtueName": "The Negotiator",
+    "strictures": [
+      "You must honor all deals and promises.",
+      "Roll 0d when choosing violence over negotiation."
+    ],
+    "abilities": [
+      "21jf4CRwOJKHlVjj",
+      "jzK7O0DjThxu4Q3o",
+      "NT7ES8NfPcq7bLgE",
+      "YIC4dW1VluECuuPP"
+    ],
+    "highBlasphemy": "5dh6Tyq3ZEBLySG9",
+    "highBlasphemyLevel": 1
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.351",
+    "systemId": "cain",
+    "systemVersion": "1.3.11",
+    "createdTime": 1765324318303,
+    "modifiedTime": 1765324318303,
+    "lastModifiedBy": "SYIh5BFClzglmca2",
+    "exportSource": null
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "SYIh5BFClzglmca2": 3
+  },
+  "_key": "!items!qfsidXidRLPz3xJR"
+}

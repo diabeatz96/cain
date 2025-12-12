@@ -26,6 +26,18 @@ jobs:
         with:
           fetch-depth: 0  # Fetch all history for proper changelog
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build compendium packs
+        run: npm run build:packs
+
       - name: Get current version
         id: get_version
         run: |
@@ -109,7 +121,7 @@ jobs:
       - name: Create release zip
         id: create_zip
         run: |
-          ZIP_NAME="cain1.3.zip"
+          ZIP_NAME="cain.zip"
           
           # Create a clean zip for distribution
           zip -r "$ZIP_NAME" . \
@@ -124,7 +136,11 @@ jobs:
             -x "*.cache" \
             -x "dist/*" \
             -x "coverage/*" \
-            -x ".nyc_output/*"
+            -x ".nyc_output/*" \
+            -x "src/*" \
+            -x "tools/*" \
+            -x "package*.json" \
+            -x "*.md"
           
           # Display info about the created file
           echo "✅ Created $ZIP_NAME"

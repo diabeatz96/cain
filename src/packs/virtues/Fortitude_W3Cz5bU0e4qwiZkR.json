@@ -1,0 +1,46 @@
+{
+  "folder": null,
+  "name": "Fortitude",
+  "type": "bond",
+  "_id": "W3Cz5bU0e4qwiZkR",
+  "img": "systems/cain/assets/Virtues/fortitude.png",
+  "system": {
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "virtueName": "The Disaster",
+    "strictures": [
+      "You cannot pass up the opportunity to get into a fight",
+      "Roll 0d on actions that would require talk instead of action"
+    ],
+    "abilities": [
+      "eSHlTfhN046fXoRu",
+      "OngQa7GbwaQijuvU",
+      "nBHXYCeiW0R2tMhJ",
+      "HoIvgieirjA8oAJr"
+    ],
+    "highBlasphemy": "ub1oQl9OudD6yVpX",
+    "highBlasphemyLevel": 1
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.351",
+    "systemId": "cain",
+    "systemVersion": "1.3.11",
+    "createdTime": 1765324318303,
+    "modifiedTime": 1765324318303,
+    "lastModifiedBy": "SYIh5BFClzglmca2",
+    "exportSource": null
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "SYIh5BFClzglmca2": 3
+  },
+  "_key": "!items!W3Cz5bU0e4qwiZkR"
+}

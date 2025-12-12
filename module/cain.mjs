@@ -15,6 +15,10 @@ import { PlayerOverview } from './documents/player-overview.mjs';
 import * as models from './data/_module.mjs';
 import PathosTracker from "./components/pathos-tracker/pathos-tracker.mjs";
 
+// Import dice roller
+import { CainDiceRoller } from './dice/cain-dice-roller.mjs';
+import { CainChatDicePanel } from './dice/chat-dice-panel.mjs';
+
 /* -------------------------------------------- */
 /*  Init Hook                                   */
 /* -------------------------------------------- */
@@ -27,7 +31,11 @@ Hooks.once('init', async function () {
     CainActor,
     CainItem,
     rollItemMacro,
+    CainDiceRoller,
   };
+
+  // Initialize the chat dice panel
+  CainChatDicePanel.init();
 
   // Add custom constants for configuration.
   CONFIG.CAIN = CAIN;
@@ -78,13 +86,19 @@ Hooks.once('init', async function () {
   CONFIG.ActiveEffect.legacyTransferral = false;
 
   // Register sheet application classes
-  Actors.unregisterSheet('core', ActorSheet);
-  Actors.registerSheet('cain', CainActorSheet, {
+  // Use v13 namespaced classes with fallback for v11/v12
+  const ActorsCollection = foundry?.documents?.collections?.Actors ?? Actors;
+  const ItemsCollection = foundry?.documents?.collections?.Items ?? Items;
+  const BaseActorSheet = foundry?.appv1?.sheets?.ActorSheet ?? ActorSheet;
+  const BaseItemSheet = foundry?.appv1?.sheets?.ItemSheet ?? ItemSheet;
+
+  ActorsCollection.unregisterSheet('core', BaseActorSheet);
+  ActorsCollection.registerSheet('cain', CainActorSheet, {
     makeDefault: true,
     label: 'CAIN.SheetLabels.Actor',
   });
-  Items.unregisterSheet('core', ItemSheet);
-  Items.registerSheet('cain', CainItemSheet, {
+  ItemsCollection.unregisterSheet('core', BaseItemSheet);
+  ItemsCollection.registerSheet('cain', CainItemSheet, {
     makeDefault: true,
     label: 'CAIN.SheetLabels.Item',
   });
@@ -200,6 +214,47 @@ Hooks.once('init', async function () {
     default: true,
   });
 
+  game.settings.register('cain', 'showDiceRoller', {
+    name: 'Show Dice Roller Panel',
+    hint: 'Display the dice roller panel in the chat sidebar. Disable if you prefer to roll from character sheets only.',
+    scope: 'client',
+    config: true,
+    type: Boolean,
+    default: true,
+    onChange: value => {
+      // Update dice panel visibility immediately
+      if (CONFIG.CAIN?.dicePanel?.element) {
+        CONFIG.CAIN.dicePanel.element.classList.toggle('hidden', !value);
+      }
+    }
+  });
+
+  game.settings.register('cain', 'dicePanelTheme', {
+    name: 'Dice Panel Theme',
+    hint: 'Choose the color theme for the dice roller panel. Click the palette icon in the panel header to cycle through themes.',
+    scope: 'client',
+    config: true,
+    type: String,
+    choices: {
+      'purple': 'Purple (Default)',
+      'dark': 'Dark',
+      'light': 'Light',
+      'blood': 'Blood'
+    },
+    default: 'purple',
+    onChange: value => {
+      // Update dice panel theme immediately
+      if (CONFIG.CAIN?.dicePanel?.element) {
+        const element = CONFIG.CAIN.dicePanel.element;
+        if (value === 'purple') {
+          element.removeAttribute('data-theme');
+        } else {
+          element.setAttribute('data-theme', value);
+        }
+      }
+    }
+  });
+
   game.settings.register('cain', 'pathosTrackerPosition', {
     name: 'Pathos Tracker Position',
     scope: 'client',
@@ -288,9 +343,12 @@ Hooks.once('init', async function () {
   applyAccessibilityMode(game.settings.get('cain', 'accessibilityMode'));
 
 
-  const blasphemyPowerTemplate = await getTemplate("systems/cain/templates/item/parts/item-blasphemy-power-sheet.hbs");
-  const blasphemyPowerPartialTemplate = await getTemplate("systems/cain/templates/item/parts/item-blasphemy-power-partial.hbs");
-  const sinMarkAbilityTemplate = await getTemplate("systems/cain/templates/item/parts/item-sin-mark-partial.hbs");
+  // Use v13 namespaced getTemplate with fallback for v11/v12
+  const getTemplateFn = foundry?.applications?.handlebars?.getTemplate ?? getTemplate;
+
+  const blasphemyPowerTemplate = await getTemplateFn("systems/cain/templates/item/parts/item-blasphemy-power-sheet.hbs");
+  const blasphemyPowerPartialTemplate = await getTemplateFn("systems/cain/templates/item/parts/item-blasphemy-power-partial.hbs");
+  const sinMarkAbilityTemplate = await getTemplateFn("systems/cain/templates/item/parts/item-sin-mark-partial.hbs");
 
   Handlebars.registerPartial("sinMarkAbility", sinMarkAbilityTemplate);
   Handlebars.registerPartial("blasphemyPower", blasphemyPowerTemplate);

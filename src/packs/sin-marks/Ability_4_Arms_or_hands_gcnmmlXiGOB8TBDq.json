@@ -1,0 +1,36 @@
+{
+  "folder": "FNVAIIyS7c4nL3hF",
+  "name": "Ability 4 Arms or hands",
+  "type": "sinMarkAbility",
+  "img": "systems/cain/assets/sin-marks/hand.png",
+  "system": {
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "abilityName": "Ability 4 Arms or hands",
+    "abilityDescription": "Once a mission, you can gain 1d3 sin to\nmorph your arm or hand into a melee weapon for a scene. It is a supernatural melee weapon of 1/2 CAT force.",
+    "bodyPartName": "Arms or hands"
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.351",
+    "systemId": "cain",
+    "systemVersion": "1.0.20",
+    "createdTime": 1725278401752,
+    "modifiedTime": 1725278401752,
+    "lastModifiedBy": "C33nbucocqUlAZNM",
+    "exportSource": null
+  },
+  "_id": "gcnmmlXiGOB8TBDq",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "C33nbucocqUlAZNM": 3
+  },
+  "_key": "!items!gcnmmlXiGOB8TBDq"
+}

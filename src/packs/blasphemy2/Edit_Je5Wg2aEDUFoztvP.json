@@ -1,0 +1,42 @@
+{
+  "name": "Edit",
+  "type": "blasphemy",
+  "img": "systems/cain/assets/Blasphemies/edot.png",
+  "folder": "62iLANNBf0nFx8BA",
+  "system": {
+    "blasphemyName": "Edit",
+    "powers": [
+      "PeqnwP99YJsHsVsY",
+      "icuPFcXqxYHdc3K4",
+      "mWZno2dyenjeuf1x",
+      "BZlYoFUVS8x6bDzb",
+      "4P9xFbLys5Y3y42D",
+      "mGFlqCMrPjITrlk6"
+    ],
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#0064ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff"
+  },
+  "_id": "Je5Wg2aEDUFoztvP",
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "6ClVUxrA2eebq5C2": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.blasphemies.Item.Je5Wg2aEDUFoztvP",
+    "duplicateSource": null,
+    "coreVersion": "13.351",
+    "systemId": "cain",
+    "systemVersion": "1.3.3",
+    "createdTime": 1763277232656,
+    "modifiedTime": 1763277232656,
+    "lastModifiedBy": "6ClVUxrA2eebq5C2",
+    "exportSource": null
+  },
+  "sort": 0,
+  "_key": "!items!Je5Wg2aEDUFoztvP"
+}

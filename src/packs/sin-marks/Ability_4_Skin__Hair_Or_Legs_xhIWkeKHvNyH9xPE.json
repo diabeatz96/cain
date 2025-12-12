@@ -1,0 +1,36 @@
+{
+  "folder": "PFJRVdcVhbgvPzDe",
+  "name": "Ability 4 Skin, Hair Or Legs",
+  "type": "sinMarkAbility",
+  "img": "systems/cain/assets/sin-marks/skin.png",
+  "system": {
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "abilityName": "Ability 4 Skin, Hair Or Legs",
+    "abilityDescription": "You can gain 1 sin during an action roll to glide a short distance through the air as part of the action. You have to start at height to gain this benefit.",
+    "bodyPartName": "Skin, Hair Or Legs"
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.351",
+    "systemId": "cain",
+    "systemVersion": "1.0.20",
+    "createdTime": 1725278401752,
+    "modifiedTime": 1725278401752,
+    "lastModifiedBy": "C33nbucocqUlAZNM",
+    "exportSource": null
+  },
+  "_id": "xhIWkeKHvNyH9xPE",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "C33nbucocqUlAZNM": 3
+  },
+  "_key": "!items!xhIWkeKHvNyH9xPE"
+}

@@ -1,0 +1,44 @@
+{
+  "folder": "YJEqn8qNXySL3k4k",
+  "name": "LAW",
+  "type": "blasphemyPower",
+  "_id": "YhcejRyJeEJnds4g",
+  "img": "systems/cain/assets/Virtues/justice.png",
+  "system": {
+    "description": "",
+    "primaryColor": "#000000",
+    "accentColor": "#009dff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "blasphemyType": "New Blasphemy",
+    "powerName": "LAW",
+    "isPassive": false,
+    "keywords": [
+      "Transmute, Adjacent, 1 scene"
+    ],
+    "powerDescription": "You set a rule of physical reality that affects everything in a circular area around you, called the Court, with a radius equal to {<CAT> area 0}. Any changes made take place instantly and persist inside the area, but the area itself does not move.\n\nThis power can always eliminate, destroy, or totally change mundane beings, objects or structures. Strong willed or supernatural beings such as exorcists or sins can partly resist its effects, but humans are always affected instantly. If you exit the area or the scene ends, the effect ends.\n\nTo use Law, spend all your remaining psyche bursts (min 1), then fill in the sentence:\n\n\"In the Court, ____ is/are _____\"\n\nYou can only use words from the Terms of Law list below. Then, choose one effect:\n\n- Grant up to three advantage die (total) to self or an ally while the court is active. These can be given out one at a time or all at once.\n\n- Instantly kill all humans in the area or that enter the area while the court is active.\n\n- Slash a talisman by rolling PSYCHE. This deals +1 slash on success. This can be performed when first using Law, then once more again while it is active.\n\n- Make something specific less hard, or less risky while the court is active.\n\nThis power may easily affect the parameters of rolls while in the area, and may make it so rolls are not even required for certain tasks. Additional effects are up to the GM and can be improvised depending on the fiction.\n\nTERMS OF LAW:\n1. Fast | 2. Slow | 3. Sticks | 4. Stones | 5. Paper | 6. Cloth | 7. Blood | 8. Nails | 9. Skin | 10. Slings or Bullets | 11. Arrows | 12. Blades | 13. Solid | 14. Liquid | 15. Metal | 16. Soft | 17. Sharp | 18. Heavy | 19. Light | 20. Earth | 21. Fire | 22. Water | 23. Air | 24. Forbidden | 25. Pulled | 26. Repulsed",
+    "psycheBurstCost": false,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": true,
+    "isHighBlasphemy": true
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.351",
+    "systemId": "cain",
+    "systemVersion": "1.3.11",
+    "createdTime": 1765324318303,
+    "modifiedTime": 1765324318303,
+    "lastModifiedBy": "SYIh5BFClzglmca2",
+    "exportSource": null
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "SYIh5BFClzglmca2": 3
+  },
+  "_key": "!items!YhcejRyJeEJnds4g"
+}

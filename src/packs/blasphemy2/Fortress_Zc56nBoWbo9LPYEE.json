@@ -1,0 +1,43 @@
+{
+  "name": "Fortress",
+  "type": "blasphemyPower",
+  "img": "systems/cain/assets/Blasphemies/tension.png",
+  "folder": "a680viXr2sP2rcjL",
+  "system": {
+    "blasphemyType": "Tension",
+    "powerName": "Fortress",
+    "isPassive": false,
+    "keywords": [
+      "Summon, Until rest, Short"
+    ],
+    "powerDescription": "Once a scene, you can create a spot tension field with a size determined by up to {<CAT> size 0} that appears as a large plane of shimmering force, invisible to humans. It can only exist as a flat plane (no bends or curves), and intersect or overlap any nonliving material, but otherwise is as hard as a solid object and prevents all living and nonliving matter and energy from crossing it. It has a 2+CAT talisman for its durability, which can take damage and be ticked up like an execution talisman by opponents. The field lasts until used again or until rest.",
+    "description": "",
+    "primaryColor": "#595959",
+    "accentColor": "#ff0000",
+    "secondaryColor": "#000000",
+    "textColor": "#ffffff",
+    "psycheBurstCost": true,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false
+  },
+  "_id": "Zc56nBoWbo9LPYEE",
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "6ClVUxrA2eebq5C2": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.blasphemies.Item.Zc56nBoWbo9LPYEE",
+    "duplicateSource": null,
+    "coreVersion": "13.351",
+    "systemId": "cain",
+    "systemVersion": "1.3.3",
+    "createdTime": 1763277232656,
+    "modifiedTime": 1763277232656,
+    "lastModifiedBy": "6ClVUxrA2eebq5C2",
+    "exportSource": null
+  },
+  "sort": 0,
+  "_key": "!items!Zc56nBoWbo9LPYEE"
+}

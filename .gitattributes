@@ -1,0 +1,5 @@
+# Treat any LevelDB files as binary
+*.ldb binary
+
+# Auto detect text files and perform LF normalization
+* text=auto

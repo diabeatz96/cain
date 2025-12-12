@@ -1,0 +1,35 @@
+{
+  "name": "Mea Culpa",
+  "type": "agendaAbility",
+  "img": "icons/svg/item-bag.svg",
+  "folder": "HWYYf4u5ELcbshbY",
+  "system": {
+    "abilityName": "Mea Culpa",
+    "abilityDescription": "The first time in a hunt you take an injury or an affliction, relieve 1d3+1 sin.",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff"
+  },
+  "_id": "GIBNWJ1OZKT5Wcxj",
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "6ClVUxrA2eebq5C2": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.agendas.Item.GIBNWJ1OZKT5Wcxj",
+    "duplicateSource": null,
+    "coreVersion": "13.351",
+    "systemId": "cain",
+    "systemVersion": "1.3.4",
+    "createdTime": 1763281210755,
+    "modifiedTime": 1763281210755,
+    "lastModifiedBy": "6ClVUxrA2eebq5C2",
+    "exportSource": null
+  },
+  "sort": 0,
+  "_key": "!items!GIBNWJ1OZKT5Wcxj"
+}

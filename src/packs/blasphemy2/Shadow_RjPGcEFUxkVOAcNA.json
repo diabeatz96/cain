@@ -1,0 +1,43 @@
+{
+  "name": "Shadow",
+  "type": "blasphemyPower",
+  "img": "systems/cain/assets/Blasphemies/whisper.png",
+  "folder": "lFhpC4zFwXiTAIZW",
+  "system": {
+    "blasphemyType": "Whisper",
+    "powerName": "Shadow",
+    "isPassive": true,
+    "keywords": [
+      "Passive"
+    ],
+    "powerDescription": "You harbor a separate being that follows you everywhere, even when you sleep.\n        \nTHE SHADOW is intangible and invisible to everyone, even the psychically sensitive. It can only weakly interact with the physical world and has its own mind and senses. It can range in about short range from you. It can pass through walls and surfaces easily but retreats into your body in bright light, preventing it from doing anything. \n        \nYou can talk to it telepathically, but talking to it is dangerous and causes 1 stress after any interaction ends. It has no obligation to tell you the truth unless you use your powers. \n        \nYou may talk to it safely using your abilities, and it knows the future. The Admin will answer for it.",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#0064ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "psycheBurstCost": false,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false
+  },
+  "_id": "RjPGcEFUxkVOAcNA",
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "6ClVUxrA2eebq5C2": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.blasphemies.Item.RjPGcEFUxkVOAcNA",
+    "duplicateSource": null,
+    "coreVersion": "13.351",
+    "systemId": "cain",
+    "systemVersion": "1.3.3",
+    "createdTime": 1763277232656,
+    "modifiedTime": 1763277232656,
+    "lastModifiedBy": "6ClVUxrA2eebq5C2",
+    "exportSource": null
+  },
+  "sort": 0,
+  "_key": "!items!RjPGcEFUxkVOAcNA"
+}

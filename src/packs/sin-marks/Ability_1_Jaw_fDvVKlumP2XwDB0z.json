@@ -1,0 +1,36 @@
+{
+  "folder": "vQcKDwo7wyItn23I",
+  "name": "Ability 1 Jaw",
+  "type": "sinMarkAbility",
+  "_id": "fDvVKlumP2XwDB0z",
+  "img": "systems/cain/assets/sin-marks/jaw.png",
+  "system": {
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "abilityName": "Ability 1 Jaw",
+    "abilityDescription": "You can spit black venom up to short distance. It’s a mundane ranged weapon with about the same effectiveness as a pistol.",
+    "bodyPartName": "Jaw"
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.351",
+    "systemId": "cain",
+    "systemVersion": "1.0.20",
+    "createdTime": 1725278401752,
+    "modifiedTime": 1725278401752,
+    "lastModifiedBy": "C33nbucocqUlAZNM",
+    "exportSource": null
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "C33nbucocqUlAZNM": 3
+  },
+  "_key": "!items!fDvVKlumP2XwDB0z"
+}

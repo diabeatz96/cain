@@ -1,0 +1,36 @@
+{
+  "folder": "STFRd5BSajjkZd9L",
+  "name": "Ability 4 Eyes",
+  "type": "sinMarkAbility",
+  "img": "systems/cain/assets/sin-marks/eye.png",
+  "system": {
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "abilityName": "Ability 4 Eyes",
+    "abilityDescription": "Once a mission, you can momentarily\nparalyze a human by merely looking at them. The effect lasts until you break eye contact, a minute passes, or either of you suffer stress.",
+    "bodyPartName": "Eyes"
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.351",
+    "systemId": "cain",
+    "systemVersion": "1.0.20",
+    "createdTime": 1725278401752,
+    "modifiedTime": 1725278401752,
+    "lastModifiedBy": "C33nbucocqUlAZNM",
+    "exportSource": null
+  },
+  "_id": "JgI9lFUNhiIskwv7",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "C33nbucocqUlAZNM": 3
+  },
+  "_key": "!items!JgI9lFUNhiIskwv7"
+}

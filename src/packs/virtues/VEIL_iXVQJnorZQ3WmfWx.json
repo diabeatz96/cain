@@ -1,0 +1,44 @@
+{
+  "folder": "YJEqn8qNXySL3k4k",
+  "name": "VEIL",
+  "type": "blasphemyPower",
+  "_id": "iXVQJnorZQ3WmfWx",
+  "img": "systems/cain/assets/Virtues/hope.png",
+  "system": {
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "blasphemyType": "New Blasphemy",
+    "powerName": "VEIL",
+    "isPassive": false,
+    "keywords": [
+      "Instant"
+    ],
+    "powerDescription": "VEIL\nDuration: Instant | Range: {<CAT> range 0}\n\nSpend all your remaining psyche bursts to instantly erase the memory of a mass of humans in range. You cannot choose who to target, and must target the maximum area and number of people possible.\n\nThey become completely insensate for exactly 11 seconds. Then, they forget everything they saw and heard for the last 77 seconds (including the insensate period). Their brain will work over the damage, and for them it is as if that time never passed (they are effectively 'reset' to 77 seconds ago). They may be confused by the circumstances, for example they might not be standing where they remember.\n\nMASS MEMORY RUPTURE\nAt bond rank III, you can push veil for longer periods. If you do, you must pay the associated cost. Costs are cumulative. Good luck out there.\n\n• Up to ten minutes: 1d3+1 stress\n• Up to one hour: ...and also gain 1d3+1 sin\n• Up to ten hours: ...and also permanently lose an important memory, such as the taste of something, the name of your parents, a childhood treasured memory\n• Up to one day: ...and also lower sin overflow cap by 2\n• Up to ten days: ...and you forget your own name. You cannot use agenda abilities or gain any further xp this mission. You must change agendas before the start of next mission.\n• Full reset: CAIN forgets you exist. You forget you exist. Your allies forget you exist. You become a hollow husk, a walking mindless corpse that nobody remembers. You are not dead but not truly alive. Make a new character.",
+    "psycheBurstCost": false,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": true,
+    "isHighBlasphemy": true
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.351",
+    "systemId": "cain",
+    "systemVersion": "1.3.11",
+    "createdTime": 1765324318303,
+    "modifiedTime": 1765324318303,
+    "lastModifiedBy": "SYIh5BFClzglmca2",
+    "exportSource": null
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "SYIh5BFClzglmca2": 3
+  },
+  "_key": "!items!iXVQJnorZQ3WmfWx"
+}

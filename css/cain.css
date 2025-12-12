@@ -2337,3 +2337,1085 @@
 }
 
 /* End v11-v13 Compatibility Section */
+
+/* ==========================================
+   CAIN Dice Roller Panel Styles
+   ========================================== */
+
+/* Panel Container - Purple Theme */
+/* ==================== DICE PANEL ANIMATIONS ==================== */
+@keyframes dicePanelSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes dicePanelGlow {
+  0%, 100% {
+    box-shadow: 0 4px 12px var(--dice-glow-color, rgba(124, 58, 237, 0.2));
+  }
+  50% {
+    box-shadow: 0 4px 20px var(--dice-glow-color, rgba(124, 58, 237, 0.4));
+  }
+}
+
+@keyframes diceButtonPulse {
+  0%, 100% {
+    box-shadow: 0 2px 4px var(--dice-glow-color, rgba(147, 51, 234, 0.3));
+  }
+  50% {
+    box-shadow: 0 2px 12px var(--dice-glow-color, rgba(147, 51, 234, 0.6));
+  }
+}
+
+@keyframes diceIconSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes diceShake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-2px); }
+  20%, 40%, 60%, 80% { transform: translateX(2px); }
+}
+
+/* ==================== THEME CSS VARIABLES ==================== */
+/* Purple Theme (Default) */
+.cain-dice-panel {
+  --dice-bg-start: #1a1a2e;
+  --dice-bg-end: #0f0f1a;
+  --dice-border: #7c3aed;
+  --dice-border-light: #a855f7;
+  --dice-header-start: #2d1f4e;
+  --dice-header-end: #1a1a2e;
+  --dice-text: #c4b5fd;
+  --dice-text-bright: #e9d5ff;
+  --dice-text-dim: #a78bfa;
+  --dice-accent: #9333ea;
+  --dice-accent-light: #a855f7;
+  --dice-glow-color: rgba(124, 58, 237, 0.3);
+  --dice-button-start: #9333ea;
+  --dice-button-end: #7c3aed;
+  /* Divine Agony - Purple Theme */
+  --divine-agony-bg: rgba(239, 68, 68, 0.15);
+  --divine-agony-bg-active: rgba(239, 68, 68, 0.25);
+  --divine-agony-border: rgba(239, 68, 68, 0.4);
+  --divine-agony-border-active: rgba(239, 68, 68, 0.6);
+  --divine-agony-text: #ef4444;
+  --divine-agony-text-bright: #ff6b6b;
+  --divine-agony-glow: rgba(239, 68, 68, 0.5);
+}
+
+/* Dark Theme */
+.cain-dice-panel[data-theme="dark"] {
+  --dice-bg-start: #1a1a1a;
+  --dice-bg-end: #0a0a0a;
+  --dice-border: #444444;
+  --dice-border-light: #666666;
+  --dice-header-start: #2a2a2a;
+  --dice-header-end: #1a1a1a;
+  --dice-text: #cccccc;
+  --dice-text-bright: #ffffff;
+  --dice-text-dim: #999999;
+  --dice-accent: #555555;
+  --dice-accent-light: #777777;
+  --dice-glow-color: rgba(100, 100, 100, 0.3);
+  --dice-button-start: #444444;
+  --dice-button-end: #333333;
+  /* Divine Agony - Dark Theme */
+  --divine-agony-bg: rgba(239, 68, 68, 0.1);
+  --divine-agony-bg-active: rgba(239, 68, 68, 0.2);
+  --divine-agony-border: rgba(239, 68, 68, 0.25);
+  --divine-agony-border-active: rgba(239, 68, 68, 0.45);
+  --divine-agony-text: #f87171;
+  --divine-agony-text-bright: #fca5a5;
+  --divine-agony-glow: rgba(248, 113, 113, 0.4);
+}
+
+/* Light Theme */
+.cain-dice-panel[data-theme="light"] {
+  --dice-bg-start: #f5f5f5;
+  --dice-bg-end: #e0e0e0;
+  --dice-border: #9333ea;
+  --dice-border-light: #a855f7;
+  --dice-header-start: #e8e0f0;
+  --dice-header-end: #f0f0f0;
+  --dice-text: #4a4a4a;
+  --dice-text-bright: #1a1a1a;
+  --dice-text-dim: #6b21a8;
+  --dice-accent: #9333ea;
+  --dice-accent-light: #a855f7;
+  --dice-glow-color: rgba(147, 51, 234, 0.2);
+  --dice-button-start: #9333ea;
+  --dice-button-end: #7c3aed;
+  /* Divine Agony - Light Theme */
+  --divine-agony-bg: rgba(220, 38, 38, 0.12);
+  --divine-agony-bg-active: rgba(220, 38, 38, 0.22);
+  --divine-agony-border: rgba(220, 38, 38, 0.4);
+  --divine-agony-border-active: rgba(220, 38, 38, 0.6);
+  --divine-agony-text: #dc2626;
+  --divine-agony-text-bright: #b91c1c;
+  --divine-agony-glow: rgba(220, 38, 38, 0.4);
+}
+
+/* Blood Theme */
+.cain-dice-panel[data-theme="blood"] {
+  --dice-bg-start: #1a0a0a;
+  --dice-bg-end: #0a0505;
+  --dice-border: #8b0000;
+  --dice-border-light: #dc2626;
+  --dice-header-start: #2a0f0f;
+  --dice-header-end: #1a0a0a;
+  --dice-text: #f5c6c6;
+  --dice-text-bright: #ffffff;
+  --dice-text-dim: #dc2626;
+  --dice-accent: #8b0000;
+  --dice-accent-light: #dc2626;
+  --dice-glow-color: rgba(220, 38, 38, 0.3);
+  --dice-button-start: #8b0000;
+  --dice-button-end: #5c0000;
+  /* Divine Agony - Blood Theme (more integrated) */
+  --divine-agony-bg: rgba(255, 100, 100, 0.15);
+  --divine-agony-bg-active: rgba(255, 100, 100, 0.3);
+  --divine-agony-border: rgba(255, 100, 100, 0.4);
+  --divine-agony-border-active: rgba(255, 100, 100, 0.7);
+  --divine-agony-text: #ff6b6b;
+  --divine-agony-text-bright: #ffa0a0;
+  --divine-agony-glow: rgba(255, 107, 107, 0.6);
+}
+
+/* ==================== MAIN PANEL STYLES ==================== */
+.cain-dice-panel {
+  background: linear-gradient(180deg, var(--dice-bg-start) 0%, var(--dice-bg-end) 100%);
+  border: 2px solid var(--dice-border);
+  border-radius: 6px;
+  margin: 4px 0;
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  overflow: hidden;
+  /* Smooth transitions for position/size changes */
+  transition: all 0.3s ease, opacity 0.2s ease, transform 0.3s ease;
+  opacity: 1;
+  transform: translateY(0);
+  box-sizing: border-box;
+  /* Full width to match chat input */
+  width: 100%;
+  box-shadow: 0 4px 12px var(--dice-glow-color);
+  /* Entry animation */
+  animation: dicePanelSlideIn 0.4s ease-out;
+  /* Prevent panel from growing unbounded - especially for v12 */
+  flex-shrink: 0;
+  flex-grow: 0;
+  height: auto;
+  max-height: fit-content;
+}
+
+/* Hidden state for user preference */
+.cain-dice-panel.hidden {
+  display: none !important;
+}
+
+
+.cain-dice-panel.collapsed .cain-dice-panel-body {
+  max-height: 0;
+  padding: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, padding 0.3s ease;
+}
+
+.cain-dice-panel-body {
+  transition: max-height 0.3s ease, padding 0.3s ease;
+  overflow: hidden;
+}
+
+/* Panel Header - Theme Aware */
+.cain-dice-panel-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 8px;
+  background: linear-gradient(135deg, var(--dice-header-start) 0%, var(--dice-header-end) 100%);
+  border-bottom: 2px solid var(--dice-border);
+  color: var(--dice-text);
+  font-weight: bold;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.cain-dice-panel-header .cain-dice-icon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  opacity: 0.95;
+  transition: all 0.4s ease;
+  /* Purple theme - subtle 20% tint */
+  filter: sepia(20%) saturate(150%) hue-rotate(220deg) drop-shadow(0 0 3px var(--dice-glow-color));
+}
+
+/* Dark theme icon - very subtle grayscale tint */
+.cain-dice-panel[data-theme="dark"] .cain-dice-panel-header .cain-dice-icon {
+  filter: saturate(80%) brightness(90%) drop-shadow(0 0 3px var(--dice-glow-color));
+}
+
+/* Light theme icon - subtle dark purple tint */
+.cain-dice-panel[data-theme="light"] .cain-dice-panel-header .cain-dice-icon {
+  filter: sepia(15%) saturate(120%) hue-rotate(260deg) brightness(95%) drop-shadow(0 0 3px var(--dice-glow-color));
+}
+
+/* Blood theme icon - subtle red tint */
+.cain-dice-panel[data-theme="blood"] .cain-dice-panel-header .cain-dice-icon {
+  filter: sepia(25%) saturate(200%) hue-rotate(340deg) drop-shadow(0 0 3px var(--dice-glow-color));
+}
+
+.cain-dice-panel-header:hover .cain-dice-icon {
+  transform: scale(1.15) rotate(5deg);
+  opacity: 1;
+}
+
+/* Hover glow effects per theme - slightly stronger tint on hover */
+.cain-dice-panel:not([data-theme]) .cain-dice-panel-header:hover .cain-dice-icon,
+.cain-dice-panel[data-theme="purple"] .cain-dice-panel-header:hover .cain-dice-icon {
+  filter: sepia(25%) saturate(180%) hue-rotate(220deg) brightness(105%) drop-shadow(0 0 8px var(--dice-glow-color));
+}
+
+.cain-dice-panel[data-theme="dark"] .cain-dice-panel-header:hover .cain-dice-icon {
+  filter: saturate(90%) brightness(100%) drop-shadow(0 0 8px var(--dice-glow-color));
+}
+
+.cain-dice-panel[data-theme="light"] .cain-dice-panel-header:hover .cain-dice-icon {
+  filter: sepia(20%) saturate(150%) hue-rotate(260deg) brightness(100%) drop-shadow(0 0 8px var(--dice-glow-color));
+}
+
+.cain-dice-panel[data-theme="blood"] .cain-dice-panel-header:hover .cain-dice-icon {
+  filter: sepia(30%) saturate(250%) hue-rotate(340deg) brightness(105%) drop-shadow(0 0 8px var(--dice-glow-color));
+}
+
+.cain-dice-panel-header span {
+  flex: 1;
+  color: var(--dice-text-dim);
+  font-size: 10px;
+}
+
+/* Theme Toggle Button */
+.cain-dice-panel .cain-theme-toggle {
+  background: transparent;
+  border: none;
+  color: var(--dice-border);
+  cursor: pointer;
+  padding: 2px;
+  font-size: 10px;
+  line-height: 1;
+  transition: all 0.3s ease;
+  opacity: 0.7;
+}
+
+.cain-dice-panel .cain-theme-toggle:hover {
+  color: var(--dice-border-light);
+  opacity: 1;
+}
+
+.cain-dice-panel .cain-panel-toggle {
+  background: transparent;
+  border: none;
+  color: var(--dice-border);
+  cursor: pointer;
+  padding: 2px;
+  font-size: 10px;
+  line-height: 1;
+  transition: all 0.3s ease;
+}
+
+.cain-dice-panel .cain-panel-toggle:hover {
+  color: var(--dice-border-light);
+  transform: translateY(-1px);
+}
+
+/* Panel Body */
+.cain-dice-panel-body {
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+/* Row Styling - Theme Aware */
+.cain-dice-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.cain-dice-row > label {
+  color: var(--dice-text-dim);
+  font-size: 10px;
+  text-transform: uppercase;
+  min-width: 40px;
+  font-weight: bold;
+}
+
+/* Character Select - Theme Aware */
+.cain-dice-panel .cain-character-select {
+  flex: 1;
+  background: var(--dice-bg-start);
+  border: 1px solid var(--dice-border);
+  border-radius: 3px;
+  color: var(--dice-text);
+  padding: 4px 6px;
+  font-family: 'Courier New', monospace;
+  font-size: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cain-dice-panel .cain-character-select:hover {
+  border-color: var(--dice-border-light);
+  background: var(--dice-header-start);
+}
+
+.cain-dice-panel .cain-character-select:focus {
+  outline: none;
+  border-color: var(--dice-border-light);
+  box-shadow: 0 0 4px var(--dice-glow-color);
+}
+
+.cain-dice-panel .cain-character-select option {
+  background: var(--dice-bg-start);
+  color: var(--dice-text);
+}
+
+/* Skill Select - Theme Aware */
+.cain-dice-panel .cain-skill-select {
+  flex: 1;
+  background: var(--dice-bg-start);
+  border: 1px solid var(--dice-border);
+  border-radius: 3px;
+  color: var(--dice-text);
+  padding: 4px 6px;
+  font-family: 'Courier New', monospace;
+  font-size: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cain-dice-panel .cain-skill-select:hover {
+  border-color: var(--dice-border-light);
+  background: var(--dice-header-start);
+}
+
+.cain-dice-panel .cain-skill-select:focus {
+  outline: none;
+  border-color: var(--dice-border-light);
+  box-shadow: 0 0 4px var(--dice-glow-color);
+}
+
+.cain-dice-panel .cain-skill-select option {
+  background: var(--dice-bg-start);
+  color: var(--dice-text);
+}
+
+/* Dice Pool Input - Theme Aware */
+.cain-dice-panel .cain-dice-pool {
+  width: 38px;
+  background: var(--dice-bg-start);
+  border: 1px solid var(--dice-border);
+  border-radius: 3px;
+  color: var(--dice-border-light);
+  padding: 4px;
+  text-align: center;
+  font-family: 'Courier New', monospace;
+  font-size: 11px;
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+
+.cain-dice-panel .cain-dice-pool:hover {
+  border-color: var(--dice-border-light);
+  background: var(--dice-header-start);
+}
+
+.cain-dice-panel .cain-dice-pool:focus {
+  outline: none;
+  border-color: var(--dice-border-light);
+  box-shadow: 0 0 4px var(--dice-glow-color);
+}
+
+/* Modifiers Row */
+.cain-dice-panel .cain-modifiers {
+  justify-content: center;
+  gap: 6px;
+  padding: 4px 6px;
+}
+
+.cain-dice-panel .cain-modifiers label {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  color: var(--dice-text);
+  font-size: 9px;
+  text-transform: uppercase;
+  min-width: auto;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.cain-dice-panel .cain-modifiers label:hover {
+  color: var(--dice-text-bright);
+}
+
+.cain-dice-panel .cain-extra-dice {
+  width: 32px;
+  background: var(--dice-bg-start);
+  border: 1px solid var(--dice-border);
+  border-radius: 3px;
+  color: var(--dice-text);
+  padding: 3px;
+  text-align: center;
+  font-family: 'Courier New', monospace;
+  font-size: 10px;
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+
+.cain-dice-panel .cain-extra-dice:focus {
+  outline: none;
+  border-color: var(--dice-border-light);
+}
+
+/* Simple Checkbox Styling */
+.cain-dice-panel .cain-modifiers input[type="checkbox"] {
+  width: 12px;
+  height: 12px;
+  accent-color: var(--dice-accent);
+  cursor: pointer;
+  margin: 0;
+}
+
+/* Main Roll Button - Theme Aware with Animation */
+.cain-dice-panel .cain-roll-skill {
+  flex: 1;
+  background: linear-gradient(135deg, var(--dice-button-start) 0%, var(--dice-button-end) 100%);
+  border: 1px solid var(--dice-border-light);
+  border-radius: 4px;
+  color: #fff;
+  padding: 6px 10px;
+  font-family: 'Courier New', monospace;
+  font-size: 11px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px var(--dice-glow-color);
+  position: relative;
+  overflow: hidden;
+}
+
+.cain-dice-panel .cain-roll-skill::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+  transform: rotate(45deg) translateX(-100%);
+  transition: transform 0.6s ease;
+}
+
+.cain-dice-panel .cain-roll-skill:hover::before {
+  transform: rotate(45deg) translateX(100%);
+}
+
+.cain-dice-panel .cain-roll-skill:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px var(--dice-glow-color);
+  filter: brightness(1.1);
+}
+
+.cain-dice-panel .cain-roll-skill:active {
+  transform: translateY(0) scale(0.98);
+  box-shadow: 0 1px 2px var(--dice-glow-color);
+}
+
+/* Roll button dice icon animation on hover */
+.cain-dice-panel .cain-roll-skill i {
+  transition: transform 0.3s ease;
+}
+
+.cain-dice-panel .cain-roll-skill:hover i {
+  animation: diceShake 0.5s ease;
+}
+
+/* Quick Roll Buttons - Theme Aware */
+.cain-dice-panel .cain-quick-rolls {
+  justify-content: center;
+  gap: 4px;
+  padding-top: 4px;
+  border-top: 1px solid var(--dice-accent);
+}
+
+.cain-dice-panel .cain-quick-rolls button {
+  background: linear-gradient(135deg, var(--dice-header-start) 0%, var(--dice-bg-start) 100%);
+  border: 1px solid var(--dice-border);
+  border-radius: 3px;
+  padding: 4px 8px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  color: var(--dice-text);
+  font-family: 'Courier New', monospace;
+  font-size: 9px;
+  font-weight: bold;
+  text-transform: uppercase;
+  position: relative;
+  overflow: hidden;
+}
+
+.cain-dice-panel .cain-quick-rolls button::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.4s ease, height 0.4s ease;
+}
+
+.cain-dice-panel .cain-quick-rolls button:hover::after {
+  width: 150%;
+  height: 150%;
+}
+
+.cain-dice-panel .cain-quick-rolls button i {
+  font-size: 12px;
+  color: var(--dice-text-dim);
+  transition: all 0.2s ease;
+}
+
+.cain-dice-panel .cain-quick-rolls button span {
+  color: var(--dice-text);
+  transition: color 0.2s ease;
+}
+
+.cain-dice-panel .cain-quick-rolls button img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  opacity: 0.8;
+  transition: all 0.2s ease;
+}
+
+.cain-dice-panel .cain-quick-rolls button:hover {
+  border-color: var(--dice-border-light);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 4px 8px var(--dice-glow-color);
+}
+
+.cain-dice-panel .cain-quick-rolls button:hover i {
+  color: var(--dice-text-bright);
+  transform: scale(1.1);
+}
+
+.cain-dice-panel .cain-quick-rolls button:hover span {
+  color: var(--dice-text-bright);
+}
+
+.cain-dice-panel .cain-quick-rolls button:hover img {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.cain-dice-panel .cain-quick-rolls button:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* Risk button - Red accent */
+.cain-dice-panel .cain-roll-risk {
+  border-color: #dc2626;
+}
+
+.cain-dice-panel .cain-roll-risk i {
+  color: #f87171;
+}
+
+.cain-dice-panel .cain-roll-risk:hover {
+  border-color: #ef4444;
+  background: linear-gradient(135deg, #450a0a 0%, var(--dice-bg-start) 100%);
+  box-shadow: 0 4px 8px rgba(220, 38, 38, 0.3);
+}
+
+/* Fate button - Gold accent */
+.cain-dice-panel .cain-roll-fate {
+  border-color: #ca8a04;
+}
+
+.cain-dice-panel .cain-roll-fate i {
+  color: #fbbf24;
+}
+
+.cain-dice-panel .cain-roll-fate:hover {
+  border-color: #eab308;
+  background: linear-gradient(135deg, #422006 0%, var(--dice-bg-start) 100%);
+  box-shadow: 0 4px 8px rgba(234, 179, 8, 0.3);
+}
+
+/* Rest button - Blue accent */
+.cain-dice-panel .cain-roll-rest {
+  border-color: #0ea5e9;
+}
+
+.cain-dice-panel .cain-roll-rest i {
+  color: #38bdf8;
+}
+
+.cain-dice-panel .cain-roll-rest:hover {
+  border-color: #38bdf8;
+  background: linear-gradient(135deg, #0c4a6e 0%, var(--dice-bg-start) 100%);
+  box-shadow: 0 4px 8px rgba(14, 165, 233, 0.3);
+}
+
+/* Custom button - Cyan accent */
+.cain-dice-panel .cain-roll-custom {
+  border-color: #06b6d4;
+}
+
+.cain-dice-panel .cain-roll-custom i {
+  color: #22d3ee;
+  transition: transform 0.3s ease;
+}
+
+.cain-dice-panel .cain-roll-custom:hover {
+  border-color: #22d3ee;
+  background: linear-gradient(135deg, #164e63 0%, var(--dice-bg-start) 100%);
+  box-shadow: 0 4px 8px rgba(6, 182, 212, 0.3);
+}
+
+.cain-dice-panel .cain-roll-custom:hover i {
+  transform: rotate(90deg);
+}
+
+/* v11/v12 Chat Sidebar Compatibility */
+/* Ensure panel doesn't stretch in flex containers */
+#chat .cain-dice-panel,
+#sidebar #chat .cain-dice-panel,
+.chat-sidebar .cain-dice-panel {
+  flex: 0 0 auto;
+  align-self: stretch;
+  min-height: 0;
+}
+
+/* v13 Notification Overlay (Mini Chat) Styles - System layer */
+.cain-dice-panel.in-notification-overlay {
+  position: relative;
+  z-index: 100;
+  pointer-events: auto !important;
+  margin: 4px;
+}
+
+/* Ensure all interactive elements in notification overlay are clickable */
+.cain-dice-panel.in-notification-overlay * {
+  pointer-events: auto !important;
+}
+
+.cain-dice-panel.in-notification-overlay button,
+.cain-dice-panel.in-notification-overlay select,
+.cain-dice-panel.in-notification-overlay input {
+  pointer-events: auto !important;
+  cursor: pointer;
+}
+
+/* Make the notification overlay container allow pointer events for our panel */
+.chat-notifications .cain-dice-panel {
+  pointer-events: auto !important;
+}
+
+/* v13 @layer exceptions - highest priority to override Foundry's built-in styles */
+@layer exceptions {
+  /* Force pointer events on the dice panel in notification overlay */
+  .cain-dice-panel,
+  .cain-dice-panel.in-notification-overlay,
+  .chat-notifications .cain-dice-panel {
+    pointer-events: auto !important;
+    position: relative;
+    z-index: 1000;
+  }
+
+  .cain-dice-panel *,
+  .cain-dice-panel.in-notification-overlay *,
+  .chat-notifications .cain-dice-panel * {
+    pointer-events: auto !important;
+  }
+
+  .cain-dice-panel button,
+  .cain-dice-panel select,
+  .cain-dice-panel input,
+  .cain-dice-panel.in-notification-overlay button,
+  .cain-dice-panel.in-notification-overlay select,
+  .cain-dice-panel.in-notification-overlay input {
+    pointer-events: auto !important;
+    cursor: pointer;
+  }
+
+  /* Override any parent pointer-events: none in the notification area */
+  .chat-notifications,
+  .chat-notifications > *,
+  #chat-notifications {
+    pointer-events: auto !important;
+  }
+}
+
+/* ==========================================
+   CAIN Dice Roll Result Styles (Chat Messages)
+   ========================================== */
+
+.cain-roll-result {
+  background: linear-gradient(135deg, #1e1e1e 0%, #2a2a2a 100%);
+  border: 2px solid #444;
+  border-radius: 8px;
+  padding: 12px;
+  font-family: 'Courier New', monospace;
+}
+
+.cain-roll-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #444;
+}
+
+.cain-roll-label {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 16px;
+  font-weight: bold;
+  color: #00bfff;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.cain-roll-hard {
+  background: #ef4444;
+  color: #fff;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.cain-roll-zero {
+  background: #f97316;
+  color: #fff;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.cain-roll-modifiers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.cain-dice-modifier {
+  background: #333;
+  color: #aaa;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 10px;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.cain-roll-dice {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.cain-die {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: #333;
+  border: 2px solid #555;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #888;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.cain-die.success {
+  background: linear-gradient(135deg, #166534 0%, #14532d 100%);
+  border-color: #22c55e;
+  color: #4ade80;
+}
+
+.cain-die.crit {
+  background: linear-gradient(135deg, #581c87 0%, #7c3aed 100%);
+  border-color: #a855f7;
+  color: #e9d5ff;
+  box-shadow: 0 0 10px rgba(168, 85, 247, 0.6), 0 0 20px rgba(124, 58, 237, 0.3);
+}
+
+.cain-die.discarded {
+  opacity: 0.4;
+  text-decoration: line-through;
+}
+
+.cain-roll-successes {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+}
+
+.cain-success-label {
+  color: #888;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.cain-success-value {
+  font-size: 24px;
+  font-weight: bold;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+/* Risk and Fate Roll Styles */
+.cain-roll-outcome {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 10px;
+}
+
+.cain-outcome-value {
+  font-size: 48px;
+  font-weight: bold;
+  font-family: 'Courier New', Courier, monospace;
+  line-height: 1;
+}
+
+.cain-outcome-text {
+  font-size: 18px;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+/* Rest Roll Styles */
+.cain-rest-roll .cain-roll-dice {
+  justify-content: center;
+}
+
+.cain-die.rest-die {
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
+  background: linear-gradient(135deg, #1e3a5f 0%, #1e293b 100%);
+  border-color: #3b82f6;
+  color: #93c5fd;
+}
+
+.cain-rest-info {
+  background: #1a1a1a;
+  border: 1px dashed #444;
+  border-radius: 4px;
+  padding: 10px;
+  font-size: 12px;
+  color: #888;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.cain-rest-info p {
+  margin: 0 0 6px 0;
+  color: #aaa;
+}
+
+.cain-rest-info ul {
+  margin: 0;
+  padding-left: 16px;
+}
+
+.cain-rest-info li {
+  margin-bottom: 4px;
+}
+
+/* Divine Agony Styles (Dice Panel) - Theme Aware */
+.cain-divine-agony-row {
+  margin-top: 2px;
+  padding: 4px 6px;
+  background: var(--divine-agony-bg, rgba(239, 68, 68, 0.1));
+  border: 1px solid var(--divine-agony-border, rgba(239, 68, 68, 0.3));
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.cain-divine-agony-row.disabled {
+  opacity: 0.5;
+  background: var(--dice-bg-start);
+  border-color: var(--dice-border);
+}
+
+.cain-divine-agony-row.has-agony {
+  background: var(--divine-agony-bg-active, rgba(239, 68, 68, 0.2));
+  border-color: var(--divine-agony-border-active, rgba(239, 68, 68, 0.5));
+  animation: divineAgonyPulse 2s ease-in-out infinite;
+}
+
+@keyframes divineAgonyPulse {
+  0%, 100% { box-shadow: 0 0 3px var(--divine-agony-glow, rgba(239, 68, 68, 0.3)); }
+  50% { box-shadow: 0 0 8px var(--divine-agony-glow, rgba(239, 68, 68, 0.6)); }
+}
+
+.cain-divine-agony-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.cain-divine-agony-row.disabled .cain-divine-agony-label {
+  cursor: not-allowed;
+}
+
+.cain-divine-agony-text {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-grow: 1;
+  font-size: 9px;
+  font-weight: bold;
+  color: var(--divine-agony-text, #ef4444);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.cain-divine-agony-row.disabled .cain-divine-agony-text {
+  color: var(--dice-text-dim);
+}
+
+.cain-divine-agony-text i {
+  font-size: 10px;
+}
+
+.cain-divine-agony-value {
+  font-family: 'Courier New', monospace;
+  font-size: 10px;
+  font-weight: bold;
+  color: var(--divine-agony-text);
+  background: var(--dice-bg-start);
+  border: 1px solid var(--divine-agony-border);
+  padding: 2px 6px;
+  border-radius: 3px;
+  min-width: 32px;
+  text-align: center;
+}
+
+.cain-divine-agony-row.disabled .cain-divine-agony-value {
+  color: var(--dice-text-dim);
+}
+
+.cain-divine-agony-row.has-agony .cain-divine-agony-value {
+  color: var(--divine-agony-text-bright, #ff6b6b);
+  text-shadow: 0 0 4px var(--divine-agony-glow, rgba(239, 68, 68, 0.5));
+}
+
+.cain-dice-panel .cain-use-divine-agony {
+  width: 12px;
+  height: 12px;
+  accent-color: var(--divine-agony-text, #ef4444);
+  cursor: pointer;
+}
+
+.cain-dice-panel .cain-use-divine-agony:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* Divine Agony Styles (Chat Messages) */
+.cain-divine-agony-modifier {
+  background: linear-gradient(135deg, #7f1d1d 0%, #991b1b 100%) !important;
+  color: #fca5a5 !important;
+  border: 1px solid #ef4444;
+}
+
+.cain-divine-agony-modifier i {
+  color: #f87171;
+  margin-right: 2px;
+}
+
+.cain-roll-result.used-divine-agony {
+  border-color: #ef4444;
+  box-shadow: 0 0 10px rgba(239, 68, 68, 0.3);
+}
+
+.cain-divine-agony-gained {
+  margin-top: 8px;
+  padding: 6px;
+  background: linear-gradient(135deg, rgba(127, 29, 29, 0.4) 0%, rgba(153, 27, 27, 0.4) 100%);
+  border: 1px solid #ef4444;
+  border-radius: 4px;
+  color: #fca5a5;
+  font-size: 11px;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-align: center;
+  animation: divineAgonyGain 0.5s ease-out;
+}
+
+.cain-divine-agony-gained i {
+  color: #f87171;
+  margin-right: 4px;
+}
+
+@keyframes divineAgonyGain {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Quick Roll Dialog */
+.cain-quick-roll-dialog .form-group {
+  margin-bottom: 10px;
+}
+
+.cain-quick-roll-dialog label {
+  display: block;
+  margin-bottom: 4px;
+  color: #aaa;
+  font-size: 12px;
+  text-transform: uppercase;
+}

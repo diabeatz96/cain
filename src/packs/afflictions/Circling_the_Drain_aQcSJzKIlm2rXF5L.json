@@ -1,0 +1,41 @@
+{
+  "name": "Circling the Drain",
+  "type": "affliction",
+  "img": "systems/cain/assets/Sins/ogre.png",
+  "folder": "yCyyqdObAoh8S9hN",
+  "system": {
+    "afflictionName": "Circling the Drain",
+    "afflictionDescription": "Cannot benefit from teamwork or setup. Permanently add to your agenda: <b>give up on something</b>.",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff"
+  },
+  "_id": "aQcSJzKIlm2rXF5L",
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "6ClVUxrA2eebq5C2": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.afflictions.Item.aQcSJzKIlm2rXF5L",
+    "duplicateSource": null,
+    "coreVersion": "13.351",
+    "systemId": "cain",
+    "systemVersion": "1.3.3",
+    "createdTime": 1763196405757,
+    "modifiedTime": 1763196405757,
+    "lastModifiedBy": "6ClVUxrA2eebq5C2",
+    "exportSource": {
+      "worldId": "cain-setup",
+      "uuid": null,
+      "coreVersion": "12.343",
+      "systemId": "cain",
+      "systemVersion": "1.3.2"
+    }
+  },
+  "sort": 0,
+  "_key": "!items!aQcSJzKIlm2rXF5L"
+}
