@@ -5,7 +5,12 @@ on:
     branches:
       - main
     paths:
-      - 'system.json'  # Only trigger when system.json changes
+      - 'system.json'  # Trigger when system.json changes
+  pull_request:
+    branches:
+      - main
+    types:
+      - closed  # Trigger when PR is closed (we check if merged in job)
   workflow_dispatch:  # Allow manual trigger from GitHub Actions tab
     inputs:
       skip_version_check:
@@ -17,6 +22,8 @@ on:
 jobs:
   create_release:
     runs-on: ubuntu-latest
+    # Only run if: push event, manual trigger, or PR was actually merged (not just closed)
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && github.event.pull_request.merged == true)
     permissions:
       contents: write
 
@@ -121,7 +128,7 @@ jobs:
       - name: Create release zip
         id: create_zip
         run: |
-          ZIP_NAME="cain.zip"
+          ZIP_NAME="cain1.3.zip"
           
           # Create a clean zip for distribution
           zip -r "$ZIP_NAME" . \
