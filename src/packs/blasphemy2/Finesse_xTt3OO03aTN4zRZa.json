@@ -10,7 +10,7 @@
     "keywords": [
       "Entire Hunt, CAT range"
     ],
-    "powerDescription": "Passive: You may finely manipulate threads of force to perform fine motor skills you could perform with your hands at 1/2 CAT range, such as opening doors, picking up objects, or even skills like typing on a keyboard, etc. Roll a relevant skill such as interfacing for this.\n        \n• You have to be able to see your target, even if it’s far away. However, you can perform this manipulation even if your path to the target is blocked, such as if you could see it through a window, etc. \n• You can pick up objects and move them around through the air but they cannot be any bigger or heavier than a laptop or a full briefcase.",
+    "powerDescription": "Passive: You may finely manipulate threads of force to perform fine motor skills you could perform with your hands at {<CAT/2> range 0} range, such as opening doors, picking up objects, or even skills like typing on a keyboard, etc. Roll a relevant skill such as interfacing for this.\n        \n• You have to be able to see your target, even if it’s far away. However, you can perform this manipulation even if your path to the target is blocked, such as if you could see it through a window, etc. \n• You can pick up objects and move them around through the air but they cannot be any bigger or heavier than a laptop or a full briefcase.",
     "description": "",
     "primaryColor": "#333333",
     "accentColor": "#000000",
