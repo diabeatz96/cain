@@ -148,43 +148,64 @@ export class HomebrewWindow extends Application {
             name: "Power 1",
             isPassive: true,
             keywords: "default",
-            powerDescription: "Power Description"
+            powerDescription: "Power Description",
+            psycheBurstCost: false,
+            psycheBurstNoCost: false,
+            psycheBurstMultCost: false
         },
         {
             name: "Power 2",
             isPassive: false,
             keywords: "default",
-            powerDescription: "Power Description"
+            powerDescription: "Power Description",
+            psycheBurstCost: false,
+            psycheBurstNoCost: false,
+            psycheBurstMultCost: false
         },
         {
             name: "Power 3",
             isPassive: false,
             keywords: "default",
-            powerDescription: "Power Description"
-        },        
+            powerDescription: "Power Description",
+            psycheBurstCost: false,
+            psycheBurstNoCost: false,
+            psycheBurstMultCost: false
+        },
         {
             name: "Power 4",
             isPassive: false,
             keywords: "default",
-            powerDescription: "Power Description"
-        },        
+            powerDescription: "Power Description",
+            psycheBurstCost: false,
+            psycheBurstNoCost: false,
+            psycheBurstMultCost: false
+        },
         {
             name: "Power 5",
             isPassive: false,
             keywords: "default",
-            powerDescription: "Power Description"
-        },        
+            powerDescription: "Power Description",
+            psycheBurstCost: false,
+            psycheBurstNoCost: false,
+            psycheBurstMultCost: false
+        },
         {
             name: "Power 6",
             isPassive: false,
             keywords: "default",
-            powerDescription: "Power Description"
-        },        
+            powerDescription: "Power Description",
+            psycheBurstCost: false,
+            psycheBurstNoCost: false,
+            psycheBurstMultCost: false
+        },
         {
             name: "Power 7",
             isPassive: false,
             keywords: "default",
-            powerDescription: "Power Description"
+            powerDescription: "Power Description",
+            psycheBurstCost: false,
+            psycheBurstNoCost: false,
+            psycheBurstMultCost: false
         }]
     }
 
@@ -238,6 +259,9 @@ export class HomebrewWindow extends Application {
       html.find('.homebrew-new-power').click(this._onCreateNewPower.bind(this));
       html.find('.homebrew-power-name-input').change(this._onChangePowerName.bind(this));
       html.find('.homebrew-power-passive-input').change(this._onChangePowerPassive.bind(this));
+      html.find('.homebrew-power-psyche-cost').change(this._onChangePowerPsycheCost.bind(this));
+      html.find('.homebrew-power-psyche-no-cost').change(this._onChangePowerPsycheNoCost.bind(this));
+      html.find('.homebrew-power-psyche-mult').change(this._onChangePowerPsycheMult.bind(this));
       html.find('.homebrew-power-tags-input').change(this._onChangePowerTags.bind(this));
       html.find('.homebrew-power-input').change(this._onChangePowerDescription.bind(this));
       html.find('.homebrew-remove-power').click(this._onRemovePower.bind(this));
@@ -296,7 +320,10 @@ export class HomebrewWindow extends Application {
             name: "",
             isPassive: false,
             keywords: "",
-            powerDescription: ""
+            powerDescription: "",
+            psycheBurstCost: false,
+            psycheBurstNoCost: false,
+            psycheBurstMultCost: false
         });
 
         // Add new power to DOM without re-rendering
@@ -396,6 +423,23 @@ export class HomebrewWindow extends Application {
         this.blasphemyOptions.powers[powerIndex].keywords = event.currentTarget.value;
     }
 
+    _onChangePowerPsycheCost(event) {
+        event.preventDefault();
+        const powerIndex = event.currentTarget.getAttribute('data-power-index');
+        this.blasphemyOptions.powers[powerIndex].psycheBurstCost = event.currentTarget.checked;
+    }
+
+    _onChangePowerPsycheNoCost(event) {
+        event.preventDefault();
+        const powerIndex = event.currentTarget.getAttribute('data-power-index');
+        this.blasphemyOptions.powers[powerIndex].psycheBurstNoCost = event.currentTarget.checked;
+    }
+
+    _onChangePowerPsycheMult(event) {
+        event.preventDefault();
+        const powerIndex = event.currentTarget.getAttribute('data-power-index');
+        this.blasphemyOptions.powers[powerIndex].psycheBurstMultCost = event.currentTarget.checked;
+    }
 
     async _onSubmitBlasphemy(event) {
         event.preventDefault();
@@ -446,7 +490,10 @@ export class HomebrewWindow extends Application {
                     powerName: power.name,
                     isPassive: power.isPassive,
                     keywords: power.keywords,
-                    powerDescription: power.powerDescription
+                    powerDescription: power.powerDescription,
+                    psycheBurstCost: power.psycheBurstCost || false,
+                    psycheBurstNoCost: power.psycheBurstNoCost || false,
+                    psycheBurstMultCost: power.psycheBurstMultCost || false
                 }
             };
             const createdPower = await Item.create(createdPowerData);

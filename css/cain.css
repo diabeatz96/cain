@@ -1,13 +1,13 @@
 /* Foundry VTT v11-v13 Compatible CSS */
 /* Imports must be at the top, before any @layer declarations */
-/* Using display=optional instead of swap to prevent layout shift when fonts load */
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=optional");
-@import url('https://fonts.googleapis.com/css2?family=Metal+Mania&display=optional');
-@import url('https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&display=optional');
-@import url('https://fonts.googleapis.com/css2?family=Lacquer&display=optional');
-@import url('https://fonts.googleapis.com/css2?family=Tiny5&display=optional');
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=optional');
-@import url('https://fonts.googleapis.com/css2?family=Pirata+One&display=optional');
+/* Using display=swap to ensure fonts load and replace fallback fonts */
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Metal+Mania&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lacquer&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Tiny5&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pirata+One&display=swap');
 @import url('./eye-anim.css');
 @import url('./glitch-effect.css');
 @import url('./sheets/index.css');
