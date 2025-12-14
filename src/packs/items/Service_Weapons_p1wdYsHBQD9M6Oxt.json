@@ -5,7 +5,7 @@
   "_id": "p1wdYsHBQD9M6Oxt",
   "img": "systems/cain/assets/items/kp.png",
   "system": {
-    "description": "<p>Your service weapons: A firearm and and</p><p>ammunition and melee weapon.</p>",
+    "description": "<p>Your service weapons: A CAT 0 firearm, ammunition, and melee weapon. This can be upgraded.</p>",
     "quantity": 1,
     "weight": 0,
     "roll": {
