@@ -69,15 +69,15 @@
         {{!-- Execution Talisman Visual Row --}}
         <div class="et-visual-row">
             <div class="et-mode-tabs">
-                <button type="button" class="et-mode-tab {{#if (eq system.executionTalisman.useVariant 'solo')}}active{{/if}}" data-mode="solo">
-                    Solo <input type="number" name="system.executionTalisman.solo" value="{{system.executionTalisman.solo}}" min="0" max="20" class="et-max-input" onclick="event.stopPropagation()"/>
-                </button>
-                <button type="button" class="et-mode-tab {{#if (eq system.executionTalisman.useVariant 'group')}}active{{/if}}" data-mode="group">
-                    Group <input type="number" name="system.executionTalisman.group" value="{{system.executionTalisman.group}}" min="0" max="20" class="et-max-input" onclick="event.stopPropagation()"/>
-                </button>
-                <button type="button" class="et-mode-tab {{#if (eq system.executionTalisman.useVariant 'horde')}}active{{/if}}" data-mode="horde">
-                    Horde <input type="number" name="system.executionTalisman.horde" value="{{system.executionTalisman.horde}}" min="0" max="20" class="et-max-input" onclick="event.stopPropagation()"/>
-                </button>
+                <div class="et-mode-tab {{#if (eq system.executionTalisman.useVariant 'solo')}}active{{/if}}" data-mode="solo">
+                    Solo <input type="number" name="system.executionTalisman.solo" value="{{system.executionTalisman.solo}}" min="0" max="20" class="et-max-input"/>
+                </div>
+                <div class="et-mode-tab {{#if (eq system.executionTalisman.useVariant 'group')}}active{{/if}}" data-mode="group">
+                    Group <input type="number" name="system.executionTalisman.group" value="{{system.executionTalisman.group}}" min="0" max="20" class="et-max-input"/>
+                </div>
+                <div class="et-mode-tab {{#if (eq system.executionTalisman.useVariant 'horde')}}active{{/if}}" data-mode="horde">
+                    Horde <input type="number" name="system.executionTalisman.horde" value="{{system.executionTalisman.horde}}" min="0" max="20" class="et-max-input"/>
+                </div>
             </div>
             <div class="et-pips-container">
                 <span class="et-label">EXECUTION</span>
