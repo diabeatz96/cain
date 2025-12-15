@@ -1,0 +1,703 @@
+/* Hunt Tracker Styles */
+
+@keyframes pulseRed {
+  0% { box-shadow: 0 0 5px rgba(255, 0, 0, 0.5); }
+  50% { box-shadow: 0 0 15px rgba(255, 0, 0, 0.8); }
+  100% { box-shadow: 0 0 5px rgba(255, 0, 0, 0.5); }
+}
+
+@keyframes pulsePurple {
+  0% { box-shadow: 0 0 5px rgba(228, 13, 242, 0.5); }
+  50% { box-shadow: 0 0 15px rgba(228, 13, 242, 0.8); }
+  100% { box-shadow: 0 0 5px rgba(228, 13, 242, 0.5); }
+}
+
+.hunt-tracker {
+  color: white;
+
+  /* Style window header - black theme */
+  .window-header {
+    background: #000000 !important;
+    border-bottom: 1px solid #333 !important;
+    padding: 4px 8px !important;
+  }
+
+  .window-header .window-title {
+    color: #e40df2 !important;
+    font-size: 14px !important;
+    font-weight: bold !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+  }
+
+  /* Main window styling - pure black */
+  background: #0a0a0a !important;
+  border: 1px solid #333 !important;
+  border-radius: 6px !important;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.9) !important;
+
+  .window-content {
+    padding: 0 !important;
+    background: #0a0a0a !important;
+    border: none !important;
+    border-radius: 0 !important;
+    overflow-y: auto;
+  }
+}
+
+.hunt-tracker-content {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Hunt Header */
+.hunt-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background: linear-gradient(135deg, #1a0a1a 0%, #0a0a0a 100%);
+  border: 1px solid #e40df2;
+  border-radius: 4px;
+}
+
+.sin-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sin-name {
+  margin: 0;
+  color: #e40df2;
+  font-size: 1.2em;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.sin-details {
+  display: flex;
+  gap: 10px;
+  font-size: 0.9em;
+  color: #aaa;
+}
+
+.sin-type {
+  text-transform: capitalize;
+}
+
+.sin-category {
+  color: #ff6666;
+  font-weight: bold;
+}
+
+.hunt-phase {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hunt-phase label {
+  color: #888;
+  font-size: 0.9em;
+}
+
+.phase-select {
+  background: #1a1a1a;
+  color: #fff;
+  border: 1px solid #444;
+  border-radius: 4px;
+  padding: 4px 8px;
+  cursor: pointer;
+}
+
+.phase-select:hover {
+  border-color: #e40df2;
+}
+
+/* Talisman Sections */
+.talisman-section {
+  background: #111;
+  border: 1px solid #333;
+  border-radius: 4px;
+  padding: 10px;
+}
+
+.talisman-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.talisman-header h4 {
+  margin: 0;
+  color: #ccc;
+  font-size: 0.95em;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.talisman-value {
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+/* Pips */
+.talisman-pips,
+.clock-pips {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.pip {
+  width: 24px;
+  height: 24px;
+  border: 2px solid #444;
+  border-radius: 50%;
+  background: #1a1a1a;
+  transition: all 0.2s ease;
+}
+
+.pip.filled {
+  background: #e40df2;
+  border-color: #e40df2;
+  box-shadow: 0 0 8px rgba(228, 13, 242, 0.6);
+}
+
+/* Tension Section */
+.tension-section .pip.filled {
+  background: #e40df2;
+  border-color: #e40df2;
+}
+
+.tension-section .talisman-value {
+  color: #e40df2;
+}
+
+/* Pressure Section */
+.pressure-section .pip.filled {
+  background: #ff6600;
+  border-color: #ff6600;
+  box-shadow: 0 0 8px rgba(255, 102, 0, 0.6);
+}
+
+.pressure-section .talisman-value {
+  color: #ff6600;
+}
+
+.pressure-section.out-of-control {
+  border-color: #ff0000;
+  animation: pulseRed 2s infinite;
+}
+
+.overflow-warning {
+  color: #ff0000;
+  font-weight: bold;
+  text-align: center;
+  padding: 5px;
+  background: rgba(255, 0, 0, 0.2);
+  border-radius: 4px;
+  margin-top: 8px;
+}
+
+/* Execution Section */
+.execution-section .talisman-value {
+  color: #ff4444;
+}
+
+.execution-formula {
+  font-size: 0.85em;
+  color: #888;
+  margin-bottom: 8px;
+}
+
+.execution-bar {
+  height: 20px;
+  background: #1a1a1a;
+  border: 1px solid #444;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.execution-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #ff0000 0%, #ff4444 100%);
+  transition: width 0.3s ease;
+}
+
+.palace-notice {
+  color: #ffaa00;
+  font-style: italic;
+  text-align: center;
+  font-size: 0.9em;
+  margin-top: 5px;
+}
+
+/* Control Buttons */
+.talisman-controls,
+.clock-controls {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.talisman-controls button,
+.clock-controls button,
+.hunt-tracker button {
+  background: #222;
+  border: 1px solid #444;
+  color: #ccc;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85em;
+  transition: all 0.2s ease;
+}
+
+.talisman-controls button:hover,
+.clock-controls button:hover,
+.hunt-tracker button:hover {
+  background: #333;
+  border-color: #e40df2;
+  color: #fff;
+}
+
+.talisman-controls button.active,
+.hunt-tracker button.active {
+  background: #e40df2;
+  border-color: #e40df2;
+  color: #fff;
+}
+
+.talisman-controls button.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.risk-triggered-notice {
+  font-size: 0.8em;
+  color: #888;
+  font-style: italic;
+  margin-top: 4px;
+}
+
+/* Traumas Section */
+.traumas-section {
+  background: #111;
+  border: 1px solid #333;
+  border-radius: 4px;
+  padding: 10px;
+}
+
+.traumas-section h4 {
+  margin: 0 0 10px 0;
+  color: #ccc;
+  font-size: 0.95em;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.trauma-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 8px;
+  background: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 4px;
+  margin-bottom: 6px;
+}
+
+.trauma-item.discovered {
+  border-color: #44aa44;
+}
+
+.trauma-item.used {
+  opacity: 0.6;
+  border-color: #666;
+}
+
+.trauma-status {
+  font-size: 1.2em;
+  width: 24px;
+  text-align: center;
+}
+
+.trauma-status .fa-question-circle {
+  color: #888;
+}
+
+.trauma-status .fa-check-circle {
+  color: #44aa44;
+}
+
+.trauma-status .fa-times-circle {
+  color: #666;
+}
+
+.trauma-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.trauma-question {
+  color: #ddd;
+  font-weight: bold;
+  font-size: 0.9em;
+}
+
+.trauma-answer {
+  background: #0a0a0a;
+  border: 1px solid #333;
+  color: #aaa;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.85em;
+  font-style: italic;
+}
+
+.trauma-answer:focus {
+  border-color: #e40df2;
+  outline: none;
+}
+
+.trauma-actions button {
+  padding: 4px 8px;
+}
+
+/* Tension Moves Section */
+.tension-moves-section {
+  background: #111;
+  border: 1px solid #333;
+  border-radius: 4px;
+  padding: 10px;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.section-header h4 {
+  margin: 0;
+  color: #ccc;
+  font-size: 0.95em;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.tension-moves-list {
+  max-height: 150px;
+  overflow-y: auto;
+  font-size: 0.85em;
+}
+
+.tension-moves-list.collapsed {
+  max-height: 0;
+  overflow: hidden;
+}
+
+.tension-move {
+  padding: 4px 0;
+  border-bottom: 1px solid #222;
+  color: #aaa;
+}
+
+.tension-move:last-child {
+  border-bottom: none;
+}
+
+.tension-move strong {
+  color: #e40df2;
+}
+
+/* Custom Clocks Section */
+.custom-clocks-section {
+  background: #111;
+  border: 1px solid #333;
+  border-radius: 4px;
+  padding: 10px;
+}
+
+.custom-clock {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px;
+  background: #1a1a1a;
+  border-radius: 4px;
+  margin-bottom: 4px;
+}
+
+.clock-name {
+  flex: 1;
+  color: #ddd;
+  font-weight: bold;
+  font-size: 0.9em;
+}
+
+.clock-pips .pip {
+  width: 16px;
+  height: 16px;
+}
+
+.clock-value {
+  color: #888;
+  font-size: 0.85em;
+  min-width: 35px;
+}
+
+.clock-controls {
+  display: flex;
+  gap: 2px;
+}
+
+.clock-controls button {
+  padding: 2px 6px;
+  font-size: 0.8em;
+}
+
+/* Notes Section */
+.notes-section {
+  background: #111;
+  border: 1px solid #333;
+  border-radius: 4px;
+  padding: 10px;
+}
+
+.notes-section h4 {
+  margin: 0 0 8px 0;
+  color: #ccc;
+  font-size: 0.95em;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.hunt-notes {
+  width: 100%;
+  min-height: 60px;
+  background: #0a0a0a;
+  border: 1px solid #333;
+  color: #ccc;
+  padding: 8px;
+  border-radius: 4px;
+  resize: vertical;
+  font-family: inherit;
+}
+
+.hunt-notes:focus {
+  border-color: #e40df2;
+  outline: none;
+}
+
+/* Hunt Controls */
+.hunt-controls {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  padding-top: 10px;
+  border-top: 1px solid #333;
+}
+
+.hunt-controls button {
+  padding: 8px 16px;
+}
+
+.reset-btn {
+  background: #333 !important;
+}
+
+.reset-btn:hover {
+  background: #444 !important;
+  border-color: #ffaa00 !important;
+}
+
+.end-btn {
+  background: #440000 !important;
+}
+
+.end-btn:hover {
+  background: #660000 !important;
+  border-color: #ff0000 !important;
+}
+
+/* No Hunt State */
+.no-hunt {
+  text-align: center;
+  padding: 30px 20px;
+}
+
+.no-hunt p {
+  color: #888;
+  margin-bottom: 15px;
+}
+
+.start-hunt-btn {
+  background: linear-gradient(135deg, #440044 0%, #220022 100%) !important;
+  border: 1px solid #e40df2 !important;
+  padding: 12px 24px !important;
+  font-size: 1em !important;
+}
+
+.start-hunt-btn:hover {
+  background: linear-gradient(135deg, #550055 0%, #330033 100%) !important;
+  box-shadow: 0 0 15px rgba(228, 13, 242, 0.5);
+}
+
+.quick-actions {
+  display: flex;
+  justify-content: center;
+  padding-top: 10px;
+}
+
+/* GM Only Notice */
+.gm-only-notice {
+  text-align: center;
+  padding: 40px 20px;
+  color: #666;
+}
+
+/* Scene control button styling - v12 */
+#controls .control-tool[data-tool="hunt-tracker"] {
+  position: relative;
+}
+
+#controls .control-tool[data-tool="hunt-tracker"] i {
+  color: #e40df2;
+}
+
+#controls .control-tool[data-tool="hunt-tracker"].active i {
+  color: #ff00ff;
+  text-shadow: 0 0 10px rgba(255, 0, 255, 0.8);
+}
+
+/* Scene control button styling - v13 */
+#scene-controls [data-tool="hunt-tracker"],
+#scene-controls [data-action="hunt-tracker"] {
+  position: relative;
+}
+
+#scene-controls [data-tool="hunt-tracker"] i,
+#scene-controls [data-action="hunt-tracker"] i {
+  color: #e40df2;
+}
+
+#scene-controls [data-tool="hunt-tracker"].active i,
+#scene-controls [data-action="hunt-tracker"].active i {
+  color: #ff00ff;
+  text-shadow: 0 0 10px rgba(255, 0, 255, 0.8);
+}
+
+/* Action bar button */
+.hunt-tracker-button {
+  background: linear-gradient(135deg, #1a0a1a 0%, #0a0a0a 100%);
+  border: 1px solid #e40df2;
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 4px;
+  transition: all 0.2s ease;
+}
+
+.hunt-tracker-button:hover {
+  background: linear-gradient(135deg, #2a1a2a 0%, #1a0a1a 100%);
+  box-shadow: 0 0 10px rgba(228, 13, 242, 0.5);
+}
+
+.hunt-tracker-button i {
+  color: #e40df2;
+  font-size: 1.5em;
+}
+
+/* Chat message styles */
+.hunt-message {
+  background: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 4px;
+  padding: 10px;
+  margin: 5px 0;
+}
+
+.hunt-message h2,
+.hunt-message h3 {
+  margin: 0 0 8px 0;
+  color: #e40df2;
+}
+
+.hunt-message p {
+  margin: 4px 0;
+  color: #ccc;
+}
+
+.hunt-message hr {
+  border: none;
+  border-top: 1px solid #333;
+  margin: 8px 0;
+}
+
+.hunt-message ul {
+  margin: 8px 0;
+  padding-left: 20px;
+}
+
+.hunt-message li {
+  color: #aaa;
+  margin: 4px 0;
+}
+
+.hunt-message .hint {
+  font-style: italic;
+  color: #888;
+  font-size: 0.9em;
+}
+
+.hunt-message .warning {
+  color: #ff6600;
+  font-weight: bold;
+}
+
+.hunt-message.hunt-started {
+  border-color: #e40df2;
+}
+
+.hunt-message.hunt-ended {
+  border-color: #44aa44;
+}
+
+.hunt-message.pressure-overflow {
+  border-color: #ff0000;
+  background: linear-gradient(135deg, #2a0a0a 0%, #1a1a1a 100%);
+}
+
+.hunt-message.pressure-overflow h2 {
+  color: #ff0000;
+}
+
+.hunt-message.sin-defeated {
+  border-color: #ffaa00;
+  background: linear-gradient(135deg, #2a2a0a 0%, #1a1a1a 100%);
+}
+
+.hunt-message.sin-defeated h2 {
+  color: #ffaa00;
+}
+
+.hunt-message.trauma-discovered {
+  border-color: #44aa44;
+}
+
+.hunt-message.trauma-counter {
+  border-color: #ffaa00;
+}
+
+.hunt-message.sin-retreats {
+  border-color: #ff6600;
+}

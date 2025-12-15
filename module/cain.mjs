@@ -14,6 +14,7 @@ import { PlayerOverview } from './documents/player-overview.mjs';
 // Import DataModel classes
 import * as models from './data/_module.mjs';
 import PathosTracker from "./components/pathos-tracker/pathos-tracker.mjs";
+import HuntTracker from "./components/hunt-tracker/hunt-tracker.mjs";
 
 // Import dice roller
 import { CainDiceRoller } from './dice/cain-dice-roller.mjs';
@@ -263,6 +264,46 @@ Hooks.once('init', async function () {
     default: { top: 60, left: 110 },
   });
 
+  // Hunt Tracker settings
+  game.settings.register('cain', 'currentHunt', {
+    name: 'Current Hunt State',
+    scope: 'world',
+    config: false,
+    type: Object,
+    default: {
+      active: false,
+      sinActorId: null,
+      sinName: '',
+      sinType: '',
+      sinCategory: 0,
+      tension: { current: 0, max: 3, sceneRiskTriggered: false },
+      pressure: { current: 0, max: 6, outOfControl: false },
+      execution: { base: 6, current: 0, calculated: 6 },
+      traumas: [],
+      customTalismans: [],
+      notes: '',
+      sceneCount: 0,
+      insidePalace: false,
+      phase: 'briefing'
+    }
+  });
+
+  game.settings.register('cain', 'huntTrackerVisible', {
+    name: 'Hunt Tracker Visible',
+    scope: 'client',
+    config: false,
+    type: Boolean,
+    default: false,
+  });
+
+  game.settings.register('cain', 'huntTrackerPosition', {
+    name: 'Hunt Tracker Position',
+    scope: 'client',
+    config: false,
+    type: Object,
+    default: { top: 100, left: 100 },
+  });
+
   function registerHotkeySetting(settingName, settingLabel, settingHint) {
     game.settings.register('cain', settingName, {
       name: settingLabel,
@@ -417,6 +458,48 @@ Hooks.on('getSceneControlButtons', (controls) => {
       });
     }
   }
+
+  // Add Hunt Tracker toggle (GM only)
+  if (game.user.isGM) {
+    if (isV13) {
+      if (controls.tokens) {
+        controls.tokens.tools['hunt-tracker'] = {
+          name: 'hunt-tracker',
+          title: 'Toggle Hunt Tracker',
+          icon: 'fa-solid fa-skull',
+          toggle: true,
+          active: game.settings.get('cain', 'huntTrackerVisible'),
+          onChange: async (event, active) => {
+            await game.settings.set('cain', 'huntTrackerVisible', active);
+            if (active) {
+              ui.huntTracker.render({ force: true });
+            } else {
+              ui.huntTracker.close();
+            }
+          }
+        };
+      }
+    } else {
+      const tokenControls = controls.find(c => c.name === 'token');
+      if (tokenControls) {
+        tokenControls.tools.push({
+          name: 'hunt-tracker',
+          title: 'Toggle Hunt Tracker',
+          icon: 'fa-solid fa-skull',
+          toggle: true,
+          active: game.settings.get('cain', 'huntTrackerVisible'),
+          onClick: async (active) => {
+            await game.settings.set('cain', 'huntTrackerVisible', active);
+            if (active) {
+              ui.huntTracker.render({ force: true });
+            } else {
+              ui.huntTracker.close();
+            }
+          }
+        });
+      }
+    }
+  }
 });
 
 /* -------------------------------------------- */
@@ -447,6 +530,27 @@ Handlebars.registerHelper('hasItemsOfType', function(items, type, options) {
 
 Handlebars.registerHelper('calcPercentage', function(curr, max) {
   return (curr / max) * 100;
+});
+
+// Comparison helpers for hunt tracker
+Handlebars.registerHelper('eq', function(a, b) {
+  return a === b;
+});
+
+Handlebars.registerHelper('lt', function(a, b) {
+  return a < b;
+});
+
+Handlebars.registerHelper('lte', function(a, b) {
+  return a <= b;
+});
+
+Handlebars.registerHelper('gt', function(a, b) {
+  return a > b;
+});
+
+Handlebars.registerHelper('gte', function(a, b) {
+  return a >= b;
 });
 
 Handlebars.registerHelper('times', function(n, block) {
@@ -698,6 +802,55 @@ Hooks.once('ready', async function () {
   // register to the UI element
   ui.pathosTracker = pathos;
 
+  // Add the hunt tracker UI element (GM only)
+  if (game.user.isGM) {
+    const huntTracker = new HuntTracker();
+
+    // Only render if visible setting is true
+    if (game.settings.get('cain', 'huntTrackerVisible')) {
+      huntTracker.render({ force: true });
+    }
+
+    // Register to the UI element
+    ui.huntTracker = huntTracker;
+  }
+
+  // Socket listener for hunt tracker updates
+  game.socket.on('system.cain', (data) => {
+    if (data.action === 'updateHunt') {
+      if (ui.huntTracker) {
+        ui.huntTracker.render(true);
+      }
+    }
+  });
+
+  function addHuntTrackerButton() {
+    if (!game.user.isGM) return;
+    // Check if button already exists to prevent duplicates
+    if ($('.hunt-tracker-button').length) return;
+
+    const button = $('<button title="Hunt Tracker" class="hunt-tracker-button"><i class="fa-solid fa-skull"></i></button>');
+
+    // Add click event to open the HuntTracker
+    button.on('click', () => {
+      if (ui.huntTracker) {
+        ui.huntTracker.render({ force: true });
+      }
+    });
+
+    // Create an aside element and append the button to it
+    const aside = $('<aside class="talisman-container"></aside>').append(button);
+
+    // Insert the aside element into the action bar
+    const actionBar = $('#action-bar');
+    if (actionBar.length) {
+      actionBar.append(aside);
+      console.log('Hunt Tracker button inserted successfully.');
+    } else {
+      console.error('Action bar not found.');
+    }
+  }
+
   function addTalismanButton() {
     // Check if button already exists to prevent duplicates
     if ($('.talisman-button').length) return;
@@ -793,6 +946,7 @@ Hooks.once('ready', async function () {
   addRiskRollButton();
   addFateRollButton();
   addHomebrewButton();
+  addHuntTrackerButton();
 
   // Ensure the buttons are added every time the action bar is rendered
   Hooks.on('renderHotbar', () => {
@@ -800,6 +954,7 @@ Hooks.once('ready', async function () {
     addRiskRollButton();
     addFateRollButton();
     addHomebrewButton();
+    addHuntTrackerButton();
   });
 
   // Register hotbar drop hook

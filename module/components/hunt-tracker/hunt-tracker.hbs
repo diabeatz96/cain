@@ -1,0 +1,232 @@
+<div class="hunt-tracker-content">
+  {{#if isGM}}
+    {{#if hunt.active}}
+      {{!-- Active Hunt Display --}}
+      <div class="hunt-header">
+        <div class="sin-info">
+          <h3 class="sin-name">{{hunt.sinName}}</h3>
+          <div class="sin-details">
+            <span class="sin-type">{{hunt.sinType}}</span>
+            <span class="sin-category">CAT {{hunt.sinCategory}}</span>
+          </div>
+        </div>
+        <div class="hunt-phase">
+          <label>Phase:</label>
+          <select class="phase-select" data-action="setPhase">
+            {{#each huntPhases}}
+              <option value="{{this.id}}" {{#if (eq this.id ../hunt.phase)}}selected{{/if}}>{{this.name}}</option>
+            {{/each}}
+          </select>
+        </div>
+      </div>
+
+      {{!-- Tension Talisman --}}
+      <div class="talisman-section tension-section">
+        <div class="talisman-header">
+          <h4>Tension</h4>
+          <span class="talisman-value">{{hunt.tension.current}}/{{hunt.tension.max}}</span>
+        </div>
+        <div class="talisman-pips">
+          {{#times hunt.tension.max}}
+            <span class="pip {{#if (lte @index ../hunt.tension.current)}}filled{{/if}}"></span>
+          {{/times}}
+        </div>
+        <div class="talisman-controls">
+          <button type="button" data-action="decrementTension" title="Decrease Tension">
+            <i class="fas fa-minus"></i>
+          </button>
+          <button type="button" data-action="incrementTension" title="Increase Tension">
+            <i class="fas fa-plus"></i>
+          </button>
+          <button type="button" data-action="advanceScene" title="Scene Passed (increases tension)">
+            <i class="fas fa-forward"></i> Scene
+          </button>
+          <button type="button" data-action="riskTriggered" class="{{#if hunt.tension.sceneRiskTriggered}}disabled{{/if}}" title="Risk Roll = 1 (once per scene)">
+            <i class="fas fa-dice-one"></i> Risk 1
+          </button>
+        </div>
+        {{#if hunt.tension.sceneRiskTriggered}}
+          <div class="risk-triggered-notice">Risk already triggered this scene</div>
+        {{/if}}
+      </div>
+
+      {{!-- Pressure Talisman --}}
+      <div class="talisman-section pressure-section {{#if hunt.pressure.outOfControl}}out-of-control{{/if}}">
+        <div class="talisman-header">
+          <h4>Pressure</h4>
+          <span class="talisman-value">{{hunt.pressure.current}}/{{hunt.pressure.max}}</span>
+        </div>
+        <div class="talisman-pips">
+          {{#times hunt.pressure.max}}
+            <span class="pip {{#if (lte @index ../hunt.pressure.current)}}filled{{/if}}"></span>
+          {{/times}}
+        </div>
+        <div class="talisman-controls">
+          <button type="button" data-action="decrementPressure" title="Decrease Pressure">
+            <i class="fas fa-minus"></i>
+          </button>
+          <button type="button" data-action="incrementPressure" title="Increase Pressure">
+            <i class="fas fa-plus"></i>
+          </button>
+          <button type="button" data-action="partyRests" title="Party Rests (+1 Pressure)">
+            <i class="fas fa-bed"></i> Rest
+          </button>
+        </div>
+        {{#if hunt.pressure.outOfControl}}
+          <div class="overflow-warning">OUT OF CONTROL - Sin gains +1 CAT!</div>
+        {{/if}}
+      </div>
+
+      {{!-- Execution Talisman --}}
+      <div class="talisman-section execution-section">
+        <div class="talisman-header">
+          <h4>Execution</h4>
+          <span class="talisman-value">{{hunt.execution.current}}/{{executionMax}}</span>
+        </div>
+        <div class="execution-formula">
+          <span>6 + {{hunt.pressure.current}} (pressure) + {{hunt.sinCategory}} (CAT) = {{executionMax}}</span>
+        </div>
+        <div class="execution-bar">
+          <div class="execution-fill" style="width: {{calcPercentage hunt.execution.current executionMax}}%"></div>
+        </div>
+        <div class="talisman-controls">
+          <button type="button" data-action="decrementExecution" title="Remove Slash">
+            <i class="fas fa-minus"></i>
+          </button>
+          <button type="button" data-action="incrementExecution" title="Add Slash">
+            <i class="fas fa-plus"></i>
+          </button>
+          <button type="button" data-action="healSin" title="Sin Heals (roll 1d3 or 2d3)">
+            <i class="fas fa-heart"></i> Heal
+          </button>
+          <button type="button" data-action="togglePalace" class="{{#if hunt.insidePalace}}active{{/if}}" title="Toggle Palace Status">
+            <i class="fas fa-dungeon"></i> {{#if hunt.insidePalace}}In Palace{{else}}Outside{{/if}}
+          </button>
+        </div>
+        {{#if hunt.insidePalace}}
+          <div class="palace-notice">Sin cannot flee from the palace!</div>
+        {{/if}}
+      </div>
+
+      {{!-- Traumas Section --}}
+      <div class="traumas-section">
+        <h4>Traumas</h4>
+        {{#each hunt.traumas}}
+          <div class="trauma-item {{#if this.discovered}}discovered{{/if}} {{#if this.used}}used{{/if}}">
+            <div class="trauma-status">
+              {{#if this.used}}
+                <i class="fas fa-times-circle" title="Used"></i>
+              {{else if this.discovered}}
+                <i class="fas fa-check-circle" title="Discovered"></i>
+              {{else}}
+                <i class="fas fa-question-circle" title="Unknown"></i>
+              {{/if}}
+            </div>
+            <div class="trauma-content">
+              <div class="trauma-question">{{this.question}}</div>
+              <input type="text" class="trauma-answer" value="{{this.answer}}" placeholder="Answer..." data-index="{{@index}}" />
+            </div>
+            <div class="trauma-actions">
+              {{#unless this.discovered}}
+                <button type="button" data-action="discoverTrauma" data-index="{{@index}}" title="Discover Trauma">
+                  <i class="fas fa-eye"></i>
+                </button>
+              {{else}}
+                {{#unless this.used}}
+                  <button type="button" data-action="useTraumaCounter" data-index="{{@index}}" title="Use Counter (roll 1d3)">
+                    <i class="fas fa-bolt"></i>
+                  </button>
+                {{/unless}}
+              {{/unless}}
+            </div>
+          </div>
+        {{/each}}
+      </div>
+
+      {{!-- Tension Moves Section --}}
+      <div class="tension-moves-section">
+        <div class="section-header">
+          <h4>Tension Moves</h4>
+          <button type="button" data-action="rollRandomTensionMove" title="Roll Random Move">
+            <i class="fas fa-dice"></i> Random
+          </button>
+        </div>
+        <div class="tension-moves-list collapsed">
+          {{#each tensionMoves}}
+            <div class="tension-move">
+              <strong>{{this.name}}:</strong> {{this.description}}
+            </div>
+          {{/each}}
+        </div>
+      </div>
+
+      {{!-- Custom Clocks Section --}}
+      <div class="custom-clocks-section">
+        <div class="section-header">
+          <h4>Custom Clocks</h4>
+          <button type="button" data-action="addCustomClock" title="Add Clock">
+            <i class="fas fa-plus"></i> Add
+          </button>
+        </div>
+        {{#each hunt.customTalismans}}
+          <div class="custom-clock">
+            <span class="clock-name">{{this.name}}</span>
+            <div class="clock-pips">
+              {{#times this.max}}
+                <span class="pip {{#if (lte @index ../this.current)}}filled{{/if}}"></span>
+              {{/times}}
+            </div>
+            <span class="clock-value">{{this.current}}/{{this.max}}</span>
+            <div class="clock-controls">
+              <button type="button" data-action="untickCustomClock" data-clock-id="{{this.id}}" title="Untick">
+                <i class="fas fa-minus"></i>
+              </button>
+              <button type="button" data-action="tickCustomClock" data-clock-id="{{this.id}}" title="Tick">
+                <i class="fas fa-plus"></i>
+              </button>
+              <button type="button" data-action="removeCustomClock" data-clock-id="{{this.id}}" title="Remove">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+          </div>
+        {{/each}}
+      </div>
+
+      {{!-- Notes Section --}}
+      <div class="notes-section">
+        <h4>GM Notes</h4>
+        <textarea class="hunt-notes" placeholder="Notes about the hunt...">{{hunt.notes}}</textarea>
+      </div>
+
+      {{!-- Hunt Controls --}}
+      <div class="hunt-controls">
+        <button type="button" data-action="resetMission" class="reset-btn" title="Reset all exorcists">
+          <i class="fas fa-redo"></i> Reset Mission
+        </button>
+        <button type="button" data-action="endHunt" class="end-btn" title="End the hunt">
+          <i class="fas fa-flag-checkered"></i> End Hunt
+        </button>
+      </div>
+
+    {{else}}
+      {{!-- No Active Hunt --}}
+      <div class="no-hunt">
+        <p>No active hunt.</p>
+        <button type="button" data-action="startHunt" class="start-hunt-btn">
+          <i class="fas fa-skull"></i> Start New Hunt
+        </button>
+      </div>
+
+      {{!-- Quick Actions even without hunt --}}
+      <div class="quick-actions">
+        <button type="button" data-action="resetMission" class="reset-btn" title="Reset all exorcists">
+          <i class="fas fa-redo"></i> Reset Exorcists
+        </button>
+      </div>
+    {{/if}}
+  {{else}}
+    <div class="gm-only-notice">
+      <p>Hunt Tracker is only visible to the GM.</p>
+    </div>
+  {{/if}}
+</div>
