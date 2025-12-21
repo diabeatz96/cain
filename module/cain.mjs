@@ -14,6 +14,7 @@ import { PlayerOverview } from './documents/player-overview.mjs';
 // Import DataModel classes
 import * as models from './data/_module.mjs';
 import PathosTracker from "./components/pathos-tracker/pathos-tracker.mjs";
+import HuntTracker from "./components/hunt-tracker/hunt-tracker.mjs";
 
 // Import dice roller
 import { CainDiceRoller } from './dice/cain-dice-roller.mjs';
@@ -110,11 +111,27 @@ Hooks.once('init', async function () {
     type: Array,
     default: [
       {
+        name: 'Tension',
+        imagePath: 'systems/cain/assets/Talismans/Talisman-A-0.png',
+        currMarkAmount: 0,
+        minMarkAmount: 0,
+        maxMarkAmount: 3,
+        isHidden: false,
+      },
+      {
+        name: 'Pressure',
+        imagePath: 'systems/cain/assets/Talismans/Talisman-A-0.png',
+        currMarkAmount: 0,
+        minMarkAmount: 0,
+        maxMarkAmount: 6,
+        isHidden: false,
+      },
+      {
         name: 'Execution',
         imagePath: 'systems/cain/assets/Talismans/Talisman-A-0.png',
         currMarkAmount: 0,
         minMarkAmount: 0,
-        maxMarkAmount: 2,
+        maxMarkAmount: 10,
         isHidden: false,
       },
     ],
@@ -216,15 +233,19 @@ Hooks.once('init', async function () {
 
   game.settings.register('cain', 'showDiceRoller', {
     name: 'Show Dice Roller Panel',
-    hint: 'Display the dice roller panel in the chat sidebar. Disable if you prefer to roll from character sheets only.',
+    hint: 'Display the dice roller panel. Disable if you prefer to roll from character sheets only.',
     scope: 'client',
     config: true,
     type: Boolean,
     default: true,
     onChange: value => {
       // Update dice panel visibility immediately
-      if (CONFIG.CAIN?.dicePanel?.element) {
-        CONFIG.CAIN.dicePanel.element.classList.toggle('hidden', !value);
+      if (ui.cainDicePanel) {
+        if (value) {
+          ui.cainDicePanel.render(true);
+        } else {
+          ui.cainDicePanel.close();
+        }
       }
     }
   });
@@ -244,12 +265,10 @@ Hooks.once('init', async function () {
     default: 'purple',
     onChange: value => {
       // Update dice panel theme immediately
-      if (CONFIG.CAIN?.dicePanel?.element) {
-        const element = CONFIG.CAIN.dicePanel.element;
-        if (value === 'purple') {
-          element.removeAttribute('data-theme');
-        } else {
-          element.setAttribute('data-theme', value);
+      if (ui.cainDicePanel) {
+        ui.cainDicePanel._currentTheme = value;
+        if (ui.cainDicePanel.rendered) {
+          ui.cainDicePanel.render();
         }
       }
     }
@@ -261,6 +280,88 @@ Hooks.once('init', async function () {
     config: false,
     type: Object,
     default: { top: 60, left: 110 },
+  });
+
+  // Hunt Tracker settings
+  game.settings.register('cain', 'currentHunt', {
+    name: 'Current Hunt State',
+    scope: 'world',
+    config: false,
+    type: Object,
+    default: {
+      active: false,
+      sinActorId: null,
+      sinName: '',
+      sinType: '',
+      sinCategory: 0,
+      tension: { current: 0, max: 3, sceneRiskTriggered: false },
+      pressure: { current: 0, max: 6, outOfControl: false },
+      execution: { base: 6, current: 0, calculated: 6 },
+      traumas: [],
+      customTalismans: [],
+      notes: '',
+      sceneCount: 0,
+      insidePalace: false,
+      phase: 'briefing'
+    }
+  });
+
+  game.settings.register('cain', 'huntTrackerVisible', {
+    name: 'Hunt Tracker Visible',
+    scope: 'client',
+    config: false,
+    type: Boolean,
+    default: false,
+  });
+  // Reset to false immediately after registration so the toggle button starts unchecked
+  game.settings.set('cain', 'huntTrackerVisible', false);
+
+  game.settings.register('cain', 'huntTrackerPosition', {
+    name: 'Hunt Tracker Position',
+    scope: 'client',
+    config: false,
+    type: Object,
+    default: { top: 100, left: 100 },
+  });
+
+  game.settings.register('cain', 'dicePanelPosition', {
+    name: 'Dice Panel Position',
+    scope: 'client',
+    config: false,
+    type: Object,
+    default: { top: 100, left: 100 },
+  });
+
+  game.settings.register('cain', 'dicePanelCollapsed', {
+    name: 'Dice Panel Collapsed',
+    scope: 'client',
+    config: false,
+    type: Boolean,
+    default: false,
+  });
+
+  game.settings.register('cain', 'dicePanelSelectedCharacter', {
+    name: 'Dice Panel Selected Character',
+    scope: 'client',
+    config: false,
+    type: String,
+    default: '',
+  });
+
+  game.settings.register('cain', 'dicePanelSelectedSkill', {
+    name: 'Dice Panel Selected Skill',
+    scope: 'client',
+    config: false,
+    type: String,
+    default: 'force',
+  });
+
+  game.settings.register('cain', 'dicePanelOpen', {
+    name: 'Dice Panel Open',
+    scope: 'client',
+    config: false,
+    type: Boolean,
+    default: false,
   });
 
   function registerHotkeySetting(settingName, settingLabel, settingHint) {
@@ -417,6 +518,48 @@ Hooks.on('getSceneControlButtons', (controls) => {
       });
     }
   }
+
+  // Add Hunt Tracker toggle (GM only)
+  if (game.user.isGM) {
+    if (isV13) {
+      if (controls.tokens) {
+        controls.tokens.tools['hunt-tracker'] = {
+          name: 'hunt-tracker',
+          title: 'Toggle Hunt Tracker',
+          icon: 'fa-solid fa-skull',
+          toggle: true,
+          active: game.settings.get('cain', 'huntTrackerVisible'),
+          onChange: async (event, active) => {
+            await game.settings.set('cain', 'huntTrackerVisible', active);
+            if (active) {
+              ui.huntTracker.render({ force: true });
+            } else {
+              ui.huntTracker.close();
+            }
+          }
+        };
+      }
+    } else {
+      const tokenControls = controls.find(c => c.name === 'token');
+      if (tokenControls) {
+        tokenControls.tools.push({
+          name: 'hunt-tracker',
+          title: 'Toggle Hunt Tracker',
+          icon: 'fa-solid fa-skull',
+          toggle: true,
+          active: game.settings.get('cain', 'huntTrackerVisible'),
+          onClick: async (active) => {
+            await game.settings.set('cain', 'huntTrackerVisible', active);
+            if (active) {
+              ui.huntTracker.render({ force: true });
+            } else {
+              ui.huntTracker.close();
+            }
+          }
+        });
+      }
+    }
+  }
 });
 
 /* -------------------------------------------- */
@@ -449,9 +592,30 @@ Handlebars.registerHelper('calcPercentage', function(curr, max) {
   return (curr / max) * 100;
 });
 
+// Comparison helpers for hunt tracker
+Handlebars.registerHelper('eq', function(a, b) {
+  return a === b;
+});
+
+Handlebars.registerHelper('lt', function(a, b) {
+  return a < b;
+});
+
+Handlebars.registerHelper('lte', function(a, b) {
+  return a <= b;
+});
+
+Handlebars.registerHelper('gt', function(a, b) {
+  return a > b;
+});
+
+Handlebars.registerHelper('gte', function(a, b) {
+  return a >= b;
+});
+
 Handlebars.registerHelper('times', function(n, block) {
   var accum = '';
-  for(var i = 1; i <= n; ++i) {
+  for(var i = 0; i < n; ++i) {
       block.data.index = i;
       block.data.first = i === 0;
       block.data.last = i === (n - 1);
@@ -697,6 +861,90 @@ Hooks.once('ready', async function () {
 
   // register to the UI element
   ui.pathosTracker = pathos;
+
+  // Add the hunt tracker UI element (GM only)
+  if (game.user.isGM) {
+    const huntTracker = new HuntTracker();
+
+    // Register to the UI element (don't auto-open on page load)
+    ui.huntTracker = huntTracker;
+  }
+
+  // Socket listener for hunt tracker and talisman updates
+  game.socket.on('system.cain', (data) => {
+    if (data.action === 'updateHunt') {
+      if (ui.huntTracker) {
+        ui.huntTracker.render(true);
+      }
+    }
+    // Handle global talisman updates - sync to hunt tracker if linked
+    if (data.action === 'updateTalismans') {
+      syncLinkedTalismanToHunt();
+    }
+  });
+
+  /**
+   * Sync linked global talismans' values to the hunt tracker
+   * Called when global talismans are updated
+   */
+  async function syncLinkedTalismanToHunt() {
+    if (!game.user.isGM) return;
+
+    const hunt = game.settings.get('cain', 'currentHunt');
+    if (!hunt.active) return;
+
+    const talismans = game.settings.get('cain', 'globalTalismans');
+    let needsUpdate = false;
+    const updatedHunt = foundry.utils.deepClone(hunt);
+
+    // Sync execution talisman
+    if (hunt.linkedTalismanIndex !== undefined && hunt.linkedTalismanIndex !== null) {
+      const linkedTalisman = talismans[hunt.linkedTalismanIndex];
+      if (linkedTalisman && hunt.execution.current !== linkedTalisman.currMarkAmount) {
+        updatedHunt.execution.current = linkedTalisman.currMarkAmount;
+        needsUpdate = true;
+      }
+    }
+
+    // Sync tension talisman
+    if (hunt.linkedTensionTalismanIndex !== undefined && hunt.linkedTensionTalismanIndex !== null) {
+      const linkedTensionTalisman = talismans[hunt.linkedTensionTalismanIndex];
+      if (linkedTensionTalisman) {
+        if (hunt.tension.current !== linkedTensionTalisman.currMarkAmount) {
+          updatedHunt.tension.current = linkedTensionTalisman.currMarkAmount;
+          needsUpdate = true;
+        }
+        if (hunt.tension.max !== linkedTensionTalisman.maxMarkAmount) {
+          updatedHunt.tension.max = linkedTensionTalisman.maxMarkAmount;
+          needsUpdate = true;
+        }
+      }
+    }
+
+    // Sync pressure talisman
+    if (hunt.linkedPressureTalismanIndex !== undefined && hunt.linkedPressureTalismanIndex !== null) {
+      const linkedPressureTalisman = talismans[hunt.linkedPressureTalismanIndex];
+      if (linkedPressureTalisman) {
+        if (hunt.pressure.current !== linkedPressureTalisman.currMarkAmount) {
+          updatedHunt.pressure.current = linkedPressureTalisman.currMarkAmount;
+          needsUpdate = true;
+        }
+        if (hunt.pressure.max !== linkedPressureTalisman.maxMarkAmount) {
+          updatedHunt.pressure.max = linkedPressureTalisman.maxMarkAmount;
+          needsUpdate = true;
+        }
+      }
+    }
+
+    if (needsUpdate) {
+      await game.settings.set('cain', 'currentHunt', updatedHunt);
+
+      // Re-render the hunt tracker
+      if (ui.huntTracker) {
+        ui.huntTracker.render(true);
+      }
+    }
+  }
 
   function addTalismanButton() {
     // Check if button already exists to prevent duplicates

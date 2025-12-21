@@ -240,6 +240,14 @@ export class CainItemSheet extends BaseItemSheet {
         this._onSinTypeSelect(sinType);
       });
     }
+
+    // Bond-specific listeners
+    if (this.item.type === "bond") {
+      html.find('#addStricture').click(this._addStricture.bind(this));
+      html.find('.remove-stricture').click(this._removeStricture.bind(this));
+      html.find('#setHighBlasphemy').click(this._setHighBlasphemy.bind(this));
+      html.find('.remove-high-blasphemy').click(this._removeHighBlasphemy.bind(this));
+    }
   }
 
   _onSinTypeSelect(sinType) {
@@ -281,11 +289,6 @@ export class CainItemSheet extends BaseItemSheet {
   _removeDomainAffliction(event) {
     event.preventDefault();
     this.item.update({ 'system.afflictionEffect': null });
-    // Bond-specific listeners
-    html.find('#addStricture').click(this._addStricture.bind(this));
-    html.find('.remove-stricture').click(this._removeStricture.bind(this));
-    html.find('#setHighBlasphemy').click(this._setHighBlasphemy.bind(this));
-    html.find('.remove-high-blasphemy').click(this._removeHighBlasphemy.bind(this));
   }
 
   _addTaskToAgenda(event) {

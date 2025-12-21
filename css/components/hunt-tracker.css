@@ -1,0 +1,916 @@
+/* Hunt Tracker Styles */
+
+@keyframes pulseRed {
+  0% { box-shadow: 0 0 5px rgba(255, 0, 0, 0.5); }
+  50% { box-shadow: 0 0 15px rgba(255, 0, 0, 0.8); }
+  100% { box-shadow: 0 0 5px rgba(255, 0, 0, 0.5); }
+}
+
+@keyframes pulsePurple {
+  0% { box-shadow: 0 0 5px rgba(228, 13, 242, 0.5); }
+  50% { box-shadow: 0 0 15px rgba(228, 13, 242, 0.8); }
+  100% { box-shadow: 0 0 5px rgba(228, 13, 242, 0.5); }
+}
+
+#hunt-tracker.hunt-tracker {
+  color: white;
+
+  /* Style window header - black theme */
+  .window-header {
+    background: #000000 !important;
+    border-bottom: 1px solid #333 !important;
+    padding: 4px 8px !important;
+  }
+
+  .window-header .window-title {
+    color: #e40df2 !important;
+    font-size: 14px !important;
+    font-weight: bold !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+  }
+
+  /* Main window styling - pure black */
+  background: #0a0a0a !important;
+  border: 1px solid #333 !important;
+  border-radius: 6px !important;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.9) !important;
+
+  .window-content {
+    padding: 0 !important;
+    background: #0a0a0a !important;
+    border: none !important;
+    border-radius: 0 !important;
+    overflow-y: auto;
+  }
+}
+
+.hunt-tracker-content {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Hunt Header */
+.hunt-tracker-content .hunt-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background: linear-gradient(135deg, #1a0a1a 0%, #0a0a0a 100%);
+  border: 1px solid #e40df2;
+  border-radius: 4px;
+}
+
+.hunt-tracker-content .sin-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.hunt-tracker-content .sin-name {
+  margin: 0;
+  color: #e40df2;
+  font-size: 1.2em;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.hunt-tracker-content .sin-details {
+  display: flex;
+  gap: 10px;
+  font-size: 0.9em;
+  color: #aaa;
+}
+
+.hunt-tracker-content .sin-type {
+  text-transform: capitalize;
+}
+
+.hunt-tracker-content .sin-category {
+  color: #ff6666;
+  font-weight: bold;
+}
+
+.hunt-tracker-content .hunt-phase {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hunt-tracker-content .hunt-phase label {
+  color: #888;
+  font-size: 0.9em;
+}
+
+.hunt-tracker-content .phase-select,
+#hunt-tracker .phase-select,
+#hunt-tracker select {
+  background: #1a1a1a !important;
+  color: #fff !important;
+  border: 1px solid #444 !important;
+  border-radius: 4px;
+  padding: 4px 8px;
+  cursor: pointer;
+}
+
+.hunt-tracker-content .phase-select:hover,
+#hunt-tracker .phase-select:hover,
+#hunt-tracker select:hover {
+  border-color: #e40df2 !important;
+}
+
+.hunt-tracker-content .phase-select option,
+#hunt-tracker .phase-select option,
+#hunt-tracker select option {
+  background: #1a1a1a !important;
+  color: #fff !important;
+}
+
+.hunt-tracker-content .phase-select:focus,
+#hunt-tracker .phase-select:focus,
+#hunt-tracker select:focus {
+  outline: none;
+  border-color: #e40df2 !important;
+}
+
+/* Hunt Talisman Sections */
+.hunt-tracker-content .hunt-talisman-section {
+  background: #111;
+  border: 1px solid #333;
+  border-radius: 4px;
+  padding: 8px;
+  overflow: hidden;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.hunt-tracker-content .hunt-talisman-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.hunt-tracker-content .hunt-talisman-header h4 {
+  margin: 0;
+  color: #ccc;
+  font-size: 0.95em;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.hunt-tracker-content .hunt-talisman-value {
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+/* Hunt Pips */
+.hunt-tracker-content .hunt-talisman-pips,
+.hunt-tracker-content .hunt-clock-pips {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.hunt-tracker-content .hunt-pip {
+  width: 24px;
+  height: 24px;
+  border: 2px solid #444;
+  border-radius: 50%;
+  background: #1a1a1a;
+  transition: all 0.2s ease;
+}
+
+.hunt-tracker-content .hunt-pip.filled {
+  background: #e40df2;
+  border-color: #e40df2;
+  box-shadow: 0 0 8px rgba(228, 13, 242, 0.6);
+}
+
+/* Tension Section */
+.hunt-tracker-content .hunt-tension-section .hunt-pip.filled {
+  background: #e40df2;
+  border-color: #e40df2;
+}
+
+.hunt-tracker-content .hunt-tension-section .hunt-talisman-value {
+  color: #e40df2;
+}
+
+.hunt-tracker-content .hunt-tension-section .hunt-linked-talisman-display {
+  border-color: #e40df2;
+}
+
+.hunt-tracker-content .hunt-tension-section .hunt-linked-talisman-image {
+  box-shadow: 0 0 10px rgba(228, 13, 242, 0.5);
+}
+
+.hunt-tracker-content .hunt-tension-section .hunt-linked-talisman-image:hover {
+  box-shadow: 0 0 15px rgba(228, 13, 242, 0.8);
+}
+
+.hunt-tracker-content .hunt-tension-section .hunt-unlink-btn {
+  background: #220022 !important;
+  border-color: #e40df2 !important;
+}
+
+.hunt-tracker-content .hunt-tension-section .hunt-unlink-btn:hover {
+  background: #440044 !important;
+  border-color: #ff00ff !important;
+}
+
+/* Pressure Section */
+.hunt-tracker-content .hunt-pressure-section .hunt-pip.filled {
+  background: #ff6600;
+  border-color: #ff6600;
+  box-shadow: 0 0 8px rgba(255, 102, 0, 0.6);
+}
+
+.hunt-tracker-content .hunt-pressure-section .hunt-talisman-value {
+  color: #ff6600;
+}
+
+.hunt-tracker-content .hunt-pressure-section.out-of-control {
+  border-color: #ff0000;
+  animation: pulseRed 2s infinite;
+}
+
+.hunt-tracker-content .hunt-pressure-section .hunt-linked-talisman-display {
+  border-color: #ff6600;
+}
+
+.hunt-tracker-content .hunt-pressure-section .hunt-linked-talisman-image {
+  box-shadow: 0 0 10px rgba(255, 102, 0, 0.5);
+}
+
+.hunt-tracker-content .hunt-pressure-section .hunt-linked-talisman-image:hover {
+  box-shadow: 0 0 15px rgba(255, 102, 0, 0.8);
+}
+
+.hunt-tracker-content .hunt-pressure-section .hunt-unlink-btn {
+  background: #442200 !important;
+  border-color: #ff6600 !important;
+}
+
+.hunt-tracker-content .hunt-pressure-section .hunt-unlink-btn:hover {
+  background: #663300 !important;
+  border-color: #ff8800 !important;
+}
+
+.hunt-tracker-content .hunt-overflow-warning {
+  color: #ff0000;
+  font-weight: bold;
+  text-align: center;
+  padding: 5px;
+  background: rgba(255, 0, 0, 0.2);
+  border-radius: 4px;
+  margin-top: 8px;
+}
+
+/* Execution Section */
+.hunt-tracker-content .hunt-execution-section .hunt-talisman-value {
+  color: #ff4444;
+}
+
+.hunt-tracker-content .hunt-execution-formula {
+  font-size: 0.85em;
+  color: #888;
+  margin-bottom: 8px;
+}
+
+.hunt-tracker-content .hunt-execution-bar {
+  height: 20px;
+  background: #1a1a1a;
+  border: 1px solid #444;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.hunt-tracker-content .hunt-execution-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #ff0000 0%, #ff4444 100%);
+  transition: width 0.3s ease;
+}
+
+.hunt-tracker-content .hunt-palace-notice {
+  color: #ffaa00;
+  font-style: italic;
+  text-align: center;
+  font-size: 0.9em;
+  margin-top: 5px;
+}
+
+/* Hunt Control Buttons */
+.hunt-tracker-content .hunt-talisman-controls,
+#hunt-tracker .hunt-talisman-controls {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  gap: 3px !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  width: 100%;
+}
+
+/* Override Foundry v12 ApplicationV2 form button defaults - v12 wraps in form */
+#hunt-tracker button[type="button"],
+#hunt-tracker .hunt-talisman-controls button[type="button"],
+#hunt-tracker.hunt-tracker button,
+aside#hunt-tracker button {
+  flex: 0 0 auto !important;
+  width: auto !important;
+  display: inline-flex !important;
+  max-width: fit-content !important;
+}
+
+#hunt-tracker .hunt-talisman-controls button,
+.hunt-tracker-content .hunt-talisman-controls button,
+.hunt-tracker-content .hunt-talisman-controls > button,
+.hunt-tracker-content .hunt-talisman-controls > button[type="button"] {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: #222 !important;
+  border: 1px solid #444 !important;
+  color: #ccc !important;
+  padding: 2px 5px !important;
+  border-radius: 3px !important;
+  cursor: pointer !important;
+  font-size: 0.7em !important;
+  transition: all 0.2s ease !important;
+  white-space: nowrap !important;
+  height: 20px !important;
+  line-height: 1 !important;
+  width: auto !important;
+  flex: 0 0 auto !important;
+  margin: 0 !important;
+  float: none !important;
+  max-width: none !important;
+  min-width: 0 !important;
+}
+
+.hunt-tracker-content button {
+  background: #222;
+  border: 1px solid #444;
+  color: #ccc;
+  padding: 3px 6px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8em;
+  transition: all 0.2s ease;
+}
+
+.hunt-tracker-content .hunt-talisman-controls button:hover,
+.hunt-tracker-content .hunt-clock-controls button:hover,
+.hunt-tracker-content button:hover {
+  background: #333;
+  border-color: #e40df2;
+  color: #fff;
+}
+
+.hunt-tracker-content .hunt-talisman-controls button.active,
+.hunt-tracker-content button.active {
+  background: #e40df2;
+  border-color: #e40df2;
+  color: #fff;
+}
+
+.hunt-tracker-content .hunt-talisman-controls button.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.hunt-tracker-content .hunt-risk-triggered-notice {
+  font-size: 0.8em;
+  color: #888;
+  font-style: italic;
+  margin-top: 4px;
+}
+
+/* Hunt Traumas Section */
+.hunt-tracker-content .hunt-traumas-section {
+  background: #111;
+  border: 1px solid #333;
+  border-radius: 4px;
+  padding: 10px;
+}
+
+.hunt-tracker-content .hunt-traumas-section h4 {
+  margin: 0 0 10px 0;
+  color: #ccc;
+  font-size: 0.95em;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.hunt-tracker-content .hunt-trauma-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 8px;
+  background: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 4px;
+  margin-bottom: 6px;
+}
+
+.hunt-tracker-content .hunt-trauma-item.discovered {
+  border-color: #44aa44;
+}
+
+.hunt-tracker-content .hunt-trauma-item.used {
+  opacity: 0.6;
+  border-color: #666;
+}
+
+.hunt-tracker-content .hunt-trauma-status {
+  font-size: 1.2em;
+  width: 24px;
+  text-align: center;
+}
+
+.hunt-tracker-content .hunt-trauma-status .fa-question-circle {
+  color: #888;
+}
+
+.hunt-tracker-content .hunt-trauma-status .fa-check-circle {
+  color: #44aa44;
+}
+
+.hunt-tracker-content .hunt-trauma-status .fa-times-circle {
+  color: #666;
+}
+
+.hunt-tracker-content .hunt-trauma-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.hunt-tracker-content .hunt-trauma-question,
+#hunt-tracker .hunt-trauma-question {
+  background: transparent !important;
+  border: 1px solid transparent !important;
+  color: #ddd !important;
+  font-weight: bold;
+  font-size: 0.9em;
+  padding: 4px 8px;
+  border-radius: 4px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.hunt-tracker-content .hunt-trauma-question:hover,
+#hunt-tracker .hunt-trauma-question:hover {
+  border-color: #444 !important;
+  background: #1a1a1a !important;
+}
+
+.hunt-tracker-content .hunt-trauma-question:focus,
+#hunt-tracker .hunt-trauma-question:focus {
+  border-color: #e40df2 !important;
+  background: #1a1a1a !important;
+  outline: none;
+}
+
+.hunt-tracker-content .hunt-trauma-answer,
+#hunt-tracker .hunt-trauma-answer,
+#hunt-tracker input.hunt-trauma-answer {
+  background: #0a0a0a !important;
+  border: 1px solid #333 !important;
+  color: #ccc !important;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.85em;
+  font-style: italic;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.hunt-tracker-content .hunt-trauma-answer:focus,
+#hunt-tracker .hunt-trauma-answer:focus,
+#hunt-tracker input.hunt-trauma-answer:focus {
+  border-color: #e40df2 !important;
+  outline: none;
+}
+
+.hunt-tracker-content .hunt-trauma-answer::placeholder,
+#hunt-tracker .hunt-trauma-answer::placeholder {
+  color: #666 !important;
+  font-style: italic;
+}
+
+.hunt-tracker-content .hunt-trauma-actions {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 2px;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.hunt-tracker-content .hunt-trauma-actions button {
+  padding: 2px 4px;
+  min-width: 24px;
+  height: 22px;
+  font-size: 0.75em;
+}
+
+/* Hunt Tension Moves Section */
+.hunt-tracker-content .hunt-tension-moves-section {
+  background: #111;
+  border: 1px solid #333;
+  border-radius: 4px;
+  padding: 10px;
+}
+
+.hunt-tracker-content .hunt-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.hunt-tracker-content .hunt-section-header h4 {
+  margin: 0;
+  color: #ccc;
+  font-size: 0.95em;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.hunt-tracker-content .hunt-section-header button {
+  padding: 2px 6px;
+  height: 22px;
+  font-size: 0.75em;
+}
+
+.hunt-tracker-content .hunt-tension-moves-list {
+  max-height: 150px;
+  overflow-y: auto;
+  font-size: 0.85em;
+}
+
+.hunt-tracker-content .hunt-tension-moves-list.collapsed {
+  max-height: 0;
+  overflow: hidden;
+}
+
+.hunt-tracker-content .hunt-tension-move {
+  padding: 4px 0;
+  border-bottom: 1px solid #222;
+  color: #aaa;
+}
+
+.hunt-tracker-content .hunt-tension-move:last-child {
+  border-bottom: none;
+}
+
+.hunt-tracker-content .hunt-tension-move strong {
+  color: #e40df2;
+}
+
+/* Hunt Custom Clocks Section */
+.hunt-tracker-content .hunt-custom-clocks-section {
+  background: #111;
+  border: 1px solid #333;
+  border-radius: 4px;
+  padding: 10px;
+}
+
+.hunt-tracker-content .hunt-custom-clock {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px;
+  background: #1a1a1a;
+  border-radius: 4px;
+  margin-bottom: 4px;
+}
+
+.hunt-tracker-content .hunt-clock-name {
+  flex: 1;
+  color: #ddd;
+  font-weight: bold;
+  font-size: 0.9em;
+}
+
+.hunt-tracker-content .hunt-clock-pips .hunt-pip {
+  width: 16px;
+  height: 16px;
+}
+
+.hunt-tracker-content .hunt-clock-value {
+  color: #888;
+  font-size: 0.85em;
+  min-width: 35px;
+}
+
+.hunt-tracker-content .hunt-clock-controls {
+  display: flex;
+  flex-direction: row;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.hunt-tracker-content .hunt-clock-controls button {
+  padding: 2px 4px;
+  min-width: 20px;
+  height: 20px;
+  font-size: 0.7em;
+}
+
+/* Hunt Notes Section */
+.hunt-tracker-content .hunt-notes-section {
+  background: #111;
+  border: 1px solid #333;
+  border-radius: 4px;
+  padding: 10px;
+}
+
+.hunt-tracker-content .hunt-notes-section h4 {
+  margin: 0 0 8px 0;
+  color: #ccc;
+  font-size: 0.95em;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.hunt-tracker-content .hunt-notes {
+  width: 100%;
+  min-height: 60px;
+  background: #0a0a0a;
+  border: 1px solid #333;
+  color: #ccc;
+  padding: 8px;
+  border-radius: 4px;
+  resize: vertical;
+  font-family: inherit;
+}
+
+.hunt-tracker-content .hunt-notes:focus {
+  border-color: #e40df2;
+  outline: none;
+}
+
+/* Hunt Controls */
+.hunt-tracker-content .hunt-controls {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 6px;
+  justify-content: flex-end;
+  padding-top: 10px;
+  border-top: 1px solid #333;
+}
+
+.hunt-tracker-content .hunt-controls button {
+  padding: 4px 8px;
+  height: 26px;
+  font-size: 0.8em;
+}
+
+.hunt-tracker-content .hunt-reset-btn {
+  background: #333 !important;
+}
+
+.hunt-tracker-content .hunt-reset-btn:hover {
+  background: #444 !important;
+  border-color: #ffaa00 !important;
+}
+
+.hunt-tracker-content .hunt-end-btn {
+  background: #440000 !important;
+}
+
+.hunt-tracker-content .hunt-end-btn:hover {
+  background: #660000 !important;
+  border-color: #ff0000 !important;
+}
+
+/* No Hunt State */
+.hunt-tracker-content .hunt-no-hunt {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 30px 20px;
+}
+
+.hunt-tracker-content .hunt-no-hunt p {
+  color: #888;
+  margin-bottom: 15px;
+}
+
+.hunt-tracker-content .hunt-start-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #440044 0%, #220022 100%) !important;
+  border: 1px solid #e40df2 !important;
+  padding: 12px 24px !important;
+  font-size: 1em !important;
+}
+
+.hunt-tracker-content .hunt-start-btn:hover {
+  background: linear-gradient(135deg, #550055 0%, #330033 100%) !important;
+  box-shadow: 0 0 15px rgba(228, 13, 242, 0.5);
+}
+
+.hunt-tracker-content .hunt-quick-actions {
+  display: flex;
+  justify-content: center;
+  padding-top: 10px;
+}
+
+/* GM Only Notice */
+.hunt-tracker-content .hunt-gm-only-notice {
+  text-align: center;
+  padding: 40px 20px;
+  color: #666;
+}
+
+/* Scene control button styling - v12 */
+#controls .control-tool[data-tool="hunt-tracker"] {
+  position: relative;
+}
+
+#controls .control-tool[data-tool="hunt-tracker"] i {
+  color: #e40df2;
+}
+
+#controls .control-tool[data-tool="hunt-tracker"].active i {
+  color: #ff00ff;
+  text-shadow: 0 0 10px rgba(255, 0, 255, 0.8);
+}
+
+/* Scene control button styling - v13 */
+#scene-controls [data-tool="hunt-tracker"],
+#scene-controls [data-action="hunt-tracker"] {
+  position: relative;
+}
+
+#scene-controls [data-tool="hunt-tracker"] i,
+#scene-controls [data-action="hunt-tracker"] i {
+  color: #e40df2;
+}
+
+#scene-controls [data-tool="hunt-tracker"].active i,
+#scene-controls [data-action="hunt-tracker"].active i {
+  color: #ff00ff;
+  text-shadow: 0 0 10px rgba(255, 0, 255, 0.8);
+}
+
+/* Action bar button */
+.hunt-tracker-button {
+  background: linear-gradient(135deg, #1a0a1a 0%, #0a0a0a 100%);
+  border: 1px solid #e40df2;
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 4px;
+  transition: all 0.2s ease;
+}
+
+.hunt-tracker-button:hover {
+  background: linear-gradient(135deg, #2a1a2a 0%, #1a0a1a 100%);
+  box-shadow: 0 0 10px rgba(228, 13, 242, 0.5);
+}
+
+.hunt-tracker-button i {
+  color: #e40df2;
+  font-size: 1.5em;
+}
+
+/* Chat message styles */
+.hunt-message {
+  background: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 4px;
+  padding: 10px;
+  margin: 5px 0;
+}
+
+.hunt-message h2,
+.hunt-message h3 {
+  margin: 0 0 8px 0;
+  color: #e40df2;
+}
+
+.hunt-message p {
+  margin: 4px 0;
+  color: #ccc;
+}
+
+.hunt-message hr {
+  border: none;
+  border-top: 1px solid #333;
+  margin: 8px 0;
+}
+
+.hunt-message ul {
+  margin: 8px 0;
+  padding-left: 20px;
+}
+
+.hunt-message li {
+  color: #aaa;
+  margin: 4px 0;
+}
+
+.hunt-message .hint {
+  font-style: italic;
+  color: #888;
+  font-size: 0.9em;
+}
+
+.hunt-message .warning {
+  color: #ff6600;
+  font-weight: bold;
+}
+
+.hunt-message.hunt-started {
+  border-color: #e40df2;
+}
+
+.hunt-message.hunt-ended {
+  border-color: #44aa44;
+}
+
+.hunt-message.pressure-overflow {
+  border-color: #ff0000;
+  background: linear-gradient(135deg, #2a0a0a 0%, #1a1a1a 100%);
+}
+
+.hunt-message.pressure-overflow h2 {
+  color: #ff0000;
+}
+
+.hunt-message.sin-defeated {
+  border-color: #ffaa00;
+  background: linear-gradient(135deg, #2a2a0a 0%, #1a1a1a 100%);
+}
+
+.hunt-message.sin-defeated h2 {
+  color: #ffaa00;
+}
+
+.hunt-message.trauma-discovered {
+  border-color: #44aa44;
+}
+
+.hunt-message.trauma-counter {
+  border-color: #ffaa00;
+}
+
+.hunt-message.sin-retreats {
+  border-color: #ff6600;
+}
+
+/* Hunt Linked Talisman Display */
+.hunt-tracker-content .hunt-linked-talisman-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px;
+  background: linear-gradient(135deg, #1a0a0a 0%, #0a0a0a 100%);
+  border: 1px solid #ff4444;
+  border-radius: 4px;
+  margin-bottom: 8px;
+  position: relative;
+}
+
+.hunt-tracker-content .hunt-linked-talisman-image {
+  max-width: 80px;
+  max-height: 120px;
+  border-radius: 4px;
+  box-shadow: 0 0 10px rgba(255, 68, 68, 0.5);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hunt-tracker-content .hunt-linked-talisman-image:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(255, 68, 68, 0.8);
+}
+
+.hunt-tracker-content .hunt-unlink-btn {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background: #440000 !important;
+  border: 1px solid #ff4444 !important;
+  padding: 2px 6px !important;
+  font-size: 0.75em !important;
+}
+
+.hunt-tracker-content .hunt-unlink-btn:hover {
+  background: #660000 !important;
+  border-color: #ff6666 !important;
+}

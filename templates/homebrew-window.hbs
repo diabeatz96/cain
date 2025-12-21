@@ -549,6 +549,47 @@
           </div>
         </div>
 
+        {{!-- REVERSE IMPORT SECTION --}}
+        <div class="reverse-import-section">
+          <div class="section-card">
+            <h3><i class="fas fa-undo-alt"></i> Load Existing Item for Editing</h3>
+            <p class="section-description">Select an existing item from your world to load into the editor for modification or duplication.</p>
+
+            <div class="reverse-import-controls">
+              <div class="form-section">
+                <label for="reverse-import-type">Item Type:</label>
+                <select id="reverse-import-type" class="homebrew-input">
+                  <option value="">-- Select Type --</option>
+                  <option value="agenda">Agenda</option>
+                  <option value="blasphemy">Blasphemy</option>
+                  <option value="blasphemyPower">Blasphemy Power</option>
+                  <option value="bond">Bond</option>
+                  <option value="bondAbility">Bond Ability</option>
+                  <option value="affliction">Affliction</option>
+                  <option value="item">Item</option>
+                  <option value="sinMark">Sin Mark</option>
+                </select>
+              </div>
+
+              <div class="form-section">
+                <label for="reverse-import-item">Select Item:</label>
+                <select id="reverse-import-item" class="homebrew-input" disabled>
+                  <option value="">-- Select Type First --</option>
+                </select>
+              </div>
+
+              <button type="button" class="btn-primary homebrew-load-item" disabled>
+                <i class="fas fa-edit"></i> Load into Editor
+              </button>
+            </div>
+
+            <div class="reverse-import-info">
+              <i class="fas fa-info-circle"></i>
+              <span>This will load the item's data into the corresponding creation tab. You can then modify it and save as a new item or update the original.</span>
+            </div>
+          </div>
+        </div>
+
         {{!-- EXPORT FORMAT GUIDE --}}
         <div class="format-guide">
           <details>
@@ -1839,6 +1880,45 @@ select.homebrew-input option {
   margin-bottom: var(--spacing-md);
   font-size: 0.85em;
   color: var(--text-secondary);
+}
+
+/* ==================== REVERSE IMPORT SECTION ==================== */
+.reverse-import-section {
+  margin-top: var(--spacing-lg);
+}
+
+.reverse-import-section .section-card h3 i {
+  color: #9c27b0;
+}
+
+.reverse-import-controls {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.reverse-import-controls .form-section {
+  margin-bottom: 0;
+}
+
+.reverse-import-info {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-sm);
+  background: rgba(156, 39, 176, 0.1);
+  border: 1px solid rgba(156, 39, 176, 0.3);
+  border-radius: 4px;
+  padding: var(--spacing-md);
+  margin-top: var(--spacing-md);
+  color: var(--text-secondary);
+  font-size: 0.85em;
+}
+
+.reverse-import-info i {
+  color: #9c27b0;
+  font-size: 1.1em;
+  flex-shrink: 0;
+  margin-top: 2px;
 }
 
 .format-guide {

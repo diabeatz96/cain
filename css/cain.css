@@ -2720,30 +2720,83 @@
   color: var(--dice-text);
 }
 
-/* Dice Pool Input - Theme Aware */
-.cain-dice-panel .cain-dice-pool {
-  width: 38px;
+/* Dice Pool Controls Container */
+.cain-dice-panel .cain-dice-pool-controls {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+/* Dice Pool +/- Buttons */
+.cain-dice-panel .cain-pool-minus,
+.cain-dice-panel .cain-pool-plus {
+  width: 22px;
+  height: 22px;
+  padding: 0;
   background: var(--dice-bg-start);
   border: 1px solid var(--dice-border);
   border-radius: 3px;
-  color: var(--dice-border-light);
+  color: var(--dice-text-bright);
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cain-dice-panel .cain-pool-minus:hover,
+.cain-dice-panel .cain-pool-plus:hover {
+  border-color: var(--dice-border-light);
+  background: var(--dice-header-start);
+  color: var(--dice-text-bright);
+  transform: scale(1.1);
+}
+
+.cain-dice-panel .cain-pool-minus:active,
+.cain-dice-panel .cain-pool-plus:active {
+  transform: scale(0.95);
+}
+
+/* Dice Pool Input - Theme Aware */
+.cain-dice-panel .cain-dice-pool,
+.cain-dice-panel input.cain-dice-pool,
+.cain-dice-panel input[type="number"].cain-dice-pool {
+  width: 38px;
+  background: var(--dice-bg-start) !important;
+  border: 1px solid var(--dice-border) !important;
+  border-radius: 3px;
+  color: #ffffff !important;
   padding: 4px;
   text-align: center;
   font-family: 'Courier New', monospace;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: bold;
   transition: all 0.2s ease;
+  -moz-appearance: textfield;
+  appearance: textfield;
 }
 
-.cain-dice-panel .cain-dice-pool:hover {
-  border-color: var(--dice-border-light);
-  background: var(--dice-header-start);
+/* Hide spinner buttons for cleaner look */
+.cain-dice-panel .cain-dice-pool::-webkit-outer-spin-button,
+.cain-dice-panel .cain-dice-pool::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
-.cain-dice-panel .cain-dice-pool:focus {
+.cain-dice-panel .cain-dice-pool:hover,
+.cain-dice-panel input.cain-dice-pool:hover {
+  border-color: var(--dice-border-light) !important;
+  background: var(--dice-header-start) !important;
+}
+
+.cain-dice-panel .cain-dice-pool:focus,
+.cain-dice-panel input.cain-dice-pool:focus {
   outline: none;
-  border-color: var(--dice-border-light);
+  border-color: var(--dice-border-light) !important;
   box-shadow: 0 0 4px var(--dice-glow-color);
+  color: #ffffff !important;
 }
 
 /* Modifiers Row */
@@ -2774,7 +2827,7 @@
   background: var(--dice-bg-start);
   border: 1px solid var(--dice-border);
   border-radius: 3px;
-  color: var(--dice-text);
+  color: var(--dice-text-bright);
   padding: 3px;
   text-align: center;
   font-family: 'Courier New', monospace;
@@ -3017,64 +3070,137 @@
   min-height: 0;
 }
 
-/* v13 Notification Overlay (Mini Chat) Styles - System layer */
-.cain-dice-panel.in-notification-overlay {
-  position: relative;
-  z-index: 100;
+
+/* ==========================================
+   V13 Floating Dice Panel (when sidebar collapsed)
+   ========================================== */
+
+/* When the dice panel is floating (not in sidebar), make it draggable and positioned */
+.cain-dice-panel.floating-panel {
+  position: fixed !important;
+  z-index: 9999 !important;
   pointer-events: auto !important;
-  margin: 4px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  border: 2px solid #6b21a8;
+  border-radius: 8px;
+  width: 280px;
 }
 
-/* Ensure all interactive elements in notification overlay are clickable */
-.cain-dice-panel.in-notification-overlay * {
+.cain-dice-panel.floating-panel .cain-dice-panel-header {
+  cursor: move;
+}
+
+/* Ensure all elements in floating panel are clickable */
+.cain-dice-panel.floating-panel * {
   pointer-events: auto !important;
 }
 
-.cain-dice-panel.in-notification-overlay button,
-.cain-dice-panel.in-notification-overlay select,
-.cain-dice-panel.in-notification-overlay input {
-  pointer-events: auto !important;
+/* Prevent cursor move on interactive elements inside floating panel */
+.cain-dice-panel.floating-panel button,
+.cain-dice-panel.floating-panel select,
+.cain-dice-panel.floating-panel input {
   cursor: pointer;
 }
 
-/* Make the notification overlay container allow pointer events for our panel */
-.chat-notifications .cain-dice-panel {
-  pointer-events: auto !important;
+.cain-dice-panel.floating-panel input[type="number"] {
+  cursor: text;
 }
 
-/* v13 @layer exceptions - highest priority to override Foundry's built-in styles */
-@layer exceptions {
-  /* Force pointer events on the dice panel in notification overlay */
-  .cain-dice-panel,
-  .cain-dice-panel.in-notification-overlay,
-  .chat-notifications .cain-dice-panel {
-    pointer-events: auto !important;
-    position: relative;
-    z-index: 1000;
-  }
+/* ==========================================
+   CAIN Dice Panel ApplicationV2 Window
+   ========================================== */
 
-  .cain-dice-panel *,
-  .cain-dice-panel.in-notification-overlay *,
-  .chat-notifications .cain-dice-panel * {
-    pointer-events: auto !important;
-  }
+/* Window wrapper styles */
+.cain-dice-panel-window {
+  background: #1a1a2e !important;
+  border: 2px solid #6b21a8 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5) !important;
+}
 
-  .cain-dice-panel button,
-  .cain-dice-panel select,
-  .cain-dice-panel input,
-  .cain-dice-panel.in-notification-overlay button,
-  .cain-dice-panel.in-notification-overlay select,
-  .cain-dice-panel.in-notification-overlay input {
-    pointer-events: auto !important;
-    cursor: pointer;
-  }
+.cain-dice-panel-window .window-header {
+  background: linear-gradient(135deg, #2d1b4e 0%, #1a1a2e 100%) !important;
+  border-bottom: 1px solid #6b21a8 !important;
+  padding: 6px 10px !important;
+  cursor: move;
+}
 
-  /* Override any parent pointer-events: none in the notification area */
-  .chat-notifications,
-  .chat-notifications > *,
-  #chat-notifications {
-    pointer-events: auto !important;
-  }
+.cain-dice-panel-window .window-header .window-title {
+  color: #e9d5ff !important;
+  font-family: 'Courier New', monospace !important;
+  font-weight: bold !important;
+  text-transform: uppercase !important;
+  letter-spacing: 1px !important;
+  font-size: 12px !important;
+}
+
+.cain-dice-panel-window .window-header .header-control {
+  color: #a78bfa !important;
+}
+
+.cain-dice-panel-window .window-header .header-control:hover {
+  color: #e9d5ff !important;
+}
+
+.cain-dice-panel-window .window-content {
+  background: transparent !important;
+  padding: 0 !important;
+  overflow: visible !important;
+}
+
+/* Hide the inner panel header since we're using the window header */
+.cain-dice-panel-window .cain-dice-panel-header {
+  display: none !important;
+}
+
+/* The inner dice panel styling within the window */
+.cain-dice-panel-window .cain-dice-panel {
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+/* Theme-specific window styling */
+.cain-dice-panel-window.theme-dark {
+  background: #1f2937 !important;
+  border-color: #374151 !important;
+}
+
+.cain-dice-panel-window.theme-dark .window-header {
+  background: linear-gradient(135deg, #374151 0%, #1f2937 100%) !important;
+  border-bottom-color: #4b5563 !important;
+}
+
+.cain-dice-panel-window.theme-dark .window-header .window-title {
+  color: #e5e7eb !important;
+}
+
+.cain-dice-panel-window.theme-light {
+  background: #f3e8ff !important;
+  border-color: #9333ea !important;
+}
+
+.cain-dice-panel-window.theme-light .window-header {
+  background: linear-gradient(135deg, #e9d5ff 0%, #f3e8ff 100%) !important;
+  border-bottom-color: #c084fc !important;
+}
+
+.cain-dice-panel-window.theme-light .window-header .window-title {
+  color: #581c87 !important;
+}
+
+.cain-dice-panel-window.theme-blood {
+  background: #1a0a0a !important;
+  border-color: #7f1d1d !important;
+}
+
+.cain-dice-panel-window.theme-blood .window-header {
+  background: linear-gradient(135deg, #450a0a 0%, #1a0a0a 100%) !important;
+  border-bottom-color: #991b1b !important;
+}
+
+.cain-dice-panel-window.theme-blood .window-header .window-title {
+  color: #fca5a5 !important;
 }
 
 /* ==========================================

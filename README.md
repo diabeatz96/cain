@@ -155,31 +155,47 @@ The system maintains backward compatibility across these versions, ensuring a sm
 
 ## Downloading and Installing the Cain System for Foundry VTT
 
-The Cain system is setup through a manifest file that is downloaded and put onto your foundry.
+### Option 1: Install from the Foundry VTT Store (Recommended)
 
-### Obtaining the Manifest URL
+CAIN is now available directly in the Foundry VTT package browser!
+
+1. Launch your Foundry VTT instance
+2. Navigate to **Setup** > **Game Systems**
+3. Click **Install System**
+4. Search for **"CAIN"** in the package browser
+5. Click **Install**
+
+That's it! The system will be automatically installed and kept up to date.
+
+### Option 2: Manual Installation via Manifest URL
+
+If you prefer to install manually or need a specific version:
+
+1. Launch your Foundry VTT instance
+2. Navigate to **Setup** > **Game Systems**
+3. Click **Install System**
+4. Paste the following manifest URL:
+   ```
+   https://github.com/diabeatz96/cain/releases/latest/download/system.json
+   ```
+5. Click **Install**
+
+<details>
+<summary>Alternative: Finding the manifest URL manually</summary>
 
 Head over to the Cain system.json GitHub repository: [Cain System Module](https://github.com/diabeatz96/cain/blob/main/system.json)
 
-
 **Here's how to find the manifest URL:**
 
-On the top right corner of the code, there is a RAW button. 
+On the top right corner of the code, there is a RAW button.
 
 <img width="1664" alt="image" src="https://github.com/user-attachments/assets/c5242a98-1cff-4f41-9368-e3c32172ec59">
 
-Then, proceed to copy the link at the top. 
+Then, proceed to copy the link at the top.
 
 <img width="478" alt="image" src="https://github.com/user-attachments/assets/1757dc5b-7194-4342-97c2-d91f2079688e">
 
-
-### Installing the Cain System in Foundry VTT
-
-* Launch your Foundry VTT instance.
-* Navigate to the "Game Systems" menu (gear icon in the top right corner).
-* Click install system
-* Copy paste the link into manifest url
-
+</details>
 
 https://github.com/user-attachments/assets/035fbb43-5e0c-4ed6-970d-b3dd6f9d6909
 

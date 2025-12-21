@@ -10,7 +10,7 @@
     "keywords": [
       "Instant, CAT range"
     ],
-    "powerDescription": "You say ‘bang’. This causes a massive influx of force affecting up to a 1/2 CAT area with its center in range that typically manifests as an extreme pressure wave. It affects everything except you. Roll PSYCHE for its effects, and only spend a psyche burst on success.\n\n• Gain +1D if the environment around you is quiet or subdued.\n• Gain +1D if you are in an area with favorable acoustics, like a canyon, a performance venue, theatre, or a stadium.",
+    "powerDescription": "You say ‘bang’. This causes a massive influx of force affecting up to a {<CAT/2> area 0} area with its center in range that typically manifests as an extreme pressure wave. It affects everything except you. Roll PSYCHE for its effects, and only spend a psyche burst on success.\n\n• Gain +1D if the environment around you is quiet or subdued.\n• Gain +1D if you are in an area with favorable acoustics, like a canyon, a performance venue, theatre, or a stadium.",
     "description": "",
     "primaryColor": "#000000",
     "accentColor": "#ff0000",

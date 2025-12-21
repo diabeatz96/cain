@@ -295,6 +295,11 @@ export class HomebrewWindow extends Application {
       html.find('.homebrew-confirm-import').click(this._onConfirmImport.bind(this));
       html.find('#export-select-all').change(this._onToggleSelectAll.bind(this));
 
+      // Reverse import listeners
+      html.find('#reverse-import-type').change(this._onReverseImportTypeChange.bind(this));
+      html.find('#reverse-import-item').change(this._onReverseImportItemChange.bind(this));
+      html.find('.homebrew-load-item').click(this._onLoadItemForEditing.bind(this));
+
       // History listeners
       html.find('#history-filter').change(this._onFilterHistory.bind(this));
       html.find('.homebrew-clear-history').click(this._onClearHistory.bind(this));
@@ -1860,5 +1865,305 @@ export class HomebrewWindow extends Application {
             this.render(true);
             ui.notifications.info("Settings reset to defaults.");
         }
+    }
+
+    // ==================== REVERSE IMPORT METHODS ====================
+
+    _onReverseImportTypeChange(event) {
+        const selectedType = event.currentTarget.value;
+        const itemSelect = this.element.find('#reverse-import-item');
+        const loadButton = this.element.find('.homebrew-load-item');
+
+        if (!selectedType) {
+            itemSelect.html('<option value="">-- Select Type First --</option>');
+            itemSelect.prop('disabled', true);
+            loadButton.prop('disabled', true);
+            return;
+        }
+
+        // Get all items of the selected type
+        const items = game.items.filter(i => i.type === selectedType);
+
+        if (items.length === 0) {
+            itemSelect.html('<option value="">No items of this type found</option>');
+            itemSelect.prop('disabled', true);
+            loadButton.prop('disabled', true);
+            return;
+        }
+
+        // Sort by name
+        items.sort((a, b) => a.name.localeCompare(b.name));
+
+        // Build options HTML
+        let optionsHtml = '<option value="">-- Select Item --</option>';
+        for (const item of items) {
+            optionsHtml += `<option value="${item.id}">${item.name}</option>`;
+        }
+
+        itemSelect.html(optionsHtml);
+        itemSelect.prop('disabled', false);
+        loadButton.prop('disabled', true);
+    }
+
+    _onReverseImportItemChange(event) {
+        const selectedItem = event.currentTarget.value;
+        const loadButton = this.element.find('.homebrew-load-item');
+        loadButton.prop('disabled', !selectedItem);
+    }
+
+    async _onLoadItemForEditing(event) {
+        event.preventDefault();
+
+        const selectedType = this.element.find('#reverse-import-type').val();
+        const selectedItemId = this.element.find('#reverse-import-item').val();
+
+        if (!selectedType || !selectedItemId) {
+            ui.notifications.warn("Please select an item type and item to load.");
+            return;
+        }
+
+        const item = game.items.get(selectedItemId);
+        if (!item) {
+            ui.notifications.error("Item not found.");
+            return;
+        }
+
+        // Load data into the appropriate form based on type
+        switch (selectedType) {
+            case 'agenda':
+                await this._loadAgendaForEditing(item);
+                break;
+            case 'blasphemy':
+                await this._loadBlasphemyForEditing(item);
+                break;
+            case 'blasphemyPower':
+                this._loadStandalonePowerForEditing(item);
+                break;
+            case 'bond':
+                this._loadBondForEditing(item);
+                break;
+            case 'bondAbility':
+                this._loadBondAbilityForEditing(item);
+                break;
+            case 'affliction':
+                this._loadAfflictionForEditing(item);
+                break;
+            case 'item':
+                this._loadItemForEditing(item);
+                break;
+            case 'sinMark':
+                await this._loadSinMarkForEditing(item);
+                break;
+            default:
+                ui.notifications.error("Unknown item type.");
+                return;
+        }
+
+        ui.notifications.info(`Loaded "${item.name}" for editing. Switch to the appropriate tab to modify it.`);
+    }
+
+    async _loadAgendaForEditing(item) {
+        // Load tasks
+        const tasks = [];
+        const unboldedTaskIds = item.system.unboldedTasks || [];
+        const boldedTaskIds = item.system.boldedTasks || [];
+
+        for (const taskId of unboldedTaskIds) {
+            const taskItem = game.items.get(taskId);
+            if (taskItem) {
+                tasks.push({ task: taskItem.system.task || taskItem.name, isBold: false });
+            }
+        }
+        for (const taskId of boldedTaskIds) {
+            const taskItem = game.items.get(taskId);
+            if (taskItem) {
+                tasks.push({ task: taskItem.system.task || taskItem.name, isBold: true });
+            }
+        }
+
+        // Load abilities
+        const abilities = [];
+        const abilityIds = item.system.abilities || [];
+        for (const abilityId of abilityIds) {
+            const abilityItem = game.items.get(abilityId);
+            if (abilityItem) {
+                abilities.push({
+                    name: abilityItem.name,
+                    abilityDescription: abilityItem.system.abilityDescription || ''
+                });
+            }
+        }
+
+        this.agendaOptions = {
+            name: item.name,
+            tasks: tasks.length > 0 ? tasks : [{ task: "", isBold: false }],
+            abilities: abilities.length > 0 ? abilities : [{ name: "", abilityDescription: "" }]
+        };
+
+        // Store reference to original item for potential update
+        this._editingItem = item;
+        this._editingItemType = 'agenda';
+
+        this.render(true);
+
+        // Switch to agenda tab after render
+        setTimeout(() => {
+            this.element.find('.sheet-tabs .item[data-tab="agenda"]').click();
+        }, 100);
+    }
+
+    async _loadBlasphemyForEditing(item) {
+        // Load powers
+        const powers = [];
+        const powerIds = item.system.powers || [];
+
+        for (const powerId of powerIds) {
+            const powerItem = game.items.get(powerId);
+            if (powerItem) {
+                powers.push({
+                    name: powerItem.name,
+                    isPassive: powerItem.system.isPassive || false,
+                    keywords: powerItem.system.keywords || '',
+                    powerDescription: powerItem.system.powerDescription || '',
+                    psycheBurstCost: powerItem.system.psycheBurstCost || false,
+                    psycheBurstNoCost: powerItem.system.psycheBurstNoCost || false,
+                    psycheBurstMultCost: powerItem.system.psycheBurstMultCost || false
+                });
+            }
+        }
+
+        this.blasphemyOptions = {
+            name: item.name,
+            powers: powers.length > 0 ? powers : [{
+                name: "",
+                isPassive: false,
+                keywords: "",
+                powerDescription: "",
+                psycheBurstCost: false,
+                psycheBurstNoCost: false,
+                psycheBurstMultCost: false
+            }]
+        };
+
+        this._editingItem = item;
+        this._editingItemType = 'blasphemy';
+
+        this.render(true);
+
+        setTimeout(() => {
+            this.element.find('.sheet-tabs .item[data-tab="blasphemy"]').click();
+        }, 100);
+    }
+
+    _loadStandalonePowerForEditing(item) {
+        // Populate the standalone power form
+        setTimeout(() => {
+            const doc = document;
+            doc.getElementById('power-standalone-name').value = item.name || '';
+            doc.getElementById('power-standalone-passive').checked = item.system.isPassive || false;
+            doc.getElementById('power-standalone-psyche-cost').checked = item.system.psycheBurstCost || false;
+            doc.getElementById('power-standalone-psyche-no-cost').checked = item.system.psycheBurstNoCost || false;
+            doc.getElementById('power-standalone-psyche-mult').checked = item.system.psycheBurstMultCost || false;
+            doc.getElementById('power-standalone-keywords').value = Array.isArray(item.system.keywords) ? item.system.keywords.join(', ') : (item.system.keywords || '');
+            doc.getElementById('power-standalone-description').value = item.system.powerDescription || '';
+
+            this.element.find('.sheet-tabs .item[data-tab="blasphemy"]').click();
+        }, 100);
+    }
+
+    _loadBondForEditing(item) {
+        this.bondOptions = {
+            name: item.name,
+            virtueName: item.system.virtueName || '',
+            highBlasphemyLevel: item.system.highBlasphemyLevel || 1,
+            strictures: item.system.strictures || []
+        };
+
+        this._editingItem = item;
+        this._editingItemType = 'bond';
+
+        this.render(true);
+
+        setTimeout(() => {
+            this.element.find('.sheet-tabs .item[data-tab="bond"]').click();
+        }, 100);
+    }
+
+    _loadBondAbilityForEditing(item) {
+        setTimeout(() => {
+            const doc = document;
+            doc.getElementById('bond-ability-name').value = item.name || '';
+            doc.getElementById('bond-ability-level').value = item.system.bondLevel || 0;
+            doc.getElementById('bond-ability-description').value = item.system.abilityDescription || '';
+            doc.getElementById('bond-ability-permanent').checked = item.system.isPermanent !== false;
+            doc.getElementById('bond-ability-requires-psyche').checked = item.system.requiresPsycheBurst || false;
+            doc.getElementById('bond-ability-psyche-cost').value = item.system.psycheBurstCost || 1;
+
+            // Toggle psyche cost field visibility
+            const psycheCostField = doc.getElementById('bond-ability-psyche-cost-field');
+            if (psycheCostField) {
+                psycheCostField.style.display = item.system.requiresPsycheBurst ? 'block' : 'none';
+            }
+
+            this.element.find('.sheet-tabs .item[data-tab="bond"]').click();
+        }, 100);
+    }
+
+    _loadAfflictionForEditing(item) {
+        setTimeout(() => {
+            const doc = document;
+            doc.getElementById('affliction-name').value = item.name || '';
+            doc.getElementById('affliction-description').value = item.system.afflictionDescription || '';
+
+            this.element.find('.sheet-tabs .item[data-tab="affliction"]').click();
+        }, 100);
+    }
+
+    _loadItemForEditing(item) {
+        setTimeout(() => {
+            const doc = document;
+            doc.getElementById('item-name').value = item.name || '';
+            doc.getElementById('item-description').value = item.system.description || '';
+            doc.getElementById('item-quantity').value = item.system.quantity || 1;
+            doc.getElementById('item-weight').value = item.system.weight || 0;
+
+            this.element.find('.sheet-tabs .item[data-tab="item"]').click();
+        }, 100);
+    }
+
+    async _loadSinMarkForEditing(item) {
+        // Load abilities
+        const abilities = [];
+        const abilityIds = item.system.abilities || [];
+
+        for (const abilityId of abilityIds) {
+            const abilityItem = game.items.get(abilityId);
+            if (abilityItem) {
+                abilities.push({
+                    name: abilityItem.name,
+                    abilityDescription: abilityItem.system.abilityDescription || ''
+                });
+            }
+        }
+
+        this.sinMarkOptions = {
+            name: item.name,
+            description: item.system.description || '',
+            abilities: abilities.length > 0 ? abilities : [{ name: "", abilityDescription: "" }]
+        };
+
+        this._editingItem = item;
+        this._editingItemType = 'sinMark';
+
+        this.render(true);
+
+        setTimeout(() => {
+            // Populate the name and description fields
+            const doc = document;
+            doc.getElementById('sinmark-name').value = item.name || '';
+            doc.getElementById('sinmark-description').value = item.system.description || '';
+
+            this.element.find('.sheet-tabs .item[data-tab="sinMark"]').click();
+        }, 100);
     }
 }
