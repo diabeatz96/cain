@@ -27,7 +27,11 @@
         {{/each}}
         <option value="psyche">Psyche</option>
       </select>
-      <input type="number" class="cain-dice-pool" value="1" min="0" max="10" title="Dice Pool"/>
+      <div class="cain-dice-pool-controls">
+        <button type="button" class="cain-pool-minus" title="Decrease Dice Pool">-</button>
+        <input type="number" class="cain-dice-pool" value="1" min="-1" max="10" title="Dice Pool (0 or below = zero-dice roll)"/>
+        <button type="button" class="cain-pool-plus" title="Increase Dice Pool">+</button>
+      </div>
     </div>
 
     {{!-- Modifiers --}}
@@ -60,7 +64,6 @@
         <i class="fas fa-bed"></i>
         <span>Rest</span>
       </button>
-      {{#if isGM}}
       <button type="button" class="cain-roll-risk" title="Risk Roll (1d6)">
         <i class="fas fa-exclamation-triangle"></i>
         <span>Risk</span>
@@ -73,7 +76,6 @@
         <i class="fas fa-cog"></i>
         <span>Custom</span>
       </button>
-      {{/if}}
     </div>
   </div>
 </div>

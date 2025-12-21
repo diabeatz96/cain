@@ -2720,6 +2720,45 @@
   color: var(--dice-text);
 }
 
+/* Dice Pool Controls Container */
+.cain-dice-panel .cain-dice-pool-controls {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+/* Dice Pool +/- Buttons */
+.cain-dice-panel .cain-pool-minus,
+.cain-dice-panel .cain-pool-plus {
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  background: var(--dice-bg-start);
+  border: 1px solid var(--dice-border);
+  border-radius: 3px;
+  color: var(--dice-border-light);
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cain-dice-panel .cain-pool-minus:hover,
+.cain-dice-panel .cain-pool-plus:hover {
+  border-color: var(--dice-border-light);
+  background: var(--dice-header-start);
+  color: var(--dice-text-bright);
+  transform: scale(1.1);
+}
+
+.cain-dice-panel .cain-pool-minus:active,
+.cain-dice-panel .cain-pool-plus:active {
+  transform: scale(0.95);
+}
+
 /* Dice Pool Input - Theme Aware */
 .cain-dice-panel .cain-dice-pool {
   width: 38px;
@@ -3042,29 +3081,27 @@
   pointer-events: auto !important;
 }
 
-/* v13 @layer exceptions - highest priority to override Foundry's built-in styles */
+/* v13 @layer exceptions - ONLY for notification overlay context */
 @layer exceptions {
-  /* Force pointer events on the dice panel in notification overlay */
-  .cain-dice-panel,
+  /* Force pointer events on the dice panel ONLY in notification overlay */
   .cain-dice-panel.in-notification-overlay,
   .chat-notifications .cain-dice-panel {
     pointer-events: auto !important;
     position: relative;
-    z-index: 1000;
+    z-index: 100;
   }
 
-  .cain-dice-panel *,
   .cain-dice-panel.in-notification-overlay *,
   .chat-notifications .cain-dice-panel * {
     pointer-events: auto !important;
   }
 
-  .cain-dice-panel button,
-  .cain-dice-panel select,
-  .cain-dice-panel input,
   .cain-dice-panel.in-notification-overlay button,
   .cain-dice-panel.in-notification-overlay select,
-  .cain-dice-panel.in-notification-overlay input {
+  .cain-dice-panel.in-notification-overlay input,
+  .chat-notifications .cain-dice-panel button,
+  .chat-notifications .cain-dice-panel select,
+  .chat-notifications .cain-dice-panel input {
     pointer-events: auto !important;
     cursor: pointer;
   }

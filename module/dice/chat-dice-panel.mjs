@@ -306,7 +306,8 @@ export class CainChatDicePanel {
       `<option value="${s.key}">${s.label}</option>`
     ).join('');
 
-    const gmQuickRolls = data.isGM ? `
+    // Quick rolls are now available to all users
+    const quickRolls = `
         <button type="button" class="cain-roll-risk" title="Risk Roll">
           <i class="fas fa-exclamation-triangle"></i>
           <span>Risk</span>
@@ -319,7 +320,7 @@ export class CainChatDicePanel {
           <i class="fas fa-cog"></i>
           <span>Custom</span>
         </button>
-    ` : '';
+    `;
 
     return `
       <div id="${this.ID}" class="cain-dice-panel">
@@ -345,7 +346,11 @@ export class CainChatDicePanel {
               ${skillOptions}
               <option value="psyche">Psyche</option>
             </select>
-            <input type="number" class="cain-dice-pool" value="1" min="0" max="10"/>
+            <div class="cain-dice-pool-controls">
+              <button type="button" class="cain-pool-minus" title="Decrease Dice Pool">-</button>
+              <input type="number" class="cain-dice-pool" value="1" min="-1" max="10"/>
+              <button type="button" class="cain-pool-plus" title="Increase Dice Pool">+</button>
+            </div>
           </div>
           <div class="cain-dice-row cain-modifiers">
             <label><input type="number" class="cain-extra-dice" value="0" min="-5" max="5"/><span>+/-</span></label>
@@ -370,7 +375,7 @@ export class CainChatDicePanel {
               <i class="fas fa-bed"></i>
               <span>Rest</span>
             </button>
-            ${gmQuickRolls}
+            ${quickRolls}
           </div>
         </div>
       </div>
@@ -439,6 +444,26 @@ export class CainChatDicePanel {
           this._handleSkillRoll(element);
         }
       });
+    });
+
+    // Dice pool +/- buttons
+    element.querySelector('.cain-pool-minus')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      const poolInput = element.querySelector('.cain-dice-pool');
+      if (poolInput) {
+        const current = parseInt(poolInput.value) || 0;
+        // Allow going down to -1 (triggers zero-dice roll)
+        poolInput.value = Math.max(-1, current - 1);
+      }
+    });
+
+    element.querySelector('.cain-pool-plus')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      const poolInput = element.querySelector('.cain-dice-pool');
+      if (poolInput) {
+        const current = parseInt(poolInput.value) || 0;
+        poolInput.value = Math.min(10, current + 1);
+      }
     });
 
     // Update dice pool when skill changes (if actor selected)
@@ -718,11 +743,14 @@ export class CainChatDicePanel {
 
     let poolValue = 1;
     if (skill === 'psyche') {
-      poolValue = actor.system?.psyche || 1;
+      // Allow 0 as a valid value (triggers zero-dice roll)
+      poolValue = actor.system?.psyche ?? 1;
     } else if (actor.system?.skills?.[skill]) {
-      poolValue = actor.system.skills[skill].value || 1;
+      // Allow 0 as a valid value (triggers zero-dice roll)
+      poolValue = actor.system.skills[skill].value ?? 1;
     }
 
+    // If the pool is 0, set to 0 in the input (not -1, the dice roller handles 0 and below)
     poolInput.value = poolValue;
 
     // Update divine agony display
