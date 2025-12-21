@@ -236,24 +236,37 @@ export class CainDiceRoller {
   static async _executeRoll({ type, label, totalDice, hard, actor, whisper, modifiers = {} }) {
     let roll;
     let isZeroDice = false;
+    let successes;
+    let diceResults;
 
     if (totalDice > 0) {
       // Normal roll: count successes on 4+ (or 6 if hard)
       roll = new Roll(`${totalDice}d6cs>=${hard ? 6 : 4}`);
+      await roll.evaluate();
+      successes = roll.total;
+      diceResults = roll.dice[0].results.map(r => ({
+        result: r.result,
+        success: hard ? r.result >= 6 : r.result >= 4,
+        discarded: r.discarded || false
+      }));
     } else {
-      // Zero dice: roll 2d6, keep lowest
-      roll = new Roll(`2d6kl1cs>=${hard ? 6 : 4}`);
+      // Zero dice: roll 2d6, keep lowest, then check if that die is a success
+      roll = new Roll('2d6kl');
+      await roll.evaluate();
       isZeroDice = true;
+
+      // Get the kept (lowest) die value
+      const lowestValue = roll.total;
+      const threshold = hard ? 6 : 4;
+      successes = lowestValue >= threshold ? 1 : 0;
+
+      // Mark which dice were kept/discarded for display
+      diceResults = roll.dice[0].results.map(r => ({
+        result: r.result,
+        success: !r.discarded && r.result >= threshold,
+        discarded: r.discarded || false
+      }));
     }
-
-    await roll.evaluate();
-
-    const successes = roll.total;
-    const diceResults = roll.dice[0].results.map(r => ({
-      result: r.result,
-      success: hard ? r.result >= 6 : r.result >= 4,
-      discarded: r.discarded || false
-    }));
 
     const messageContent = this._buildSuccessMessage({
       label,

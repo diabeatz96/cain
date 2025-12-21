@@ -34,5 +34,6 @@ export const preloadHandlebarsTemplates = async function () {
     'systems/cain/templates/item/item-sinMarkAbility-sheet.hbs',
     // Dice roller
     'systems/cain/templates/dice/chat-dice-panel.hbs',
+    'systems/cain/templates/dice/dice-panel-app.hbs',
   ]);
 };

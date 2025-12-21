@@ -233,15 +233,19 @@ Hooks.once('init', async function () {
 
   game.settings.register('cain', 'showDiceRoller', {
     name: 'Show Dice Roller Panel',
-    hint: 'Display the dice roller panel in the chat sidebar. Disable if you prefer to roll from character sheets only.',
+    hint: 'Display the dice roller panel. Disable if you prefer to roll from character sheets only.',
     scope: 'client',
     config: true,
     type: Boolean,
     default: true,
     onChange: value => {
       // Update dice panel visibility immediately
-      if (CONFIG.CAIN?.dicePanel?.element) {
-        CONFIG.CAIN.dicePanel.element.classList.toggle('hidden', !value);
+      if (ui.cainDicePanel) {
+        if (value) {
+          ui.cainDicePanel.render(true);
+        } else {
+          ui.cainDicePanel.close();
+        }
       }
     }
   });
@@ -261,12 +265,10 @@ Hooks.once('init', async function () {
     default: 'purple',
     onChange: value => {
       // Update dice panel theme immediately
-      if (CONFIG.CAIN?.dicePanel?.element) {
-        const element = CONFIG.CAIN.dicePanel.element;
-        if (value === 'purple') {
-          element.removeAttribute('data-theme');
-        } else {
-          element.setAttribute('data-theme', value);
+      if (ui.cainDicePanel) {
+        ui.cainDicePanel._currentTheme = value;
+        if (ui.cainDicePanel.rendered) {
+          ui.cainDicePanel.render();
         }
       }
     }
@@ -320,6 +322,46 @@ Hooks.once('init', async function () {
     config: false,
     type: Object,
     default: { top: 100, left: 100 },
+  });
+
+  game.settings.register('cain', 'dicePanelPosition', {
+    name: 'Dice Panel Position',
+    scope: 'client',
+    config: false,
+    type: Object,
+    default: { top: 100, left: 100 },
+  });
+
+  game.settings.register('cain', 'dicePanelCollapsed', {
+    name: 'Dice Panel Collapsed',
+    scope: 'client',
+    config: false,
+    type: Boolean,
+    default: false,
+  });
+
+  game.settings.register('cain', 'dicePanelSelectedCharacter', {
+    name: 'Dice Panel Selected Character',
+    scope: 'client',
+    config: false,
+    type: String,
+    default: '',
+  });
+
+  game.settings.register('cain', 'dicePanelSelectedSkill', {
+    name: 'Dice Panel Selected Skill',
+    scope: 'client',
+    config: false,
+    type: String,
+    default: 'force',
+  });
+
+  game.settings.register('cain', 'dicePanelOpen', {
+    name: 'Dice Panel Open',
+    scope: 'client',
+    config: false,
+    type: Boolean,
+    default: true,
   });
 
   function registerHotkeySetting(settingName, settingLabel, settingHint) {

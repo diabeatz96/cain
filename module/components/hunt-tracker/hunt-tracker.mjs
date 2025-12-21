@@ -101,6 +101,7 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
       healSin: function(event, target) { this._onHealSin(event, target); },
       togglePalace: function(event, target) { this._onTogglePalace(event, target); },
       discoverTrauma: function(event, target) { this._onDiscoverTrauma(event, target); },
+      resetTrauma: function(event, target) { this._onResetTrauma(event, target); },
       useTraumaCounter: function(event, target) { this._onUseTraumaCounter(event, target); },
       rollRandomTensionMove: function(event, target) { this._onRollRandomTensionMove(event, target); },
       addCustomClock: function(event, target) { this._onAddCustomClock(event, target); },
@@ -473,6 +474,23 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
         <p class="hint">This trauma can now be used to counter a Sin reaction during execution.</p>
       </div>`
     });
+  }
+
+  async _onResetTrauma(event, target) {
+    if (!game.user.isGM) return;
+    const traumaIndex = parseInt(target.dataset.index);
+    const hunt = foundry.utils.deepClone(game.settings.get('cain', 'currentHunt'));
+
+    if (!hunt.traumas[traumaIndex]) return;
+
+    // Reset the trauma to undiscovered state
+    hunt.traumas[traumaIndex].discovered = false;
+    hunt.traumas[traumaIndex].used = false;
+
+    await game.settings.set('cain', 'currentHunt', hunt);
+    this._emitUpdate();
+
+    ui.notifications.info(`Trauma "${hunt.traumas[traumaIndex].question}" has been reset to undiscovered.`);
   }
 
   async _onUseTraumaCounter(event, target) {
