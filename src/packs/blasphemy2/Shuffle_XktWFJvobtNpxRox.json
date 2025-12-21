@@ -10,7 +10,7 @@
     "keywords": [
       "Transmute, Instant, CAT area"
     ],
-    "powerDescription": "You may choose any number of objects, vehicles, or people in the affected area. Anything swapped may have a size up to 1/2 CAT (min 0). You instantly swap their positions and momentum. You must swap things of approximately the same size and mass. If attempting otherwise, or if you need to roll for effects such as harm, roll PSYCHE and only spend a burst on success. When you or an ally next acts to gain advantage of this power, they may gain +1D.",
+    "powerDescription": "You may choose any number of objects, vehicles, or people in the affected area. Anything swapped may have a size up to {<CAT/2> size 0} (min 0). You instantly swap their positions and momentum. You must swap things of approximately the same size and mass. If attempting otherwise, or if you need to roll for effects such as harm, roll PSYCHE and only spend a burst on success. When you or an ally next acts to gain advantage of this power, they may gain +1D.",
     "description": "",
     "primaryColor": "#2a2a2a",
     "accentColor": "#ffdc00",

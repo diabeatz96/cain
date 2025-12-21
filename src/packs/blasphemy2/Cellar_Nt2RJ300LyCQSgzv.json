@@ -10,7 +10,7 @@
     "keywords": [
       "Charm, Infinite range, Instant"
     ],
-    "powerDescription": "You can simulate situations inside your palace before putting them into practice in reality. You can use this power and roll to set up a number of allies equal to 1/2 CAT even if you are not physically present. However, you may only set up a target if you can describe the way in which you trained or prepared with them, or a psychic copy of them, for the current situation. This setup can never be risky, but cannot lower risk. If you fail the setup roll, you may take 1d3 nonlethal stress to re-roll it, taking the second result as final.",
+    "powerDescription": "You can simulate situations inside your palace before putting them into practice in reality. You can use this power and roll to set up a number of allies equal to {<CAT/2> people 0} even if you are not physically present. However, you may only set up a target if you can describe the way in which you trained or prepared with them, or a psychic copy of them, for the current situation. This setup can never be risky, but cannot lower risk. If you fail the setup roll, you may take 1d3 nonlethal stress to re-roll it, taking the second result as final.",
     "description": "",
     "primaryColor": "#2a2a2a",
     "accentColor": "#ff00ff",

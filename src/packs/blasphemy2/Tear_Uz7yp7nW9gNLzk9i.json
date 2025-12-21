@@ -10,7 +10,7 @@
     "keywords": [
       "Summon, Until rest"
     ],
-    "powerDescription": "You create a point in {<CAT> range 0}, and another point within the same range, though you have to be able to see both points when you use this ability. The two points are connected by a slash in the fabric of reality, a portal that can be moved through and connects the two points as though they were right next to each other. Objects, beings, and forces up to 1/2 CAT can freely move through the tear for the duration, and momentum is preserved.",
+    "powerDescription": "You create a point in {<CAT> range 0}, and another point within the same range, though you have to be able to see both points when you use this ability. The two points are connected by a slash in the fabric of reality, a portal that can be moved through and connects the two points as though they were right next to each other. Objects, beings, and forces up to {<CAT/2> size 0} can freely move through the tear for the duration, and momentum is preserved.",
     "description": "",
     "primaryColor": "#2a2a2a",
     "accentColor": "#ffff00",
