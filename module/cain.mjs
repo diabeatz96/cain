@@ -111,11 +111,27 @@ Hooks.once('init', async function () {
     type: Array,
     default: [
       {
+        name: 'Tension',
+        imagePath: 'systems/cain/assets/Talismans/Talisman-A-0.png',
+        currMarkAmount: 0,
+        minMarkAmount: 0,
+        maxMarkAmount: 3,
+        isHidden: false,
+      },
+      {
+        name: 'Pressure',
+        imagePath: 'systems/cain/assets/Talismans/Talisman-A-0.png',
+        currMarkAmount: 0,
+        minMarkAmount: 0,
+        maxMarkAmount: 6,
+        isHidden: false,
+      },
+      {
         name: 'Execution',
         imagePath: 'systems/cain/assets/Talismans/Talisman-A-0.png',
         currMarkAmount: 0,
         minMarkAmount: 0,
-        maxMarkAmount: 2,
+        maxMarkAmount: 10,
         isHidden: false,
       },
     ],
@@ -295,6 +311,8 @@ Hooks.once('init', async function () {
     type: Boolean,
     default: false,
   });
+  // Reset to false immediately after registration so the toggle button starts unchecked
+  game.settings.set('cain', 'huntTrackerVisible', false);
 
   game.settings.register('cain', 'huntTrackerPosition', {
     name: 'Hunt Tracker Position',
@@ -555,7 +573,7 @@ Handlebars.registerHelper('gte', function(a, b) {
 
 Handlebars.registerHelper('times', function(n, block) {
   var accum = '';
-  for(var i = 1; i <= n; ++i) {
+  for(var i = 0; i < n; ++i) {
       block.data.index = i;
       block.data.first = i === 0;
       block.data.last = i === (n - 1);
@@ -806,48 +824,83 @@ Hooks.once('ready', async function () {
   if (game.user.isGM) {
     const huntTracker = new HuntTracker();
 
-    // Only render if visible setting is true
-    if (game.settings.get('cain', 'huntTrackerVisible')) {
-      huntTracker.render({ force: true });
-    }
-
-    // Register to the UI element
+    // Register to the UI element (don't auto-open on page load)
     ui.huntTracker = huntTracker;
   }
 
-  // Socket listener for hunt tracker updates
+  // Socket listener for hunt tracker and talisman updates
   game.socket.on('system.cain', (data) => {
     if (data.action === 'updateHunt') {
       if (ui.huntTracker) {
         ui.huntTracker.render(true);
       }
     }
+    // Handle global talisman updates - sync to hunt tracker if linked
+    if (data.action === 'updateTalismans') {
+      syncLinkedTalismanToHunt();
+    }
   });
 
-  function addHuntTrackerButton() {
+  /**
+   * Sync linked global talismans' values to the hunt tracker
+   * Called when global talismans are updated
+   */
+  async function syncLinkedTalismanToHunt() {
     if (!game.user.isGM) return;
-    // Check if button already exists to prevent duplicates
-    if ($('.hunt-tracker-button').length) return;
 
-    const button = $('<button title="Hunt Tracker" class="hunt-tracker-button"><i class="fa-solid fa-skull"></i></button>');
+    const hunt = game.settings.get('cain', 'currentHunt');
+    if (!hunt.active) return;
 
-    // Add click event to open the HuntTracker
-    button.on('click', () => {
-      if (ui.huntTracker) {
-        ui.huntTracker.render({ force: true });
+    const talismans = game.settings.get('cain', 'globalTalismans');
+    let needsUpdate = false;
+    const updatedHunt = foundry.utils.deepClone(hunt);
+
+    // Sync execution talisman
+    if (hunt.linkedTalismanIndex !== undefined && hunt.linkedTalismanIndex !== null) {
+      const linkedTalisman = talismans[hunt.linkedTalismanIndex];
+      if (linkedTalisman && hunt.execution.current !== linkedTalisman.currMarkAmount) {
+        updatedHunt.execution.current = linkedTalisman.currMarkAmount;
+        needsUpdate = true;
       }
-    });
+    }
 
-    // Create an aside element and append the button to it
-    const aside = $('<aside class="talisman-container"></aside>').append(button);
+    // Sync tension talisman
+    if (hunt.linkedTensionTalismanIndex !== undefined && hunt.linkedTensionTalismanIndex !== null) {
+      const linkedTensionTalisman = talismans[hunt.linkedTensionTalismanIndex];
+      if (linkedTensionTalisman) {
+        if (hunt.tension.current !== linkedTensionTalisman.currMarkAmount) {
+          updatedHunt.tension.current = linkedTensionTalisman.currMarkAmount;
+          needsUpdate = true;
+        }
+        if (hunt.tension.max !== linkedTensionTalisman.maxMarkAmount) {
+          updatedHunt.tension.max = linkedTensionTalisman.maxMarkAmount;
+          needsUpdate = true;
+        }
+      }
+    }
 
-    // Insert the aside element into the action bar
-    const actionBar = $('#action-bar');
-    if (actionBar.length) {
-      actionBar.append(aside);
-      console.log('Hunt Tracker button inserted successfully.');
-    } else {
-      console.error('Action bar not found.');
+    // Sync pressure talisman
+    if (hunt.linkedPressureTalismanIndex !== undefined && hunt.linkedPressureTalismanIndex !== null) {
+      const linkedPressureTalisman = talismans[hunt.linkedPressureTalismanIndex];
+      if (linkedPressureTalisman) {
+        if (hunt.pressure.current !== linkedPressureTalisman.currMarkAmount) {
+          updatedHunt.pressure.current = linkedPressureTalisman.currMarkAmount;
+          needsUpdate = true;
+        }
+        if (hunt.pressure.max !== linkedPressureTalisman.maxMarkAmount) {
+          updatedHunt.pressure.max = linkedPressureTalisman.maxMarkAmount;
+          needsUpdate = true;
+        }
+      }
+    }
+
+    if (needsUpdate) {
+      await game.settings.set('cain', 'currentHunt', updatedHunt);
+
+      // Re-render the hunt tracker
+      if (ui.huntTracker) {
+        ui.huntTracker.render(true);
+      }
     }
   }
 
@@ -946,7 +999,6 @@ Hooks.once('ready', async function () {
   addRiskRollButton();
   addFateRollButton();
   addHomebrewButton();
-  addHuntTrackerButton();
 
   // Ensure the buttons are added every time the action bar is rendered
   Hooks.on('renderHotbar', () => {
@@ -954,7 +1006,6 @@ Hooks.once('ready', async function () {
     addRiskRollButton();
     addFateRollButton();
     addHomebrewButton();
-    addHuntTrackerButton();
   });
 
   // Register hotbar drop hook

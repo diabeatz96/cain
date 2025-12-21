@@ -111,6 +111,12 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
       startHunt: function(event, target) { this._onStartHunt(event, target); },
       endHunt: function(event, target) { this._onEndHunt(event, target); },
       resetMission: function(event, target) { this._onResetMission(event, target); },
+      linkTalisman: function(event, target) { this._onLinkTalisman(event, target); },
+      unlinkTalisman: function(event, target) { this._onUnlinkTalisman(event, target); },
+      linkTensionTalisman: function(event, target) { this._onLinkTensionTalisman(event, target); },
+      unlinkTensionTalisman: function(event, target) { this._onUnlinkTensionTalisman(event, target); },
+      linkPressureTalisman: function(event, target) { this._onLinkPressureTalisman(event, target); },
+      unlinkPressureTalisman: function(event, target) { this._onUnlinkPressureTalisman(event, target); },
     }
   }
 
@@ -227,11 +233,53 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
     // Get sin actors for the start hunt dropdown
     context.sinActors = game.actors.filter(a => a.type === 'sin' || a.type === 'npc');
 
-    // Calculate execution talisman max
-    if (huntState.active) {
-      context.executionMax = 6 + huntState.pressure.current + huntState.sinCategory;
+    // Calculate execution talisman max (uses linked talisman max if linked)
+    context.executionMax = this._getExecutionMax(huntState);
+
+    // Add flattened values for easier template access in range blocks
+    context.tensionMax = huntState.tension?.max || 3;
+    context.tensionCurrent = huntState.tension?.current || 0;
+    context.pressureMax = huntState.pressure?.max || 6;
+    context.pressureCurrent = huntState.pressure?.current || 0;
+
+    // Get global talismans for linking
+    const globalTalismans = game.settings.get('cain', 'globalTalismans');
+    context.globalTalismans = globalTalismans;
+
+    // Get linked execution talisman if exists
+    if (huntState.linkedTalismanIndex !== undefined && huntState.linkedTalismanIndex !== null) {
+      context.linkedTalisman = globalTalismans[huntState.linkedTalismanIndex];
+      context.linkedTalismanIndex = huntState.linkedTalismanIndex;
     } else {
-      context.executionMax = 6;
+      context.linkedTalisman = null;
+    }
+
+    // Get linked tension talisman if exists
+    if (huntState.linkedTensionTalismanIndex !== undefined && huntState.linkedTensionTalismanIndex !== null) {
+      const tensionTalisman = globalTalismans[huntState.linkedTensionTalismanIndex];
+      context.linkedTensionTalisman = tensionTalisman;
+      context.linkedTensionTalismanIndex = huntState.linkedTensionTalismanIndex;
+      // Use talisman max if linked
+      if (tensionTalisman) {
+        context.tensionMax = tensionTalisman.maxMarkAmount;
+        context.tensionCurrent = tensionTalisman.currMarkAmount;
+      }
+    } else {
+      context.linkedTensionTalisman = null;
+    }
+
+    // Get linked pressure talisman if exists
+    if (huntState.linkedPressureTalismanIndex !== undefined && huntState.linkedPressureTalismanIndex !== null) {
+      const pressureTalisman = globalTalismans[huntState.linkedPressureTalismanIndex];
+      context.linkedPressureTalisman = pressureTalisman;
+      context.linkedPressureTalismanIndex = huntState.linkedPressureTalismanIndex;
+      // Use talisman max if linked
+      if (pressureTalisman) {
+        context.pressureMax = pressureTalisman.maxMarkAmount;
+        context.pressureCurrent = pressureTalisman.currMarkAmount;
+      }
+    } else {
+      context.linkedPressureTalisman = null;
     }
 
     return context;
@@ -256,6 +304,7 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
     if (hunt.tension.current > 0) {
       hunt.tension.current--;
       await game.settings.set('cain', 'currentHunt', hunt);
+      await this._syncToLinkedTensionTalisman(hunt.tension.current);
       this._emitUpdate();
     }
   }
@@ -274,6 +323,7 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
       // Recalculate execution
       hunt.execution.calculated = 6 + hunt.pressure.current + hunt.sinCategory;
       await game.settings.set('cain', 'currentHunt', hunt);
+      await this._syncToLinkedPressureTalisman(hunt.pressure.current);
       this._emitUpdate();
     }
   }
@@ -301,19 +351,16 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
   async _onIncrementExecution(event, target) {
     if (!game.user.isGM) return;
     const hunt = foundry.utils.deepClone(game.settings.get('cain', 'currentHunt'));
-    const executionMax = 6 + hunt.pressure.current + hunt.sinCategory;
+    const executionMax = this._getExecutionMax(hunt);
 
     if (hunt.execution.current < executionMax) {
       hunt.execution.current++;
       await game.settings.set('cain', 'currentHunt', hunt);
-      this._emitUpdate();
 
-      // Check for retreat (outside palace at 4 slashes) or defeat
-      if (!hunt.insidePalace && hunt.execution.current >= 4) {
-        await this._sinRetreats();
-      } else if (hunt.execution.current >= executionMax) {
-        await this._sinDefeated();
-      }
+      // Sync with linked global talisman if exists
+      await this._syncToLinkedTalisman(hunt.execution.current);
+
+      this._emitUpdate();
     }
   }
 
@@ -323,7 +370,47 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
     if (hunt.execution.current > 0) {
       hunt.execution.current--;
       await game.settings.set('cain', 'currentHunt', hunt);
+
+      // Sync with linked global talisman if exists
+      await this._syncToLinkedTalisman(hunt.execution.current);
+
       this._emitUpdate();
+    }
+  }
+
+  /**
+   * Sync the execution talisman value to the linked global talisman
+   */
+  async _syncToLinkedTalisman(newValue) {
+    const hunt = game.settings.get('cain', 'currentHunt');
+    if (hunt.linkedTalismanIndex === undefined || hunt.linkedTalismanIndex === null) return;
+
+    const talismans = game.settings.get('cain', 'globalTalismans');
+    const linkedTalisman = talismans[hunt.linkedTalismanIndex];
+    if (!linkedTalisman) return;
+
+    // Update the talisman's current mark amount
+    talismans[hunt.linkedTalismanIndex].currMarkAmount = newValue;
+
+    // Update image path to match current marks
+    const basePath = linkedTalisman.imagePath.replace(/-\d+\.png$/, '');
+    talismans[hunt.linkedTalismanIndex].imagePath = `${basePath}-${newValue}.png`;
+
+    await game.settings.set('cain', 'globalTalismans', talismans);
+
+    // Emit update for talismans and re-render TalismanWindow
+    game.socket.emit('system.cain', { action: 'updateTalismans' });
+    this._refreshTalismanWindows();
+  }
+
+  /**
+   * Refresh any open TalismanWindow instances
+   */
+  _refreshTalismanWindows() {
+    for (const app of Object.values(ui.windows)) {
+      if (app.constructor.name === 'TalismanWindow') {
+        app.render(true);
+      }
     }
   }
 
@@ -769,7 +856,7 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
       title: 'Reset Mission',
       content: `<p>This will reset all exorcist characters to mission-start state:</p>
                 <ul>
-                  <li>Stress to max</li>
+                  <li>Stress to 0</li>
                   <li>3 psyche bursts</li>
                   <li>Kit points to max</li>
                 </ul>
@@ -781,7 +868,7 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
     // Reset all exorcist characters
     for (const actor of game.actors.filter(a => a.type === 'character')) {
       await actor.update({
-        'system.stress.value': actor.system.stress.max,
+        'system.stress.value': 0,
         'system.psycheBurst.value': 3,
         'system.kitPoints.value': actor.system.kitPoints.max,
       });
@@ -798,7 +885,285 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
     });
   }
 
+  async _onLinkTalisman(event, target) {
+    if (!game.user.isGM) return;
+    const self = this;
+
+    const globalTalismans = game.settings.get('cain', 'globalTalismans');
+
+    if (!globalTalismans || globalTalismans.length === 0) {
+      ui.notifications.warn('No global talismans found. Create a talisman in the Talismans window first.');
+      return;
+    }
+
+    // Build options list
+    const options = globalTalismans.map((t, idx) =>
+      `<option value="${idx}">${t.name} (${t.currMarkAmount}/${t.maxMarkAmount})</option>`
+    ).join('');
+
+    const content = `
+      <form>
+        <div class="form-group">
+          <label>Select Talisman to Link</label>
+          <select name="talismanIndex">${options}</select>
+        </div>
+        <p class="notes">The execution talisman will sync with this global talisman. Changes to either will update both.</p>
+      </form>
+    `;
+
+    new Dialog({
+      title: 'Link Execution Talisman',
+      content,
+      buttons: {
+        link: {
+          icon: '<i class="fas fa-link"></i>',
+          label: 'Link',
+          callback: async (html) => {
+            const talismanIndex = parseInt(html.find('[name="talismanIndex"]').val());
+            const hunt = foundry.utils.deepClone(game.settings.get('cain', 'currentHunt'));
+
+            hunt.linkedTalismanIndex = talismanIndex;
+
+            // Sync current execution value to the talisman
+            const talismans = game.settings.get('cain', 'globalTalismans');
+            talismans[talismanIndex].currMarkAmount = hunt.execution.current;
+            // Update image path to match current marks
+            const basePath = talismans[talismanIndex].imagePath.replace(/-\d+\.png$/, '');
+            talismans[talismanIndex].imagePath = `${basePath}-${hunt.execution.current}.png`;
+
+            await game.settings.set('cain', 'globalTalismans', talismans);
+            await game.settings.set('cain', 'currentHunt', hunt);
+
+            // Emit updates for both
+            game.socket.emit('system.cain', { action: 'updateTalismans' });
+            self._emitUpdate();
+
+            ui.notifications.info(`Linked execution talisman to ${talismans[talismanIndex].name}`);
+          }
+        },
+        cancel: {
+          icon: '<i class="fas fa-times"></i>',
+          label: 'Cancel'
+        }
+      },
+      default: 'link'
+    }).render(true);
+  }
+
+  async _onUnlinkTalisman(event, target) {
+    if (!game.user.isGM) return;
+
+    const hunt = foundry.utils.deepClone(game.settings.get('cain', 'currentHunt'));
+
+    if (hunt.linkedTalismanIndex === undefined || hunt.linkedTalismanIndex === null) {
+      ui.notifications.warn('No talisman is currently linked');
+      return;
+    }
+
+    const talismans = game.settings.get('cain', 'globalTalismans');
+    const linkedName = talismans[hunt.linkedTalismanIndex]?.name || 'Unknown';
+
+    hunt.linkedTalismanIndex = null;
+    await game.settings.set('cain', 'currentHunt', hunt);
+    this._emitUpdate();
+
+    ui.notifications.info(`Unlinked execution talisman from ${linkedName}`);
+  }
+
+  async _onLinkTensionTalisman(event, target) {
+    if (!game.user.isGM) return;
+    const self = this;
+
+    const globalTalismans = game.settings.get('cain', 'globalTalismans');
+
+    if (!globalTalismans || globalTalismans.length === 0) {
+      ui.notifications.warn('No global talismans found. Create a talisman in the Talismans window first.');
+      return;
+    }
+
+    const options = globalTalismans.map((t, idx) =>
+      `<option value="${idx}">${t.name} (${t.currMarkAmount}/${t.maxMarkAmount})</option>`
+    ).join('');
+
+    const content = `
+      <form>
+        <div class="form-group">
+          <label>Select Talisman to Link</label>
+          <select name="talismanIndex">${options}</select>
+        </div>
+        <p class="notes">The tension talisman will sync with this global talisman. The talisman's max value will be used.</p>
+      </form>
+    `;
+
+    new Dialog({
+      title: 'Link Tension Talisman',
+      content,
+      buttons: {
+        link: {
+          icon: '<i class="fas fa-link"></i>',
+          label: 'Link',
+          callback: async (html) => {
+            const talismanIndex = parseInt(html.find('[name="talismanIndex"]').val());
+            const hunt = foundry.utils.deepClone(game.settings.get('cain', 'currentHunt'));
+
+            hunt.linkedTensionTalismanIndex = talismanIndex;
+
+            // Sync current tension value to the talisman
+            const talismans = game.settings.get('cain', 'globalTalismans');
+            talismans[talismanIndex].currMarkAmount = hunt.tension.current;
+            const basePath = talismans[talismanIndex].imagePath.replace(/-\d+\.png$/, '');
+            talismans[talismanIndex].imagePath = `${basePath}-${hunt.tension.current}.png`;
+
+            // Update hunt tension max to match talisman
+            hunt.tension.max = talismans[talismanIndex].maxMarkAmount;
+
+            await game.settings.set('cain', 'globalTalismans', talismans);
+            await game.settings.set('cain', 'currentHunt', hunt);
+
+            game.socket.emit('system.cain', { action: 'updateTalismans' });
+            self._emitUpdate();
+
+            ui.notifications.info(`Linked tension talisman to ${talismans[talismanIndex].name}`);
+          }
+        },
+        cancel: {
+          icon: '<i class="fas fa-times"></i>',
+          label: 'Cancel'
+        }
+      },
+      default: 'link'
+    }).render(true);
+  }
+
+  async _onUnlinkTensionTalisman(event, target) {
+    if (!game.user.isGM) return;
+
+    const hunt = foundry.utils.deepClone(game.settings.get('cain', 'currentHunt'));
+
+    if (hunt.linkedTensionTalismanIndex === undefined || hunt.linkedTensionTalismanIndex === null) {
+      ui.notifications.warn('No tension talisman is currently linked');
+      return;
+    }
+
+    const talismans = game.settings.get('cain', 'globalTalismans');
+    const linkedName = talismans[hunt.linkedTensionTalismanIndex]?.name || 'Unknown';
+
+    hunt.linkedTensionTalismanIndex = null;
+    hunt.tension.max = 3; // Reset to default
+    await game.settings.set('cain', 'currentHunt', hunt);
+    this._emitUpdate();
+
+    ui.notifications.info(`Unlinked tension talisman from ${linkedName}`);
+  }
+
+  async _onLinkPressureTalisman(event, target) {
+    if (!game.user.isGM) return;
+    const self = this;
+
+    const globalTalismans = game.settings.get('cain', 'globalTalismans');
+
+    if (!globalTalismans || globalTalismans.length === 0) {
+      ui.notifications.warn('No global talismans found. Create a talisman in the Talismans window first.');
+      return;
+    }
+
+    const options = globalTalismans.map((t, idx) =>
+      `<option value="${idx}">${t.name} (${t.currMarkAmount}/${t.maxMarkAmount})</option>`
+    ).join('');
+
+    const content = `
+      <form>
+        <div class="form-group">
+          <label>Select Talisman to Link</label>
+          <select name="talismanIndex">${options}</select>
+        </div>
+        <p class="notes">The pressure talisman will sync with this global talisman. The talisman's max value will be used.</p>
+      </form>
+    `;
+
+    new Dialog({
+      title: 'Link Pressure Talisman',
+      content,
+      buttons: {
+        link: {
+          icon: '<i class="fas fa-link"></i>',
+          label: 'Link',
+          callback: async (html) => {
+            const talismanIndex = parseInt(html.find('[name="talismanIndex"]').val());
+            const hunt = foundry.utils.deepClone(game.settings.get('cain', 'currentHunt'));
+
+            hunt.linkedPressureTalismanIndex = talismanIndex;
+
+            // Sync current pressure value to the talisman
+            const talismans = game.settings.get('cain', 'globalTalismans');
+            talismans[talismanIndex].currMarkAmount = hunt.pressure.current;
+            const basePath = talismans[talismanIndex].imagePath.replace(/-\d+\.png$/, '');
+            talismans[talismanIndex].imagePath = `${basePath}-${hunt.pressure.current}.png`;
+
+            // Update hunt pressure max to match talisman
+            hunt.pressure.max = talismans[talismanIndex].maxMarkAmount;
+
+            await game.settings.set('cain', 'globalTalismans', talismans);
+            await game.settings.set('cain', 'currentHunt', hunt);
+
+            game.socket.emit('system.cain', { action: 'updateTalismans' });
+            self._emitUpdate();
+
+            ui.notifications.info(`Linked pressure talisman to ${talismans[talismanIndex].name}`);
+          }
+        },
+        cancel: {
+          icon: '<i class="fas fa-times"></i>',
+          label: 'Cancel'
+        }
+      },
+      default: 'link'
+    }).render(true);
+  }
+
+  async _onUnlinkPressureTalisman(event, target) {
+    if (!game.user.isGM) return;
+
+    const hunt = foundry.utils.deepClone(game.settings.get('cain', 'currentHunt'));
+
+    if (hunt.linkedPressureTalismanIndex === undefined || hunt.linkedPressureTalismanIndex === null) {
+      ui.notifications.warn('No pressure talisman is currently linked');
+      return;
+    }
+
+    const talismans = game.settings.get('cain', 'globalTalismans');
+    const linkedName = talismans[hunt.linkedPressureTalismanIndex]?.name || 'Unknown';
+
+    hunt.linkedPressureTalismanIndex = null;
+    hunt.pressure.max = 6; // Reset to default
+    await game.settings.set('cain', 'currentHunt', hunt);
+    this._emitUpdate();
+
+    ui.notifications.info(`Unlinked pressure talisman from ${linkedName}`);
+  }
+
   // ============== HELPER METHODS ==============
+
+  /**
+   * Calculate the execution talisman max value
+   * If linked to a global talisman, uses the talisman's max value
+   * Otherwise, uses 6 + pressure + CAT
+   */
+  _getExecutionMax(hunt) {
+    if (!hunt?.active) return 6;
+
+    // If linked to a talisman, use its max
+    if (hunt.linkedTalismanIndex !== undefined && hunt.linkedTalismanIndex !== null) {
+      const globalTalismans = game.settings.get('cain', 'globalTalismans');
+      const linkedTalisman = globalTalismans[hunt.linkedTalismanIndex];
+      if (linkedTalisman) {
+        return linkedTalisman.maxMarkAmount;
+      }
+    }
+
+    // Default calculation: 6 + pressure + CAT
+    return 6 + (hunt.pressure?.current || 0) + (hunt.sinCategory || 0);
+  }
 
   async _incrementTension(source = 'manual') {
     const hunt = foundry.utils.deepClone(game.settings.get('cain', 'currentHunt'));
@@ -824,6 +1189,8 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
       await this._onTensionFilled(hunt);
     } else {
       await game.settings.set('cain', 'currentHunt', hunt);
+      // Sync with linked tension talisman
+      await this._syncToLinkedTensionTalisman(hunt.tension.current);
       this._emitUpdate();
     }
   }
@@ -843,6 +1210,11 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
     }
 
     await game.settings.set('cain', 'currentHunt', hunt);
+
+    // Sync linked talismans (tension reset to 0, pressure increased)
+    await this._syncToLinkedTensionTalisman(0);
+    await this._syncToLinkedPressureTalisman(hunt.pressure.current);
+
     this._emitUpdate();
 
     // Prompt tension move
@@ -870,7 +1242,49 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
     }
 
     await game.settings.set('cain', 'currentHunt', hunt);
+    // Sync with linked pressure talisman
+    await this._syncToLinkedPressureTalisman(hunt.pressure.current);
     this._emitUpdate();
+  }
+
+  /**
+   * Sync the tension talisman value to the linked global talisman
+   */
+  async _syncToLinkedTensionTalisman(newValue) {
+    const hunt = game.settings.get('cain', 'currentHunt');
+    if (hunt.linkedTensionTalismanIndex === undefined || hunt.linkedTensionTalismanIndex === null) return;
+
+    const talismans = game.settings.get('cain', 'globalTalismans');
+    const linkedTalisman = talismans[hunt.linkedTensionTalismanIndex];
+    if (!linkedTalisman) return;
+
+    talismans[hunt.linkedTensionTalismanIndex].currMarkAmount = newValue;
+    const basePath = linkedTalisman.imagePath.replace(/-\d+\.png$/, '');
+    talismans[hunt.linkedTensionTalismanIndex].imagePath = `${basePath}-${newValue}.png`;
+
+    await game.settings.set('cain', 'globalTalismans', talismans);
+    game.socket.emit('system.cain', { action: 'updateTalismans' });
+    this._refreshTalismanWindows();
+  }
+
+  /**
+   * Sync the pressure talisman value to the linked global talisman
+   */
+  async _syncToLinkedPressureTalisman(newValue) {
+    const hunt = game.settings.get('cain', 'currentHunt');
+    if (hunt.linkedPressureTalismanIndex === undefined || hunt.linkedPressureTalismanIndex === null) return;
+
+    const talismans = game.settings.get('cain', 'globalTalismans');
+    const linkedTalisman = talismans[hunt.linkedPressureTalismanIndex];
+    if (!linkedTalisman) return;
+
+    talismans[hunt.linkedPressureTalismanIndex].currMarkAmount = newValue;
+    const basePath = linkedTalisman.imagePath.replace(/-\d+\.png$/, '');
+    talismans[hunt.linkedPressureTalismanIndex].imagePath = `${basePath}-${newValue}.png`;
+
+    await game.settings.set('cain', 'globalTalismans', talismans);
+    game.socket.emit('system.cain', { action: 'updateTalismans' });
+    this._refreshTalismanWindows();
   }
 
   async _onPressureOutOfControl(hunt) {

@@ -21,17 +21,26 @@
       </div>
 
       {{!-- Tension Talisman --}}
-      <div class="talisman-section tension-section">
-        <div class="talisman-header">
-          <h4>Tension</h4>
-          <span class="talisman-value">{{hunt.tension.current}}/{{hunt.tension.max}}</span>
+      <div class="hunt-talisman-section hunt-tension-section">
+        <div class="hunt-talisman-header">
+          <h4>Tension Talisman</h4>
+          <span class="hunt-talisman-value">{{tensionCurrent}}/{{tensionMax}}</span>
         </div>
-        <div class="talisman-pips">
-          {{#times hunt.tension.max}}
-            <span class="pip {{#if (lte @index ../hunt.tension.current)}}filled{{/if}}"></span>
-          {{/times}}
-        </div>
-        <div class="talisman-controls">
+        {{#if linkedTensionTalisman}}
+          <div class="hunt-linked-talisman-display">
+            <img src="{{linkedTensionTalisman.imagePath}}" alt="{{linkedTensionTalisman.name}}" class="hunt-linked-talisman-image" />
+            <button type="button" data-action="unlinkTensionTalisman" class="hunt-unlink-btn" title="Unlink Talisman">
+              <i class="fas fa-unlink"></i>
+            </button>
+          </div>
+        {{else}}
+          <div class="hunt-talisman-pips">
+            {{#range 0 tensionMax}}
+              <span class="hunt-pip {{#if (lt index ../tensionCurrent)}}filled{{/if}}"></span>
+            {{/range}}
+          </div>
+        {{/if}}
+        <div class="hunt-talisman-controls">
           <button type="button" data-action="decrementTension" title="Decrease Tension">
             <i class="fas fa-minus"></i>
           </button>
@@ -44,24 +53,38 @@
           <button type="button" data-action="riskTriggered" class="{{#if hunt.tension.sceneRiskTriggered}}disabled{{/if}}" title="Risk Roll = 1 (once per scene)">
             <i class="fas fa-dice-one"></i> Risk 1
           </button>
+          {{#unless linkedTensionTalisman}}
+            <button type="button" data-action="linkTensionTalisman" title="Link to Global Talisman">
+              <i class="fas fa-link"></i> Link
+            </button>
+          {{/unless}}
         </div>
         {{#if hunt.tension.sceneRiskTriggered}}
-          <div class="risk-triggered-notice">Risk already triggered this scene</div>
+          <div class="hunt-risk-triggered-notice">Risk already triggered this scene</div>
         {{/if}}
       </div>
 
       {{!-- Pressure Talisman --}}
-      <div class="talisman-section pressure-section {{#if hunt.pressure.outOfControl}}out-of-control{{/if}}">
-        <div class="talisman-header">
-          <h4>Pressure</h4>
-          <span class="talisman-value">{{hunt.pressure.current}}/{{hunt.pressure.max}}</span>
+      <div class="hunt-talisman-section hunt-pressure-section {{#if hunt.pressure.outOfControl}}out-of-control{{/if}}">
+        <div class="hunt-talisman-header">
+          <h4>Pressure Talisman</h4>
+          <span class="hunt-talisman-value">{{pressureCurrent}}/{{pressureMax}}</span>
         </div>
-        <div class="talisman-pips">
-          {{#times hunt.pressure.max}}
-            <span class="pip {{#if (lte @index ../hunt.pressure.current)}}filled{{/if}}"></span>
-          {{/times}}
-        </div>
-        <div class="talisman-controls">
+        {{#if linkedPressureTalisman}}
+          <div class="hunt-linked-talisman-display">
+            <img src="{{linkedPressureTalisman.imagePath}}" alt="{{linkedPressureTalisman.name}}" class="hunt-linked-talisman-image" />
+            <button type="button" data-action="unlinkPressureTalisman" class="hunt-unlink-btn" title="Unlink Talisman">
+              <i class="fas fa-unlink"></i>
+            </button>
+          </div>
+        {{else}}
+          <div class="hunt-talisman-pips">
+            {{#range 0 pressureMax}}
+              <span class="hunt-pip {{#if (lt index ../pressureCurrent)}}filled{{/if}}"></span>
+            {{/range}}
+          </div>
+        {{/if}}
+        <div class="hunt-talisman-controls">
           <button type="button" data-action="decrementPressure" title="Decrease Pressure">
             <i class="fas fa-minus"></i>
           </button>
@@ -71,25 +94,39 @@
           <button type="button" data-action="partyRests" title="Party Rests (+1 Pressure)">
             <i class="fas fa-bed"></i> Rest
           </button>
+          {{#unless linkedPressureTalisman}}
+            <button type="button" data-action="linkPressureTalisman" title="Link to Global Talisman">
+              <i class="fas fa-link"></i> Link
+            </button>
+          {{/unless}}
         </div>
         {{#if hunt.pressure.outOfControl}}
-          <div class="overflow-warning">OUT OF CONTROL - Sin gains +1 CAT!</div>
+          <div class="hunt-overflow-warning">OUT OF CONTROL - Sin gains +1 CAT!</div>
         {{/if}}
       </div>
 
       {{!-- Execution Talisman --}}
-      <div class="talisman-section execution-section">
-        <div class="talisman-header">
-          <h4>Execution</h4>
-          <span class="talisman-value">{{hunt.execution.current}}/{{executionMax}}</span>
+      <div class="hunt-talisman-section hunt-execution-section">
+        <div class="hunt-talisman-header">
+          <h4>Execution Talisman</h4>
+          <span class="hunt-talisman-value">{{hunt.execution.current}}/{{executionMax}}</span>
         </div>
-        <div class="execution-formula">
-          <span>6 + {{hunt.pressure.current}} (pressure) + {{hunt.sinCategory}} (CAT) = {{executionMax}}</span>
-        </div>
-        <div class="execution-bar">
-          <div class="execution-fill" style="width: {{calcPercentage hunt.execution.current executionMax}}%"></div>
-        </div>
-        <div class="talisman-controls">
+        {{#if linkedTalisman}}
+          <div class="hunt-linked-talisman-display">
+            <img src="{{linkedTalisman.imagePath}}" alt="{{linkedTalisman.name}}" class="hunt-linked-talisman-image" />
+            <button type="button" data-action="unlinkTalisman" class="hunt-unlink-btn" title="Unlink Talisman">
+              <i class="fas fa-unlink"></i>
+            </button>
+          </div>
+        {{else}}
+          <div class="hunt-execution-formula">
+            <span>6 + {{hunt.pressure.current}} (pressure) + {{hunt.sinCategory}} (CAT) = {{executionMax}}</span>
+          </div>
+          <div class="hunt-execution-bar">
+            <div class="hunt-execution-fill" style="width: {{calcPercentage hunt.execution.current executionMax}}%"></div>
+          </div>
+        {{/if}}
+        <div class="hunt-talisman-controls">
           <button type="button" data-action="decrementExecution" title="Remove Slash">
             <i class="fas fa-minus"></i>
           </button>
@@ -102,18 +139,23 @@
           <button type="button" data-action="togglePalace" class="{{#if hunt.insidePalace}}active{{/if}}" title="Toggle Palace Status">
             <i class="fas fa-dungeon"></i> {{#if hunt.insidePalace}}In Palace{{else}}Outside{{/if}}
           </button>
+          {{#unless linkedTalisman}}
+            <button type="button" data-action="linkTalisman" title="Link to Global Talisman">
+              <i class="fas fa-link"></i> Link
+            </button>
+          {{/unless}}
         </div>
         {{#if hunt.insidePalace}}
-          <div class="palace-notice">Sin cannot flee from the palace!</div>
+          <div class="hunt-palace-notice">Sin cannot flee from the palace!</div>
         {{/if}}
       </div>
 
       {{!-- Traumas Section --}}
-      <div class="traumas-section">
+      <div class="hunt-traumas-section">
         <h4>Traumas</h4>
         {{#each hunt.traumas}}
-          <div class="trauma-item {{#if this.discovered}}discovered{{/if}} {{#if this.used}}used{{/if}}">
-            <div class="trauma-status">
+          <div class="hunt-trauma-item {{#if this.discovered}}discovered{{/if}} {{#if this.used}}used{{/if}}">
+            <div class="hunt-trauma-status">
               {{#if this.used}}
                 <i class="fas fa-times-circle" title="Used"></i>
               {{else if this.discovered}}
@@ -122,11 +164,11 @@
                 <i class="fas fa-question-circle" title="Unknown"></i>
               {{/if}}
             </div>
-            <div class="trauma-content">
-              <div class="trauma-question">{{this.question}}</div>
-              <input type="text" class="trauma-answer" value="{{this.answer}}" placeholder="Answer..." data-index="{{@index}}" />
+            <div class="hunt-trauma-content">
+              <div class="hunt-trauma-question">{{this.question}}</div>
+              <input type="text" class="hunt-trauma-answer" value="{{this.answer}}" placeholder="Answer..." data-index="{{@index}}" />
             </div>
-            <div class="trauma-actions">
+            <div class="hunt-trauma-actions">
               {{#unless this.discovered}}
                 <button type="button" data-action="discoverTrauma" data-index="{{@index}}" title="Discover Trauma">
                   <i class="fas fa-eye"></i>
@@ -144,16 +186,16 @@
       </div>
 
       {{!-- Tension Moves Section --}}
-      <div class="tension-moves-section">
-        <div class="section-header">
+      <div class="hunt-tension-moves-section">
+        <div class="hunt-section-header">
           <h4>Tension Moves</h4>
           <button type="button" data-action="rollRandomTensionMove" title="Roll Random Move">
             <i class="fas fa-dice"></i> Random
           </button>
         </div>
-        <div class="tension-moves-list collapsed">
+        <div class="hunt-tension-moves-list collapsed">
           {{#each tensionMoves}}
-            <div class="tension-move">
+            <div class="hunt-tension-move">
               <strong>{{this.name}}:</strong> {{this.description}}
             </div>
           {{/each}}
@@ -161,23 +203,23 @@
       </div>
 
       {{!-- Custom Clocks Section --}}
-      <div class="custom-clocks-section">
-        <div class="section-header">
+      <div class="hunt-custom-clocks-section">
+        <div class="hunt-section-header">
           <h4>Custom Clocks</h4>
           <button type="button" data-action="addCustomClock" title="Add Clock">
             <i class="fas fa-plus"></i> Add
           </button>
         </div>
         {{#each hunt.customTalismans}}
-          <div class="custom-clock">
-            <span class="clock-name">{{this.name}}</span>
-            <div class="clock-pips">
-              {{#times this.max}}
-                <span class="pip {{#if (lte @index ../this.current)}}filled{{/if}}"></span>
-              {{/times}}
+          <div class="hunt-custom-clock">
+            <span class="hunt-clock-name">{{this.name}}</span>
+            <div class="hunt-clock-pips">
+              {{#range 0 this.max}}
+                <span class="hunt-pip {{#if (lt index ../current)}}filled{{/if}}"></span>
+              {{/range}}
             </div>
-            <span class="clock-value">{{this.current}}/{{this.max}}</span>
-            <div class="clock-controls">
+            <span class="hunt-clock-value">{{this.current}}/{{this.max}}</span>
+            <div class="hunt-clock-controls">
               <button type="button" data-action="untickCustomClock" data-clock-id="{{this.id}}" title="Untick">
                 <i class="fas fa-minus"></i>
               </button>
@@ -193,39 +235,39 @@
       </div>
 
       {{!-- Notes Section --}}
-      <div class="notes-section">
+      <div class="hunt-notes-section">
         <h4>GM Notes</h4>
         <textarea class="hunt-notes" placeholder="Notes about the hunt...">{{hunt.notes}}</textarea>
       </div>
 
       {{!-- Hunt Controls --}}
       <div class="hunt-controls">
-        <button type="button" data-action="resetMission" class="reset-btn" title="Reset all exorcists">
+        <button type="button" data-action="resetMission" class="hunt-reset-btn" title="Reset all exorcists">
           <i class="fas fa-redo"></i> Reset Mission
         </button>
-        <button type="button" data-action="endHunt" class="end-btn" title="End the hunt">
+        <button type="button" data-action="endHunt" class="hunt-end-btn" title="End the hunt">
           <i class="fas fa-flag-checkered"></i> End Hunt
         </button>
       </div>
 
     {{else}}
       {{!-- No Active Hunt --}}
-      <div class="no-hunt">
+      <div class="hunt-no-hunt">
         <p>No active hunt.</p>
-        <button type="button" data-action="startHunt" class="start-hunt-btn">
+        <button type="button" data-action="startHunt" class="hunt-start-btn">
           <i class="fas fa-skull"></i> Start New Hunt
         </button>
       </div>
 
       {{!-- Quick Actions even without hunt --}}
-      <div class="quick-actions">
-        <button type="button" data-action="resetMission" class="reset-btn" title="Reset all exorcists">
+      <div class="hunt-quick-actions">
+        <button type="button" data-action="resetMission" class="hunt-reset-btn" title="Reset all exorcists">
           <i class="fas fa-redo"></i> Reset Exorcists
         </button>
       </div>
     {{/if}}
   {{else}}
-    <div class="gm-only-notice">
+    <div class="hunt-gm-only-notice">
       <p>Hunt Tracker is only visible to the GM.</p>
     </div>
   {{/if}}
