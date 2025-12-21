@@ -12,7 +12,7 @@
         </div>
         <div class="hunt-phase">
           <label>Phase:</label>
-          <select class="phase-select" data-action="setPhase">
+          <select class="phase-select">
             {{#each huntPhases}}
               <option value="{{this.id}}" {{#if (eq this.id ../hunt.phase)}}selected{{/if}}>{{this.name}}</option>
             {{/each}}

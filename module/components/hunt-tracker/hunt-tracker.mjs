@@ -90,28 +90,27 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
       height: 'auto',
     },
     actions: {
-      incrementTension: HuntTracker._onIncrementTension,
-      decrementTension: HuntTracker._onDecrementTension,
-      incrementPressure: HuntTracker._onIncrementPressure,
-      decrementPressure: HuntTracker._onDecrementPressure,
-      advanceScene: HuntTracker._onAdvanceScene,
-      riskTriggered: HuntTracker._onRiskTriggered,
-      incrementExecution: HuntTracker._onIncrementExecution,
-      decrementExecution: HuntTracker._onDecrementExecution,
-      healSin: HuntTracker._onHealSin,
-      togglePalace: HuntTracker._onTogglePalace,
-      discoverTrauma: HuntTracker._onDiscoverTrauma,
-      useTraumaCounter: HuntTracker._onUseTraumaCounter,
-      rollRandomTensionMove: HuntTracker._onRollRandomTensionMove,
-      addCustomClock: HuntTracker._onAddCustomClock,
-      tickCustomClock: HuntTracker._onTickCustomClock,
-      untickCustomClock: HuntTracker._onUntickCustomClock,
-      removeCustomClock: HuntTracker._onRemoveCustomClock,
-      partyRests: HuntTracker._onPartyRests,
-      startHunt: HuntTracker._onStartHunt,
-      endHunt: HuntTracker._onEndHunt,
-      resetMission: HuntTracker._onResetMission,
-      setPhase: HuntTracker._onSetPhase,
+      incrementTension: function(event, target) { this._onIncrementTension(event, target); },
+      decrementTension: function(event, target) { this._onDecrementTension(event, target); },
+      incrementPressure: function(event, target) { this._onIncrementPressure(event, target); },
+      decrementPressure: function(event, target) { this._onDecrementPressure(event, target); },
+      advanceScene: function(event, target) { this._onAdvanceScene(event, target); },
+      riskTriggered: function(event, target) { this._onRiskTriggered(event, target); },
+      incrementExecution: function(event, target) { this._onIncrementExecution(event, target); },
+      decrementExecution: function(event, target) { this._onDecrementExecution(event, target); },
+      healSin: function(event, target) { this._onHealSin(event, target); },
+      togglePalace: function(event, target) { this._onTogglePalace(event, target); },
+      discoverTrauma: function(event, target) { this._onDiscoverTrauma(event, target); },
+      useTraumaCounter: function(event, target) { this._onUseTraumaCounter(event, target); },
+      rollRandomTensionMove: function(event, target) { this._onRollRandomTensionMove(event, target); },
+      addCustomClock: function(event, target) { this._onAddCustomClock(event, target); },
+      tickCustomClock: function(event, target) { this._onTickCustomClock(event, target); },
+      untickCustomClock: function(event, target) { this._onUntickCustomClock(event, target); },
+      removeCustomClock: function(event, target) { this._onRemoveCustomClock(event, target); },
+      partyRests: function(event, target) { this._onPartyRests(event, target); },
+      startHunt: function(event, target) { this._onStartHunt(event, target); },
+      endHunt: function(event, target) { this._onEndHunt(event, target); },
+      resetMission: function(event, target) { this._onResetMission(event, target); },
     }
   }
 
@@ -246,12 +245,12 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
 
   // ============== ACTION HANDLERS ==============
 
-  static async _onIncrementTension(event, target) {
+  async _onIncrementTension(event, target) {
     if (!game.user.isGM) return;
     await this._incrementTension('manual');
   }
 
-  static async _onDecrementTension(event, target) {
+  async _onDecrementTension(event, target) {
     if (!game.user.isGM) return;
     const hunt = foundry.utils.deepClone(game.settings.get('cain', 'currentHunt'));
     if (hunt.tension.current > 0) {
@@ -261,16 +260,17 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
     }
   }
 
-  static async _onIncrementPressure(event, target) {
+  async _onIncrementPressure(event, target) {
     if (!game.user.isGM) return;
     await this._incrementPressure('manual');
   }
 
-  static async _onDecrementPressure(event, target) {
+  async _onDecrementPressure(event, target) {
     if (!game.user.isGM) return;
     const hunt = foundry.utils.deepClone(game.settings.get('cain', 'currentHunt'));
     if (hunt.pressure.current > 0) {
       hunt.pressure.current--;
+      hunt.pressure.outOfControl = false; // Reset out of control when decreasing
       // Recalculate execution
       hunt.execution.calculated = 6 + hunt.pressure.current + hunt.sinCategory;
       await game.settings.set('cain', 'currentHunt', hunt);
@@ -278,7 +278,7 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
     }
   }
 
-  static async _onAdvanceScene(event, target) {
+  async _onAdvanceScene(event, target) {
     if (!game.user.isGM) return;
     const hunt = foundry.utils.deepClone(game.settings.get('cain', 'currentHunt'));
     hunt.sceneCount++;
@@ -293,12 +293,12 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
     }
   }
 
-  static async _onRiskTriggered(event, target) {
+  async _onRiskTriggered(event, target) {
     if (!game.user.isGM) return;
     await this._incrementTension('risk');
   }
 
-  static async _onIncrementExecution(event, target) {
+  async _onIncrementExecution(event, target) {
     if (!game.user.isGM) return;
     const hunt = foundry.utils.deepClone(game.settings.get('cain', 'currentHunt'));
     const executionMax = 6 + hunt.pressure.current + hunt.sinCategory;
@@ -317,7 +317,7 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
     }
   }
 
-  static async _onDecrementExecution(event, target) {
+  async _onDecrementExecution(event, target) {
     if (!game.user.isGM) return;
     const hunt = foundry.utils.deepClone(game.settings.get('cain', 'currentHunt'));
     if (hunt.execution.current > 0) {
@@ -327,7 +327,7 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
     }
   }
 
-  static async _onHealSin(event, target) {
+  async _onHealSin(event, target) {
     if (!game.user.isGM) return;
     const hunt = foundry.utils.deepClone(game.settings.get('cain', 'currentHunt'));
 
@@ -348,7 +348,7 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
     });
   }
 
-  static async _onTogglePalace(event, target) {
+  async _onTogglePalace(event, target) {
     if (!game.user.isGM) return;
     const hunt = foundry.utils.deepClone(game.settings.get('cain', 'currentHunt'));
     hunt.insidePalace = !hunt.insidePalace;
@@ -366,7 +366,7 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
     });
   }
 
-  static async _onDiscoverTrauma(event, target) {
+  async _onDiscoverTrauma(event, target) {
     if (!game.user.isGM) return;
     const traumaIndex = parseInt(target.dataset.index);
     const hunt = foundry.utils.deepClone(game.settings.get('cain', 'currentHunt'));
@@ -388,7 +388,7 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
     });
   }
 
-  static async _onUseTraumaCounter(event, target) {
+  async _onUseTraumaCounter(event, target) {
     if (!game.user.isGM) return;
     const traumaIndex = parseInt(target.dataset.index);
     const hunt = foundry.utils.deepClone(game.settings.get('cain', 'currentHunt'));
@@ -426,7 +426,7 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
     }
   }
 
-  static async _onRollRandomTensionMove(event, target) {
+  async _onRollRandomTensionMove(event, target) {
     if (!game.user.isGM) return;
 
     const roll = await new Roll(`1d${TENSION_MOVES.length}`).roll();
@@ -442,8 +442,9 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
     });
   }
 
-  static async _onAddCustomClock(event, target) {
+  async _onAddCustomClock(event, target) {
     if (!game.user.isGM) return;
+    const self = this;
 
     // Show dialog to create new clock
     const content = `
@@ -479,7 +480,7 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
             });
 
             await game.settings.set('cain', 'currentHunt', hunt);
-            this._emitUpdate();
+            self._emitUpdate();
           }
         },
         cancel: {
@@ -491,7 +492,7 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
     }).render(true);
   }
 
-  static async _onTickCustomClock(event, target) {
+  async _onTickCustomClock(event, target) {
     if (!game.user.isGM) return;
     const clockId = target.dataset.clockId;
     const hunt = foundry.utils.deepClone(game.settings.get('cain', 'currentHunt'));
@@ -516,7 +517,7 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
     }
   }
 
-  static async _onUntickCustomClock(event, target) {
+  async _onUntickCustomClock(event, target) {
     if (!game.user.isGM) return;
     const clockId = target.dataset.clockId;
     const hunt = foundry.utils.deepClone(game.settings.get('cain', 'currentHunt'));
@@ -529,7 +530,7 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
     this._emitUpdate();
   }
 
-  static async _onRemoveCustomClock(event, target) {
+  async _onRemoveCustomClock(event, target) {
     if (!game.user.isGM) return;
     const clockId = target.dataset.clockId;
     const hunt = foundry.utils.deepClone(game.settings.get('cain', 'currentHunt'));
@@ -538,8 +539,9 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
     this._emitUpdate();
   }
 
-  static async _onPartyRests(event, target) {
+  async _onPartyRests(event, target) {
     if (!game.user.isGM) return;
+    const self = this;
 
     const confirmed = await Dialog.confirm({
       title: 'Party Rest',
@@ -550,7 +552,7 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
 
     if (!confirmed) return;
 
-    await this._incrementPressure('rest');
+    await self._incrementPressure('rest');
 
     ChatMessage.create({
       speaker: { alias: "CAIN System" },
@@ -569,8 +571,9 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
     });
   }
 
-  static async _onStartHunt(event, target) {
+  async _onStartHunt(event, target) {
     if (!game.user.isGM) return;
+    const self = this;
 
     // Get available sin actors
     const sinActors = game.actors.filter(a => a.type === 'sin' || a.type === 'npc');
@@ -651,7 +654,7 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
             };
 
             await game.settings.set('cain', 'currentHunt', huntState);
-            this._emitUpdate();
+            self._emitUpdate();
 
             ChatMessage.create({
               speaker: { alias: "CAIN System" },
@@ -674,8 +677,9 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
     }).render(true);
   }
 
-  static async _onEndHunt(event, target) {
+  async _onEndHunt(event, target) {
     if (!game.user.isGM) return;
+    const self = this;
 
     const content = `
       <form>
@@ -736,7 +740,7 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
               phase: 'briefing'
             });
 
-            this._emitUpdate();
+            self._emitUpdate();
 
             ChatMessage.create({
               speaker: { alias: "CAIN System" },
@@ -758,7 +762,7 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
     }).render(true);
   }
 
-  static async _onResetMission(event, target) {
+  async _onResetMission(event, target) {
     if (!game.user.isGM) return;
 
     const confirmed = await Dialog.confirm({
@@ -794,15 +798,6 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
     });
   }
 
-  static async _onSetPhase(event, target) {
-    if (!game.user.isGM) return;
-    const phase = target.dataset.phase;
-    const hunt = foundry.utils.deepClone(game.settings.get('cain', 'currentHunt'));
-    hunt.phase = phase;
-    await game.settings.set('cain', 'currentHunt', hunt);
-    this._emitUpdate();
-  }
-
   // ============== HELPER METHODS ==============
 
   async _incrementTension(source = 'manual') {
@@ -811,6 +806,13 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
     // Check if risk-1 already triggered this scene
     if (source === 'risk' && hunt.tension.sceneRiskTriggered) {
       ui.notifications.warn('Risk roll already triggered tension this scene');
+      return;
+    }
+
+    // Check if already at max (for manual increases)
+    if (hunt.tension.current >= hunt.tension.max) {
+      // Already at max, trigger overflow
+      await this._onTensionFilled(hunt);
       return;
     }
 
@@ -849,6 +851,13 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
 
   async _incrementPressure(source = 'manual') {
     const hunt = foundry.utils.deepClone(game.settings.get('cain', 'currentHunt'));
+
+    // Check if already at or above max
+    if (hunt.pressure.current >= hunt.pressure.max) {
+      ui.notifications.warn('Pressure is already at maximum');
+      return;
+    }
+
     hunt.pressure.current++;
 
     // Recalculate execution talisman
@@ -929,130 +938,5 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
     });
   }
 }
-
-// Make static methods work with 'this' context by binding them
-// This is needed because ApplicationV2 actions call static methods
-const staticMethods = [
-  '_onIncrementTension', '_onDecrementTension',
-  '_onIncrementPressure', '_onDecrementPressure',
-  '_onAdvanceScene', '_onRiskTriggered',
-  '_onIncrementExecution', '_onDecrementExecution',
-  '_onHealSin', '_onTogglePalace',
-  '_onDiscoverTrauma', '_onUseTraumaCounter',
-  '_onRollRandomTensionMove', '_onAddCustomClock',
-  '_onTickCustomClock', '_onUntickCustomClock', '_onRemoveCustomClock',
-  '_onPartyRests', '_onStartHunt', '_onEndHunt',
-  '_onResetMission', '_onSetPhase'
-];
-
-// Helper methods need to be instance methods, not static
-HuntTracker.prototype._incrementTension = HuntTracker.prototype._incrementTension || async function(source) {
-  const hunt = foundry.utils.deepClone(game.settings.get('cain', 'currentHunt'));
-
-  if (source === 'risk' && hunt.tension.sceneRiskTriggered) {
-    ui.notifications.warn('Risk roll already triggered tension this scene');
-    return;
-  }
-
-  hunt.tension.current++;
-  if (source === 'risk') hunt.tension.sceneRiskTriggered = true;
-
-  if (hunt.tension.current >= hunt.tension.max) {
-    await this._onTensionFilled(hunt);
-  } else {
-    await game.settings.set('cain', 'currentHunt', hunt);
-    this._emitUpdate();
-  }
-};
-
-HuntTracker.prototype._onTensionFilled = async function(hunt) {
-  hunt.tension.current = 0;
-  hunt.tension.sceneRiskTriggered = false;
-  hunt.pressure.current++;
-  hunt.execution.calculated = 6 + hunt.pressure.current + hunt.sinCategory;
-
-  if (hunt.pressure.current >= hunt.pressure.max && !hunt.pressure.outOfControl) {
-    hunt.pressure.outOfControl = true;
-    await this._onPressureOutOfControl(hunt);
-  }
-
-  await game.settings.set('cain', 'currentHunt', hunt);
-  this._emitUpdate();
-  await this._promptTensionMove();
-};
-
-HuntTracker.prototype._incrementPressure = async function(source) {
-  const hunt = foundry.utils.deepClone(game.settings.get('cain', 'currentHunt'));
-  hunt.pressure.current++;
-  hunt.execution.calculated = 6 + hunt.pressure.current + hunt.sinCategory;
-
-  if (hunt.pressure.current >= hunt.pressure.max && !hunt.pressure.outOfControl) {
-    hunt.pressure.outOfControl = true;
-    await this._onPressureOutOfControl(hunt);
-  }
-
-  await game.settings.set('cain', 'currentHunt', hunt);
-  this._emitUpdate();
-};
-
-HuntTracker.prototype._onPressureOutOfControl = async function(hunt) {
-  ChatMessage.create({
-    speaker: { alias: "CAIN System" },
-    content: `<div class="hunt-message pressure-overflow">
-      <h2>PRESSURE OVERFLOW</h2>
-      <p>The situation has gone out of control!</p>
-      <p>The Sin gains <strong>+1 CAT</strong> and activates its overflow effect.</p>
-      <p>Check the Sin's pressure description for specific effects.</p>
-    </div>`
-  });
-};
-
-HuntTracker.prototype._promptTensionMove = async function() {
-  const movesList = TENSION_MOVES.map(m =>
-    `<li><strong>${m.name}:</strong> ${m.description}</li>`
-  ).join('');
-
-  ChatMessage.create({
-    speaker: { alias: "CAIN System" },
-    content: `<div class="hunt-message tension-move-prompt">
-      <h2>Tension Filled!</h2>
-      <p>Pressure increased. Choose a tension move:</p>
-      <ul>${movesList}</ul>
-      <p><em>Or improvise based on the situation!</em></p>
-    </div>`
-  });
-};
-
-HuntTracker.prototype._sinRetreats = async function() {
-  const hunt = foundry.utils.deepClone(game.settings.get('cain', 'currentHunt'));
-  const healDice = hunt.execution.current === 0 ? '2d3' : '1d3';
-  const roll = await new Roll(healDice).roll();
-
-  hunt.execution.current = Math.max(0, hunt.execution.current - roll.total);
-  await game.settings.set('cain', 'currentHunt', hunt);
-  this._emitUpdate();
-
-  await roll.toMessage({
-    speaker: { alias: "CAIN System" },
-    flavor: `<div class="hunt-message sin-retreats">
-      <h2>Sin Retreats!</h2>
-      <p>The Sin flees to its palace.</p>
-      <p>It cannot leave until <strong>pressure increases</strong>.</p>
-      <hr>
-      <p>Sin heals <strong>${roll.total}</strong> slashes.</p>
-    </div>`
-  });
-};
-
-HuntTracker.prototype._sinDefeated = async function() {
-  ChatMessage.create({
-    speaker: { alias: "CAIN System" },
-    content: `<div class="hunt-message sin-defeated">
-      <h2>SIN EXECUTED</h2>
-      <p>The Sin has been destroyed!</p>
-      <p>Proceed to exfiltration phase.</p>
-    </div>`
-  });
-};
 
 export default HuntTracker;
