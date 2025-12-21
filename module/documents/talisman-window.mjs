@@ -2,9 +2,9 @@ import { CainActorSheet } from "../sheets/actor-sheet.mjs";
 
 export class TalismanWindow extends Application {
   static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       id: 'talisman-window',
-      title: 'Talismans',
+      title: 'Global Talismans',
       template: 'systems/cain/templates/talisman-window.hbs',
       width: 1000, // Adjusted initial width
       height: 800, // Adjusted initial height
@@ -486,9 +486,73 @@ export class TalismanWindow extends Application {
     this._updatePinnedTalismans(); // Update pinned talismans
     this._updateSinSelectedTalismans(); // Update sin selected talismans
     this._updateTiles(); // Update tiles
+    this._syncLinkedTalismansToHunt(); // Sync linked talismans to hunt tracker (local client)
     for (let app of Object.values(ui.windows)) {
       if (app instanceof CainActorSheet) {
         app.render(true); // Force re-render
+      }
+    }
+  }
+
+  /**
+   * Sync linked global talismans' values to the hunt tracker
+   * Called locally when talisman values change
+   */
+  async _syncLinkedTalismansToHunt() {
+    if (!game.user.isGM) return;
+
+    const hunt = game.settings.get('cain', 'currentHunt');
+    if (!hunt.active) return;
+
+    const talismans = game.settings.get('cain', 'globalTalismans');
+    let needsUpdate = false;
+    const updatedHunt = foundry.utils.deepClone(hunt);
+
+    // Sync execution talisman
+    if (hunt.linkedTalismanIndex !== undefined && hunt.linkedTalismanIndex !== null) {
+      const linkedTalisman = talismans[hunt.linkedTalismanIndex];
+      if (linkedTalisman && hunt.execution.current !== linkedTalisman.currMarkAmount) {
+        updatedHunt.execution.current = linkedTalisman.currMarkAmount;
+        needsUpdate = true;
+      }
+    }
+
+    // Sync tension talisman
+    if (hunt.linkedTensionTalismanIndex !== undefined && hunt.linkedTensionTalismanIndex !== null) {
+      const linkedTensionTalisman = talismans[hunt.linkedTensionTalismanIndex];
+      if (linkedTensionTalisman) {
+        if (hunt.tension.current !== linkedTensionTalisman.currMarkAmount) {
+          updatedHunt.tension.current = linkedTensionTalisman.currMarkAmount;
+          needsUpdate = true;
+        }
+        if (hunt.tension.max !== linkedTensionTalisman.maxMarkAmount) {
+          updatedHunt.tension.max = linkedTensionTalisman.maxMarkAmount;
+          needsUpdate = true;
+        }
+      }
+    }
+
+    // Sync pressure talisman
+    if (hunt.linkedPressureTalismanIndex !== undefined && hunt.linkedPressureTalismanIndex !== null) {
+      const linkedPressureTalisman = talismans[hunt.linkedPressureTalismanIndex];
+      if (linkedPressureTalisman) {
+        if (hunt.pressure.current !== linkedPressureTalisman.currMarkAmount) {
+          updatedHunt.pressure.current = linkedPressureTalisman.currMarkAmount;
+          needsUpdate = true;
+        }
+        if (hunt.pressure.max !== linkedPressureTalisman.maxMarkAmount) {
+          updatedHunt.pressure.max = linkedPressureTalisman.maxMarkAmount;
+          needsUpdate = true;
+        }
+      }
+    }
+
+    if (needsUpdate) {
+      await game.settings.set('cain', 'currentHunt', updatedHunt);
+
+      // Re-render the hunt tracker
+      if (ui.huntTracker) {
+        ui.huntTracker.render(true);
       }
     }
   }

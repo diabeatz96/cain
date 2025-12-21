@@ -269,24 +269,89 @@ jobs:
           omitBodyDuringUpdate: false
           omitNameDuringUpdate: false
 
+      - name: Notify Foundry VTT Package Release API
+        id: foundry_release
+        env:
+          FOUNDRY_PACKAGE_RELEASE_TOKEN: ${{ secrets.FOUNDRY_PACKAGE_RELEASE_TOKEN }}
+        run: |
+          # Only notify if we have the token configured
+          if [ -z "$FOUNDRY_PACKAGE_RELEASE_TOKEN" ]; then
+            echo "⚠️ FOUNDRY_PACKAGE_RELEASE_TOKEN not configured, skipping Foundry package release notification"
+            echo "foundry_notified=false" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          VERSION="${{ steps.get_version.outputs.version }}"
+          MANIFEST_URL="https://github.com/${{ github.repository }}/releases/download/v${VERSION}/system.json"
+
+          echo "📦 Notifying Foundry VTT Package Release API..."
+          echo "   Version: ${VERSION}"
+          echo "   Manifest: ${MANIFEST_URL}"
+
+          # Call the Foundry VTT Package Release API
+          RESPONSE=$(curl -s -w "\n%{http_code}" -X POST \
+            "https://api.foundryvtt.com/_api/packages/release_version/" \
+            -H "Content-Type: application/json" \
+            -H "Authorization: $FOUNDRY_PACKAGE_RELEASE_TOKEN" \
+            -d "{
+              \"id\": \"cain\",
+              \"dry-run\": false,
+              \"release\": {
+                \"version\": \"${VERSION}\",
+                \"manifest\": \"${MANIFEST_URL}\",
+                \"notes\": \"https://github.com/${{ github.repository }}/releases/tag/v${VERSION}\",
+                \"compatibility\": {
+                  \"minimum\": \"11\",
+                  \"verified\": \"13\",
+                  \"maximum\": \"13\"
+                }
+              }
+            }")
+
+          # Extract HTTP status code (last line) and response body
+          HTTP_CODE=$(echo "$RESPONSE" | tail -n1)
+          BODY=$(echo "$RESPONSE" | sed '$d')
+
+          echo "HTTP Status: $HTTP_CODE"
+          echo "Response: $BODY"
+
+          if [ "$HTTP_CODE" -ge 200 ] && [ "$HTTP_CODE" -lt 300 ]; then
+            echo "✅ Successfully notified Foundry VTT Package Release API"
+            echo "foundry_notified=true" >> $GITHUB_OUTPUT
+          else
+            echo "❌ Failed to notify Foundry VTT Package Release API (HTTP $HTTP_CODE)"
+            echo "foundry_notified=false" >> $GITHUB_OUTPUT
+            # Don't fail the workflow, just warn
+            echo "::warning::Failed to notify Foundry VTT Package Release API: $BODY"
+          fi
+
       - name: Release summary
         run: |
           ZIP_NAME="${{ steps.create_zip.outputs.zip_name }}"
-          
+
           echo "## 🎉 Release Published!" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          
+
           # Show if manually triggered
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             echo "**Trigger:** Manual (workflow_dispatch)" >> $GITHUB_STEP_SUMMARY
           else
             echo "**Trigger:** Automatic (push to main)" >> $GITHUB_STEP_SUMMARY
           fi
-          
+
           echo "**Version:** v${{ steps.get_version.outputs.version }}" >> $GITHUB_STEP_SUMMARY
           echo "**System:** ${{ steps.system_info.outputs.title }}" >> $GITHUB_STEP_SUMMARY
           echo "**Tag:** v${{ steps.get_version.outputs.version }}" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
+
+          # Foundry API notification status
+          if [ "${{ steps.foundry_release.outputs.foundry_notified }}" = "true" ]; then
+            echo "**Foundry VTT Store:** ✅ Package release notified" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "**Foundry VTT Store:** ⚠️ Not notified (check logs)" >> $GITHUB_STEP_SUMMARY
+          fi
+          echo "" >> $GITHUB_STEP_SUMMARY
+
           echo "### 📦 Artifacts" >> $GITHUB_STEP_SUMMARY
           echo "- ${ZIP_NAME} ($(du -h "$ZIP_NAME" | cut -f1))" >> $GITHUB_STEP_SUMMARY
           echo "- ${ZIP_NAME}.sha256" >> $GITHUB_STEP_SUMMARY
