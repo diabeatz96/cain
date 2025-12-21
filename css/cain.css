@@ -2736,7 +2736,7 @@
   background: var(--dice-bg-start);
   border: 1px solid var(--dice-border);
   border-radius: 3px;
-  color: var(--dice-border-light);
+  color: var(--dice-text-bright);
   font-size: 14px;
   font-weight: bold;
   cursor: pointer;
@@ -2760,29 +2760,43 @@
 }
 
 /* Dice Pool Input - Theme Aware */
-.cain-dice-panel .cain-dice-pool {
+.cain-dice-panel .cain-dice-pool,
+.cain-dice-panel input.cain-dice-pool,
+.cain-dice-panel input[type="number"].cain-dice-pool {
   width: 38px;
-  background: var(--dice-bg-start);
-  border: 1px solid var(--dice-border);
+  background: var(--dice-bg-start) !important;
+  border: 1px solid var(--dice-border) !important;
   border-radius: 3px;
-  color: var(--dice-border-light);
+  color: #ffffff !important;
   padding: 4px;
   text-align: center;
   font-family: 'Courier New', monospace;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: bold;
   transition: all 0.2s ease;
+  -moz-appearance: textfield;
+  appearance: textfield;
 }
 
-.cain-dice-panel .cain-dice-pool:hover {
-  border-color: var(--dice-border-light);
-  background: var(--dice-header-start);
+/* Hide spinner buttons for cleaner look */
+.cain-dice-panel .cain-dice-pool::-webkit-outer-spin-button,
+.cain-dice-panel .cain-dice-pool::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
-.cain-dice-panel .cain-dice-pool:focus {
+.cain-dice-panel .cain-dice-pool:hover,
+.cain-dice-panel input.cain-dice-pool:hover {
+  border-color: var(--dice-border-light) !important;
+  background: var(--dice-header-start) !important;
+}
+
+.cain-dice-panel .cain-dice-pool:focus,
+.cain-dice-panel input.cain-dice-pool:focus {
   outline: none;
-  border-color: var(--dice-border-light);
+  border-color: var(--dice-border-light) !important;
   box-shadow: 0 0 4px var(--dice-glow-color);
+  color: #ffffff !important;
 }
 
 /* Modifiers Row */
@@ -2813,7 +2827,7 @@
   background: var(--dice-bg-start);
   border: 1px solid var(--dice-border);
   border-radius: 3px;
-  color: var(--dice-text);
+  color: var(--dice-text-bright);
   padding: 3px;
   text-align: center;
   font-family: 'Courier New', monospace;

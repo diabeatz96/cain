@@ -424,9 +424,13 @@ export class CainDicePanel extends HandlebarsApplicationMixin(ApplicationV2) {
     const html = this.element;
     if (!html) return {};
 
+    // Parse pool value carefully - 0 is a valid value for zero-dice rolls
+    const poolInput = html.querySelector('.cain-dice-pool')?.value;
+    const poolValue = poolInput !== '' && poolInput !== undefined ? parseInt(poolInput) : 1;
+
     return {
       skill: html.querySelector('.cain-skill-select')?.value || 'force',
-      pool: parseInt(html.querySelector('.cain-dice-pool')?.value) || 1,
+      pool: isNaN(poolValue) ? 1 : poolValue,
       extraDice: parseInt(html.querySelector('.cain-extra-dice')?.value) || 0,
       hard: html.querySelector('.cain-hard-roll')?.checked || false,
       whisper: html.querySelector('.cain-whisper')?.checked || false,

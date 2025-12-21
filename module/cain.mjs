@@ -361,7 +361,7 @@ Hooks.once('init', async function () {
     scope: 'client',
     config: false,
     type: Boolean,
-    default: true,
+    default: false,
   });
 
   function registerHotkeySetting(settingName, settingLabel, settingHint) {

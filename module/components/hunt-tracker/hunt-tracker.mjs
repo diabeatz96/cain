@@ -160,20 +160,41 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
       });
     }
 
-    // Trauma answer input handlers
-    const traumaInputs = html.querySelectorAll('.trauma-answer');
-    traumaInputs.forEach(input => {
-      input.addEventListener('change', async (event) => {
+    // Trauma answer input handlers - use correct CSS class and save on blur/change
+    const traumaAnswerInputs = html.querySelectorAll('.hunt-trauma-answer');
+    traumaAnswerInputs.forEach(input => {
+      // Save on change (when user presses enter or leaves field after typing)
+      const saveTraumaAnswer = async (event) => {
         if (!game.user.isGM) return;
         const index = parseInt(event.target.dataset.index);
         const value = event.target.value;
         const hunt = foundry.utils.deepClone(game.settings.get('cain', 'currentHunt'));
-        if (hunt.traumas[index]) {
+        if (hunt.traumas[index] && hunt.traumas[index].answer !== value) {
           hunt.traumas[index].answer = value;
           await game.settings.set('cain', 'currentHunt', hunt);
-          this._emitUpdate();
+          // Don't emit update to avoid re-render while typing
         }
-      });
+      };
+      input.addEventListener('change', saveTraumaAnswer);
+      input.addEventListener('blur', saveTraumaAnswer);
+    });
+
+    // Trauma question input handlers - allow editing questions
+    const traumaQuestionInputs = html.querySelectorAll('.hunt-trauma-question');
+    traumaQuestionInputs.forEach(input => {
+      const saveTraumaQuestion = async (event) => {
+        if (!game.user.isGM) return;
+        const index = parseInt(event.target.dataset.index);
+        const value = event.target.value;
+        const hunt = foundry.utils.deepClone(game.settings.get('cain', 'currentHunt'));
+        if (hunt.traumas[index] && hunt.traumas[index].question !== value) {
+          hunt.traumas[index].question = value;
+          await game.settings.set('cain', 'currentHunt', hunt);
+          // Don't emit update to avoid re-render while typing
+        }
+      };
+      input.addEventListener('change', saveTraumaQuestion);
+      input.addEventListener('blur', saveTraumaQuestion);
     });
 
     // Notes textarea handler

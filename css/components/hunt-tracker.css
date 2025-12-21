@@ -104,17 +104,35 @@
   font-size: 0.9em;
 }
 
-.hunt-tracker-content .phase-select {
-  background: #1a1a1a;
-  color: #fff;
-  border: 1px solid #444;
+.hunt-tracker-content .phase-select,
+#hunt-tracker .phase-select,
+#hunt-tracker select {
+  background: #1a1a1a !important;
+  color: #fff !important;
+  border: 1px solid #444 !important;
   border-radius: 4px;
   padding: 4px 8px;
   cursor: pointer;
 }
 
-.hunt-tracker-content .phase-select:hover {
-  border-color: #e40df2;
+.hunt-tracker-content .phase-select:hover,
+#hunt-tracker .phase-select:hover,
+#hunt-tracker select:hover {
+  border-color: #e40df2 !important;
+}
+
+.hunt-tracker-content .phase-select option,
+#hunt-tracker .phase-select option,
+#hunt-tracker select option {
+  background: #1a1a1a !important;
+  color: #fff !important;
+}
+
+.hunt-tracker-content .phase-select:focus,
+#hunt-tracker .phase-select:focus,
+#hunt-tracker select:focus {
+  outline: none;
+  border-color: #e40df2 !important;
 }
 
 /* Hunt Talisman Sections */
@@ -122,7 +140,10 @@
   background: #111;
   border: 1px solid #333;
   border-radius: 4px;
-  padding: 10px;
+  padding: 8px;
+  overflow: hidden;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .hunt-tracker-content .hunt-talisman-header {
@@ -284,24 +305,61 @@
 
 /* Hunt Control Buttons */
 .hunt-tracker-content .hunt-talisman-controls,
-.hunt-tracker-content .hunt-clock-controls {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 4px;
-  align-items: center;
+#hunt-tracker .hunt-talisman-controls {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  gap: 3px !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  width: 100%;
 }
 
+/* Override Foundry v12 ApplicationV2 form button defaults - v12 wraps in form */
+#hunt-tracker button[type="button"],
+#hunt-tracker .hunt-talisman-controls button[type="button"],
+#hunt-tracker.hunt-tracker button,
+aside#hunt-tracker button {
+  flex: 0 0 auto !important;
+  width: auto !important;
+  display: inline-flex !important;
+  max-width: fit-content !important;
+}
+
+#hunt-tracker .hunt-talisman-controls button,
 .hunt-tracker-content .hunt-talisman-controls button,
-.hunt-tracker-content .hunt-clock-controls button,
+.hunt-tracker-content .hunt-talisman-controls > button,
+.hunt-tracker-content .hunt-talisman-controls > button[type="button"] {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: #222 !important;
+  border: 1px solid #444 !important;
+  color: #ccc !important;
+  padding: 2px 5px !important;
+  border-radius: 3px !important;
+  cursor: pointer !important;
+  font-size: 0.7em !important;
+  transition: all 0.2s ease !important;
+  white-space: nowrap !important;
+  height: 20px !important;
+  line-height: 1 !important;
+  width: auto !important;
+  flex: 0 0 auto !important;
+  margin: 0 !important;
+  float: none !important;
+  max-width: none !important;
+  min-width: 0 !important;
+}
+
 .hunt-tracker-content button {
   background: #222;
   border: 1px solid #444;
   color: #ccc;
-  padding: 4px 8px;
+  padding: 3px 6px;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 0.85em;
+  font-size: 0.8em;
   transition: all 0.2s ease;
 }
 
@@ -393,29 +451,73 @@
   gap: 4px;
 }
 
-.hunt-tracker-content .hunt-trauma-question {
-  color: #ddd;
+.hunt-tracker-content .hunt-trauma-question,
+#hunt-tracker .hunt-trauma-question {
+  background: transparent !important;
+  border: 1px solid transparent !important;
+  color: #ddd !important;
   font-weight: bold;
   font-size: 0.9em;
+  padding: 4px 8px;
+  border-radius: 4px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-.hunt-tracker-content .hunt-trauma-answer {
-  background: #0a0a0a;
-  border: 1px solid #333;
-  color: #aaa;
+.hunt-tracker-content .hunt-trauma-question:hover,
+#hunt-tracker .hunt-trauma-question:hover {
+  border-color: #444 !important;
+  background: #1a1a1a !important;
+}
+
+.hunt-tracker-content .hunt-trauma-question:focus,
+#hunt-tracker .hunt-trauma-question:focus {
+  border-color: #e40df2 !important;
+  background: #1a1a1a !important;
+  outline: none;
+}
+
+.hunt-tracker-content .hunt-trauma-answer,
+#hunt-tracker .hunt-trauma-answer,
+#hunt-tracker input.hunt-trauma-answer {
+  background: #0a0a0a !important;
+  border: 1px solid #333 !important;
+  color: #ccc !important;
   padding: 4px 8px;
   border-radius: 4px;
   font-size: 0.85em;
   font-style: italic;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-.hunt-tracker-content .hunt-trauma-answer:focus {
-  border-color: #e40df2;
+.hunt-tracker-content .hunt-trauma-answer:focus,
+#hunt-tracker .hunt-trauma-answer:focus,
+#hunt-tracker input.hunt-trauma-answer:focus {
+  border-color: #e40df2 !important;
   outline: none;
 }
 
+.hunt-tracker-content .hunt-trauma-answer::placeholder,
+#hunt-tracker .hunt-trauma-answer::placeholder {
+  color: #666 !important;
+  font-style: italic;
+}
+
+.hunt-tracker-content .hunt-trauma-actions {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 2px;
+  align-items: center;
+  flex-shrink: 0;
+}
+
 .hunt-tracker-content .hunt-trauma-actions button {
-  padding: 4px 8px;
+  padding: 2px 4px;
+  min-width: 24px;
+  height: 22px;
+  font-size: 0.75em;
 }
 
 /* Hunt Tension Moves Section */
@@ -439,6 +541,12 @@
   font-size: 0.95em;
   text-transform: uppercase;
   letter-spacing: 1px;
+}
+
+.hunt-tracker-content .hunt-section-header button {
+  padding: 2px 6px;
+  height: 22px;
+  font-size: 0.75em;
 }
 
 .hunt-tracker-content .hunt-tension-moves-list {
@@ -506,11 +614,14 @@
   display: flex;
   flex-direction: row;
   gap: 2px;
+  flex-shrink: 0;
 }
 
 .hunt-tracker-content .hunt-clock-controls button {
-  padding: 2px 6px;
-  font-size: 0.8em;
+  padding: 2px 4px;
+  min-width: 20px;
+  height: 20px;
+  font-size: 0.7em;
 }
 
 /* Hunt Notes Section */
@@ -550,14 +661,17 @@
 .hunt-tracker-content .hunt-controls {
   display: flex;
   flex-direction: row;
-  gap: 8px;
+  flex-wrap: nowrap;
+  gap: 6px;
   justify-content: flex-end;
   padding-top: 10px;
   border-top: 1px solid #333;
 }
 
 .hunt-tracker-content .hunt-controls button {
-  padding: 8px 16px;
+  padding: 4px 8px;
+  height: 26px;
+  font-size: 0.8em;
 }
 
 .hunt-tracker-content .hunt-reset-btn {
