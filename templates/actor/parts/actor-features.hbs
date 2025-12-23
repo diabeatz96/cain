@@ -235,7 +235,7 @@
       <div class="CAT-selector {{#if (eq system.CATLEVEL.value @index)}}CAT-selected{{/if}}" data-cat="{{@index}}" title="{{testData}}" data-tooltip="{{localize 'SHEET.TOOLTIPS.CATSELECT'}}">
         <img src="systems/cain/assets/CAT/CAT{{@index}}.png" alt="CAT {{@index}}">
       </div>
-      <div class="CAT-session-text" data-tooltip="{{localize 'SHEET.TOOLTIPS.SURVIVED'}}">{{lookup sheetConstants.CATSessionNumbers (CainOffset @index -1)}}</div>
+      <div class="CAT-session-text" data-tooltip="{{localize 'SHEET.TOOLTIPS.SURVIVED'}}">{{lookup sheetConstants.CATSessionNumbers @index}}</div>
     </div>
     {{/times}}
   </div>
@@ -270,7 +270,7 @@
     </div>
     <div class="checkbox-group" data-field="xp">
       {{#times system.xp.max}}
-      <input type="checkbox" id="xp-checkbox-{{@index}}" name="xp-{{@index}}" {{#if (gte system.xp.value @index)}}checked{{/if}} disabled/>
+      <input type="checkbox" id="xp-checkbox-{{@index}}" name="xp-{{@index}}" {{#if (gt system.xp.value @index)}}checked{{/if}} disabled/>
       {{/times}}
     </div>
   </div>
@@ -280,7 +280,7 @@
     <output id="advancements-output">{{system.advancements.value}}</output>
     <div class="checkbox-group" data-field="advancements" style="margin-top: 10px;">
       {{#times system.advancements.max}}
-      <input type="checkbox" id="advancements-checkbox-{{@index}}" name="advancements-{{@index}}" {{#if (gte system.advancements.value @index)}}checked{{/if}}/>
+      <input type="checkbox" id="advancements-checkbox-{{@index}}" name="advancements-{{@index}}" {{#if (gt system.advancements.value @index)}}checked{{/if}}/>
       {{/times}}
     </div>
   </div>
@@ -295,7 +295,7 @@
     </div>
     <div class="checkbox-group" data-field="divineAgony">
       {{#times system.divineAgony.max}}
-      <input type="checkbox" name="divineAgony-{{@index}}" {{#if (gte system.divineAgony.value @index)}}checked{{/if}}/>
+      <input type="checkbox" name="divineAgony-{{@index}}" {{#if (gt system.divineAgony.value @index)}}checked{{/if}}/>
       {{/times}}
     </div>
   </div>
@@ -308,7 +308,7 @@
     </div>
     <div class="checkbox-group" data-field="injuries">
       {{#times system.injuries.max}}
-      <input type="checkbox" name="injuries-{{@index}}" {{#if (gte system.injuries.value @index)}}checked{{/if}}/>
+      <input type="checkbox" name="injuries-{{@index}}" {{#if (gt system.injuries.value @index)}}checked{{/if}}/>
       {{/times}}
     </div>
   </div>
@@ -321,7 +321,7 @@
     </div>
     <div class="checkbox-group" data-field="stress">
       {{#times system.stress.max}}
-      <input type="checkbox" name="stress-{{@index}}" {{#if (gte system.stress.value @index)}}checked{{/if}}/>
+      <input type="checkbox" name="stress-{{@index}}" {{#if (gt system.stress.value @index)}}checked{{/if}}/>
       {{/times}}
     </div>
   </div>
