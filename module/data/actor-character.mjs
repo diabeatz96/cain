@@ -45,7 +45,7 @@ export default class CainCharacter extends CainActorBase {
     schema.scrip = new fields.NumberField({ required: true, initial: 0, min: 0, max: 1000 });
     
     schema.CATLEVEL = new fields.SchemaField({
-      value: new fields.NumberField({ required: true, initial: 1, min: 0, max: 7 }),
+      value: new fields.NumberField({ required: true, initial: 0, min: 0, max: 7 }),
     });
 
     schema.afflictions = new fields.ArrayField(new fields.StringField({ required: true, initial: " " }), { required: true, initial: [] });

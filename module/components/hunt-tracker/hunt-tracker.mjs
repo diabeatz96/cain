@@ -343,7 +343,7 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
       hunt.pressure.current--;
       hunt.pressure.outOfControl = false; // Reset out of control when decreasing
       // Recalculate execution
-      hunt.execution.calculated = 6 + hunt.pressure.current + hunt.sinCategory;
+      hunt.execution.calculated = 8 + hunt.pressure.current + hunt.sinCategory;
       await game.settings.set('cain', 'currentHunt', hunt);
       await this._syncToLinkedPressureTalisman(hunt.pressure.current);
       this._emitUpdate();
@@ -529,7 +529,7 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
     hunt.traumas[traumaIndex].used = true;
 
     // Apply damage to sin execution talisman
-    const executionMax = 6 + hunt.pressure.current + hunt.sinCategory;
+    const executionMax = 8 + hunt.pressure.current + hunt.sinCategory;
     hunt.execution.current = Math.min(hunt.execution.current + roll.total, executionMax);
 
     await game.settings.set('cain', 'currentHunt', hunt);
@@ -762,9 +762,9 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
               tension: { current: 0, max: 3, sceneRiskTriggered: false },
               pressure: { current: 0, max: 6, outOfControl: false },
               execution: {
-                base: 6,
+                base: 8,
                 current: 0,
-                calculated: 6 + category
+                calculated: 8 + category
               },
               traumas: traumaQuestions.map(q => ({
                 question: q,
@@ -789,7 +789,7 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
                 <p><strong>Target:</strong> ${sinActor.name}</p>
                 <p><strong>Type:</strong> ${sinActor.system.sinType || 'Unknown'}</p>
                 <p><strong>Category:</strong> ${category}</p>
-                <p><strong>Execution Talisman:</strong> ${6 + category} slashes</p>
+                <p><strong>Execution Talisman:</strong> ${8 + category} slashes</p>
               </div>`
             });
           }
@@ -857,7 +857,7 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
               sinCategory: 0,
               tension: { current: 0, max: 3, sceneRiskTriggered: false },
               pressure: { current: 0, max: 6, outOfControl: false },
-              execution: { base: 6, current: 0, calculated: 6 },
+              execution: { base: 8, current: 0, calculated: 8 },
               traumas: [],
               customTalismans: [],
               notes: '',
@@ -1186,10 +1186,10 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
   /**
    * Calculate the execution talisman max value
    * If linked to a global talisman, uses the talisman's max value
-   * Otherwise, uses 6 + pressure + CAT
+   * Otherwise, uses 8 + pressure + CAT
    */
   _getExecutionMax(hunt) {
-    if (!hunt?.active) return 6;
+    if (!hunt?.active) return 8;
 
     // If linked to a talisman, use its max
     if (hunt.linkedTalismanIndex !== undefined && hunt.linkedTalismanIndex !== null) {
@@ -1200,8 +1200,8 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
       }
     }
 
-    // Default calculation: 6 + pressure + CAT
-    return 6 + (hunt.pressure?.current || 0) + (hunt.sinCategory || 0);
+    // Default calculation: 8 + pressure + CAT
+    return 8 + (hunt.pressure?.current || 0) + (hunt.sinCategory || 0);
   }
 
   async _incrementTension(source = 'manual') {
@@ -1240,7 +1240,7 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
     hunt.pressure.current++;
 
     // Recalculate execution
-    hunt.execution.calculated = 6 + hunt.pressure.current + hunt.sinCategory;
+    hunt.execution.calculated = 8 + hunt.pressure.current + hunt.sinCategory;
 
     // Check pressure overflow
     if (hunt.pressure.current >= hunt.pressure.max && !hunt.pressure.outOfControl) {
@@ -1272,7 +1272,7 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
     hunt.pressure.current++;
 
     // Recalculate execution talisman
-    hunt.execution.calculated = 6 + hunt.pressure.current + hunt.sinCategory;
+    hunt.execution.calculated = 8 + hunt.pressure.current + hunt.sinCategory;
 
     // Check for out of control
     if (hunt.pressure.current >= hunt.pressure.max && !hunt.pressure.outOfControl) {
