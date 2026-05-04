@@ -65,11 +65,11 @@ export class CainActor extends Actor {
     await super._preUpdate(changed, options, user);
 
     // If the actor image is being updated, also update the prototype token image
-    if (changed.img && !changed.prototypeToken?.texture?.src) {
-      this.updateSource({
-        "prototypeToken.texture.src": changed.img
-      });
-    }
+    // if (changed.img && !changed.prototypeToken?.texture?.src) {
+    //   this.updateSource({
+    //     "prototypeToken.texture.src": changed.img
+    //   });
+    // }
   }
 
   async _onUpdate(changed, options, user) {

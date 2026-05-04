@@ -1,4 +1,5 @@
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
+import { CainActorSheet } from "../../sheets/actor-sheet.mjs";
 
 // Default position if no saved position exists
 const DEFAULT_POSITION = { top: 100, left: 100 };
@@ -432,6 +433,9 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
     for (const app of Object.values(ui.windows)) {
       if (app.constructor.name === 'TalismanWindow') {
         app.render(true);
+      }
+      if (app instanceof CainActorSheet) {
+        app.render(true); // Force re-render
       }
     }
   }
