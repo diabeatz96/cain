@@ -105,16 +105,6 @@ export default class CainNPC extends CainActorBase {
     return schema;
   }
 
-  async _preCreate(data, options, user){
-    console.log(`preCreate: ${data} ${options} ${user}`);
-    await super._preCreate(data, options, user);
-
-    // ogre by default
-    this.parent.updateSource({
-      img: "systems/cain/assets/Sins/ogre.png"
-    })
-  }
-
   prepareDerivedData() {
     super.prepareDerivedData();
     // Removed the call to updateFieldsBasedOnSinType

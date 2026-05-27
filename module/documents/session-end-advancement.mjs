@@ -4,7 +4,7 @@ export class SessionEndAdvancement extends FormApplication  {
         this.actor = actor;
     }
     static get defaultOptions() {
-        return mergeObject(super.defaultOptions, {
+        return foundry.utils.mergeObject(super.defaultOptions, {
             classes: ['form'],
             popOut: true,
             template: `systems/cain/templates/session-end-advancement.hbs`,

@@ -270,7 +270,7 @@
     </div>
     <div class="checkbox-group" data-field="xp">
       {{#times system.xp.max}}
-      <input type="checkbox" id="xp-checkbox-{{@index}}" name="xp-{{@index}}" {{#if (gt system.xp.value @index)}}checked{{/if}} disabled/>
+      <input type="checkbox" id="xp-checkbox-{{@index}}-{{@root.actor.id}}" name="xp-{{@index}}" {{#if (gt system.xp.value @index)}}checked{{/if}} disabled/>
       {{/times}}
     </div>
   </div>
@@ -280,7 +280,7 @@
     <output id="advancements-output">{{system.advancements.value}}</output>
     <div class="checkbox-group" data-field="advancements" style="margin-top: 10px;">
       {{#times system.advancements.max}}
-      <input type="checkbox" id="advancements-checkbox-{{@index}}" name="advancements-{{@index}}" {{#if (gt system.advancements.value @index)}}checked{{/if}}/>
+      <input type="checkbox" id="advancements-checkbox-{{@index}}-{{@root.actor.id}}" name="advancements-{{@index}}" {{#if (gt system.advancements.value @index)}}checked{{/if}}/>
       {{/times}}
     </div>
   </div>

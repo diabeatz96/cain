@@ -15,9 +15,12 @@ export default class CainDomain extends CainItemBase {
   async _preCreate(data, options, user) {
     await super._preCreate(data, options, user);
 
-    // ogre by default
-    this.parent.updateSource({
-      img: "systems/cain/assets/Sins/ogre.png"
-    })
+    // Only set the ogre default when no image was explicitly provided.
+    // Otherwise this overwrites the source img on every compendium import.
+    if (!data.img || data.img === "icons/svg/item-bag.svg" || data.img === "icons/svg/mystery-man.svg") {
+      this.parent.updateSource({
+        img: "systems/cain/assets/Sins/ogre.png"
+      });
+    }
   }
 }

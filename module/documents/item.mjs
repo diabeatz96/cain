@@ -4,15 +4,6 @@
  */
 export class CainItem extends Item {
   /**
-   * Augment the basic Item data model with additional dynamic data.
-   */
-  prepareData() {
-    // As with the actor class, items are documents that can have their data
-    // preparation methods overridden (such as prepareBaseData()).
-    super.prepareData();
-  }
-
-  /**
    * Prepare a data object which defines the data schema used by dice roll commands against this Item
    * @override
    */
