@@ -127,15 +127,19 @@ export class CainDicePanel extends HandlebarsApplicationMixin(ApplicationV2) {
     Hooks.on('getSceneControlButtons', (controls) => {
       const isV13 = game.release?.generation >= 13;
 
+      // v14 silently ignores scene-control tool clicks when canvas.ready is false
+      // (no active scene). Surface the reason in the hover tooltip.
+      const noSceneHint = canvas?.ready ? '' : ' — activate a scene to enable';
+
       if (isV13) {
         // v13: controls is an object keyed by control name (plural: "tokens")
         if (controls.tokens) {
           controls.tokens.tools['cain-dice-roller'] = {
             name: 'cain-dice-roller',
-            title: 'CAIN Dice Roller',
+            title: 'CAIN Dice Roller' + noSceneHint,
             icon: 'fa-solid fa-brain',
             button: true,
-            onClick: () => {
+            onChange: () => {
               if (ui.cainDicePanel) {
                 if (ui.cainDicePanel.rendered) {
                   ui.cainDicePanel.close();
@@ -156,7 +160,7 @@ export class CainDicePanel extends HandlebarsApplicationMixin(ApplicationV2) {
         if (tokenControls) {
           tokenControls.tools.push({
             name: 'cain-dice-roller',
-            title: 'CAIN Dice Roller',
+            title: 'CAIN Dice Roller' + noSceneHint,
             icon: 'fa-solid fa-brain',
             button: true,
             onClick: () => {

@@ -52,6 +52,22 @@
     - ahandleman and Benji as developers
     - bugeso and loupgarou for development contributions and v1.3 updates
 
+
+## 1.3.18
+
+- V14 Support is here! This update includes several fixes and improvements to ensure compatibility with FoundryVTT v14 while maintaining support for v11 and v12. Key changes include namespacing utility calls, removing deprecated options, and fixing data preparation issues during actor creation and rolls. Additionally, the Player Overview interface has been improved to prevent errors when no players have assigned actors, and the Domain item creation logic has been refined to preserve custom images. Overall, this update ensures a smoother experience across all supported FoundryVTT versions.
+- Foundry v14 compatibility: namespaced `mergeObject`, `TextEditor`, and `duplicate` calls so they resolve under both v12 (global) and v13+ (`foundry.utils` / `foundry.applications.ux.TextEditor.implementation`)
+- Removed the deprecated `async: true` option from `Roll#evaluate` and `TextEditor.enrichHTML` calls
+- Awaited `actor.update` calls in `_performRoll` to prevent overlapping data-preparation cycles that triggered "ActiveEffect application phase already completed" errors
+ 
+In addition to the above, the following fixes and improvements were made:
+- Fixed an error in the Player Overview interface when no players have assigned actors, ensuring it renders correctly without crashing
+- Fixed a bug with two-character sheets open at once where clicking a checkbox label on one sheet would trigger the change event on the other sheet due to non-unique `id` attributes. All affected checkboxes now have unique IDs suffixed with the actor ID.
+- Refined the Domain item creation logic to only set the default image when no image was explicitly provided, preserving custom images during compendium import and actor creation. Previously, every domain would display the ogre icon regardless of its source image.
+- Updated scene-control tooltips for the Divine Agony, Hunt Tracker, and Dice Roller tools
+- Fixed the CAT placeholder parser to allow for optional modifiers, ensuring power text like Ardence's Sabre now renders correctly without showing the literal placeholder. The modifier capture is now optional and defaults to `0`, matching the  author intent.
+
+
 ## v1.3.X Update for CAIN
 
 Version 1.3.X is a major update for the CAIN system focused on FoundryVTT v13 compatibility, improved accessibility, and enhanced talisman management. This version represents a collaborative effort between bugeso and loupgarou.

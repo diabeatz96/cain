@@ -12,6 +12,8 @@ import { SessionEndAdvancement} from  '../documents/session-end-advancement.mjs'
 
 // Use v13 namespaced ActorSheet with fallback for v11/v12
 const BaseActorSheet = foundry?.appv1?.sheets?.ActorSheet ?? ActorSheet;
+// v13+ namespaces TextEditor; v12 still exposes it as a global.
+const TextEditorImpl = foundry?.applications?.ux?.TextEditor?.implementation ?? globalThis.TextEditor;
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
@@ -116,51 +118,46 @@ export class CainActorSheet extends BaseActorSheet {
     }
 
 
-    context.enrichedAppearance = await TextEditor.enrichHTML(
+    context.enrichedAppearance = await TextEditorImpl.enrichHTML(
       this.actor.system.appearance,
       {
         secrets: this.document.isOwner,
-        async: true,
         rollData: this.actor.getRollData(),
         relativeTo: this.actor,
       }
     );
 
-    context.enrichedPalace = await TextEditor.enrichHTML(
+    context.enrichedPalace = await TextEditorImpl.enrichHTML(
       this.actor.system.palace,
       {
         secrets: this.document.isOwner,
-        async: true,
         rollData: this.actor.getRollData(),
         relativeTo: this.actor,
       }
     );
 
-    context.enrichedPressure = await TextEditor.enrichHTML(
+    context.enrichedPressure = await TextEditorImpl.enrichHTML(
       this.actor.system.pressure,
       {
         secrets: this.document.isOwner,
-        async: true,
         rollData: this.actor.getRollData(),
         relativeTo: this.actor,
       }
     );
     
-    context.enrichedBiography = await TextEditor.enrichHTML(
+    context.enrichedBiography = await TextEditorImpl.enrichHTML(
       this.actor.system.biography,
       {
         secrets: this.document.isOwner,
-        async: true,
         rollData: this.actor.getRollData(),
         relativeTo: this.actor,
       }
     );
     if (this.actor.system.severeAttack) {
-      context.enrichedDescription = await TextEditor.enrichHTML(
+      context.enrichedDescription = await TextEditorImpl.enrichHTML(
         this.actor.system.severeAttack.description,
         {
           secrets: this.document.isOwner,
-          async: true,
           rollData: this.actor.getRollData(),
           relativeTo: this.actor,
         }
@@ -168,11 +165,10 @@ export class CainActorSheet extends BaseActorSheet {
     }
 
     if (this.actor.system.attack) {
-      context.enrichedDescription = await TextEditor.enrichHTML(
+      context.enrichedDescription = await TextEditorImpl.enrichHTML(
         this.actor.system.attack.description,
         {
           secrets: this.document.isOwner,
-          async: true,
           rollData: this.actor.getRollData(),
           relativeTo: this.actor,
         }
@@ -180,11 +176,10 @@ export class CainActorSheet extends BaseActorSheet {
     }
 
     if (this.actor.system.severeAttack || this.actor.system.attack) {
-      context.enrichedDescription = await TextEditor.enrichHTML(
+      context.enrichedDescription = await TextEditorImpl.enrichHTML(
         this.actor.system.severeAttack.description,
         {
           secrets: this.document.isOwner,
-          async: true,
           rollData: this.actor.getRollData(),
           relativeTo: this.actor,
         }
@@ -788,7 +783,7 @@ export class CainActorSheet extends BaseActorSheet {
 
     // Event listeners for severe ability questions (SIN sheet attacks tab)
     html.find('.add-btn').click(async (ev) => {
-      const questions = duplicate(this.actor.system.severeAbilityQuestions || []);
+      const questions = foundry.utils.duplicate(this.actor.system.severeAbilityQuestions || []);
       questions.push('');
       await this.actor.update({'system.severeAbilityQuestions': questions});
     });
@@ -796,7 +791,7 @@ export class CainActorSheet extends BaseActorSheet {
     html.find('.delete-btn').click(async (ev) => {
       const index = parseInt(ev.currentTarget.closest('.question-row')?.querySelector('.question-label')?.textContent.replace('Q', '').replace(':', ''));
       if (index >= 0) {
-        const questions = duplicate(this.actor.system.severeAbilityQuestions || []);
+        const questions = foundry.utils.duplicate(this.actor.system.severeAbilityQuestions || []);
         questions.splice(index, 1);
         await this.actor.update({'system.severeAbilityQuestions': questions});
       }
@@ -838,7 +833,7 @@ export class CainActorSheet extends BaseActorSheet {
 
     // Add Affliction button (Opponent sheet)
     html.find('.add-affliction-btn').click(async (ev) => {
-      const afflictions = duplicate(this.actor.system.afflictions || []);
+      const afflictions = foundry.utils.duplicate(this.actor.system.afflictions || []);
       afflictions.push('');
       await this.actor.update({'system.afflictions': afflictions});
     });
@@ -846,14 +841,14 @@ export class CainActorSheet extends BaseActorSheet {
     // Remove Affliction button (Opponent sheet)
     html.find('.remove-affliction-btn').click(async (ev) => {
       const index = parseInt(ev.currentTarget.dataset.index);
-      const afflictions = duplicate(this.actor.system.afflictions || []);
+      const afflictions = foundry.utils.duplicate(this.actor.system.afflictions || []);
       afflictions.splice(index, 1);
       await this.actor.update({'system.afflictions': afflictions});
     });
 
     // Add Special Ability button (Opponent sheet)
     html.find('.add-ability-btn').click(async (ev) => {
-      const abilities = duplicate(this.actor.system.specialAbilities || []);
+      const abilities = foundry.utils.duplicate(this.actor.system.specialAbilities || []);
       abilities.push({ name: '', description: '', trigger: '' });
       await this.actor.update({'system.specialAbilities': abilities});
     });
@@ -861,14 +856,14 @@ export class CainActorSheet extends BaseActorSheet {
     // Remove Special Ability button (Opponent sheet)
     html.find('.remove-ability-btn').click(async (ev) => {
       const index = parseInt(ev.currentTarget.dataset.index);
-      const abilities = duplicate(this.actor.system.specialAbilities || []);
+      const abilities = foundry.utils.duplicate(this.actor.system.specialAbilities || []);
       abilities.splice(index, 1);
       await this.actor.update({'system.specialAbilities': abilities});
     });
 
     // Add Capability button (Opponent sheet)
     html.find('.add-capability-btn').click(async (ev) => {
-      const capabilities = duplicate(this.actor.system.capabilities || []);
+      const capabilities = foundry.utils.duplicate(this.actor.system.capabilities || []);
       capabilities.push('');
       await this.actor.update({'system.capabilities': capabilities});
     });
@@ -876,7 +871,7 @@ export class CainActorSheet extends BaseActorSheet {
     // Remove Capability button (Opponent sheet)
     html.find('.remove-capability-btn').click(async (ev) => {
       const index = parseInt(ev.currentTarget.dataset.index);
-      const capabilities = duplicate(this.actor.system.capabilities || []);
+      const capabilities = foundry.utils.duplicate(this.actor.system.capabilities || []);
       capabilities.splice(index, 1);
       await this.actor.update({'system.capabilities': capabilities});
     });
@@ -2565,9 +2560,9 @@ export class CainActorSheet extends BaseActorSheet {
     let totalDice = baseDice + extraDice + (teamwork ? 1 : 0) + (setup ? 1 : 0);
 
     if (useDivineAgony) {
-      const divineAgonyStat = this.actor.system.divineAgony.value; // Replace with the actual path to the divine agony stat
+      const divineAgonyStat = this.actor.system.divineAgony.value;
       totalDice += divineAgonyStat;
-      this.actor.update({ 'system.divineAgony.value': 0 }); // Set divine agony to zero
+      await this.actor.update({ 'system.divineAgony.value': 0 });
     }
 
     let roll;
@@ -2577,13 +2572,13 @@ export class CainActorSheet extends BaseActorSheet {
     } else {
       roll = new Roll(`2d6cs>=${hard ? 6 : 4}kl`);
     }
-    await roll.evaluate({ async: true });
+    await roll.evaluate();
 
     // Calculate successes
     let successes = roll.total;
 
     if(successes === 0 && this.actor.system.divineAgony.value < this.actor.system.divineAgony.max) {
-      this.actor.update({'system.divineAgony.value' : this.actor.system.divineAgony.value + 1});
+      await this.actor.update({'system.divineAgony.value' : this.actor.system.divineAgony.value + 1});
     }
 
     let message = `<h2>${skill.charAt(0).toUpperCase() + skill.slice(1)} Roll</h2>`;
@@ -2616,7 +2611,7 @@ export class CainActorSheet extends BaseActorSheet {
   
     // Roll the dice using Foundry's built-in dice roller
     const roll = new Roll(rollFormula);
-    await roll.evaluate({ async: true });
+    await roll.evaluate();
   
     // Get individual dice results
     const diceResults = roll.terms[0].results.map(result => result.result).join(', ');
@@ -2688,7 +2683,7 @@ export class CainActorSheet extends BaseActorSheet {
     } else {
       roll = new Roll(`2d6cs>=${hardRoll ? 6 : 4}`);
     }
-    await roll.evaluate({ async: true });
+    await roll.evaluate();
   
     console.log(roll.dice[0].results);
   
@@ -2749,7 +2744,8 @@ export class CainActorSheet extends BaseActorSheet {
       'Produce faint light or aura',
       'Produce minor force at distance',
       'Make electrical lights flicker',
-      'Warm or cool body surface'
+      'Warm or cool body surface',
+      'Blast'
     ];
 
     let commonUseOptions = commonUses.map((use, idx) =>
@@ -3143,7 +3139,7 @@ export class CainActorSheet extends BaseActorSheet {
       const maxAttempts = 10;
       let attempts = 0;
       do {
-        const abilityRoll = await new Roll(`1d${abilities.length}`).roll({async: true});
+        const abilityRoll = await new Roll(`1d${abilities.length}`).roll();
         selectedAbility = abilities[abilityRoll.total - 1];
         attempts++;
       } while (currentSinMarkAbilities.includes(selectedAbility) && attempts < maxAttempts);
@@ -3158,7 +3154,7 @@ export class CainActorSheet extends BaseActorSheet {
       // Sin Mark is not in the list, add it and select an ability
       currentSinMarks.push(selectedSinMark.id);
   
-      const abilityRoll = await new Roll(`1d${abilities.length}`).roll({async: true});
+      const abilityRoll = await new Roll(`1d${abilities.length}`).roll();
       selectedAbility = abilities[abilityRoll.total - 1];
   
       currentSinMarkAbilities.push(selectedAbility);
@@ -3212,7 +3208,7 @@ export class CainActorSheet extends BaseActorSheet {
       const maxAttempts = 10;
       let attempts = 0;
       do {
-        const abilityRoll = await new Roll(`1d${abilities.length}`).roll({async: true});
+        const abilityRoll = await new Roll(`1d${abilities.length}`).roll();
         selectedAbility = abilities[abilityRoll.total - 1];
         attempts++;
       } while (currentSinMarkAbilities.includes(selectedAbility) && attempts < maxAttempts);
@@ -3227,7 +3223,7 @@ export class CainActorSheet extends BaseActorSheet {
       // Sin Mark is not in the list, add it and select an ability
       currentSinMarks.push(selectedSinMark.id);
   
-      const abilityRoll = await new Roll(`1d${abilities.length}`).roll({async: true});
+      const abilityRoll = await new Roll(`1d${abilities.length}`).roll();
       selectedAbility = abilities[abilityRoll.total - 1];
   
       currentSinMarkAbilities.push(selectedAbility);
@@ -3368,7 +3364,7 @@ export class CainActorSheet extends BaseActorSheet {
 
   async _onNpcAttack(event) {
     event.preventDefault();
-    const roll = await new Roll('1d6').roll({ async: true });
+    const roll = await new Roll('1d6').roll();
     const lowDamage = this.actor.system.attackRoll.lowDamage;
     const mediumDamage = this.actor.system.attackRoll.mediumDamage;
     const highDamage = this.actor.system.attackRoll.highDamage;
@@ -3469,7 +3465,7 @@ export class CainActorSheet extends BaseActorSheet {
     const totalDice = Math.max(baseDice + modifier, 0);
   
     const roll = new Roll(`${totalDice}d6cs=1`);
-    await roll.evaluate({ async: true });
+    await roll.evaluate();
   
     let onesCount = 0;
     let nonOnesCount = 0;
@@ -3499,7 +3495,7 @@ export class CainActorSheet extends BaseActorSheet {
   
   async _onRollAffliction(event) {
     event.preventDefault();
-    const roll = await new Roll('1d6').roll({ async: true });
+    const roll = await new Roll('1d6').roll();
     const afflictions = this.actor.system.afflictions;
     const affliction = afflictions[roll.total - 1];
 
@@ -4099,7 +4095,7 @@ export class CainActorSheet extends BaseActorSheet {
             
             // Roll 1d6 to determine the amount of stress inflicted
             const roll = new Roll('1d6');
-            await roll.evaluate({ async: true });
+            await roll.evaluate();
             const rollResult = roll.total;
             let stressInflicted;
   
@@ -4301,7 +4297,7 @@ _useThreat(event) {
           switch (selectedThreatIndex) {
             case 0: // Inflict harm
               const roll = new Roll('1d6');
-              await roll.evaluate({ async: true });
+              await roll.evaluate();
               const rollResult = roll.total;
               let damage;
 

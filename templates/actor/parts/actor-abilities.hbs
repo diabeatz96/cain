@@ -19,9 +19,9 @@
       <div class="psyche-burst-checkboxes circle-checkboxes" style="display: flex; align-items: center;">
         {{#if system.psycheBurst}}
         {{#range 0 system.psycheBurst.max}}
-        <input type="checkbox" id="checkbox-{{index}}" class="psyche-burst-checkbox" {{#if (lt index
+        <input type="checkbox" id="checkbox-{{index}}-{{@root.actor.id}}" class="psyche-burst-checkbox" {{#if (lt index
           ../system.psycheBurst.value)}}checked{{/if}} />
-        <label for="checkbox-{{index}}"></label>
+        <label for="checkbox-{{index}}-{{@root.actor.id}}"></label>
         {{/range}}
         {{else}}
         <p>No Psyche Burst Data</p>

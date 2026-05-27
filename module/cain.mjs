@@ -476,6 +476,10 @@ Hooks.on('getSceneControlButtons', (controls) => {
   // v13 uses object structure with "tokens" (plural), v12 uses array with "token" (singular)
   const isV13 = game.release.generation >= 13;
 
+  // v14 ignores scene-control tool clicks while canvas.ready is false (no active scene).
+  // Suffix tool tooltips with a hint so users know why the button isn't responding.
+  const noSceneHint = canvas?.ready ? '' : ' — activate a scene to enable';
+
   if (isV13) {
     // v13: controls is an object keyed by control name (plural: "tokens"), tools is also an object
     // Reference: https://foundryvtt.com/api/functions/hookEvents.getSceneControlButtons.html
@@ -483,7 +487,7 @@ Hooks.on('getSceneControlButtons', (controls) => {
     if (controls.tokens) {
       controls.tokens.tools['pathos-tracker'] = {
         name: 'pathos-tracker',
-        title: 'Toggle Divine Agony Tracker',
+        title: 'Toggle Divine Agony Tracker' + noSceneHint,
         icon: 'fa-solid fa-heart',
         toggle: true,
         active: game.settings.get('cain', 'pathosTrackerVisible'),
@@ -503,7 +507,7 @@ Hooks.on('getSceneControlButtons', (controls) => {
     if (tokenControls) {
       tokenControls.tools.push({
         name: 'pathos-tracker',
-        title: 'Toggle Divine Agony Tracker',
+        title: 'Toggle Divine Agony Tracker' + noSceneHint,
         icon: 'fa-solid fa-heart',
         toggle: true,
         active: game.settings.get('cain', 'pathosTrackerVisible'),
@@ -525,7 +529,7 @@ Hooks.on('getSceneControlButtons', (controls) => {
       if (controls.tokens) {
         controls.tokens.tools['hunt-tracker'] = {
           name: 'hunt-tracker',
-          title: 'Toggle Hunt Tracker',
+          title: 'Toggle Hunt Tracker' + noSceneHint,
           icon: 'fa-solid fa-skull',
           toggle: true,
           active: game.settings.get('cain', 'huntTrackerVisible'),
@@ -544,7 +548,7 @@ Hooks.on('getSceneControlButtons', (controls) => {
       if (tokenControls) {
         tokenControls.tools.push({
           name: 'hunt-tracker',
-          title: 'Toggle Hunt Tracker',
+          title: 'Toggle Hunt Tracker' + noSceneHint,
           icon: 'fa-solid fa-skull',
           toggle: true,
           active: game.settings.get('cain', 'huntTrackerVisible'),
@@ -702,8 +706,9 @@ window.formatCatText = function(text, category) {
   ]
   // Check if the text is defined and is a string
   let parse_cat_values = (inputString => {
-    // Updated regex to support CAT operations like CAT/2, CAT*2, CAT+1, CAT-1
-    const regex = /\{<CAT([\/\*\+\-]\d+)?>\s+(\S+)\s+(\S+)\}/g;
+    // Supports CAT operations like CAT/2, CAT*2, CAT+1, CAT-1.
+    // Modifier is optional — `{<CAT> distance_normal}` is equivalent to `{<CAT> distance_normal 0}`.
+    const regex = /\{<CAT([\/\*\+\-]\d+)?>\s+(\S+)(?:\s+(\S+))?\}/g;
 
     const matches = [...inputString.matchAll(regex)];
 
@@ -711,7 +716,7 @@ window.formatCatText = function(text, category) {
         string: Handlebars.escapeExpression(match[0]),
         operation: match[1] || '', // e.g., "/2", "*2", "+1", "-1", or empty string
         type: match[2],
-        modifier: match[3]
+        modifier: match[3] ?? '0'
     }));
   });
 
