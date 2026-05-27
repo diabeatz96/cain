@@ -5,6 +5,8 @@ import {
 
 // Use v13 namespaced ItemSheet with fallback for v11/v12
 const BaseItemSheet = foundry?.appv1?.sheets?.ItemSheet ?? ItemSheet;
+// v13+ namespaces TextEditor; v12 still exposes it as a global.
+const TextEditorImpl = foundry?.applications?.ux?.TextEditor?.implementation ?? globalThis.TextEditor;
 
 /**
  * Extend the basic ItemSheet with some very simple modifications
@@ -51,13 +53,11 @@ export class CainItemSheet extends BaseItemSheet {
 
     // Enrich description info for display
     // Enrichment turns text like `[[/r 1d20]]` into buttons
-    context.enrichedDescription = await TextEditor.enrichHTML(
+    context.enrichedDescription = await TextEditorImpl.enrichHTML(
       this.item.system.description,
       {
         // Whether to show secret blocks in the finished html
         secrets: this.document.isOwner,
-        // Necessary in v11, can be removed in v12
-        async: true,
         // Data to fill in for inline rolls
         rollData: this.item.getRollData(),
         // Relative UUID resolution

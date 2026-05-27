@@ -1,7 +1,7 @@
 // player-overview.js
 export class PlayerOverview extends Application {
     static get defaultOptions() {
-        return mergeObject(super.defaultOptions, {
+        return foundry.utils.mergeObject(super.defaultOptions, {
             id: "player-overview",
             template: "systems/cain/templates/player-overview.hbs",
             width: 800,
@@ -39,7 +39,22 @@ export class PlayerOverview extends Application {
 
     activateListeners(html) {
         super.activateListeners(html);
-        // Add any event listeners if needed
+
+        // Tab switching: scope to this overview's DOM, not document-wide,
+        // so handlers don't stack across re-renders and selectors can't reach
+        // unrelated DOM. Guard the target pane lookup — when no players have
+        // assigned actors, the .tab panes don't exist in the rendered template.
+        const root = html instanceof jQuery ? html[0] : html;
+        if (!root) return;
+        root.querySelectorAll('.item').forEach(tab => {
+            tab.addEventListener('click', () => {
+                root.querySelectorAll('.item').forEach(t => t.classList.remove('active'));
+                root.querySelectorAll('.tab').forEach(pane => pane.classList.remove('active'));
+                tab.classList.add('active');
+                const target = root.querySelector(`.tab[data-tab="${tab.dataset.tab}"]`);
+                if (target) target.classList.add('active');
+            });
+        });
     }
 
     // Add a method to re-render the application

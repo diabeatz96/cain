@@ -210,7 +210,7 @@ export class HomebrewWindow extends Application {
     }
 
     static get defaultOptions() {
-      return mergeObject(super.defaultOptions, {
+      return foundry.utils.mergeObject(super.defaultOptions, {
         id: 'homebrew-window',
         title: 'Create Homebrew',
         template: 'systems/cain/templates/homebrew-window.hbs',

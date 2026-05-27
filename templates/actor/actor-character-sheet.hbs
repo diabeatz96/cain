@@ -88,8 +88,8 @@
               </label>     
               <div class="flexrow ability-dots circle-checkboxes">
                 {{#range 0 4}}
-                  <input type="checkbox" id="ability-{{key}}-{{index}}" class="skills-checkbox {{#if (eq index 3)}}fourth-checkbox{{/if}}" {{#if (lt index skill.value)}}checked{{/if}} data-skill_key="{{key}}" data-skill_value="{{CainOffset index 1}}"/>
-                  <label for="ability-{{key}}-{{index}}" class="{{#if (eq index 3)}}fourth-checkbox-label{{/if}}"></label>
+                  <input type="checkbox" id="ability-{{key}}-{{index}}-{{@root.actor.id}}" class="skills-checkbox {{#if (eq index 3)}}fourth-checkbox{{/if}}" {{#if (lt index skill.value)}}checked{{/if}} data-skill_key="{{key}}" data-skill_value="{{CainOffset index 1}}"/>
+                  <label for="ability-{{key}}-{{index}}-{{@root.actor.id}}" class="{{#if (eq index 3)}}fourth-checkbox-label{{/if}}"></label>
                 {{/range}}
               </div>   
             </div>

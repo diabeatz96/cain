@@ -29,17 +29,6 @@
     {{/if}}
   </section>
 
-  <script>
-    document.querySelectorAll('.player-overview .item').forEach(tab => {
-      tab.addEventListener('click', function() {
-        document.querySelectorAll('.player-overview .item').forEach(t => t.classList.remove('active'));
-        document.querySelectorAll('.player-overview .tab').forEach(pane => pane.classList.remove('active'));
-        this.classList.add('active');
-        document.querySelector(`.player-overview .tab[data-tab="${this.dataset.tab}"]`).classList.add('active');
-      });
-    });
-  </script>
-
   <style>
     .player-overview {
       background-color: #121212;
