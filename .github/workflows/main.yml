@@ -284,9 +284,15 @@ jobs:
           VERSION="${{ steps.get_version.outputs.version }}"
           MANIFEST_URL="https://github.com/${{ github.repository }}/releases/download/v${VERSION}/system.json"
 
+          # Read compatibility from system.json so it stays in sync with the manifest
+          COMPAT_MIN=$(jq -r '.compatibility.minimum'  system.json)
+          COMPAT_VERIFIED=$(jq -r '.compatibility.verified' system.json)
+          COMPAT_MAX=$(jq -r '.compatibility.maximum'  system.json)
+
           echo "📦 Notifying Foundry VTT Package Release API..."
           echo "   Version: ${VERSION}"
           echo "   Manifest: ${MANIFEST_URL}"
+          echo "   Compatibility: min=${COMPAT_MIN} verified=${COMPAT_VERIFIED} max=${COMPAT_MAX}"
 
           # Call the Foundry VTT Package Release API
           RESPONSE=$(curl -s -w "\n%{http_code}" -X POST \
@@ -301,9 +307,9 @@ jobs:
                 \"manifest\": \"${MANIFEST_URL}\",
                 \"notes\": \"https://github.com/${{ github.repository }}/releases/tag/v${VERSION}\",
                 \"compatibility\": {
-                  \"minimum\": \"11\",
-                  \"verified\": \"13\",
-                  \"maximum\": \"13\"
+                  \"minimum\": \"${COMPAT_MIN}\",
+                  \"verified\": \"${COMPAT_VERIFIED}\",
+                  \"maximum\": \"${COMPAT_MAX}\"
                 }
               }
             }")

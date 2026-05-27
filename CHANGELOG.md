@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## 1.3.18
+## 1.3.19
 
 - Foundry v14 compatibility: namespaced `mergeObject`, `TextEditor`, and `duplicate` calls so they resolve under both v12 (global) and v13+ (`foundry.utils` / `foundry.applications.ux.TextEditor.implementation`)
 - Removed the deprecated `async: true` option from `Roll#evaluate` and `TextEditor.enrichHTML` calls
