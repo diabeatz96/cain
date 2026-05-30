@@ -21,7 +21,9 @@ const TextEditorImpl = foundry?.applications?.ux?.TextEditor?.implementation ?? 
  */
 export class CainActorSheet extends BaseActorSheet {
   sheetConstants = {
-    "CATSessionNumbers": ["0", "1", "2", "4", "7", "X", "X"],
+    // 8 slots: CAT 0 through CAT VII. Per CAIN rules, missions-survived under each CAT:
+    //   CAT 0 → 0, I → 0, II → 1, III → 2, IV → 4, V → 7, VI → X, VII → X
+    "CATSessionNumbers": ["0", "0", "1", "2", "4", "7", "X", "X"],
     "SINVisualOffset": Math.round( Math.random() * 8) //a random offset so the EYES in the sin section don't always look exactly the same
   };
 

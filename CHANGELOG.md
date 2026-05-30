@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 1.3.20
+
+- CAT level strip: extended from 7 slots (CAT 0–VI) to 8 slots (CAT 0–VII) and fixed the missions-survived mapping. Now reads `0, 0, 1, 2, 4, 7, X, X` under CAT 0 through VII respectively, matching the CAIN rulebook
+- Release workflow: the "Notify Foundry VTT Package Release API" step now reads `compatibility.minimum/verified/maximum` from `system.json` via `jq -r` instead of hardcoding `"13"`. Bumping the verified field in `system.json` will now propagate to the foundryvtt.com listing on the next release
+
 ## 1.3.19
 
 - Foundry v14 compatibility: namespaced `mergeObject`, `TextEditor`, and `duplicate` calls so they resolve under both v12 (global) and v13+ (`foundry.utils` / `foundry.applications.ux.TextEditor.implementation`)
