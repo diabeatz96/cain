@@ -21,6 +21,72 @@ import { CainDiceRoller } from './dice/cain-dice-roller.mjs';
 import { CainChatDicePanel } from './dice/chat-dice-panel.mjs';
 
 /* -------------------------------------------- */
+/*  Talisman ↔ Hunt Tracker sync                */
+/* -------------------------------------------- */
+
+/**
+ * Push the current Hunt Tracker values into the linked Global Talismans.
+ * Inverse direction of `syncLinkedTalismanToHunt`. Guarded against no-op
+ * writes so the two syncs cannot feedback-loop: only writes the setting
+ * when an actual value differs, and only emits the socket on a real write.
+ */
+async function syncHuntToLinkedTalismans() {
+  if (!game.user?.isGM) return;
+  const hunt = game.settings.get('cain', 'currentHunt');
+  if (!hunt?.active) return;
+
+  const talismans = game.settings.get('cain', 'globalTalismans');
+  if (!Array.isArray(talismans)) return;
+  const updated = foundry.utils.deepClone(talismans);
+  let needsUpdate = false;
+
+  // Execution talisman — pushes current marks back to the linked global.
+  if (hunt.linkedTalismanIndex !== undefined && hunt.linkedTalismanIndex !== null) {
+    const t = updated[hunt.linkedTalismanIndex];
+    if (t && t.currMarkAmount !== hunt.execution.current) {
+      t.currMarkAmount = hunt.execution.current;
+      needsUpdate = true;
+    }
+  }
+
+  // Tension talisman — current AND max (max can change if execution scaling shifts it)
+  if (hunt.linkedTensionTalismanIndex !== undefined && hunt.linkedTensionTalismanIndex !== null) {
+    const t = updated[hunt.linkedTensionTalismanIndex];
+    if (t) {
+      if (t.currMarkAmount !== hunt.tension.current) {
+        t.currMarkAmount = hunt.tension.current;
+        needsUpdate = true;
+      }
+      if (t.maxMarkAmount !== hunt.tension.max) {
+        t.maxMarkAmount = hunt.tension.max;
+        needsUpdate = true;
+      }
+    }
+  }
+
+  // Pressure talisman — current AND max
+  if (hunt.linkedPressureTalismanIndex !== undefined && hunt.linkedPressureTalismanIndex !== null) {
+    const t = updated[hunt.linkedPressureTalismanIndex];
+    if (t) {
+      if (t.currMarkAmount !== hunt.pressure.current) {
+        t.currMarkAmount = hunt.pressure.current;
+        needsUpdate = true;
+      }
+      if (t.maxMarkAmount !== hunt.pressure.max) {
+        t.maxMarkAmount = hunt.pressure.max;
+        needsUpdate = true;
+      }
+    }
+  }
+
+  if (needsUpdate) {
+    await game.settings.set('cain', 'globalTalismans', updated);
+    // Notify other clients so their TalismanWindows / pinned tiles / etc. refresh.
+    game.socket?.emit('system.cain', { action: 'updateTalismans' });
+  }
+}
+
+/* -------------------------------------------- */
 /*  Init Hook                                   */
 /* -------------------------------------------- */
 
@@ -231,6 +297,27 @@ Hooks.once('init', async function () {
     default: true,
   });
 
+  // Talisman tile dimensions (used by TalismanWindow's "Create Tile" action).
+  // Defaults match the original hardcoded 274x432 so existing setups don't
+  // visibly change; GMs running larger scenes can bump these up so the tile
+  // doesn't appear postage-stamp sized.
+  game.settings.register('cain', 'talismanTileWidth', {
+    name: 'Talisman Tile Width (px)',
+    hint: 'Pixel width of tiles produced by the Talisman window\'s Create Tile button. Default 274. Increase for larger scenes.',
+    scope: 'world',
+    config: true,
+    type: Number,
+    default: 274
+  });
+  game.settings.register('cain', 'talismanTileHeight', {
+    name: 'Talisman Tile Height (px)',
+    hint: 'Pixel height of tiles produced by the Talisman window\'s Create Tile button. Default 432. Increase for larger scenes.',
+    scope: 'world',
+    config: true,
+    type: Number,
+    default: 432
+  });
+
   game.settings.register('cain', 'showDiceRoller', {
     name: 'Show Dice Roller Panel',
     hint: 'Display the dice roller panel. Disable if you prefer to roll from character sheets only.',
@@ -303,7 +390,11 @@ Hooks.once('init', async function () {
       sceneCount: 0,
       insidePalace: false,
       phase: 'briefing'
-    }
+    },
+    // Push Hunt Tracker changes back into linked Global Talismans. The
+    // function is no-op when values already match, which short-circuits
+    // any sync→sync feedback with the inbound Global→Hunt path.
+    onChange: () => syncHuntToLinkedTalismans()
   });
 
   game.settings.register('cain', 'huntTrackerVisible', {

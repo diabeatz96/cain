@@ -347,6 +347,8 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
       hunt.execution.calculated = 8 + hunt.pressure.current + hunt.sinCategory;
       await game.settings.set('cain', 'currentHunt', hunt);
       await this._syncToLinkedPressureTalisman(hunt.pressure.current);
+      // Pressure dropped; shrink the linked execution talisman to match.
+      await this._syncExecutionMaxToLinkedTalisman(hunt.execution.calculated);
       this._emitUpdate();
     }
   }
@@ -1257,6 +1259,8 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
     // Sync linked talismans (tension reset to 0, pressure increased)
     await this._syncToLinkedTensionTalisman(0);
     await this._syncToLinkedPressureTalisman(hunt.pressure.current);
+    // Tension filling raises pressure, which raises the execution ceiling.
+    await this._syncExecutionMaxToLinkedTalisman(hunt.execution.calculated);
 
     this._emitUpdate();
 
@@ -1287,6 +1291,9 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
     await game.settings.set('cain', 'currentHunt', hunt);
     // Sync with linked pressure talisman
     await this._syncToLinkedPressureTalisman(hunt.pressure.current);
+    // Pressure drives executionMax (= 8 + pressure + CAT); push the new
+    // ceiling to the linked execution talisman so its size grows in lockstep.
+    await this._syncExecutionMaxToLinkedTalisman(hunt.execution.calculated);
     this._emitUpdate();
   }
 
@@ -1304,6 +1311,35 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
     talismans[hunt.linkedTensionTalismanIndex].currMarkAmount = newValue;
     const basePath = linkedTalisman.imagePath.replace(/-\d+\.png$/, '');
     talismans[hunt.linkedTensionTalismanIndex].imagePath = `${basePath}-${newValue}.png`;
+
+    await game.settings.set('cain', 'globalTalismans', talismans);
+    game.socket.emit('system.cain', { action: 'updateTalismans' });
+    this._refreshTalismanWindows();
+  }
+
+  /**
+   * Push the new calculated execution max to the linked execution talisman's
+   * maxMarkAmount. Per CAIN rules executionMax = 8 + pressure + CAT, so this
+   * is called whenever pressure or sinCategory changes. Without this, the
+   * linked talisman size stays frozen at its initial max even as pressure
+   * climbs, which is the reported bug.
+   */
+  async _syncExecutionMaxToLinkedTalisman(newMax) {
+    const hunt = game.settings.get('cain', 'currentHunt');
+    if (hunt.linkedTalismanIndex === undefined || hunt.linkedTalismanIndex === null) return;
+
+    const talismans = game.settings.get('cain', 'globalTalismans');
+    const linkedTalisman = talismans[hunt.linkedTalismanIndex];
+    if (!linkedTalisman) return;
+    if (linkedTalisman.maxMarkAmount === newMax) return;
+
+    talismans[hunt.linkedTalismanIndex].maxMarkAmount = newMax;
+    // If current exceeds the new max, clamp it down and update the image too.
+    if ((talismans[hunt.linkedTalismanIndex].currMarkAmount ?? 0) > newMax) {
+      talismans[hunt.linkedTalismanIndex].currMarkAmount = newMax;
+      const basePath = linkedTalisman.imagePath.replace(/-\d+\.png$/, '');
+      talismans[hunt.linkedTalismanIndex].imagePath = `${basePath}-${newMax}.png`;
+    }
 
     await game.settings.set('cain', 'globalTalismans', talismans);
     game.socket.emit('system.cain', { action: 'updateTalismans' });
