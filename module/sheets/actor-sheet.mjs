@@ -21,7 +21,9 @@ const TextEditorImpl = foundry?.applications?.ux?.TextEditor?.implementation ?? 
  */
 export class CainActorSheet extends BaseActorSheet {
   sheetConstants = {
-    "CATSessionNumbers": ["0", "1", "2", "4", "7", "X", "X"],
+    // 8 slots: CAT 0 through CAT VII. Per CAIN rules, missions-survived under each CAT:
+    //   CAT 0 → 0, I → 0, II → 1, III → 2, IV → 4, V → 7, VI → X, VII → X
+    "CATSessionNumbers": ["0", "0", "1", "2", "4", "7", "X", "X"],
     "SINVisualOffset": Math.round( Math.random() * 8) //a random offset so the EYES in the sin section don't always look exactly the same
   };
 
@@ -88,9 +90,82 @@ export class CainActorSheet extends BaseActorSheet {
           btn.attr('title', isHidden ? "Show in Divine Agony Tracker" : "Hide from Divine Agony Tracker");
         }
       }, 0);
+
+      // Opt-in migration: clone any still-world-referenced blasphemy powers
+      // to per-character embedded copies so they can be reflavored.
+      buttons.unshift({
+        label: "",
+        class: "convert-powers",
+        icon: "fas fa-user-pen",
+        onclick: async () => {
+          await this._convertPowersToEmbedded();
+        }
+      });
+      // Foundry's TooltipManager uses [data-tooltip]; setting both `title`
+      // (native) and `data-tooltip` (Foundry styled) so hovers work even
+      // if the framework version doesn't claim the data-tooltip attribute.
+      // setTimeout(0) waits for the application's _renderInner cycle to
+      // attach the buttons to the DOM.
+      const tooltipText = "Convert blasphemy powers to per-character copies (for reflavoring)";
+      setTimeout(() => {
+        const btn = this.element?.find?.('.convert-powers');
+        if (btn?.length) {
+          btn.attr('title', tooltipText);
+          btn.attr('data-tooltip', tooltipText);
+        }
+      }, 0);
     }
 
     return buttons;
+  }
+
+  /**
+   * GM-only opt-in migration. For each id in `currentBlasphemyPowers` that
+   * still points at a world (catalog) item rather than an embedded copy on
+   * this actor, clone it onto the actor and swap the array entry to the new
+   * embedded id. Already-embedded entries are left untouched. Safe to run
+   * multiple times; idempotent.
+   */
+  async _convertPowersToEmbedded() {
+    const ids = this.actor.system.currentBlasphemyPowers ?? [];
+    if (!ids.length) {
+      ui.notifications.info("This character has no blasphemy powers to convert.");
+      return;
+    }
+
+    const newIds = [];
+    let convertedCount = 0;
+    let droppedCount = 0;
+
+    for (const id of ids) {
+      // Already embedded on this actor: keep.
+      if (this.actor.items.has(id)) {
+        newIds.push(id);
+        continue;
+      }
+      // Legacy world id: clone onto actor.
+      const worldItem = game.items.get(id);
+      if (!worldItem) {
+        // Dead reference (item deleted from world). Drop it from the array.
+        console.warn(`CAIN | Dropping dead power reference ${id} during convert.`);
+        droppedCount += 1;
+        continue;
+      }
+      const embeddedId = await this._embedPowerForActor(id);
+      if (embeddedId) {
+        newIds.push(embeddedId);
+        convertedCount += 1;
+      } else {
+        newIds.push(id);
+      }
+    }
+
+    await this.actor.update({ 'system.currentBlasphemyPowers': newIds });
+    const msg = `Converted ${convertedCount} power(s) to per-character copies`
+      + (droppedCount ? `; dropped ${droppedCount} dead reference(s)` : '')
+      + '.';
+    ui.notifications.info(msg);
+    this.render(false);
   }
 
   /* -------------------------------------------- */
@@ -224,12 +299,17 @@ export class CainActorSheet extends BaseActorSheet {
     context.currentSinMarkAbilities = this._getItemsFromIDs(context.system.sinMarkAbilities || []);
     context.currentAfflictions = this._getItemsFromIDs(context.system.afflictions || []);
 
-    // Calculate currentUnlinkedBlasphemyPowers
+    // Powers on the character that aren't linked to any of the character's
+    // current blasphemies. Origin-aware so embedded copies match their
+    // catalog parent's `system.powers` (world ids) correctly.
+    const _allParentPowerIds = new Set(
+      (context.currentBlasphemies || []).flatMap(b => b.system.powers ?? [])
+    );
     context.currentUnlinkedBlasphemyPowers = this._getItemsFromIDs(
-      (context.system.currentBlasphemyPowers || []).filter(blasphemyPowerID => {
-        return (context.currentBlasphemies || []).map(blasphemy => {
-          return !blasphemy.system.powers.includes(blasphemyPowerID);
-        }).reduce((a, b) => a && b, true);
+      (context.system.currentBlasphemyPowers || []).filter(id => {
+        const embedded = this.actor.items.get(id);
+        const origin = embedded?.getFlag?.('cain', 'originWorldId') ?? id;
+        return !_allParentPowerIds.has(origin);
       })
     );
     
@@ -256,18 +336,27 @@ export class CainActorSheet extends BaseActorSheet {
       };
     });
 
-    // Prepare blasphemy data
+    // Prepare blasphemy data.
+    // Parent blasphemy `system.powers` is always a list of world (catalog) ids.
+    // The character's `currentBlasphemyPowers` may hold legacy world ids or
+    // new per-character embedded ids (tagged with flags.cain.originWorldId).
+    // Group via origin matching so both data shapes render correctly.
     context.blasphemyData = (context.currentBlasphemies || []).map(blasphemy => {
-      const blasphemyPowers = blasphemy.system.powers || [];
-      const currentBlasphemyPowers = context.system.currentBlasphemyPowers || [];
-  
+      const catalogIds = blasphemy.system.powers || [];
+      const ownedPowers = catalogIds
+        .map(wid => this._getCharacterPowerByOrigin(wid))
+        .filter(Boolean);
+      const ownedOriginIds = new Set(
+        ownedPowers.map(p => p.getFlag?.('cain', 'originWorldId') ?? p.id)
+      );
       return {
-        blasphemy: blasphemy,
-        passives: this._getItemsFromIDs(blasphemyPowers.filter(powerID => currentBlasphemyPowers.includes(powerID)))
-          .filter(power => power.system.isPassive),
-        powers: this._getItemsFromIDs(blasphemyPowers.filter(powerID => currentBlasphemyPowers.includes(powerID)))
-          .filter(power => !power.system.isPassive),
-        availablePowers: this._getItemsFromIDs(blasphemyPowers.filter(powerID => !currentBlasphemyPowers.includes(powerID)))
+        blasphemy,
+        passives: ownedPowers.filter(p => p.system?.isPassive),
+        powers: ownedPowers.filter(p => !p.system?.isPassive),
+        availablePowers: catalogIds
+          .filter(wid => !ownedOriginIds.has(wid))
+          .map(wid => game.items.get(wid))
+          .filter(Boolean)
       };
     });
   
@@ -315,7 +404,48 @@ export class CainActorSheet extends BaseActorSheet {
   }
 
   _getItemsFromIDs(ids) {
-    return ids.map(id => game.items.get(id));
+    // Resolution order: per-character embedded copy first, then world catalog.
+    // Legacy actors (pre-embed-on-add) stored world IDs directly, so the
+    // fallback keeps their sheets rendering identically.
+    return ids.map(id => this.actor.items.get(id) ?? game.items.get(id));
+  }
+
+  /**
+   * Find a character's per-character power copy by its world-catalog origin id.
+   * Handles both new embedded copies (matched via flags.cain.originWorldId)
+   * and legacy actors that still store the world id directly.
+   * @param {string} worldId The world (catalog) item id to look up
+   * @returns {Item|null}
+   */
+  _getCharacterPowerByOrigin(worldId) {
+    const ids = this.actor.system.currentBlasphemyPowers ?? [];
+    for (const id of ids) {
+      const embedded = this.actor.items.get(id);
+      if (embedded?.getFlag('cain', 'originWorldId') === worldId) return embedded;
+      if (id === worldId) return game.items.get(worldId) ?? null;
+    }
+    return null;
+  }
+
+  /**
+   * Clone a world-catalog blasphemy power onto this actor as an embedded item,
+   * tagging it with the origin id so per-character edits can be tracked. Returns
+   * the embedded item's id, or the existing embedded id if the power is already
+   * embedded on this actor. Returns null if the world item can't be resolved.
+   * @param {string} worldPowerId
+   * @returns {Promise<string|null>}
+   */
+  async _embedPowerForActor(worldPowerId) {
+    if (!worldPowerId) return null;
+    const existing = this.actor.items.find(i => i.getFlag('cain', 'originWorldId') === worldPowerId);
+    if (existing) return existing.id;
+    const worldItem = game.items.get(worldPowerId);
+    if (!worldItem) return null;
+    const itemData = worldItem.toObject();
+    delete itemData._id;
+    foundry.utils.setProperty(itemData, 'flags.cain.originWorldId', worldPowerId);
+    const [created] = await this.actor.createEmbeddedDocuments('Item', [itemData]);
+    return created?.id ?? null;
   }
 
   _prepareItems(context) {
@@ -608,6 +738,7 @@ export class CainActorSheet extends BaseActorSheet {
     html.find('#editable-agenda-items').on('change', '.editable-item-input', this._updateAgendaItem.bind(this));
     html.find('#editable-agenda-abilities').on('change', '.editable-ability-input', this._updateAgendaAbility.bind(this));
     html.find('.blasphemy-power-to-chat').on('click', this._sendBlasphemyPowerMessage.bind(this));
+    html.find('.edit-blasphemy-power-button').on('click', this._editBlasphemyPower.bind(this));
     html.find('.remove-blasphemy-power-button').on('click', this._removeBlasphemyPowerButton.bind(this));
     html.find('.remove-blasphemy-button').on('click', this._removeBlasphemyButton.bind(this));
     html.find('.remove-affliction-button').on('click', this._removeAfflictionButton.bind(this));
@@ -1534,77 +1665,60 @@ export class CainActorSheet extends BaseActorSheet {
     });
   }
 
-  _onDropBlasphemy(event, blasphemy) {
-    // Ensure this.actor and this.actor.system are defined
+  async _onDropBlasphemy(event, blasphemy) {
     if (!this.actor || !this.actor.system) {
       console.error("Actor or actor system is undefined.");
       ui.notifications.error("Actor or actor system is undefined. Please check your setup.");
       return;
     }
-    console.log("Actor and actor system are defined.");
-  
-    const blasphemyList = this.actor.system.currentBlasphemies || [];
-    console.log("Current Blasphemies:", blasphemyList);
-  
-    // Check if the blasphemy is already in the list
+
+    const blasphemyList = [...(this.actor.system.currentBlasphemies ?? [])];
     if (blasphemyList.includes(blasphemy.id)) {
       console.log("Blasphemy already exists:", blasphemy.id);
       return;
     }
-  
-    // Add the new blasphemy to the list
     blasphemyList.push(blasphemy.id);
-    console.log("Updated Blasphemies:", blasphemyList);
-  
-    // Get the current list of blasphemy powers
-    const blasphemyPowersList = this.actor.system.currentBlasphemyPowers || [];
-    console.log("Current Blasphemy Powers:", blasphemyPowersList);
-  
-    console.log(blasphemy.system);
-  
-    // Get the new blasphemy powers that are passive
-    const newBlasphemyPowers = this._getItemsFromIDs(blasphemy.system.powers || [])
-      .filter(power => {
-        console.log("Inspecting power:", power);
-        if (!power || !power.system) {
-          console.error("Power or power system is undefined:", power);
-          ui.notifications.error("Some powers are undefined. Did you import the compendium to keep document IDs?");
-          return false;
-        }
-        const isPassive = power.system.isPassive;
-        console.log("Is power passive?", isPassive);
-        return isPassive;
-      })
-      .map(power => {
-        console.log("Mapping power to ID:", power.id);
-        return power.id;
-      });
-  
-    console.log("New Blasphemy Powers:", newBlasphemyPowers);
-  
-    // Combine the current and new blasphemy powers
-    const newBlasphemyPowersList = blasphemyPowersList.concat(newBlasphemyPowers);
-    console.log("Updated Blasphemy Powers:", newBlasphemyPowersList);
 
-    //Check if this raises the number of blasphemies higher than 1, if so, add one to the XP max
+    // Auto-embed the blasphemy's passive powers as per-character copies.
+    // Iterating world ids directly (rather than via _getItemsFromIDs) keeps
+    // the catalog as the source of truth even when an actor already has a
+    // legacy/embedded copy of one of them.
+    const worldPowerIds = blasphemy.system.powers ?? [];
+    const embeddedPassiveIds = [];
+    for (const worldId of worldPowerIds) {
+      const worldItem = game.items.get(worldId);
+      if (!worldItem?.system) {
+        console.error("World power lookup failed:", worldId);
+        ui.notifications.error("Some powers are undefined. Did you import the compendium to keep document IDs?");
+        continue;
+      }
+      if (!worldItem.system.isPassive) continue;
+      const embeddedId = await this._embedPowerForActor(worldId);
+      if (embeddedId) embeddedPassiveIds.push(embeddedId);
+    }
+
+    const blasphemyPowersList = [
+      ...(this.actor.system.currentBlasphemyPowers ?? []),
+      ...embeddedPassiveIds
+    ];
+
+    // A second blasphemy raises max XP by 1
     let XPmax = this.actor.system.xp.max;
     if (blasphemyList.length > 1) XPmax += 1;
-    const newXPMax = XPmax;
-    // Update the actor with the new lists
-    this.actor.update({
-      'system.currentBlasphemies': blasphemyList,
-      'system.currentBlasphemyPowers': newBlasphemyPowersList,
-      'system.xp.max': newXPMax
-    }).then(() => {
-      console.log("Actor updated successfully.");
-      console.log(this.actor);
-    }).catch(err => {
+
+    try {
+      await this.actor.update({
+        'system.currentBlasphemies': blasphemyList,
+        'system.currentBlasphemyPowers': blasphemyPowersList,
+        'system.xp.max': XPmax
+      });
+    } catch (err) {
       console.error("Error updating actor:", err);
       ui.notifications.error("Error updating actor. Please check the console for more details.");
-    });
+    }
   }
   
-  _onDropBlasphemyPower(event, blasphemyPower) {
+  async _onDropBlasphemyPower(event, blasphemyPower) {
     // Ensure this.actor and this.actor.system are defined
     if (!this.actor || !this.actor.system) {
       console.error("Actor or actor system is undefined.");
@@ -1621,28 +1735,35 @@ export class CainActorSheet extends BaseActorSheet {
     }
     console.log("Blasphemy power and blasphemy power system are defined.");
   
-    const blasphemyPowersList = this.actor.system.currentBlasphemyPowers || [];
+    const blasphemyPowersList = [...(this.actor.system.currentBlasphemyPowers ?? [])];
     console.log("Current Blasphemy Powers List:", blasphemyPowersList);
-  
-    // Check if the blasphemy power is already in the list
-    if (blasphemyPowersList.includes(blasphemyPower.id)) {
-      console.log("Blasphemy power already exists:", blasphemyPower.id);
+
+    const worldPowerId = blasphemyPower.id;
+    // Legacy duplicate (array still holds the world id directly)
+    if (blasphemyPowersList.includes(worldPowerId)) {
+      console.log("Blasphemy power already in list:", worldPowerId);
       return;
     }
-  
-    // Add the new blasphemy power to the list
-    blasphemyPowersList.push(blasphemyPower.id);
-    console.log("Updated Blasphemy Powers List:", blasphemyPowersList);
-  
-    // Update the actor with the new list
-    this.actor.update({
-      'system.currentBlasphemyPowers': blasphemyPowersList
-    }).then(() => {
+    // Per-character duplicate (already embedded with this origin)
+    if (this.actor.items.find(i => i.getFlag('cain', 'originWorldId') === worldPowerId)) {
+      console.log("Blasphemy power already embedded:", worldPowerId);
+      return;
+    }
+
+    const embeddedId = await this._embedPowerForActor(worldPowerId);
+    if (!embeddedId) {
+      ui.notifications.error("Could not embed power on actor.");
+      return;
+    }
+    blasphemyPowersList.push(embeddedId);
+
+    try {
+      await this.actor.update({ 'system.currentBlasphemyPowers': blasphemyPowersList });
       console.log("Actor updated successfully.");
-    }).catch(err => {
+    } catch (err) {
       console.error("Error updating actor:", err);
       ui.notifications.error("Error updating actor. Please check the console for more details.");
-    });
+    }
   }
 
   _onDropSinMark(event, sinMark) {
@@ -1853,13 +1974,18 @@ export class CainActorSheet extends BaseActorSheet {
     this.actor.render(true);
   }
 
-  _addBlasphemyPower(event) {
+  async _addBlasphemyPower(event) {
     event.preventDefault();
-    const powerID = event.currentTarget.parentElement.querySelector('.selectedPower').value;
-    const currentPowers = this.actor.system.currentBlasphemyPowers;
-    if (currentPowers.includes(powerID)) return;
-    currentPowers.push(powerID);
-    this.actor.update({'system.currentBlasphemyPowers': currentPowers});
+    const worldPowerId = event.currentTarget.parentElement.querySelector('.selectedPower').value;
+    const currentPowers = [...(this.actor.system.currentBlasphemyPowers ?? [])];
+    // Legacy duplicate (array still holds the world id directly)
+    if (currentPowers.includes(worldPowerId)) return;
+    // Per-character duplicate (already embedded with this origin)
+    if (this.actor.items.find(i => i.getFlag('cain', 'originWorldId') === worldPowerId)) return;
+    const embeddedId = await this._embedPowerForActor(worldPowerId);
+    if (!embeddedId) return;
+    currentPowers.push(embeddedId);
+    await this.actor.update({ 'system.currentBlasphemyPowers': currentPowers });
     this.actor.render(true);
   }
 
@@ -2084,10 +2210,59 @@ export class CainActorSheet extends BaseActorSheet {
     });
   }
 
+  /**
+   * Open the editable item sheet for this character's copy of a power.
+   * If the id still points at a world (catalog) item — i.e. the power was
+   * added before the embed-on-add migration and never converted — embed it
+   * on this actor first, then open the embedded copy. This prevents the
+   * "edit leaks to every other character" footgun that prompted the
+   * embed-on-add work in the first place.
+   */
+  async _editBlasphemyPower(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    const id = event.currentTarget.getAttribute('data-id');
+    if (!id) return;
+
+    let item = this.actor.items.get(id);
+    if (item) {
+      // Already per-character editable.
+      item.sheet?.render(true);
+      return;
+    }
+
+    // Legacy world-ref. Embed a copy, swap the array entry to the new id,
+    // then open the editable per-character copy.
+    const worldItem = game.items.get(id);
+    if (!worldItem) {
+      ui.notifications.warn("Could not find that power. Try removing and re-adding it.");
+      return;
+    }
+    const embeddedId = await this._embedPowerForActor(id);
+    if (!embeddedId) {
+      ui.notifications.error("Could not create a per-character copy of this power.");
+      return;
+    }
+    const currentPowers = this.actor.system.currentBlasphemyPowers ?? [];
+    const newPowers = currentPowers.map(p => (p === id ? embeddedId : p));
+    await this.actor.update({ 'system.currentBlasphemyPowers': newPowers });
+    const embedded = this.actor.items.get(embeddedId);
+    embedded?.sheet?.render(true);
+    // Re-render the sheet so the data-id attributes update to the new id.
+    this.render(false);
+  }
+
   _sendBlasphemyPowerMessage(event) {
     event.preventDefault();
     const id = event.currentTarget.getAttribute('data-id');
-    const blasphemyPower = game.items.get(id);
+    // Embedded per-character copies live on the actor; legacy entries live
+    // in the world catalog. Same fallback shape as _getItemsFromIDs.
+    const blasphemyPower = this.actor.items.get(id) ?? game.items.get(id);
+    if (!blasphemyPower) {
+      console.error(`CAIN | Blasphemy power not found for chat-send: ${id}`);
+      ui.notifications.warn("Could not find that power. Try removing and re-adding it.");
+      return;
+    }
     const catLevel = this.actor.system.CATLEVEL.value;
     const formattedDescription = window.formatCatText(blasphemyPower.system.powerDescription, catLevel);
     const message = `<h3>${blasphemyPower.system.powerName}</h3><p>${formattedDescription}</p>`;
@@ -2149,46 +2324,72 @@ export class CainActorSheet extends BaseActorSheet {
     });
   }
 
-  _removeBlasphemyPowerButton(event) {
+  async _removeBlasphemyPowerButton(event) {
     event.preventDefault();
     const powerID = event.currentTarget.dataset.id;
-    const blasphemyPowers = this.actor.system.currentBlasphemyPowers || [];
-    const index = blasphemyPowers.indexOf(powerID);
-    const newblasphemyPowers = blasphemyPowers.slice(0, Number(index)).concat(blasphemyPowers.slice(Number(index)+1))
-    this.actor.update({ 'system.currentBlasphemyPowers': newblasphemyPowers }).then(() => {
-      this.render(false); // Re-render the sheet to reflect changes
-    });
+    const blasphemyPowers = this.actor.system.currentBlasphemyPowers ?? [];
+    const newBlasphemyPowers = blasphemyPowers.filter(id => id !== powerID);
+    // If the removed id refers to an embedded copy on this actor, delete the
+    // embedded doc so we don't leak orphan items as players add/remove powers.
+    if (this.actor.items.has(powerID)) {
+      try {
+        await this.actor.deleteEmbeddedDocuments('Item', [powerID]);
+      } catch (err) {
+        console.error("Failed to delete embedded power:", err);
+      }
+    }
+    await this.actor.update({ 'system.currentBlasphemyPowers': newBlasphemyPowers });
+    this.render(false);
   }
 
-  _removeBlasphemyButton(event) {
+  async _removeBlasphemyButton(event) {
     event.preventDefault();
     const blasphemyID = event.currentTarget.dataset.id;
-    console.log(blasphemyID);
     const blasphemy = game.items.get(blasphemyID);
-    console.log(blasphemy);
-    const blasphemies = this.actor.system.currentBlasphemies || [];
-    if (!blasphemies.includes(blasphemyID)) {console.error("Tried to remove Blasphemy ID: " + blasphemyID + " but did not find it in list: " + blasphemies); return}; //Break out if we're trying to remove a non-existant blasphemy.
-
-    //Handle reducing XP max if removing a 2nd blasphemy.
-    let XPmax = this.actor.system.xp.max;
-    if (blasphemies.length > 1) {
-      XPmax -= 1;
+    const blasphemies = this.actor.system.currentBlasphemies ?? [];
+    if (!blasphemies.includes(blasphemyID)) {
+      console.error(`Tried to remove Blasphemy ID ${blasphemyID} but it isn't on the actor.`);
+      return;
     }
 
-    //Remove the blasphemy
-    const index = blasphemies.indexOf(blasphemyID);
-    const newBlasphemies = blasphemies.slice(0, Number(index)).concat(blasphemies.slice(Number(index)+1));
-    const blasphemyPowers = this.actor.system.currentBlasphemyPowers || [];
-    console.log(blasphemy);
-    const newBlasphemyPowers = blasphemyPowers.filter(powerID => {return !(blasphemy.system.powers.includes(powerID));});
+    let XPmax = this.actor.system.xp.max;
+    if (blasphemies.length > 1) XPmax -= 1;
 
-    this.actor.update({
+    const newBlasphemies = blasphemies.filter(id => id !== blasphemyID);
+
+    // Strip out this blasphemy's powers. Two cases per entry in the powers
+    // array: a legacy world id, where we compare directly to the parent's
+    // catalog; or an embedded id, where we look up the embedded doc's
+    // originWorldId flag. Embedded copies that match also get deleted from
+    // the actor so we don't leave dangling per-character items.
+    const parentPowerIds = new Set(blasphemy?.system?.powers ?? []);
+    const blasphemyPowers = this.actor.system.currentBlasphemyPowers ?? [];
+    const embeddedIdsToDelete = [];
+    const newBlasphemyPowers = blasphemyPowers.filter(powerID => {
+      if (parentPowerIds.has(powerID)) return false; // legacy match
+      const embedded = this.actor.items.get(powerID);
+      const origin = embedded?.getFlag('cain', 'originWorldId');
+      if (origin && parentPowerIds.has(origin)) {
+        embeddedIdsToDelete.push(powerID);
+        return false;
+      }
+      return true;
+    });
+
+    if (embeddedIdsToDelete.length) {
+      try {
+        await this.actor.deleteEmbeddedDocuments('Item', embeddedIdsToDelete);
+      } catch (err) {
+        console.error("Failed to delete embedded powers during blasphemy remove:", err);
+      }
+    }
+
+    await this.actor.update({
       'system.currentBlasphemies': newBlasphemies,
       'system.currentBlasphemyPowers': newBlasphemyPowers,
-      'system.xp.max': XPmax,
-     }).then(() => {
-      this.render(false); // Re-render the sheet to reflect changes
+      'system.xp.max': XPmax
     });
+    this.render(false);
   }
 
   _removeAgendaButton(event) {
@@ -2273,38 +2474,65 @@ export class CainActorSheet extends BaseActorSheet {
       return { bondId: bond.bondId, currentLevel: bond.currentLevel };
     });
 
-    // Check if we need to add/remove high blasphemy power
+    // Check if we need to add/remove high blasphemy power.
+    // bondItem.system.highBlasphemy is a world (catalog) id; on the actor side
+    // we use embed-on-add so a per-character copy can be reflavored later.
     const bondItem = game.items.get(bondId);
     if (bondItem && bondItem.system.highBlasphemy) {
       const highBlasphemyLevel = bondItem.system.highBlasphemyLevel || 2;
-      const highBlasphemyPowerId = bondItem.system.highBlasphemy;
+      const highBlasphemyWorldId = bondItem.system.highBlasphemy;
 
-      // If we're reaching or exceeding the required level, add the power
+      // Reaching/exceeding threshold: embed the power onto the actor.
       if (clampedLevel >= highBlasphemyLevel && oldLevel < highBlasphemyLevel) {
-        const currentPowers = this.actor.system.currentBlasphemyPowers || [];
-        if (!currentPowers.includes(highBlasphemyPowerId)) {
-          const newPowers = [...currentPowers, highBlasphemyPowerId];
-          await this.actor.update({
-            'system.bonds': newBonds,
-            'system.currentBlasphemyPowers': newPowers
-          });
-          const powerItem = game.items.get(highBlasphemyPowerId);
-          ui.notifications.info(`Gained High Blasphemy Power: ${powerItem?.name || 'Unknown'}`);
-          this.render(false);
-          return;
+        const currentPowers = [...(this.actor.system.currentBlasphemyPowers ?? [])];
+        const alreadyLegacy = currentPowers.includes(highBlasphemyWorldId);
+        const alreadyEmbedded = this.actor.items.find(
+          i => i.getFlag('cain', 'originWorldId') === highBlasphemyWorldId
+        );
+        if (!alreadyLegacy && !alreadyEmbedded) {
+          const embeddedId = await this._embedPowerForActor(highBlasphemyWorldId);
+          if (embeddedId) {
+            currentPowers.push(embeddedId);
+            await this.actor.update({
+              'system.bonds': newBonds,
+              'system.currentBlasphemyPowers': currentPowers
+            });
+            const powerItem = game.items.get(highBlasphemyWorldId);
+            ui.notifications.info(`Gained High Blasphemy Power: ${powerItem?.name || 'Unknown'}`);
+            this.render(false);
+            return;
+          }
         }
       }
 
-      // If we're dropping below the required level, remove the power
+      // Dropping below threshold: remove the entry by origin match (handles
+      // both legacy world-id entries and embedded copies). Delete the
+      // embedded doc so we don't leak per-character items.
       if (clampedLevel < highBlasphemyLevel && oldLevel >= highBlasphemyLevel) {
-        const currentPowers = this.actor.system.currentBlasphemyPowers || [];
-        if (currentPowers.includes(highBlasphemyPowerId)) {
-          const newPowers = currentPowers.filter(id => id !== highBlasphemyPowerId);
+        const currentPowers = this.actor.system.currentBlasphemyPowers ?? [];
+        const embeddedIdsToDelete = [];
+        const newPowers = currentPowers.filter(id => {
+          if (id === highBlasphemyWorldId) return false; // legacy entry
+          const embedded = this.actor.items.get(id);
+          if (embedded?.getFlag('cain', 'originWorldId') === highBlasphemyWorldId) {
+            embeddedIdsToDelete.push(id);
+            return false;
+          }
+          return true;
+        });
+        if (newPowers.length !== currentPowers.length) {
+          if (embeddedIdsToDelete.length) {
+            try {
+              await this.actor.deleteEmbeddedDocuments('Item', embeddedIdsToDelete);
+            } catch (err) {
+              console.error("Failed to delete embedded high-blasphemy power:", err);
+            }
+          }
           await this.actor.update({
             'system.bonds': newBonds,
             'system.currentBlasphemyPowers': newPowers
           });
-          const powerItem = game.items.get(highBlasphemyPowerId);
+          const powerItem = game.items.get(highBlasphemyWorldId);
           ui.notifications.info(`Lost High Blasphemy Power: ${powerItem?.name || 'Unknown'}`);
           this.render(false);
           return;
@@ -4733,25 +4961,29 @@ _setupBlasphemySearch(html) {
       if (!currentBlasphemies.includes(item.id)) {
         currentBlasphemies.push(item.id);
 
-        // Get the current list of blasphemy powers
-        const blasphemyPowersList = this.actor.system.currentBlasphemyPowers || [];
+        // Auto-embed the blasphemy's passive powers as per-character copies.
+        // Same shape as _onDropBlasphemy — iterate the catalog (world ids) and
+        // skip anything missing or already embedded so re-adds are idempotent.
+        const worldPowerIds = item.system.powers ?? [];
+        const embeddedPassiveIds = [];
+        for (const worldId of worldPowerIds) {
+          const worldItem = game.items.get(worldId);
+          if (!worldItem?.system) {
+            console.error("World power lookup failed:", worldId);
+            ui.notifications.error("Some powers are undefined. Did you import the compendium to keep document IDs?");
+            continue;
+          }
+          if (!worldItem.system.isPassive) continue;
+          const embeddedId = await this._embedPowerForActor(worldId);
+          if (embeddedId) embeddedPassiveIds.push(embeddedId);
+        }
 
-        // Get the new blasphemy powers that are passive (matching drag behavior from line 878-894)
-        const newBlasphemyPowers = this._getItemsFromIDs(item.system.powers || [])
-          .filter(power => {
-            if (!power || !power.system) {
-              console.error("Power or power system is undefined:", power);
-              ui.notifications.error("Some powers are undefined. Did you import the compendium to keep document IDs?");
-              return false;
-            }
-            return power.system.isPassive;
-          })
-          .map(power => power.id);
+        const newBlasphemyPowersList = [
+          ...(this.actor.system.currentBlasphemyPowers ?? []),
+          ...embeddedPassiveIds
+        ];
 
-        // Combine the current and new blasphemy powers
-        const newBlasphemyPowersList = blasphemyPowersList.concat(newBlasphemyPowers);
-
-        // Check if this raises the number of blasphemies higher than 1, if so, add one to the XP max
+        // A second blasphemy raises max XP by 1
         let XPmax = this.actor.system.xp.max;
         if (currentBlasphemies.length > 1) XPmax += 1;
 
@@ -4761,7 +4993,7 @@ _setupBlasphemySearch(html) {
           'system.xp.max': XPmax
         });
 
-        const passiveCount = newBlasphemyPowers.length;
+        const passiveCount = embeddedPassiveIds.length;
         ui.notifications.info(`Added ${item.name} with ${passiveCount} passive power${passiveCount !== 1 ? 's' : ''}`);
         searchInput.val('');
         searchResults.removeClass('active').empty();

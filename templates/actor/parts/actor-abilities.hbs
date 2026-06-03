@@ -195,6 +195,9 @@
                   <a class="item-control blasphemy-power-to-chat" data-id="{{this.id}}" title="Send to Chat">
                     <i class="fas fa-comment"></i>
                   </a>
+                  <a class="item-control edit-blasphemy-power-button" data-id="{{this.id}}" title="Edit this character's copy">
+                    <i class="fas fa-pen-to-square"></i>
+                  </a>
                   <a class="item-control remove-blasphemy-power-button" data-id="{{this.id}}" title="Remove">
                     <i class="fas fa-trash"></i>
                   </a>
@@ -243,6 +246,9 @@
                   title="{{this.system.powerDescription}}">{{this.system.powerName}}</span>
                 <a class="item-control blasphemy-power-to-chat" data-id="{{this.id}}" title="Send to Chat">
                   <i class="fas fa-comment"></i>
+                </a>
+                <a class="item-control edit-blasphemy-power-button" data-id="{{this.id}}" title="Edit this character's copy">
+                  <i class="fas fa-pen-to-square"></i>
                 </a>
                 <a class="item-control remove-blasphemy-power-button" data-id="{{this.id}}" title="Remove">
                   <i class="fas fa-trash"></i>
@@ -310,14 +316,26 @@
         <ul class="editable-blasphemy-powers">
           {{#each currentUnlinkedBlasphemyPowers}}
           <li>
-            <span data-id="{{this.id}}" class="blasphemy-power"
-              title="{{this.system.powerDescription}}">{{this.system.powerName}}</span>
-            <a class="item-control blasphemy-power-to-chat" data-id="{{this.id}}" title="Send to Chat">
-              <i class="fas fa-comment"></i>
-            </a>
-            <a class="item-control remove-blasphemy-power-button" data-id="{{this.id}}" title="Remove">
-              <i class="fas fa-trash"></i>
-            </a>
+            {{!--
+              The name + action buttons live inside an <h4> wrapper so the
+              click handler's `event.target.parentElement.parentElement`
+              traversal lands on this <li> (and finds THIS power's
+              `.power-description-card`) instead of stepping up to the
+              <ul> and grabbing the first power's card.
+            --}}
+            <h4>
+              <span data-id="{{this.id}}" class="blasphemy-power"
+                title="{{this.system.powerDescription}}">{{this.system.powerName}}</span>
+              <a class="item-control blasphemy-power-to-chat" data-id="{{this.id}}" title="Send to Chat">
+                <i class="fas fa-comment"></i>
+              </a>
+              <a class="item-control edit-blasphemy-power-button" data-id="{{this.id}}" title="Edit this character's copy">
+                <i class="fas fa-pen-to-square"></i>
+              </a>
+              <a class="item-control remove-blasphemy-power-button" data-id="{{this.id}}" title="Remove">
+                <i class="fas fa-trash"></i>
+              </a>
+            </h4>
             <div class="power-description-card">
               <h4>Keywords</h4>
               <p>{{this.system.keywords}}</p>

@@ -53,6 +53,22 @@
     - bugeso and loupgarou for development contributions and v1.3 updates
 
 
+## 1.3.20
+
+- Per-character blasphemy power copies: when a character adds a blasphemy power (via the Add Power dropdown, dragging it in, taking a parent Blasphemy that auto-adds passives, the homebrew "search and add" path, or crossing a Bond's high-blasphemy threshold), the catalog item is now embedded as a per-character copy on the actor instead of stored as a shared world reference. Players can edit their copy from the character sheet's Items tab without affecting the catalog item or any other character. **No migration runs — existing characters keep working unchanged via a fallback lookup; new additions become per-character editable.**
+- Player-facing edit pencil: each blasphemy power on the character sheet now has a `fa-pen-to-square` icon next to chat/remove. Click opens the editable per-character item sheet. If the power is still a legacy world reference, clicking edit silently embeds a copy first so the edit lands on the player's own version.
+- GM Convert button: GM-only header button (`fa-user-pen`) on character sheets to bulk-convert that character's still-legacy powers to embedded copies on demand. Idempotent and per-actor. Dead references are silently dropped.
+- CAT level strip: extended from 7 slots (CAT 0–VI) to 8 slots (CAT 0–VII) and fixed the missions-survived mapping. Now reads `0, 0, 1, 2, 4, 7, X, X` under CAT 0 through VII respectively, matching the CAIN rulebook.
+- Hunt Tracker ↔ Global Talismans: changes made on the Hunt Tracker now push back to the linked Global Talismans (previously only the inverse direction worked).
+- Pressure → Execution talisman scaling: when pressure changes the linked Execution talisman's max now scales with it (`8 + pressure + CAT`), so the talisman visibly grows as pressure climbs.
+- Talisman tile presets: two new world-scope settings (**Talisman Tile Width / Height**) — defaults 274×432, configurable per world so big scenes don't get postage-stamp tiles from Create Tile.
+- Talisman completion visual: when a talisman is full, the marks readout turns CAIN-orange with a pulsing "✓ FULL" badge so completion is obvious at a glance.
+- Talisman tile label: now centered directly below the tile (with no border), self-heals onto stranded labels the next time their value changes.
+- Initiative formula: `CONFIG.Combat.initiative` is now `1d6` instead of `1d20 + @abilities.dex.mod`. CAIN doesn't use Foundry's initiative system natively, but tools like the Carousel Combat Tracker do — the previous formula was throwing roll errors because the referenced ability path doesn't exist on CAIN actors.
+- "Other Powers" card-open bug: clicking a homebrew or unlinked power no longer opens the first power's description card — the list now uses the same `<h4>` wrapper as Passives/Powers so the click handler walks to the right `<li>`.
+- Release pipeline: the GitHub Actions workflow now reads `compatibility.minimum/verified/maximum` from `system.json` instead of hardcoding `"13"`, so foundryvtt.com's package page actually picks up the verified-v14 status on release.
+- Release notes: added `Blast` to the Common Psyche Uses dropdown.
+
 ## 1.3.18
 
 - V14 Support is here! This update includes several fixes and improvements to ensure compatibility with FoundryVTT v14 while maintaining support for v11 and v12. Key changes include namespacing utility calls, removing deprecated options, and fixing data preparation issues during actor creation and rolls. Additionally, the Player Overview interface has been improved to prevent errors when no players have assigned actors, and the Domain item creation logic has been refined to preserve custom images. Overall, this update ensures a smoother experience across all supported FoundryVTT versions.

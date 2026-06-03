@@ -17,8 +17,11 @@
             <button class="delete-all-tiles" data-index="{{@index}}"><i class="fas fa-eraser"></i> Delete All Tiles</button>
             <input type="number" min="0" max="13" value="{{this.maxMarkAmount}}" class="talisman-max-mark" data-index="{{@index}}">
           {{/if}}
-          <input type="range" min="0" max="{{this.maxMarkAmount}}" value="{{this.currMarkAmount}}" class="talisman-slider" data-index="{{@index}}">
-          <div class="talisman-marks">{{this.currMarkAmount}} / {{this.maxMarkAmount}}</div>
+          <input type="range" min="0" max="{{this.maxMarkAmount}}" value="{{this.currMarkAmount}}" class="talisman-slider {{#if (gte this.currMarkAmount this.maxMarkAmount)}}is-complete{{/if}}" data-index="{{@index}}">
+          <div class="talisman-marks {{#if (gte this.currMarkAmount this.maxMarkAmount)}}is-complete{{/if}}">
+            {{this.currMarkAmount}} / {{this.maxMarkAmount}}
+            {{#if (gte this.currMarkAmount this.maxMarkAmount)}}<span class="talisman-complete-badge">✓ FULL</span>{{/if}}
+          </div>
         </div>
       </div>
       {{/unless}}
@@ -34,8 +37,11 @@
           </button>
           <button class="pin-talisman" data-index="{{@index}}"><i class="fas fa-thumbtack"></i> Pin</button>
           <input type="number" min="0" max="13" value="{{this.maxMarkAmount}}" class="talisman-max-mark" data-index="{{@index}}">
-          <input type="range" min="0" max="{{this.maxMarkAmount}}" value="{{this.currMarkAmount}}" class="talisman-slider" data-index="{{@index}}">
-          <div class="talisman-marks">{{this.currMarkAmount}} / {{this.maxMarkAmount}}</div>
+          <input type="range" min="0" max="{{this.maxMarkAmount}}" value="{{this.currMarkAmount}}" class="talisman-slider {{#if (gte this.currMarkAmount this.maxMarkAmount)}}is-complete{{/if}}" data-index="{{@index}}">
+          <div class="talisman-marks {{#if (gte this.currMarkAmount this.maxMarkAmount)}}is-complete{{/if}}">
+            {{this.currMarkAmount}} / {{this.maxMarkAmount}}
+            {{#if (gte this.currMarkAmount this.maxMarkAmount)}}<span class="talisman-complete-badge">✓ FULL</span>{{/if}}
+          </div>
         </div>
       </div>
       {{/if}}
@@ -162,5 +168,32 @@
 /* Talisman button icons */
 .talisman-controls button i {
   margin-right: 5px;
+}
+
+/* Completion state: the talisman has hit its maximum and is "full". */
+.talisman-marks.is-complete {
+  color: #ff4500;
+  font-weight: bold;
+  text-shadow: 0 0 6px rgba(255, 69, 0, 0.85);
+  letter-spacing: 1px;
+}
+.talisman-complete-badge {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 1px 6px;
+  font-size: 0.75em;
+  background: #ff4500;
+  color: #fff;
+  border-radius: 4px;
+  vertical-align: middle;
+  animation: talisman-complete-pulse 1.4s ease-in-out infinite;
+}
+@keyframes talisman-complete-pulse {
+  0%, 100% { box-shadow: 0 0 4px rgba(255, 69, 0, 0.7); }
+  50%      { box-shadow: 0 0 14px rgba(255, 69, 0, 1); }
+}
+/* When full, accent the slider track too so the at-a-glance view matches. */
+.talisman-slider.is-complete {
+  accent-color: #ff4500;
 }
 </style>
