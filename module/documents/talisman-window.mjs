@@ -218,9 +218,12 @@ export class TalismanWindow extends Application {
 
     console.log('Center position:', centerX, centerY);
 
-    // Use proper talisman image size - 274x432 to match original dimensions
-    const tileWidth = 274;
-    const tileHeight = 432;
+    // Tile size is configurable via world settings so large scenes can use
+    // bigger talisman tiles without manual resize after every create. Defaults
+    // are 274x432 (the original hardcoded values), so unconfigured worlds keep
+    // their existing behavior.
+    const tileWidth = Number(game.settings.get('cain', 'talismanTileWidth')) || 274;
+    const tileHeight = Number(game.settings.get('cain', 'talismanTileHeight')) || 432;
 
     const tileData = {
       texture: {
@@ -290,16 +293,34 @@ export class TalismanWindow extends Application {
   }
 
   async _createTileLabel(tile, talisman) {
-    // Create a drawing with text to label the tile - positioned below
-    const labelWidth = 200;
-    const labelHeight = 50;
+    // Coerce to numbers up front. Some Foundry versions hand back tile
+    // dimensions as strings depending on how the TileDocument was created,
+    // which silently turns `(tile.width - labelWidth) / 2` into NaN and
+    // drops the label at scene-origin or wherever the renderer defaults
+    // for an invalid coord. Number() is cheap insurance against that.
+    const tileX = Number(tile.x);
+    const tileY = Number(tile.y);
+    const tileW = Number(tile.width);
+    const tileH = Number(tile.height);
+
+    // Label is a compact tag horizontally centered directly below the
+    // talisman. Position below the tile (not inside): the DrawingsLayer
+    // is painted BEFORE the TilesLayer, so a drawing inside the tile's
+    // bounds is hidden behind the tile texture. We put a small gap so
+    // any letterbox padding that the v13+ centered texture anchor adds
+    // to the tile's visible bottom doesn't visually cut into the label.
+    const labelWidth = Math.max(140, Math.min(360, Math.round(tileW * 0.75)));
+    const labelHeight = Math.max(40, Math.min(80, Math.round(tileH * 0.12)));
+    const labelX = tileX + (tileW - labelWidth) / 2;
+    const labelY = tileY + tileH + 8;
 
     console.log('Creating label for tile:', tile.id);
-    console.log('Tile position:', tile.x, tile.y, 'size:', tile.width, tile.height);
+    console.log('Tile position:', tileX, tileY, 'size:', tileW, tileH);
+    console.log('Label computed:', { labelX, labelY, labelWidth, labelHeight });
 
     const labelData = {
-      x: tile.x + (tile.width / 2) - (labelWidth / 2), // Center horizontally
-      y: tile.y + tile.height + 5, // Position below the tile with small gap
+      x: labelX,
+      y: labelY,
       shape: {
         type: 'r', // Rectangle
         width: labelWidth,
@@ -307,11 +328,14 @@ export class TalismanWindow extends Application {
       },
       fillColor: '#000000',
       fillAlpha: 0.8,
-      strokeWidth: 2,
-      strokeColor: '#00bfff',
-      strokeAlpha: 1.0,
+      // No border — text often overflows the shape's fixed width and
+      // the box clips through the text. Cleaner without it.
+      strokeWidth: 0,
+      strokeAlpha: 0,
       text: `${talisman.name}\n${talisman.currMarkAmount} / ${talisman.maxMarkAmount}`,
-      fontSize: 20,
+      // Scale font with tile width so the label is readable on big tiles
+      // without overflowing on the 274px default.
+      fontSize: Math.max(14, Math.min(40, Math.round(tile.width * 0.075))),
       fontFamily: 'Signika',
       textColor: '#ffffff',
       textAlpha: 1.0,
@@ -388,11 +412,23 @@ export class TalismanWindow extends Application {
 
       console.log(`Found ${labels.length} labels for tile ${tile.id}`);
 
+      // Self-heal: same "below tile with small gap" anchoring as creation.
+      const newShapeWidth = Math.max(140, Math.min(360, Math.round(tile.width * 0.75)));
+      const newShapeHeight = Math.max(40, Math.min(80, Math.round(tile.height * 0.12)));
+      const newX = tile.x + (tile.width - newShapeWidth) / 2;
+      const newY = tile.y + tile.height + 8;
+      const newFontSize = Math.max(14, Math.min(40, Math.round(tile.width * 0.075)));
+
       for (let label of labels) {
         await label.update({
+          x: newX,
+          y: newY,
+          'shape.width': newShapeWidth,
+          'shape.height': newShapeHeight,
+          fontSize: newFontSize,
           text: `${talisman.name}\n${talisman.currMarkAmount} / ${talisman.maxMarkAmount}`
         });
-        console.log(`Label updated: ${talisman.name} ${talisman.currMarkAmount}/${talisman.maxMarkAmount}`);
+        console.log(`Label updated: ${talisman.name} ${talisman.currMarkAmount}/${talisman.maxMarkAmount} @ (${newX}, ${newY})`);
       }
     }
   }
@@ -757,16 +793,22 @@ Hooks.on('updateTile', async (tileDoc, changes, options, userId) => {
     console.log('Found labels:', labels.length);
 
     for (let label of labels) {
-      const labelWidth = label.shape?.width || 200;
-      const newX = tileDoc.x + (tileDoc.width / 2) - (labelWidth / 2);
-      const newY = tileDoc.y + tileDoc.height + 5;
+      // Match the creation path: below tile, with a small gap so the
+      // tile texture doesn't clip the label. See _createTileLabel.
+      const newShapeWidth = Math.max(140, Math.min(360, Math.round(tileDoc.width * 0.75)));
+      const newShapeHeight = Math.max(40, Math.min(80, Math.round(tileDoc.height * 0.12)));
+      const newX = tileDoc.x + (tileDoc.width - newShapeWidth) / 2;
+      const newY = tileDoc.y + tileDoc.height + 8;
 
       console.log('Updating label from', label.x, label.y, 'to', newX, newY);
 
       try {
         await label.update({
           x: newX,
-          y: newY
+          y: newY,
+          'shape.width': newShapeWidth,
+          'shape.height': newShapeHeight,
+          fontSize: Math.max(14, Math.min(40, Math.round(tileDoc.width * 0.075)))
         });
         console.log('Label updated successfully');
       } catch (error) {
