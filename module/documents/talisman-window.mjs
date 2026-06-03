@@ -328,9 +328,10 @@ export class TalismanWindow extends Application {
       },
       fillColor: '#000000',
       fillAlpha: 0.8,
-      strokeWidth: 2,
-      strokeColor: '#00bfff',
-      strokeAlpha: 1.0,
+      // No border — text often overflows the shape's fixed width and
+      // the box clips through the text. Cleaner without it.
+      strokeWidth: 0,
+      strokeAlpha: 0,
       text: `${talisman.name}\n${talisman.currMarkAmount} / ${talisman.maxMarkAmount}`,
       // Scale font with tile width so the label is readable on big tiles
       // without overflowing on the 274px default.

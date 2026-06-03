@@ -108,12 +108,16 @@ Hooks.once('init', async function () {
   CONFIG.CAIN = CAIN;
 
   /**
-   * Set an initiative formula for the system
-   * @type {String}
+   * Set an initiative formula for the system.
+   * CAIN doesn't use initiative by default, but tools like the Carousel
+   * Combat Tracker rely on CONFIG.Combat.initiative. A 1d6 with no
+   * modifier is closer to CAIN's d6-based dice pool than the leftover
+   * d20-plus-DEX-mod placeholder, and `@abilities.dex.mod` referenced
+   * a path that doesn't exist on CAIN actors anyway.
    */
   CONFIG.Combat.initiative = {
-    formula: '1d20 + @abilities.dex.mod',
-    decimals: 2,
+    formula: '1d6',
+    decimals: 0,
   };
 
   // Define custom Document and DataModel classes
