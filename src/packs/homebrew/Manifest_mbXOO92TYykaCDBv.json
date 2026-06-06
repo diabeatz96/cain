@@ -1,0 +1,50 @@
+{
+  "name": "Manifest",
+  "type": "blasphemyPower",
+  "img": "Assets/Cain/Cain%20Art/Symbols/Egoism.png",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Egoism",
+    "powerName": "Manifest",
+    "isPassive": false,
+    "keywords": [
+      "Charm, Self, Until Rest"
+    ],
+    "powerDescription": "You transform your body into an amalgamation of flesh and sin, becoming a partial-imago in the process. Pick one of these effects with your transformation:\n\n• You fuse with one or more of your mundane weapons, increasing their CAT by +1 (up to CAT 4) and making them able to harm sins.\n\n• Your flesh deforms into one similar to an actual sin. All your mundane abilities are no longer hard by default while fighting sins.\n\n• You tap into your sin-seed tumor for more power. Your mundane abilities increase by +1 CAT.\n\nYou can take 1d3 sin to pick a second option, and 1d6 sin to pick all three options. This is chosen upon activation.",
+    "description": "",
+    "primaryColor": "#000000",
+    "accentColor": "#8a0000",
+    "secondaryColor": "#000000",
+    "textColor": "#ffffff",
+    "psycheBurstCost": false,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false,
+    "isHighBlasphemy": false
+  },
+  "_id": "mbXOO92TYykaCDBv",
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "flags": {
+    "exportSource": {
+      "world": "cain-all",
+      "system": "cain",
+      "coreVersion": "12.343",
+      "systemVersion": "1.2.2"
+    }
+  },
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.mbXOO92TYykaCDBv",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752529130,
+    "modifiedTime": 1780752529130,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "sort": 0,
+  "_key": "!items!mbXOO92TYykaCDBv"
+}

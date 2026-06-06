@@ -1,0 +1,43 @@
+{
+  "name": "Cipher",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Enigmata",
+    "powerName": "Cipher",
+    "isPassive": false,
+    "keywords": [
+      "Instant, Touch, 1 scene, 1/scene."
+    ],
+    "powerDescription": "You create a cognito hazardous glyph on any surface that is smaller than the palm of your hand, and may be placed on anything such as an object, piece of clothing, or on the surface of your body. Create a talisman equal to your ½ CAT. Whenever a being looks at it and trigger its effects, slash the talisman once. This power ends when the talisman is fully slashed. You determine its effect from the following: \n\nLatching: The cognitohazard is not particularly dangerous but lingers in the mind of anyone who sees it. Gain or grant +1D to track, follow, or ascertain the nature of living beings that have looked at the glyph. \n\nDisturbing: All living beings will actively avoid looking at this symbol and subconsciously and have intense migraines upon forcing themselves to do so. The glyph now lasts regardless of how many beings look at it. \n\nHarmful: The cognitohazard causes damage to the brain of anyone who perceives it. This critically injures mundane humans and is painful to supernatural beings. Enemies who look at it for the first time take damage equal to a PSYCHE roll. Take the Descent hook for every time you roll for PSYCHE this way after your first roll. If you are already in descent take 1d3+1 stress per instance instead.",
+    "psycheBurstCost": true,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false,
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "isHighBlasphemy": false
+  },
+  "_id": "BgmrELRYaimLN6ub",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.BgmrELRYaimLN6ub",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752528807,
+    "modifiedTime": 1780752528807,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!BgmrELRYaimLN6ub"
+}

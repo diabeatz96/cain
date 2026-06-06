@@ -1,0 +1,43 @@
+{
+  "name": "Temper",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Valence",
+    "powerName": "Temper",
+    "isPassive": false,
+    "keywords": [
+      "Transmute, Curse, 1 Scene."
+    ],
+    "powerDescription": "Alter the strength and rigidity of emotions and objects alike. You may choose to target a CAT amount of people within range or an object equal to your CAT size or smaller. Apply one of the following effects: \n\n• Brittle: A creature’s current emotion becomes less intense, more prone to change from external influences, and impacting the decisions of the creature less. An object becomes extremely brittle, and easier to destroy or break, anything thin with any weight on it may suddenly break or shatter. \n\n• Harden: A creature’s current emotion becomes more intense, harder to get rid of or change moods from, and impacting the decisions of the creature more heavily. An object becomes dense and durable, much harder to destroy or break, and can withstand more force than it normally would. \n\nThis power may easily affect the parameters of rolls, such as difficulty and risk.",
+    "psycheBurstCost": true,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false,
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "isHighBlasphemy": false
+  },
+  "_id": "hlVO18B50ICIapPb",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.hlVO18B50ICIapPb",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752529130,
+    "modifiedTime": 1780752529130,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!hlVO18B50ICIapPb"
+}

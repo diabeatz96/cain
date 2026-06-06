@@ -1,0 +1,43 @@
+{
+  "name": "Cure",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Physic",
+    "powerName": "Cure",
+    "isPassive": false,
+    "keywords": [
+      "Instant, Short."
+    ],
+    "powerDescription": "You rearrange and revert the physical traumas on a target in range. Roll for PSYCHE, adding 1d3 to the total number of successes. Remove that number of stress from the target. If this would overheal (reduce the number of slashes below 0) you may choose to remove an injury from the target and continue removing stress as if the talisman was fully slashed. Removing an injury this way grants the Necrosis hook to your target. You may only use this on an allied exorcist once per rest. \n\nWhen you may also target a CAT group of humans instead, you instantly cure them of any psychic phenomenon affecting them, along with physical ailments or injuries. These effects return to them at the end of the scene. \n\nWhen targeting a supernatural non-player creature, add ½ CAT segments to their execution talisman. The next time that NPC would take a reaction, they falter as their healing comes undone, rolling the risk die twice and choosing the higher result.",
+    "psycheBurstCost": true,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false,
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "isHighBlasphemy": false
+  },
+  "_id": "ShPrMZAfuvSmAuMj",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.ShPrMZAfuvSmAuMj",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752529013,
+    "modifiedTime": 1780752529013,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!ShPrMZAfuvSmAuMj"
+}

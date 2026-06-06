@@ -1,0 +1,47 @@
+{
+  "name": "Zealot",
+  "type": "agenda",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "agendaName": "Zealot",
+    "formula": "",
+    "unboldedTasks": [
+      "8dSyBValMi72CKza"
+    ],
+    "boldedTasks": [
+      "YaDgiquQHwF9Tx8n"
+    ],
+    "abilities": [
+      "zxWCTK1xCm72YIvb",
+      "xx7TalYdh9w4cotS",
+      "3LHrmVT9LzaEalrI",
+      "iPz4x2XjV11kSjM6",
+      "0LWk5YU2X6aUYLFS"
+    ],
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff"
+  },
+  "_id": "r2Ab0B7Be0lUVLNG",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.r2Ab0B7Be0lUVLNG",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752529248,
+    "modifiedTime": 1780752529248,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!r2Ab0B7Be0lUVLNG"
+}

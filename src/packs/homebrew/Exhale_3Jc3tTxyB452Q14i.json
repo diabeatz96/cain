@@ -1,0 +1,43 @@
+{
+  "name": "Exhale",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Expiration",
+    "powerName": "Exhale",
+    "isPassive": true,
+    "keywords": [
+      "Passive"
+    ],
+    "powerDescription": "You maintain minor control over the property of air around you in a ½ CAT area. At will you can control: \n\n- How heavy the air feels, from no resistance to a light pressure. \n- The humidity, from dry to slightly moist. \n- The sound of living things breathing, from silencing it to making it overtly audible. \n- Scents in the air, from negating smells to doubling the strength of existing odors.",
+    "psycheBurstCost": false,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false,
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "isHighBlasphemy": false
+  },
+  "_id": "3Jc3tTxyB452Q14i",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.3Jc3tTxyB452Q14i",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752528807,
+    "modifiedTime": 1780752528807,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!3Jc3tTxyB452Q14i"
+}

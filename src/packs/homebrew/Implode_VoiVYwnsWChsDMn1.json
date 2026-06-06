@@ -1,0 +1,43 @@
+{
+  "name": "Implode",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Pugile",
+    "powerName": "Implode",
+    "isPassive": false,
+    "keywords": [
+      "Instant, ½ CAT Area, 1/scene."
+    ],
+    "powerDescription": "This does not cost a psyche burst to use. Overcharge a sinmark you possess with psychic energy and detonate it in a ½ CAT area, creating a small but powerful explosion that damages structures and living beings in the area. The selected sinmark is destroyed temporarily, and the body part it occupies becomes mutilated. For the rest of the mission you do not benefit from any of that sinmark’s abilities, and any roll involving that body part is hard by default without set-up or teamwork. After the mission is over, you can adjust to your disability and this no longer has an effect on you (determine with Admin how your character heals). No matter what, your sinmark remanifests before the next mission. \n\nIf use of this power would be risky or unclear, or inflict harm, roll PSYCH, adding +1D if the sinmark you destroyed was evolved.\n\nMETAMORPHOSIS:\n\nIf you roll for PSYCHE using this power, gain +1D for every ability that sinmark possessed (max +3D) .",
+    "psycheBurstCost": false,
+    "psycheBurstNoCost": true,
+    "psycheBurstMultCost": false,
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "isHighBlasphemy": false
+  },
+  "_id": "VoiVYwnsWChsDMn1",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.VoiVYwnsWChsDMn1",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752529013,
+    "modifiedTime": 1780752529013,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!VoiVYwnsWChsDMn1"
+}

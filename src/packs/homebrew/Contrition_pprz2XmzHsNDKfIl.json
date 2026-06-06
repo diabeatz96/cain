@@ -1,0 +1,43 @@
+{
+  "name": "Contrition",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Guilt",
+    "powerName": "Contrition",
+    "isPassive": true,
+    "keywords": [
+      "Passive"
+    ],
+    "powerDescription": "Spend the indicated amount of Pathos to activate any of the following effects. \n\n(1) Gain +1D on a roll you make. \n\n(2) Negate the effects of all afflictions you have for 2d3 minutes. \n\n(3) Regain 1 psyche burst. \n\n(6) Take 1d3+1 stress. On your next risky roll to inflict harm or violence, you deal +2 slashes and roll the risk die twice, taking the highest number. No one can tell what blood is yours and what isn’t (1/rest).",
+    "psycheBurstCost": false,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false,
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "isHighBlasphemy": false
+  },
+  "_id": "pprz2XmzHsNDKfIl",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.pprz2XmzHsNDKfIl",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752529248,
+    "modifiedTime": 1780752529248,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!pprz2XmzHsNDKfIl"
+}

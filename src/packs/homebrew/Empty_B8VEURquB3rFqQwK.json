@@ -1,0 +1,43 @@
+{
+  "name": "Empty",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Famine",
+    "powerName": "Empty",
+    "isPassive": false,
+    "keywords": [
+      "Curse, Short, Until rest."
+    ],
+    "powerDescription": "Cause any number of living beings equal to your CAT in range to experience extreme anhedonia, a lack of ability to experience pleasure, joy, or satisfaction. This easily alters their state of mind and causes individuals to overexert, overindulge, or even give up on most actions they would have otherwise taken. While emptied, living beings become more susceptible to the influence of others. They may also break or render ineffective abilities and supernatural phenomena that manipulate emotions. \n\nGain or grant +1D to the next action that takes advantage of this power",
+    "psycheBurstCost": true,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false,
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "isHighBlasphemy": false
+  },
+  "_id": "B8VEURquB3rFqQwK",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.B8VEURquB3rFqQwK",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752528807,
+    "modifiedTime": 1780752528807,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!B8VEURquB3rFqQwK"
+}

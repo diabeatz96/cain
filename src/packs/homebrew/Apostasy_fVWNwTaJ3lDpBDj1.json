@@ -1,0 +1,43 @@
+{
+  "name": "Apostasy",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Hysteria",
+    "powerName": "Apostasy",
+    "isPassive": true,
+    "keywords": [
+      "Passive"
+    ],
+    "powerDescription": "Apostasy: You can gain this hook with your passive or from powers. Some of your powers may interact with this hook. When this hook fills up, gain the agenda item “Do something risky, regardless of the consequences”. If you did not fulfill this agenda at the end of a session, take 1 sin. At the end of a mission roll 1d6. On a 4+ you may remove the agenda item and effect. \n\nIf you fill this hook again after it has been filled once and its agenda item hasn’t been removed, you gain the following condition: \n\nPsychosis: Gain +1D on rolls when they are both risky and hard. When the Admin rolls a 2 or lower on the risk dice against your actions, it is always much worse than expected, is treated as a 1, and may trigger severe attacks from the Sin. \n\nRemove this condition after you rest or at the end of the current mission.",
+    "psycheBurstCost": false,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false,
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "isHighBlasphemy": false
+  },
+  "_id": "fVWNwTaJ3lDpBDj1",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.fVWNwTaJ3lDpBDj1",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752529130,
+    "modifiedTime": 1780752529130,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!fVWNwTaJ3lDpBDj1"
+}

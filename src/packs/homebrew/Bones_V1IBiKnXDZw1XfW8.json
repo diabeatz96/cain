@@ -1,0 +1,42 @@
+{
+  "name": "Bones",
+  "type": "blasphemy",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyName": "Bones",
+    "powers": [
+      "gnUk6Cbvf6Vr64lU",
+      "9czAzKXL3htjWJx3",
+      "fpNkLcixaBt7jC7K",
+      "UmcP11XvSKIaLs7z",
+      "ONBbB0NULG61kRvV",
+      "ET8c5YGUcYeIxUxK"
+    ],
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "highBlasphemy": false
+  },
+  "_id": "V1IBiKnXDZw1XfW8",
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.V1IBiKnXDZw1XfW8",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752529013,
+    "modifiedTime": 1780752529013,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "sort": 0,
+  "_key": "!items!V1IBiKnXDZw1XfW8"
+}

@@ -1,0 +1,43 @@
+{
+  "name": "Cult",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Rapport",
+    "powerName": "Cult",
+    "isPassive": false,
+    "keywords": [
+      "Charm, Long, 1 Scene"
+    ],
+    "powerDescription": "Choose a human or exorcist within range and then apply one of the following effects to them as you contort the essence of human connection. \n\n• Worship: The attention of every creature within range becomes fixated on the target. It is difficult to wrest the gaze away. \n\n• Shun: Focusing on the target becomes near-impossible and as soon as they leave line of sight their presence will be difficult to remember. \n\nIf you attempt to influence a supernatural creature with this roll PSYCHE to determine success. Gain or grant +1D when next you or an ally take advantage of this power.",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "psycheBurstCost": true,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false,
+    "isHighBlasphemy": false
+  },
+  "_id": "hoBZJ0hc67rpPwv5",
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.hoBZJ0hc67rpPwv5",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752529130,
+    "modifiedTime": 1780752529130,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "sort": 0,
+  "_key": "!items!hoBZJ0hc67rpPwv5"
+}

@@ -1,0 +1,43 @@
+{
+  "name": "Physic",
+  "type": "blasphemy",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyName": "Physic",
+    "powers": [
+      "adPGLQtYggvlTOon",
+      "sa4IMiljYvk4oWoM",
+      "mxVUbHkIxbNkrdec",
+      "ShPrMZAfuvSmAuMj",
+      "NwBpotVKXkIehmYI",
+      "c2NkCv7FB8ap17iw",
+      "aUTN0nNzrGlJzimV"
+    ],
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "highBlasphemy": false
+  },
+  "_id": "AMQ6f12NAifHB3NL",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.AMQ6f12NAifHB3NL",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752528807,
+    "modifiedTime": 1780752528807,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!AMQ6f12NAifHB3NL"
+}

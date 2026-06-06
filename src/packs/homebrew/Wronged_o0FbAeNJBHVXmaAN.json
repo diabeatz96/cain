@@ -1,0 +1,41 @@
+{
+  "name": "Wronged",
+  "type": "agenda",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "agendaName": "Wronged",
+    "formula": "",
+    "unboldedTasks": [],
+    "boldedTasks": [
+      "6IRfZL2rI033y8Xl"
+    ],
+    "abilities": [
+      "vv5ydbnb0QnR9gEL"
+    ],
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff"
+  },
+  "_id": "o0FbAeNJBHVXmaAN",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.o0FbAeNJBHVXmaAN",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752529130,
+    "modifiedTime": 1780752529130,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!o0FbAeNJBHVXmaAN"
+}

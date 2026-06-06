@@ -1,0 +1,43 @@
+{
+  "name": "Hubris",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Valence",
+    "powerName": "Hubris",
+    "isPassive": true,
+    "keywords": [
+      "Passive, Hook"
+    ],
+    "powerDescription": "Your passive gives you this hook upon activating it. When this hook fills up, you gain the Hubris affliction. Whenever you use one of your Transmute or Valence powers the Admin may: \n\n1. Make it select another valid target within range of you. \n\n2. Select a different Transmute or Valence power you possess on your intended target. (You still choose the effects of the newly selected power but may not dismiss it early). \n\n3. Reduce its CAT to 0. \n\nAfter the Admin takes this action, remove the Affliction.",
+    "psycheBurstCost": false,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false,
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "isHighBlasphemy": false
+  },
+  "_id": "J5FlN3B0ux0Kw9En",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.J5FlN3B0ux0Kw9En",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752528904,
+    "modifiedTime": 1780752528904,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!J5FlN3B0ux0Kw9En"
+}

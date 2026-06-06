@@ -1,0 +1,42 @@
+{
+  "name": "Wave",
+  "type": "blasphemy",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyName": "Wave",
+    "powers": [
+      "MP4DnVeCGrpQSNzj",
+      "helyGAmrXXsEuKYG",
+      "rjgZYYCWtTslBbnO",
+      "CVAP7vdXXUOkRieP",
+      "1iP3jz4duc9xQvDE",
+      "8dyPrSpwvWs5LvkF"
+    ],
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "highBlasphemy": false
+  },
+  "_id": "fmiNhXOp0WKzerDC",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.fmiNhXOp0WKzerDC",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752529130,
+    "modifiedTime": 1780752529130,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!fmiNhXOp0WKzerDC"
+}

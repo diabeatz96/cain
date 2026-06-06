@@ -1,0 +1,43 @@
+{
+  "name": "Osmosis",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Erudition",
+    "powerName": "Osmosis",
+    "isPassive": false,
+    "keywords": [
+      "Charm, Close, 1/rest"
+    ],
+    "powerDescription": "By maintaining eye contact with another individual within range for a few seconds, you may absorb skills, knowledge, or specialized skills they possess. When used on a mundane human, you may absorb certain trademark skills or specialized knowledge such as handiwork, years of research on a particular subject, or certain practical skills. \n\nGain or grant +1D to rolls that match the skills gained from this ability for the duration of its effect. This may easily change the parameter of rolls such as difficulty or risk. \n\nAlternatively you may use this on another exorcist to copy one of their skill ratings for the duration of the scene. This does not grant additional bonus die.",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "psycheBurstCost": false,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false,
+    "isHighBlasphemy": false
+  },
+  "_id": "sHGXVcScmUiXWPYw",
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.sHGXVcScmUiXWPYw",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752529248,
+    "modifiedTime": 1780752529248,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "sort": 0,
+  "_key": "!items!sHGXVcScmUiXWPYw"
+}

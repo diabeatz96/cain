@@ -1,0 +1,47 @@
+{
+  "name": "Idealist",
+  "type": "agenda",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "agendaName": "Idealist",
+    "formula": "",
+    "unboldedTasks": [
+      "8LLZAw6hW72AIijB"
+    ],
+    "boldedTasks": [
+      "HVe9n5c25Zt2pVoz"
+    ],
+    "abilities": [
+      "Gi6wTK7hqCSuE0Mb",
+      "x4OxOyXMRbcs7UH8",
+      "5JDYvsxcJ94Lv7Yn",
+      "gH1muyozH8bsiSHD",
+      "tovSunecKkR273uq"
+    ],
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff"
+  },
+  "_id": "KOBkJi7YEJxjZGT5",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.KOBkJi7YEJxjZGT5",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752528904,
+    "modifiedTime": 1780752528904,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!KOBkJi7YEJxjZGT5"
+}

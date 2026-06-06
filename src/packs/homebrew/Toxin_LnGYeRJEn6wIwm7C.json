@@ -1,0 +1,43 @@
+{
+  "name": "Toxin",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Melt",
+    "powerName": "Toxin",
+    "isPassive": false,
+    "keywords": [
+      "Summon, Touch."
+    ],
+    "powerDescription": "Produce a small dose of potent neurotoxin from any area of skin on your body, palm, fingers, lips, etc. You may choose to release this toxin into a container or different medium such as food or a syringe, or allow it to linger on your skin. This neurotoxin affects mundane beings instantly upon contact or consumption. Choose the toxin to have one of the following effects: \n\nParalytic: The victim is paralyzed completely, unable to take any physical actions or movements. \n\nHallucinogen: The victim experiences vivid and realistic hallucinations which may hinder or stagger them. \n\nLethal: The victim dies, as the toxin shuts down their primary bodily functions. \n\nYou may roll PSYCHE to attempt to effect a psychic being with your toxin, spending a burst regardless of success. Upon success, the toxin only has half the normal effects it would on a mundane being, either partially paralyzing them, rendering hallucinations mild, or injuring them as opposed to killing them outright. \n\nThis may easily affect the parameter of rolls such as difficulty or risk.",
+    "psycheBurstCost": true,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false,
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "isHighBlasphemy": false
+  },
+  "_id": "LnGYeRJEn6wIwm7C",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.LnGYeRJEn6wIwm7C",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752528904,
+    "modifiedTime": 1780752528904,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!LnGYeRJEn6wIwm7C"
+}

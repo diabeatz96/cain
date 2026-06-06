@@ -1,0 +1,43 @@
+{
+  "name": "Guilt",
+  "type": "blasphemy",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyName": "Guilt",
+    "powers": [
+      "MSwsOKmkvPObFKVL",
+      "ZUN2kooUawpWZG0h",
+      "pC6K6qZYMXmH2L5S",
+      "yk6xLviqFQUMmI9I",
+      "KrhxVZ1Yghlp3qJM",
+      "1nZU9bU7LdBG6u77",
+      "pprz2XmzHsNDKfIl"
+    ],
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "highBlasphemy": false
+  },
+  "_id": "828BAlNt1Fhuw7Ol",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.828BAlNt1Fhuw7Ol",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752528807,
+    "modifiedTime": 1780752528807,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!828BAlNt1Fhuw7Ol"
+}

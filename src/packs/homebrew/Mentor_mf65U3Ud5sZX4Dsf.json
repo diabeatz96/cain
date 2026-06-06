@@ -1,0 +1,47 @@
+{
+  "name": "Mentor",
+  "type": "agenda",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "agendaName": "Mentor",
+    "formula": "",
+    "unboldedTasks": [
+      "jC2tvN12ZLyVZzyu"
+    ],
+    "boldedTasks": [
+      "Av3S0B8VrqyVFmwq"
+    ],
+    "abilities": [
+      "4WbFRiNqDL6H97wb",
+      "DfgI34k7UhF25tKU",
+      "sBkX71RyWllG68IE",
+      "tV8d0iwZj5v7ELdB",
+      "3QF7OH72sUyflBF8"
+    ],
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff"
+  },
+  "_id": "mf65U3Ud5sZX4Dsf",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.mf65U3Ud5sZX4Dsf",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752529130,
+    "modifiedTime": 1780752529130,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!mf65U3Ud5sZX4Dsf"
+}

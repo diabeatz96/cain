@@ -51,6 +51,7 @@
     - My friend carmen for miscellaneous ideas and polish
     - ahandleman and Benji as developers
     - bugeso and loupgarou for development contributions and v1.3 updates
+    - Yawn0 for homebrew content creation and testing
 
 
 ## 1.3.20

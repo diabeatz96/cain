@@ -1,0 +1,43 @@
+{
+  "name": "Ring",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Roar",
+    "powerName": "Ring",
+    "isPassive": false,
+    "keywords": [
+      "Transmute, CAT+1 Distance, 1 Scene."
+    ],
+    "powerDescription": "Within this range you can manipulate the way you and your allies' voices travel for the rest of the scene. \n\nAt will, you may also allow anyone to hear the voices of you or your allies in range that they would not normally be able to hear through distance or physical obstacles otherwise as long as they are also within range. This does not work on deafened individuals or those in hermetically sealed locations. You only need to know what a recipient sounds like in order to ring them. You may increase the CAT range of this power by +2 by taking the Tinnitus hook. \n\nGain or grant +1D to yourself or an ally when taking advantage of this power while it is in effect.",
+    "psycheBurstCost": true,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false,
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "isHighBlasphemy": false
+  },
+  "_id": "GGQ3XNDw7DV9aRad",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.GGQ3XNDw7DV9aRad",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752528904,
+    "modifiedTime": 1780752528904,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!GGQ3XNDw7DV9aRad"
+}

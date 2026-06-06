@@ -1,0 +1,43 @@
+{
+  "name": "Tide",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Wave",
+    "powerName": "Tide",
+    "isPassive": false,
+    "keywords": [
+      "Transmute, 1 Scene."
+    ],
+    "powerDescription": "Produce a torrent of psychic energy centered on yourself which flows in a certain direction up to a CAT area around you. This affects creatures of your choice with a CAT equal to or lower than yours. Objects with supernatural properties or other grace-affected phenomena are also affected by this if loose or unattached to other objects. Pick one of the effects below: \n\n• Flood: Generate a wave of psychic energy that rushes outwards. Attempting to get closer to you feels like trying to push against a waterfall or river. \n\n• Recede: Amass a dense concentration of psychic energy on yourself, pulling everything of your choice towards you. Getting further away from you feels like trying to escape powerful riptide or a whirlpool. \n\nThis may easily affect the parameters of rolls such as difficulty and risk. This effect ends early if you sustain an injury, and attempting to focus on or using other powers becomes hard.",
+    "psycheBurstCost": true,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false,
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "isHighBlasphemy": false
+  },
+  "_id": "helyGAmrXXsEuKYG",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.helyGAmrXXsEuKYG",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752529130,
+    "modifiedTime": 1780752529130,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!helyGAmrXXsEuKYG"
+}

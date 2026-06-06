@@ -1,0 +1,49 @@
+{
+  "name": "Death",
+  "type": "blasphemy",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyName": "Death",
+    "powers": [
+      "vfeWXJDgZqoqoifr",
+      "eLcVPzeNSx5155OR",
+      "7wCXpbt6NsdNKsWO",
+      "eCMd7NULL01sUGiU",
+      "NBBErWfC2gY7zg50",
+      "tHamQD6kJ1tUxp9d"
+    ],
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "highBlasphemy": false
+  },
+  "_id": "K1RYw7Vo5pJ1OnqC",
+  "effects": [],
+  "flags": {
+    "exportSource": {
+      "world": "cain-EXTre",
+      "system": "cain",
+      "coreVersion": "12.343",
+      "systemVersion": "1.3.17"
+    }
+  },
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.K1RYw7Vo5pJ1OnqC",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752528904,
+    "modifiedTime": 1780752528904,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!K1RYw7Vo5pJ1OnqC"
+}

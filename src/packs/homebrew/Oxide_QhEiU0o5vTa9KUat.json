@@ -1,0 +1,43 @@
+{
+  "name": "Oxide",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Expiration",
+    "powerName": "Oxide",
+    "isPassive": false,
+    "keywords": [
+      "Instant, CAT+1 distance"
+    ],
+    "powerDescription": "Rapidly degrade exposed metals, oxygen, or flammable materials within range through air contact, and temporarily perceive anything in range through air contact. The oxidation affects an area up to your CAT, and you may choose one of the following effects:\n\n  • Flake: Things you select begin to rust away  and flake into red dust, corrode, or age  rapidly, becoming irreparably damaged and  unusable.\n\n  • Burn: Rapidly oxidize your selected object or  area causing it to ignite instantaneously. This  lasts only for a few moments but completely  destroys whatever you select.\n\nIf this would cause damage to a hostile target, roll PSYCHE for it. This may easily affect the parameter of rolls such as difficulty or risk..",
+    "psycheBurstCost": true,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false,
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "isHighBlasphemy": false
+  },
+  "_id": "QhEiU0o5vTa9KUat",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.QhEiU0o5vTa9KUat",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752529013,
+    "modifiedTime": 1780752529013,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!QhEiU0o5vTa9KUat"
+}

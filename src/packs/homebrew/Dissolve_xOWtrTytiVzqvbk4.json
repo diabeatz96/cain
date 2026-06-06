@@ -1,0 +1,43 @@
+{
+  "name": "Dissolve",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Valence",
+    "powerName": "Dissolve",
+    "isPassive": false,
+    "keywords": [
+      "Curse, CAT+1 distance, Until Rest."
+    ],
+    "powerDescription": "Disintegrate the bonds between anyone and anything temporarily. Select two targets that have knowledge with each other. One of these targets must be within CAT range of you, while the other one must be within CAT+2 range. Other exorcists, binders, humans, sins, and traces are all valid targets, including dead ones. \n\nUntil you rest, the two targets forget everything they know and remember about each other, as if they had never met. This temporarily pauses hooks afflicted by sins or traces until they are encountered again, resets lingering psychic phenomena, and makes the target’s faces and voices unfamiliar to one another. This will not affect the manifestation or trauma questions of a sin. \n\nAfter you rest, both target’s memories return to normal and all effects of this power ends. \n\nYou are a valid target for this power. If you choose yourself as a target, you may not end this effect early.\n\n\n\nDISSOLVE OPTIONAL RULE: This power when used on two allied exorcists this may temporarily reduce the bond between them to B-rank while this power is in effect. If they would fully slash their bond talisman before this power ends, it ends early. (For use with Glory Unto Them)",
+    "psycheBurstCost": true,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false,
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "isHighBlasphemy": false
+  },
+  "_id": "xOWtrTytiVzqvbk4",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.xOWtrTytiVzqvbk4",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752529248,
+    "modifiedTime": 1780752529248,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!xOWtrTytiVzqvbk4"
+}

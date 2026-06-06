@@ -1,0 +1,43 @@
+{
+  "name": "Bloat",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Expiration",
+    "powerName": "Bloat",
+    "isPassive": false,
+    "keywords": [
+      "Transmute, Touch, 1 scene, 1/rest."
+    ],
+    "powerDescription": "By touching a living or dead being, you can make it emanate dangerous fumes within a CAT area. You may increase the CAT of this power by +1 for every additional burst you spend on it. This effect lasts for 2d3 minutes if the target is alive, or for the rest of the scene if the target is a corpse. When you activate this power, you can choose the opacity of this gas, ranging from transparent to opaque smog. \n\nThis gas can ignite from any source of combustion, such as fire, a spark, or concentrated heat. The resulting explosion damages structures and kills or injures any unprotected humans in the area. Roll PSYCHE for damage if this would harm a living or supernatural being. \n\nYou may gain or grant +1D when you or any ally next acts to take advantage of this power.",
+    "psycheBurstCost": false,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": true,
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "isHighBlasphemy": false
+  },
+  "_id": "XRH4T11lnQvnEldc",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.XRH4T11lnQvnEldc",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752529013,
+    "modifiedTime": 1780752529013,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!XRH4T11lnQvnEldc"
+}

@@ -1,0 +1,43 @@
+{
+  "name": "Split",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Severed",
+    "powerName": "Split",
+    "isPassive": true,
+    "keywords": [
+      "Passive"
+    ],
+    "powerDescription": "At any point during a mission you may spend a psyche burst to Split, creating an exact copy of yourself, with all the clothes you are wearing (but not objects you are holding), originating from your body. You may also split as a reaction to taking stress from physical harm that involves cutting, slicing, or slashing, negating that instance of stress taken by 2. \n\nWhile split you may not choose to split again until you become whole. The rules for this are below.\n\n\n\nWhile SPLIT, each of the following is true: \n\n• Both copies share the same statistics and exorcist sheet. If one of you suffers instant death or overflow, you both do. \n\n• You control both bodies which can act independently of each other, each taking their own action in an investigation or conflict scene but receiving all consequences as normal (risk die). All stress you receive during a conflict scene while split is increased by +1. \n\n• You always perceive everything from both bodies at once. \n\n• Items from KP are shared between both versions of yourself, and it is not a duplicated resource. \n\n• Both of you must choose to rest at the same time, and become whole after doing so, waking up in the body of the Admin’s choice if separated.",
+    "psycheBurstCost": false,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false,
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "isHighBlasphemy": false
+  },
+  "_id": "DeLA5rLguSkcmgiS",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.DeLA5rLguSkcmgiS",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752528904,
+    "modifiedTime": 1780752528904,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!DeLA5rLguSkcmgiS"
+}

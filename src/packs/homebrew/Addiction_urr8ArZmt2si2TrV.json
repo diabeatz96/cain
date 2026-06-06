@@ -1,0 +1,43 @@
+{
+  "name": "Addiction",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Bonbon",
+    "powerName": "Addiction",
+    "isPassive": false,
+    "keywords": [
+      "Curse, Short, 1 scene, 1/rest."
+    ],
+    "powerDescription": "You may activate this power without spending a psyche burst. You trigger this power when a being in range consumes or imbibes in anything ranging from water to food or drugs. Upon activation, the target becomes helplessly addicted to the substance they consumed or imbibed, experiencing intense withdrawal symptoms when not indulging in it after a few minutes. They may become desperate to the point of harmful or violent actions towards others or themselves. \n\nGain or grant +1D to the next action you or your allies make to take advantage of this power.",
+    "psycheBurstCost": false,
+    "psycheBurstNoCost": true,
+    "psycheBurstMultCost": false,
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "isHighBlasphemy": false
+  },
+  "_id": "urr8ArZmt2si2TrV",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.urr8ArZmt2si2TrV",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752529248,
+    "modifiedTime": 1780752529248,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!urr8ArZmt2si2TrV"
+}

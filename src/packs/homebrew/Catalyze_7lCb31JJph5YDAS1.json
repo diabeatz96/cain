@@ -1,0 +1,43 @@
+{
+  "name": "Catalyze",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Valence",
+    "powerName": "Catalyze",
+    "isPassive": false,
+    "keywords": [
+      "Instant, CAT distance, 1/scene."
+    ],
+    "powerDescription": "Psychically remove the space between “now” and “then”, and accelerate the inevitable. You can speed up or begin any “reaction”: chemical, kinetic, emotional, within CAT distance to various effects. Pick one of the following options and describe your intended course of action, to which your admin determines its final effects: \n\n• Heat: Jump start a potential reaction that normally requires a trigger or long period of time. This can trigger and potentially combust dormant materials such as gunpowder, fuel, or batteries. It may also remove an individual's hesitation, someone on the verge of acting or speaking follows through immediately, bypassing doubt or fear. \n\n• Chain: Accelerate the strength and propagation of an active reaction. Explosions, bullets, and chemical reactions are violently accelerated and may increase in force or effect. Mild acids accelerate into active corrosives. When applied to a living being it amplifies a current state of reaction, fear turning into panic, a moment of relief into fully relaxed, or spiking adrenaline into dizzying levels. \n\nThis may easily affect the parameter of rolls such as difficulty or risk, and may be used alongside your own or your other allies actions if relevant.",
+    "psycheBurstCost": true,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false,
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "isHighBlasphemy": false
+  },
+  "_id": "7lCb31JJph5YDAS1",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.7lCb31JJph5YDAS1",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752528807,
+    "modifiedTime": 1780752528807,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!7lCb31JJph5YDAS1"
+}

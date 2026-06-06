@@ -1,0 +1,43 @@
+{
+  "name": "Golem",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Bones",
+    "powerName": "Golem",
+    "isPassive": false,
+    "keywords": [
+      "Charm, Adjacent, 1 Scene"
+    ],
+    "powerDescription": "Once per scene, you coat the skin of a willing creautre within range with a thin, shifting layer of metal. Their skin becomes incredibly difficult to penetrate and resistant to harm, with this layer able to take 1+CAT slashes of physical harm before breaking. In addition, their mundane strength raises to 1/2 CAT and they may choose to have their size rise to 1/2 CAT as well. When this metal breaks, the effect immediately ends. \n\nGain or grant +1D when you or an ally next take advantage of this power. This power may alter the parameters of a roll whilst active.",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "psycheBurstCost": true,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false,
+    "isHighBlasphemy": false
+  },
+  "_id": "ET8c5YGUcYeIxUxK",
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.ET8c5YGUcYeIxUxK",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752528904,
+    "modifiedTime": 1780752528904,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "sort": 0,
+  "_key": "!items!ET8c5YGUcYeIxUxK"
+}

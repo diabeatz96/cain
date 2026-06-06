@@ -1,0 +1,43 @@
+{
+  "name": "Dodger",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Greed",
+    "powerName": "Dodger",
+    "isPassive": false,
+    "keywords": [
+      "Charm, Instant"
+    ],
+    "powerDescription": "You have always got an exit plan. You reveal an escape route you've set-up to flee this exact situation. You rapidly travel to any point you have already been within CAT+1 range. When you use this power roll PSYCHE, you may then pick one of the following bonuses per success. \n\n• You may take CAT allies in the scene with you. \n• You may take one object of up to CAT size in the scene that you are not currently holding with you. \n• You may vanish without a trace, your escape being impossible to track.",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "psycheBurstCost": true,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false,
+    "isHighBlasphemy": false
+  },
+  "_id": "WBBlJW11Tmj0yEF1",
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.WBBlJW11Tmj0yEF1",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752529013,
+    "modifiedTime": 1780752529013,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "sort": 0,
+  "_key": "!items!WBBlJW11Tmj0yEF1"
+}

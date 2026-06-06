@@ -1,0 +1,43 @@
+{
+  "name": "Dune",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Bones",
+    "powerName": "Dune",
+    "isPassive": false,
+    "keywords": [
+      "Charm, Self, Until Rest"
+    ],
+    "powerDescription": "A blinding sandstorm whips to life within an up to CAT+2 area around yourself, unnaturally blowing in any outside spaces. While within this sandstorm, objects will have their details and edges sanded down as the grains blast against them. In addition to this, the dense sand renders it hard for any creatures without enhanced senses to see past adjacent range. This storm causes irritation to the lungs, eyes, and skin of any creatures caught within it. \n\nGain or grant +1D when you or an ally next take advantage of this power. This power may alter the parameters of a roll whilst active.",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "psycheBurstCost": true,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false,
+    "isHighBlasphemy": false
+  },
+  "_id": "UmcP11XvSKIaLs7z",
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.UmcP11XvSKIaLs7z",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752529013,
+    "modifiedTime": 1780752529013,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "sort": 0,
+  "_key": "!items!UmcP11XvSKIaLs7z"
+}

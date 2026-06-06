@@ -1,0 +1,43 @@
+{
+  "name": "Stumble",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Gloom",
+    "powerName": "Stumble",
+    "isPassive": false,
+    "keywords": [
+      "Curse, Short, 1 Scene"
+    ],
+    "powerDescription": "You sabotage the bodies of up to CAT creatures within range. You may do this by waterlogging their skin, freezing their muscles, rotting their bones, or other similar effects. Regardless of method, any targeted creature suffers from the following effects: \n\n• It is incredibly difficult to use more than one limb at a time. \n\n• Speech becomes nigh-impossible. \n\n• Fine motor function is completely lost. \n\nIf you target a supernatural creature roll PSYCHE for effect, only spending a burst on success. Gain or grant +1D when you or an ally next take advantage of this power. This power may easily modify the difficulty of a roll whilst active.",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "psycheBurstCost": true,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false,
+    "isHighBlasphemy": false
+  },
+  "_id": "tRPZ6PFCHwLTNDxi",
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.tRPZ6PFCHwLTNDxi",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752529248,
+    "modifiedTime": 1780752529248,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "sort": 0,
+  "_key": "!items!tRPZ6PFCHwLTNDxi"
+}

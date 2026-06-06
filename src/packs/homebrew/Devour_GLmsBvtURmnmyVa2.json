@@ -1,0 +1,50 @@
+{
+  "name": "Devour",
+  "type": "blasphemyPower",
+  "img": "Assets/Cain/Cain%20Art/Symbols/Egoism.png",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Egoism",
+    "powerName": "Devour",
+    "isPassive": false,
+    "keywords": [
+      "Instant, Adjacent"
+    ],
+    "powerDescription": "You deform your own body and organs to perform an unspeakable violent act against a living being adjacent to you. When you use this power roll PSYCHE and answer the following questions, gaining +1D for each 'yes' answer, only spending a psyche burst on success.\n\n• Do you let the hunger take over your thoughts and actions?\n\n• Can you forgive and live on with what you're going to do?\n\nWhatever question you answer 'yes' on, it affects the outcome of the action - no matter the roll.\n\nIf you target a human, instantly kill them and recover stress equal to the number of 'yes' answer, however take as much sin as stress recovered.",
+    "description": "",
+    "primaryColor": "#000000",
+    "accentColor": "#8a0000",
+    "secondaryColor": "#000000",
+    "textColor": "#ffffff",
+    "psycheBurstCost": false,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false,
+    "isHighBlasphemy": false
+  },
+  "_id": "GLmsBvtURmnmyVa2",
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "flags": {
+    "exportSource": {
+      "world": "cain-all",
+      "system": "cain",
+      "coreVersion": "12.343",
+      "systemVersion": "1.2.2"
+    }
+  },
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.GLmsBvtURmnmyVa2",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752528904,
+    "modifiedTime": 1780752528904,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "sort": 0,
+  "_key": "!items!GLmsBvtURmnmyVa2"
+}

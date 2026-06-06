@@ -1,0 +1,43 @@
+{
+  "name": "Surreal",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Somnia",
+    "powerName": "Surreal",
+    "isPassive": false,
+    "keywords": [
+      "Transmute, CAT Area, 1 scene."
+    ],
+    "powerDescription": "Dramatically change the landscape around you into visions of your dreams. Select a space up to your CAT area in size that you can see. The features and landscape within that area changes into one of the following of your choice: \n\n• Bliss: Hard surfaces become soft and fluffy when made contact with, lights shine brighter, and supernatural beings may appear less threatening than usual. \n\n• Terror: Objects of your choice become angular, solid, and sharp, the sky and area darken, and supernatural beings may appear more threatening than usual. \n\n• Incongruence: Hanging objects begin to droop, lights flicker, and visible features of buildings or landscapes warp slightly. \n\nAt any point during the scene, spend 1 additional psyche burst to make these changes last until rest. These changes do not affect the abilities and statistics of SINs, traces, or other enemies. \n\nThis may easily affect the parameters of rolls, such as difficulty and risk.",
+    "psycheBurstCost": false,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": true,
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "isHighBlasphemy": false
+  },
+  "_id": "mDD5VxG1uETANWrU",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.mDD5VxG1uETANWrU",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752529130,
+    "modifiedTime": 1780752529130,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!mDD5VxG1uETANWrU"
+}

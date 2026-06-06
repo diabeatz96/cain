@@ -1,0 +1,47 @@
+{
+  "name": "Scum",
+  "type": "agenda",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "agendaName": "Scum",
+    "formula": "",
+    "unboldedTasks": [
+      "vANSDllZxyGioFqV"
+    ],
+    "boldedTasks": [
+      "fXjXKRihyiWF8F0N"
+    ],
+    "abilities": [
+      "T0oQsZ5OvIbzTpmd",
+      "anzeoK81kMj6QvPl",
+      "F92uqmIj194ens8T",
+      "zxbh5VWs1Fr8MeqX",
+      "dLWVcPbMveUlOT86"
+    ],
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff"
+  },
+  "_id": "yJoVQAgcyUAgXYr7",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.yJoVQAgcyUAgXYr7",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752529248,
+    "modifiedTime": 1780752529248,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!yJoVQAgcyUAgXYr7"
+}

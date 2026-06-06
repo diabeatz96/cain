@@ -1,0 +1,43 @@
+{
+  "name": "Valence",
+  "type": "blasphemy",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyName": "Valence",
+    "powers": [
+      "wKSLI2KBZ0vAMY9N",
+      "J5FlN3B0ux0Kw9En",
+      "xOWtrTytiVzqvbk4",
+      "7lCb31JJph5YDAS1",
+      "sNrZkyy84E56GqW7",
+      "pKGGdmAUPB92VaEC",
+      "hlVO18B50ICIapPb"
+    ],
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "highBlasphemy": false
+  },
+  "_id": "Tck9lZLPq8aqjXoC",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.Tck9lZLPq8aqjXoC",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752529013,
+    "modifiedTime": 1780752529013,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!Tck9lZLPq8aqjXoC"
+}

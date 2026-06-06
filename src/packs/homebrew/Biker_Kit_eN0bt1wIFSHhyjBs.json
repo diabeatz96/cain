@@ -1,0 +1,42 @@
+{
+  "folder": null,
+  "name": "Biker Kit",
+  "type": "item",
+  "_id": "eN0bt1wIFSHhyjBs",
+  "img": "systems/cain/assets/items/kp.png",
+  "system": {
+    "description": "<p>Allocated with approval. You have a sturdy helmet (1 KP) and access to a motorbike on missions. The bike has a 6 talisman for harm and can fit two people comfortably. If it’s totaled, you are docked 2 scrip for a replacement.</p>",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "quantity": 1,
+    "weight": 0,
+    "roll": {
+      "diceNum": 1,
+      "diceSize": "d6",
+      "diceBonus": ""
+    },
+    "kitPoint": 1,
+    "scripValue": 4,
+    "type": "Possession"
+  },
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.eN0bt1wIFSHhyjBs",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752529130,
+    "modifiedTime": 1780752529130,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "sort": 0,
+  "_key": "!items!eN0bt1wIFSHhyjBs"
+}

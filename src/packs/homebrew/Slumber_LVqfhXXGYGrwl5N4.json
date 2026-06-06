@@ -1,0 +1,43 @@
+{
+  "name": "Slumber",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Rapport",
+    "powerName": "Slumber",
+    "isPassive": false,
+    "keywords": [
+      "Curse, Long, Until Rest"
+    ],
+    "powerDescription": "Once per rest you force up to CAT creatures (using the people scale) to fall asleep and slip into a dream until they are moved, take damage, or the duration of this ability ends. \n\nIf used on a supernatural creature you roll PSYCHE to determine success. In addition they wake up in CAT minutes instead of sleeping for the usual duration. By touching a creature forced to sleep with this on the back of the head you may witness whatever dream they are having from their perspective. \n\nGain or grant +1D when next you or an ally take advantage of this power. This power may easily modify the difficulty of rolls whilst active.",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "psycheBurstCost": true,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false,
+    "isHighBlasphemy": false
+  },
+  "_id": "LVqfhXXGYGrwl5N4",
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.LVqfhXXGYGrwl5N4",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752528904,
+    "modifiedTime": 1780752528904,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "sort": 0,
+  "_key": "!items!LVqfhXXGYGrwl5N4"
+}

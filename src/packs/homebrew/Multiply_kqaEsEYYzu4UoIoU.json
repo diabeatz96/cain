@@ -1,0 +1,43 @@
+{
+  "name": "Multiply",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Severed",
+    "powerName": "Multiply",
+    "isPassive": false,
+    "keywords": [
+      "Instant, Touch"
+    ],
+    "powerDescription": "Touch a mundane object in range that you can hold and carry with one hand. Create a number of copies of that object equal to your CAT that spill out from the original. These copies are indistinguishable from the original and maintain all the same properties as the original. \n\nWhen you rest, all additional versions of the object disappear, and you may decide which version is the original copy if you are holding at least one of them. Otherwise the Admin chooses. \n\nGain +1D when you or any ally take advantage of this power while it is in effect.",
+    "psycheBurstCost": true,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false,
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "isHighBlasphemy": false
+  },
+  "_id": "kqaEsEYYzu4UoIoU",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.kqaEsEYYzu4UoIoU",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752529130,
+    "modifiedTime": 1780752529130,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!kqaEsEYYzu4UoIoU"
+}
