@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.3.24
+
+- Maintenance/release bump (no functional changes since 1.3.23).
+
 ## 1.3.23
 
 - Homebrew folder export now saves directly into the world folder instead of triggering a browser blob download (the desktop/Electron app was prompting to "open with an app" rather than saving the blob). Foundry's file API rejects `.zip` uploads, so the export writes the **individual JSON files** — laid out like the system's own pack sources (`src/packs/homebrew/<Name>_<id>.json`) plus a `_manifest.json` — into a timestamped folder at `Data/worlds/<world>/homebrew-exports/<timestamp>/`. A toast reports the exact path. Nested directories are created as needed, and `FilePicker.upload`'s silent `false`-on-rejection is now surfaced so failures fall back to a browser ZIP download instead of falsely reporting success. Uses the v13+ namespaced `FilePicker` with a v12 global fallback
