@@ -1696,9 +1696,44 @@ export class HomebrewWindow extends Application {
         files.push({ path: "_manifest.json", content: JSON.stringify(manifest, null, 2) });
 
         const blob = this._createZipBlob(files);
-        this._downloadBlob(blob, zipName);
 
-        ui.notifications.info(`Exported ${items.length} item(s) as ${zipName} (drop into the repo, then run npm run build:packs)`);
+        // Prefer saving server-side into the world folder (reliable in both the
+        // browser and the desktop/Electron app). Fall back to a browser download
+        // only if the upload fails (e.g. missing file-upload permission).
+        try {
+            const savedPath = await this._saveZipToWorld(blob, zipName);
+            ui.notifications.info(`Saved ${items.length} item(s) to ${savedPath} (inside your world folder).`);
+            console.log(`Homebrew export saved to: ${savedPath}`);
+        } catch (err) {
+            console.error("Could not save export into the world folder, falling back to download:", err);
+            this._downloadBlob(blob, zipName);
+            ui.notifications.warn(`Couldn't save into the world folder; downloaded ${zipName} to your browser instead.`);
+        }
+    }
+
+    /**
+     * Write a Blob into the current world's folder via Foundry's file API.
+     * Lands in  Data/worlds/<worldId>/homebrew-exports/<filename>  and returns
+     * the data-relative path. Uses the v13+ namespaced FilePicker with a v12
+     * global fallback.
+     */
+    async _saveZipToWorld(blob, filename) {
+        const FP = foundry.applications?.apps?.FilePicker?.implementation ?? FilePicker;
+        const dir = `worlds/${game.world.id}/homebrew-exports`;
+
+        // Ensure the target directory exists; ignore "already exists" errors.
+        try {
+            await FP.createDirectory("data", dir);
+        } catch (e) {
+            const msg = String(e?.message ?? e);
+            if (!msg.includes("EEXIST") && !msg.toLowerCase().includes("already exists")) {
+                console.debug("createDirectory (non-fatal):", e);
+            }
+        }
+
+        const file = new File([blob], filename, { type: "application/zip" });
+        const result = await FP.upload("data", dir, file, {}, { notify: false });
+        return result?.path ?? `${dir}/${filename}`;
     }
 
     /** CRC-32 (IEEE 802.3) of a byte array — required by the ZIP format. */
