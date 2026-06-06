@@ -104,6 +104,13 @@
       "system": "cain",
       "type": "Item",
       "path": "packs/virtues"
+    },
+    {
+      "name": "homebrew",
+      "label": "Homebrew",
+      "system": "cain",
+      "type": "Item",
+      "path": "packs/homebrew"
     }
   ],
   "packFolders": [],

@@ -146,6 +146,7 @@ jobs:
             -x ".nyc_output/*" \
             -x "src/*" \
             -x "tools/*" \
+            -x "submissions/*" \
             -x "package*.json" \
             -x "*.md"
           

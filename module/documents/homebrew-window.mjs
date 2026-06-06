@@ -227,8 +227,31 @@ export class HomebrewWindow extends Application {
       });
     }
   
+    // Item types that count as exportable homebrew (parents + their linked children)
+    get _relevantItemTypes() {
+        return [
+            "agenda", "blasphemy", "blasphemyPower", "bond", "bondAbility",
+            "affliction", "item", "sinMark",
+            "agendaTask", "agendaAbility", "sinMarkAbility"
+        ];
+    }
+
     getData() {
         const itemFolders = game.folders.filter(f => f.type === "Item");
+        const relevantTypes = this._relevantItemTypes;
+
+        // Build folder list for the ZIP export picker, with a count of the
+        // relevant items contained in each folder (including its subfolders).
+        const exportFolders = itemFolders
+            .map(f => {
+                const folderIds = this._getFolderAndDescendantIds(f.id);
+                const count = game.items.filter(i =>
+                    i.folder && folderIds.has(i.folder.id) && relevantTypes.includes(i.type)
+                ).length;
+                const depth = this._getFolderDepth(f);
+                return { id: f.id, name: f.name, count, indent: depth * 16 };
+            })
+            .filter(f => f.count > 0);
 
         return {
             agendaOptions: this.agendaOptions,
@@ -237,7 +260,8 @@ export class HomebrewWindow extends Application {
             bondOptions: this.bondOptions,
             bondAbilityOptions: this.bondAbilityOptions,
             settings: this.settings,
-            availableFolders: itemFolders.map(f => ({ id: f.id, name: f.name }))
+            availableFolders: itemFolders.map(f => ({ id: f.id, name: f.name })),
+            exportFolders: exportFolders
         }
     }
   
@@ -294,6 +318,10 @@ export class HomebrewWindow extends Application {
       html.find('#homebrew-import-file').change(this._onFileSelected.bind(this));
       html.find('.homebrew-confirm-import').click(this._onConfirmImport.bind(this));
       html.find('#export-select-all').change(this._onToggleSelectAll.bind(this));
+
+      // Folder-based ZIP export listeners
+      html.find('.homebrew-export-folders-zip').click(this._onExportFoldersZip.bind(this));
+      html.find('#export-folder-select-all').change(this._onToggleSelectAllFolders.bind(this));
 
       // Reverse import listeners
       html.find('#reverse-import-type').change(this._onReverseImportTypeChange.bind(this));
@@ -1521,6 +1549,174 @@ export class HomebrewWindow extends Application {
         saveDataToFile(json, "application/json", filename);
 
         ui.notifications.info(`Exported ${items.length} item(s) to ${filename}`);
+    }
+
+    // ==================== FOLDER ZIP EXPORT ====================
+
+    /** Get a folder id plus the ids of all of its descendant Item folders. */
+    _getFolderAndDescendantIds(rootId) {
+        const childrenByParent = {};
+        for (const f of game.folders.filter(f => f.type === "Item")) {
+            const parent = f.folder?.id ?? null;
+            (childrenByParent[parent] ??= []).push(f.id);
+        }
+
+        const result = new Set();
+        const stack = [rootId];
+        while (stack.length) {
+            const id = stack.pop();
+            if (result.has(id)) continue;
+            result.add(id);
+            for (const childId of (childrenByParent[id] || [])) stack.push(childId);
+        }
+        return result;
+    }
+
+    /** How deeply nested an Item folder is (root = 0), for indentation. */
+    _getFolderDepth(folder) {
+        let depth = 0;
+        let current = folder.folder;
+        while (current) {
+            depth++;
+            current = current.folder;
+        }
+        return depth;
+    }
+
+    /** Recursively add the child items a parent links to by id (powers/tasks/abilities). */
+    _collectChildren(item, collected) {
+        const childIds = [];
+        if (item.type === "blasphemy") {
+            childIds.push(...(item.system.powers || []));
+        } else if (item.type === "agenda") {
+            childIds.push(
+                ...(item.system.unboldedTasks || []),
+                ...(item.system.boldedTasks || []),
+                ...(item.system.abilities || [])
+            );
+        } else if (item.type === "sinMark") {
+            childIds.push(...(item.system.abilities || []));
+        }
+
+        for (const childId of childIds) {
+            const child = game.items.get(childId);
+            if (child && !collected.has(child.id)) {
+                collected.set(child.id, child);
+                this._collectChildren(child, collected);
+            }
+        }
+    }
+
+    /**
+     * Sanitize a name for use as a pack source filename. Matches the convention
+     * used by tools/unpack.mjs so exports look like the system's own src/packs.
+     */
+    _sanitizeFileName(str) {
+        return (str || "unnamed").replace(/[^a-zA-Z0-9_-]/g, "_").substring(0, 40);
+    }
+
+    _onToggleSelectAllFolders(event) {
+        const isChecked = event.currentTarget.checked;
+        this.element.find('.export-folder-checkbox').prop('checked', isChecked);
+    }
+
+    async _onExportFoldersZip(event) {
+        event.preventDefault();
+
+        const checkedBoxes = this.element.find('.export-folder-checkbox:checked');
+        if (checkedBoxes.length === 0) {
+            ui.notifications.warn("Please select at least one folder to export.");
+            return;
+        }
+
+        // Expand selected folders to include all of their descendant folders.
+        const allFolderIds = new Set();
+        checkedBoxes.each((i, el) => {
+            const folderId = $(el).data('folder-id');
+            for (const id of this._getFolderAndDescendantIds(folderId)) allFolderIds.add(id);
+        });
+
+        // Gather every relevant item in those folders, plus any linked children
+        // (so a blasphemy's powers travel with it even if filed elsewhere).
+        const relevantTypes = this._relevantItemTypes;
+        const collected = new Map();
+        for (const item of game.items) {
+            if (item.folder && allFolderIds.has(item.folder.id) &&
+                relevantTypes.includes(item.type) && !collected.has(item.id)) {
+                collected.set(item.id, item);
+                this._collectChildren(item, collected);
+            }
+        }
+
+        if (collected.size === 0) {
+            ui.notifications.warn("No homebrew items found in the selected folders.");
+            return;
+        }
+
+        const zipName = `cain-homebrew-${new Date().toISOString().split('T')[0]}.zip`;
+        await this._exportItemsAsZip([...collected.values()], zipName);
+    }
+
+    /**
+     * Build a ZIP of individual item JSON files laid out exactly like the
+     * system's own pack sources: every item becomes
+     *   src/packs/homebrew/<SafeName>_<id>.json
+     * with a "!items!<id>" _key, so the ZIP drops straight into the repo and
+     * compiles into the dedicated "homebrew" compendium via `npm run build:packs`.
+     * A _manifest.json is placed at the ZIP root (outside the pack dir, so it
+     * is never mistaken for a pack document).
+     */
+    async _exportItemsAsZip(items, zipName) {
+        if (typeof JSZip === "undefined") {
+            ui.notifications.error("ZIP export is unavailable (JSZip not found). Use 'Export All Content' for a single JSON file instead.");
+            console.error("JSZip global is not available in this Foundry environment.");
+            return;
+        }
+
+        const PACK_ROOT = "src/packs/homebrew";
+
+        const zip = new JSZip();
+        const manifest = {
+            system: "cain",
+            version: game.system.version,
+            exportDate: new Date().toISOString(),
+            pack: "homebrew",
+            count: items.length,
+            items: []
+        };
+
+        for (const item of items) {
+            const itemData = item.toObject();
+            if (!itemData._id) itemData._id = item.id;
+            // Pack source files carry a LevelDB key; matching it keeps the file
+            // byte-compatible with what tools/unpack.mjs produces.
+            itemData._key = `!items!${itemData._id}`;
+
+            const fileName = `${this._sanitizeFileName(item.name)}_${itemData._id}.json`;
+            const filePath = `${PACK_ROOT}/${fileName}`;
+
+            zip.file(filePath, JSON.stringify(itemData, null, 2));
+            manifest.items.push({ id: itemData._id, name: item.name, type: item.type, file: filePath });
+        }
+
+        zip.file("_manifest.json", JSON.stringify(manifest, null, 2));
+
+        const blob = await zip.generateAsync({ type: "blob" });
+        this._downloadBlob(blob, zipName);
+
+        ui.notifications.info(`Exported ${items.length} item(s) as ${zipName} (drop into the repo, then run npm run build:packs)`);
+    }
+
+    /** Trigger a browser download for a Blob (used for ZIP exports). */
+    _downloadBlob(blob, filename) {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 2000);
     }
 
     _onChooseFile(event) {
