@@ -1667,8 +1667,31 @@ export class HomebrewWindow extends Application {
      * is never mistaken for a pack document).
      */
     async _exportItemsAsZip(items, zipName) {
-        const PACK_ROOT = "src/packs/homebrew";
+        // Foundry's file API rejects .zip uploads (only specific extensions are
+        // allowed — json is). So the primary path writes the individual .json
+        // files straight into the world folder, mirroring src/packs/homebrew/.
+        // The single-archive ZIP is only used for the browser-download fallback.
+        const files = this._buildExportFiles(items);
 
+        try {
+            const savedDir = await this._exportItemsToWorld(files);
+            ui.notifications.info(`Saved ${items.length} item(s) to ${savedDir} (inside your world folder).`);
+            console.log(`Homebrew export saved to: ${savedDir}`);
+        } catch (err) {
+            console.error("Could not write export into the world folder, falling back to download:", err);
+            const blob = this._createZipBlob(files);
+            this._downloadBlob(blob, zipName);
+            ui.notifications.warn(`Couldn't write into the world folder; downloaded ${zipName} to your browser instead.`);
+        }
+    }
+
+    /**
+     * Build the list of files to export as [{ path, content }], where path is
+     * relative (e.g. src/packs/homebrew/<Name>_<id>.json). Shared by both the
+     * world-folder writer and the ZIP fallback.
+     */
+    _buildExportFiles(items) {
+        const PACK_ROOT = "src/packs/homebrew";
         const files = [];
         const manifest = {
             system: "cain",
@@ -1694,46 +1717,63 @@ export class HomebrewWindow extends Application {
         }
 
         files.push({ path: "_manifest.json", content: JSON.stringify(manifest, null, 2) });
-
-        const blob = this._createZipBlob(files);
-
-        // Prefer saving server-side into the world folder (reliable in both the
-        // browser and the desktop/Electron app). Fall back to a browser download
-        // only if the upload fails (e.g. missing file-upload permission).
-        try {
-            const savedPath = await this._saveZipToWorld(blob, zipName);
-            ui.notifications.info(`Saved ${items.length} item(s) to ${savedPath} (inside your world folder).`);
-            console.log(`Homebrew export saved to: ${savedPath}`);
-        } catch (err) {
-            console.error("Could not save export into the world folder, falling back to download:", err);
-            this._downloadBlob(blob, zipName);
-            ui.notifications.warn(`Couldn't save into the world folder; downloaded ${zipName} to your browser instead.`);
-        }
+        return files;
     }
 
     /**
-     * Write a Blob into the current world's folder via Foundry's file API.
-     * Lands in  Data/worlds/<worldId>/homebrew-exports/<filename>  and returns
-     * the data-relative path. Uses the v13+ namespaced FilePicker with a v12
-     * global fallback.
+     * Write each export file into a timestamped folder inside the current world
+     * via Foundry's file API:
+     *   Data/worlds/<worldId>/homebrew-exports/<timestamp>/<relative path>
+     * Returns the data-relative base directory. Uses the v13+ namespaced
+     * FilePicker with a v12 global fallback.
      */
-    async _saveZipToWorld(blob, filename) {
+    async _exportItemsToWorld(files) {
         const FP = foundry.applications?.apps?.FilePicker?.implementation ?? FilePicker;
-        const dir = `worlds/${game.world.id}/homebrew-exports`;
+        // Timestamped subfolder so repeated exports don't overwrite each other.
+        const stamp = new Date().toISOString().replace(/[:.]/g, "-").slice(0, 19);
+        const baseDir = `worlds/${game.world.id}/homebrew-exports/${stamp}`;
 
-        // Ensure the target directory exists; ignore "already exists" errors.
-        try {
-            await FP.createDirectory("data", dir);
-        } catch (e) {
-            const msg = String(e?.message ?? e);
-            if (!msg.includes("EEXIST") && !msg.toLowerCase().includes("already exists")) {
-                console.debug("createDirectory (non-fatal):", e);
+        // Create the base dir and every subdirectory the files need (parents first).
+        await this._ensureDir(FP, baseDir);
+        const subDirs = new Set();
+        for (const f of files) {
+            const slash = f.path.lastIndexOf("/");
+            if (slash >= 0) subDirs.add(`${baseDir}/${f.path.slice(0, slash)}`);
+        }
+        for (const dir of [...subDirs].sort()) await this._ensureDir(FP, dir);
+
+        for (const f of files) {
+            const slash = f.path.lastIndexOf("/");
+            const sub = slash >= 0 ? f.path.slice(0, slash) : "";
+            const name = slash >= 0 ? f.path.slice(slash + 1) : f.path;
+            const targetDir = sub ? `${baseDir}/${sub}` : baseDir;
+
+            const file = new File([f.content], name, { type: "application/json" });
+            const result = await FP.upload("data", targetDir, file, {}, { notify: false });
+            // upload() returns false (without throwing) when rejected — surface it.
+            if (!result || result === false) {
+                throw new Error(`Foundry rejected upload of ${name}`);
             }
         }
 
-        const file = new File([blob], filename, { type: "application/zip" });
-        const result = await FP.upload("data", dir, file, {}, { notify: false });
-        return result?.path ?? `${dir}/${filename}`;
+        return baseDir;
+    }
+
+    /** Create a nested directory path one segment at a time; ignore "exists" errors. */
+    async _ensureDir(FP, path) {
+        const parts = path.split("/");
+        let current = "";
+        for (const part of parts) {
+            current = current ? `${current}/${part}` : part;
+            try {
+                await FP.createDirectory("data", current);
+            } catch (e) {
+                const msg = String(e?.message ?? e);
+                if (!msg.includes("EEXIST") && !msg.toLowerCase().includes("already exists")) {
+                    console.debug("createDirectory (non-fatal):", current, e);
+                }
+            }
+        }
     }
 
     /** CRC-32 (IEEE 802.3) of a byte array — required by the ZIP format. */
