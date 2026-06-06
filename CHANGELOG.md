@@ -3,6 +3,7 @@
 ## 1.3.22
 
 - **Homebrew ZIP export now works on Foundry v12**: the "Export Folders as ZIP" feature relied on a global `JSZip`, which only exists in v13+ (v12 reported "ZIP export is unavailable — JSZip not found"). Replaced it with a self-contained ZIP writer (STORE method + CRC-32) so the export works identically on v12/v13/v14 with no external dependency. Output verified to pass archive integrity checks
+- Homebrew ZIP export now saves directly into the world folder (`Data/worlds/<world>/homebrew-exports/`) via Foundry's file API instead of triggering a browser blob download — the desktop/Electron app was prompting to "open with an app" rather than saving the blob link. A toast reports the saved path; if the upload fails (e.g. no file-upload permission) it falls back to the browser download. Uses the v13+ namespaced `FilePicker` with a v12 global fallback
 - Release workflow fixes: removed the redundant `generateReleaseNotes: true` from the release action (it was throwing `403: Resource not accessible by integration` against the generate-notes API, while a full `bodyFile` was already supplied); deleted the legacy `releaseOnPullRequest.yml` workflow that ran on every push and raced the advanced workflow for the same tag; bumped `actions/checkout` and `actions/setup-node` from `@v4` to `@v5` to clear the Node.js 20 deprecation warning
 
 ## 1.3.21
