@@ -1667,15 +1667,9 @@ export class HomebrewWindow extends Application {
      * is never mistaken for a pack document).
      */
     async _exportItemsAsZip(items, zipName) {
-        if (typeof JSZip === "undefined") {
-            ui.notifications.error("ZIP export is unavailable (JSZip not found). Use 'Export All Content' for a single JSON file instead.");
-            console.error("JSZip global is not available in this Foundry environment.");
-            return;
-        }
-
         const PACK_ROOT = "src/packs/homebrew";
 
-        const zip = new JSZip();
+        const files = [];
         const manifest = {
             system: "cain",
             version: game.system.version,
@@ -1695,16 +1689,109 @@ export class HomebrewWindow extends Application {
             const fileName = `${this._sanitizeFileName(item.name)}_${itemData._id}.json`;
             const filePath = `${PACK_ROOT}/${fileName}`;
 
-            zip.file(filePath, JSON.stringify(itemData, null, 2));
+            files.push({ path: filePath, content: JSON.stringify(itemData, null, 2) });
             manifest.items.push({ id: itemData._id, name: item.name, type: item.type, file: filePath });
         }
 
-        zip.file("_manifest.json", JSON.stringify(manifest, null, 2));
+        files.push({ path: "_manifest.json", content: JSON.stringify(manifest, null, 2) });
 
-        const blob = await zip.generateAsync({ type: "blob" });
+        const blob = this._createZipBlob(files);
         this._downloadBlob(blob, zipName);
 
         ui.notifications.info(`Exported ${items.length} item(s) as ${zipName} (drop into the repo, then run npm run build:packs)`);
+    }
+
+    /** CRC-32 (IEEE 802.3) of a byte array — required by the ZIP format. */
+    _crc32(bytes) {
+        let crc = ~0;
+        for (let i = 0; i < bytes.length; i++) {
+            crc ^= bytes[i];
+            for (let j = 0; j < 8; j++) {
+                crc = (crc >>> 1) ^ (0xEDB88320 & -(crc & 1));
+            }
+        }
+        return (~crc) >>> 0;
+    }
+
+    /**
+     * Build a ZIP archive Blob from [{ path, content }] entries using the STORE
+     * method (no compression). Self-contained so it works on every Foundry
+     * version (v12 doesn't expose a global JSZip; v13+ does). JSON stays plain
+     * text, so storing uncompressed is fine for homebrew payloads.
+     */
+    _createZipBlob(files) {
+        const encoder = new TextEncoder();
+
+        // DOS-format timestamp shared by every entry.
+        const now = new Date();
+        const dosTime = (now.getHours() << 11) | (now.getMinutes() << 5) | (Math.floor(now.getSeconds() / 2));
+        const dosDate = ((now.getFullYear() - 1980) << 9) | ((now.getMonth() + 1) << 5) | now.getDate();
+
+        const localChunks = [];   // local file headers + names + data
+        const records = [];       // bookkeeping for the central directory
+        let offset = 0;
+
+        for (const file of files) {
+            const nameBytes = encoder.encode(file.path);
+            const dataBytes = typeof file.content === "string" ? encoder.encode(file.content) : file.content;
+            const crc = this._crc32(dataBytes);
+            const size = dataBytes.length;
+
+            const header = new DataView(new ArrayBuffer(30));
+            header.setUint32(0, 0x04034b50, true);  // local file header signature
+            header.setUint16(4, 20, true);          // version needed to extract
+            header.setUint16(6, 0x0800, true);      // flags: bit 11 = UTF-8 names
+            header.setUint16(8, 0, true);           // compression method: 0 (store)
+            header.setUint16(10, dosTime, true);
+            header.setUint16(12, dosDate, true);
+            header.setUint32(14, crc, true);
+            header.setUint32(18, size, true);       // compressed size
+            header.setUint32(22, size, true);       // uncompressed size
+            header.setUint16(26, nameBytes.length, true);
+            header.setUint16(28, 0, true);          // extra field length
+
+            localChunks.push(new Uint8Array(header.buffer), nameBytes, dataBytes);
+            records.push({ nameBytes, crc, size, offset });
+            offset += 30 + nameBytes.length + size;
+        }
+
+        const centralChunks = [];
+        let centralSize = 0;
+        for (const rec of records) {
+            const cd = new DataView(new ArrayBuffer(46));
+            cd.setUint32(0, 0x02014b50, true);      // central directory signature
+            cd.setUint16(4, 20, true);              // version made by
+            cd.setUint16(6, 20, true);              // version needed
+            cd.setUint16(8, 0x0800, true);          // flags: UTF-8 names
+            cd.setUint16(10, 0, true);              // compression: store
+            cd.setUint16(12, dosTime, true);
+            cd.setUint16(14, dosDate, true);
+            cd.setUint32(16, rec.crc, true);
+            cd.setUint32(20, rec.size, true);
+            cd.setUint32(24, rec.size, true);
+            cd.setUint16(28, rec.nameBytes.length, true);
+            cd.setUint16(30, 0, true);              // extra field length
+            cd.setUint16(32, 0, true);              // comment length
+            cd.setUint16(34, 0, true);              // disk number start
+            cd.setUint16(36, 0, true);              // internal attributes
+            cd.setUint32(38, 0, true);              // external attributes
+            cd.setUint32(42, rec.offset, true);     // local header offset
+
+            centralChunks.push(new Uint8Array(cd.buffer), rec.nameBytes);
+            centralSize += 46 + rec.nameBytes.length;
+        }
+
+        const eocd = new DataView(new ArrayBuffer(22));
+        eocd.setUint32(0, 0x06054b50, true);        // end of central directory signature
+        eocd.setUint16(4, 0, true);                 // disk number
+        eocd.setUint16(6, 0, true);                 // disk with central directory
+        eocd.setUint16(8, records.length, true);    // entries on this disk
+        eocd.setUint16(10, records.length, true);   // total entries
+        eocd.setUint32(12, centralSize, true);      // central directory size
+        eocd.setUint32(16, offset, true);           // central directory offset
+        eocd.setUint16(20, 0, true);                // comment length
+
+        return new Blob([...localChunks, ...centralChunks, new Uint8Array(eocd.buffer)], { type: "application/zip" });
     }
 
     /** Trigger a browser download for a Blob (used for ZIP exports). */
