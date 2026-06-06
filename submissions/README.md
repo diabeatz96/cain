@@ -9,10 +9,11 @@ system's compendium packs, and credits you in the release.
 1. **Create your content in Foundry** using the **Homebrew Laboratory** window
    (the flask icon), or build it normally in your world's Items directory.
 2. **Export it:** open the Homebrew Laboratory → **Import/Export** tab →
-   **Export Folders as ZIP**. Tick the folder(s) holding your content and click
-   export. The ZIP is saved into your world at
-   `Data/worlds/<world>/homebrew-exports/cain-homebrew-<date>.zip` (a toast
-   shows the exact path). Linked powers/abilities are bundled automatically.
+   **Export Folders to World**. Tick the folder(s) holding your content and click
+   export. The items are written as individual JSON files into your world at
+   `Data/worlds/<world>/homebrew-exports/<timestamp>/src/packs/homebrew/` (a toast
+   shows the exact path). Linked powers/abilities are included automatically. Zip
+   that folder up to attach it to a PR, or commit the JSON files directly.
    - The ZIP is laid out like the system's own pack sources — every item is a
      `src/packs/homebrew/<Name>_<id>.json` file, so a maintainer can drop it
      straight into the repo and run `npm run build:packs`. It compiles into the
