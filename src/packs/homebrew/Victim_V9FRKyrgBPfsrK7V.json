@@ -1,0 +1,48 @@
+{
+  "name": "Victim",
+  "type": "agenda",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "agendaName": "Victim",
+    "formula": "",
+    "unboldedTasks": [
+      "6liRVhffgqjvC0Qh"
+    ],
+    "boldedTasks": [
+      "IFExbDRUtgIVd7lP"
+    ],
+    "abilities": [
+      "7Mw5ag68CHP4V4y8",
+      "vNqu4kmSiCOpnE9M",
+      "JDn7ZmsgAoT9ZXUj",
+      "JoEa37F1JUfd7e2B",
+      "1809ka4FEA5na4bf",
+      "LlfI8yfcysoU2rfg"
+    ],
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff"
+  },
+  "_id": "V9FRKyrgBPfsrK7V",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.V9FRKyrgBPfsrK7V",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752529013,
+    "modifiedTime": 1780752529013,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!V9FRKyrgBPfsrK7V"
+}

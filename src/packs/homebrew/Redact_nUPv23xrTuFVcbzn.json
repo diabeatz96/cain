@@ -1,0 +1,43 @@
+{
+  "name": "Redact",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Witness",
+    "powerName": "Redact",
+    "isPassive": false,
+    "keywords": [
+      "Transmute, CAT+1 range, Until Rest."
+    ],
+    "powerDescription": "Remove one piece of information from the minds of everything and everyone within range temporarily. You may redact:\n\n  • A name.\n\n  • A location.\n\n  • A certain individual’s action.\n\n  • A death.\n\n  • Or any other simple piece of information  that can be mentioned in one sentence,  at the approval of your Admin.\n\n Creatures under the effect of this have this piece of information seamlessly blocked in their mind, unable to recall or identify the piece of missing information. Gain or grant +1D to yourself or an ally when taking advantage of this power while it is in effect. This effect ends early if you take an injury. This may temporarily render a trauma answer useless for the duration.",
+    "psycheBurstCost": true,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false,
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "isHighBlasphemy": false
+  },
+  "_id": "nUPv23xrTuFVcbzn",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.nUPv23xrTuFVcbzn",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752529130,
+    "modifiedTime": 1780752529130,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!nUPv23xrTuFVcbzn"
+}

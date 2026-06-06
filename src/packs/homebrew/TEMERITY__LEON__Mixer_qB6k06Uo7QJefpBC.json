@@ -1,0 +1,42 @@
+{
+  "folder": null,
+  "name": "TEMERITY 'LEON' Mixer",
+  "type": "item",
+  "_id": "qB6k06Uo7QJefpBC",
+  "img": "systems/cain/assets/items/kp.png",
+  "system": {
+    "description": "<p>Cursed item created by TEMERITY’s research branch for the cultivation of cursed items. May spend scrip to fuse two occcult/medical items together, stacking their effects. The cost of the fusion equals the value of the two fused items, then halved rounded up. The result of the fusion can be fused again, so long as scrip is payed.</p>",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "quantity": 1,
+    "weight": 0,
+    "roll": {
+      "diceNum": 1,
+      "diceSize": "d6",
+      "diceBonus": ""
+    },
+    "kitPoint": 1,
+    "scripValue": 8,
+    "type": "Possession"
+  },
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.qB6k06Uo7QJefpBC",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752529248,
+    "modifiedTime": 1780752529248,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "sort": 0,
+  "_key": "!items!qB6k06Uo7QJefpBC"
+}

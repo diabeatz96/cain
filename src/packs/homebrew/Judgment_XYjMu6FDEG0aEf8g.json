@@ -1,0 +1,43 @@
+{
+  "name": "Judgment",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Dread",
+    "powerName": "Judgment",
+    "isPassive": false,
+    "keywords": [
+      "Curse, Self, 1 Scene"
+    ],
+    "powerDescription": "Once a scene, you spend up to three psyche bursts to enforce divine law upon an up to CAT+1 area surrounding yourself. Any living creature within this area is innately aware that they cannot lie, harm another creature, or steal. If any of these laws are intentionally broken the offending creatures takes 1/2 CAT slashes as they are seared with divine light. This effect may be triggered an amount of times equal to bursts spent. \n\nGain or grant +1D when you or an ally next take advantage of this power. This power may easily modify the parameters of a roll whilst active, cannot be willingly ended early, and may not be used as a response to a risk die within a conflict scene.",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "psycheBurstCost": false,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": true,
+    "isHighBlasphemy": false
+  },
+  "_id": "XYjMu6FDEG0aEf8g",
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.XYjMu6FDEG0aEf8g",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752529013,
+    "modifiedTime": 1780752529013,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "sort": 0,
+  "_key": "!items!XYjMu6FDEG0aEf8g"
+}

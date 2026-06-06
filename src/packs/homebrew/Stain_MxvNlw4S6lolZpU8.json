@@ -1,0 +1,43 @@
+{
+  "name": "Stain",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Pugile",
+    "powerName": "Stain",
+    "isPassive": false,
+    "keywords": [
+      "Transmute, CAT+2 area, Until Rest"
+    ],
+    "powerDescription": "You may trigger this power when you kill a human, exorcist, or supernatural being. The psychic energy of the being you just killed is violently mutilated as a warning for other supernatural beings. Roll PSYCHE if activating this power on a creature that has a CAT higher than yours, only expending a psyche burst on a success. \n\nAll beings that can perceive grace within a CAT+2 area become immediately aware that you have killed the target, and all beings with a CAT equal to or lower than your slain target become apprehensive and devote resources into avoiding conflict with you. Supernatural beings with a CAT higher than your slain target may see this as a threat, challenge, or territorial dispute, and act accordingly.\n\nMETAMORPHOSIS:\n\nThe range of this ability becomes CAT+2 distance instead. Beings become apprehensive of you regardless of CAT.",
+    "psycheBurstCost": true,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false,
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "isHighBlasphemy": false
+  },
+  "_id": "MxvNlw4S6lolZpU8",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.MxvNlw4S6lolZpU8",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752528904,
+    "modifiedTime": 1780752528904,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!MxvNlw4S6lolZpU8"
+}

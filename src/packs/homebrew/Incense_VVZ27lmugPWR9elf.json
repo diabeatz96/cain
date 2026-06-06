@@ -1,0 +1,43 @@
+{
+  "name": "Incense",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Expiration",
+    "powerName": "Incense",
+    "isPassive": false,
+    "keywords": [
+      "Curse, CAT distance, 1/rest."
+    ],
+    "powerDescription": "This power does not cost a psyche burst. You expel or manifest a visible atmospheric vapor or smoke that floats up to a CAT distance away from you. Laced with psychic influence, this substance floats towards the following points of interest that it approaches, making them clear or obvious: \n\n• The traces of supernatural beings other than the exorcists, objects they may have touched, footsteps left behind by psychic beings, etc. \n\n• Points of fragility in physical structures, stress fractures, or architectural weak points. \n\n• Deceased beings or corpses. \n\nGain or grant +1D when you or any ally next acts to take advantage of this power.",
+    "psycheBurstCost": false,
+    "psycheBurstNoCost": true,
+    "psycheBurstMultCost": false,
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "isHighBlasphemy": false
+  },
+  "_id": "VVZ27lmugPWR9elf",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.VVZ27lmugPWR9elf",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752529013,
+    "modifiedTime": 1780752529013,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!VVZ27lmugPWR9elf"
+}

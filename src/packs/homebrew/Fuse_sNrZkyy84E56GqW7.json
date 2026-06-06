@@ -1,0 +1,43 @@
+{
+  "name": "Fuse",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Valence",
+    "powerName": "Fuse",
+    "isPassive": false,
+    "keywords": [
+      "Transmute, Curse, Short, 1 Scene"
+    ],
+    "powerDescription": "Bond any surface to another on a molecular and psychic level. Select 2 targets, which can be either objects or creatures, but must be touching each other when you use this power. Roll PSYCHE when targeting one or more unwilling targets, only consuming a psyche burst on a success. \n\nYou fuse the point of contact between the two targets. While fused, nothing can remove the surfaces from one another until the end of the scene. This does not render either target indestructible or immune to harm however. \n\nGain or grant +1D to yourself or an ally that takes advantage of this power while it is in effect.",
+    "psycheBurstCost": true,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false,
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "isHighBlasphemy": false
+  },
+  "_id": "sNrZkyy84E56GqW7",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.sNrZkyy84E56GqW7",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752529248,
+    "modifiedTime": 1780752529248,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!sNrZkyy84E56GqW7"
+}

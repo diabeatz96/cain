@@ -1,0 +1,47 @@
+{
+  "name": "Persecutor",
+  "type": "agenda",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "agendaName": "Persecutor",
+    "formula": "",
+    "unboldedTasks": [
+      "NtF0ZA9HPiBWKNpH"
+    ],
+    "boldedTasks": [
+      "zfG3kXZkTjo8iTPW"
+    ],
+    "abilities": [
+      "xq0eqSkgjb6u4g6t",
+      "fTDL4Ca9TfMkBezT",
+      "KTcl6dG2ICPSvkW2",
+      "ZfJZsqCXqkxtJABf",
+      "xj3AHPLlR84P7tgr"
+    ],
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff"
+  },
+  "_id": "Q6WKgO0mJshp4GHY",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.Q6WKgO0mJshp4GHY",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752528904,
+    "modifiedTime": 1780752528904,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!Q6WKgO0mJshp4GHY"
+}

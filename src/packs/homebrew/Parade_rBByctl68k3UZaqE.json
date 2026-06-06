@@ -1,0 +1,43 @@
+{
+  "name": "Parade",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Severed",
+    "powerName": "Parade",
+    "isPassive": false,
+    "keywords": [
+      "Summon, 1 scene"
+    ],
+    "powerDescription": "You can only activate this power when whole. Create up to ½ CAT+3 less powerful copies of yourself which can only move together and follow basic 1 word commands. They cannot use any of your abilities or powers but can pick up mundane objects. Roll PSYCHE for creative uses of this power. Your parade can take up to your ½ CAT+3 stress before being destroyed, each copy evaporating in a fine pink mist. This happens regardless at the end of the scene. \n\nYou may consume additional psyche bursts with this power. For every additional burst add 1d3 more members to your parade and roll 1d3+1. Your parade can additionally take that amount of stress before it is destroyed.",
+    "psycheBurstCost": false,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": true,
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "isHighBlasphemy": false
+  },
+  "_id": "rBByctl68k3UZaqE",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.rBByctl68k3UZaqE",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752529248,
+    "modifiedTime": 1780752529248,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!rBByctl68k3UZaqE"
+}

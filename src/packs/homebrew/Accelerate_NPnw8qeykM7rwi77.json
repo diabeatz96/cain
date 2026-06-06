@@ -1,0 +1,43 @@
+{
+  "name": "Accelerate",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Pugile",
+    "powerName": "Accelerate",
+    "isPassive": false,
+    "keywords": [
+      "Charm, Self, 1 scene."
+    ],
+    "powerDescription": "Enhance your speed to extreme capabilities by dipping into the lingering grace in your body. In addition to any action you take for the rest of the scene, you may physically move up to a ½ CAT distance within less than a second. \n\nOnce per scene when you take advantage of this speed, you can make an action roll without any hostile creatures taking a reaction.\n\nMETAMORPHOSIS:\n\nYou may trigger this effect twice per scene. You may trigger it a third time by permanently reducing your sin cap by 2. You may trigger it a fourth time by instantly overflowing when the action resolves and giving up. \n\nThis may easily affect the parameter of rolls such as difficulty or risk.",
+    "psycheBurstCost": true,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false,
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "isHighBlasphemy": false
+  },
+  "_id": "NPnw8qeykM7rwi77",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.NPnw8qeykM7rwi77",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752528904,
+    "modifiedTime": 1780752528904,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!NPnw8qeykM7rwi77"
+}

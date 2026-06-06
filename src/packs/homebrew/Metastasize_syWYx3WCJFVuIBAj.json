@@ -1,0 +1,43 @@
+{
+  "name": "Metastasize",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Bloom",
+    "powerName": "Metastasize",
+    "isPassive": false,
+    "keywords": [
+      "nstant, Touch, 1/rest."
+    ],
+    "powerDescription": "Transmute the form of a living being into its next state. When targeting an exorcist you may grant them a new sin mark or “transform” one of their existing sin marks, removing one ability of choice on that mark and rolling per usual to determine the new one. The selected exorcist may gain 1d3+1 sin during this transformation to select location first. \n\nIf selecting a mundane human make a fate roll. (1): They become a drifter of the Admin’s choice (2-5): They to suffer degenerative disorders and internal bleeding as their body rapidly decays (6): They become psychically sensitive as a sinseed emerges within their body. You may reroll this die by spending an additional psyche burst, up to twice. \n\nThis may easily affect the parameter of rolls such as difficulty or risk.",
+    "psycheBurstCost": false,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": true,
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "isHighBlasphemy": false
+  },
+  "_id": "syWYx3WCJFVuIBAj",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.syWYx3WCJFVuIBAj",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752529248,
+    "modifiedTime": 1780752529248,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!syWYx3WCJFVuIBAj"
+}

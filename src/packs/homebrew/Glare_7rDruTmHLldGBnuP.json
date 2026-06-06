@@ -1,0 +1,43 @@
+{
+  "name": "Glare",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Witness",
+    "powerName": "Glare",
+    "isPassive": false,
+    "keywords": [
+      "Summon, Short, 1 scene"
+    ],
+    "powerDescription": "You create a source of ethereal blinding light at any point within range, no larger than your CAT-1 in size. This may be disorienting to living beings that rely on sight, and it appears to the graceless as well.\n\n Wherever the light touches, you have the ability to perceive in great detail, from the inside of dark cracks or slits in walls and windows, to the texture of surfaces and skin. You may choose to move the source of light at a pace no faster than your walking speed, and it can be concealed by mundane opaque materials such as within a pocket or under a cup.\n\n This power may easily affect the parameters of rolls, such as difficulty and risk.",
+    "psycheBurstCost": true,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false,
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "isHighBlasphemy": false
+  },
+  "_id": "7rDruTmHLldGBnuP",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.7rDruTmHLldGBnuP",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752528807,
+    "modifiedTime": 1780752528807,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!7rDruTmHLldGBnuP"
+}

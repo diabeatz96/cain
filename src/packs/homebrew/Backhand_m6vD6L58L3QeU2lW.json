@@ -1,0 +1,34 @@
+{
+  "name": "Backhand",
+  "type": "agendaAbility",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "abilityName": "Backhand",
+    "abilityDescription": "Once per scene when someone insults or challenges you, gain +1D on the first action you take to get back at them.",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff"
+  },
+  "_id": "m6vD6L58L3QeU2lW",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.m6vD6L58L3QeU2lW",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752529130,
+    "modifiedTime": 1780752529130,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!m6vD6L58L3QeU2lW"
+}

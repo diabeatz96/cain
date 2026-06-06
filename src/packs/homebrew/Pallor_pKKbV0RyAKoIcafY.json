@@ -1,0 +1,34 @@
+{
+  "name": "Pallor",
+  "type": "agendaAbility",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "abilityName": "Pallor",
+    "abilityDescription": "When a living creature near you dies, you may delay any psychic or supernatural consequences of their death for a number of action rolls equal to your ½ CAT.",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff"
+  },
+  "_id": "pKKbV0RyAKoIcafY",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.pKKbV0RyAKoIcafY",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752529248,
+    "modifiedTime": 1780752529248,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!pKKbV0RyAKoIcafY"
+}

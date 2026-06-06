@@ -1,0 +1,43 @@
+{
+  "name": "Action",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Static",
+    "powerName": "Action",
+    "isPassive": false,
+    "keywords": [
+      "Charm, Self, Instant"
+    ],
+    "powerDescription": "You force your nervous system into overdrive. When you activate this power roll CATd6 dice, with the result being equal to the amount of seconds that it is active. Whilst it is active you gain CAT+1 physical speed and your mental/processing speed raises a proportional amount, with your perception slowing to match your capabilities. \n\nThis taxes your body heavily and if used more than once in a scene each additional use deals 1d3 stress to yourself. \n\nGain or grant +1D when you next take advantage of this power and it may easily alter the parameters of a roll whilst active.",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "psycheBurstCost": true,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false,
+    "isHighBlasphemy": false
+  },
+  "_id": "WQa3rauWh0xzRiGR",
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.WQa3rauWh0xzRiGR",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752529013,
+    "modifiedTime": 1780752529013,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "sort": 0,
+  "_key": "!items!WQa3rauWh0xzRiGR"
+}

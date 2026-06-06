@@ -1,0 +1,43 @@
+{
+  "name": "Riddle",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Enigmata",
+    "powerName": "Riddle",
+    "isPassive": false,
+    "keywords": [
+      "Charm, Transmute, 1 scene."
+    ],
+    "powerDescription": "For the rest of the scene you have the ability to render information useless, jumbled, and incoherent until rest. Whenever you touch something that has information whether it is written, recorded, or digitally uploaded, you have the ability to make this information impossible to access from the corrupted source. Psychic abilities that provide omniscience or the supernatural ability to perceive hidden things will not bypass this. \n\nYou may make it so that any changes made during this scene are permanent by taking the Descent hook for each instance you corrupt a source of recorded information.",
+    "psycheBurstCost": true,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false,
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "isHighBlasphemy": false
+  },
+  "_id": "msIbQ2U8v1JDN4RM",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.msIbQ2U8v1JDN4RM",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752529130,
+    "modifiedTime": 1780752529130,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!msIbQ2U8v1JDN4RM"
+}

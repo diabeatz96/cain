@@ -1,0 +1,43 @@
+{
+  "name": "Sleepwalk",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Somnia",
+    "powerName": "Sleepwalk",
+    "isPassive": false,
+    "keywords": [
+      "Charm, Self, 1/rest"
+    ],
+    "powerDescription": "You force yourself to fall asleep for the rest of the scene, but allow your body to keep moving in response to threats and stimuli. For the duration: \n\n• Your passive triggers, granting you immunity to psychic phenomena, but you still take stress from mundane sources such as rubble or weapons, even if produced by a supernatural creature. This does not count as taking a rest. \n\n• You can use blasphemy powers freely but roll 0D on actions that would physically exert you with difficulty or effort. \n\n• You cannot move faster than a slow walk. \n\n• You can catch combatants or hostiles off guard easily. Gain or grant +1D to the first roll that takes advantage of this. \n\nYou wake up early if you take an injury. If this power ends at the end of the scene you gain an additional rest die and must spend it immediately.",
+    "psycheBurstCost": true,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false,
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "isHighBlasphemy": false
+  },
+  "_id": "n6LBU1Q0QY7wsXnC",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.n6LBU1Q0QY7wsXnC",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752529130,
+    "modifiedTime": 1780752529130,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!n6LBU1Q0QY7wsXnC"
+}

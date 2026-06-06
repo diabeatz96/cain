@@ -1,0 +1,43 @@
+{
+  "name": "Crunch",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Bonbon",
+    "powerName": "Crunch",
+    "isPassive": false,
+    "keywords": [
+      "Transmute, Short, 1 scene, 1/scene."
+    ],
+    "powerDescription": "Once per scene you may target an object or living being up to CAT size. For the duration of this power the target becomes metaphysically edible to any living being. The physical composition of the target does not change, but the teeth of other beings pass through it with ease, as if it were made of sugar, and bites of the target taken this way dissolve easily in the mouth. This may render objects inoperable if biting off an important piece of an object or leave injuries on living beings. \n\nIf the target was mostly consumed, gain the Overdose hook. If the target was fully consumed, gain the hook twice instead. Mundane beings that eat an affected target are inflicted with high levels of blood sugar and subsequent heart palpitations. \n\nThis may easily change the parameter of rolls such as difficulty or risk.",
+    "psycheBurstCost": true,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false,
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "isHighBlasphemy": false
+  },
+  "_id": "bu0VaLlbShCQYYaS",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.bu0VaLlbShCQYYaS",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752529013,
+    "modifiedTime": 1780752529013,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!bu0VaLlbShCQYYaS"
+}

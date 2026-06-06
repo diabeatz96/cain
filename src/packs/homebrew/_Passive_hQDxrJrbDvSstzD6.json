@@ -1,0 +1,34 @@
+{
+  "name": "*Passive",
+  "type": "agendaAbility",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "abilityName": "*Passive",
+    "abilityDescription": "If you start a mission wearing Aesthetics whose total original scrip value is less than your CAT, start the mission with 2d3 stress.",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff"
+  },
+  "_id": "hQDxrJrbDvSstzD6",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.hQDxrJrbDvSstzD6",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752529130,
+    "modifiedTime": 1780752529130,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!hQDxrJrbDvSstzD6"
+}

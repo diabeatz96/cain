@@ -1,0 +1,43 @@
+{
+  "name": "Imprison",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Enigmata",
+    "powerName": "Imprison",
+    "isPassive": false,
+    "keywords": [
+      "Touch, 1/rest."
+    ],
+    "powerDescription": "Touch a creature to shunt both of your consciousnesses into your Sanctum. Roll for PSYCHE when targeting a supernatural being, only spending a psyche burst upon success. While within the Sanctum, your hostile tulpa actively hunts both you and the target. The power ends when either you or the target are harmed by the tulpa. While inside of your Sanctum, the time outside of your mind is slowed down to a near stop until this power resolves. \n\n- If you were harmed first, take 1d3+1 stress and gain the Descent Hook. If your target was harmed first, they become extremely disoriented upon returning to reality, granting +1D to the next ½ CAT rolls to take advantage of this power. This may also affect the parameter of rolls such as difficulty or risk. \n\n- You gain a pool of +1D equal to the number of times you’ve taken a resting scene and explored your Sanctum during it before you triggered this power (Max +3D). You may spend these dice on any actions to avoid your tulpa while this power is active.",
+    "psycheBurstCost": true,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false,
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "isHighBlasphemy": false
+  },
+  "_id": "6zaQqyxOsGm6bE8z",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.6zaQqyxOsGm6bE8z",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752528807,
+    "modifiedTime": 1780752528807,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!6zaQqyxOsGm6bE8z"
+}

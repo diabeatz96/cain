@@ -1,0 +1,42 @@
+{
+  "name": "Enmity",
+  "type": "blasphemy",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyName": "Enmity",
+    "powers": [
+      "TE9is48ILLCDjrg7",
+      "OaPvRoPmnEv6cAQ4",
+      "e3kz0XPMPbTeSJWT",
+      "oacnHZlprrsW7FU3",
+      "HrfIZ5gt02ZifRLf",
+      "yMjr8Y8im446NDKM"
+    ],
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "highBlasphemy": false
+  },
+  "_id": "TuxDi2G0Jjq0t0yR",
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.TuxDi2G0Jjq0t0yR",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752529013,
+    "modifiedTime": 1780752529013,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "sort": 0,
+  "_key": "!items!TuxDi2G0Jjq0t0yR"
+}

@@ -1,0 +1,43 @@
+{
+  "name": "Fate",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Death",
+    "powerName": "Fate",
+    "isPassive": false,
+    "keywords": [
+      "Instant, Far, 1/mission"
+    ],
+    "powerDescription": "You may trigger this power as a reaction whenever you or an ally in range fails their resist roll or suffers instant death. Spend all of your remaining psyche bursts (min 1). The Admin must offer a deal that would allow the target to succeed their resist roll or avoid suffering instant death. If your target agrees to the deal, it cannot be broken. If they reject the deal, refund all psyche bursts spent and gain +1D to your next roll. \n\nSome examples of deals that could be made are: (Your name and face becomes known and unforgettable to the wrong people. You are beset with a permanent and debilitating affliction. Your body becomes weak and frail. The next time you die will be brutal, painful, and unavoidable, regardless of this power.) \n\nIf the deal is taken, you allow the scene to play out as if the target succeeded their resist roll or did not take their last source of stress, remove 1 injury from them and clear all stress on their current talisman, and gain 1d3 sin.",
+    "psycheBurstCost": true,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false,
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "isHighBlasphemy": false
+  },
+  "_id": "eCMd7NULL01sUGiU",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.eCMd7NULL01sUGiU",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752529130,
+    "modifiedTime": 1780752529130,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!eCMd7NULL01sUGiU"
+}

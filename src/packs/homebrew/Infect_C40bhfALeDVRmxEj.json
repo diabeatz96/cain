@@ -1,0 +1,43 @@
+{
+  "name": "Infect",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Hysteria",
+    "powerName": "Infect",
+    "isPassive": false,
+    "keywords": [
+      "Transmute, Touch, Until Rest"
+    ],
+    "powerDescription": "Instill a lingering psychic virus into an object or living being that you can detonate at any moment. While the target you have touched is within CAT+2 range of you, you know where they are and can see what is in its immediate vicinity. If the target touches or is touched by another potential target, you may spread the infection to them by spending 1 psyche burst. \n\nTo detonate the virus, select any of your powers with the Curse or Transmute tags, and trigger them on valid infected targets without consuming additional psyche bursts (you cannot enhance powers used this way through additional bursts, passives, or other abilities). \n\nThis power may easily affect the parameters of rolls, such as difficulty and risk. Using Delirium on this power grants and instantly fills the Apostasy hook.",
+    "psycheBurstCost": false,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": true,
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "isHighBlasphemy": false
+  },
+  "_id": "C40bhfALeDVRmxEj",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.C40bhfALeDVRmxEj",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752528807,
+    "modifiedTime": 1780752528807,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!C40bhfALeDVRmxEj"
+}

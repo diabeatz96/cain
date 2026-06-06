@@ -1,0 +1,43 @@
+{
+  "name": "Heavy",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Guilt",
+    "powerName": "Heavy",
+    "isPassive": false,
+    "keywords": [
+      "Transmute, Close, Until Rest"
+    ],
+    "powerDescription": "You temporarily increase the weight of an object as if it were +1 CAT larger in size. You may spend 1 pathos when you use this power to increase this by +1 CAT, up to a max of 3 times. You may only target objects equal to your CAT size or lower. Roll PSYCHE for creative uses of this power.\n\nGain +1D when you or an ally next acts to take advantage of this power. \n\nThis power ends early on all targets if you have 0 pathos at the end of a scene. This power may easily affect the parameters of rolls, such as difficulty and risk.",
+    "psycheBurstCost": true,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false,
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "isHighBlasphemy": false
+  },
+  "_id": "ZUN2kooUawpWZG0h",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.ZUN2kooUawpWZG0h",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752529013,
+    "modifiedTime": 1780752529013,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!ZUN2kooUawpWZG0h"
+}

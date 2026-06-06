@@ -1,0 +1,43 @@
+{
+  "name": "Lighthouse",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Wave",
+    "powerName": "Lighthouse",
+    "isPassive": false,
+    "keywords": [
+      "Instant, CAT+1 distance, 1/scene."
+    ],
+    "powerDescription": "You burn the grace inside of your body to produce a distinct and highly visible flash of psychic energy, visible only to the graced. Anywhere within a few seconds to a few minutes of the admin’s choice, a drifter of the admin’s choice enters the scene. It may initially be distracted or entranced by your psychic signature, and not be immediately hostile to you for a few moments before taking its usual course of action. \n\nThis may also be used to create a signal of psychic energy detectable by your allies who can see in your general direction, as the flash reaches up to a CAT+1 distance away. \n\nGain or grant +1D to the next action roll that takes advantage of this happening. This power may easily affect the parameters of rolls such as difficulty or risk.",
+    "psycheBurstCost": true,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false,
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "isHighBlasphemy": false
+  },
+  "_id": "CVAP7vdXXUOkRieP",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.CVAP7vdXXUOkRieP",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752528807,
+    "modifiedTime": 1780752528807,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!CVAP7vdXXUOkRieP"
+}

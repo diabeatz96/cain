@@ -1,0 +1,43 @@
+{
+  "name": "Flock",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Famine",
+    "powerName": "Flock",
+    "isPassive": false,
+    "keywords": [
+      "Summon, CAT distance, Instant."
+    ],
+    "powerDescription": "Call upon mundane living beings within range that travel together such as pests, crows, rats, foxes, insects, or other creatures of your choice. Then, select a target. \n\nThese animals will attempt to devour your target, ripping off flesh, skin, or other pieces of consumable organic material until they have reached bone. They flee shortly after. When you use this power, roll PSYCHE and answer the following questions, gaining +1D for each ‘yes’ answer (only spending a Psyche Burst on success): \n\n- Are you outside and near nature? \n\n- Is your target wounded or bleeding? \n\nThis may easily affect the parameters of rolls such as difficulty and risk. This power cannot be used if your flock cannot reach the target, such as being in an enclosed or sealed space.",
+    "psycheBurstCost": true,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false,
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "isHighBlasphemy": false
+  },
+  "_id": "zCCTE5TKCwo3VW9C",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.zCCTE5TKCwo3VW9C",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752529248,
+    "modifiedTime": 1780752529248,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!zCCTE5TKCwo3VW9C"
+}

@@ -1,0 +1,43 @@
+{
+  "name": "Pollen",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Bloom",
+    "powerName": "Pollen",
+    "isPassive": false,
+    "keywords": [
+      "Charm, 1 scene"
+    ],
+    "powerDescription": "Summon scales, petals, particulates, or small flying insects from any part of your body which you control for the duration. You decide the appearance and shape of your pollen but it is always small enough to get through small cracks or crevices. The total size of the cloud is no larger than your CAT in size, but you may control its shape and form at will, even choosing to separate it into smaller clouds. \n\nThese clouds can manipulate objects as if they were your own hands, using your skill checks when required for rolls, and can travel up to a far distance away from you. Your cloud can be used to obscure or hide, to distract other creatures, or offensively. Roll PSYCHE for creative uses of this power. If used offensively, the pollen dissipates and this power ends early after that action resolves.",
+    "psycheBurstCost": true,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false,
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "isHighBlasphemy": false
+  },
+  "_id": "dqZZotOLy1RRIGcr",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.dqZZotOLy1RRIGcr",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752529130,
+    "modifiedTime": 1780752529130,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!dqZZotOLy1RRIGcr"
+}

@@ -1,0 +1,43 @@
+{
+  "name": "Molt",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Husk",
+    "powerName": "Molt",
+    "isPassive": false,
+    "keywords": [
+      "Instant, 1/mission"
+    ],
+    "powerDescription": "Molt from your own skin, leaving behind everything you once were. When you use this ability you must do so as a reaction to taking 3 or more stress at once OR by taking 2 stress. Shedding your skin allows you to remove one affliction of choice on yourself and also restores limbs and removes scars that have been afflicted on previous missions (limbs loss or scars afflicted on the current mission will not be removed.) \n\nRoll PSYCHE. On a failure, you must answer the following question truthfully: What is an important memory you have? The admin removes that memory from you. \n\nGain or grant +1D on the next action that takes advantage of this power.",
+    "psycheBurstCost": false,
+    "psycheBurstNoCost": true,
+    "psycheBurstMultCost": false,
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "isHighBlasphemy": false
+  },
+  "_id": "O7q1flqshKbL7tGr",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.O7q1flqshKbL7tGr",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752528904,
+    "modifiedTime": 1780752528904,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!O7q1flqshKbL7tGr"
+}

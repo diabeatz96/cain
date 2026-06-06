@@ -1,0 +1,43 @@
+{
+  "name": "Wound",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Physic",
+    "powerName": "Wound",
+    "isPassive": false,
+    "keywords": [
+      "Instant, Short, 1/scene"
+    ],
+    "powerDescription": "Reverse the flow of your healing abilities and pull on broken threads, creating devastating entropic wounds. This instantly kills mundane humans, leaving them with lesions, cut marks, or any injuries of your choice. When targeting a supernatural creature, roll PSYCHE for damage as you deteriorate and injure a section of your target’s physical form. This power gains +1D bonus die on the roll for each of the following questions you can answer “yes” to (max +3D). \n\n• Are you able to touch a part of your target that is vital or important to them? \n\n• Have you previously healed or used healing abilities on the target? \n\n• Are you willing to rip yourself to pieces to Wipe the Stain? (Gain the Necrosis hook if you answer “yes”)",
+    "psycheBurstCost": true,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false,
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "isHighBlasphemy": false
+  },
+  "_id": "mxVUbHkIxbNkrdec",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.mxVUbHkIxbNkrdec",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752529130,
+    "modifiedTime": 1780752529130,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!mxVUbHkIxbNkrdec"
+}

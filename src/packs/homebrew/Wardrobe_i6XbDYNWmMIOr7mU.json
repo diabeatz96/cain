@@ -1,0 +1,34 @@
+{
+  "name": "Wardrobe",
+  "type": "agendaAbility",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "abilityName": "Wardrobe",
+    "abilityDescription": "Aesthetic options cost 1 less scrip for you (min 0). Gain access to the “Expanded Aesthetics” below.\n\nEXPANDED AESTHETICS:\n\n-Fancy Shoes\n2 Scrip\n\nFormal footwear for exorcists in the form of heels, oxfords, etc.\n\n-Fancy Undergarments \n3 Scrip \n\nUnderwear or undergarments for off duty wear. Lingerie, briefs, garter belts, etc.\n\n-Make Up Options \n2 Scrip \n\nA make up kit that can be applied before mission deployment.\n\n-Handbag \n4 Scrip \n\nA high end designer bag that can carry small objects. Can be used when deployed.",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff"
+  },
+  "_id": "i6XbDYNWmMIOr7mU",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.i6XbDYNWmMIOr7mU",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752529130,
+    "modifiedTime": 1780752529130,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!i6XbDYNWmMIOr7mU"
+}

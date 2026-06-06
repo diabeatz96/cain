@@ -1,0 +1,43 @@
+{
+  "name": "Tacticus",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "War",
+    "powerName": "Tacticus",
+    "isPassive": false,
+    "keywords": [
+      "Charm, 1/rest."
+    ],
+    "powerDescription": "This power does not cost a psyche burst to use. Wage a simulacrum of war within your mind of the current battle that lets you predict your opponent’s next move. Select a number of combatants in the same scene as you. You ask your Admin a question which they must answer truthfully: \n\n- Can I win this fight? \n\nIf the answer is a yes, gain +1D on the first action you take this scene to inflict violence or harm. Regardless of the answer, you roll the risk die alongside the Admin when you take your turn up to a number of times equal to your ½ CAT and take the lower number, having seen all possibilities.",
+    "psycheBurstCost": false,
+    "psycheBurstNoCost": true,
+    "psycheBurstMultCost": false,
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "isHighBlasphemy": false
+  },
+  "_id": "ph5Pzj7sbQnDjHv5",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.ph5Pzj7sbQnDjHv5",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752529248,
+    "modifiedTime": 1780752529248,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!ph5Pzj7sbQnDjHv5"
+}

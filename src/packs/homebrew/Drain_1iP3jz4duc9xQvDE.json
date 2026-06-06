@@ -1,0 +1,43 @@
+{
+  "name": "Drain",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Wave",
+    "powerName": "Drain",
+    "isPassive": false,
+    "keywords": [
+      "Transmute, CAT Area, 1 Scene, 1/mission."
+    ],
+    "powerDescription": "Generate a massive sinkhole in the psychic sea centered on you. Every drifter, trace or sin within a CAT area temporarily dissipates as they slide into the subconscious layer of the psychic gestalt. Beings with psychic abilities caught in the area including you and your allies are drained of your grace. Any action that would expend a psyche burst or roll with PSYCHE is hard by default until the end of the scene. Enemies that rely on psychic abilities may find it hard to generate meaningful damage through them. \n\nAt the end of the scene, any supernatural being removed by this ability quickly remanifests and may be additionally aggressive or hostile to the user of this power. \n\nThis power may easily change the parameter of rolls such as difficulty or risk.",
+    "psycheBurstCost": true,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false,
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "isHighBlasphemy": false
+  },
+  "_id": "1iP3jz4duc9xQvDE",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.1iP3jz4duc9xQvDE",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752528807,
+    "modifiedTime": 1780752528807,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!1iP3jz4duc9xQvDE"
+}

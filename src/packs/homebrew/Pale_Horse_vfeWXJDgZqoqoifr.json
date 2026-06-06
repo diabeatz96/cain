@@ -1,0 +1,43 @@
+{
+  "name": "Pale Horse",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Death",
+    "powerName": "Pale Horse",
+    "isPassive": true,
+    "keywords": [
+      "Passive"
+    ],
+    "powerDescription": "Once per rest, you can mildly control the life force of a mundane human within a close range. You can allow a human on the brink of death to survive for much longer than normal, or instantly kill a human that you can touch.",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "psycheBurstCost": false,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false,
+    "isHighBlasphemy": false
+  },
+  "_id": "vfeWXJDgZqoqoifr",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.vfeWXJDgZqoqoifr",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752529248,
+    "modifiedTime": 1780752529248,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!vfeWXJDgZqoqoifr"
+}

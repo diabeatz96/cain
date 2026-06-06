@@ -1,0 +1,43 @@
+{
+  "name": "Power Words",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Author",
+    "powerName": "Power Words",
+    "isPassive": true,
+    "keywords": [
+      "Passive"
+    ],
+    "powerDescription": "Whenever you write one of your Power Words, you may expend a Psych Burst to enchant it with psychic essence - this counts as a Summon. When you do so, choose whether it triggers from being Touched (which does not require skin contact) or Read (which does not require the word to be read aloud). These effects originate directly from the word itself. You cannot trigger your own Power Words, but are susceptible to their effects. Power Words can easily affect the difficulty and risk of rolls unless otherwise stated. The psychic charge dissipate upon resting if not triggered, and can only trigger once unless stated. All Authors begin with the word Push; \n\n• Touch: Launches the victim CAT distance away. • Read: Pushes everything in CAT area away with light force",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "psycheBurstCost": false,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false,
+    "isHighBlasphemy": false
+  },
+  "_id": "9jwR3RRJMFkkABYR",
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.9jwR3RRJMFkkABYR",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752528807,
+    "modifiedTime": 1780752528807,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "sort": 0,
+  "_key": "!items!9jwR3RRJMFkkABYR"
+}

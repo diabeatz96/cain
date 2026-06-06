@@ -1,0 +1,43 @@
+{
+  "name": "Soften",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Melt",
+    "powerName": "Soften",
+    "isPassive": false,
+    "keywords": [
+      "Curse, Touch."
+    ],
+    "powerDescription": "Mold someone’s mind in your hands like putty. A mundane human being in your touch immediately becomes unable to focus on anything except for the sensation of your skin while you are speaking to them. While touching them, you can suggest a course of actions that are not outright harmful to themselves, such as “drive the car down this street” or “unlock the password on this computer”, and they will willingly do so to their best ability. When you stop touching them this power ends. \n\nThis may easily affect the parameter of rolls such as difficulty or risk.",
+    "psycheBurstCost": true,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false,
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "isHighBlasphemy": false
+  },
+  "_id": "veYKyZxx37m7zuN8",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.veYKyZxx37m7zuN8",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752529248,
+    "modifiedTime": 1780752529248,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!veYKyZxx37m7zuN8"
+}

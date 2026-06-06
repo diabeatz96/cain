@@ -1,0 +1,43 @@
+{
+  "name": "Influence",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Bonbon",
+    "powerName": "Influence",
+    "isPassive": false,
+    "keywords": [
+      "Curse, CAT area, 1 scene."
+    ],
+    "powerDescription": "Every living being of your choice within a CAT area of you becomes immediately inebriated, as if drunk or high. This renders their ability- making abilities sporadic or uncontrolled, induces loss of certain motor functions, and sustains any other effects an inebriant such as alcohol or drugs may have on a living being. You may take the Overdose affliction hook up to two times to increase the CAT of this power by +1 per hook taken. \n\nGain or grant +1D to the next action you or your allies make to take advantage of this power. This power may easily affect the parameter of rolls such as difficulty or risk.",
+    "psycheBurstCost": true,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false,
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "isHighBlasphemy": false
+  },
+  "_id": "G8Qs4my06xYPqGV1",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.G8Qs4my06xYPqGV1",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752528904,
+    "modifiedTime": 1780752528904,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!G8Qs4my06xYPqGV1"
+}

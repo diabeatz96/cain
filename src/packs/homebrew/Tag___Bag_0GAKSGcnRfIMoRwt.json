@@ -1,0 +1,34 @@
+{
+  "name": "Tag & Bag",
+  "type": "agendaAbility",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "abilityName": "Tag & Bag",
+    "abilityDescription": "It is never impossible for you to transport, conceal, or secure a body, no matter how damaged or large. Gain +1D on actions to conceal or transport corpses.",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff"
+  },
+  "_id": "0GAKSGcnRfIMoRwt",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.0GAKSGcnRfIMoRwt",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752528807,
+    "modifiedTime": 1780752528807,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!0GAKSGcnRfIMoRwt"
+}

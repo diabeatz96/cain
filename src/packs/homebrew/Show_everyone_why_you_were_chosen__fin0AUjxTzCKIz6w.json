@@ -1,0 +1,34 @@
+{
+  "name": "Show everyone why you were chosen.",
+  "type": "agendaTask",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "task": "Show everyone why you were chosen.",
+    "isBold": true,
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff"
+  },
+  "_id": "fin0AUjxTzCKIz6w",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.fin0AUjxTzCKIz6w",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752529130,
+    "modifiedTime": 1780752529130,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!fin0AUjxTzCKIz6w"
+}

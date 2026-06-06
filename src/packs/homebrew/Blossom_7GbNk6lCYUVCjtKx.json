@@ -1,0 +1,43 @@
+{
+  "name": "Blossom",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Bloom",
+    "powerName": "Blossom",
+    "isPassive": false,
+    "keywords": [
+      "Instant, CAT area, 1/scene."
+    ],
+    "powerDescription": "Cause organic matter of your choice to violently grow up to a CAT area centered on yourself. Plant life and vegetation may grow to extremely large sizes which can change the scene drastically. Mundane living beings of your choice inside of this area quickly develop massive tumors that burst open, age a few years, and change in physically traumatic ways. Roll PSYCHE for creative uses of this power. \n\nGain or grant +1D to the next roll that takes advantage of this power. This may easily affect the parameter or rolls such as difficulty or risk.",
+    "psycheBurstCost": true,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false,
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "isHighBlasphemy": false
+  },
+  "_id": "7GbNk6lCYUVCjtKx",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.7GbNk6lCYUVCjtKx",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752528807,
+    "modifiedTime": 1780752528807,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!7GbNk6lCYUVCjtKx"
+}

@@ -1,0 +1,43 @@
+{
+  "name": "Confluence",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Erudition",
+    "powerName": "Confluence",
+    "isPassive": false,
+    "keywords": [
+      "Instant, CAT area, 1/scene."
+    ],
+    "powerDescription": "By focusing for a moment, you force individuals of your choice in a CAT area centered on yourself to experience a shared overlay of your understanding of a topic, skill, or knowledge of the situation at hand. This happens instantaneously but can project the full knowledge of the investigation at hand, months of training in a particular skill set, or any wide breadth of knowledge. \n\nYou may pick and choose details to leave out in order to disguise where the information came from, but still share the knowledge in an accurate and precise way. \n\nGain or grant +1D to the next action that takes advantage of this power. This power may easily affect the parameters of rolls such as difficulty or risk.",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "psycheBurstCost": false,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false,
+    "isHighBlasphemy": false
+  },
+  "_id": "eZQsTMdXPxcIuq0Y",
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.eZQsTMdXPxcIuq0Y",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752529130,
+    "modifiedTime": 1780752529130,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "sort": 0,
+  "_key": "!items!eZQsTMdXPxcIuq0Y"
+}
