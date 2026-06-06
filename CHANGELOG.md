@@ -1,6 +1,11 @@
 # CHANGELOG
 
-## 1.3.20
+## 1.3.21
+
+- **Dedicated "Homebrew" compendium**: registered a new `homebrew` Item pack (`packs/homebrew`, built from `src/packs/homebrew/`) so community/homebrew content lives in its own compendium, separate from the official packs. The release workflow excludes the raw `submissions/` folder from the distributed zip
+- **Homebrew Laboratory — "Export Folders as ZIP"**: new control on the Import/Export tab. Pick the Item folders holding your homebrew and download a ZIP. Linked children travel with their parents (a blasphemy's `blasphemyPower`s, an agenda's tasks/abilities, a sin mark's abilities) even when filed in different folders, fixing the broken cross-references the old single-file export produced
+  - The ZIP is laid out like the system's own pack sources — every item becomes a `src/packs/homebrew/<Name>_<id>.json` file with a `!items!<id>` key (matching `tools/unpack.mjs`), plus a root `_manifest.json`. It drops straight into the repo and compiles via `npm run build:packs`
+- **Homebrew submission pipeline**: added a `submissions/` drop-folder with contributor instructions, a `tools/validate-submissions.mjs` validator (checks JSON validity, known item types, and required fields), and a `validate-submissions.yml` GitHub Action that runs the validator on any PR touching `submissions/**`
 
 - CAT level strip: extended from 7 slots (CAT 0–VI) to 8 slots (CAT 0–VII) and fixed the missions-survived mapping. Now reads `0, 0, 1, 2, 4, 7, X, X` under CAT 0 through VII respectively, matching the CAIN rulebook
 - Release workflow: the "Notify Foundry VTT Package Release API" step now reads `compatibility.minimum/verified/maximum` from `system.json` via `jq -r` instead of hardcoding `"13"`. Bumping the verified field in `system.json` will now propagate to the foundryvtt.com listing on the next release
