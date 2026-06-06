@@ -1,0 +1,43 @@
+{
+  "name": "Overwhelm",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Revulsion",
+    "powerName": "Overwhelm",
+    "isPassive": false,
+    "keywords": [
+      "CAT Range, 1 scene."
+    ],
+    "powerDescription": "Assault the senses of a target within range on both a physical and mental level. Pick two of the following: \n\n- Sight \n- Smell \n- Hearing \n- Touch \n- Taste \n\nUntil the end of the scene, the target cannot rely on the selected senses, overwhelmed by an influx of adverse sensations. This distorts their senses but does not remove them entirely. \n\nGain +1D when you or any ally take advantage of this power while it is in effect.",
+    "psycheBurstCost": true,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false,
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "isHighBlasphemy": false
+  },
+  "_id": "sjmsyIsXNDbPVZkr",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.sjmsyIsXNDbPVZkr",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752529248,
+    "modifiedTime": 1780752529248,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!sjmsyIsXNDbPVZkr"
+}

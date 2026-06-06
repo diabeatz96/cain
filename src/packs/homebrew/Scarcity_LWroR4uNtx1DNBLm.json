@@ -1,0 +1,43 @@
+{
+  "name": "Scarcity",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Famine",
+    "powerName": "Scarcity",
+    "isPassive": false,
+    "keywords": [
+      "Transmute, CAT+2 area, until rest, 1/mission."
+    ],
+    "powerDescription": "This power does not cost a psyche burst to use. Completely drain the world of resources around you. Arsenals of weapons will be left scarce, guns empty of ammunition. Shelves of supplies grow emptier, commonplace items mysteriously under stocked. Basic necessities such as food, water, and electricity slowly disappear and become difficult to find, with only meager amounts left for those within the area. \n\nWhenever pressure increases, the impact of this power becomes more noticeable and drastic, which may cause unrest or panic among the mundane population within the area of effect. As the effect moves with you, parts of the investigation zone that are not within the area of effect slowly recover their resources over time. \n\nThis may easily affect the parameter of rolls such as difficulty or risk.",
+    "psycheBurstCost": false,
+    "psycheBurstNoCost": true,
+    "psycheBurstMultCost": false,
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "isHighBlasphemy": false
+  },
+  "_id": "LWroR4uNtx1DNBLm",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.LWroR4uNtx1DNBLm",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752528904,
+    "modifiedTime": 1780752528904,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!LWroR4uNtx1DNBLm"
+}

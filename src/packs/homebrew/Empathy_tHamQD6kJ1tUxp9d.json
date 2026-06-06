@@ -1,0 +1,43 @@
+{
+  "name": "Empathy",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Death",
+    "powerName": "Empathy",
+    "isPassive": false,
+    "keywords": [
+      "Instant, CAT area, 1/rest."
+    ],
+    "powerDescription": "You may trigger this power in response to a living being dying within close range of you, making them the primary target of this ability. Every mundane human within a CAT area dies in the same way your original target died. A decapitation results in everyone’s heads falling off as if sliced. A lethal car accident would not manifest additional cars, but crush and mangle the bodies of other humans. \n\nIf a supernatural being with 2 or less segments remaining on it’s talisman is in this area, you may make a PSYCHE roll. On a success they die the same way your target did too. \n\nYou may spend up to 2 additional psyche bursts to increase the CAT of this power by +1 per burst spent.",
+    "psycheBurstCost": false,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": true,
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "isHighBlasphemy": false
+  },
+  "_id": "tHamQD6kJ1tUxp9d",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.tHamQD6kJ1tUxp9d",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752529248,
+    "modifiedTime": 1780752529248,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!tHamQD6kJ1tUxp9d"
+}

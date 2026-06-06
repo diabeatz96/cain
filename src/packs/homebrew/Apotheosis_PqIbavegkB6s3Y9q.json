@@ -1,0 +1,43 @@
+{
+  "name": "Apotheosis",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Pugile",
+    "powerName": "Apotheosis",
+    "isPassive": false,
+    "keywords": [
+      "Self, 1 scene, 1/scene."
+    ],
+    "powerDescription": "Passive: Lower your sin cap by 2 and roll to gain a sin mark when you gain this power. This mark does not count towards your resistance rolls. \n\nActive: Transform and enhance the abilities of your cursed flesh. Select one sin ability you currently possess. For the rest of the scene, you may select 1 more sin ability that manifests from the same mark as your selected one. \n\nIt manifests as a spreading infection or uncontrollable growth. This may cause living beings that see you to become apprehensive or scared, and you may gain +1D on the next roll that takes advantage of this effect. It disappears at the end of the scene, melting back into your flesh. Then gain 1d3 sin.\n\nMETAMORPHOSIS:\n\nInstead of selecting 1 sin ability to manifest from the mark you possess, you gain every sin ability from the same sin mark as your selected ability. The marked area becomes a mass of writhing flesh, horrific, and violently grotesque. When this power ends, roll to gain a sin mark.",
+    "psycheBurstCost": true,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false,
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "isHighBlasphemy": false
+  },
+  "_id": "PqIbavegkB6s3Y9q",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.PqIbavegkB6s3Y9q",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752528904,
+    "modifiedTime": 1780752528904,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!PqIbavegkB6s3Y9q"
+}

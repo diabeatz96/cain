@@ -1,0 +1,43 @@
+{
+  "name": "Pessimist",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Guilt",
+    "powerName": "Pessimist",
+    "isPassive": true,
+    "keywords": [
+      "Passive"
+    ],
+    "powerDescription": "Your max Pathos increases by ½ CAT+1. You also gain 1 Pathos when you aid an allied exorcist through set-up or teamwork and they either: fail the resulting roll ; gain an injury as a result of that action; or roll a 1 on the final result. \n\nWhen a session ends, you keep half your current pathos (rounding up) instead of clearing it. You may no longer activate Divine Agony but instead use Pathos for effects on the Contrition table and to enhance your abilities.",
+    "psycheBurstCost": false,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false,
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "isHighBlasphemy": false
+  },
+  "_id": "MSwsOKmkvPObFKVL",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.MSwsOKmkvPObFKVL",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752528904,
+    "modifiedTime": 1780752528904,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!MSwsOKmkvPObFKVL"
+}

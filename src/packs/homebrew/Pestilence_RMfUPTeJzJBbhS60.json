@@ -1,0 +1,43 @@
+{
+  "name": "Pestilence",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Conquest",
+    "powerName": "Pestilence",
+    "isPassive": false,
+    "keywords": [
+      "Curse, CAT+2 area, 1/mission."
+    ],
+    "powerDescription": "Control the duplication of harmful pathogens on the surface of the target’s skin, giving them a severe disease which rapidly spreads to all mundane humans within a CAT+2 area by the end of the scene. When the scene transpires the diseases granted are considered mundane. While sickened these humans may grow weak, desperate, or potentially die if not treated within an appropriate mindframe. \n\nGain or grant +1D to the next action that takes advantage of this happening. This may easily affect the parameters of rolls such as difficulty and risk.",
+    "psycheBurstCost": true,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false,
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "isHighBlasphemy": false
+  },
+  "_id": "RMfUPTeJzJBbhS60",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.RMfUPTeJzJBbhS60",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752529013,
+    "modifiedTime": 1780752529013,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!RMfUPTeJzJBbhS60"
+}

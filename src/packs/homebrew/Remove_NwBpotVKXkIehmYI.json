@@ -1,0 +1,43 @@
+{
+  "name": "Remove",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Physic",
+    "powerName": "Remove",
+    "isPassive": false,
+    "keywords": [
+      "Curse, CAT Distance, Until Rest."
+    ],
+    "powerDescription": "Remove an aspect of pain or trauma from a creature of your choice. This may seamlessly remove a traumatic or painful memory that you are aware of from any being until rest. \n\nAlternatively, once per hunt you may use this power when all of the following conditions have been met: \n\n• You meet at least 1 requirement for the Nail of Abel. \n\n• The Sin has 1 or more of its execution talisman slashed. \n\n• You know one Trauma question that you have not used to counter a reaction yet. \n\nYou erase a memory of an intense trauma that the Sin was born from. Restore 2 segments on the Sin’s execution talisman, then the admin selects 1 domain the sin has access to (picking the one that may best match or narratively coincides with the removed trauma if possible). The sin may not use abilities or powers granted to it by that domain until rest. \n\nYou may no longer use the trauma question selected to counter this sin’s reaction until rest. The sin ends this power early when you encounter it in its palace, as its memories flood back to it: you may gain the Necrosis hook twice to suppress this.",
+    "psycheBurstCost": true,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false,
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "isHighBlasphemy": false
+  },
+  "_id": "NwBpotVKXkIehmYI",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.NwBpotVKXkIehmYI",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752528904,
+    "modifiedTime": 1780752528904,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!NwBpotVKXkIehmYI"
+}

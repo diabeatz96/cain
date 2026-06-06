@@ -1,0 +1,43 @@
+{
+  "name": "Consecrate",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Bless",
+    "powerName": "Consecrate",
+    "isPassive": false,
+    "keywords": [
+      "Transmutation, Adjacent, Until Rest"
+    ],
+    "powerDescription": "You charge an object up to CAT size with raw grace. Regardless of its distance away from you as an action you may cause the grace within this object to violently erupt. This creates an explosion with CAT area equal to 1/2 the CAT size of the object. When detonated, roll PSYCHE and answer the following questions, gaining +1D for each 'yes' answer. \n\n• Was your target in contact with the object? \n• Was your target unaware of the object's charged state?",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "psycheBurstCost": true,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false,
+    "isHighBlasphemy": false
+  },
+  "_id": "CG58jLx2eVgpLo6T",
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.CG58jLx2eVgpLo6T",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752528807,
+    "modifiedTime": 1780752528807,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "sort": 0,
+  "_key": "!items!CG58jLx2eVgpLo6T"
+}

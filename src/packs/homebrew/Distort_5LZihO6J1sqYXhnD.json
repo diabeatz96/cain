@@ -1,0 +1,50 @@
+{
+  "name": "Distort",
+  "type": "blasphemyPower",
+  "img": "Assets/Cain/Cain%20Art/Symbols/Egoism.png",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Egoism",
+    "powerName": "Distort",
+    "isPassive": false,
+    "keywords": [
+      "Curse, 1 Scene, Adjacent"
+    ],
+    "powerDescription": "You deform the very soul of a human or animal with your touch causing their body to undergo partial sin transformation. They take one of the following, you can choose as much effects as your CAT level.\n\n• Their limbs grow or shrink to abnormal sizes, from making them as high as a bus, or as small as a key.\n\n• Their eyes morph and explode, rendering them blind. \n\n• They partially fuse with another human, animal, or an object in CAT range. While fused, their actions become compromised and harder to perform freely.\n\n• Mouths appear all over their bodies as they become unable to lie, cover their face, or hide their thoughts and feelings to anyone in the area.\n\n• Their form and function contorts in abnormal ways, as they transform into an usable item of your choice.\n\nYou may gain or grant +1D when you or any ally next acts to take advantage of this power. At the end of this ability, the affected targets return to normal and do not remember anything that happened while deformed.",
+    "description": "",
+    "primaryColor": "#000000",
+    "accentColor": "#8a0000",
+    "secondaryColor": "#000000",
+    "textColor": "#ffffff",
+    "psycheBurstCost": false,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false,
+    "isHighBlasphemy": false
+  },
+  "_id": "5LZihO6J1sqYXhnD",
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "flags": {
+    "exportSource": {
+      "world": "cain-all",
+      "system": "cain",
+      "coreVersion": "12.343",
+      "systemVersion": "1.2.2"
+    }
+  },
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.5LZihO6J1sqYXhnD",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752528807,
+    "modifiedTime": 1780752528807,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "sort": 0,
+  "_key": "!items!5LZihO6J1sqYXhnD"
+}

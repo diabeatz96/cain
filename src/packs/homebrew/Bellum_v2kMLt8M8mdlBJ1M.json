@@ -1,0 +1,43 @@
+{
+  "name": "Bellum",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "War",
+    "powerName": "Bellum",
+    "isPassive": false,
+    "keywords": [
+      "CAT+1 Area, 1 scene, 1/rest."
+    ],
+    "powerDescription": "Fill living beings around you within a CAT+1 area with extreme anger and the urge to commit violence. All creatures of your choice within range are filled with this roiling emotion and may use it to attack each other, finding it difficult to differentiate friend from foe. For the duration all creatures under the effect of this rage also have their physical CAT increased by 1, even if they are mundane in nature. \n\nThis may easily affect the parameter of rolls, such as difficulty or risk.",
+    "psycheBurstCost": true,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false,
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "isHighBlasphemy": false
+  },
+  "_id": "v2kMLt8M8mdlBJ1M",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.v2kMLt8M8mdlBJ1M",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752529248,
+    "modifiedTime": 1780752529248,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!v2kMLt8M8mdlBJ1M"
+}

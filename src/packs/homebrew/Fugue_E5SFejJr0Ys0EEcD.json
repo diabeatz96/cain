@@ -1,0 +1,43 @@
+{
+  "name": "Fugue",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Hysteria",
+    "powerName": "Fugue",
+    "isPassive": false,
+    "keywords": [
+      "Curse, Close, 1 scene"
+    ],
+    "powerDescription": "Reach into a target’s psyche and rip off their inhibition.\nThey lose control as you take off the mask. That target’s current primary emotion causes them to go\ninto a frenzy, and for the rest of the scene they gain\nyour choice of up to ½ CAT of the following effects:\n\n-They can only choose to harm the closest target to them.\n\n-They lose the ability to focus on specific or complicated tasks.\n\n-They become painfully hot to the touch. This cannot harm them.\n\n -They cannot be incapacitated and do not feel pain.\n\n -They begin to dance fervently and uncontrollably.\n\nThis power may easily effect the parameters of rolls,\nsuch as difficulty and risk.",
+    "psycheBurstCost": true,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false,
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "isHighBlasphemy": false
+  },
+  "_id": "E5SFejJr0Ys0EEcD",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.E5SFejJr0Ys0EEcD",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752528904,
+    "modifiedTime": 1780752528904,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!E5SFejJr0Ys0EEcD"
+}

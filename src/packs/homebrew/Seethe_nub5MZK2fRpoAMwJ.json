@@ -1,0 +1,43 @@
+{
+  "name": "Seethe",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Hysteria",
+    "powerName": "Seethe",
+    "isPassive": false,
+    "keywords": [
+      "Charm, Short, Until rest, 1/rest"
+    ],
+    "powerDescription": "This does not cost a psyche burst to use. You or a\ntarget exorcist lets their roiling emotions flow through\nthem. The target then chooses to answer following\nquestions as truthfully as they can:\n\n-Who has wronged you?\n\n-What do you hate most about humanity?\n\n -What do you deserve that was denied to you?\n\nIf that exorcist directly acts upon any of their answers\nthey may gain 1 psyche burst after doing so, up to once\nper answer.\n\nAfter gaining a psyche burst this way, roll PSYCHE.\nOn a failure, the selected target gains the Apostasy\nHook. You may not use Delirium to boost this power.",
+    "psycheBurstCost": false,
+    "psycheBurstNoCost": true,
+    "psycheBurstMultCost": false,
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "isHighBlasphemy": false
+  },
+  "_id": "nub5MZK2fRpoAMwJ",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.nub5MZK2fRpoAMwJ",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752529130,
+    "modifiedTime": 1780752529130,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!nub5MZK2fRpoAMwJ"
+}

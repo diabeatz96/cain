@@ -1,0 +1,50 @@
+{
+  "name": "Catch",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Wrath",
+    "powerName": "Catch",
+    "isPassive": true,
+    "keywords": [
+      "Passive"
+    ],
+    "powerDescription": "Whenever you taste blood you instantly know if the creature it came from is dead/alive, if it is a supernatural creature, and if it is a short, long, or extreme distance away from you.",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "psycheBurstCost": false,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false,
+    "isHighBlasphemy": false
+  },
+  "_id": "iVaDbXmsxqoiIgLU",
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "flags": {
+    "exportSource": {
+      "world": "cain-R",
+      "system": "cain",
+      "coreVersion": "12.343",
+      "systemVersion": "1.3.5"
+    }
+  },
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.iVaDbXmsxqoiIgLU",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752529130,
+    "modifiedTime": 1780752529130,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "sort": 0,
+  "_key": "!items!iVaDbXmsxqoiIgLU"
+}

@@ -1,0 +1,43 @@
+{
+  "name": "Fiber",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Stem",
+    "powerName": "Fiber",
+    "isPassive": false,
+    "keywords": [
+      "Self, 1 Scene"
+    ],
+    "powerDescription": "For the remainder of the scene you may eject a sticky, mucus-covered column of muscle and tendons from your arms. This muscle may attach itself to any solid point within CAT distance, allowing you to either drag yourself towards it or attempt to drag the surface it is attached to towards yourself (rolling as is necessary), both of these are done at 1/2 CAT speed. \n\nYou receive any stress that this muscle takes. You may choose to detach this muscle from any surface it is on at any time, allowing you to swing from it or cease dragging an object. Gain or grant +1D when you or an ally next take advantage of this power. This power may alter the parameters of a roll whilst active.",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "psycheBurstCost": true,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false,
+    "isHighBlasphemy": false
+  },
+  "_id": "lyekrtPI9SZyhs0J",
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.lyekrtPI9SZyhs0J",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752529130,
+    "modifiedTime": 1780752529130,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "sort": 0,
+  "_key": "!items!lyekrtPI9SZyhs0J"
+}

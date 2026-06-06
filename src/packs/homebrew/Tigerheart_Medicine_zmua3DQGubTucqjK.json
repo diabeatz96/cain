@@ -1,0 +1,42 @@
+{
+  "folder": null,
+  "name": "Tigerheart Medicine",
+  "type": "item",
+  "_id": "zmua3DQGubTucqjK",
+  "img": "systems/cain/assets/items/kp.png",
+  "system": {
+    "description": "<p>Consume to heal an injury, removing it, but permanently lowers max stress by 1. Can be used while under duress</p>",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "quantity": 1,
+    "weight": 0,
+    "roll": {
+      "diceNum": 1,
+      "diceSize": "d6",
+      "diceBonus": ""
+    },
+    "kitPoint": 2,
+    "scripValue": 4,
+    "type": "Occult / Medical"
+  },
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.zmua3DQGubTucqjK",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752529248,
+    "modifiedTime": 1780752529248,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "sort": 0,
+  "_key": "!items!zmua3DQGubTucqjK"
+}

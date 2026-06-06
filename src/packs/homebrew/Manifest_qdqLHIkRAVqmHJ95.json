@@ -1,0 +1,43 @@
+{
+  "name": "Manifest",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Somnia",
+    "powerName": "Manifest",
+    "isPassive": false,
+    "keywords": [
+      "Summon, 1 Scene"
+    ],
+    "powerDescription": "Create a number of intangible constructs up to your CAT that are visible even to those without Grace. They can be objects, small animals, or creatures whose combined size must be equal to or smaller than your CAT, but you must have seen it at least once before your most recent sleep or deployment. \n\n• You control their movements and actions, although they cannot inflict harm on anything or anyone due to being intangible. \n\n• They cannot move farther than a long distance away from you or else they disappear. \n\n• They cannot intelligently vocalize, and make garbled incomprehensible speech when attempting to do so. \n\nSpend 1 additional psyche burst to make any constructs made this way physically tangible. They may block attacks, be felt and touched by even those without Grace, and may interact with the world around them. Roll PSYCHE for creative uses of this ability. They have a combined execution talisman equal to your CAT+1 and disappear if taking a total amount of stress that exceeds that. They no longer disappear at the end of the scene, but instead when you rest.",
+    "psycheBurstCost": false,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": true,
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "isHighBlasphemy": false
+  },
+  "_id": "qdqLHIkRAVqmHJ95",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.qdqLHIkRAVqmHJ95",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752529248,
+    "modifiedTime": 1780752529248,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!qdqLHIkRAVqmHJ95"
+}

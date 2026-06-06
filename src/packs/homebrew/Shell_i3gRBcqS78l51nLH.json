@@ -1,0 +1,43 @@
+{
+  "name": "Shell",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Husk",
+    "powerName": "Shell",
+    "isPassive": true,
+    "keywords": [
+      "Passive?"
+    ],
+    "powerDescription": "Something once alive, now empty. \n\nShell(sin): Execution Talisman 1 \n\nShells do not move from the location they were birthed and will crumble at attempts to move them. \n\nThey take on a form of the exorcist’s choice, but are almost always paper thin and empty regardless of size. \n\nReactions: \n\nGentle Repose(1-6): One exorcist may observe the Shell and relive a memory they had with the exorcist that birthed the Shell. They take 1 non-lethal stress.",
+    "psycheBurstCost": false,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false,
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "isHighBlasphemy": false
+  },
+  "_id": "i3gRBcqS78l51nLH",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.i3gRBcqS78l51nLH",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752529130,
+    "modifiedTime": 1780752529130,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!i3gRBcqS78l51nLH"
+}

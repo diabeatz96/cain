@@ -1,0 +1,43 @@
+{
+  "name": "Entropy",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Death",
+    "powerName": "Entropy",
+    "isPassive": false,
+    "keywords": [
+      "Transmute, CAT area, 1 scene."
+    ],
+    "powerDescription": "You accelerate the flow of time for all mundane beings and objects within a CAT area around you. They rapidly age and decay, altering them accordingly: \n\n- Small animals quickly die as their lifespan plays out in seconds. \n\n- Humans reach old age or expire. \n\n- Objects deteriorate, rust, or malfunction. \n\n- Injuries may heal quickly or fester, depending on their circumstances. \n\nGain or grant +1D to the next action that takes advantage of this power.",
+    "psycheBurstCost": true,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false,
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "isHighBlasphemy": false
+  },
+  "_id": "NBBErWfC2gY7zg50",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.NBBErWfC2gY7zg50",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752528904,
+    "modifiedTime": 1780752528904,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!NBBErWfC2gY7zg50"
+}

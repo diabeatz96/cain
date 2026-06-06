@@ -1,0 +1,43 @@
+{
+  "name": "Caustic",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Melt",
+    "powerName": "Caustic",
+    "isPassive": false,
+    "keywords": [
+      "Permanent."
+    ],
+    "powerDescription": "Passive: Your blood is highly corrosive to everything other than your own body, able to melt most things. Mundane harmful or violent actions that pierce your skin deal -1 stress (taking a minimum of 1 stress) as your blood melts and singes the resulting attack. Blades corrode, bullets dissolve, and unprotected fists against your blood may recoil back in pain. \n\nActive: You may also choose to take 1d3+1 stress at any time to bite a part of your mouth to bleed, and spray it out in a caustic spray which may dissolve or burn living beings or objects it touches. While injured, you may reduce the stress cost for this action by a number equal to your current number of injuries, as you pool blood from your bleeding body. \n\nIf necessary, roll PSYCHE for effects that would be risky, unclear, or inflict harm. When you or an ally next acts to gain advantage of this power’s active ability, they may gain +1D.",
+    "psycheBurstCost": false,
+    "psycheBurstNoCost": true,
+    "psycheBurstMultCost": false,
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "isHighBlasphemy": false
+  },
+  "_id": "vuUoZRM0whdFZ1Hc",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.vuUoZRM0whdFZ1Hc",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752529248,
+    "modifiedTime": 1780752529248,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!vuUoZRM0whdFZ1Hc"
+}

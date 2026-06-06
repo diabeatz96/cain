@@ -1,0 +1,43 @@
+{
+  "name": "Abel",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Severed",
+    "powerName": "Abel",
+    "isPassive": false,
+    "keywords": [
+      "Charm, Instant, 1/scene."
+    ],
+    "powerDescription": "When you use this ability while split, instantly kill one version of yourself of choice, not taking any slashes on your talisman and avoiding the resulting death. You may choose how this death manifests whether it is passing out, wounds appearing on the body, or instant combustion, which cannot deal physical harm to other creatures. \n\nIf you use this ability currently under the effect of cleave or parade while whole, or any other blasphemy ability where you produce a copy of yourself, you may choose to regenerate from one cleaved portion of yourself or one copy by killing the rest of your portions harmlessly. \n\nGain +1D to your next roll that takes advantage of this power. You may not choose to split until after you rest.",
+    "psycheBurstCost": true,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false,
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "isHighBlasphemy": false
+  },
+  "_id": "PhF8YOI0HWMGEQ0e",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.PhF8YOI0HWMGEQ0e",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752528904,
+    "modifiedTime": 1780752528904,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!PhF8YOI0HWMGEQ0e"
+}

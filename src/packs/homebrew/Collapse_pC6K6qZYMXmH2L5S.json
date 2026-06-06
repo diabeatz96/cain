@@ -1,0 +1,43 @@
+{
+  "name": "Collapse",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Guilt",
+    "powerName": "Collapse",
+    "isPassive": false,
+    "keywords": [
+      "Transmute, 1 Scene"
+    ],
+    "powerDescription": "You cause everything to fall apart. In a CAT area around you, select one of the following effects. \n\n- Fall: Objects of your choice of CAT size or smaller fall apart into their individual pieces, and cannot be put back together for the rest of the scene, through supernatural means or otherwise. \n\n- Cease: Inertia slows to a stop for things of your choice. Cars in motion stop moving, birds drop to the ground, and objects moving through the air stop abruptly when launched or fired. \n\n- Still: Living beings of your choice find It hard to find motivation, and often lose their trains of thought. They become lethargic and fatigued. \n\nGain or grant +1D when you or an ally next act to take advantage of this power. \n\nIf you have 0 pathos during this power, it ends early.",
+    "psycheBurstCost": true,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false,
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "isHighBlasphemy": false
+  },
+  "_id": "pC6K6qZYMXmH2L5S",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.pC6K6qZYMXmH2L5S",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752529130,
+    "modifiedTime": 1780752529130,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!pC6K6qZYMXmH2L5S"
+}

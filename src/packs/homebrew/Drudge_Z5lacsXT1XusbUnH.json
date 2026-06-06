@@ -1,0 +1,47 @@
+{
+  "name": "Drudge",
+  "type": "agenda",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "agendaName": "Drudge",
+    "formula": "",
+    "unboldedTasks": [
+      "6RSwwmrpCncTKtQi"
+    ],
+    "boldedTasks": [
+      "eDKDt4VFSqvK0S6H"
+    ],
+    "abilities": [
+      "wqI2yQ4LjSx1NktI",
+      "D3Q1h6GIm8vLOvik",
+      "6sJSxTklYiQjrzhT",
+      "2dIjZ0TlXe0HB5sk",
+      "HzTMp8C50VduHxth"
+    ],
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff"
+  },
+  "_id": "Z5lacsXT1XusbUnH",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.Z5lacsXT1XusbUnH",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752529013,
+    "modifiedTime": 1780752529013,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!Z5lacsXT1XusbUnH"
+}

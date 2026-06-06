@@ -1,0 +1,43 @@
+{
+  "name": "Breach",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Wave",
+    "powerName": "Breach",
+    "isPassive": false,
+    "keywords": [
+      "Charm, Instant"
+    ],
+    "powerDescription": "Part the waves of the psychic sea that others find it hard to move through. You may take a corresponding amount of stress to physically move through, with no issue, complication, or difficulty, any of the following psychic phenomena as apart of any action or for the duration of 1 action roll: \n\n1 Stress: Environmental psychic effects; An ogres miasma; A psychic based attack (you still take stress, hooks, and afflictions as normally); Psychically induced weather etc. \n\n2 Stress: Boundaries of psychic domains; An alternate entrance or exit to a sin’s palace (but within a short distance of the original entrance); An gate user’s maze; etc. \n\n4 Stress: Normally impenetrable psychic barriers; A tension user’s stasis; A bind user’s prison; An object made entirely out of grace; etc. \n\nYou take +1 additional stress as a cost when using this against effects caused by creatures of a higher CAT than you. You may reduce stress taken from this ability by 1d3 for every additional psyche burst you spend on it.\n\nThis may easily effect the parameter of rolls such as difficulty or risk.",
+    "psycheBurstCost": false,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": true,
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "isHighBlasphemy": false
+  },
+  "_id": "rjgZYYCWtTslBbnO",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.rjgZYYCWtTslBbnO",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752529248,
+    "modifiedTime": 1780752529248,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!rjgZYYCWtTslBbnO"
+}

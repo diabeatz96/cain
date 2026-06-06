@@ -1,0 +1,43 @@
+{
+  "name": "Vitriol",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Enmity",
+    "powerName": "Vitriol",
+    "isPassive": false,
+    "keywords": [
+      "Transmute, 1 Scene, Self"
+    ],
+    "powerDescription": "Venom flows from your fingertips. For the rest of the scene you may dissolve mundane objects with a touch. You may dissolve a total amount of objects equal to CAT size before you lose the use of this power. Alternatively, you may inject the totality of this venom into a living creature, immediately ending this power and rolling PSYCHE for damage. You gain +1D for each \"yes\" answer. \n\n• Does the target believe you are an ally? \n• Is your hand over the target's heart?",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "psycheBurstCost": true,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false,
+    "isHighBlasphemy": false
+  },
+  "_id": "yMjr8Y8im446NDKM",
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.yMjr8Y8im446NDKM",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752529248,
+    "modifiedTime": 1780752529248,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "sort": 0,
+  "_key": "!items!yMjr8Y8im446NDKM"
+}

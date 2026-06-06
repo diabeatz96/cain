@@ -1,0 +1,43 @@
+{
+  "name": "Command",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Conquest",
+    "powerName": "Command",
+    "isPassive": false,
+    "keywords": [
+      "Curse, Far, 1 scene."
+    ],
+    "powerDescription": "Issue a command to a CAT sized group of humans, or a single supernatural being that can hear you. If this being has a higher CAT than you, take 1d3+1 stress for each level of difference. Choose one of the following commands:\n\nFreeze: They stop what they are doing completely, and become unable to move for a few moments until moved or harmed by another living being. \n\nDrop: They abruptly drop everything they are holding. \n\nApproach: They approach you as quickly as possible. \n\nFlee: They attempt to escape from you as quickly as possible. \n\nGain or grant +1D to the next action that takes advantage of this happening. This may easily affect the parameters of rolls such as difficulty and risk.",
+    "psycheBurstCost": true,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false,
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "isHighBlasphemy": false
+  },
+  "_id": "GzLiApMFNi1cydjw",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.GzLiApMFNi1cydjw",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752528904,
+    "modifiedTime": 1780752528904,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!GzLiApMFNi1cydjw"
+}

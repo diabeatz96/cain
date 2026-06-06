@@ -1,0 +1,50 @@
+{
+  "name": "Expansion",
+  "type": "blasphemyPower",
+  "img": "Assets/Cain/Cain%20Art/Symbols/Egoism.png",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Egoism",
+    "powerName": "Expansion",
+    "isPassive": false,
+    "keywords": [
+      "Transmute, 1 Scene, CAT area"
+    ],
+    "powerDescription": "You spread flesh and veins in a bubble area equal to CAT centered around you, causing the area to be morphed in your image of choice. Pick any of the following, then gain or grant +1D when you or an ally next acts to take advantage of this power:\n\n• Structures sink into the floor, making them easier to climb or even trap others within them.\n\n• Surfaces become squishy and soft to land upon.\n\n• Sin and their minions can either not leave, or not enter.\n\n• Create tendrils on any non-living surfaces. These can be controlled like your limbs or even harm others.\n\n• Change the lightning of the area from total darkness to blindingly bright as the sun.\n\nYou cannot outright remove structures or surfaces with this power. Sin outside their palace can always exit this ability if they take 4 slashes. Changing light does not change heat, so it doesn't become colder or hotter than what it was before.",
+    "description": "",
+    "primaryColor": "#000000",
+    "accentColor": "#8a0000",
+    "secondaryColor": "#000000",
+    "textColor": "#ffffff",
+    "psycheBurstCost": false,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false,
+    "isHighBlasphemy": false
+  },
+  "_id": "cmjEgR3GtAX8TzRA",
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "flags": {
+    "exportSource": {
+      "world": "cain-all",
+      "system": "cain",
+      "coreVersion": "12.343",
+      "systemVersion": "1.2.2"
+    }
+  },
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.cmjEgR3GtAX8TzRA",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752529013,
+    "modifiedTime": 1780752529013,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "sort": 0,
+  "_key": "!items!cmjEgR3GtAX8TzRA"
+}

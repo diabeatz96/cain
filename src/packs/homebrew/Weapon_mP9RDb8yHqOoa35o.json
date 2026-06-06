@@ -1,0 +1,43 @@
+{
+  "name": "Weapon",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "War",
+    "powerName": "Weapon",
+    "isPassive": false,
+    "keywords": [
+      "Transmute, Touch, 1 Scene."
+    ],
+    "powerDescription": "Turn any mundane object into a weapon of your choice. You decide its shape, form, and size, but it always has a CAT equal to yours. It has an execution talisman of your ½ CAT+2 before it is destroyed, may be targeted by enemies separately, and it takes 1 stress every time it is used for an attack. It is considered supernatural but does not gain bonus dice from set up and teamwork or outside abilities other than divine agony. Roll PSYCHE when choosing to attack with it. It gains +1D bonus dice for each of the following question you can answer yes to: \n\n- Is this object important to someone else? \n\n- Is this object important to you? \n\n- Is this object traditionally dangerous, powerful, or of note? \n\nThe object is gone forever once the weapon is destroyed.",
+    "psycheBurstCost": true,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false,
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "isHighBlasphemy": false
+  },
+  "_id": "mP9RDb8yHqOoa35o",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.mP9RDb8yHqOoa35o",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752529130,
+    "modifiedTime": 1780752529130,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!mP9RDb8yHqOoa35o"
+}

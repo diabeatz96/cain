@@ -1,0 +1,43 @@
+{
+  "name": "Triage",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Physic",
+    "powerName": "Triage",
+    "isPassive": false,
+    "keywords": [
+      "Charm, CAT +1 area, 1 scene, 1/rest."
+    ],
+    "powerDescription": "You may only use this ability if an ally within range has 2 or more injuries. Psychically connect your healing abilities to the sinseed of every allied exorcist within a CAT+1 area. Through overworking your synapses to project your abilities over a wide area, the following effects persist for the duration of the scene: \n\n• The exorcist with the most injuries at any moment heals +1 stress from healing abilities or consumables. (ties trigger on all exorcist who fulfill this requirement) \n\n• Whenever an allied exorcist is on the brink of death, psychic threads always lead a path to reach them for another allied exorcist. Reaching them is never impossible. \n\n• Up to ½ CAT times during the duration of this power, any allied exorcist that takes actions to stabilize, aid, or heal another may revert an affliction on their target to a fully slashed hook and tick that hook down by 1. \n\nWhen this ability ends, fully slash the Necrosis hook on yourself.",
+    "psycheBurstCost": true,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false,
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "isHighBlasphemy": false
+  },
+  "_id": "c2NkCv7FB8ap17iw",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.c2NkCv7FB8ap17iw",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752529013,
+    "modifiedTime": 1780752529013,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!c2NkCv7FB8ap17iw"
+}

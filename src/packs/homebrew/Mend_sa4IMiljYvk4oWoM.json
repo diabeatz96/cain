@@ -1,0 +1,43 @@
+{
+  "name": "Mend",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Physic",
+    "powerName": "Mend",
+    "isPassive": false,
+    "keywords": [
+      "Transmute, Instant"
+    ],
+    "powerDescription": "You repair any broken object that is your CAT size or smaller. You must know what the object looked like before it was destroyed or broken. Mundane humans that have seen this happen are convinced that the object was never broken in the first place, and will not be suspicious of you. \n\nYou may gain or grant +1D when you or any ally next acts to take advantage of this power.",
+    "psycheBurstCost": true,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false,
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "isHighBlasphemy": false
+  },
+  "_id": "sa4IMiljYvk4oWoM",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.sa4IMiljYvk4oWoM",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752529248,
+    "modifiedTime": 1780752529248,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!sa4IMiljYvk4oWoM"
+}

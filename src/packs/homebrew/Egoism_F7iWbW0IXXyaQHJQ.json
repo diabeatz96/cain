@@ -1,0 +1,42 @@
+{
+  "name": "Egoism",
+  "type": "blasphemy",
+  "img": "Assets/Cain/Cain%20Art/Symbols/Egoism.png",
+  "folder": null,
+  "system": {
+    "blasphemyName": "Egoism",
+    "powers": [
+      "30pTw9yGUAMc0mV3",
+      "cmjEgR3GtAX8TzRA",
+      "QjPyDF1eknlosHh8",
+      "GLmsBvtURmnmyVa2",
+      "mbXOO92TYykaCDBv",
+      "5LZihO6J1sqYXhnD"
+    ],
+    "description": "",
+    "primaryColor": "#000000",
+    "accentColor": "#8a0000",
+    "secondaryColor": "#000000",
+    "textColor": "#ffffff",
+    "highBlasphemy": false
+  },
+  "_id": "F7iWbW0IXXyaQHJQ",
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.F7iWbW0IXXyaQHJQ",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752528904,
+    "modifiedTime": 1780752528904,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "sort": 0,
+  "_key": "!items!F7iWbW0IXXyaQHJQ"
+}

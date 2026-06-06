@@ -1,0 +1,50 @@
+{
+  "name": "E.G.O.I.S.T",
+  "type": "blasphemyPower",
+  "img": "Assets/Cain/Cain%20Art/Symbols/Egoism.png",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Egoism",
+    "powerName": "E.G.O.I.S.T",
+    "isPassive": true,
+    "keywords": [
+      "Passive"
+    ],
+    "powerDescription": "At the end of the mission:\n\n• You may reduce sin by 1 instead of halving it.\n\n• If above 5+ sin, you may reduce sin by up to 3 instead.\n\n• You cannot reduce sin below 1 with this passive.",
+    "description": "",
+    "primaryColor": "#000000",
+    "accentColor": "#8a0000",
+    "secondaryColor": "#000000",
+    "textColor": "#ffffff",
+    "psycheBurstCost": false,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false,
+    "isHighBlasphemy": false
+  },
+  "_id": "30pTw9yGUAMc0mV3",
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "flags": {
+    "exportSource": {
+      "world": "cain-all",
+      "system": "cain",
+      "coreVersion": "12.343",
+      "systemVersion": "1.2.2"
+    }
+  },
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.30pTw9yGUAMc0mV3",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752528807,
+    "modifiedTime": 1780752528807,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "sort": 0,
+  "_key": "!items!30pTw9yGUAMc0mV3"
+}

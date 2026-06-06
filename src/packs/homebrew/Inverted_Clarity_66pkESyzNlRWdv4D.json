@@ -1,0 +1,34 @@
+{
+  "name": "Inverted Clarity",
+  "type": "agendaAbility",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "abilityName": "Inverted Clarity",
+    "abilityDescription": "When you have 2 or more injuries and are in the same scene as the sin, you may ask the Admin the answer to one of the trauma questions. The Admin may only connect the dots on information you already possess, but cannot conjure information you have not learned.",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff"
+  },
+  "_id": "66pkESyzNlRWdv4D",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.66pkESyzNlRWdv4D",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752528807,
+    "modifiedTime": 1780752528807,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!66pkESyzNlRWdv4D"
+}

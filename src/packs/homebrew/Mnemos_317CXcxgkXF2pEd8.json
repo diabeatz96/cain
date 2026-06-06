@@ -1,0 +1,43 @@
+{
+  "name": "Mnemos",
+  "type": "blasphemyPower",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "blasphemyType": "Enigmata",
+    "powerName": "Mnemos",
+    "isPassive": false,
+    "keywords": [
+      "Transmute, Close, 1/scene."
+    ],
+    "powerDescription": "You cause a number of living being’s memories within range equal to your CAT to rapidly fail and cascade in front of you. They become insensate for exactly 11 seconds and forget everything they've heard or seen in the last 66 seconds. Then your admin rolls a risk die. \n\n(1) Mundane humans die of brain injuries at any point after the scene ends at a moment of the admin’s choosing. Supernatural beings regain their memory when the scene ends but take 1 slash on their execution talisman when the scene ends. Your tulpa mocks you.\n\n(2) All beings regain their memories after you take a rest. \n\n(3) Your brain bleeds from the overexertion caused by this ability. Take 1d3 non-lethal stress and when you take the Descent hook from this power tick it up by 1 as well. \n\nTake the Descent hook. Gain or grant +1D to the next roll that takes advantage of this power.",
+    "psycheBurstCost": true,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false,
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "isHighBlasphemy": false
+  },
+  "_id": "317CXcxgkXF2pEd8",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.317CXcxgkXF2pEd8",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752528807,
+    "modifiedTime": 1780752528807,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!317CXcxgkXF2pEd8"
+}

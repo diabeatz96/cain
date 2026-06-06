@@ -1,0 +1,34 @@
+{
+  "name": "That Fleeting Taste",
+  "type": "agendaAbility",
+  "img": "icons/svg/item-bag.svg",
+  "folder": null,
+  "system": {
+    "abilityName": "That Fleeting Taste",
+    "abilityDescription": "Pick 1 vice such as sweets, cigarettes, etc. 1/rest when you consume your vice, relieve 1d3 stress and 1d3 sin. Every time you do the admin secretly rolls 2D and adds the results. On a 2-6, you no longer relieve stress or sin when you partake. On future rolls of 11 or 12, you regain the benefits of this effect. This repeats and the Admin only tells you if this ability works or not after each instance of partaking in your vice.",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff"
+  },
+  "_id": "rwv51zdxZ8TZP8Gf",
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": "Compendium.cain.homebrew.Item.rwv51zdxZ8TZP8Gf",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.20",
+    "createdTime": 1780752529248,
+    "modifiedTime": 1780752529248,
+    "lastModifiedBy": "NC9TQCbFWvqfJNgm"
+  },
+  "ownership": {
+    "default": 0,
+    "NC9TQCbFWvqfJNgm": 3
+  },
+  "sort": 0,
+  "_key": "!items!rwv51zdxZ8TZP8Gf"
+}
