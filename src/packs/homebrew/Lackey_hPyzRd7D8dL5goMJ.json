@@ -1,8 +1,8 @@
 {
   "name": "Lackey",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/doomed.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "Lackey",
     "abilityDescription": "At the start of the mission assign someone to be your lackey. They gain +1D on all set-up rolls for your actions, but if you fail the subsequent roll both of you take 1d3 stress.",

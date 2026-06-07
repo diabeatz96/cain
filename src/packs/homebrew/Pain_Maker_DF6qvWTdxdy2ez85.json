@@ -1,8 +1,8 @@
 {
   "name": "Pain Maker",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/doomed.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "Pain Maker",
     "abilityDescription": "When you slash a talisman you may increase or decrease the amount by +1. This can only be used when you have 2 or more injuries.",

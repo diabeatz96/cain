@@ -1,8 +1,8 @@
 {
   "name": "Clean Exit",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/songbird.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "Clean Exit",
     "abilityDescription": "Pick one to never be impossible when leaving a location. You can leave: without a trace; without being detected; with what you came for.",

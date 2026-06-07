@@ -1,8 +1,8 @@
 {
   "name": "Clogging the Drain",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/beast.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "Clogging the Drain",
     "abilityDescription": "When pressure increases, gain 1 pathos. You gain +1D on all rolls to set up allies with less pathos than you.",

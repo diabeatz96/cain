@@ -1,8 +1,8 @@
 {
   "name": "Unionized Effort",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/hardline.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "Unionized Effort",
     "abilityDescription": "At the end of a mission, CAIN must pay all exorcist a minimum of 5 scrip regardless of if they executed or have spared the sin. Additionally, CAIN can not discipline you inappropriately.",

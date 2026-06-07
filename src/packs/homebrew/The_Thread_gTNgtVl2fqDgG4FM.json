@@ -1,8 +1,8 @@
 {
   "name": "The Thread",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/songbird.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "The Thread",
     "abilityDescription": "At the start of a mission select an ally. Once during the mission when you succeed on a roll they may immediately make an action roll and share risks or consequences with you. This does not take up their turn.",

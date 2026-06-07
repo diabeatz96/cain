@@ -1,8 +1,8 @@
 {
   "name": "Multiply",
   "type": "blasphemyPower",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Blasphemies/palace.png",
+  "folder": "HBWaveBlasPower1",
   "system": {
     "blasphemyType": "Severed",
     "powerName": "Multiply",

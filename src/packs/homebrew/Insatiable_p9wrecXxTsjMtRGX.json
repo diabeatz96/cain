@@ -1,8 +1,8 @@
 {
   "name": "Insatiable",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/loner.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "Insatiable",
     "abilityDescription": "You may use two consumables at once as a part of the same action. Consuming them this way lowers the overall cost of KP by 1.",

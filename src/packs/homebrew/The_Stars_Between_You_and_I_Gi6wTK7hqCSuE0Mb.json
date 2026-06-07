@@ -1,8 +1,8 @@
 {
   "name": "The Stars Between You and I",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/guardian.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "The Stars Between You and I",
     "abilityDescription": "At mission start 1 allied exorcist to be your “inspiration”. Whenever they pass a hard roll with 2+ successes you relieve 1 stress. Whenever they take an injury you take 1 stress.",

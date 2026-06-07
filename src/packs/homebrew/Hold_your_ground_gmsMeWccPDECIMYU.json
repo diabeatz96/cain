@@ -1,8 +1,8 @@
 {
   "name": "Hold your ground",
   "type": "agendaTask",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/doomed.png",
+  "folder": "HBWaveAgTask0001",
   "system": {
     "task": "Hold your ground",
     "isBold": false,

@@ -1,8 +1,8 @@
 {
   "name": "Greener Grasses",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/guardian.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "Greener Grasses",
     "abilityDescription": "Whenever you gain an affliction, every other allied exorcist may tick down all of their affliction hooks by 1.",

@@ -1,8 +1,8 @@
 {
   "name": "Gullet",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/loner.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "Gullet",
     "abilityDescription": "You can eat much more than normal and eat most things without consequence. Poisons, objects, and inedible things do not harm you when eaten. Outright dangerous things such as explosives, hostile creatures, etc will still hurt you if eaten.",

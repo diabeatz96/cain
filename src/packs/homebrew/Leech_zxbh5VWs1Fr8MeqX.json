@@ -1,8 +1,8 @@
 {
   "name": "Leech",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/guardian.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "Leech",
     "abilityDescription": "Whenever an ally relieves sin or stress using a consumable you may reduce the amount relieved by 1 in order to relieve 1 stress and/or sin from yourself instead.",

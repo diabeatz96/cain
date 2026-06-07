@@ -1,8 +1,8 @@
 {
   "name": "Revere a higher power.",
   "type": "agendaTask",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/sorcerer.png",
+  "folder": "HBWaveAgTask0001",
   "system": {
     "task": "Revere a higher power.",
     "isBold": false,

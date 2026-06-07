@@ -1,8 +1,8 @@
 {
   "name": "Flaming Sword of Judgment",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/sorcerer.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "Flaming Sword of Judgment",
     "abilityDescription": "You have a service weapon which always has +1 CAT to its current CAT. Divine Agony on an attack roll with this weapon grants +1D. If you lose this weapon it costs 2 scrip to replace and you reduce your sin cap by 1.",

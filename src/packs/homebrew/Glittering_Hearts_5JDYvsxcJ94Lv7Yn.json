@@ -1,8 +1,8 @@
 {
   "name": "Glittering Hearts",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/guardian.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "Glittering Hearts",
     "abilityDescription": "When you and every allied exorcist has at least 1 injury, the first teamwork roll made this scene gains +1D.",

@@ -1,8 +1,8 @@
 {
   "name": "Backhand",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/doomed.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "Backhand",
     "abilityDescription": "Once per scene when someone insults or challenges you, gain +1D on the first action you take to get back at them.",

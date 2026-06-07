@@ -1,8 +1,8 @@
 {
   "name": "Crow's Eye",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/songbird.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "Crow's Eye",
     "abilityDescription": "You may take 2 non-lethal stress to gain +1D on any action to suppress or negate an incoming threat.",

@@ -1,8 +1,8 @@
 {
   "name": "Blank Seed",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/machine.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "Blank Seed",
     "abilityDescription": "Pick an ally. You may telepathically communicate between each other for the duration of the hunt.",

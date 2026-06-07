@@ -1,8 +1,8 @@
 {
   "name": "Schadenfreude",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/guardian.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "Schadenfreude",
     "abilityDescription": "1/rest when you witness an ally’s affliction hook fill out or witness them experience intense suffering, relieve 1d3 stress. Relieve 2d3 instead if it was self inflicted.",

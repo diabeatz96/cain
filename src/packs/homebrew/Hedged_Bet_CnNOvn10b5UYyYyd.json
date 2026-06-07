@@ -1,8 +1,8 @@
 {
   "name": "Hedged Bet",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/demon.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "Hedged Bet",
     "abilityDescription": "You gain Pathos when the risk die rolls a 1.",

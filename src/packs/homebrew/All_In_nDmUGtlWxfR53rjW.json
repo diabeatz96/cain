@@ -1,8 +1,8 @@
 {
   "name": "All In",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/demon.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "All In",
     "abilityDescription": "Whenever you are the target of a Threat, you can refuse the assistance of allies and roll 1d6. If you roll a 6, negate the Threat and clear 2 stress.",

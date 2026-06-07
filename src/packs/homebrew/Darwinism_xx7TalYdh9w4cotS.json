@@ -1,8 +1,8 @@
 {
   "name": "Darwinism",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/moth.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "Darwinism",
     "abilityDescription": "1/rest during a mission when a human in front of you dies due to the supernatural, you may relieve 1d3 stress.",

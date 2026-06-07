@@ -1,8 +1,8 @@
 {
   "name": "Complete a task with finesse and precision.",
   "type": "agendaTask",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/songbird.png",
+  "folder": "HBWaveAgTask0001",
   "system": {
     "task": "Complete a task with finesse and precision.",
     "isBold": false,

@@ -1,8 +1,8 @@
 {
   "name": "Thankless Job",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/beast.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "Thankless Job",
     "abilityDescription": "At the end of a session, you may spend any unspent pathos to relieve 1 stress per pathos spent (Max 3). If you spend any pathos this way gain 1 sin.",

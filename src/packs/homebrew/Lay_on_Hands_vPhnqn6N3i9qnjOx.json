@@ -1,8 +1,8 @@
 {
   "name": "Lay on Hands",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/sorcerer.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "Lay on Hands",
     "abilityDescription": "Gain +1D on actions to heal, stabilize, or cure another exorcist. Consumables from your kit that relieve stress or sin relieve +1 additional stress or sin upon use.",

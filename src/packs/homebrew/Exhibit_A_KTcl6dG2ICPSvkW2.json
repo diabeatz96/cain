@@ -1,8 +1,8 @@
 {
   "name": "Exhibit A",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/beast.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "Exhibit A",
     "abilityDescription": "You gain +2D on rolls to convince another individual of something if you have some form of physical evidence pertaining to your argument.",

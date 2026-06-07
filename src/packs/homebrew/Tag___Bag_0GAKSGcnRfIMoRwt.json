@@ -1,8 +1,8 @@
 {
   "name": "Tag & Bag",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/shadow.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "Tag & Bag",
     "abilityDescription": "It is never impossible for you to transport, conceal, or secure a body, no matter how damaged or large. Gain +1D on actions to conceal or transport corpses.",

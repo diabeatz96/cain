@@ -1,8 +1,8 @@
 {
   "name": "Overwhelm",
   "type": "blasphemyPower",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Blasphemies/kindagraceless.png",
+  "folder": "HBWaveBlasPower1",
   "system": {
     "blasphemyType": "Revulsion",
     "powerName": "Overwhelm",

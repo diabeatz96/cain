@@ -1,8 +1,8 @@
 {
   "name": "Challenge your beliefs.",
   "type": "agendaTask",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/beast.png",
+  "folder": "HBWaveAgTask0001",
   "system": {
     "task": "Challenge your beliefs.",
     "isBold": true,

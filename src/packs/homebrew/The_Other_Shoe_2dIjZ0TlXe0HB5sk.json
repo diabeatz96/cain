@@ -1,8 +1,8 @@
 {
   "name": "The Other Shoe",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/beast.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "The Other Shoe",
     "abilityDescription": "At mission start select 2 numbers between 1-6. The first time you encounter the sin or primary hunt target while the pressure matches either of those numbers, gain 1 pathos and 1 psych burst.",

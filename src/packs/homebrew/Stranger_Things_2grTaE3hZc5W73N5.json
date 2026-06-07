@@ -1,8 +1,8 @@
 {
   "name": "Stranger Things",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/departed.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "Stranger Things",
     "abilityDescription": "Once per Round. In a conflict scene, if more than six characters are in the scene, you can setup one of your allied exorcists for free.",

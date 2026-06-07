@@ -1,8 +1,8 @@
 {
   "name": "Heart of Copper",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/guardian.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "Heart of Copper",
     "abilityDescription": "1/mission when you take needless, excessive, and cruel action against the innocent, relieve 1d3-1 sin (Min 1).",

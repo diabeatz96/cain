@@ -1,8 +1,8 @@
 {
   "name": "Let something bad happen to you.",
   "type": "agendaTask",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/hardline.png",
+  "folder": "HBWaveAgTask0001",
   "system": {
     "task": "Let something bad happen to you.",
     "isBold": false,

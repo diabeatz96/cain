@@ -1,0 +1,22 @@
+{
+  "name": "Agendas",
+  "type": "Item",
+  "folder": "HBWaveRoot000001",
+  "sorting": "m",
+  "_id": "HBWaveAgenda0001",
+  "description": "",
+  "sort": 300000,
+  "color": null,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.25",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": null
+  },
+  "_key": "!folders!HBWaveAgenda0001"
+}

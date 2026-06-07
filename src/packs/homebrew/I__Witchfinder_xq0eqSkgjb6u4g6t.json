@@ -1,8 +1,8 @@
 {
   "name": "I, Witchfinder",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/beast.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "I, Witchfinder",
     "abilityDescription": "You always know when something directly in front of you is supernatural or mundane.",

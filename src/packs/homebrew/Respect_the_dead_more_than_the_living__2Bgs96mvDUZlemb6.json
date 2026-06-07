@@ -1,8 +1,8 @@
 {
   "name": "Respect the dead more than the living.",
   "type": "agendaTask",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/shadow.png",
+  "folder": "HBWaveAgTask0001",
   "system": {
     "task": "Respect the dead more than the living.",
     "isBold": false,
