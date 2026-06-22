@@ -721,6 +721,16 @@ Handlebars.registerHelper('gte', function(a, b) {
   return a >= b;
 });
 
+// True if `value` appears in `collection` (an array, or a comma/space-delimited
+// string). Used to flag quirks (keyword "Quirk") in power lists.
+Handlebars.registerHelper('includes', function(collection, value) {
+  if (Array.isArray(collection)) return collection.includes(value);
+  if (typeof collection === 'string') {
+    return collection.split(/[\s,]+/).map(s => s.trim()).includes(value);
+  }
+  return false;
+});
+
 Handlebars.registerHelper('times', function(n, block) {
   var accum = '';
   for(var i = 0; i < n; ++i) {

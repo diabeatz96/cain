@@ -3545,3 +3545,21 @@
   font-size: 12px;
   text-transform: uppercase;
 }
+/* --- Quirk badge: marks Games-for-Freaks quirks in power lists / item sheets --- */
+.quirk-badge {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 6px;
+  padding: 1px 6px;
+  font-size: 0.65em;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1.4;
+  color: #1a1a1a;
+  background: #ffdc00;
+  border: 1px solid #b89e00;
+  border-radius: 4px;
+  text-transform: uppercase;
+  box-shadow: 0 0 4px rgba(255, 220, 0, 0.6);
+  cursor: help;
+}

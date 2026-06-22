@@ -24,7 +24,7 @@
 
     <div class="header-fields item-click" data-id="{{this.id}}" style="flex-grow: 1; text-align: left; cursor: pointer;">
       <div class="form-group" style="margin-bottom: 10px;">
-        <label class="power-label" style="font-weight: bold; font-size: 1.2em;">Power Name:</label>
+        <label class="power-label" style="font-weight: bold; font-size: 1.2em;">Power Name:{{#if (includes system.keywords "Quirk")}} <span class="quirk-badge" title="Quirk — an optional alternate/additive passive from Games for Freaks">QUIRK</span>{{/if}}</label>
         <div style="font-size: 1.5em; font-weight: bold; width: 100%; background: var(--primary-color, #2a2a2a); color: var(--text-color, #ffffff); border: 2px solid var(--secondary-color, #555); border-radius: 5px; padding: 5px;">{{system.powerName}}</div>
       </div>
       <div class="form-group" style="margin-bottom: 10px;">

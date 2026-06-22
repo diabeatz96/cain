@@ -191,7 +191,7 @@
               <li>
                 <h4>
                   <span data-id="{{this.id}}" class="blasphemy-passive"
-                    title="{{this.system.powerDescription}}">{{this.system.powerName}}</span>
+                    title="{{this.system.powerDescription}}">{{this.system.powerName}}</span>{{#if (includes this.system.keywords "Quirk")}}<span class="quirk-badge" title="Quirk — an optional alternate/additive passive from Games for Freaks">QUIRK</span>{{/if}}
                   <a class="item-control blasphemy-power-to-chat" data-id="{{this.id}}" title="Send to Chat">
                     <i class="fas fa-comment"></i>
                   </a>
@@ -243,7 +243,7 @@
             <li>
               <h4>
                 <span data-id="{{this.id}}" class="blasphemy-power"
-                  title="{{this.system.powerDescription}}">{{this.system.powerName}}</span>
+                  title="{{this.system.powerDescription}}">{{this.system.powerName}}</span>{{#if (includes this.system.keywords "Quirk")}}<span class="quirk-badge" title="Quirk — an optional alternate/additive passive from Games for Freaks">QUIRK</span>{{/if}}
                 <a class="item-control blasphemy-power-to-chat" data-id="{{this.id}}" title="Send to Chat">
                   <i class="fas fa-comment"></i>
                 </a>
@@ -325,7 +325,7 @@
             --}}
             <h4>
               <span data-id="{{this.id}}" class="blasphemy-power"
-                title="{{this.system.powerDescription}}">{{this.system.powerName}}</span>
+                title="{{this.system.powerDescription}}">{{this.system.powerName}}</span>{{#if (includes this.system.keywords "Quirk")}}<span class="quirk-badge" title="Quirk — an optional alternate/additive passive from Games for Freaks">QUIRK</span>{{/if}}
               <a class="item-control blasphemy-power-to-chat" data-id="{{this.id}}" title="Send to Chat">
                 <i class="fas fa-comment"></i>
               </a>
