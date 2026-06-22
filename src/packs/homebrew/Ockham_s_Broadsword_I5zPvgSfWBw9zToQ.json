@@ -1,8 +1,8 @@
 {
   "name": "Ockham's Broadsword",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/songbird.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "Ockham's Broadsword",
     "abilityDescription": "Once per mission you may ask the Admin exactly where to go next to get new or vital information pertaining to the current investigation.",

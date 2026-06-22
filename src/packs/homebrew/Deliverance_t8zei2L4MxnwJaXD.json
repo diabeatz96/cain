@@ -1,8 +1,8 @@
 {
   "name": "Deliverance",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/survivor.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "Deliverance",
     "abilityDescription": "1/mission when using the Nail of Abel, for every additional requirement you fulfill beyond the first, remove 1 segment on the sin’s execution talisman.",

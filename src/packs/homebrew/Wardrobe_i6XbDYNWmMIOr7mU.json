@@ -1,8 +1,8 @@
 {
   "name": "Wardrobe",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/doomed.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "Wardrobe",
     "abilityDescription": "Aesthetic options cost 1 less scrip for you (min 0). Gain access to the “Expanded Aesthetics” below.\n\nEXPANDED AESTHETICS:\n\n-Fancy Shoes\n2 Scrip\n\nFormal footwear for exorcists in the form of heels, oxfords, etc.\n\n-Fancy Undergarments \n3 Scrip \n\nUnderwear or undergarments for off duty wear. Lingerie, briefs, garter belts, etc.\n\n-Make Up Options \n2 Scrip \n\nA make up kit that can be applied before mission deployment.\n\n-Handbag \n4 Scrip \n\nA high end designer bag that can carry small objects. Can be used when deployed.",

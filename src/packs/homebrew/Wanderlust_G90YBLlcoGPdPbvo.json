@@ -1,8 +1,8 @@
 {
   "name": "Wanderlust",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/torch.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "Wanderlust",
     "abilityDescription": "Twice per rest, may gain +1D to your first roll in a new location you haven’t been to yet during the hunt. You cannot use this ability within the Palace.",

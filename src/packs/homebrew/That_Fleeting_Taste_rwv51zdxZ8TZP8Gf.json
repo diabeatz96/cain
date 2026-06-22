@@ -1,8 +1,8 @@
 {
   "name": "That Fleeting Taste",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/loner.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "That Fleeting Taste",
     "abilityDescription": "Pick 1 vice such as sweets, cigarettes, etc. 1/rest when you consume your vice, relieve 1d3 stress and 1d3 sin. Every time you do the admin secretly rolls 2D and adds the results. On a 2-6, you no longer relieve stress or sin when you partake. On future rolls of 11 or 12, you regain the benefits of this effect. This repeats and the Admin only tells you if this ability works or not after each instance of partaking in your vice.",

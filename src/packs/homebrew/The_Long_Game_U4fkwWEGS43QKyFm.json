@@ -1,8 +1,8 @@
 {
   "name": "The Long Game",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/machine.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "The Long Game",
     "abilityDescription": "Once per mission you may delay an ally’s hook from filling up. It becomes fully slashed after you both rest. If the Admin forgets to do this and you remind them, you and your ally gain 1 exp.",

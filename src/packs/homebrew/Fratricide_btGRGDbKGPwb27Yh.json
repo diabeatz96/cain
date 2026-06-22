@@ -1,8 +1,8 @@
 {
   "name": "Fratricide",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/firebug.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "Fratricide",
     "abilityDescription": "When you invoke the Nail of Abel, you may destroy whoever or whatever you are using as a conduit to the sin. Doing so costs a psyche burst, but marks slashes equal to your psyche on the sin's execution talisman. You may invoke the Nail of Abel while the sin is present at the cost of stress equal to the sin's category. Authority commends your service.",

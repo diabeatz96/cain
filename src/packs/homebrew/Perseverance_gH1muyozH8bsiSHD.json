@@ -1,8 +1,8 @@
 {
   "name": "Perseverance",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/guardian.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "Perseverance",
     "abilityDescription": "1/rest when you fail to negate a threat, you may take 2 non-lethal stress to re-attempt a roll.",

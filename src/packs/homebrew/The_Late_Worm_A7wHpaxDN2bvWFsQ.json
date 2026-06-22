@@ -1,8 +1,8 @@
 {
   "name": "The Late Worm",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/loner.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "The Late Worm",
     "abilityDescription": "Acting last in the round of any conflict scene slashes +1 segment on any complication you choose to deal with.",

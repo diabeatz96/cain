@@ -1,8 +1,8 @@
 {
   "name": "Pass the torch to someone new.",
   "type": "agendaTask",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/machine.png",
+  "folder": "HBWaveAgTask0001",
   "system": {
     "task": "Pass the torch to someone new.",
     "isBold": true,

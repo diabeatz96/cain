@@ -1,8 +1,8 @@
 {
   "name": "Kill All Apes.",
   "type": "agendaTask",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/moth.png",
+  "folder": "HBWaveAgTask0001",
   "system": {
     "task": "Kill All Apes.",
     "isBold": true,

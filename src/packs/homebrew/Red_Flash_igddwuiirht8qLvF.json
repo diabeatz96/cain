@@ -1,8 +1,8 @@
 {
   "name": "Red Flash",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/doomed.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "Red Flash",
     "abilityDescription": "When you harm, or take a hostile action against a target. If you roll two or more 6’s, you may roll an additional +1d, this dice can trigger this ability again if it roll more 6’s.",

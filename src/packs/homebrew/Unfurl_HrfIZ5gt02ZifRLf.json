@@ -1,8 +1,8 @@
 {
   "name": "Unfurl",
   "type": "blasphemyPower",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Blasphemies/smother.png",
+  "folder": "HBWaveBlasPower1",
   "system": {
     "blasphemyType": "Enmity",
     "powerName": "Unfurl",

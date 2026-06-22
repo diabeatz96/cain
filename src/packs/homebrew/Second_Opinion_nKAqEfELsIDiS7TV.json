@@ -1,8 +1,8 @@
 {
   "name": "Second Opinion",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/machine.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "Second Opinion",
     "abilityDescription": "Once per rest when an ally of choice fails a roll, they may reroll with +1D but still suffer previous consequences or risks.",

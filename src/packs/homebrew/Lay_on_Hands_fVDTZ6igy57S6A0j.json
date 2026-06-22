@@ -1,8 +1,8 @@
 {
   "name": "Lay on Hands",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/survivor.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "Lay on Hands",
     "abilityDescription": "Gain +1D on actions to heal, stabilize, or medically aid another exorcist. Once per scene, a consumable you use on another exorcist relieves +1 additional stress.",

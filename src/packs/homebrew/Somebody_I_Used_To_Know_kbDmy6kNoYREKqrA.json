@@ -1,8 +1,8 @@
 {
   "name": "Somebody I Used To Know",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/departed.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "Somebody I Used To Know",
     "abilityDescription": "Once per mission when meeting a new character, you may describe how you already know said character, positive or negative. You gain +1D on any social roll related with this character.",

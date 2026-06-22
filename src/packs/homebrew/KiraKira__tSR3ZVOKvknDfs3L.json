@@ -1,8 +1,8 @@
 {
   "name": "KiraKira!",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/departed.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "KiraKira!",
     "abilityDescription": "You can always spend 1 KP to pull out a small or cute bauble or accessory: keychain, hairclip, charm, etc. If you use 3 KP for this consecutively, the last item is explosive, similar in strength to a grenade.",

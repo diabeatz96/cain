@@ -1,8 +1,8 @@
 {
   "name": "The Fire That Remains",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/loner.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "The Fire That Remains",
     "abilityDescription": "Gain +2 sin overflow cap. 1 in 6 chance of ignoring sin overflow (roll 1d6).",

@@ -1,8 +1,8 @@
 {
   "name": "Memento Mori",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/shadow.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "Memento Mori",
     "abilityDescription": "You get the Morgue Kit for free. 1/mission, you may retrieve an item from this kit for 0KP . You lose the kit if you lose this agenda.",

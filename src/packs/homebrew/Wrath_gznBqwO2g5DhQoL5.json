@@ -1,8 +1,8 @@
 {
   "name": "Wrath",
   "type": "blasphemy",
-  "img": "Assets/Cain/Cain%20Art/Symbols/Wrath.webp",
-  "folder": null,
+  "img": "systems/cain/assets/Blasphemies/ardence.png",
+  "folder": "HBWaveBlasphemy1",
   "system": {
     "blasphemyName": "Wrath",
     "powers": [

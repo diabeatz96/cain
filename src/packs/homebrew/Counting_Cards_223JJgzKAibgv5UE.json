@@ -1,8 +1,8 @@
 {
   "name": "Counting Cards",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/demon.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "Counting Cards",
     "abilityDescription": "When Admin performs a Fate Roll, they must roll die equal to your PSYCHE and take the highest result.",

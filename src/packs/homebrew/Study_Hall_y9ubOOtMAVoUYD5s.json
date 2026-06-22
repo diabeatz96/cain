@@ -1,8 +1,8 @@
 {
   "name": "Study Hall",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/firebug.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "Study Hall",
     "abilityDescription": "Once per hunt, you may spend a resting die to check with the Admin whether or not you have the correct solutions to Trauma Questions equal to the die value. The Admin may only answer 'yes' or 'no'.",

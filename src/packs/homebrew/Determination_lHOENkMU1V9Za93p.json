@@ -1,8 +1,8 @@
 {
   "name": "Determination",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/doomed.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "Determination",
     "abilityDescription": "After taking an injury you become unable to gain an affliction until the end of the scene. Then, lose the use of this ability until you rest.",

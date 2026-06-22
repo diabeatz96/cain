@@ -1,8 +1,8 @@
 {
   "name": "Internal Compass",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/torch.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "Internal Compass",
     "abilityDescription": "Once a hunt, you may use your natural intuition to ask the Admin where to go next based on existing clues. They must give a location or direction, but do not need to give specifics.",

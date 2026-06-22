@@ -1,8 +1,8 @@
 {
   "name": "Middle Man",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/machine.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "Middle Man",
     "abilityDescription": "Once in a conflict scene, you may delay an Admin’s reaction when an ally takes their turn. If you do, the Admin makes the delayed reaction on your turn after your action in addition to the reaction on your turn. After use you lose access to this ability until rest. Only one reaction can be delayed at a time if the Admin is targeted by this ability multiple times.",

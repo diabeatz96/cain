@@ -4,6 +4,8 @@
 
 - **"CAIN: Second Wave" homebrew content** added to the bundled **Homebrew** compendium (496 items): 37 blasphemies (238 powers), 26 agendas (47 tasks + 116 abilities), and 32 items. Created and contributed by **Yawn0**, imported via the homebrew export pipeline
 - The `cain.homebrew` pack is now included in the fresh-world auto-import (`checkAndImportCompendiums`), so new worlds pull the homebrew into the world's Items directory alongside the official content (with `keepId` preserving the blasphemy/agenda → child links). Existing worlds that already auto-imported are unaffected — the Homebrew compendium is still available to drag from manually
+- Homebrew compendium is now **organized into folders** instead of one flat list: a root **"Second Wave"** folder with per-type subfolders (Blasphemies, Blasphemy Powers, Agendas, Agenda Tasks, Agenda Abilities, Items). The structure carries over when the pack is imported into a world (via `importAll`), so everything lands grouped under one labeled folder
+- Homebrew items now have **themed default icons** instead of the generic item-bag: each blasphemy/agenda gets a CAIN icon and its powers/tasks/abilities inherit it (linked, matching the official content convention); items use the kit-point icon. New `tools/normalize-homebrew-pack.mjs` applies this folder + icon pass and is re-runnable for future submissions
 - Known gaps in the imported set: the **Mentor** agenda is missing 7 of its linked tasks/abilities and the **Weaver** blasphemy is missing 1 power (those children weren't part of the export). The dangling references render gracefully (the missing entries are simply skipped); they can be filled in if a complete re-export is provided
 
 ## 1.3.24

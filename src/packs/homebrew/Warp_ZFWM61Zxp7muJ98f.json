@@ -1,8 +1,8 @@
 {
   "name": "Warp",
   "type": "blasphemyPower",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Blasphemies/whisper.png",
+  "folder": "HBWaveBlasPower1",
   "system": {
     "blasphemyType": "Weaver",
     "powerName": "Warp",

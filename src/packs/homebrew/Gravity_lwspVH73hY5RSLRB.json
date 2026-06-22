@@ -1,8 +1,8 @@
 {
   "name": "Gravity",
   "type": "blasphemy",
-  "img": "Assets/Cain/Cain%20Art/Symbols/Gravity.webp",
-  "folder": null,
+  "img": "systems/cain/assets/Blasphemies/vector.png",
+  "folder": "HBWaveBlasphemy1",
   "system": {
     "blasphemyName": "Gravity",
     "powers": [

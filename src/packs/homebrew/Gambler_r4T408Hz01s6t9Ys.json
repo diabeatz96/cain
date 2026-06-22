@@ -1,8 +1,8 @@
 {
   "name": "Gambler",
   "type": "agenda",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/demon.png",
+  "folder": "HBWaveAgenda0001",
   "system": {
     "agendaName": "Gambler",
     "formula": "",

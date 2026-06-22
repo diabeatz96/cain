@@ -1,8 +1,8 @@
 {
   "name": "Mentor",
   "type": "agenda",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/moth.png",
+  "folder": "HBWaveAgenda0001",
   "system": {
     "agendaName": "Mentor",
     "formula": "",

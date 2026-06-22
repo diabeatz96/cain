@@ -1,8 +1,8 @@
 {
   "name": "Numb",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/hardline.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "Numb",
     "abilityDescription": "Once per mission when a psychic effect would make a roll hard when it normally isn’t, you may choose to ignore it.",

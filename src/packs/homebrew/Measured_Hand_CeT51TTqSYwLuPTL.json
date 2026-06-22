@@ -1,8 +1,8 @@
 {
   "name": "Measured Hand",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/machine.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "Measured Hand",
     "abilityDescription": "Once per rest you use Set-Up or Teamwork on an ally and they succeed, both of you relieve 1d3+1 stress.",

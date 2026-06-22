@@ -1,8 +1,8 @@
 {
   "name": "Inverted Clarity",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/temperance.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "Inverted Clarity",
     "abilityDescription": "When you have 2 or more injuries and are in the same scene as the sin, you may ask the Admin the answer to one of the trauma questions. The Admin may only connect the dots on information you already possess, but cannot conjure information you have not learned.",

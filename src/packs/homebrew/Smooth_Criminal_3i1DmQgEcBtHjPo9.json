@@ -1,8 +1,8 @@
 {
   "name": "Smooth Criminal",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/departed.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "Smooth Criminal",
     "abilityDescription": "If you have taken no damage at the end of a conflict scene you may heal 1d6 stress of an ally.",

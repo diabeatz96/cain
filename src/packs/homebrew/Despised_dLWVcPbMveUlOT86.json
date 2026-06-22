@@ -1,8 +1,8 @@
 {
   "name": "Despised",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/guardian.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "Despised",
     "abilityDescription": "When fighting the sin and you roll a 1 on the risk die, it must target you with its severe attack if it hasn’t used it this mission.",

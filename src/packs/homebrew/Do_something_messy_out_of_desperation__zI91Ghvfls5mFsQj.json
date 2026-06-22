@@ -1,8 +1,8 @@
 {
   "name": "Do something messy out of desperation.",
   "type": "agendaTask",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/songbird.png",
+  "folder": "HBWaveAgTask0001",
   "system": {
     "task": "Do something messy out of desperation.",
     "isBold": true,

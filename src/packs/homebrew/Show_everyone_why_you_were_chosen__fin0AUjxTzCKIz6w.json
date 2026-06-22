@@ -1,8 +1,8 @@
 {
   "name": "Show everyone why you were chosen.",
   "type": "agendaTask",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/survivor.png",
+  "folder": "HBWaveAgTask0001",
   "system": {
     "task": "Show everyone why you were chosen.",
     "isBold": true,

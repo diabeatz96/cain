@@ -1,8 +1,8 @@
 {
   "name": "Mean Girl",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/doomed.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "Mean Girl",
     "abilityDescription": "Rolls to bully or degrade another person can never be hard or impossible for you.",

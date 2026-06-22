@@ -1,8 +1,8 @@
 {
   "name": "Experienced",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/machine.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "Experienced",
     "abilityDescription": "Once per mission if you tell someone how to do something and they succeed in doing it, they gain 1 exp.",

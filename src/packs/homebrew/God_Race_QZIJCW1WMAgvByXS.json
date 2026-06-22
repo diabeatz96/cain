@@ -1,8 +1,8 @@
 {
   "name": "God Race",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/hardline.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "God Race",
     "abilityDescription": "You can take 1d3+1 stress to setup an ally without spending your action this round to do so.",

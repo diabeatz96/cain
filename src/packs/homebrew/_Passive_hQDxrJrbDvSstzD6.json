@@ -1,8 +1,8 @@
 {
   "name": "*Passive",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/doomed.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "*Passive",
     "abilityDescription": "If you start a mission wearing Aesthetics whose total original scrip value is less than your CAT, start the mission with 2d3 stress.",

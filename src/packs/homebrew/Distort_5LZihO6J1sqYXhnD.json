@@ -1,8 +1,8 @@
 {
   "name": "Distort",
   "type": "blasphemyPower",
-  "img": "Assets/Cain/Cain%20Art/Symbols/Egoism.png",
-  "folder": null,
+  "img": "systems/cain/assets/Blasphemies/palace.png",
+  "folder": "HBWaveBlasPower1",
   "system": {
     "blasphemyType": "Egoism",
     "powerName": "Distort",
