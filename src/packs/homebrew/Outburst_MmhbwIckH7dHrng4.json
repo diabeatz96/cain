@@ -1,8 +1,8 @@
 {
   "name": "Outburst",
   "type": "blasphemyPower",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Blasphemies/bind.png",
+  "folder": "HBWaveBlasPower1",
   "system": {
     "blasphemyType": "Hysteria",
     "powerName": "Outburst",

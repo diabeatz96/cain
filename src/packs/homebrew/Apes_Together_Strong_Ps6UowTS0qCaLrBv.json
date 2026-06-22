@@ -1,8 +1,8 @@
 {
   "name": "Apes Together Strong",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/hardline.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "Apes Together Strong",
     "abilityDescription": "If you’re the leader in a teamwork, only you takes consequences for a failed roll.",

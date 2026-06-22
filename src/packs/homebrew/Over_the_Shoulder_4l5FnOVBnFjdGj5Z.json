@@ -1,8 +1,8 @@
 {
   "name": "Over the Shoulder",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/machine.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "Over the Shoulder",
     "abilityDescription": "Allied exorcists of your choice gain +1D to lead, intimidate, or give orders to anyone if you are standing adjacent to them.",

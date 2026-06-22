@@ -1,8 +1,8 @@
 {
   "name": "6th Sense",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/temperance.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "6th Sense",
     "abilityDescription": "You always know when someone or something is observing you. When alerted by the Admin of this, you may roll PSYCHE to determine whether or not it is supernatural on a success.",

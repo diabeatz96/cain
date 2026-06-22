@@ -1,8 +1,8 @@
 {
   "name": "Abyss",
   "type": "blasphemy",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Blasphemies/ardence.png",
+  "folder": "HBWaveBlasphemy1",
   "system": {
     "blasphemyName": "Abyss",
     "powers": [

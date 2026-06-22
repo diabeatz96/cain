@@ -1,8 +1,8 @@
 {
   "name": "Confessional",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/survivor.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "Confessional",
     "abilityDescription": "During a resting scene you may answer the question:How have you sinned? If the answer is serious and sincere, the Admin may relieve 1/2/3(Admin’s choice) sin from you.",

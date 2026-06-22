@@ -1,8 +1,8 @@
 {
   "name": "Flaming Sword of Judgment",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/survivor.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "Flaming Sword of Judgment",
     "abilityDescription": "You have a service weapon which can be upgraded through scrip 1 additional time (max 4). If you lose it during a mission, you are always able to find it again at the start of the execution scene.",

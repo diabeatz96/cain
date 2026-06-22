@@ -1,8 +1,8 @@
 {
   "name": "Quiet Work",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/shadow.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "Quiet Work",
     "abilityDescription": "You can handle corpses or remains without disturbing their current state. Gain +1D on actions to gain information from a dead body.",

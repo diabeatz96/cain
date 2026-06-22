@@ -1,8 +1,8 @@
 {
   "name": "Dive",
   "type": "blasphemyPower",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Blasphemies/ardence.png",
+  "folder": "HBWaveBlasPower1",
   "system": {
     "blasphemyType": "Abyss",
     "powerName": "Dive",

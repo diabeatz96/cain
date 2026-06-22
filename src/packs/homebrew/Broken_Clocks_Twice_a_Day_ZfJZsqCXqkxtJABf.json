@@ -1,8 +1,8 @@
 {
   "name": "Broken Clocks Twice a Day",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/beast.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "Broken Clocks Twice a Day",
     "abilityDescription": "After briefing at the start of deployment, make 1 specific claim or belief about the mission at hand. 1/scene gain +1D on actions to prove yourself right. If it is discovered you are correct, you lose this bonus but gain 1 psyche burst.",

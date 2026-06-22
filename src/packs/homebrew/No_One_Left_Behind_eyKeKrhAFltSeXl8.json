@@ -1,8 +1,8 @@
 {
   "name": "No One Left Behind",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/hardline.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "No One Left Behind",
     "abilityDescription": "At the end of a session, you may recount how you saved a fellow exorcist’s life. If you do, grant 1 xp to said exorcist. Characters can only gain this xp once if targeted by this ability multiple times.",

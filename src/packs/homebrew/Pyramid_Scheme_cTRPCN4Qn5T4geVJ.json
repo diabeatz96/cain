@@ -1,8 +1,8 @@
 {
   "name": "Pyramid Scheme",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/machine.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "Pyramid Scheme",
     "abilityDescription": "When you enter a room filled with people, you immediately know who is in control.",

@@ -1,8 +1,8 @@
 {
   "name": "Scholar's Scathe",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/firebug.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "Scholar's Scathe",
     "abilityDescription": "Twice per rest, when you witness an ally fail an action roll, you may (harshly) advise them on why they failed. They take 1 stress, but their rolls using that skill are at +1D until the end of the scene.",

@@ -1,8 +1,8 @@
 {
   "name": "Bodily Dysphoria",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/departed.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "Bodily Dysphoria",
     "abilityDescription": "Once per mission, you may use an allied exorcist’s agenda power as if your own. You lose access to said taken ability after you use it, or the scene ends.",

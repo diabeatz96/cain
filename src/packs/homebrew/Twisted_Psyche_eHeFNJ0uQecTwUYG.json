@@ -1,8 +1,8 @@
 {
   "name": "Twisted Psyche",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/temperance.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "Twisted Psyche",
     "abilityDescription": "Once per rest after you have encountered the sin or a drifter, a power you use that targets objects may be used on mundane humans.",

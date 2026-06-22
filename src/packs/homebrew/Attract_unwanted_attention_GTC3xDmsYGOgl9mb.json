@@ -1,8 +1,8 @@
 {
   "name": "Attract unwanted attention",
   "type": "agendaTask",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/departed.png",
+  "folder": "HBWaveAgTask0001",
   "system": {
     "task": "Attract unwanted attention",
     "isBold": true,

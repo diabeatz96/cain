@@ -1,8 +1,8 @@
 {
   "name": "Insurance Plan",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/beast.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "Insurance Plan",
     "abilityDescription": "At the end of the mission if you received 3 or more injuries, gain +2 scrip.",

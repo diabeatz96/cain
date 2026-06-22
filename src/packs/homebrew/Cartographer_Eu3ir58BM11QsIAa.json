@@ -1,8 +1,8 @@
 {
   "name": "Cartographer",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/torch.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "Cartographer",
     "abilityDescription": "You always know roughly how to get back to places you have already been, like a mental map. +1D to rolls involving tracking people if you have a physical map.",

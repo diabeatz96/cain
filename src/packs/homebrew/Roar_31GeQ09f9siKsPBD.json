@@ -1,8 +1,8 @@
 {
   "name": "Roar",
   "type": "blasphemy",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Blasphemies/mother.png",
+  "folder": "HBWaveBlasphemy1",
   "system": {
     "blasphemyName": "Roar",
     "powers": [

@@ -1,8 +1,8 @@
 {
   "name": "Demonstrate why you’re the worst.",
   "type": "agendaTask",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/guardian.png",
+  "folder": "HBWaveAgTask0001",
   "system": {
     "task": "Demonstrate why you’re the worst.",
     "isBold": false,

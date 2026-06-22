@@ -1,8 +1,8 @@
 {
   "name": "Knowledge is Power",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/firebug.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "Knowledge is Power",
     "abilityDescription": "Once per rest, you may instead use your PSYCHE for a check which requires a different skill, taking 1 stress.",

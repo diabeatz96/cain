@@ -1,8 +1,8 @@
 {
   "name": "Local Customs",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/torch.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "Local Customs",
     "abilityDescription": "You more easily blend in with local civilians, and they are quicker to trust you. Authorities are also less likely to single you out.",

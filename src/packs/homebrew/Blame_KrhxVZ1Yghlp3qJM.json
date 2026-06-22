@@ -1,8 +1,8 @@
 {
   "name": "Blame",
   "type": "blasphemyPower",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Blasphemies/wire.png",
+  "folder": "HBWaveBlasPower1",
   "system": {
     "blasphemyType": "Guilt",
     "powerName": "Blame",

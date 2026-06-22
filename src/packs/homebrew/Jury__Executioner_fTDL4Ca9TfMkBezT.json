@@ -1,8 +1,8 @@
 {
   "name": "Jury, Executioner",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/beast.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "Jury, Executioner",
     "abilityDescription": "If you reduce an execution talisman to 1, you can take 2 stress to inflict +1 slash which cannot be reduced in any way.",

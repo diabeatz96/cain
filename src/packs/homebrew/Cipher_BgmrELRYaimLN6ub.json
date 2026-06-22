@@ -1,8 +1,8 @@
 {
   "name": "Cipher",
   "type": "blasphemyPower",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Blasphemies/sidewire.png",
+  "folder": "HBWaveBlasPower1",
   "system": {
     "blasphemyType": "Enigmata",
     "powerName": "Cipher",

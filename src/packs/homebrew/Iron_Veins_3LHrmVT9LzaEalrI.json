@@ -1,8 +1,8 @@
 {
   "name": "Iron Veins",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/moth.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "Iron Veins",
     "abilityDescription": "1/scene you may reduce the stress you take from a mundane source by an amount equal to your current injuries.",

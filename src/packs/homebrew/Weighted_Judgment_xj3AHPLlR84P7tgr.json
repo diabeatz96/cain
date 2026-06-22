@@ -1,8 +1,8 @@
 {
   "name": "Weighted Judgment",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/beast.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "Weighted Judgment",
     "abilityDescription": "Once per rest when you publicly accuse or shame another individual of something serious, regain 1 psyche burst.",

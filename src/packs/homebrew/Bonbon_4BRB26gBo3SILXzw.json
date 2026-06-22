@@ -1,8 +1,8 @@
 {
   "name": "Bonbon",
   "type": "blasphemy",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Blasphemies/gate.png",
+  "folder": "HBWaveBlasphemy1",
   "system": {
     "blasphemyName": "Bonbon",
     "powers": [

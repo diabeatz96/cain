@@ -1,8 +1,8 @@
 {
   "name": "Surgical Precision",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/songbird.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "Surgical Precision",
     "abilityDescription": "You roll +1D on actions that require fine motor skills or high mental acuity.",

@@ -1,8 +1,8 @@
 {
   "name": "When Heaven Burns",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/moth.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "When Heaven Burns",
     "abilityDescription": "Take -1D on all mundane attack rolls to harm the supernatural. You may take 1 stress to gain +1D when using your psychic powers to inflict harm or violence.",

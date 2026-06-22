@@ -1,8 +1,8 @@
 {
   "name": "Pallor",
   "type": "agendaAbility",
-  "img": "icons/svg/item-bag.svg",
-  "folder": null,
+  "img": "systems/cain/assets/Agendas/shadow.png",
+  "folder": "HBWaveAgAbil0001",
   "system": {
     "abilityName": "Pallor",
     "abilityDescription": "When a living creature near you dies, you may delay any psychic or supernatural consequences of their death for a number of action rolls equal to your ½ CAT.",
