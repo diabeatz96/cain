@@ -215,6 +215,15 @@ Hooks.once('init', async function () {
     default: false
   });
 
+  game.settings.register('cain', 'huntTrackerPrivateMessages', {
+    name: 'Private Hunt Tracker Messages',
+    hint: 'When enabled, Hunt Tracker chat messages (tension fills, palace entry/exit, trauma discovery, etc.) are whispered to GMs only instead of being shown to all players — a quiet helper for the GM rather than a reveal to the table.',
+    scope: 'world',
+    config: true,
+    type: Boolean,
+    default: false
+  });
+
   game.settings.register('cain', 'homebrewHistory', {
     name: 'Homebrew Creation History',
     scope: 'world',
@@ -1293,7 +1302,9 @@ async function checkAndImportCompendiums() {
     { key: 'cain.tables', label: 'Roll Tables' },
     { key: 'cain.domains', label: 'Domains' },
     { key: 'cain.virtues', label: 'Virtues (Bonds)' },
-    { key: 'cain.homebrew', label: 'Homebrew' }
+    { key: 'cain.homebrew', label: 'Homebrew' },
+    { key: 'cain.recreation', label: 'Recreation' },
+    { key: 'cain.lore', label: 'Lore & Archives' }
   ];
 
   let totalImported = 0;

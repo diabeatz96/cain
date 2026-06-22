@@ -1,0 +1,39 @@
+{
+  "name": "Rail",
+  "sorting": "a",
+  "folder": "GFF4QFolder00005",
+  "type": "blasphemyPower",
+  "_id": "GFF4Quirk0000011",
+  "img": "systems/cain/assets/Blasphemies/vector.png",
+  "sort": 1100,
+  "flags": {},
+  "system": {
+    "blasphemyType": "Vector",
+    "powerName": "Rail",
+    "isPassive": true,
+    "keywords": [
+      "Quirk",
+      "Passive"
+    ],
+    "powerDescription": "When moving, you automatically increase your own velocity. All your own movement (not movement granted to others) is +1 CAT higher, including movement without your powers. You can 'skate' on a small bubble of vectorized air underneath your feet, allowing you to move across water or slippery surfaces.\n\nHowever, none of your powers work if you are unable to move while using them.\n\nQuirk — replaces Brake.",
+    "description": "",
+    "primaryColor": "#333333",
+    "accentColor": "#000000",
+    "secondaryColor": "#878787",
+    "textColor": "#ffdc00",
+    "psycheBurstCost": false,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.26",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": null
+  },
+  "_key": "!items!GFF4Quirk0000011"
+}

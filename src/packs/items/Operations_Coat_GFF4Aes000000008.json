@@ -1,0 +1,38 @@
+{
+  "folder": "GdN0nfCDP965wxF0",
+  "name": "Operations Coat",
+  "type": "item",
+  "img": "systems/cain/assets/items/kp.png",
+  "system": {
+    "description": "<p>Simple, mass-produced coat usually disbursed for active anti-sin combat missions.</p><p><strong>CAT 2+</strong></p>",
+    "quantity": 1,
+    "weight": 0,
+    "roll": {
+      "diceNum": 1,
+      "diceSize": "d6",
+      "diceBonus": ""
+    },
+    "kitPoint": 0,
+    "scripValue": 1,
+    "type": "Aesthetics"
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.26",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": null,
+    "exportSource": null
+  },
+  "_id": "GFF4Aes000000008",
+  "sort": 800,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!GFF4Aes000000008"
+}

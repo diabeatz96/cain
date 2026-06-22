@@ -1,0 +1,39 @@
+{
+  "name": "Menagerie",
+  "sorting": "a",
+  "folder": "GFF4QFolder00011",
+  "type": "blasphemyPower",
+  "_id": "GFF4Quirk0000022",
+  "img": "systems/cain/assets/Blasphemies/bind.png",
+  "sort": 2200,
+  "flags": {},
+  "system": {
+    "blasphemyType": "Bind",
+    "powerName": "Menagerie",
+    "isPassive": true,
+    "keywords": [
+      "Quirk",
+      "Passive"
+    ],
+    "powerDescription": "When you defeat a sin during a hunt, you may bind it as a new bound sin during a rest. This applies even for minor sins or foes with the type 'sin', such as Traces. Doing so typically requires approval from the Temerity Office of Stability (which can sometimes be waived). A captive sin is mechanically identical to your original bound sin but may differ in aesthetics and personality. You can swap your active bound sin in and out, including your original bound sin, and keep up to six. Inactive sins retract into a dormant state inside your sin seed.\n\nQuirk — complements Bind (free).",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#0064ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "psycheBurstCost": false,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.26",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": null
+  },
+  "_key": "!items!GFF4Quirk0000022"
+}

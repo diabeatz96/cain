@@ -1,0 +1,39 @@
+{
+  "name": "Steel Soul",
+  "sorting": "a",
+  "folder": "GFF4QFolder00001",
+  "type": "blasphemyPower",
+  "_id": "GFF4Quirk0000001",
+  "img": "systems/cain/assets/Blasphemies/tension.png",
+  "sort": 100,
+  "flags": {},
+  "system": {
+    "blasphemyType": "Tension",
+    "powerName": "Steel Soul",
+    "isPassive": true,
+    "keywords": [
+      "Quirk",
+      "Passive"
+    ],
+    "powerDescription": "You specialize in projecting tension fields over bladed weapons. You gain the Severance power for free (even past the cap of 5 powers). You always use it at +1 CAT. However, you can only use it while wielding a bladed weapon in one or both hands.\n\nAdditionally, you can project a psychic cutting force at short range by rolling PSYCHE. This doesn't cost a psyche burst but doesn't have enough force to significantly harm someone — enough to sever a strap, cord, or cause minor cuts.\n\nQuirk — replaces Iron Soul.",
+    "description": "",
+    "primaryColor": "#595959",
+    "accentColor": "#ff0000",
+    "secondaryColor": "#000000",
+    "textColor": "#ffffff",
+    "psycheBurstCost": false,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.26",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": null
+  },
+  "_key": "!items!GFF4Quirk0000001"
+}

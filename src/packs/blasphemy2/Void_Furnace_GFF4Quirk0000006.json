@@ -1,0 +1,39 @@
+{
+  "name": "Void Furnace",
+  "sorting": "a",
+  "folder": "GFF4QFolder00003",
+  "type": "blasphemyPower",
+  "_id": "GFF4Quirk0000006",
+  "img": "systems/cain/assets/Blasphemies/ardence.png",
+  "sort": 600,
+  "flags": {},
+  "system": {
+    "blasphemyType": "Ardence",
+    "powerName": "Void Furnace",
+    "isPassive": true,
+    "keywords": [
+      "Quirk",
+      "Passive"
+    ],
+    "powerDescription": "Your powers focus on the cold at the end of the universe, the fathomless emptiness of entropy. This changes the following:\n\n• Pallor: You are always cold to the touch and can't be warmed up. You can't suffer negative effects or harm due to cold weather or temperature (even extreme cold), but you still feel it. You subtract 1 from all your resting rolls if the area where you are resting isn't warm.\n• Void Affinity: No power you take can ever produce heat.\n• Rise from Abyss: Your powers from this blasphemy increase in potency the closer you are to death. They gain +1 CAT in all capabilities if you have an injury, a further +1 CAT if you have two or more, and a further +1 CAT if another exorcist has died this mission.\n• Collapse: If you die, your body snap freezes and begins collapsing into a nonspace. Touching it without protection can inflict incredible harm from the cold (around 3–4 stress). It will require special removal by CAIN, therefore it cannot be recovered by your compatriots.\n\nVoid Furnace also replaces some of your powers: replace Fury with Blackmatter, and Sabre with Nihil.\n\nQuirk — replaces Inner Furnace.",
+    "description": "",
+    "primaryColor": "#333333",
+    "accentColor": "#ff0000",
+    "secondaryColor": "#000000",
+    "textColor": "#ffffff",
+    "psycheBurstCost": false,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.26",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": null
+  },
+  "_key": "!items!GFF4Quirk0000006"
+}

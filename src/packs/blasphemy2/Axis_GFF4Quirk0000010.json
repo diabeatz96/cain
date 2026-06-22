@@ -1,0 +1,39 @@
+{
+  "name": "Axis",
+  "sorting": "a",
+  "folder": "GFF4QFolder00005",
+  "type": "blasphemyPower",
+  "_id": "GFF4Quirk0000010",
+  "img": "systems/cain/assets/Blasphemies/vector.png",
+  "sort": 1000,
+  "flags": {},
+  "system": {
+    "blasphemyType": "Vector",
+    "powerName": "Axis",
+    "isPassive": true,
+    "keywords": [
+      "Quirk",
+      "Passive"
+    ],
+    "powerDescription": "Your powers rely on rotational velocity.\n\nInscribe Axis: The Fling and Current powers from this blasphemy move things either clockwise or counter-clockwise around you or a point you choose in hand's reach, instead of in a straight line. The range of these abilities instead becomes the radius of this circular path.\n\nHoly Chakra: You may roll 1d6 when an object or projectile equal or lower than your CAT would impact you. If you roll a 4+, it instead orbits harmlessly around you and away from you, missing you and inflicting a max of 1 stress. If successful, lose the use of this passive until you rest.\n\nQuirk — replaces Brake.",
+    "description": "",
+    "primaryColor": "#333333",
+    "accentColor": "#000000",
+    "secondaryColor": "#878787",
+    "textColor": "#ffdc00",
+    "psycheBurstCost": false,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.26",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": null
+  },
+  "_key": "!items!GFF4Quirk0000010"
+}

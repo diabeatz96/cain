@@ -1,0 +1,39 @@
+{
+  "name": "Locus",
+  "sorting": "a",
+  "folder": "GFF4QFolder00015",
+  "type": "blasphemyPower",
+  "_id": "GFF4Quirk0000031",
+  "img": "systems/cain/assets/Blasphemies/sympathy.png",
+  "sort": 3100,
+  "flags": {},
+  "system": {
+    "blasphemyType": "Sympathy",
+    "powerName": "Locus",
+    "isPassive": true,
+    "keywords": [
+      "Quirk",
+      "Passive"
+    ],
+    "powerDescription": "You specialize in a particular object, but have an aversion to others. Choose an object on the list of resonances. You are automatically resonant with that object, but find activities that involve any of the other objects on that list hard by default. Actions are also hard when you are touching, wearing, or in hand's reach of those objects. You can swap this focus around at the start of each hunt, or when you rest.\n\nQuirk — replaces Resonance.",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "psycheBurstCost": false,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.26",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": null
+  },
+  "_key": "!items!GFF4Quirk0000031"
+}

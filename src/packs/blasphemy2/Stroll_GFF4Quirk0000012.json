@@ -1,0 +1,39 @@
+{
+  "name": "Stroll",
+  "sorting": "a",
+  "folder": "GFF4QFolder00006",
+  "type": "blasphemyPower",
+  "_id": "GFF4Quirk0000012",
+  "img": "systems/cain/assets/Blasphemies/gate.png",
+  "sort": 1200,
+  "flags": {},
+  "system": {
+    "blasphemyType": "Gate",
+    "powerName": "Stroll",
+    "isPassive": true,
+    "keywords": [
+      "Quirk",
+      "Passive"
+    ],
+    "powerDescription": "Once a scene, without spending a psyche burst, you can attempt to teleport yourself to a point in short distance you can see (even just partly) with enough space for you to arrive by rolling 1d6. On a 3+, you are successful. On a 1–2, you teleport anyway to a point in range, but the Admin tells you where you end up.\n\nQuirk — replaces Pocket.",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ffe100",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "psycheBurstCost": false,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.26",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": null
+  },
+  "_key": "!items!GFF4Quirk0000012"
+}

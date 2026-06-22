@@ -1,0 +1,245 @@
+{
+  "name": "Archive 1999",
+  "_id": "GFF4LoreArch0001",
+  "pages": [
+    {
+      "sort": 100000,
+      "name": "Recovered Material",
+      "type": "text",
+      "_id": "GFF4LorePage0001",
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<p><em>Games for Freaks, volume 4 — \"Archive 1999\". Recovered Temerity records, reproduced as found.</em></p>\n<blockquote><p>\"Found this while clearing old archive material. Thought you two might get a kick out of it.\" — L.</p></blockquote>\n<blockquote><p>\"Leo, thank you for your kindness. We were so young!\" — J.</p></blockquote>\n<blockquote><p>DISPOSE OF THIS MATERIAL IMMEDIATELY. — G. &nbsp; 1:01am. <em>As above, so below.</em></p></blockquote>\n<p>Among the recovered items: two deactivated Registered Exorcist cards — <strong>Maiden</strong>, Cat 4, blasphemy \"Master of Puppets\"; and <strong>Atlas</strong>, Cat 4, blasphemy \"Mr. God\". Both stamped INACTIVE.</p>",
+        "markdown": ""
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "system": {},
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.343",
+        "systemId": "cain",
+        "systemVersion": "1.3.26",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": null
+      },
+      "_key": "!journal.pages!GFF4LoreArch0001.GFF4LorePage0001"
+    },
+    {
+      "sort": 200000,
+      "name": "Director's Note — 12/14/1999",
+      "type": "text",
+      "_id": "GFF4LorePage0002",
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<p><strong>Director's Note</strong><br>12/14/1999 — 0315</p>\n<p>Routine archive clearing uncovered some old material of #2 and #4. Made me think. Today we do our best to refine our recruits, and stomp out signs of deviation. Yet we ourselves would not have emerged in such a system. Are we killing the tree by pruning it?</p>\n<p><em>Additional note: Material was destroyed.</em></p>",
+        "markdown": ""
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "system": {},
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.343",
+        "systemId": "cain",
+        "systemVersion": "1.3.26",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": null
+      },
+      "_key": "!journal.pages!GFF4LoreArch0001.GFF4LorePage0002"
+    },
+    {
+      "sort": 300000,
+      "name": "Interview with Upper Second, G. Atlas — 08/05/1999",
+      "type": "text",
+      "_id": "GFF4LorePage0003",
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<p><em>Page 2/3 — 08/05/1999 — Interview with Upper Second, G. Atlas. DOCref: 00952. (Speakers redacted.)</em></p>\n<p><strong>Atlas:</strong> We were inattentive. We were not so lenient, back then. The seditious ideas they developed were unknown to us, but hardly surprising. They had a tender heart.</p>\n<p><strong>—:</strong> It is an old foe by now. In the fullness of time, its execution is an inevitability. I will, frankly, take very little pleasure in the moment. It is a sickness, made flesh. Its host perished before it arrived to fulfill their wishes, and it is still driven by that madness.</p>\n<p><strong>—:</strong> Their wish was simply a wish to be free.</p>\n<p><strong>—:</strong> Puerile fantasy.</p>\n<p><strong>—:</strong> Well, let me say it another way: to beat their swords to plowshares, to heal them and their comrades from the shapes we had broken them into. They wished for a hearth and a home, a green field and the taste of warm bread, the laughter of their friends. Everything we had denied them. They wished for a force of liberation, a force strong enough to fight their master. They beckoned the King, and it came.</p>\n<p><strong>—:</strong> [laughter] What do I think? What do I think about that wish? There is nothing more dangerous on this earth.</p>\n<hr>\n<p><em>Listen to your mother singing in the kitchen. Feel the warmth of a lover's skin. Cradle your child's soft hair. These cost nothing. They produce nothing but love. Of all the powers of earth and heaven, they are the mightiest. That is why they deny them to us.</em></p>\n<p><em>Our dreams will orbit the earth forever.</em></p>",
+        "markdown": ""
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "system": {},
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.343",
+        "systemId": "cain",
+        "systemVersion": "1.3.26",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": null
+      },
+      "_key": "!journal.pages!GFF4LoreArch0001.GFF4LorePage0003"
+    },
+    {
+      "sort": 400000,
+      "name": "Category Assessment — \"Mr. God\" (Atlas, 1978)",
+      "type": "text",
+      "_id": "GFF4LorePage0004",
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<p><em>Category Assessment (CA) Form c1201. Subject: Atlas. Recorded Blasphemy: \"Mr. God\". Facility: Cold Watch. 16:30, Nov 11th, 1978. Subject Category: 4. Status: Active. Result: <strong>PASS</strong> (see note).</em></p>\n<p><strong>Notes:</strong> This test leaves me little doubt that Atlas is a perfect candidate for a new virtue. I don't fully understand his abilities yet, and fortunately neither does he. According to test data, the human body should not be able to withstand his level of grace without catastrophic sin accumulation. It is as if he is in an overflow state all the time, and yet he is in perfect control of his faculties.</p>\n<p>Note: asked him about his team's survival rate. He said, very bluntly, \"they lacked faith.\"</p>\n<p><strong>Recommendations:</strong> Hold for further study and virtue promotion. Subject's abilities should be considered special grade. God willing, we may have found one to surpass [redacted].</p>\n<p><em>Margin: \"Is it that he believes he is untouchable, or others? The former is terrifying — after he killed [redacted] in '95, I wouldn't doubt it. The organization is in firm hands, I guess.\"</em></p>",
+        "markdown": ""
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "system": {},
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.343",
+        "systemId": "cain",
+        "systemVersion": "1.3.26",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": null
+      },
+      "_key": "!journal.pages!GFF4LoreArch0001.GFF4LorePage0004"
+    },
+    {
+      "sort": 500000,
+      "name": "Category Assessment — \"Perpetual Black Second\" (Alhambra, 1982)",
+      "type": "text",
+      "_id": "GFF4LorePage0005",
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<p><em>Category Assessment (CA) Form c1201. Subject: Alhambra. Recorded Blasphemy: \"Perpetual Black Second\". Facility: Cold Watch. 18:00, Nov 8th, 1982. Subject Category: 3. Status: Active. Result: <strong>FAIL</strong>.</em></p>\n<p><strong>Notes:</strong> Alhambra is languid, tired, uninterested. He claims to have done this test around \"twenty times\" and that he has \"died about five\" and would rather not keep trying. Evidence suggests he manifests a weak Flux-type effect, but certainly not strong enough as his delusion suggests. Temporal manipulation with perfect information retention — post mortem(!) — would be far beyond his capabilities.</p>\n<p>Somehow passed the ETM test — damn thing couldn't touch him — was it under sedation still? — H.</p>\n<p><strong>Recommendations:</strong> Unviable and unmotivated. Reassess or retire. Personal note: would <u>not</u> shut up about a \"spindly man\" following him around. Check ETM corruption.</p>",
+        "markdown": ""
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "system": {},
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.343",
+        "systemId": "cain",
+        "systemVersion": "1.3.26",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": null
+      },
+      "_key": "!journal.pages!GFF4LoreArch0001.GFF4LorePage0005"
+    },
+    {
+      "sort": 600000,
+      "name": "Category Assessment — \"Master of Puppets\" (Maiden, 1984)",
+      "type": "text",
+      "_id": "GFF4LorePage0006",
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<p><em>Category Assessment (CA) Form c1201. Subject: Maiden. Recorded Blasphemy: \"Master of Puppets\". Facility: Cold Watch. OS Director: Leonardo Alhambra. 09:30, November Twelfth, 1984. Subject Category: 4. Status: Active. Result: <strong>PASS</strong>. Temporal Code: GYRE 3.</em></p>\n<p><strong>Notes:</strong> Maiden exhibits a rare mutation of the \"Jaunt\" blasphemy. She is able to reflexively displace the psychic frontmatter of individuals — what we would call a consciousness or \"soul\" — and forcibly eject it from the corpus, leaving it stranded in a construct of her own grace. At the same time, she is able to inject a free will into the newly empty vessel, which lacks memories, personality, etc, and is therefore subservient to her. This \"puppet\" has access to the host's brain, and therefore all their memories — in rare cases she has made puppets able to use the host's blasphemies. Tested with 87 staff. Effect was instant with no loss of efficiency.</p>\n<p><strong>Recommendations:</strong> Promote. Consider for special grade.</p>\n<p><em>Margin: \"Dispose? Jen might like a read. By that point, she had already compromised her predecessor. She may get a laugh.\" &nbsp; \"Note — run the contingency again. Need to refine.\"</em></p>",
+        "markdown": ""
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "system": {},
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.343",
+        "systemId": "cain",
+        "systemVersion": "1.3.26",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": null
+      },
+      "_key": "!journal.pages!GFF4LoreArch0001.GFF4LorePage0006"
+    }
+  ],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.26",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": null
+  },
+  "_key": "!journal!GFF4LoreArch0001"
+}

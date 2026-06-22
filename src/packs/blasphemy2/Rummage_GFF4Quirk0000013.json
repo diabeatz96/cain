@@ -1,0 +1,39 @@
+{
+  "name": "Rummage",
+  "sorting": "a",
+  "folder": "GFF4QFolder00006",
+  "type": "blasphemyPower",
+  "_id": "GFF4Quirk0000013",
+  "img": "systems/cain/assets/Blasphemies/gate.png",
+  "sort": 1300,
+  "flags": {},
+  "system": {
+    "blasphemyType": "Gate",
+    "powerName": "Rummage",
+    "isPassive": true,
+    "keywords": [
+      "Quirk",
+      "Passive"
+    ],
+    "powerDescription": "Once a scene, you can spend 1 kp to pull a random item out of a space that an item could be stored (clothing, suit pocket, in a desk drawer, etc). This only works if you are not looking while you're pulling the item out. The item that comes out may not necessarily logically fit the space, but comes out anyway. Roll 1d6, then the Admin picks something from the rolled list.\n\n1. Fountain pen, Live Grenade, Leather gloves, Lighter (small, plain), Pack of cigarettes (2 missing), Phone charger\n2. Roll of coins, Crowbar, Stapler, Claw hammer, Camcorder (1 hr tape), Chapstick\n3. Handgun (unloaded), two cigarettes, Faded photograph, Instruction manual for building furniture (in Swedish), Map of the area (folded, well used, in Swedish), Large pack of caramel candies\n4. Cell phone (10% battery), Thick sheathe of printer paper, Large amount of cash, Full bottle of wine, Fire Axe, Huge box of nails\n5. Chewing Gum, Lipstick, Coffee Mug (novelty), Folded Letter, Hat (situation appropriate), Clip of 9mm ammo for a handgun\n6. Useful key, Pocket Knife, Lighter (oversized, novelty), Bicycle (foldable), Dictionary for translating Swedish, six sided die\n\nQuirk — replaces Pocket.",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ffe100",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "psycheBurstCost": false,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.26",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": null
+  },
+  "_key": "!items!GFF4Quirk0000013"
+}

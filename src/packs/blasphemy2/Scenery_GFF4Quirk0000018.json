@@ -1,0 +1,39 @@
+{
+  "name": "Scenery",
+  "sorting": "a",
+  "folder": "GFF4QFolder00010",
+  "type": "blasphemyPower",
+  "_id": "GFF4Quirk0000018",
+  "img": "systems/cain/assets/Blasphemies/edot.png",
+  "sort": 1800,
+  "flags": {},
+  "system": {
+    "blasphemyType": "Edit",
+    "powerName": "Scenery",
+    "isPassive": true,
+    "keywords": [
+      "Quirk",
+      "Passive"
+    ],
+    "powerDescription": "Once a scene, when using any power from this blasphemy, if you can pull from a work of art nearby, it does not cost a psyche burst. The same work of art does not work twice in the same hunt, and the quality of the end result is dependent on the quality of the artwork.\n\nQuirk — replaces Mimic.",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#0064ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "psycheBurstCost": false,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.26",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": null
+  },
+  "_key": "!items!GFF4Quirk0000018"
+}

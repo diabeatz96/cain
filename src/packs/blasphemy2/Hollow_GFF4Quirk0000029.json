@@ -1,0 +1,39 @@
+{
+  "name": "Hollow",
+  "sorting": "a",
+  "folder": "GFF4QFolder00014",
+  "type": "blasphemyPower",
+  "_id": "GFF4Quirk0000029",
+  "img": "systems/cain/assets/Blasphemies/jaunt.png",
+  "sort": 2900,
+  "flags": {},
+  "system": {
+    "blasphemyType": "Jaunt",
+    "powerName": "Hollow",
+    "isPassive": true,
+    "keywords": [
+      "Quirk",
+      "Passive"
+    ],
+    "powerDescription": "You specialize in the incorporeal remnants of psyche.\n\nYou can use the Geist blasphemy power without spending a psyche burst, once between rests.\n\nIf you have only one passenger from the Passenger power, they can now use psychic powers using your body, and you can use powers normally. When they use a power, you take any effects or consequences as if you used the power, though they spend any resources (sin, bursts, etc). These powers immediately end if your passenger exits.\n\nQuirk — replaces Ghostwire.",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "psycheBurstCost": false,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.26",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": null
+  },
+  "_key": "!items!GFF4Quirk0000029"
+}

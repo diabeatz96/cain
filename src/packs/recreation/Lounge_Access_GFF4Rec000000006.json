@@ -1,0 +1,38 @@
+{
+  "folder": null,
+  "name": "Lounge Access",
+  "type": "item",
+  "img": "systems/cain/assets/Recreation/lounge.png",
+  "system": {
+    "description": "<p><em>Morning or evening access.</em></p><p>Morning or evening access to a private facility lounge — highly in demand. Lounges typically have (and only have!) the following amenities: one television and cassette player with a mostly-donated collection of movies and recorded TV out of date by several months (no live TV); a small bookshelf of well-used books, outdated periodicals, comics and board games; large worn furniture and two blankets; climate control that does not work; a fridge and small kitchen, mostly barren, with a stained coffee maker, gas range, tin kettle, tea, and ration-grade snacks; one CD or cassette player with a mostly-donated but carefully curated music collection and two pairs of attachable headphones; and a Centura Vamigo game console with around 10 cartridges and two controllers (a few buttons on the second controller tend to jam).</p><h3>Questions</h3><p>Go around the table and ask:</p><ul><li>How do you spend your time?</li><li>How do you manage to share what's available?</li><li>What surprising or interesting things do you find, play, read, or discover buried in the shelves and cabinets? (You may find something that's not listed!)</li></ul><p>You may choose to play some scenes out based on the answers, and continue to play out scenes as needed.</p>",
+    "quantity": 1,
+    "weight": 0,
+    "roll": {
+      "diceNum": 1,
+      "diceSize": "d6",
+      "diceBonus": ""
+    },
+    "kitPoint": 0,
+    "scripValue": 0,
+    "type": "Recreation"
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.26",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": null,
+    "exportSource": null
+  },
+  "_id": "GFF4Rec000000006",
+  "sort": 600,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!GFF4Rec000000006"
+}
