@@ -1,0 +1,38 @@
+{
+  "folder": null,
+  "name": "Surface Access",
+  "type": "item",
+  "img": "systems/cain/assets/Recreation/surface.png",
+  "system": {
+    "description": "<p><em>Morning or evening access.</em></p><p>Morning or evening access to the surface of the current CAIN facility. Around two-thirds of active CAIN facilities are buried at least a mile underground; the rest, including main headquarters, sit in the middle of the ocean. Going up is tightly monitored and security is extremely high — perimeter security is kill-on-sight, though signage and fencing are clear. Surroundings are typically remote or inhospitable: high mountain forest, deep red desert, arctic ice, or endless ocean. Acclimatization sunglasses are provided for exorcists who've spent more than a week underground. Surface facilities usually include faculty offices, VTOL pads, docks, rail and cranes, sunlight-dependent Temerity lab infrastructure, gardens and a vegetable patch, and a running track. Most are inaccessible without good relationships or special dispensation; for low-category exorcists, surface access is usually just a chance to see the sun, breathe unfiltered air, and get a walk in.</p><h3>Questions</h3><p>Go around the table and ask:</p><ul><li>How do you spend your time on the surface?</li><li>Do you have any special permissions up here?</li><li>What does it feel like to see the sun again?</li><li>Do you love, hate, or notice something interesting or surprising in the natural environment around the base on this particular visit?</li></ul><p>You may choose to play some scenes out based on the answers, and continue to play out scenes as needed.</p>",
+    "quantity": 1,
+    "weight": 0,
+    "roll": {
+      "diceNum": 1,
+      "diceSize": "d6",
+      "diceBonus": ""
+    },
+    "kitPoint": 0,
+    "scripValue": 0,
+    "type": "Recreation"
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.26",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": null,
+    "exportSource": null
+  },
+  "_id": "GFF4Rec000000005",
+  "sort": 500,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!GFF4Rec000000005"
+}

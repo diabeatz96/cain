@@ -1,0 +1,39 @@
+{
+  "name": "Alter",
+  "sorting": "a",
+  "folder": "GFF4QFolder00010",
+  "type": "blasphemyPower",
+  "_id": "GFF4Quirk0000019",
+  "img": "systems/cain/assets/Blasphemies/edot.png",
+  "sort": 1900,
+  "flags": {},
+  "system": {
+    "blasphemyType": "Edit",
+    "powerName": "Alter",
+    "isPassive": true,
+    "keywords": [
+      "Quirk",
+      "Passive"
+    ],
+    "powerDescription": "When you rest or go to sleep, you disappear and are replaced by a different version of yourself with similar memories. These versions of yourself rotate in from another reality where this power activated. Your appearance changes as if you used the Mimic passive. Choose one:\n\n• You are holding something small but useful (a tool, a weapon, a key, a map)\n• You have faint memories of a piece of information pertinent to the current investigation. Ask the GM a yes or no question about the current hunt and get a truthful answer.\n• You are slightly less stressed (-1 stress) than your current version.\n\nQuirk — replaces Mimic.",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#0064ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "psycheBurstCost": false,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.26",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": null
+  },
+  "_key": "!items!GFF4Quirk0000019"
+}

@@ -1,0 +1,39 @@
+{
+  "name": "Worm",
+  "sorting": "a",
+  "folder": "GFF4QFolder00012",
+  "type": "blasphemyPower",
+  "_id": "GFF4Quirk0000025",
+  "img": "systems/cain/assets/Blasphemies/wire.png",
+  "sort": 2500,
+  "flags": {},
+  "system": {
+    "blasphemyType": "Wire",
+    "powerName": "Worm",
+    "isPassive": true,
+    "keywords": [
+      "Quirk",
+      "Passive"
+    ],
+    "powerDescription": "You can produce light reading material (novels, magazines, etc) at will, without costing KP, though it dissolves after a few minutes of losing contact with your body.\n\nIn addition, all wire powers apply to books instead of computers or phones and can be used with books. When you'd produce a computer terminal with Terminal or Deck, you instead produce an appropriate book (almanac, history book, encyclopedia, comic book, etc), including from people's bodies. Surge works with books (you must have read, or at least be familiar with, the destination book), and Disk turns your target into a book. Call creates a duplicate journal on both you and your target if the target picks up. Writing in the journal causes the writing to supernaturally and instantly appear on the duplicate, regardless of distance.\n\nQuirk — replaces Main Artery.",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#0064ff",
+    "secondaryColor": "#000000",
+    "textColor": "#ffffff",
+    "psycheBurstCost": false,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.26",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": null
+  },
+  "_key": "!items!GFF4Quirk0000025"
+}

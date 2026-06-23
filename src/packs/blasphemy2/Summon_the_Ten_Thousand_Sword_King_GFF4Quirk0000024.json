@@ -1,0 +1,39 @@
+{
+  "name": "Summon the Ten Thousand Sword King",
+  "sorting": "a",
+  "folder": "GFF4QFolder00011",
+  "type": "blasphemyPower",
+  "_id": "GFF4Quirk0000024",
+  "img": "systems/cain/assets/Blasphemies/bind.png",
+  "sort": 2400,
+  "flags": {},
+  "system": {
+    "blasphemyType": "Bind",
+    "powerName": "Summon the Ten Thousand Sword King",
+    "isPassive": false,
+    "keywords": [
+      "Quirk",
+      "Ultimate"
+    ],
+    "powerDescription": "If you have the Bind blasphemy and are either CAT 5 or on the brink of death, you can beckon the infinite blue. The skies that were denied to us come rushing forth, and do not stop. The stars are falling, each of them a perfect blade.\n\nSummoning the King immediately initiates an apocalyptic force in an area around the size of a town (around CAT 5), centered on you. The infinite sword field appears, turning the sky a perfect blue.\n\nSins and exorcists in the area, including you, roll 1d6 and add their category. If the result is 9 or higher, they survive the unending assault, otherwise they are obliterated. Exorcists suffer instant death, sins are reduced to blood-soaked ashes. This fate can be defied as normal. Perfect Sins (Games for Freaks, volume 3) always survive.\n\nAnything else that survives takes 5 slashes on its execution talisman. All other humans, creatures, and structures in the area around CAT 5 or under are annihilated with unbelievable force unless protected by supernatural and similarly overwhelming force. Afterwards, the King departs.\n\nYou can describe, if you wish, the way that your character accepts or avoids their fate. If you are particularly avaricious of victory, you may attempt to fight, or even bind the King, though such matters are best left up to your table to figure out. Few beings exist that are stronger than it, and perhaps there are none at all. Its grief is infinite, after all.\n\nSummoning the King can only be done once in a game of CAIN.\n\nQuirk — complements Bind (free).",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#0064ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "psycheBurstCost": false,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.26",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": null
+  },
+  "_key": "!items!GFF4Quirk0000024"
+}

@@ -1,0 +1,38 @@
+{
+  "folder": "GdN0nfCDP965wxF0",
+  "name": "Control Collar",
+  "type": "item",
+  "img": "systems/cain/assets/items/kp.png",
+  "system": {
+    "description": "<p>Suppresses powers when worn, limiting to max CAT 1. Takes a rest to remove safely.</p><p><strong>Conspicuous</strong></p>",
+    "quantity": 1,
+    "weight": 0,
+    "roll": {
+      "diceNum": 1,
+      "diceSize": "d6",
+      "diceBonus": ""
+    },
+    "kitPoint": 0,
+    "scripValue": 3,
+    "type": "Aesthetics"
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.26",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": null,
+    "exportSource": null
+  },
+  "_id": "GFF4Aes000000003",
+  "sort": 300,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!GFF4Aes000000003"
+}

@@ -215,6 +215,15 @@ Hooks.once('init', async function () {
     default: false
   });
 
+  game.settings.register('cain', 'huntTrackerPrivateMessages', {
+    name: 'Private Hunt Tracker Messages',
+    hint: 'When enabled, Hunt Tracker chat messages (tension fills, palace entry/exit, trauma discovery, etc.) are whispered to GMs only instead of being shown to all players — a quiet helper for the GM rather than a reveal to the table.',
+    scope: 'world',
+    config: true,
+    type: Boolean,
+    default: false
+  });
+
   game.settings.register('cain', 'homebrewHistory', {
     name: 'Homebrew Creation History',
     scope: 'world',
@@ -710,6 +719,16 @@ Handlebars.registerHelper('gt', function(a, b) {
 
 Handlebars.registerHelper('gte', function(a, b) {
   return a >= b;
+});
+
+// True if `value` appears in `collection` (an array, or a comma/space-delimited
+// string). Used to flag quirks (keyword "Quirk") in power lists.
+Handlebars.registerHelper('includes', function(collection, value) {
+  if (Array.isArray(collection)) return collection.includes(value);
+  if (typeof collection === 'string') {
+    return collection.split(/[\s,]+/).map(s => s.trim()).includes(value);
+  }
+  return false;
 });
 
 Handlebars.registerHelper('times', function(n, block) {
@@ -1293,7 +1312,9 @@ async function checkAndImportCompendiums() {
     { key: 'cain.tables', label: 'Roll Tables' },
     { key: 'cain.domains', label: 'Domains' },
     { key: 'cain.virtues', label: 'Virtues (Bonds)' },
-    { key: 'cain.homebrew', label: 'Homebrew' }
+    { key: 'cain.homebrew', label: 'Homebrew' },
+    { key: 'cain.recreation', label: 'Recreation' },
+    { key: 'cain.lore', label: 'Lore & Archives' }
   ];
 
   let totalImported = 0;

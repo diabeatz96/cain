@@ -1,0 +1,38 @@
+{
+  "folder": null,
+  "name": "Recreation (Overview)",
+  "type": "item",
+  "img": "systems/cain/assets/Recreation/lounge.png",
+  "system": {
+    "description": "<p><em>Once between hunts.</em></p><p>Once between hunts, the entire group may optionally choose one of the following recreation activities and take the associated keycard, answering the attached questions and exploring the answers. This provides a little downtime to the exorcists and allows them to develop their characters and relationships outside of the stresses and confines of a hunt.</p><h3>Caveats</h3><ul><li>The group must agree on the same activity, and it costs nothing.</li><li>Exorcists may choose to split from the group and choose a different activity. If they do, they must pay 1 scrip, even if someone has already bought access to their chosen activity.</li><li>If an activity specifies morning or evening access only, one time period must be chosen. This mainly changes the setting of the scenes.</li></ul><h3>Conduct</h3><ul><li>Exorcists must be well behaved during recreation. Every area has security cameras and keycard access doors that limit who can come and go.</li><li>Letting in unapproved personnel, tampering with surveillance, damaging facilities, leaving them untidy, or taking items out is punishable by sanction and bans activities for the offender for the next period between hunts.</li><li>Repeat or severe offenders are docked scrip (usually 1 or 2) or disciplined.</li></ul>",
+    "quantity": 1,
+    "weight": 0,
+    "roll": {
+      "diceNum": 1,
+      "diceSize": "d6",
+      "diceBonus": ""
+    },
+    "kitPoint": 0,
+    "scripValue": 0,
+    "type": "Recreation"
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.26",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": null,
+    "exportSource": null
+  },
+  "_id": "GFF4Rec000000001",
+  "sort": 100,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!GFF4Rec000000001"
+}

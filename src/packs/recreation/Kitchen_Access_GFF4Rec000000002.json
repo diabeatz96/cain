@@ -1,0 +1,38 @@
+{
+  "folder": null,
+  "name": "Kitchen Access",
+  "type": "item",
+  "img": "systems/cain/assets/Recreation/kitchen.png",
+  "system": {
+    "description": "<p><em>All-day access.</em></p><p>All-day access to private dormitory kitchen facilities, with a large stock of non-perishable or frozen ingredients. The kitchen is sterile and too brightly lit, but well stocked. There is an attached, well-furnished dining area which is windowless and underlit. On formal occasions (holidays, founding day, or any of the thirteen days of mourning and remembrance), formalwear is required for dinner and is provided. May pay 1 scrip to stock better cooking ingredients such as fresh vegetables or fruits.</p><h3>Questions</h3><p>Go around the table and ask:</p><ul><li>Who cooks, one or many? How's the labor split up? Who eats or doesn't eat?</li><li>What's your relationship to food?</li><li>How did the food turn out? What did you end up cooking?</li><li>Go around the table — each character can: share a conversation they had over food; share something other characters noticed about them (or didn't!) during the meal; or choose not to share.</li></ul><p>You may choose to play some scenes out based on the answers, and continue to play out scenes as needed.</p>",
+    "quantity": 1,
+    "weight": 0,
+    "roll": {
+      "diceNum": 1,
+      "diceSize": "d6",
+      "diceBonus": ""
+    },
+    "kitPoint": 0,
+    "scripValue": 0,
+    "type": "Recreation"
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.26",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": null,
+    "exportSource": null
+  },
+  "_id": "GFF4Rec000000002",
+  "sort": 200,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!GFF4Rec000000002"
+}

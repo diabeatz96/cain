@@ -1,0 +1,39 @@
+{
+  "name": "Digit",
+  "sorting": "a",
+  "folder": "GFF4QFolder00007",
+  "type": "blasphemyPower",
+  "_id": "GFF4Quirk0000014",
+  "img": "systems/cain/assets/Blasphemies/smother.png",
+  "sort": 1400,
+  "flags": {},
+  "system": {
+    "blasphemyType": "Smother",
+    "powerName": "Digit",
+    "isPassive": true,
+    "keywords": [
+      "Quirk",
+      "Passive"
+    ],
+    "powerDescription": "You can instantly (and cleanly) lose a finger to gain +1D and +1 CAT to any power when you use it. It disappears as if it had been cut off a long time ago. Roll 1d6 (2–3: left hand, 4–5: right hand).\n\nIf you run out of fingers on one hand, you automatically lose fingers on the other. If you roll a 1, you lose another finger and roll again (this can keep going!). If you roll a 6, you can choose which hand you lose a finger on.\n\nGain -1D on any rolls that would require using the affected hand until the next hunt, when you have time to adjust to the disability. If you have no fingers left, you lose your head instead and suffer (gruesome) instant death, which cannot be ignored.\n\nQuirk — replaces Absentia.",
+    "description": "",
+    "primaryColor": "#000000",
+    "accentColor": "#8f8f8f",
+    "secondaryColor": "#000000",
+    "textColor": "#ffe100",
+    "psycheBurstCost": false,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.26",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": null
+  },
+  "_key": "!items!GFF4Quirk0000014"
+}

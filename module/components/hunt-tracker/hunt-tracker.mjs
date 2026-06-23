@@ -4,6 +4,25 @@ import { CainActorSheet } from "../../sheets/actor-sheet.mjs";
 // Default position if no saved position exists
 const DEFAULT_POSITION = { top: 100, left: 100 };
 
+/**
+ * Post a Hunt Tracker chat message. When the GM has enabled
+ * "Private Hunt Tracker Messages", the message is whispered to GMs only — a
+ * quiet helper for the GM — instead of being revealed to all players.
+ * Falls back to the normal public message when the setting is off.
+ */
+function postHuntChatMessage(messageData) {
+  let isPrivate = false;
+  try {
+    isPrivate = game.settings.get('cain', 'huntTrackerPrivateMessages');
+  } catch (e) { /* setting not registered yet — post publicly */ }
+
+  if (isPrivate) {
+    const gmIds = ChatMessage.getWhisperRecipients("GM").map(u => u.id);
+    messageData = { ...messageData, whisper: messageData.whisper ?? gmIds };
+  }
+  return ChatMessage.create(messageData);
+}
+
 // Tension moves from the CAIN rulebook
 const TENSION_MOVES = [
   {
@@ -471,7 +490,7 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
     this._emitUpdate();
 
     const status = hunt.insidePalace ? 'entered' : 'exited';
-    ChatMessage.create({
+    postHuntChatMessage({
       speaker: { alias: "CAIN System" },
       content: `<div class="hunt-message palace-toggle">
         <h3>Palace ${hunt.insidePalace ? 'Entered' : 'Exited'}</h3>
@@ -492,7 +511,7 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
     await game.settings.set('cain', 'currentHunt', hunt);
     this._emitUpdate();
 
-    ChatMessage.create({
+    postHuntChatMessage({
       speaker: { alias: "CAIN System" },
       content: `<div class="hunt-message trauma-discovered">
         <h3>Trauma Discovered</h3>
@@ -638,7 +657,7 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
       this._emitUpdate();
 
       if (clock.current >= clock.max) {
-        ChatMessage.create({
+        postHuntChatMessage({
           speaker: { alias: "CAIN System" },
           content: `<div class="hunt-message clock-filled">
             <h3>Clock Filled: ${clock.name}</h3>
@@ -686,7 +705,7 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
 
     await self._incrementPressure('rest');
 
-    ChatMessage.create({
+    postHuntChatMessage({
       speaker: { alias: "CAIN System" },
       content: `<div class="hunt-message party-rest">
         <h2>Party Rests</h2>
@@ -788,7 +807,7 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
             await game.settings.set('cain', 'currentHunt', huntState);
             self._emitUpdate();
 
-            ChatMessage.create({
+            postHuntChatMessage({
               speaker: { alias: "CAIN System" },
               content: `<div class="hunt-message hunt-started">
                 <h2>Hunt Initiated</h2>
@@ -874,7 +893,7 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
 
             self._emitUpdate();
 
-            ChatMessage.create({
+            postHuntChatMessage({
               speaker: { alias: "CAIN System" },
               content: `<div class="hunt-message hunt-ended">
                 <h2>Exfiltration Complete</h2>
@@ -921,7 +940,7 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
 
     ui.notifications.info('All exorcists reset to mission-start state');
 
-    ChatMessage.create({
+    postHuntChatMessage({
       speaker: { alias: "CAIN System" },
       content: `<div class="hunt-message mission-reset">
         <h2>Mission Reset</h2>
@@ -1367,7 +1386,7 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
   }
 
   async _onPressureOutOfControl(hunt) {
-    ChatMessage.create({
+    postHuntChatMessage({
       speaker: { alias: "CAIN System" },
       content: `<div class="hunt-message pressure-overflow">
         <h2>PRESSURE OVERFLOW</h2>
@@ -1385,7 +1404,7 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
       `<li><strong>${m.name}:</strong> ${m.description}</li>`
     ).join('');
 
-    ChatMessage.create({
+    postHuntChatMessage({
       speaker: { alias: "CAIN System" },
       content: `<div class="hunt-message tension-move-prompt">
         <h2>Tension Filled!</h2>
@@ -1421,7 +1440,7 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
   }
 
   async _sinDefeated() {
-    ChatMessage.create({
+    postHuntChatMessage({
       speaker: { alias: "CAIN System" },
       content: `<div class="hunt-message sin-defeated">
         <h2>SIN EXECUTED</h2>

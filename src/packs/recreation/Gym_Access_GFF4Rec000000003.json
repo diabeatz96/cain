@@ -1,0 +1,38 @@
+{
+  "folder": null,
+  "name": "Gym Access",
+  "type": "item",
+  "img": "systems/cain/assets/Recreation/gym.png",
+  "system": {
+    "description": "<p><em>All-day access.</em></p><p>All-day access to the CASTLE facility recreation center. Facilities are dated but well lit, stocked, and maintained. Gymwear and swimwear that conform to CASTLE dress codes are provided and required. Amenities: a swimming pool (cold, sterile, well lit); a cavernous ball court for basketball, indoor tennis, squash, indoor soccer, hockey and the like (equipment must be arranged beforehand, setup is up to the exorcists, competitive games encouraged); and a gym with training mats, weights, and equipment for martial arts, wrestling, tumbling, strength training, or general fitness.</p><h3>Questions</h3><p>Go around the table and ask:</p><ul><li>How do you spend your time? Do you try to spend it alone or with others?</li><li>What is your relationship to sports and fitness?</li><li>Do you believe in self-improvement?</li><li>How competitive are you? Do you play for fun or for keeps?</li></ul><p>You may choose to play some scenes out based on the answers, and continue to play out scenes as needed.</p><p><em>If you play a sport or competitive game, use associated skill rolls (conditioning, coordination, force, etc) with roll-offs to determine outcomes. Rolls can be set up, assisted, etc as usual. It's standard among exorcists to set a powers / no-powers rule before playing.</em></p>",
+    "quantity": 1,
+    "weight": 0,
+    "roll": {
+      "diceNum": 1,
+      "diceSize": "d6",
+      "diceBonus": ""
+    },
+    "kitPoint": 0,
+    "scripValue": 0,
+    "type": "Recreation"
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.26",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": null,
+    "exportSource": null
+  },
+  "_id": "GFF4Rec000000003",
+  "sort": 300,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!GFF4Rec000000003"
+}

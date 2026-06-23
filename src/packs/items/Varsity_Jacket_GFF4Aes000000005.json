@@ -1,0 +1,38 @@
+{
+  "folder": "GdN0nfCDP965wxF0",
+  "name": "Varsity Jacket",
+  "type": "item",
+  "img": "systems/cain/assets/items/kp.png",
+  "system": {
+    "description": "<p>Logo selection approved for campus sports and recreation activities.</p><p><strong>CAT 3+</strong></p>",
+    "quantity": 1,
+    "weight": 0,
+    "roll": {
+      "diceNum": 1,
+      "diceSize": "d6",
+      "diceBonus": ""
+    },
+    "kitPoint": 0,
+    "scripValue": 3,
+    "type": "Aesthetics"
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.26",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": null,
+    "exportSource": null
+  },
+  "_id": "GFF4Aes000000005",
+  "sort": 500,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!GFF4Aes000000005"
+}

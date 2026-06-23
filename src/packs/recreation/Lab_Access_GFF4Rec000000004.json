@@ -1,0 +1,38 @@
+{
+  "folder": null,
+  "name": "Lab Access",
+  "type": "item",
+  "img": "systems/cain/assets/Recreation/lab.png",
+  "system": {
+    "description": "<p><em>All-day access.</em></p><p>All-day access to spare Temerity facilities. The Training Room (aka the Block) is a barren, cavernous industrial room whose walls, doors, floors and even the observation glass are reinforced with grids of Y-alloy — a rare, psychically resistant metal infused with the fibrous flesh of the Ymir tree. It is nigh impervious to forces and blasphemy powers of CAT 3 and lower, and takes only minor damage from forces 4 and higher; training dioramas are usually set up inside. The Observation Deck can monitor produced forces, grace, and veil fluctuation, and holds a two-layer kill switch that seals all doors and sounds the alarm. The Research Alcove fits one or two people, with a small library and a PC with (slow at peak, otherwise fast 56k) CAIN intranet access.</p><h3>Questions</h3><p>Go around the table and ask:</p><ul><li>Do you spend your time in practice or observation?</li><li>Do you embrace or reject your powers?</li><li>Do you believe you are a weapon?</li><li>What's a quirk, oddity, or feature of your powers you show us or notice?</li></ul><p>You may choose to play some scenes out based on the answers, and continue to play out scenes as needed.</p><p><em>If you have characters show off their powers, they don't gain sin (unless they want to) and don't have to spend a psyche burst.</em></p>",
+    "quantity": 1,
+    "weight": 0,
+    "roll": {
+      "diceNum": 1,
+      "diceSize": "d6",
+      "diceBonus": ""
+    },
+    "kitPoint": 0,
+    "scripValue": 0,
+    "type": "Recreation"
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.26",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": null,
+    "exportSource": null
+  },
+  "_id": "GFF4Rec000000004",
+  "sort": 400,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!GFF4Rec000000004"
+}

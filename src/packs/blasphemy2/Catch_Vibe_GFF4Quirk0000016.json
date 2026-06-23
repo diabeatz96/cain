@@ -1,0 +1,39 @@
+{
+  "name": "Catch Vibe",
+  "sorting": "a",
+  "folder": "GFF4QFolder00008",
+  "type": "blasphemyPower",
+  "_id": "GFF4Quirk0000016",
+  "img": "systems/cain/assets/Blasphemies/track.png",
+  "sort": 1600,
+  "flags": {},
+  "system": {
+    "blasphemyType": "Track",
+    "powerName": "Catch Vibe",
+    "isPassive": true,
+    "keywords": [
+      "Quirk",
+      "Passive"
+    ],
+    "powerDescription": "Your starting playlist is smaller (4 tracks). However, you can add or swap in and out any (real life) music track played during the session by you, your GM, or any of the players into your active playlist for the remainder of the hunt, or any music track played diagetically (in the game). This could push it up to 10 tracks.\n\nQuirk — adds to your Track passive (does not replace it).",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ffdc00",
+    "secondaryColor": "#000000",
+    "textColor": "#ffffff",
+    "psycheBurstCost": false,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.26",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": null
+  },
+  "_key": "!items!GFF4Quirk0000016"
+}

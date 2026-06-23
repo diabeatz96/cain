@@ -1,0 +1,39 @@
+{
+  "name": "Recluse",
+  "sorting": "a",
+  "folder": "GFF4QFolder00013",
+  "type": "blasphemyPower",
+  "_id": "GFF4Quirk0000026",
+  "img": "systems/cain/assets/Blasphemies/palace.png",
+  "sort": 2600,
+  "flags": {},
+  "system": {
+    "blasphemyType": "Palace",
+    "powerName": "Recluse",
+    "isPassive": true,
+    "keywords": [
+      "Quirk",
+      "Passive"
+    ],
+    "powerDescription": "Only you can enter your palace (with the exception of the Bar power, and psychic doubles, such as from Parlor). It grants no resting benefits, but otherwise functions as the normal Sanctum power. In addition, you can enter it any time you like by concentrating for a few moments.\n\nWhen you enter your palace, you physically disappear and are replaced by a palace port, which is a small reflective object. Historically, these have been things like gemstones, mirrors, or basins of water, but in modern times have sometimes become things like phone screens, laptops, or portable video game consoles. Outside observers, including mundane humans, can see and talk to you inside your palace, though your voice and appearance may seem distant or distorted. While inside your palace, you can use powers from this blasphemy normally to affect the outside world.\n\nYou remain in the palace until you voluntarily leave. If the object is damaged, you are shunted out, take stress as if you were targeted by that damage, and you cannot re-enter until you rest. The port can be supernaturally repaired during a rest at no cost.\n\nQuirk — replaces Sanctum.",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "psycheBurstCost": false,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.26",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": null
+  },
+  "_key": "!items!GFF4Quirk0000026"
+}
