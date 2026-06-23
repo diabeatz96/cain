@@ -1,0 +1,39 @@
+{
+  "name": "Corpus",
+  "sorting": "a",
+  "folder": "GFF4QFolder00014",
+  "type": "blasphemyPower",
+  "_id": "GFF4Quirk0000028",
+  "img": "systems/cain/assets/Blasphemies/jaunt.png",
+  "sort": 2800,
+  "flags": {},
+  "system": {
+    "blasphemyType": "Jaunt",
+    "powerName": "Corpus",
+    "isPassive": true,
+    "keywords": [
+      "Quirk",
+      "Passive"
+    ],
+    "powerDescription": "You specialize in the bodies of the recently deceased. Once a scene, when you touch a corpse, you can tell exactly how long ago it died, and get brief visions of its death, granting you +1D when next you act on the answers in the same scene.\n\nAdditionally, you can use the Possession power on corpses without spending a psyche burst, and you can use the Desecrate power on living, but unconscious, humans.\n\nQuirk — replaces Ghostwire.",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#ff00ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "psycheBurstCost": false,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.26",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": null
+  },
+  "_key": "!items!GFF4Quirk0000028"
+}

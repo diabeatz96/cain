@@ -1,0 +1,39 @@
+{
+  "name": "Taboo",
+  "sorting": "a",
+  "folder": "GFF4QFolder00004",
+  "type": "blasphemyPower",
+  "_id": "GFF4Quirk0000009",
+  "img": "systems/cain/assets/Blasphemies/tongue.png",
+  "sort": 900,
+  "flags": {},
+  "system": {
+    "blasphemyType": "Tongue",
+    "powerName": "Taboo",
+    "isPassive": true,
+    "keywords": [
+      "Quirk",
+      "Passive"
+    ],
+    "powerDescription": "Certain words are banned for you. When you, the character or the player, speak those words (even inadvertently) in any voice louder than a whisper, resolve any powers triggered by your speech, then it inflicts a supernatural destructive shockwave on everything other than you in a CAT+1 area centered on you (roll PSYCHE for effects, including harm, etc), and temporarily deafens everyone in that area. Your voice is blown out and your character is unable to speak or use powers from any blasphemy until you rest.\n\nBanned words: Sin, Cain, the name of any blasphemies or blasphemy powers (including your own), and the name of a sin type (ogre, lord, etc).\n\nQuirk — replaces The Word.",
+    "description": "",
+    "primaryColor": "#000000",
+    "accentColor": "#ff0000",
+    "secondaryColor": "#4a4a4a",
+    "textColor": "#ffffff",
+    "psycheBurstCost": false,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.26",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": null
+  },
+  "_key": "!items!GFF4Quirk0000009"
+}

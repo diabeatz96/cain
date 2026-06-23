@@ -1,0 +1,40 @@
+{
+  "name": "Blackmatter",
+  "sorting": "a",
+  "folder": "GFF4QFolder00003",
+  "type": "blasphemyPower",
+  "_id": "GFF4Quirk0000007",
+  "img": "systems/cain/assets/Blasphemies/ardence.png",
+  "sort": 700,
+  "flags": {},
+  "system": {
+    "blasphemyType": "Ardence",
+    "powerName": "Blackmatter",
+    "isPassive": false,
+    "keywords": [
+      "Quirk",
+      "Instant",
+      "Long"
+    ],
+    "powerDescription": "Instant, Long.\n\nYou instantly disperse heat in an area, creating a killing flash freeze at a location in range with a blast area up to ½ CAT. This inflicts harm on anything living in the area and instantly freezes liquids and environments, causing damage. Roll PSYCHE for its effects, and only spend a psyche burst on success.\n\nWhen you use this power, you may inflict 1 nonlethal but irreducible stress on yourself to gain +1D on the roll as your body partly freezes over. If you do, increase the nonlethal stress suffered the next time you use this power by +1. This effect stacks but resets when you rest.\n\nQuirk — replaces Fury (with Void Furnace).",
+    "description": "",
+    "primaryColor": "#333333",
+    "accentColor": "#ff0000",
+    "secondaryColor": "#000000",
+    "textColor": "#ffffff",
+    "psycheBurstCost": true,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.26",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": null
+  },
+  "_key": "!items!GFF4Quirk0000007"
+}

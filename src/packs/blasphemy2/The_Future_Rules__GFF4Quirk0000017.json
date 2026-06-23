@@ -1,0 +1,39 @@
+{
+  "name": "The Future Rules!",
+  "sorting": "a",
+  "folder": "GFF4QFolder00009",
+  "type": "blasphemyPower",
+  "_id": "GFF4Quirk0000017",
+  "img": "systems/cain/assets/Blasphemies/whisper.png",
+  "sort": 1700,
+  "flags": {},
+  "system": {
+    "blasphemyType": "Whisper",
+    "powerName": "The Future Rules!",
+    "isPassive": true,
+    "keywords": [
+      "Quirk",
+      "Passive"
+    ],
+    "powerDescription": "You cannot die, except from causes which aren't ignorable. If you would die, you miraculously survive in an improbable way, pass out, and come to consciousness at the start of the next scene with 1 remaining injury and half your stress full.\n\nHowever, roll 1d6 at the end of each mission you complete. On a 1, foreboding doom sets in, and you become certain that the next mission is the one you die on. Increase the range of this number by +1 for each mission it doesn't trigger (so the next time would be on a roll of 1–2).\n\nWhile you are affected by foreboding doom, you lose your ability to ignore death and suffer instant death instead any time you suffer an injury. You can defy this fate as normal.\n\nQuirk — adds to your Whisper passive (does not replace it).",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#0064ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "psycheBurstCost": false,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.26",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": null
+  },
+  "_key": "!items!GFF4Quirk0000017"
+}

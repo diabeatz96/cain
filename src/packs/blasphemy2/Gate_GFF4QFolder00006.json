@@ -1,0 +1,22 @@
+{
+  "name": "Gate",
+  "type": "Item",
+  "folder": "GFF4QuirksRoot01",
+  "sorting": "a",
+  "_id": "GFF4QFolder00006",
+  "description": "",
+  "sort": 6000,
+  "color": null,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.26",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": null
+  },
+  "_key": "!folders!GFF4QFolder00006"
+}

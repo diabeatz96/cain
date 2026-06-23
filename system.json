@@ -26,7 +26,7 @@
       "thumbnail": "systems/cain/assets/cainnew.png"
     }
   ],
-  "version": "1.3.25",
+  "version": "1.3.26",
   "compatibility": {
     "minimum": 11,
     "verified": "14",
@@ -111,6 +111,20 @@
       "system": "cain",
       "type": "Item",
       "path": "packs/homebrew"
+    },
+    {
+      "name": "recreation",
+      "label": "Recreation",
+      "system": "cain",
+      "type": "Item",
+      "path": "packs/recreation"
+    },
+    {
+      "name": "lore",
+      "label": "Lore & Archives",
+      "system": "cain",
+      "type": "JournalEntry",
+      "path": "packs/lore"
     }
   ],
   "packFolders": [],

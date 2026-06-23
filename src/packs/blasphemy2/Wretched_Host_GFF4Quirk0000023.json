@@ -1,0 +1,39 @@
+{
+  "name": "Wretched Host",
+  "sorting": "a",
+  "folder": "GFF4QFolder00011",
+  "type": "blasphemyPower",
+  "_id": "GFF4Quirk0000023",
+  "img": "systems/cain/assets/Blasphemies/bind.png",
+  "sort": 2300,
+  "flags": {},
+  "system": {
+    "blasphemyType": "Bind",
+    "powerName": "Wretched Host",
+    "isPassive": true,
+    "keywords": [
+      "Quirk",
+      "Passive"
+    ],
+    "powerDescription": "You don't have a bound sin. Instead, you are a former type II sin host, where the sin is fused to your flesh and is part of you.\n\nYou gain the Surrender blasphemy power for free, it loses the charm tag, and its effects can stack up to three times on you. Instead of costing a psyche burst, it always costs 1 sin to activate.\n\nAll powers that would apply to your sin instead apply to you, and physically transform you.\n\nQuirk — replaces Sin Binding.",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#0064ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "psycheBurstCost": false,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.26",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": null
+  },
+  "_key": "!items!GFF4Quirk0000023"
+}

@@ -1,0 +1,40 @@
+{
+  "name": "Sin Strike",
+  "sorting": "a",
+  "folder": "GFF4QFolder00011",
+  "type": "blasphemyPower",
+  "_id": "GFF4Quirk0000020",
+  "img": "systems/cain/assets/Blasphemies/bind.png",
+  "sort": 2000,
+  "flags": {},
+  "system": {
+    "blasphemyType": "Bind",
+    "powerName": "Sin Strike",
+    "isPassive": false,
+    "keywords": [
+      "Quirk",
+      "Instant",
+      "Short"
+    ],
+    "powerDescription": "Instant, Short.\n\nYou can command an active sin to attack by spending a psyche burst as long as both your sin and its target are in range, and you can communicate with it. Roll PSYCHE for its effects. The attack has supernatural potency.\n\nQuirk — complements Bind (free).",
+    "description": "",
+    "primaryColor": "#2a2a2a",
+    "accentColor": "#0064ff",
+    "secondaryColor": "#555555",
+    "textColor": "#ffffff",
+    "psycheBurstCost": true,
+    "psycheBurstNoCost": false,
+    "psycheBurstMultCost": false
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.26",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": null
+  },
+  "_key": "!items!GFF4Quirk0000020"
+}

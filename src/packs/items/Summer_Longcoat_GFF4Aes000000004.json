@@ -1,0 +1,38 @@
+{
+  "folder": "GdN0nfCDP965wxF0",
+  "name": "Summer Longcoat",
+  "type": "item",
+  "img": "systems/cain/assets/items/kp.png",
+  "system": {
+    "description": "<p>Lighter, breathable material. Designed with ease of movement in mind.</p><p><strong>CAT 3+</strong></p>",
+    "quantity": 1,
+    "weight": 0,
+    "roll": {
+      "diceNum": 1,
+      "diceSize": "d6",
+      "diceBonus": ""
+    },
+    "kitPoint": 0,
+    "scripValue": 2,
+    "type": "Aesthetics"
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "cain",
+    "systemVersion": "1.3.26",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": null,
+    "exportSource": null
+  },
+  "_id": "GFF4Aes000000004",
+  "sort": 400,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!GFF4Aes000000004"
+}
