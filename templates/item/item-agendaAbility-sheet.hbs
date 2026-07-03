@@ -11,7 +11,7 @@
           name='name'
           type='text'
           value='{{item.name}}'
-          placeholder='Name'
+          placeholder='{{localize "CAIN.Name"}}'
           style='color: white; background-color: transparent; border: none; border-bottom: 2px solid #555;'
         /></h1>
     </div>
@@ -19,14 +19,14 @@
 
   {{! Sheet Tab Navigation }}
   <nav class='sheet-tabs tabs agenda-tabs' data-group='primary'>
-    <a class='item' data-tab='ability'>Ability</a>
+    <a class='item' data-tab='ability'>{{localize 'CAIN.AbilityLabel'}}</a>
   </nav>
 
   {{! Sheet Body }}
   <section class='sheet-body agenda-body'>
     <div class='tab agenda-text-color' data-group='primary' data-tab='ability'>
       <div class='form-group'>
-        <label for='abilityName' style='color: white;'>Ability Name</label>
+        <label for='abilityName' style='color: white;'>{{localize 'CAIN.AbilityName'}}</label>
         <input
           type='text'
           name='system.abilityName'
@@ -37,7 +37,7 @@
       </div>
 
       <div class='form-group'>
-        <label for='abilityDescription' style='color: white;'>Ability Description</label>
+        <label for='abilityDescription' style='color: white;'>{{localize 'CAIN.AbilityDescription'}}</label>
         <textarea
           name='system.abilityDescription'
           data-dtype='String'

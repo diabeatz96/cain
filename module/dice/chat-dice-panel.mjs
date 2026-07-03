@@ -419,7 +419,7 @@ export class CainDicePanel extends HandlebarsApplicationMixin(ApplicationV2) {
     // Re-render to apply
     this.render();
 
-    ui.notifications?.info(`Dice Panel Theme: ${this._currentTheme.charAt(0).toUpperCase() + this._currentTheme.slice(1)}`);
+    ui.notifications?.info(game.i18n.format("CAIN.Notifications.DicePanelTheme", {theme: this._currentTheme.charAt(0).toUpperCase() + this._currentTheme.slice(1)}));
   }
 
   // ==================== DICE ROLLING ====================
@@ -552,14 +552,14 @@ export class CainDicePanel extends HandlebarsApplicationMixin(ApplicationV2) {
       buttons: {
         roll: {
           icon: '<i class="fas fa-dice"></i>',
-          label: 'Roll',
+          label: game.i18n.localize("CAIN.Roll"),
           callback: async (html) => {
             const form = html[0].querySelector('form');
             const formula = form.querySelector('[name="formula"]')?.value;
-            const label = form.querySelector('[name="label"]')?.value || 'Custom Roll';
+            const label = form.querySelector('[name="label"]')?.value || game.i18n.localize("CAIN.CustomRoll");
 
             if (!formula) {
-              ui.notifications.warn('Enter a dice formula');
+              ui.notifications.warn(game.i18n.localize("CAIN.Notifications.EnterDiceFormula"));
               return;
             }
 

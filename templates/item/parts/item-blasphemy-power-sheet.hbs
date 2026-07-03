@@ -4,48 +4,48 @@
     <img class="profile-img" src="{{this.img}}" data-edit="img" title="{{system.powerName}}" />
     <div class="header-fields">
       <div class="form-group">
-        <label for="name">Name</label>
-        <input name="name" type="text" value="{{name}}" placeholder="Name" data-dtype="String" style="color: white;" />
+        <label for="name">{{localize 'CAIN.Name'}}</label>
+        <input name="name" type="text" value="{{name}}" placeholder="{{localize 'CAIN.Name'}}" data-dtype="String" style="color: white;" />
       </div>
       <div class="form-group">
-        <label for="isPassive">Is Passive</label>
+        <label for="isPassive">{{localize 'CAIN.Abilities.IsPassive'}}</label>
         <input type="checkbox" name="system.isPassive" {{#if system.isPassive}}checked{{/if}} data-dtype="Boolean" />
       </div>
       <div class="form-group">
-        <label for="isHighBlasphemy">High Blasphemy Power</label>
+        <label for="isHighBlasphemy">{{localize 'CAIN.Abilities.HighBlasphemyPower'}}</label>
         <input type="checkbox" name="system.isHighBlasphemy" {{#if system.isHighBlasphemy}}checked{{/if}} data-dtype="Boolean" />
       </div>
 
       <div class="form-group psyche-options">
-        <label>Psyche Burst Options:</label>
+        <label>{{localize 'CAIN.Abilities.PsycheBurstOptions'}}</label>
         <div class="checkbox-row">
           <label for="psycheBurstCost">
             <input type="checkbox" name="system.psycheBurstCost" id="psycheBurstCost" {{#if system.psycheBurstCost}}checked{{/if}} data-dtype="Boolean" />
-            Uses Psyche Burst ⟡
+            {{localize 'CAIN.Abilities.UsesPsycheBurstBtn'}}
           </label>
         </div>
         <div class="checkbox-row">
           <label for="psycheBurstNoCost">
             <input type="checkbox" name="system.psycheBurstNoCost" id="psycheBurstNoCost" {{#if system.psycheBurstNoCost}}checked{{/if}} data-dtype="Boolean" />
-            Has No-Psyche Mode X
+            {{localize 'CAIN.Abilities.HasNoPsycheModeBtn'}}
           </label>
         </div>
         <div class="checkbox-row">
           <label for="psycheBurstMultCost">
             <input type="checkbox" name="system.psycheBurstMultCost" id="psycheBurstMultCost" {{#if system.psycheBurstMultCost}}checked{{/if}} data-dtype="Boolean" />
-            Can Use Multiple Bursts +
+            {{localize 'CAIN.Abilities.CanUseMultipleBurstsBtn'}}
           </label>
         </div>
       </div>
       <div class="form-group">
-        <label for="keywords">Keywords</label>
+        <label for="keywords">{{localize 'CAIN.Keywords'}}</label>
         <input type="text" name="system.keywords" value="{{system.keywords}}" data-dtype="String" />
       </div>
     </div>
   </header>
 
   <section class="blasphemy-power-body">
-    <h2>Description</h2>
+    <h2>{{localize 'CAIN.Description'}}</h2>
     <div class="form-group">
       <textarea name="system.powerDescription" data-dtype="String" rows="10" style="width: 100%; padding: 10px; border: 2px solid var(--secondary-color, #555); border-radius: 10px; background-color: var(--primary-color, #2a2a2a); font-family: 'Courier New', Courier, monospace; color: var(--text-color, #ffffff); resize: vertical;">{{system.powerDescription}}</textarea>
     </div>
@@ -57,11 +57,11 @@
       </button>
       <div class="color-pickers">
         <input type="color" id="primaryColor" data-id="primary-color" value="{{system.primaryColor}}"
-          title="Primary Color">
-        <input type="color" id="accentColor" data-id="accent-color" value="{{system.accentColor}}" title="Accent Color">
+          title="{{localize 'CAIN.Blasphemy.PrimaryColor'}}">
+        <input type="color" id="accentColor" data-id="accent-color" value="{{system.accentColor}}" title="{{localize 'CAIN.Blasphemy.AccentColor'}}">
         <input type="color" id="secondaryColor" data-id="secondary-color" value="{{system.secondaryColor}}"
-          title="Secondary Color">
-        <input type="color" id="textColor" data-id="text-color" value="{{system.textColor}}" title="Text Color">
+          title="{{localize 'CAIN.Blasphemy.SecondaryColor'}}">
+        <input type="color" id="textColor" data-id="text-color" value="{{system.textColor}}" title="{{localize 'CAIN.Blasphemy.TextColor'}}">
       </div>
     </div>
     {{/unless}}

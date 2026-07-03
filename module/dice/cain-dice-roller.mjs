@@ -208,7 +208,7 @@ export class CainDiceRoller {
     const { formula, label = 'Custom Roll', actor = null, whisper = false } = options;
 
     if (!formula) {
-      ui.notifications.error('No dice formula provided');
+      ui.notifications.error(game.i18n.localize("CAIN.Notifications.NoDiceFormula"));
       return null;
     }
 

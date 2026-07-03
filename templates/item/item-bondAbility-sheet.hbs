@@ -11,50 +11,50 @@
           name='name'
           type='text'
           value='{{item.name}}'
-          placeholder='Ability Name'
+          placeholder='{{localize "CAIN.Homebrew.AbilityNamePlaceholder"}}'
         /></h1>
     </div>
   </header>
 
   <section class='sheet-body bond-ability-body'>
     <div class='form-group'>
-      <label for='system.bondLevel'>Bond Level Required</label>
+      <label for='system.bondLevel'>{{localize 'CAIN.Bonds.LevelRequired'}}</label>
       <select name='system.bondLevel'>
-        <option value='0' {{#if (eq system.bondLevel 0)}}selected{{/if}}>Level 0 - Immediate</option>
-        <option value='1' {{#if (eq system.bondLevel 1)}}selected{{/if}}>Level 1 - 1 Mission Survived</option>
-        <option value='2' {{#if (eq system.bondLevel 2)}}selected{{/if}}>Level 2 - 2 Missions Survived</option>
-        <option value='3' {{#if (eq system.bondLevel 3)}}selected{{/if}}>Level 3 - 3 Missions Survived (Max)</option>
+        <option value='0' {{#if (eq system.bondLevel 0)}}selected{{/if}}>{{localize 'CAIN.Bonds.Level0Immediate'}}</option>
+        <option value='1' {{#if (eq system.bondLevel 1)}}selected{{/if}}>{{localize 'CAIN.Bonds.Level1Desc'}}</option>
+        <option value='2' {{#if (eq system.bondLevel 2)}}selected{{/if}}>{{localize 'CAIN.Bonds.Level2Desc'}}</option>
+        <option value='3' {{#if (eq system.bondLevel 3)}}selected{{/if}}>{{localize 'CAIN.Bonds.Level3Desc'}}</option>
       </select>
     </div>
 
     <div class='form-group'>
-      <label for='system.abilityDescription'>Ability Description</label>
-      <textarea name='system.abilityDescription' rows='6' placeholder='Describe what this ability does...'>{{system.abilityDescription}}</textarea>
+      <label for='system.abilityDescription'>{{localize 'CAIN.AbilityDescription'}}</label>
+      <textarea name='system.abilityDescription' rows='6' placeholder='{{localize "CAIN.Bonds.AbilityDescPlaceholder"}}'>{{system.abilityDescription}}</textarea>
     </div>
 
     <div class='form-group checkbox-group'>
       <label>
         <input type='checkbox' name='system.isPermanent' {{#if system.isPermanent}}checked{{/if}}/>
-        Permanent Ability
+        {{localize 'CAIN.Bonds.PermanentAbility'}}
       </label>
-      <p class='hint'>Permanent abilities persist even when not actively bonding with this virtue.</p>
+      <p class='hint'>{{localize 'CAIN.Bonds.PermanentAbilityHint'}}</p>
     </div>
 
     <div class='psyche-burst-section'>
-      <h3>Psyche Burst Requirements</h3>
+      <h3>{{localize 'CAIN.Abilities.PsycheBurstOptions'}}</h3>
       <div class='form-group checkbox-group'>
         <label>
           <input type='checkbox' name='system.requiresPsycheBurst' {{#if system.requiresPsycheBurst}}checked{{/if}}/>
-          Requires Psyche Burst
+          {{localize 'CAIN.Abilities.UsesPsycheBurst'}}
         </label>
-        <p class='hint'>Check this if the ability requires spending Psyche Bursts to activate.</p>
+        <p class='hint'>{{localize 'CAIN.Bonds.RequiresPsycheHint'}}</p>
       </div>
 
       {{#if system.requiresPsycheBurst}}
         <div class='form-group'>
-          <label for='system.psycheBurstCost'>Psyche Burst Cost</label>
+          <label for='system.psycheBurstCost'>{{localize 'CAIN.Bonds.PsycheBurstCostLabel'}}</label>
           <input type='number' name='system.psycheBurstCost' value='{{system.psycheBurstCost}}' min='0' data-dtype='Number'/>
-          <p class='hint'>Set to 0 for "all remaining Psyche Bursts (minimum 1)"</p>
+          <p class='hint'>{{localize 'CAIN.Bonds.Cost0Hint'}}</p>
         </div>
       {{/if}}
     </div>

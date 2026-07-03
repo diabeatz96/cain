@@ -6,9 +6,9 @@
         <h3 class="domain-title">{{this.name}}</h3>
         <div class="domain-buttons">
           <button class="chat-button" data-index="{{@index}}">
-            <i class="fas fa-comment-alt"></i> Send to Chat
+            <i class="fas fa-comment-alt"></i> {{localize 'CAIN.Actor.SendToChat'}}
           </button>
-          <button class="remove-domain-button" data-index="{{@index}}" title="Remove Domain">
+          <button class="remove-domain-button" data-index="{{@index}}" title="{{localize 'CAIN.Sin.RemoveDomain'}}">
             <i class="fas fa-times"></i>
           </button>
         </div>
@@ -18,7 +18,7 @@
       </div>
     {{else}}
       <div>
-        <span>No domain, drag one here!</span>
+        <span>{{localize 'CAIN.Sin.NoDomainDragHint'}}</span>
         <i class="fa-solid fa-circle-chevron-down"></i>
       </div>
     {{/if}}
@@ -27,7 +27,7 @@
 
   <div class="domains-info-note">
     <i class="fas fa-info-circle"></i>
-    <span>Domains are separate items. If you don't see any domains, import them from the Domains compendium first, then drag them here.</span>
+    <span>{{localize 'CAIN.Sin.DomainsNote'}}</span>
   </div>
 
 <script>
@@ -42,7 +42,7 @@
 
         if (textareaElement) {
             // For [REDACTED] type, use textarea value
-            domainName = '[REDACTED] Domain';
+            domainName = game.i18n.localize('CAIN.Sin.RedactedDomain');
             domainDescription = textareaElement.value;
         } else if (selectElement && abilityValueElement) {
             // Get the domain name from the selected option's title
@@ -57,7 +57,7 @@
             if (colonIndex !== -1) {
                 domainName = optionTitle.substring(0, colonIndex).trim();
             } else {
-                domainName = optionTitle || 'Domain';
+                domainName = optionTitle || game.i18n.localize('CAIN.Sin.DomainFallback');
             }
 
             domainDescription = fullDescription;

@@ -6,7 +6,7 @@
     <div class="attacks-card">
         <div class="card-grid">
             <div class="info-section">
-                <h3 class="section-header">Complications</h3>
+                <h3 class="section-header">{{localize 'CAIN.Complication'}}</h3>
                 <div class="content-box">
                     {{#if (eq system.sinType "redacted")}}
                         <textarea class="journal-textarea" name="system.complications">{{system.complications}}</textarea>
@@ -16,7 +16,7 @@
                 </div>
             </div>
             <div class="info-section">
-                <h3 class="section-header">Threats</h3>
+                <h3 class="section-header">{{localize 'CAIN.Threats'}}</h3>
                 <div class="content-box">
                     {{#if (eq system.sinType "redacted")}}
                         <textarea class="journal-textarea" name="system.threats">{{system.threats}}</textarea>
@@ -31,16 +31,16 @@
     <!-- Attack Buttons -->
     <div class="attack-actions">
         <button class="journal-button quick-action-button attack-player">
-            <span class="button-label">Attack</span>
+            <span class="button-label">{{localize 'CAIN.Opponent.Attack'}}</span>
         </button>
         <button class="journal-button quick-action-button severe-attack">
-            <span class="button-label">Severe Attack</span>
+            <span class="button-label">{{localize 'CAIN.Sin.SevereAttack'}}</span>
         </button>
     </div>
 
     <!-- Severe Attack Description -->
     <div class="attacks-card severe-attack-section">
-        <h2 class="card-title">Severe Attack</h2>
+        <h2 class="card-title">{{localize 'CAIN.Sin.SevereAttack'}}</h2>
         <div class="editor-container">
             {{ editor enrichedDescription target='system.severeAttack.description' engine='prosemirror' button=true
                       class="editor-style" editable=editable }}
@@ -49,27 +49,27 @@
 
     <!-- Severe Ability Questions -->
     <div class="attacks-card questions-section">
-        <h2 class="card-title">Severe Ability Questions</h2>
+        <h2 class="card-title">{{localize 'CAIN.Sin.SevereAbilityQuestions'}}</h2>
         <div id="severe-ability-questions-section">
             {{#each system.severeAbilityQuestions}}
                 <div class="question-row">
                     <label class="question-label">Q{{@index}}:</label>
                     <textarea class="journal-textarea question-input"
-                              name="system.severeAbilityQuestions.{{@index}}">{{this}}</textarea>
+                               name="system.severeAbilityQuestions.{{@index}}">{{this}}</textarea>
                     <button class="icon-button delete-btn">
                         <i class="fas fa-trash"></i>
                     </button>
                 </div>
             {{/each}}
             <button class="journal-button add-btn">
-                <i class="fas fa-plus"></i> Add Question
+                <i class="fas fa-plus"></i> {{localize 'CAIN.Sin.AddQuestion'}}
             </button>
         </div>
     </div>
 
     <!-- Afflictions -->
     <div class="attacks-card afflictions-section">
-        <h2 class="card-title">Afflictions</h2>
+        <h2 class="card-title">{{localize 'CAIN.Abilities.Afflictions'}}</h2>
         <div id="afflictions-section">
             <div class="afflictions-list">
                 {{#each system.afflictions}}
@@ -84,7 +84,7 @@
                 {{/each}}
             </div>
             <button class="journal-button roll-btn">
-                <i class="fas fa-dice-d20"></i> Roll Affliction
+                <i class="fas fa-dice-d20"></i> {{localize 'CAIN.Sin.RollAffliction'}}
             </button>
         </div>
     </div>

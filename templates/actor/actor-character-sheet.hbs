@@ -6,52 +6,52 @@
     <img class="profile-img mob-psycho-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="200" width="200"/>
 
     <div class="header-fields mob-psycho-header-fields">
-      <h1 class="charname mob-psycho-charname"><input name="name" type="text" value="{{actor.name}}" placeholder="Name"/></h1>
+      <h1 class="charname mob-psycho-charname"><input name="name" type="text" value="{{actor.name}}" placeholder="{{localize 'CAIN.CharacterName'}}"/></h1>
 
       <div class="grid grid-4col">
         <div class="flex-group-center mob-psycho-flex-group">
-          <label for="system.sex" class="resource-label mob-psycho-label">Sex</label>
+          <label for="system.sex" class="resource-label mob-psycho-label">{{localize 'CAIN.ActorType.Sex'}}</label>
           <input type="text" name="system.sex" value="{{system.sex}}" data-dtype="String" class="mob-psycho-input"/>
         </div>
         
         <div class="flex-group-center mob-psycho-flex-group">
-          <label for="system.height" class="resource-label mob-psycho-label">Height</label>
+          <label for="system.height" class="resource-label mob-psycho-label">{{localize 'CAIN.ActorType.Height'}}</label>
           <input type="text" name="system.height" value="{{system.height}}" data-dtype="String" class="mob-psycho-input"/>
         </div>
 
         <div class="flex-group-center mob-psycho-flex-group">
-          <label for="system.weight" class="resource-label mob-psycho-label">Weight</label>
+          <label for="system.weight" class="resource-label mob-psycho-label">{{localize 'CAIN.ActorType.Weight'}}</label>
           <input type="text" name="system.weight" value="{{system.weight}}" data-dtype="String" class="mob-psycho-input"/>
         </div>
 
         <div class="flex-group-center mob-psycho-flex-group">
-          <label for="system.hair" class="resource-label mob-psycho-label">Hair</label>
+          <label for="system.hair" class="resource-label mob-psycho-label">{{localize 'CAIN.ActorType.Hair'}}</label>
           <input type="text" name="system.hair" value="{{system.hair}}" data-dtype="String" class="mob-psycho-input"/>
         </div>
 
         <div class="flex-group-center mob-psycho-flex-group">
-          <label for="system.eyes" class="resource-label mob-psycho-label">Eyes</label>
+          <label for="system.eyes" class="resource-label mob-psycho-label">{{localize 'CAIN.ActorType.Eyes'}}</label>
           <div class="resource-content flexrow flex-center flex-between mob-psycho-resource-content">
             <input type="text" name="system.eyes" value="{{system.eyes}}" data-dtype="String" class="mob-psycho-input"/>
           </div>
         </div>
 
         <div class="flex-group-center mob-psycho-flex-group">
-          <label for="system.agenda" class="resource-label mob-psycho-label">Agenda</label>
+          <label for="system.agenda" class="resource-label mob-psycho-label">{{localize 'CAIN.ActorType.Agenda'}}</label>
           <div class="resource-content flexrow flex-center flex-between mob-psycho-resource-content">
             <input type="text" name="system.agenda" value="{{system.agenda}}" data-dtype="String" class="mob-psycho-input"/>
           </div>
         </div>
 
         <div class="flex-group-center mob-psycho-flex-group">
-          <label for="system.blasphemy" class="resource-label mob-psycho-label">Blasphemy</label>
+          <label for="system.blasphemy" class="resource-label mob-psycho-label">{{localize 'CAIN.ActorType.Blasphemy'}}</label>
           <div class="resource-content flexrow flex-center flex-between mob-psycho-resource-content">
             <input type="text" name="system.blasphemy" value="{{system.blasphemy}}" data-dtype="String" class="mob-psycho-input"/>
           </div>
         </div>
 
         <div class="flex-group-center mob-psycho-flex-group">
-          <label for="system.XID" class="resource-label mob-psycho-label">XID</label>
+          <label for="system.XID" class="resource-label mob-psycho-label">{{localize 'CAIN.ActorType.XID'}}</label>
           <div style="padding: 5px">
             <input type="text" name="system.XID" value="{{system.XID}}" data-dtype="String" class="mob-psycho-input"/>
           </div>
@@ -62,12 +62,12 @@
   {{!-- Sheet Tab Navigation --}}
   <nav class="sheet-tabs tabs mob-psycho-tabs" data-group="primary">
     {{!-- Default tab is specified in actor-sheet.mjs --}}
-    <a class="item mob-psycho-tab-item" data-tab="features">Stats & Advancements</a>
-    <a class="item mob-psycho-tab-item" data-tab="description">Bio & Bonds</a>
-    <a class="item mob-psycho-tab-item" data-tab="items">Kit and Items</a>
-    <a class="item mob-psycho-tab-item" data-tab="abilities">Abilities</a>
-    <a class="item mob-psycho-tab-item" data-tab="sin">Sin</a>
-    <a class="item mob-psycho-tab-item" data-tab="talismans">Talismans</a>
+    <a class="item mob-psycho-tab-item" data-tab="features">{{localize 'CAIN.Sheet.StatsAndAdvancements'}}</a>
+    <a class="item mob-psycho-tab-item" data-tab="description">{{localize 'CAIN.Sheet.BioAndBonds'}}</a>
+    <a class="item mob-psycho-tab-item" data-tab="items">{{localize 'CAIN.Sheet.KitAndItems'}}</a>
+    <a class="item mob-psycho-tab-item" data-tab="abilities">{{localize 'CAIN.Sheet.Abilities'}}</a>
+    <a class="item mob-psycho-tab-item" data-tab="sin">{{localize 'CAIN.Sheet.Sin'}}</a>
+    <a class="item mob-psycho-tab-item" data-tab="talismans">{{localize 'CAIN.Sheet.Talismans'}}</a>
   </nav>
 
   {{!-- Sheet Body --}}
@@ -98,22 +98,22 @@
         <div class="ability flexrow mob-psycho-ability flex-group-center">
           <label class="resource-label rollable mob-psycho-label"
                 data-roll="{{system.psyche}}d6cs>=4{{#if (gt system.extraDice.value 0)}}+{{system.extraDice.value}}d6cs>=4{{/if}}"
-                data-label="Psyche"
-                data-tooltip="Roll your psyche dice">
-            Psyche
+                data-label="{{localize 'CAIN.Abilities.Psyche'}}"
+                data-tooltip="{{localize 'CAIN.Sheet.PsycheRollTooltip'}}">
+            {{localize 'CAIN.Abilities.Psyche'}}
           </label>
           <div class="flexrow ability-dots" style="justify-content: center; align-items: center;">
             <span style="color: #ff00cc; font-weight: bold; font-size: 1.2em;">{{system.psyche}}d6</span>
           </div>
         </div>
         <div class="extra-dice-section flexrow flex-group-center mob-psycho-extra-dice">
-          <label for="system.extraDice.value" class="resource-label flexlarge align-left mob-psycho-label">EXTRA d6 to ROLLS</label>
+          <label for="system.extraDice.value" class="resource-label flexlarge align-left mob-psycho-label">{{localize 'CAIN.Abilities.ExtraDice'}}</label>
           <input type="number" name="system.extraDice.value" value="{{system.extraDice.value}}" data-dtype="Number" min="0" max="6" class="mob-psycho-input"/>
         </div>
           {{!-- The grid classes are defined in scss/global/_grid.scss. To use,
           use both the "grid" and "grid-Ncol" class where "N" can be any number
           from 1 to 12 and will create that number of columns.  --}}
-        <h3 class="mob-psycho-heading">Afflictions</h3>
+        <h3 class="mob-psycho-heading">{{localize 'CAIN.Abilities.Afflictions'}}</h3>
           {{#each currentAfflictions}}
           <div class="affliction flexrow flex-group-center mob-psycho-affliction">
               <div class="flexcol affliction-content">
@@ -129,13 +129,13 @@
               </div>
           </div>
           {{/each}}
-        <button type="button" id="add-affliction" class="add-affliction-button">Add Affliction</button>
+        <button type="button" id="add-affliction" class="add-affliction-button">{{localize 'CAIN.Abilities.AddAffliction'}}</button>
 
         <div class="rest-dice-section flexrow mob-psycho-rest-dice">
-          <label for="system.restDiceModifier" class="resource-label flexlarge align-left mob-psycho-label">Rest Dice Modifier</label>
+          <label for="system.restDiceModifier" class="resource-label flexlarge align-left mob-psycho-label">{{localize 'CAIN.Abilities.RestDiceModifier'}}</label>
           <input type="number" name="system.restDiceModifier" value="{{system.restDiceModifier}}" data-dtype="Number" class="mob-psycho-input"/>
         </div>
-          <button type="button" class="roll-rest-dice mob-psycho-button">Roll Rest Dice</button>
+          <button type="button" class="roll-rest-dice mob-psycho-button">{{localize 'CAIN.Abilities.RollRestDice'}}</button>
 
         </aside>
 
@@ -152,17 +152,16 @@
     <div class="tab biography mob-psycho-tab" data-group="primary" data-tab="description">
       {{!-- Biography Section --}}
       <section class="bio-section">
-        <h3 class="mob-psycho-heading">Biography</h3>
+        <h3 class="mob-psycho-heading">{{localize 'CAIN.Abilities.Biography'}}</h3>
         {{editor enrichedBiography target="system.biography" button=True engine="prosemirror" button=true editable=editable class="mob-psycho-editor"}}
       </section>
 
       {{!-- Bonds Section --}}
       <section class="bonds-section">
-        <h3 class="mob-psycho-heading">Bonds</h3>
+        <h3 class="mob-psycho-heading">{{localize 'CAIN.Abilities.Bonds'}}</h3>
         <p class="bonds-info">
           <i class="fas fa-info-circle"></i>
-          Pick a virtue to bond with at the start of a mission. Surviving missions increases your bond level (max 3).
-          Bond benefits are permanent even when not actively bonding.
+          {{localize 'CAIN.Abilities.BondsInfo'}}
         </p>
 
         <div class="character-bonds-list">
@@ -172,10 +171,10 @@
                 <img src="{{this.img}}" class="bond-img" alt="{{this.name}}"/>
                 <div class="bond-info">
                   <h4 class="bond-name">{{this.name}}</h4>
-                  <span class="virtue-name">Virtue: {{this.system.virtueName}}</span>
+                  <span class="virtue-name">{{localize 'CAIN.Virtue'}}: {{this.system.virtueName}}</span>
                 </div>
                 <div class="bond-level-tracker">
-                  <span class="bond-level-label">Bond Level:</span>
+                  <span class="bond-level-label">{{localize 'CAIN.Abilities.BondLevel'}}</span>
                   <div class="bond-level-dots">
                     <input type="checkbox" class="bond-level-checkbox" data-bond-id="{{this._id}}" data-level="0" {{#if (gte this.system.currentLevel 1)}}checked{{/if}}/>
                     <input type="checkbox" class="bond-level-checkbox" data-bond-id="{{this._id}}" data-level="1" {{#if (gte this.system.currentLevel 2)}}checked{{/if}}/>
@@ -187,7 +186,7 @@
               {{!-- Strictures at top --}}
               {{#if this.system.strictures.length}}
                 <div class="bond-strictures-reminder">
-                  <strong><i class="fas fa-exclamation-triangle"></i> Strictures:</strong>
+                  <strong><i class="fas fa-exclamation-triangle"></i> {{localize 'CAIN.Abilities.Strictures'}}</strong>
                   <ul>
                     {{#each this.system.strictures}}
                       <li>{{this}}</li>
@@ -202,10 +201,10 @@
                   {{#if (lte this.system.bondLevel ../system.currentLevel)}}
                     <div class="bond-ability-unlocked" data-ability-id="{{this._id}}" data-bond-id="{{../_id}}">
                       <div class="bond-ability-header-row">
-                        <span class="ability-level">Lvl {{this.system.bondLevel}}</span>
+                        <span class="ability-level">{{localize 'CAIN.Lvl' level=this.system.bondLevel}}</span>
                         <strong class="ability-name">{{this.name}}</strong>
                         {{#if this.system.isPermanent}}
-                          <span class="ability-permanent-tag">Permanent</span>
+                          <span class="ability-permanent-tag">{{localize 'CAIN.Abilities.Permanent'}}</span>
                         {{/if}}
                       </div>
                       <p class="ability-description">{{this.system.abilityDescription}}</p>
@@ -213,19 +212,19 @@
                         <p class="ability-psyche-cost">
                           <i class="fas fa-brain"></i>
                           {{#if (eq this.system.psycheBurstCost 0)}}
-                            Requires all remaining Psyche Bursts (min 1)
+                            {{localize 'CAIN.Abilities.PsycheBurstAll'}}
                           {{else}}
-                            Requires {{this.system.psycheBurstCost}} Psyche Burst(s)
+                            {{localize 'CAIN.Abilities.PsycheBurstCost' cost=this.system.psycheBurstCost}}
                           {{/if}}
                         </p>
                       {{/if}}
                       <div class="ability-actions">
-                        <button type="button" class="bond-ability-chat" data-ability-id="{{this._id}}" title="Send to Chat">
+                        <button type="button" class="bond-ability-chat" data-ability-id="{{this._id}}" title="{{localize 'CAIN.Actor.SendToChat'}}">
                           <i class="fas fa-comment"></i>
                         </button>
                         {{#if this.system.requiresPsycheBurst}}
-                          <button type="button" class="bond-ability-spend-psyche" data-ability-id="{{this._id}}" data-cost="{{this.system.psycheBurstCost}}" title="Spend Psyche Burst">
-                            <i class="fas fa-brain"></i> Use
+                          <button type="button" class="bond-ability-spend-psyche" data-ability-id="{{this._id}}" data-cost="{{this.system.psycheBurstCost}}" title="{{localize 'CAIN.Actor.SpendPsycheBurst'}}">
+                            <i class="fas fa-brain"></i> {{localize 'CAIN.Actor.Use'}}
                           </button>
                         {{/if}}
                       </div>
@@ -236,15 +235,15 @@
 
               <div class="bond-actions">
                 <button type="button" class="open-bond-sheet" data-bond-id="{{this._id}}">
-                  <i class="fas fa-book-open"></i> View Full Bond
+                  <i class="fas fa-book-open"></i> {{localize 'CAIN.Abilities.ViewFullBond'}}
                 </button>
                 <button type="button" class="remove-bond" data-bond-id="{{this._id}}">
-                  <i class="fas fa-trash"></i> Remove
+                  <i class="fas fa-trash"></i> {{localize 'CAIN.Remove'}}
                 </button>
               </div>
             </div>
           {{else}}
-            <p class="no-bonds">No bonds assigned. Drag a Bond item here to add one.</p>
+            <p class="no-bonds">{{localize 'CAIN.Abilities.NoBondsAssigned'}}</p>
           {{/each}}
         </div>
       </section>

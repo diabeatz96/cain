@@ -536,7 +536,7 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
     await game.settings.set('cain', 'currentHunt', hunt);
     this._emitUpdate();
 
-    ui.notifications.info(`Trauma "${hunt.traumas[traumaIndex].question}" has been reset to undiscovered.`);
+    ui.notifications.info(game.i18n.format("CAIN.Notifications.TraumaReset", {question: hunt.traumas[traumaIndex].question}));
   }
 
   async _onUseTraumaCounter(event, target) {
@@ -545,7 +545,7 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
     const hunt = foundry.utils.deepClone(game.settings.get('cain', 'currentHunt'));
 
     if (!hunt.traumas[traumaIndex]?.discovered || hunt.traumas[traumaIndex]?.used) {
-      ui.notifications.warn('This trauma cannot be used');
+      ui.notifications.warn(game.i18n.localize("CAIN.Notifications.CannotUseTrauma"));
       return;
     }
 
@@ -730,7 +730,7 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
     const sinActors = game.actors.filter(a => a.type === 'sin' || a.type === 'npc');
 
     if (sinActors.length === 0) {
-      ui.notifications.warn('No Sin actors found. Create a Sin actor first.');
+      ui.notifications.warn(game.i18n.localize("CAIN.Notifications.NoSinActorsFound"));
       return;
     }
 
@@ -938,13 +938,13 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
       });
     }
 
-    ui.notifications.info('All exorcists reset to mission-start state');
+    ui.notifications.info(game.i18n.localize("CAIN.Notifications.ExorcistsReset"));
 
     postHuntChatMessage({
       speaker: { alias: "CAIN System" },
       content: `<div class="hunt-message mission-reset">
-        <h2>Mission Reset</h2>
-        <p>All exorcists have been reset to mission-start state.</p>
+        <h2>${game.i18n.localize("CAIN.HuntTracker.ResetMission")}</h2>
+        <p>${game.i18n.localize("CAIN.Notifications.ExorcistsReset")}</p>
       </div>`
     });
   }
@@ -956,7 +956,7 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
     const globalTalismans = game.settings.get('cain', 'globalTalismans');
 
     if (!globalTalismans || globalTalismans.length === 0) {
-      ui.notifications.warn('No global talismans found. Create a talisman in the Talismans window first.');
+      ui.notifications.warn(game.i18n.localize("CAIN.Notifications.NoGlobalTalismans"));
       return;
     }
 
@@ -968,20 +968,20 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
     const content = `
       <form>
         <div class="form-group">
-          <label>Select Talisman to Link</label>
+          <label>${game.i18n.localize("CAIN.HuntTracker.SelectTalismanToLink")}</label>
           <select name="talismanIndex">${options}</select>
         </div>
-        <p class="notes">The execution talisman will sync with this global talisman. Changes to either will update both.</p>
+        <p class="notes">${game.i18n.localize("CAIN.HuntTracker.LinkExecutionTalismanHint")}</p>
       </form>
     `;
 
     new Dialog({
-      title: 'Link Execution Talisman',
+      title: game.i18n.localize("CAIN.Notifications.LinkExecutionTalisman"),
       content,
       buttons: {
         link: {
           icon: '<i class="fas fa-link"></i>',
-          label: 'Link',
+          label: game.i18n.localize("CAIN.HuntTracker.Link"),
           callback: async (html) => {
             const talismanIndex = parseInt(html.find('[name="talismanIndex"]').val());
             const hunt = foundry.utils.deepClone(game.settings.get('cain', 'currentHunt'));
@@ -1002,12 +1002,12 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
             game.socket.emit('system.cain', { action: 'updateTalismans' });
             self._emitUpdate();
 
-            ui.notifications.info(`Linked execution talisman to ${talismans[talismanIndex].name}`);
+            ui.notifications.info(game.i18n.format("CAIN.Notifications.LinkedExecutionTalisman", {name: talismans[talismanIndex].name}));
           }
         },
         cancel: {
           icon: '<i class="fas fa-times"></i>',
-          label: 'Cancel'
+          label: game.i18n.localize("CAIN.Cancel")
         }
       },
       default: 'link'
@@ -1020,7 +1020,7 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
     const hunt = foundry.utils.deepClone(game.settings.get('cain', 'currentHunt'));
 
     if (hunt.linkedTalismanIndex === undefined || hunt.linkedTalismanIndex === null) {
-      ui.notifications.warn('No talisman is currently linked');
+      ui.notifications.warn(game.i18n.localize("CAIN.Notifications.NoTalismanLinked"));
       return;
     }
 
@@ -1031,7 +1031,7 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
     await game.settings.set('cain', 'currentHunt', hunt);
     this._emitUpdate();
 
-    ui.notifications.info(`Unlinked execution talisman from ${linkedName}`);
+    ui.notifications.info(game.i18n.format("CAIN.Notifications.UnlinkedExecutionTalisman", {name: linkedName}));
   }
 
   async _onLinkTensionTalisman(event, target) {
@@ -1041,7 +1041,7 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
     const globalTalismans = game.settings.get('cain', 'globalTalismans');
 
     if (!globalTalismans || globalTalismans.length === 0) {
-      ui.notifications.warn('No global talismans found. Create a talisman in the Talismans window first.');
+      ui.notifications.warn(game.i18n.localize("CAIN.Notifications.NoGlobalTalismans"));
       return;
     }
 
@@ -1052,20 +1052,20 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
     const content = `
       <form>
         <div class="form-group">
-          <label>Select Talisman to Link</label>
+          <label>${game.i18n.localize("CAIN.HuntTracker.SelectTalismanToLink")}</label>
           <select name="talismanIndex">${options}</select>
         </div>
-        <p class="notes">The tension talisman will sync with this global talisman. The talisman's max value will be used.</p>
+        <p class="notes">${game.i18n.localize("CAIN.HuntTracker.LinkTensionTalismanHint")}</p>
       </form>
     `;
 
     new Dialog({
-      title: 'Link Tension Talisman',
+      title: game.i18n.localize("CAIN.Notifications.LinkTensionTalisman"),
       content,
       buttons: {
         link: {
           icon: '<i class="fas fa-link"></i>',
-          label: 'Link',
+          label: game.i18n.localize("CAIN.HuntTracker.Link"),
           callback: async (html) => {
             const talismanIndex = parseInt(html.find('[name="talismanIndex"]').val());
             const hunt = foundry.utils.deepClone(game.settings.get('cain', 'currentHunt'));
@@ -1087,12 +1087,12 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
             game.socket.emit('system.cain', { action: 'updateTalismans' });
             self._emitUpdate();
 
-            ui.notifications.info(`Linked tension talisman to ${talismans[talismanIndex].name}`);
+            ui.notifications.info(game.i18n.format("CAIN.Notifications.LinkedTensionTalisman", {name: talismans[talismanIndex].name}));
           }
         },
         cancel: {
           icon: '<i class="fas fa-times"></i>',
-          label: 'Cancel'
+          label: game.i18n.localize("CAIN.Cancel")
         }
       },
       default: 'link'
@@ -1105,7 +1105,7 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
     const hunt = foundry.utils.deepClone(game.settings.get('cain', 'currentHunt'));
 
     if (hunt.linkedTensionTalismanIndex === undefined || hunt.linkedTensionTalismanIndex === null) {
-      ui.notifications.warn('No tension talisman is currently linked');
+      ui.notifications.warn(game.i18n.localize("CAIN.Notifications.NoTensionTalismanLinked"));
       return;
     }
 
@@ -1117,7 +1117,7 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
     await game.settings.set('cain', 'currentHunt', hunt);
     this._emitUpdate();
 
-    ui.notifications.info(`Unlinked tension talisman from ${linkedName}`);
+    ui.notifications.info(game.i18n.format("CAIN.Notifications.UnlinkedTensionTalisman", {name: linkedName}));
   }
 
   async _onLinkPressureTalisman(event, target) {
@@ -1127,7 +1127,7 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
     const globalTalismans = game.settings.get('cain', 'globalTalismans');
 
     if (!globalTalismans || globalTalismans.length === 0) {
-      ui.notifications.warn('No global talismans found. Create a talisman in the Talismans window first.');
+      ui.notifications.warn(game.i18n.localize("CAIN.Notifications.NoGlobalTalismans"));
       return;
     }
 
@@ -1138,20 +1138,20 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
     const content = `
       <form>
         <div class="form-group">
-          <label>Select Talisman to Link</label>
+          <label>${game.i18n.localize("CAIN.HuntTracker.SelectTalismanToLink")}</label>
           <select name="talismanIndex">${options}</select>
         </div>
-        <p class="notes">The pressure talisman will sync with this global talisman. The talisman's max value will be used.</p>
+        <p class="notes">${game.i18n.localize("CAIN.HuntTracker.LinkPressureTalismanHint")}</p>
       </form>
     `;
 
     new Dialog({
-      title: 'Link Pressure Talisman',
+      title: game.i18n.localize("CAIN.Notifications.LinkPressureTalisman"),
       content,
       buttons: {
         link: {
           icon: '<i class="fas fa-link"></i>',
-          label: 'Link',
+          label: game.i18n.localize("CAIN.HuntTracker.Link"),
           callback: async (html) => {
             const talismanIndex = parseInt(html.find('[name="talismanIndex"]').val());
             const hunt = foundry.utils.deepClone(game.settings.get('cain', 'currentHunt'));
@@ -1173,12 +1173,12 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
             game.socket.emit('system.cain', { action: 'updateTalismans' });
             self._emitUpdate();
 
-            ui.notifications.info(`Linked pressure talisman to ${talismans[talismanIndex].name}`);
+            ui.notifications.info(game.i18n.format("CAIN.Notifications.LinkedPressureTalisman", {name: talismans[talismanIndex].name}));
           }
         },
         cancel: {
           icon: '<i class="fas fa-times"></i>',
-          label: 'Cancel'
+          label: game.i18n.localize("CAIN.Cancel")
         }
       },
       default: 'link'
@@ -1191,7 +1191,7 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
     const hunt = foundry.utils.deepClone(game.settings.get('cain', 'currentHunt'));
 
     if (hunt.linkedPressureTalismanIndex === undefined || hunt.linkedPressureTalismanIndex === null) {
-      ui.notifications.warn('No pressure talisman is currently linked');
+      ui.notifications.warn(game.i18n.localize("CAIN.Notifications.NoPressureTalismanLinked"));
       return;
     }
 
@@ -1203,7 +1203,7 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
     await game.settings.set('cain', 'currentHunt', hunt);
     this._emitUpdate();
 
-    ui.notifications.info(`Unlinked pressure talisman from ${linkedName}`);
+    ui.notifications.info(game.i18n.format("CAIN.Notifications.UnlinkedPressureTalisman", {name: linkedName}));
   }
 
   // ============== HELPER METHODS ==============
@@ -1234,7 +1234,7 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
 
     // Check if risk-1 already triggered this scene
     if (source === 'risk' && hunt.tension.sceneRiskTriggered) {
-      ui.notifications.warn('Risk roll already triggered tension this scene');
+      ui.notifications.warn(game.i18n.localize("CAIN.Notifications.RiskAlreadyTriggered"));
       return;
     }
 
@@ -1292,7 +1292,7 @@ class HuntTracker extends HandlebarsApplicationMixin(ApplicationV2) {
 
     // Check if already at or above max
     if (hunt.pressure.current >= hunt.pressure.max) {
-      ui.notifications.warn('Pressure is already at maximum');
+      ui.notifications.warn(game.i18n.localize("CAIN.Notifications.PressureAlreadyMax"));
       return;
     }
 

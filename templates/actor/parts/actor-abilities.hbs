@@ -3,17 +3,17 @@
     <div style="display: flex; justify-content: center; align-items: center;">
       {{#if system.psyche}}
       <button class="psyche-roll-button" style="margin-right: 10px;">
-        Roll Psyche ({{system.psyche}}d6)
+        {{localize 'CAIN.Abilities.RollPsyche' psyche=system.psyche}}
       </button>
       <button class="use-psyche-burst-button" style="margin-right: 20px;">
-        Use Psyche Burst
+        {{localize 'CAIN.Abilities.UsePsycheBurst'}}
       </button>
       {{else}}
       <button class="psyche-roll-button" style="margin-right: 10px;" disabled>
-        Roll Psyche (N/A)
+        {{localize 'CAIN.Abilities.RollPsycheNA'}}
       </button>
       <button class="use-psyche-burst-button" style="margin-right: 20px;" disabled>
-        Use Psyche Burst
+        {{localize 'CAIN.Abilities.UsePsycheBurst'}}
       </button>
       {{/if}}
       <div class="psyche-burst-checkboxes circle-checkboxes" style="display: flex; align-items: center;">
@@ -24,26 +24,25 @@
         <label for="checkbox-{{index}}-{{@root.actor.id}}"></label>
         {{/range}}
         {{else}}
-        <p>No Psyche Burst Data</p>
+        <p>{{localize 'CAIN.Abilities.NoPsycheBurstData'}}</p>
         {{/if}}
-        <label style="margin-right: 10px;">Psyche Burst Charges</label>
+        <label style="margin-right: 10px;">{{localize 'CAIN.Abilities.PsycheBurstCharges'}}</label>
       </div>
       <button id="increment-max-psycheBurst" class="xp-button">+1</button>
       <button id="decrement-max-psycheBurst" class="xp-button">-1</button>
     </div>
     <div class="psyche-info" style="margin-top: 20px; text-align: left;">
-      <p>Using any blasphemy power requires a psyche burst. Some can spend multiple for extra benefit.</p>
+      <p>{{localize 'CAIN.Abilities.PsycheInfoP1'}}</p>
       <ul>
-        <li>You can always spend a psyche burst to add +1 advantage die to any roll (yours or an ally’s) by using your
-          blasphemies in a creative way.</li>
-        <li>You always start a mission with three psyche bursts.</li>
-        <li>You can recover them by resting during a hunt (see pg. 38) or through the uses of abilities.</li>
-        <li>You can always use psyche for minor effects such as:</li>
+        <li>{{localize 'CAIN.Abilities.PsycheInfoLi1'}}</li>
+        <li>{{localize 'CAIN.Abilities.PsycheInfoLi2'}}</li>
+        <li>{{localize 'CAIN.Abilities.PsycheInfoLi3'}}</li>
+        <li>{{localize 'CAIN.Abilities.PsycheInfoLi4'}}</li>
         <ul>
-          <li>producing a faint light or aura around something or someone</li>
-          <li>producing minor force at a distance (like a gust of wind)</li>
-          <li>making electrical lights or appliances flicker</li>
-          <li>warm or cool the surface of your body</li>
+          <li>{{localize 'CAIN.Abilities.PsycheInfoSubLi1'}}</li>
+          <li>{{localize 'CAIN.Abilities.PsycheInfoSubLi2'}}</li>
+          <li>{{localize 'CAIN.Abilities.PsycheInfoSubLi3'}}</li>
+          <li>{{localize 'CAIN.Abilities.PsycheInfoSubLi4'}}</li>
         </ul>
       </ul>
     </div>
@@ -52,27 +51,27 @@
     {{#if currentAgenda }}
     <div class="agenda-header">
       <img src="{{currentAgenda.img}}" alt="Agenda Image" class="agenda-image">
-      <h2 title="Drag new agenda here to swap">
+      <h2 title="{{localize 'CAIN.Abilities.DragAgenda'}}">
         {{currentAgenda.name}}
-        <a class="item-control remove-agenda-button" data-id="{{currentAgenda.id}}" title="Remove">
+        <a class="item-control remove-agenda-button" data-id="{{currentAgenda.id}}" title="{{localize 'CAIN.Remove'}}">
           <i class="fas fa-trash"></i>
         </a>
       </h2>
     </div>
     {{else}}
     <h2>
-      <p class="psychedelic-text">Drag or search for agenda to add to your sheet.</p>
+      <p class="psychedelic-text">{{localize 'CAIN.Abilities.DragAgenda'}}</p>
     </h2>
     {{/if}}
 
     {{!-- Search functionality for adding agendas --}}
     <div class="agenda-search-container">
-      <input type="text" class="agenda-search-input" placeholder="Search world agendas to add to sheet..." />
+      <input type="text" class="agenda-search-input" placeholder="{{localize 'CAIN.Abilities.SearchAgenda'}}" />
       <div class="agenda-search-results"></div>
     </div>
     <div class="editable-agenda">
       <div class="agenda-items">
-        <h3>Agenda Tasks</h3>
+        <h3>{{localize 'CAIN.Abilities.AgendaTasks'}}</h3>
         <ul id="editable-agenda-items" class="items-list">
           {{#if currentUnboldedAgendaTasks.length}}
           {{#each currentUnboldedAgendaTasks}}
@@ -80,10 +79,10 @@
             <p data-index="{{@index}}" class="agenda-task"
               style="font-weight: {{#if this.system.isBold}}bold{{else}}normal{{/if}};">{{this.system.task}}</p>
             <div class="item-controls">
-              <a class="item-control agenda-task-to-chat" data-index="{{@index}}" title="Send to Chat">
+              <a class="item-control agenda-task-to-chat" data-index="{{@index}}" title="{{localize 'CAIN.Actor.SendToChat'}}">
                 <i class="fas fa-comment"></i>
               </a>
-              <a class="item-control remove-task-button" data-index="{{@index}}" title="Remove">
+              <a class="item-control remove-task-button" data-index="{{@index}}" title="{{localize 'CAIN.Remove'}}">
                 <i class="fas fa-trash"></i>
               </a>
             </div>
@@ -91,7 +90,7 @@
           {{/each}}
           {{else}}
           <li class='item flexrow'>
-            <p style="font-style: italic; color: #888;">Click "Add Task" button below to add custom tasks, or tasks will auto-populate when you add an agenda.</p>
+            <p style="font-style: italic; color: #888;">{{localize 'CAIN.Abilities.AddAgendaTaskHint'}}</p>
           </li>
           {{/if}}
           {{#each currentBoldedAgendaTasks}}
@@ -99,44 +98,44 @@
             <p data-index="{{@index}}" class="agenda-task"
               style="font-weight: {{#if this.system.isBold}}bold{{else}}normal{{/if}};">{{this.system.task}}</p>
             <div class="item-controls">
-              <a class="item-control agenda-task-to-chat" data-index="{{@index}}" data-bold title="Send to Chat">
+              <a class="item-control agenda-task-to-chat" data-index="{{@index}}" data-bold title="{{localize 'CAIN.Actor.SendToChat'}}">
                 <i class="fas fa-comment"></i>
               </a>
-              <a class="item-control remove-task-button" data-index="{{@index}}" data-bold title="Remove">
+              <a class="item-control remove-task-button" data-index="{{@index}}" data-bold title="{{localize 'CAIN.Remove'}}">
                 <i class="fas fa-trash"></i>
               </a>
             </div>
           </li>
           {{/each}}
         </ul>
-        <button class="add-task-button">Add Task</button>
+        <button class="add-task-button">{{localize 'CAIN.Abilities.AddTask'}}</button>
       </div>
 
       <div class="agenda-abilities">
-        <h3>Agenda Abilities</h3>
+        <h3>{{localize 'CAIN.Abilities.AgendaAbilities'}}</h3>
         <ul id="editable-agenda-abilities" class="items-list">
           {{#if currentAgendaAbilities.length}}
           {{#each currentAgendaAbilities}}
           <li>
             <span data-index="{{@index}}" data-id="{{this.id}}" class="agenda-ability"
               title="{{this.system.abilityDescription}}">{{this.system.abilityName}}</span>
-            <a class="item-control agenda-ability-to-chat" data-index="{{@index}}" title="Send to Chat">
+            <a class="item-control agenda-ability-to-chat" data-index="{{@index}}" title="{{localize 'CAIN.Actor.SendToChat'}}">
               <i class="fas fa-comment"></i>
             </a>
-            <a class="item-control remove-ability-button" data-index="{{@index}}" title="Remove">
+            <a class="item-control remove-ability-button" data-index="{{@index}}" title="{{localize 'CAIN.Remove'}}">
               <i class="fas fa-trash"></i>
             </a>
           </li>
           {{/each}}
           {{else}}
           <li>
-            <p style="font-style: italic; color: #888;">Select abilities from the dropdown below, or they will auto-populate when you add an agenda.</p>
+            <p style="font-style: italic; color: #888;">{{localize 'CAIN.Abilities.AddAgendaAbilityHint'}}</p>
           </li>
           {{/if}}
         </ul>
         <div class="form-group">
           <div style="display: inline-block; margin-right: 10px">
-            <label for="selectedAgenda" style="">Available Abilities:</label>
+            <label for="selectedAgenda" style="">{{localize 'CAIN.Abilities.AvailableAbilities'}}</label>
             <select name="selectedAgenda" id="selectedAgenda">
               {{#each currentAgendaAvailableAbilities}}
               <option value="{{this.id}}" data-description="{{this.system.abilityDescription}}">{{this.name}}</option>
@@ -144,10 +143,10 @@
             </select>
           </div>
           <button type="button" id="add-agenda-ability-button" class="add-agenda-ability-button" {{#unless
-            currentAgendaAvailableAbilities.length}} disabled {{/unless}}>Add Ability</button>
+            currentAgendaAvailableAbilities.length}} disabled {{/unless}}>{{localize 'CAIN.Abilities.AddAbility'}}</button>
         </div>
         <div class="ability-description-card">
-          <h4>Ability Description</h4>
+          <h4>{{localize 'CAIN.Abilities.AbilityDescription'}}</h4>
           <p id="abilityDescription"></p>
         </div>
       </div>
@@ -155,17 +154,17 @@
   </div>
   <div class="items-section" style="width: 100%;">
     <div class="blasphemy" style="width: 100%;">
-      <h1>Blasphemies</h1>
+      <h1>{{localize 'CAIN.Abilities.Blasphemies'}}</h1>
 
       {{!-- Search functionality for adding blasphemies --}}
       <div class="blasphemy-search-container">
-        <input type="text" class="blasphemy-search-input" placeholder="Search world blasphemies to add to sheet..." />
+        <input type="text" class="blasphemy-search-input" placeholder="{{localize 'CAIN.Abilities.SearchBlasphemies'}}" />
         <div class="blasphemy-search-results"></div>
       </div>
 
       {{#unless blasphemyData}}
       <div class="blasphemy-powers">
-        <p class="psychedelic-text">Drag or search for blasphemy to add to your sheet.</p>
+        <p class="psychedelic-text">{{localize 'CAIN.Abilities.DragBlasphemy'}}</p>
       </div>
       {{/unless}}
       {{#each blasphemyData}}
@@ -173,10 +172,10 @@
         <div class="blasphemy-header">
           <img src={{blasphemy.img}} alt="Blasphemy Image" class="blasphemy-image">
           <h2>{{blasphemy.system.blasphemyName}}
-            <a class="item-control remove-blasphemy-button" data-id="{{blasphemy.id}}" title="Remove">
+            <a class="item-control remove-blasphemy-button" data-id="{{blasphemy.id}}" title="{{localize 'CAIN.Remove'}}">
               <i class="fas fa-trash"></i>
             </a>
-            <a class="animation-toggle" title="Toggle Animation">
+            <a class="animation-toggle" title="{{localize 'CAIN.Abilities.ToggleAnimation'}}">
               <input type="checkbox" id="toggle-animation" class="toggle-animation">
               <label for="toggle-animation">
                 <i class="fas fa-sync-alt"></i> <i class="fas fa-ban"></i> </label>
@@ -184,21 +183,21 @@
           </h2>
         </div>
         <div class="blasphemy-details">
-          <h3>Passive{{#if (gt passives.length 1)}}s{{/if}}</h3>
+          <h3>{{#if (gt passives.length 1)}}{{localize 'CAIN.Abilities.Passives'}}{{else}}{{localize 'CAIN.Abilities.Passive'}}{{/if}}</h3>
           <ul class="editable-blasphemy-powers">
             {{#if passives.length}}
               {{#each passives}}
               <li>
                 <h4>
                   <span data-id="{{this.id}}" class="blasphemy-passive"
-                    title="{{this.system.powerDescription}}">{{this.system.powerName}}</span>{{#if (includes this.system.keywords "Quirk")}}<span class="quirk-badge" title="Quirk — an optional alternate/additive passive from Games for Freaks">QUIRK</span>{{/if}}
-                  <a class="item-control blasphemy-power-to-chat" data-id="{{this.id}}" title="Send to Chat">
+                    title="{{this.system.powerDescription}}">{{this.system.powerName}}</span>{{#if (includes this.system.keywords "Quirk")}}<span class="quirk-badge" title="{{localize 'CAIN.Abilities.QuirkTooltip'}}">{{localize 'CAIN.Quirk'}}</span>{{/if}}
+                  <a class="item-control blasphemy-power-to-chat" data-id="{{this.id}}" title="{{localize 'CAIN.Actor.SendToChat'}}">
                     <i class="fas fa-comment"></i>
                   </a>
-                  <a class="item-control edit-blasphemy-power-button" data-id="{{this.id}}" title="Edit this character's copy">
+                  <a class="item-control edit-blasphemy-power-button" data-id="{{this.id}}" title="{{localize 'CAIN.Abilities.EditCopyTooltip'}}">
                     <i class="fas fa-pen-to-square"></i>
                   </a>
-                  <a class="item-control remove-blasphemy-power-button" data-id="{{this.id}}" title="Remove">
+                  <a class="item-control remove-blasphemy-power-button" data-id="{{this.id}}" title="{{localize 'CAIN.Remove'}}">
                     <i class="fas fa-trash"></i>
                   </a>
                 </h4>
@@ -207,50 +206,50 @@
                     {{#if this.system.psycheBurstNoCost}}
                     <a href="systems/cain/assets/psyche/NoPsyche.png" target="_blank">
                       <img src="systems/cain/assets/psyche/NoPsyche.png" alt="No Psyche" class="power-psyche-icon-large"
-                        title="Has no-psyche mode">
+                        title="{{localize 'CAIN.Abilities.HasNoPsycheMode'}}">
                     </a>
                     {{/if}}
                     {{#if this.system.psycheBurstCost}}
                     <a href="systems/cain/assets/psyche/Psyche.png" target="_blank">
                       <img src="systems/cain/assets/psyche/Psyche.png" alt="Uses Psyche" class="power-psyche-icon-large"
-                        title="Uses psyche burst">
+                        title="{{localize 'CAIN.Abilities.UsesPsycheBurst'}}">
                     </a>
                     {{/if}}
                     {{#if this.system.psycheBurstMultCost}}
                     <a href="systems/cain/assets/psyche/PsychePlus.png" target="_blank">
                       <img src="systems/cain/assets/psyche/PsychePlus.png" alt="Plus Psyche"
-                        class="power-plus-large" title="Can use multiple bursts">
+                        class="power-plus-large" title="{{localize 'CAIN.Abilities.CanUseMultipleBursts'}}">
                     </a>
                     {{/if}}
                   </span>
-                  <h4>Keywords</h4>
+                  <h4>{{localize 'CAIN.Keywords'}}</h4>
                   <p>{{this.system.keywords}}</p>
-                  <h4>Power Description</h4>
+                  <h4>{{localize 'CAIN.PowerDescription'}}</h4>
                   <p>{{formatted this.system.powerDescription ../../system.CATLEVEL.value}}</p>
                 </div>
               </li>
               {{/each}}
             {{else}}
-              <li><p style="font-style: italic; color: #888;">Passives will auto-populate when you add a blasphemy.</p></li>
+              <li><p style="font-style: italic; color: #888;">{{localize 'CAIN.Abilities.PassivesHint'}}</p></li>
             {{/if}}
           </ul>
-          <h3>Powers</h3>
+          <h3>{{localize 'CAIN.Abilities.Powers'}}</h3>
           <ul>
             {{#unless powers}}
-            <li><p style="font-style: italic; color: #888;">Select powers from the dropdown below to add them to your blasphemy.</p></li>
+            <li><p style="font-style: italic; color: #888;">{{localize 'CAIN.Abilities.PowersHint'}}</p></li>
             {{/unless}}
             {{#each powers}}
             <li>
               <h4>
                 <span data-id="{{this.id}}" class="blasphemy-power"
-                  title="{{this.system.powerDescription}}">{{this.system.powerName}}</span>{{#if (includes this.system.keywords "Quirk")}}<span class="quirk-badge" title="Quirk — an optional alternate/additive passive from Games for Freaks">QUIRK</span>{{/if}}
-                <a class="item-control blasphemy-power-to-chat" data-id="{{this.id}}" title="Send to Chat">
+                  title="{{this.system.powerDescription}}">{{this.system.powerName}}</span>{{#if (includes this.system.keywords "Quirk")}}<span class="quirk-badge" title="{{localize 'CAIN.Abilities.QuirkTooltip'}}">{{localize 'CAIN.Quirk'}}</span>{{/if}}
+                <a class="item-control blasphemy-power-to-chat" data-id="{{this.id}}" title="{{localize 'CAIN.Actor.SendToChat'}}">
                   <i class="fas fa-comment"></i>
                 </a>
-                <a class="item-control edit-blasphemy-power-button" data-id="{{this.id}}" title="Edit this character's copy">
+                <a class="item-control edit-blasphemy-power-button" data-id="{{this.id}}" title="{{localize 'CAIN.Abilities.EditCopyTooltip'}}">
                   <i class="fas fa-pen-to-square"></i>
                 </a>
-                <a class="item-control remove-blasphemy-power-button" data-id="{{this.id}}" title="Remove">
+                <a class="item-control remove-blasphemy-power-button" data-id="{{this.id}}" title="{{localize 'CAIN.Remove'}}">
                   <i class="fas fa-trash"></i>
                 </a>
               </h4>
@@ -259,25 +258,25 @@
                   {{#if this.system.psycheBurstNoCost}}
                   <a href="systems/cain/assets/psyche/NoPsyche.png" target="_blank">
                     <img src="systems/cain/assets/psyche/NoPsyche.png" alt="No Psyche" class="power-psyche-icon-large"
-                      title="Has no-psyche mode">
+                      title="{{localize 'CAIN.Abilities.HasNoPsycheMode'}}">
                   </a>
                   {{/if}}
                   {{#if this.system.psycheBurstCost}}
                   <a href="systems/cain/assets/psyche/Psyche.png" target="_blank">
                     <img src="systems/cain/assets/psyche/Psyche.png" alt="Uses Psyche" class="power-psyche-icon-large"
-                      title="Uses psyche burst">
+                      title="{{localize 'CAIN.Abilities.UsesPsycheBurst'}}">
                   </a>
                   {{/if}}
                   {{#if this.system.psycheBurstMultCost}}
                   <a href="systems/cain/assets/psyche/PsychePlus.png" target="_blank">
                     <img src="systems/cain/assets/psyche/PsychePlus.png" alt="Plus Psyche"
-                      class="power-plus-large" title="Can use multiple bursts">
+                      class="power-plus-large" title="{{localize 'CAIN.Abilities.CanUseMultipleBursts'}}">
                   </a>
                   {{/if}}
                 </span>
-                <h4>Keywords</h4>
+                <h4>{{localize 'CAIN.Keywords'}}</h4>
                 <p>{{this.system.keywords}}</p>
-                <h4>Power Description</h4>
+                <h4>{{localize 'CAIN.PowerDescription'}}</h4>
                 <p>{{formatted this.system.powerDescription ../../system.CATLEVEL.value}}</p>
               </div>
             </li>
@@ -285,11 +284,11 @@
           </ul>
           <details class="available-powers-section">
             <summary class="available-powers-toggle">
-              <i class="fas fa-plus-circle"></i> Add More Powers (Click to expand)
+              <i class="fas fa-plus-circle"></i> {{localize 'CAIN.Abilities.AddMorePowers'}}
             </summary>
             <div class="available-powers-content">
               <div class="form-group">
-                <label for="selectedPower" class="labelSelectedPower">Available Powers:</label>
+                <label for="selectedPower" class="labelSelectedPower">{{localize 'CAIN.Abilities.AvailablePowers'}}</label>
                 <select name="selectedPower" class="selectedPower">
                   {{#each availablePowers}}
                   <option value="{{this.id}}" data-description="{{this.system.powerDescription}}"
@@ -297,12 +296,12 @@
                   {{/each}}
                 </select>
                 <button type="button" class="add-blasphemy-power-button" {{#unless availablePowers.length}} disabled
-                  {{/unless}}>Add Power</button>
+                  {{/unless}}>{{localize 'CAIN.Abilities.AddPower'}}</button>
               </div>
               <div class="available-power-description-card">
-                <h4>Keywords</h4>
+                <h4>{{localize 'CAIN.Keywords'}}</h4>
                 <p class="powerKeywords"></p>
-                <h4>Power Description</h4>
+                <h4>{{localize 'CAIN.PowerDescription'}}</h4>
                 <p class="powerDescription"></p>
               </div>
             </div>
@@ -312,7 +311,7 @@
       {{/each}}
       {{#if currentUnlinkedBlasphemyPowers.length}}
       <div class="blasphemy-powers">
-        <h3>Other Powers</h3>
+        <h3>{{localize 'CAIN.Abilities.OtherPowers'}}</h3>
         <ul class="editable-blasphemy-powers">
           {{#each currentUnlinkedBlasphemyPowers}}
           <li>
@@ -325,21 +324,21 @@
             --}}
             <h4>
               <span data-id="{{this.id}}" class="blasphemy-power"
-                title="{{this.system.powerDescription}}">{{this.system.powerName}}</span>{{#if (includes this.system.keywords "Quirk")}}<span class="quirk-badge" title="Quirk — an optional alternate/additive passive from Games for Freaks">QUIRK</span>{{/if}}
-              <a class="item-control blasphemy-power-to-chat" data-id="{{this.id}}" title="Send to Chat">
+                title="{{this.system.powerDescription}}">{{this.system.powerName}}</span>{{#if (includes this.system.keywords "Quirk")}}<span class="quirk-badge" title="{{localize 'CAIN.Abilities.QuirkTooltip'}}">{{localize 'CAIN.Quirk'}}</span>{{/if}}
+              <a class="item-control blasphemy-power-to-chat" data-id="{{this.id}}" title="{{localize 'CAIN.Actor.SendToChat'}}">
                 <i class="fas fa-comment"></i>
               </a>
-              <a class="item-control edit-blasphemy-power-button" data-id="{{this.id}}" title="Edit this character's copy">
+              <a class="item-control edit-blasphemy-power-button" data-id="{{this.id}}" title="{{localize 'CAIN.Abilities.EditCopyTooltip'}}">
                 <i class="fas fa-pen-to-square"></i>
               </a>
-              <a class="item-control remove-blasphemy-power-button" data-id="{{this.id}}" title="Remove">
+              <a class="item-control remove-blasphemy-power-button" data-id="{{this.id}}" title="{{localize 'CAIN.Remove'}}">
                 <i class="fas fa-trash"></i>
               </a>
             </h4>
             <div class="power-description-card">
-              <h4>Keywords</h4>
+              <h4>{{localize 'CAIN.Keywords'}}</h4>
               <p>{{this.system.keywords}}</p>
-              <h4>Power Description</h4>
+              <h4>{{localize 'CAIN.PowerDescription'}}</h4>
               <p>{{formatted this.system.powerDescription ../../system.CATLEVEL.value}}</p>
             </div>
           </li>

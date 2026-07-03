@@ -2,16 +2,16 @@
   <div id="talisman-list" class="talisman-grid">
     {{#each system.talismans}}
     <div class="talisman">
-      <input type="text" placeholder="Name" class="talisman-name" value="{{this.name}}" data-index="{{@index}}">
+      <input type="text" placeholder="{{localize 'CAIN.Name'}}" class="talisman-name" value="{{this.name}}" data-index="{{@index}}">
       <img src="{{this.imagePath}}" alt="{{this.name}}" class="talisman-image" data-index="{{@index}}">
       <div class="talisman-controls">
-        <button class="delete-talisman" data-index="{{@index}}">Delete</button>
+        <button class="delete-talisman" data-index="{{@index}}">{{localize 'CAIN.Delete'}}</button>
         <input type="number" min="0" max="13" value="{{this.maxMarkAmount}}" class="talisman-max-mark" data-index="{{@index}}">
         <input type="range" min="0" max="{{this.maxMarkAmount}}" value="{{this.currMarkAmount}}" class="talisman-slider" data-index="{{@index}}">
-        <span class="current-marks">Current Marks: {{this.currMarkAmount}}</span>
+        <span class="current-marks">{{localize 'CAIN.TalismansTab.CurrentMarks' current=this.currMarkAmount}}</span>
       </div>
     </div>
     {{/each}}
   </div>
-  <button id="add-talisman">Add Talisman</button>
+  <button id="add-talisman">{{localize 'CAIN.TalismansTab.AddTalisman'}}</button>
 </div>

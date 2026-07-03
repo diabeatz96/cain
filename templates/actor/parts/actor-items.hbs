@@ -1,33 +1,33 @@
-<h2> Kit Points & Scrip Amount </h2>
+<h2> {{localize 'CAIN.ItemsTab.KitPointsAndScrip'}} </h2>
 <div class="kit-points-scrip" style="display: flex; margin-top:10px;">
     <div id="kit-points" style="display: flex; align-items: center; margin-right: 20px;">
         {{#range 0 system.kitPoints.max}}
-          <img class="kit-points-selection" src="systems/cain/assets/KIT/{{#if (lt index ../system.kitPoints.value)}}KIT-filled.png{{else}}KIT-empty.png{{/if}}" data-kit="{{CainOffset index 1}}" data-tooltip="Right click to clear">
+          <img class="kit-points-selection" src="systems/cain/assets/KIT/{{#if (lt index ../system.kitPoints.value)}}KIT-filled.png{{else}}KIT-empty.png{{/if}}" data-kit="{{CainOffset index 1}}" data-tooltip="{{localize 'SHEET.TOOLTIPS.CATSELECT'}}">
         {{/range}}
         <span class="kit-points-text">{{system.kitPoints.value}} / {{system.kitPoints.max}}</span>
         <button type="button" class="kit-points-decrease">-</button>
         <button type="button" class="kit-points-increase">+</button>
     </div>
     <div class="scrip" style="display: flex; align-items: center;">
-        <label for="system.scrip" style="margin-right: 10px;">Scrip:</label>
+        <label for="system.scrip" style="margin-right: 10px;">{{localize 'CAIN.Scrip'}}:</label>
         <input type="number" name="system.scrip" id="scrip" value="{{system.scrip}}" style="width: 100px; text-align: center;" />
-    </div>
+     </div>
 </div>
 
-<h2> Gear </h2>
+<h2> {{localize 'CAIN.ItemsTab.Gear'}} </h2>
 
 {{!-- Search functionality for adding existing items --}}
 <div class="item-search-container">
-  <input type="text" class="item-search-input" placeholder="Search world items to add to sheet..." />
+  <input type="text" class="item-search-input" placeholder="{{localize 'CAIN.ItemsTab.SearchItems'}}" />
   <div class="item-search-results"></div>
 </div>
 
 <ol class='items-list'>
   <li class='item flexrow items-header'>
-    <div class='item-name-header'>Name </div>
-    <div class='item-type'>Type</div>
-    <div class='item-scrip'>{{localize 'Scrip'}}</div>
-    <div class='item-kit-points'>{{localize 'Kit Points'}}</div>
+    <div class='item-name-header'>{{localize 'CAIN.ItemsTab.Name'}} </div>
+    <div class='item-type'>{{localize 'CAIN.ItemsTab.Type'}}</div>
+    <div class='item-scrip'>{{localize 'CAIN.Scrip'}}</div>
+    <div class='item-kit-points'>{{localize 'CAIN.KitPoints'}}</div>
     <div class='item-controls'>
       <a
         class='item-control item-create'

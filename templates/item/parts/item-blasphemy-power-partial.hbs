@@ -5,42 +5,42 @@
         {{#if system.psycheBurstNoCost}}
         <a href="systems/cain/assets/psyche/NoPsyche.png" target="_blank">
             <img src="systems/cain/assets/psyche/NoPsyche.png" alt="No Psyche" class="power-psyche-icon-item"
-                title="Has no-psyche mode">
+                title="{{localize 'CAIN.Abilities.HasNoPsycheMode'}}">
         </a>
         {{/if}}
         {{#if system.psycheBurstCost}}
         <a href="systems/cain/assets/psyche/Psyche.png" target="_blank">
             <img src="systems/cain/assets/psyche/Psyche.png" alt="Uses Psyche" class="power-psyche-icon-item"
-                title="Uses psyche burst">
+                title="{{localize 'CAIN.Abilities.UsesPsycheBurst'}}">
         </a>
         {{/if}}
         {{#if system.psycheBurstMultCost}}
         <a href="systems/cain/assets/psyche/PsychePlus.png" target="_blank">
             <img src="systems/cain/assets/psyche/PsychePlus.png" alt="Plus Psyche" class="power-plus-item"
-                title="Can use multiple bursts">
+                title="{{localize 'CAIN.Abilities.CanUseMultipleBursts'}}">
         </a>
         {{/if}}
     </div>
 
     <div class="header-fields item-click" data-id="{{this.id}}" style="flex-grow: 1; text-align: left; cursor: pointer;">
       <div class="form-group" style="margin-bottom: 10px;">
-        <label class="power-label" style="font-weight: bold; font-size: 1.2em;">Power Name:{{#if (includes system.keywords "Quirk")}} <span class="quirk-badge" title="Quirk — an optional alternate/additive passive from Games for Freaks">QUIRK</span>{{/if}}</label>
+        <label class="power-label" style="font-weight: bold; font-size: 1.2em;">{{localize 'CAIN.Homebrew.PowerName'}}:{{#if (includes system.keywords "Quirk")}} <span class="quirk-badge" title="{{localize 'CAIN.Abilities.QuirkTooltip'}}">{{localize 'CAIN.Quirk'}}</span>{{/if}}</label>
         <div style="font-size: 1.5em; font-weight: bold; width: 100%; background: var(--primary-color, #2a2a2a); color: var(--text-color, #ffffff); border: 2px solid var(--secondary-color, #555); border-radius: 5px; padding: 5px;">{{system.powerName}}</div>
       </div>
       <div class="form-group" style="margin-bottom: 10px;">
-        <label class="power-label" style="font-weight: bold; font-size: 1.2em;">Is Passive:</label>
-        <div style="padding: 5px;">{{#if system.isPassive}}✓ Yes{{else}}✗ No{{/if}}</div>
+        <label class="power-label" style="font-weight: bold; font-size: 1.2em;">{{localize 'CAIN.Abilities.IsPassive'}}:</label>
+        <div style="padding: 5px;">{{#if system.isPassive}}✓ {{localize 'CAIN.Yes'}}{{else}}✗ {{localize 'CAIN.No'}}{{/if}}</div>
       </div>
       <div class="form-group" style="margin-bottom: 10px;">
-        <label class="power-label" style="font-weight: bold; font-size: 1.2em;">Keywords:</label>
+        <label class="power-label" style="font-weight: bold; font-size: 1.2em;">{{localize 'CAIN.Keywords'}}:</label>
         <div style="width: 100%; background: var(--primary-color, #2a2a2a); color: var(--text-color, #ffffff); border: 2px solid var(--secondary-color, #555); border-radius: 5px; padding: 5px;">{{system.keywords}}</div>
       </div>
       <div class="form-group" style="margin-bottom: 10px;">
-        <label class="power-label" style="font-weight: bold; font-size: 1.2em;">Psyche Burst Options:</label>
+        <label class="power-label" style="font-weight: bold; font-size: 1.2em;">{{localize 'CAIN.Abilities.PsycheBurstOptions'}}</label>
         <div style="display: flex; gap: 15px; flex-wrap: wrap;">
-          {{#if system.psycheBurstCost}}<span>✓ Uses Psyche</span>{{/if}}
-          {{#if system.psycheBurstNoCost}}<span>✓ No Psyche Mode</span>{{/if}}
-          {{#if system.psycheBurstMultCost}}<span>✓ Multiple Bursts</span>{{/if}}
+          {{#if system.psycheBurstCost}}<span>✓ {{localize 'CAIN.Abilities.UsesPsycheBurst'}}</span>{{/if}}
+          {{#if system.psycheBurstNoCost}}<span>✓ {{localize 'CAIN.Abilities.HasNoPsycheMode'}}</span>{{/if}}
+          {{#if system.psycheBurstMultCost}}<span>✓ {{localize 'CAIN.Abilities.CanUseMultipleBursts'}}</span>{{/if}}
         </div>
       </div>
     </div>
@@ -48,7 +48,7 @@
   </header>
 
   <section class="blasphemy-power-body item-click" data-id="{{this.id}}" style="text-align: center; padding: 20px; border-radius: 10px; background: linear-gradient(135deg, var(--primary-color, #2a2a2a), var(--secondary-color, #555)); cursor: pointer;">
-    <h2 style="color: var(--accent-color, #ff00ff); text-shadow: 0 0 10px var(--accent-color, #ff00ff);">Description</h2>
+    <h2 style="color: var(--accent-color, #ff00ff); text-shadow: 0 0 10px var(--accent-color, #ff00ff);">{{localize 'CAIN.Description'}}</h2>
     <div style="width: 100%; padding: 10px; border: 2px solid var(--secondary-color, #555); border-radius: 10px; background-color: var(--primary-color, #2a2a2a); font-family: 'Courier New', Courier, monospace; color: var(--text-color, #ffffff); box-shadow: 0 0 10px var(--accent-color, #ff00ff); min-height: 100px; text-align: left; white-space: pre-wrap;">{{system.powerDescription}}</div>
   </section>
 </div>

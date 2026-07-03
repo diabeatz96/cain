@@ -136,14 +136,14 @@
           name='name'
           type='text'
           value='{{item.name}}'
-          placeholder='Name'
+          placeholder='{{localize "CAIN.Name"}}'
         /></h1>
     </div>
   </header>
 
   {{! Sheet Body }}
   <section class='sheet-body'>
-    <h2>Sin Abilities</h2>
+    <h2>{{localize "CAIN.Sin.SinAbilities"}}</h2>
 
     {{#each sinMarkAbilities}}
       <div class="ability-container">
@@ -152,10 +152,10 @@
     {{/each}}
 
     <div class="form-group">
-      <label for="abilityUUID">Ability UUID</label>
-      <input type="text" id="abilityUUID" name="abilityUUID" placeholder="Enter Ability UUID">
-      <button id="addAbility" type="button">Add Ability</button>
+      <label for="abilityUUID">{{localize "CAIN.AbilityUuid"}}</label>
+      <input type="text" id="abilityUUID" name="abilityUUID" placeholder="{{localize 'CAIN.EnterAbilityUuid'}}">
+      <button id="addAbility" type="button">{{localize "CAIN.Abilities.AddAbility"}}</button>
     </div>
-    <button id="removeAbility" type="button">Remove Ability</button>
+    <button id="removeAbility" type="button">{{localize "CAIN.RemoveAbility"}}</button>
   </section>
 </form>

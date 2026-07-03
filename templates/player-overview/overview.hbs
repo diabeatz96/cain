@@ -1,26 +1,26 @@
 <div class="player-overview">
-  <h2>Player Overview</h2>
+  <h2>{{localize "CAIN.PlayerOverview.Title"}}</h2>
   <div class="table-container">
     <table class="player-overview-table">
       <thead>
         <tr>
-          <th>Name</th>
-          <th>Actor</th>
-          <th>Profile Image</th>
-          <th>CAT Level</th>
-          <th>Sex</th>
-          <th>Height</th>
-          <th>Weight</th>
-          <th>Hair</th>
-          <th>Eyes</th>
-          <th>Agenda</th>
-          <th>Blasphemy</th>
-          <th>XID</th>
-          <th>Scrip</th>
-          <th>Divine Agony</th>
-          <th>Injuries</th>
-          <th>Stress</th>
-          <th>Extra Dice</th>
+          <th>{{localize "CAIN.Name"}}</th>
+          <th>{{localize "CAIN.Actor"}}</th>
+          <th>{{localize "CAIN.ProfileImage"}}</th>
+          <th>{{localize "CAIN.Features.CatLevel"}}</th>
+          <th>{{localize "CAIN.Sin.Sex"}}</th>
+          <th>{{localize "CAIN.Sin.Height"}}</th>
+          <th>{{localize "CAIN.Weight"}}</th>
+          <th>{{localize "CAIN.Sin.Hair"}}</th>
+          <th>{{localize "CAIN.Sin.Eyes"}}</th>
+          <th>{{localize "CAIN.Homebrew.Agenda"}}</th>
+          <th>{{localize "CAIN.Homebrew.Blasphemy"}}</th>
+          <th>{{localize "CAIN.Abilities.Xid"}}</th>
+          <th>{{localize "CAIN.Scrip"}}</th>
+          <th>{{localize "CAIN.Features.DivineAgony"}}</th>
+          <th>{{localize "CAIN.Features.Injuries"}}</th>
+          <th>{{localize "CAIN.Features.Stress"}}</th>
+          <th>{{localize "CAIN.Features.ExtraDice"}}</th>
         </tr>
       </thead>
       <tbody>
@@ -57,7 +57,7 @@
     {{#each playerData}}
     {{#if actor}}
     <div class="afflictions-column">
-      <h3>{{actor.name}}'s Afflictions</h3>
+      <h3>{{localize "CAIN.PlayerOverview.ActorAfflictions" name=actor.name}}</h3>
       <ul class="afflictions-list">
         {{#each afflictions}}
         <li>
@@ -65,7 +65,7 @@
         </li>
         {{/each}}
         {{#unless afflictions.length}}
-        <li>No afflictions</li>
+        <li>{{localize "CAIN.PlayerOverview.NoAfflictions"}}</li>
         {{/unless}}
       </ul>
     </div>

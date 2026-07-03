@@ -57,38 +57,38 @@
 }
 </style>
 <form class="flexcol session-end-form">
-    <h3> Survival </h3>
+    <h3> {{localize "CAIN.Features.SurvivalHeading"}} </h3>
     <div class="form-group">
-        <label for="survival"> Did you <b>survive</b>?</label>
+        <label for="survival"> {{{localize "CAIN.Features.SurvivalQuestion"}}}</label>
         <input type="checkbox" name="survival">
     </div>
-    <h3> Up to 1 from first agenda </h3>
+    <h3> {{localize "CAIN.Features.UpTo1FirstAgenda"}} </h3>
     {{#each unboldedAgendaTasks}}
     <div class="form-group">
-        <label for="firstAgenda-{{@index}}"> Did you {{this.system.task}}?</label>
+        <label for="firstAgenda-{{@index}}"> {{localize "CAIN.Features.DidYouTask" task=this.system.task}}</label>
         <input type="checkbox" name="firstAgenda-{{@index}}">
     </div>
     {{else}}
-    <w>You don't seem to have a primary agenda - consider adding one...</w>
+    <w>{{localize "CAIN.Features.NoPrimaryAgendaHint"}}</w>
     {{/each}}
-    <h3> Up to 2 from <b>bold</b> agendas</h3>
+    <h3> {{{localize "CAIN.Features.UpTo2BoldAgendas"}}} </h3>
 
     {{#each boldedAgendaTasks}}
         <div class="form-group">
-            <label for="boldAgenda-{{@index}}"> Did you <b>{{this.system.task}}</b>?</label>
+            <label for="boldAgenda-{{@index}}"> {{{localize "CAIN.Features.DidYouTaskBold" task=this.system.task}}}</label>
             <input type="checkbox" name="boldAgenda-{{@index}}">
         </div>
     {{else}}
-    <w>You don't seem to have any bolded agendas - consider adding one...</w>
+    <w>{{localize "CAIN.Features.NoBoldAgendasHint"}}</w>
     {{/each}}
-    <h3> Injuries/Afflictions </h3>
+    <h3> {{localize "CAIN.Features.InjuriesOrAfflictions"}} </h3>
     <div class="form-group">
-        <label for="injuries"> Did you take an <b>injury</b> or <b>affliction</b>?</label>
+        <label for="injuries"> {{{localize "CAIN.Features.TakeInjuryOrAfflictionQuestion"}}}</label>
         <input type="checkbox" name="injuries">
     </div>
   <footer class="sheet-footer flexrow">
     <button type="submit" name="submit">
-        <i class="fa fa-check"></i> OK
+        <i class="fa fa-check"></i> {{localize "CAIN.Ok"}}
     </button>
   </footer>
 </form>

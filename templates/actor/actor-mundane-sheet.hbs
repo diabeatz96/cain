@@ -3,15 +3,15 @@
     <img class="profile-img demon-mob-psycho-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100"/>
     <div class="header-fields">
       <div class="field-group">
-        <label for="name">Name</label>
-        <input name="name" type="text" value="{{actor.name}}" placeholder="Name"/>
+        <label for="name">{{localize 'CAIN.CharacterName'}}</label>
+        <input name="name" type="text" value="{{actor.name}}" placeholder="{{localize 'CAIN.CharacterName'}}"/>
       </div>
       <div class="field-group">
-        <label for="system.executionTalisman">Execution Talisman</label>
+        <label for="system.executionTalisman">{{localize 'CAIN.Mundane.ExecutionTalisman'}}</label>
         <input type="number" name="system.executionTalisman" value="{{system.executionTalisman}}">
       </div>
       <div class="field-group">
-        <label for="system.category">Category</label>
+        <label for="system.category">{{localize 'CAIN.Category'}}</label>
         <input type="number" name="system.category" value="{{system.category}}">
       </div>
     </div>
@@ -19,55 +19,55 @@
   <section class="demon-sheet-section">
     <div class="field-group-row">
       <div class="field-group wide-field-group">
-        <label for="system.complication">Complication</label>
+        <label for="system.complication">{{localize 'CAIN.Complication'}}</label>
         <textarea name="system.complication" rows="4">{{system.complication}}</textarea>
       </div>
       <div class="field-group wide-field-group">
-        <label for="system.threats">Threats</label>
+        <label for="system.threats">{{localize 'CAIN.Threats'}}</label>
         <textarea name="system.threats" rows="4">{{system.threats}}</textarea>
       </div>
     </div>
     <div class="field-group large-field-group">
-      <label for="system.description">Description</label>
+      <label for="system.description">{{localize 'CAIN.Description'}}</label>
       <div class="form-group">
         {{editor enrichedBiography target="system.biography" button=true engine="prosemirror" button=true editable=editable class="description-editor"}}
       </div>
     </div>
   </section>
   <section class="demon-sheet-section">
-    <h2 style="color: white;">Reaction</h2>
-    <p class="instruction-text">Players can choose whatever they want to write for each roll, and then click the dice button to roll 1d6. One of the rolls will be picked and displayed in the chat.</p>
+    <h2 style="color: white;">{{localize 'CAIN.Mundane.Reaction'}}</h2>
+    <p class="instruction-text">{{localize 'CAIN.Mundane.InstructionText'}}</p>
     <div class="field-group-row">
       <div class="field-group">
-        <label for="system.rollData.roll1">Roll 1</label>
+        <label for="system.rollData.roll1">{{localize 'CAIN.Mundane.Roll' number=1}}</label>
         <textarea name="system.rollData.roll1" rows="2">{{system.rollData.roll1}}</textarea>
       </div>
       <div class="field-group">
-        <label for="system.rollData.roll2">Roll 2</label>
+        <label for="system.rollData.roll2">{{localize 'CAIN.Mundane.Roll' number=2}}</label>
         <textarea name="system.rollData.roll2" rows="2">{{system.rollData.roll2}}</textarea>
       </div>
     </div>
     <div class="field-group-row">
       <div class="field-group">
-        <label for="system.rollData.roll3">Roll 3</label>
+        <label for="system.rollData.roll3">{{localize 'CAIN.Mundane.Roll' number=3}}</label>
         <textarea name="system.rollData.roll3" rows="2">{{system.rollData.roll3}}</textarea>
       </div>
       <div class="field-group">
-        <label for="system.rollData.roll4">Roll 4</label>
+        <label for="system.rollData.roll4">{{localize 'CAIN.Mundane.Roll' number=4}}</label>
         <textarea name="system.rollData.roll4" rows="2">{{system.rollData.roll4}}</textarea>
       </div>
     </div>
     <div class="field-group-row">
       <div class="field-group">
-        <label for="system.rollData.roll5">Roll 5</label>
+        <label for="system.rollData.roll5">{{localize 'CAIN.Mundane.Roll' number=5}}</label>
         <textarea name="system.rollData.roll5" rows="2">{{system.rollData.roll5}}</textarea>
       </div>
       <div class="field-group">
-        <label for="system.rollData.roll6">Roll 6</label>
+        <label for="system.rollData.roll6">{{localize 'CAIN.Mundane.Roll' number=6}}</label>
         <textarea name="system.rollData.roll6" rows="2">{{system.rollData.roll6}}</textarea>
       </div>
     </div>
-    <button type="button" class="roll-button" onclick="rollDice()">Roll Dice</button>
+    <button type="button" class="roll-button" onclick="rollDice()">{{localize 'CAIN.RollDice'}}</button>
   </section>
 </form>
 
@@ -87,7 +87,7 @@
     ChatMessage.create({
       user: game.user.id,
       speaker: ChatMessage.getSpeaker(),
-      content: `You rolled: ${rollResult}`
+      content: game.i18n.format("CAIN.Chat.YouRolled", {result: rollResult})
     });
   }
 </script>

@@ -11,21 +11,21 @@
           name='name'
           type='text'
           value='{{item.name}}'
-          placeholder='Name'
+          placeholder='{{localize "CAIN.Name"}}'
         /></h1>
     </div>
   </header>
 
   {{! Sheet Tab Navigation }}
   <nav class='sheet-tabs tabs agenda-tabs' data-group='primary'>
-    <a class='item' data-tab='task'>Task</a>
+    <a class='item' data-tab='task'>{{localize 'CAIN.Task'}}</a>
   </nav>
 
   {{! Sheet Body }}
   <section class='sheet-body agenda-body'>
     <div class='tab agenda-text-color' data-group='primary' data-tab='task'>
       <div class='form-group'>
-        <label for='task' style='color: white;'>Task Description</label>
+        <label for='task' style='color: white;'>{{localize 'CAIN.TaskDescription'}}</label>
         <textarea
           name='system.task'
           data-dtype='String'
@@ -43,7 +43,7 @@
             data-dtype='Boolean'
             style='width: 20px; height: 20px; cursor: pointer;'
           />
-          <span>Bold Task (Primary Task)</span>
+          <span>{{localize 'CAIN.Homebrew.BoldTask'}}</span>
         </label>
       </div>
     </div>

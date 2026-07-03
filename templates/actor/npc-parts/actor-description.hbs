@@ -2,15 +2,15 @@
     <!-- Trauma Questions Card -->
     <div class="description-card">
         <div class="card-header">
-            <h2 class="card-title">Trauma Questions</h2>
+            <h2 class="card-title">{{localize 'CAIN.Sin.TraumaQuestions'}}</h2>
         </div>
         <div class="trauma-list">
             {{#each system.traumas as |trauma index|}}
                 <div class="trauma-item">
-                    <input type="checkbox" name="system.traumas.{{index}}.answered"
-                           {{#if trauma.answered}}checked{{/if}} class="trauma-checkbox" />
-                    <input type="text" name="system.traumas.{{index}}.question" value="{{trauma.question}}"
-                           class="trauma-question-input {{#if trauma.answered}}crossed-out{{/if}}"/>
+                     <input type="checkbox" name="system.traumas.{{index}}.answered"
+                            {{#if trauma.answered}}checked{{/if}} class="trauma-checkbox" />
+                     <input type="text" name="system.traumas.{{index}}.question" value="{{trauma.question}}"
+                            class="trauma-question-input {{#if trauma.answered}}crossed-out{{/if}}"/>
                 </div>
             {{/each}}
         </div>
@@ -19,7 +19,7 @@
     <!-- Biography and Appearance Card -->
     <div class="description-card">
         <div class="card-header">
-            <h2 class="card-title">Biography & Appearance</h2>
+            <h2 class="card-title">{{localize 'CAIN.Sin.BiographyAppearance'}}</h2>
         </div>
         <div class="editor-container">
             {{ editor enrichedBiography target='system.biography' engine='prosemirror' button=true editable=editable class="editor-style" }}

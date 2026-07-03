@@ -12,7 +12,7 @@
           name='name'
           type='text'
           value='{{item.name}}'
-          placeholder='Name'
+          placeholder='{{localize "CAIN.Name"}}'
           class='domain-name-input {{system.sinSource}}' />
       </h1>
     </div>
@@ -29,7 +29,7 @@
     {{#if editable}}
       <hr>
       <div class="domain-option">
-        <span><b>Sin Source:</b></span>
+        <span><b>{{localize 'CAIN.Sin.SinSource'}}</b></span>
         <select id="sinTypeSelect" name="system.sinSource">
           <option value="ogre" {{#if (eq system.sinSource "ogre")}}selected{{/if}}>Ogre</option>
           <option value="toad" {{#if (eq system.sinSource "toad")}}selected{{/if}}>Toad</option>
@@ -45,12 +45,12 @@
         </select>
       </div>
       <div class="domain-option">
-        <span><b>Targets exorcist?</b></span>
+        <span><b>{{localize 'CAIN.Sin.TargetsExorcist'}}</b></span>
         <input type="checkbox" name="system.selectsExorcist" {{checked system.selectsExorcist}}/>
       </div>
       <div class="domain-option">
       {{#unless system.afflictionEffect}}
-        <span><b>If this domain targets an exorcist and inflicts an affliction, you can drag it here.</b></span>
+        <span><b>{{localize 'CAIN.Sin.DragAfflictionHint'}}</b></span>
       {{else}}
         <div class="affliction flexrow flex-group-center mob-psycho-affliction">
           <div class="flexcol affliction-content">
