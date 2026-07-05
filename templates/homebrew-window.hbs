@@ -1,24 +1,24 @@
 <form class='{{cssClass}} homebrew-background' autocomplete='off'>
   <header class='sheet-header homebrew-header'>
     <h1 class="homebrew-title">
-      <i class="fas fa-flask"></i> Homebrew Laboratory
+      <i class="fas fa-flask"></i> {{localize "CAIN.Homebrew.Title"}}
     </h1>
-    <p class="homebrew-subtitle">Create custom content for your CAIN game</p>
+    <p class="homebrew-subtitle">{{localize "CAIN.Homebrew.Subtitle"}}</p>
   </header>
 
   {{! Sheet Tab Navigation }}
   <nav class='sheet-tabs tabs homebrew-tabs' data-group='primary'>
-    <a class='item' data-tab='agenda'><i class="fas fa-tasks"></i> Agenda</a>
-    <a class='item' data-tab='blasphemy'><i class="fas fa-book-dead"></i> Blasphemy</a>
-    <a class='item' data-tab='blasphemyPower'><i class="fas fa-hand-sparkles"></i> Powers</a>
-    <a class='item' data-tab='bond'><i class="fas fa-heart"></i> Bond</a>
-    <a class='item' data-tab='bondAbility'><i class="fas fa-handshake"></i> Bond Abilities</a>
-    <a class='item' data-tab='affliction'><i class="fas fa-skull-crossbones"></i> Afflictions</a>
-    <a class='item' data-tab='item'><i class="fas fa-briefcase"></i> Items</a>
-    <a class='item' data-tab='sinMark'><i class="fas fa-exclamation-triangle"></i> Sin Marks</a>
-    <a class='item' data-tab='import-export'><i class="fas fa-file-import"></i> Import/Export</a>
-    <a class='item' data-tab='history'><i class="fas fa-history"></i> History</a>
-    <a class='item' data-tab='settings'><i class="fas fa-cog"></i> Settings</a>
+    <a class='item' data-tab='agenda'><i class="fas fa-tasks"></i> {{localize "CAIN.Homebrew.Agenda"}}</a>
+    <a class='item' data-tab='blasphemy'><i class="fas fa-book-dead"></i> {{localize "CAIN.Homebrew.Blasphemy"}}</a>
+    <a class='item' data-tab='blasphemyPower'><i class="fas fa-hand-sparkles"></i> {{localize "CAIN.Homebrew.Powers"}}</a>
+    <a class='item' data-tab='bond'><i class="fas fa-heart"></i> {{localize "CAIN.Homebrew.Bond"}}</a>
+    <a class='item' data-tab='bondAbility'><i class="fas fa-handshake"></i> {{localize "CAIN.Homebrew.BondAbilities"}}</a>
+    <a class='item' data-tab='affliction'><i class="fas fa-skull-crossbones"></i> {{localize "CAIN.Homebrew.Afflictions"}}</a>
+    <a class='item' data-tab='item'><i class="fas fa-briefcase"></i> {{localize "CAIN.Homebrew.Items"}}</a>
+    <a class='item' data-tab='sinMark'><i class="fas fa-exclamation-triangle"></i> {{localize "CAIN.Homebrew.SinMarks"}}</a>
+    <a class='item' data-tab='import-export'><i class="fas fa-file-import"></i> {{localize "CAIN.Homebrew.ImportExport"}}</a>
+    <a class='item' data-tab='history'><i class="fas fa-history"></i> {{localize "CAIN.Homebrew.History"}}</a>
+    <a class='item' data-tab='settings'><i class="fas fa-cog"></i> {{localize "CAIN.Homebrew.Settings"}}</a>
   </nav>
 
   {{! Sheet Body }}
@@ -26,28 +26,28 @@
 
     {{!-- AGENDA TAB --}}
     <div class='tab homebrew-tab' data-group='primary' data-tab='agenda'>
-      <div class="creation-panel">
-        <h2><i class="fas fa-plus-circle"></i> Create Agenda</h2>
+       <div class="creation-panel">
+        <h2><i class="fas fa-plus-circle"></i> {{localize "CAIN.Homebrew.CreateAgenda"}}</h2>
 
         <div class="form-section">
-          <label for="agenda-name">Agenda Name</label>
-          <input type="text" id="agenda-name" class="homebrew-input homebrew-agenda-name-input" placeholder="Enter agenda name..." value="{{agendaOptions.name}}">
+          <label for="agenda-name">{{localize "CAIN.Homebrew.AgendaName"}}</label>
+          <input type="text" id="agenda-name" class="homebrew-input homebrew-agenda-name-input" placeholder="{{localize 'CAIN.Homebrew.EnterAgendaName'}}" value="{{agendaOptions.name}}">
         </div>
 
         <div class="form-section">
           <div class="section-header">
-            <h3><i class="fas fa-list-ul"></i> Agenda Tasks</h3>
-            <button type="button" class="btn-add homebrew-new-task"><i class="fas fa-plus"></i> Add Task</button>
+            <h3><i class="fas fa-list-ul"></i> {{localize "CAIN.Homebrew.AgendaTasks"}}</h3>
+            <button type="button" class="btn-add homebrew-new-task"><i class="fas fa-plus"></i> {{localize "CAIN.Homebrew.AddTask"}}</button>
           </div>
           <ul class="task-list">
           {{#each agendaOptions.tasks}}
             <li class='task-item'>
-              <textarea class="homebrew-input homebrew-task-input" data-task-index="{{@index}}" placeholder="Task description..." style="font-weight: {{#if this.isBold}}bold{{else}}normal{{/if}};">{{this.task}}</textarea>
+              <textarea class="homebrew-input homebrew-task-input" data-task-index="{{@index}}" placeholder="{{localize 'CAIN.Homebrew.TaskDescPlaceholder'}}" style="font-weight: {{#if this.isBold}}bold{{else}}normal{{/if}};">{{this.task}}</textarea>
               <div class="task-controls">
-                <button type="button" class="btn-icon homebrew-toggle-bold" data-task-index="{{@index}}" title="Bold Text">
+                <button type="button" class="btn-icon homebrew-toggle-bold" data-task-index="{{@index}}" title="{{localize 'CAIN.Homebrew.BoldText'}}">
                   <i class="fas fa-bold {{#if this.isBold}}active{{/if}}"></i>
                 </button>
-                <button type="button" class="btn-icon btn-delete homebrew-remove-task" data-task-index="{{@index}}" title="Remove">
+                <button type="button" class="btn-icon btn-delete homebrew-remove-task" data-task-index="{{@index}}" title="{{localize 'CAIN.Remove'}}">
                   <i class="fas fa-trash"></i>
                 </button>
               </div>
@@ -58,15 +58,15 @@
 
         <div class="form-section">
           <div class="section-header">
-            <h3><i class="fas fa-star"></i> Agenda Abilities</h3>
-            <button type="button" class="btn-add homebrew-new-ability"><i class="fas fa-plus"></i> Add Ability</button>
+            <h3><i class="fas fa-star"></i> {{localize "CAIN.Homebrew.AgendaAbilities"}}</h3>
+            <button type="button" class="btn-add homebrew-new-ability"><i class="fas fa-plus"></i> {{localize "CAIN.Homebrew.AddAbility"}}</button>
           </div>
           <ul class="ability-list">
           {{#each agendaOptions.abilities}}
             <li class='ability-item'>
-              <input type="text" class="homebrew-input homebrew-ability-name-input" data-ability-index="{{@index}}" placeholder="Ability name..." value="{{this.name}}">
-              <textarea class="homebrew-input homebrew-ability-input" data-ability-index="{{@index}}" placeholder="Ability description (use {<CAT> type modifier} for CAT formatting)...">{{this.abilityDescription}}</textarea>
-              <button type="button" class="btn-icon btn-delete homebrew-remove-ability" data-ability-index="{{@index}}" title="Remove">
+              <input type="text" class="homebrew-input homebrew-ability-name-input" data-ability-index="{{@index}}" placeholder="{{localize 'CAIN.Homebrew.AbilityNamePlaceholder'}}" value="{{this.name}}">
+              <textarea class="homebrew-input homebrew-ability-input" data-ability-index="{{@index}}" placeholder="{{localize 'CAIN.Homebrew.AbilityDescPlaceholder'}}">{{this.abilityDescription}}</textarea>
+              <button type="button" class="btn-icon btn-delete homebrew-remove-ability" data-ability-index="{{@index}}" title="{{localize 'CAIN.Remove'}}">
                 <i class="fas fa-trash"></i>
               </button>
             </li>
@@ -76,21 +76,21 @@
 
         <div class="cat-help">
           <details>
-            <summary><i class="fas fa-question-circle"></i> CAT Formatting Help</summary>
+            <summary><i class="fas fa-question-circle"></i> {{localize "CAIN.Homebrew.CatHelp"}}</summary>
             <div class="cat-help-content">
-              <p><strong>Syntax:</strong> <code>{"{<CAT> type modifier}"}</code> or <code>{"{<CAT operation> type modifier}"}</code></p>
-              <p><strong>Valid types:</strong></p>
+              <p><strong>{{localize "CAIN.Homebrew.CatHelpSyntax"}}</strong> <code>{"{<CAT> type modifier}"}</code> or <code>{"{<CAT operation> type modifier}"}</code></p>
+              <p><strong>{{localize "CAIN.Homebrew.CatHelpValidTypes"}}</strong></p>
               <ul class="cat-type-list">
-                <li><code>people</code> - one, a few, small group, large group, a crowd, a huge crowd, thousands, many thousands</li>
-                <li><code>size</code> - human, heavy furniture, large animal, vehicle, large vehicle, building, large building, skyscraper</li>
-                <li><code>area</code> - personal, a few people, entire room, few rooms, whole building, city block, whole neighborhood, whole town</li>
-                <li><code>range</code> - touch, same room, across the street, down the block, a few blocks away, across town, visual range, over the horizon</li>
-                <li><code>speed</code> - average human, fast human, fast animal, car, train, maglev, airliner, jet fighter</li>
-                <li><code>magnitude</code> - small, noticeable, large, very large, massive, destructive, overwhelming, cataclysmic</li>
+                <li><code>people</code> - {{localize "CAIN.Homebrew.CatHelpDescPeople"}}</li>
+                <li><code>size</code> - {{localize "CAIN.Homebrew.CatHelpDescSize"}}</li>
+                <li><code>area</code> - {{localize "CAIN.Homebrew.CatHelpDescArea"}}</li>
+                <li><code>range</code> - {{localize "CAIN.Homebrew.CatHelpDescRange"}}</li>
+                <li><code>speed</code> - {{localize "CAIN.Homebrew.CatHelpDescSpeed"}}</li>
+                <li><code>magnitude</code> - {{localize "CAIN.Homebrew.CatHelpDescMagnitude"}}</li>
               </ul>
-              <p><strong>Modifier:</strong> A number (0, +1, -1, +2, etc.) that adjusts the CAT level</p>
-              <p><strong>Operations (optional):</strong> <code>/2</code>, <code>*2</code>, <code>+1</code>, <code>-1</code> applied before modifier</p>
-              <p><strong>Examples:</strong></p>
+              <p><strong>{{localize "CAIN.Homebrew.CatHelpModifier"}}</strong> {{localize "CAIN.Homebrew.CatHelpModifierDesc"}}</p>
+              <p><strong>{{localize "CAIN.Homebrew.CatHelpOperations"}}</strong> <code>/2</code>, <code>*2</code>, <code>+1</code>, <code>-1</code> {{localize "CAIN.Homebrew.CatHelpOperationsDesc"}}</p>
+              <p><strong>{{localize "CAIN.Homebrew.CatHelpExamples"}}</strong></p>
               <ul class="cat-example-list">
                 <li><code>{"{<CAT> size 0}"}</code> - size at current CAT level</li>
                 <li><code>{"{<CAT> people +1}"}</code> - people at CAT+1</li>
@@ -101,7 +101,7 @@
         </div>
 
         <footer class="form-footer">
-          <button type="button" class="btn-primary homebrew-submit-agenda"><i class="fas fa-check-circle"></i> Create Agenda</button>
+          <button type="button" class="btn-primary homebrew-submit-agenda"><i class="fas fa-check-circle"></i> {{localize "CAIN.Homebrew.CreateAgenda"}}</button>
         </footer>
       </div>
     </div>
@@ -109,49 +109,49 @@
     {{!-- BLASPHEMY TAB --}}
     <div class='tab homebrew-tab' data-group='primary' data-tab='blasphemy'>
       <div class="creation-panel">
-        <h2><i class="fas fa-plus-circle"></i> Create Blasphemy</h2>
+        <h2><i class="fas fa-plus-circle"></i> {{localize "CAIN.Homebrew.CreateBlasphemy"}}</h2>
 
         <div class="form-section">
-          <label for="blasphemy-name">Blasphemy Name</label>
-          <input type="text" id="blasphemy-name" class="homebrew-input homebrew-blasphemy-name-input" placeholder="Enter blasphemy name..." value="{{blasphemyOptions.name}}">
+          <label for="blasphemy-name">{{localize "CAIN.Homebrew.BlasphemyName"}}</label>
+          <input type="text" id="blasphemy-name" class="homebrew-input homebrew-blasphemy-name-input" placeholder="{{localize 'CAIN.Homebrew.EnterBlasphemyName'}}" value="{{blasphemyOptions.name}}">
         </div>
 
         <div class="form-section">
           <div class="section-header">
-            <h3><i class="fas fa-hand-sparkles"></i> Powers</h3>
-            <button type="button" class="btn-add homebrew-new-power"><i class="fas fa-plus"></i> Add Power</button>
+            <h3><i class="fas fa-hand-sparkles"></i> {{localize "CAIN.Homebrew.Powers"}}</h3>
+            <button type="button" class="btn-add homebrew-new-power"><i class="fas fa-plus"></i> {{localize "CAIN.Abilities.AddPower"}}</button>
           </div>
           <ul class="power-list">
           {{#each blasphemyOptions.powers}}
             <li class='power-item'>
               <div class="power-header-row">
-                <input type="text" class="homebrew-input homebrew-power-name-input" data-power-index="{{@index}}" placeholder="Power name..." value="{{this.name}}">
+                <input type="text" class="homebrew-input homebrew-power-name-input" data-power-index="{{@index}}" placeholder="{{localize 'CAIN.Homebrew.PowerNamePlaceholder'}}" value="{{this.name}}">
                 <label class="checkbox-label">
                   <input type="checkbox" class="homebrew-power-passive-input" data-power-index="{{@index}}" {{#if this.isPassive}}checked{{/if}}>
-                  <span>Passive</span>
+                  <span>{{localize "CAIN.Abilities.Passive"}}</span>
                 </label>
-                <button type="button" class="btn-icon btn-delete homebrew-remove-power" data-power-index="{{@index}}" title="Remove">
+                <button type="button" class="btn-icon btn-delete homebrew-remove-power" data-power-index="{{@index}}" title="{{localize 'CAIN.Remove'}}">
                   <i class="fas fa-trash"></i>
                 </button>
               </div>
               <div class="power-details">
                 <div class="psyche-burst-options">
-                  <label class="psyche-label">Psyche Burst:</label>
+                  <label class="psyche-label">{{localize "CAIN.Psyche"}}:</label>
                   <label class="checkbox-label small">
                     <input type="checkbox" class="homebrew-power-psyche-cost" data-power-index="{{@index}}" {{#if this.psycheBurstCost}}checked{{/if}}>
-                    <span><i class="fas fa-circle"></i> Uses</span>
+                    <span><i class="fas fa-circle"></i> {{localize "CAIN.Homebrew.Uses"}}</span>
                   </label>
                   <label class="checkbox-label small">
                     <input type="checkbox" class="homebrew-power-psyche-no-cost" data-power-index="{{@index}}" {{#if this.psycheBurstNoCost}}checked{{/if}}>
-                    <span><i class="fas fa-times"></i> No-Cost Mode</span>
+                    <span><i class="fas fa-times"></i> {{localize "CAIN.Abilities.HasNoPsycheMode"}}</span>
                   </label>
                   <label class="checkbox-label small">
                     <input type="checkbox" class="homebrew-power-psyche-mult" data-power-index="{{@index}}" {{#if this.psycheBurstMultCost}}checked{{/if}}>
-                    <span><i class="fas fa-plus"></i> Multiple</span>
+                    <span><i class="fas fa-plus"></i> {{localize "CAIN.Homebrew.Multiple"}}</span>
                   </label>
                 </div>
-                <input type="text" class="homebrew-input homebrew-power-tags-input" data-power-index="{{@index}}" placeholder="Keywords (comma-separated)..." value="{{this.keywords}}">
-                <textarea class="homebrew-input homebrew-power-input" data-power-index="{{@index}}" placeholder="Power description (use CAT formatting)...">{{this.powerDescription}}</textarea>
+                <input type="text" class="homebrew-input homebrew-power-tags-input" data-power-index="{{@index}}" placeholder="{{localize 'CAIN.Homebrew.KeywordsPlaceholder'}}" value="{{this.keywords}}">
+                <textarea class="homebrew-input homebrew-power-input" data-power-index="{{@index}}" placeholder="{{localize 'CAIN.Homebrew.PowerDesc'}}">{{this.powerDescription}}</textarea>
               </div>
             </li>
           {{/each}}
@@ -160,17 +160,17 @@
 
         <div class="cat-help">
           <details>
-            <summary><i class="fas fa-question-circle"></i> CAT Formatting Help</summary>
+            <summary><i class="fas fa-question-circle"></i> {{localize "CAIN.Homebrew.CatHelp"}}</summary>
             <div class="cat-help-content">
-              <p><strong>Syntax:</strong> <code>{"{<CAT> type modifier}"}</code> or <code>{"{<CAT operation> type modifier}"}</code></p>
-              <p><strong>Valid types:</strong> <code>people</code>, <code>size</code>, <code>area</code>, <code>range</code>, <code>speed</code>, <code>magnitude</code></p>
-              <p><strong>Examples:</strong> <code>{"{<CAT> size 0}"}</code>, <code>{"{<CAT> people +1}"}</code>, <code>{"{<CAT/2> area 0}"}</code></p>
+              <p><strong>{{localize "CAIN.Homebrew.CatHelpSyntax"}}</strong> <code>{"{<CAT> type modifier}"}</code> or <code>{"{<CAT operation> type modifier}"}</code></p>
+              <p><strong>{{localize "CAIN.Homebrew.CatHelpValidTypes"}}</strong> <code>people</code>, <code>size</code>, <code>area</code>, <code>range</code>, <code>speed</code>, <code>magnitude</code></p>
+              <p><strong>{{localize "CAIN.Homebrew.CatHelpExamples"}}</strong> <code>{"{<CAT> size 0}"}</code>, <code>{"{<CAT> people +1}"}</code>, <code>{"{<CAT/2> area 0}"}</code></p>
             </div>
           </details>
         </div>
 
         <footer class="form-footer">
-          <button type="button" class="btn-primary homebrew-submit-blasphemy"><i class="fas fa-check-circle"></i> Create Blasphemy</button>
+          <button type="button" class="btn-primary homebrew-submit-blasphemy"><i class="fas fa-check-circle"></i> {{localize "CAIN.Homebrew.CreateBlasphemy"}}</button>
         </footer>
       </div>
     </div>
@@ -178,61 +178,61 @@
     {{!-- BLASPHEMY POWER TAB --}}
     <div class='tab homebrew-tab' data-group='primary' data-tab='blasphemyPower'>
       <div class="creation-panel">
-        <h2><i class="fas fa-plus-circle"></i> Create Standalone Power</h2>
+        <h2><i class="fas fa-plus-circle"></i> {{localize "CAIN.Homebrew.CreateStandalonePower"}}</h2>
 
         <div class="form-section">
-          <label for="power-standalone-name">Power Name</label>
-          <input type="text" id="power-standalone-name" class="homebrew-input" placeholder="Enter power name...">
+          <label for="power-standalone-name">{{localize "CAIN.Homebrew.PowerName"}}</label>
+          <input type="text" id="power-standalone-name" class="homebrew-input" placeholder="{{localize 'CAIN.Homebrew.EnterPowerName'}}">
         </div>
 
         <div class="form-section">
           <label class="checkbox-label">
             <input type="checkbox" id="power-standalone-passive">
-            <span>Is Passive Power</span>
+            <span>{{localize "CAIN.Abilities.IsPassive"}}</span>
           </label>
         </div>
 
         <div class="form-section">
-          <label>Psyche Burst Options</label>
+          <label>{{localize "CAIN.Abilities.PsycheBurstOptions"}}</label>
           <div class="psyche-burst-options">
             <label class="checkbox-label">
               <input type="checkbox" id="power-standalone-psyche-cost">
-              <span><i class="fas fa-circle"></i> Uses Psyche Burst</span>
+              <span><i class="fas fa-circle"></i> {{localize "CAIN.Abilities.UsesPsycheBurst"}}</span>
             </label>
             <label class="checkbox-label">
               <input type="checkbox" id="power-standalone-psyche-no-cost">
-              <span><i class="fas fa-times"></i> Has No-Psyche Mode</span>
+              <span><i class="fas fa-times"></i> {{localize "CAIN.Abilities.HasNoPsycheMode"}}</span>
             </label>
             <label class="checkbox-label">
               <input type="checkbox" id="power-standalone-psyche-mult">
-              <span><i class="fas fa-plus"></i> Can Use Multiple Bursts</span>
+              <span><i class="fas fa-plus"></i> {{localize "CAIN.Abilities.CanUseMultipleBursts"}}</span>
             </label>
           </div>
         </div>
 
         <div class="form-section">
-          <label for="power-standalone-keywords">Keywords</label>
-          <input type="text" id="power-standalone-keywords" class="homebrew-input" placeholder="Keywords (comma-separated)...">
+          <label for="power-standalone-keywords">{{localize "CAIN.Keywords"}}</label>
+          <input type="text" id="power-standalone-keywords" class="homebrew-input" placeholder="{{localize 'CAIN.Homebrew.KeywordsPlaceholder'}}">
         </div>
 
         <div class="form-section">
-          <label for="power-standalone-description">Power Description</label>
-          <textarea id="power-standalone-description" class="homebrew-input" rows="6" placeholder="Power description (use CAT formatting)..."></textarea>
+          <label for="power-standalone-description">{{localize "CAIN.Homebrew.PowerDesc"}}</label>
+          <textarea id="power-standalone-description" class="homebrew-input" rows="6" placeholder="{{localize 'CAIN.Homebrew.PowerDesc'}}"></textarea>
         </div>
 
         <div class="cat-help">
           <details>
-            <summary><i class="fas fa-question-circle"></i> CAT Formatting Help</summary>
+            <summary><i class="fas fa-question-circle"></i> {{localize "CAIN.Homebrew.CatHelp"}}</summary>
             <div class="cat-help-content">
-              <p><strong>Syntax:</strong> <code>{"{<CAT> type modifier}"}</code> or <code>{"{<CAT operation> type modifier}"}</code></p>
-              <p><strong>Valid types:</strong> <code>people</code>, <code>size</code>, <code>area</code>, <code>range</code>, <code>speed</code>, <code>magnitude</code></p>
-              <p><strong>Examples:</strong> <code>{"{<CAT> size 0}"}</code>, <code>{"{<CAT> people +1}"}</code>, <code>{"{<CAT/2> area 0}"}</code></p>
+              <p><strong>{{localize "CAIN.Homebrew.CatHelpSyntax"}}</strong> <code>{"{<CAT> type modifier}"}</code> or <code>{"{<CAT operation> type modifier}"}</code></p>
+              <p><strong>{{localize "CAIN.Homebrew.CatHelpValidTypes"}}</strong> <code>people</code>, <code>size</code>, <code>area</code>, <code>range</code>, <code>speed</code>, <code>magnitude</code></p>
+              <p><strong>{{localize "CAIN.Homebrew.CatHelpExamples"}}</strong> <code>{"{<CAT> size 0}"}</code>, <code>{"{<CAT> people +1}"}</code>, <code>{"{<CAT/2> area 0}"}</code></p>
             </div>
           </details>
         </div>
 
         <footer class="form-footer">
-          <button type="button" class="btn-primary homebrew-submit-standalone-power"><i class="fas fa-check-circle"></i> Create Power</button>
+          <button type="button" class="btn-primary homebrew-submit-standalone-power"><i class="fas fa-check-circle"></i> {{localize "CAIN.Homebrew.CreatePower"}}</button>
         </footer>
       </div>
     </div>
@@ -240,48 +240,48 @@
     {{!-- BOND TAB --}}
     <div class='tab homebrew-tab' data-group='primary' data-tab='bond'>
       <div class="creation-panel bond-panel">
-        <h2><i class="fas fa-plus-circle"></i> Create Bond (Virtue)</h2>
+        <h2><i class="fas fa-plus-circle"></i> {{localize "CAIN.Homebrew.CreateBond"}}</h2>
 
         <div class="form-section">
-          <label for="bond-name">Bond Name</label>
-          <input type="text" id="bond-name" class="homebrew-input" placeholder="Enter bond name (e.g., 'Bond of Justice')...">
+          <label for="bond-name">{{localize "CAIN.Homebrew.BondName"}}</label>
+          <input type="text" id="bond-name" class="homebrew-input" placeholder="{{localize 'CAIN.Homebrew.EnterBondName'}}">
         </div>
 
         <div class="form-section">
-          <label for="bond-virtue-name">Virtue Name</label>
-          <input type="text" id="bond-virtue-name" class="homebrew-input" placeholder="Enter virtue name (e.g., 'Justice')...">
+          <label for="bond-virtue-name">{{localize "CAIN.VirtueName"}}</label>
+          <input type="text" id="bond-virtue-name" class="homebrew-input" placeholder="{{localize 'CAIN.Homebrew.EnterVirtueName'}}">
         </div>
 
         <div class="form-section">
-          <label for="bond-high-blasphemy-level">High Blasphemy Unlock Level</label>
+          <label for="bond-high-blasphemy-level">{{localize "CAIN.Bonds.UnlockedAtLevel"}}</label>
           <select id="bond-high-blasphemy-level" class="homebrew-input">
-            <option value="0">Level 0 - Immediate</option>
-            <option value="1" selected>Level 1</option>
-            <option value="2">Level 2</option>
-            <option value="3">Level 3</option>
+            <option value="0">{{localize "CAIN.Bonds.Level0Immediate"}}</option>
+            <option value="1" selected>{{localize "CAIN.Lvl" level=1}}</option>
+            <option value="2">{{localize "CAIN.Lvl" level=2}}</option>
+            <option value="3">{{localize "CAIN.Lvl" level=3}}</option>
           </select>
-          <p class="settings-hint">The bond level at which the associated High Blasphemy is unlocked.</p>
+          <p class="settings-hint">{{localize "CAIN.Homebrew.HighBlasphemyLevelHint"}}</p>
         </div>
 
         <div class="form-section">
           <div class="section-header">
-            <h3><i class="fas fa-scroll"></i> Strictures</h3>
-            <button type="button" class="btn-add homebrew-new-stricture"><i class="fas fa-plus"></i> Add Stricture</button>
+            <h3><i class="fas fa-scroll"></i> {{localize "CAIN.Abilities.Strictures"}}</h3>
+            <button type="button" class="btn-add homebrew-new-stricture"><i class="fas fa-plus"></i> {{localize "CAIN.Homebrew.AddStricture"}}</button>
           </div>
-          <p class="settings-hint">Rules that must be followed while bonding with this virtue. Breaking a stricture costs 1d3 stress.</p>
+          <p class="settings-hint">{{localize "CAIN.Homebrew.StricturesHint"}}</p>
           <ul class="stricture-list" id="bond-stricture-list">
           {{#each bondOptions.strictures}}
             <li class='stricture-item'>
               <span class="stricture-number"></span>
-              <textarea class="homebrew-input homebrew-stricture-input" data-stricture-index="{{@index}}" placeholder="Enter stricture (e.g., 'Never lie', 'Always help the innocent')...">{{this}}</textarea>
-              <button type="button" class="btn-icon btn-delete homebrew-remove-stricture" data-stricture-index="{{@index}}" title="Remove Stricture">
+              <textarea class="homebrew-input homebrew-stricture-input" data-stricture-index="{{@index}}" placeholder="{{localize 'CAIN.Homebrew.StricturePlaceholder'}}">{{this}}</textarea>
+              <button type="button" class="btn-icon btn-delete homebrew-remove-stricture" data-stricture-index="{{@index}}" title="{{localize 'CAIN.Homebrew.RemoveStricture'}}">
                 <i class="fas fa-trash"></i>
               </button>
             </li>
           {{else}}
             <li class="stricture-empty-state">
               <i class="fas fa-scroll"></i>
-              <span>No strictures added yet. Click "Add Stricture" to define the rules of this bond.</span>
+              <span>{{localize "CAIN.Homebrew.NoStricturesHint"}}</span>
             </li>
           {{/each}}
           </ul>
@@ -289,18 +289,18 @@
 
         <div class="bond-info">
           <details>
-            <summary><i class="fas fa-info-circle"></i> Bond System Info</summary>
+            <summary><i class="fas fa-info-circle"></i> {{localize "CAIN.Homebrew.BondSystemInfo"}}</summary>
             <div class="bond-info-content">
-              <p><strong>Bonds</strong> represent a character's connection to a Virtue. As bonds level up (0-3), characters gain abilities.</p>
-              <p><strong>Strictures</strong> are rules that must be followed while bonding. Breaking them costs 1d3 stress.</p>
-              <p><strong>High Blasphemies</strong> are special powers gained at the specified bond level - they're "free" and don't increase XP cap.</p>
-              <p><strong>Bond Abilities</strong> should be created separately using the Bond Abilities tab, then linked to this bond.</p>
+              <p><strong>{{localize "CAIN.Sheet.Talismans"}}</strong> {{localize "CAIN.Homebrew.BondInfo1"}}</p>
+              <p><strong>{{localize "CAIN.Abilities.Strictures"}}</strong> {{localize "CAIN.Homebrew.BondInfo2"}}</p>
+              <p><strong>{{localize "CAIN.Abilities.HighBlasphemyPower"}}</strong> {{localize "CAIN.Homebrew.BondInfo3"}}</p>
+              <p><strong>{{localize "CAIN.Homebrew.BondAbilities"}}</strong> {{localize "CAIN.Homebrew.BondInfo4"}}</p>
             </div>
           </details>
         </div>
 
         <footer class="form-footer">
-          <button type="button" class="btn-primary homebrew-submit-bond"><i class="fas fa-check-circle"></i> Create Bond</button>
+          <button type="button" class="btn-primary homebrew-submit-bond"><i class="fas fa-check-circle"></i> {{localize "CAIN.Homebrew.CreateBond"}}</button>
         </footer>
       </div>
     </div>
@@ -308,53 +308,53 @@
     {{!-- BOND ABILITY TAB --}}
     <div class='tab homebrew-tab' data-group='primary' data-tab='bondAbility'>
       <div class="creation-panel bond-ability-panel">
-        <h2><i class="fas fa-plus-circle"></i> Create Bond Ability</h2>
+        <h2><i class="fas fa-plus-circle"></i> {{localize "CAIN.Homebrew.CreateBondAbility"}}</h2>
 
         <div class="form-section">
-          <label for="bond-ability-name">Ability Name</label>
-          <input type="text" id="bond-ability-name" class="homebrew-input" placeholder="Enter ability name...">
+          <label for="bond-ability-name">{{localize "CAIN.AbilityName"}}</label>
+          <input type="text" id="bond-ability-name" class="homebrew-input" placeholder="{{localize 'CAIN.Homebrew.EnterBondAbilityName'}}">
         </div>
 
         <div class="form-section">
-          <label for="bond-ability-level">Bond Level Required</label>
+          <label for="bond-ability-level">{{localize "CAIN.Bonds.LevelRequired"}}</label>
           <select id="bond-ability-level" class="homebrew-input">
-            <option value="0">Level 0 - Immediate</option>
-            <option value="1">Level 1 - 1 Mission Survived</option>
-            <option value="2">Level 2 - 2 Missions Survived</option>
-            <option value="3">Level 3 - 3 Missions Survived (Max)</option>
+            <option value="0">{{localize "CAIN.Bonds.Level0Immediate"}}</option>
+            <option value="1">{{localize "CAIN.Bonds.Level1Desc"}}</option>
+            <option value="2">{{localize "CAIN.Bonds.Level2Desc"}}</option>
+            <option value="3">{{localize "CAIN.Bonds.Level3Desc"}}</option>
           </select>
         </div>
 
         <div class="form-section">
-          <label for="bond-ability-description">Ability Description</label>
-          <textarea id="bond-ability-description" class="homebrew-input" rows="6" placeholder="Describe what this ability does..."></textarea>
+          <label for="bond-ability-description">{{localize "CAIN.AbilityDescription"}}</label>
+          <textarea id="bond-ability-description" class="homebrew-input" rows="6" placeholder="{{localize 'CAIN.Bonds.AbilityDescPlaceholder'}}"></textarea>
         </div>
 
         <div class="form-section">
           <label class="checkbox-label">
             <input type="checkbox" id="bond-ability-permanent" checked>
-            <span>Permanent Ability</span>
+            <span>{{localize "CAIN.Bonds.PermanentAbility"}}</span>
           </label>
-          <p class="settings-hint">Permanent abilities persist even when not actively bonding with this virtue.</p>
+          <p class="settings-hint">{{localize "CAIN.Bonds.PermanentAbilityHint"}}</p>
         </div>
 
         <div class="form-section psyche-section">
-          <h3><i class="fas fa-brain"></i> Psyche Burst Requirements</h3>
+          <h3><i class="fas fa-brain"></i> {{localize "CAIN.Abilities.PsycheBurstOptions"}}</h3>
           <label class="checkbox-label">
             <input type="checkbox" id="bond-ability-requires-psyche">
-            <span>Requires Psyche Burst</span>
+            <span>{{localize "CAIN.Abilities.UsesPsycheBurst"}}</span>
           </label>
-          <p class="settings-hint">Check this if the ability requires spending Psyche Bursts to activate.</p>
+          <p class="settings-hint">{{localize "CAIN.Bonds.RequiresPsycheHint"}}</p>
 
           <div class="psyche-cost-field" id="bond-ability-psyche-cost-field" style="display: none;">
-            <label for="bond-ability-psyche-cost">Psyche Burst Cost</label>
+            <label for="bond-ability-psyche-cost">{{localize "CAIN.Bonds.PsycheBurstCostLabel"}}</label>
             <input type="number" id="bond-ability-psyche-cost" class="homebrew-input" value="1" min="0">
-            <p class="settings-hint">Set to 0 for "all remaining Psyche Bursts (minimum 1)"</p>
+            <p class="settings-hint">{{localize "CAIN.Bonds.Cost0Hint"}}</p>
           </div>
         </div>
 
         <footer class="form-footer">
-          <button type="button" class="btn-primary homebrew-submit-bond-ability"><i class="fas fa-check-circle"></i> Create Bond Ability</button>
+          <button type="button" class="btn-primary homebrew-submit-bond-ability"><i class="fas fa-check-circle"></i> {{localize "CAIN.Homebrew.CreateBondAbility"}}</button>
         </footer>
       </div>
     </div>
@@ -362,31 +362,31 @@
     {{!-- AFFLICTION TAB --}}
     <div class='tab homebrew-tab' data-group='primary' data-tab='affliction'>
       <div class="creation-panel">
-        <h2><i class="fas fa-plus-circle"></i> Create Affliction</h2>
+        <h2><i class="fas fa-plus-circle"></i> {{localize "CAIN.Homebrew.CreateAffliction"}}</h2>
 
         <div class="form-section">
-          <label for="affliction-name">Affliction Name</label>
-          <input type="text" id="affliction-name" class="homebrew-input" placeholder="Enter affliction name...">
+          <label for="affliction-name">{{localize "CAIN.Homebrew.AfflictionName"}}</label>
+          <input type="text" id="affliction-name" class="homebrew-input" placeholder="{{localize 'CAIN.Homebrew.EnterAfflictionName'}}">
         </div>
 
         <div class="form-section">
-          <label for="affliction-description">Description</label>
-          <textarea id="affliction-description" class="homebrew-input" rows="6" placeholder="Affliction description (use CAT formatting)..."></textarea>
+          <label for="affliction-description">{{localize "CAIN.Description"}}</label>
+          <textarea id="affliction-description" class="homebrew-input" rows="6" placeholder="{{localize 'CAIN.Homebrew.EnterAfflictionDesc'}}"></textarea>
         </div>
 
         <div class="cat-help">
           <details>
-            <summary><i class="fas fa-question-circle"></i> CAT Formatting Help</summary>
+            <summary><i class="fas fa-question-circle"></i> {{localize "CAIN.Homebrew.CatHelp"}}</summary>
             <div class="cat-help-content">
-              <p><strong>Syntax:</strong> <code>{"{<CAT> type modifier}"}</code> or <code>{"{<CAT operation> type modifier}"}</code></p>
-              <p><strong>Valid types:</strong> <code>people</code>, <code>size</code>, <code>area</code>, <code>range</code>, <code>speed</code>, <code>magnitude</code></p>
-              <p><strong>Examples:</strong> <code>{"{<CAT> size 0}"}</code>, <code>{"{<CAT> people +1}"}</code>, <code>{"{<CAT/2> area 0}"}</code></p>
+              <p><strong>{{localize "CAIN.Homebrew.CatHelpSyntax"}}</strong> <code>{"{<CAT> type modifier}"}</code> or <code>{"{<CAT operation> type modifier}"}</code></p>
+              <p><strong>{{localize "CAIN.Homebrew.CatHelpValidTypes"}}</strong> <code>people</code>, <code>size</code>, <code>area</code>, <code>range</code>, <code>speed</code>, <code>magnitude</code></p>
+              <p><strong>{{localize "CAIN.Homebrew.CatHelpExamples"}}</strong> <code>{"{<CAT> size 0}"}</code>, <code>{"{<CAT> people +1}"}</code>, <code>{"{<CAT/2> area 0}"}</code></p>
             </div>
           </details>
         </div>
 
         <footer class="form-footer">
-          <button type="button" class="btn-primary homebrew-submit-affliction"><i class="fas fa-check-circle"></i> Create Affliction</button>
+          <button type="button" class="btn-primary homebrew-submit-affliction"><i class="fas fa-check-circle"></i> {{localize "CAIN.Homebrew.CreateAffliction"}}</button>
         </footer>
       </div>
     </div>
@@ -394,30 +394,30 @@
     {{!-- ITEM TAB --}}
     <div class='tab homebrew-tab' data-group='primary' data-tab='item'>
       <div class="creation-panel">
-        <h2><i class="fas fa-plus-circle"></i> Create Item</h2>
+        <h2><i class="fas fa-plus-circle"></i> {{localize "CAIN.Homebrew.CreateItem"}}</h2>
 
         <div class="form-section">
-          <label for="item-name">Item Name</label>
-          <input type="text" id="item-name" class="homebrew-input" placeholder="Enter item name...">
+          <label for="item-name">{{localize "CAIN.Homebrew.ItemName"}}</label>
+          <input type="text" id="item-name" class="homebrew-input" placeholder="{{localize 'CAIN.Homebrew.EnterItemName'}}">
         </div>
 
         <div class="form-section">
-          <label for="item-description">Description</label>
-          <textarea id="item-description" class="homebrew-input" rows="6" placeholder="Item description..."></textarea>
+          <label for="item-description">{{localize "CAIN.Description"}}</label>
+          <textarea id="item-description" class="homebrew-input" rows="6" placeholder="{{localize 'CAIN.DescriptionPlaceholder'}}"></textarea>
         </div>
 
         <div class="form-section">
-          <label for="item-quantity">Quantity</label>
+          <label for="item-quantity">{{localize "CAIN.Quantity"}}</label>
           <input type="number" id="item-quantity" class="homebrew-input" min="1" value="1">
         </div>
 
         <div class="form-section">
-          <label for="item-weight">Weight</label>
+          <label for="item-weight">{{localize "CAIN.Weight"}}</label>
           <input type="number" id="item-weight" class="homebrew-input" min="0" step="0.1" value="0">
         </div>
 
         <footer class="form-footer">
-          <button type="button" class="btn-primary homebrew-submit-item"><i class="fas fa-check-circle"></i> Create Item</button>
+          <button type="button" class="btn-primary homebrew-submit-item"><i class="fas fa-check-circle"></i> {{localize "CAIN.Homebrew.CreateItem"}}</button>
         </footer>
       </div>
     </div>
@@ -425,29 +425,29 @@
     {{!-- SIN MARK TAB --}}
     <div class='tab homebrew-tab' data-group='primary' data-tab='sinMark'>
       <div class="creation-panel">
-        <h2><i class="fas fa-plus-circle"></i> Create Sin Mark</h2>
+        <h2><i class="fas fa-plus-circle"></i> {{localize "CAIN.Homebrew.CreateSinMark"}}</h2>
 
         <div class="form-section">
-          <label for="sinmark-name">Sin Mark Name</label>
-          <input type="text" id="sinmark-name" class="homebrew-input" placeholder="Enter sin mark name...">
+          <label for="sinmark-name">{{localize "CAIN.Homebrew.SinMarkName"}}</label>
+          <input type="text" id="sinmark-name" class="homebrew-input" placeholder="{{localize 'CAIN.Homebrew.EnterSinMarkName'}}">
         </div>
 
         <div class="form-section">
-          <label for="sinmark-description">Description</label>
-          <textarea id="sinmark-description" class="homebrew-input" rows="4" placeholder="Sin mark description..."></textarea>
+          <label for="sinmark-description">{{localize "CAIN.Description"}}</label>
+          <textarea id="sinmark-description" class="homebrew-input" rows="4" placeholder="{{localize 'CAIN.Homebrew.EnterSinMarkDesc'}}"></textarea>
         </div>
 
         <div class="form-section">
           <div class="section-header">
-            <h3><i class="fas fa-star"></i> Sin Mark Abilities</h3>
-            <button type="button" class="btn-add homebrew-new-sinmark-ability"><i class="fas fa-plus"></i> Add Ability</button>
+            <h3><i class="fas fa-star"></i> {{localize "CAIN.Homebrew.SinMarkAbilities"}}</h3>
+            <button type="button" class="btn-add homebrew-new-sinmark-ability"><i class="fas fa-plus"></i> {{localize "CAIN.Homebrew.AddTask"}}</button>
           </div>
           <ul class="ability-list">
           {{#each sinMarkOptions.abilities}}
             <li class='ability-item'>
-              <input type="text" class="homebrew-input homebrew-sinmark-ability-name-input" data-sinmark-ability-index="{{@index}}" placeholder="Ability name..." value="{{this.name}}">
-              <textarea class="homebrew-input homebrew-sinmark-ability-description-input" data-sinmark-ability-index="{{@index}}" placeholder="Ability description (use {<CAT> type modifier} for CAT formatting)...">{{this.abilityDescription}}</textarea>
-              <button type="button" class="btn-icon btn-delete homebrew-remove-sinmark-ability" data-sinmark-ability-index="{{@index}}" title="Remove">
+              <input type="text" class="homebrew-input homebrew-sinmark-ability-name-input" data-sinmark-ability-index="{{@index}}" placeholder="{{localize 'CAIN.Homebrew.SinMarkAbilityName'}}" value="{{this.name}}">
+              <textarea class="homebrew-input homebrew-sinmark-ability-description-input" data-sinmark-ability-index="{{@index}}" placeholder="{{localize 'CAIN.Homebrew.EnterSinMarkAbilityDesc'}}">{{this.abilityDescription}}</textarea>
+              <button type="button" class="btn-icon btn-delete homebrew-remove-sinmark-ability" data-sinmark-ability-index="{{@index}}" title="{{localize 'CAIN.Remove'}}">
                 <i class="fas fa-trash"></i>
               </button>
             </li>
@@ -456,7 +456,7 @@
         </div>
 
         <footer class="form-footer">
-          <button type="button" class="btn-primary homebrew-submit-sinmark"><i class="fas fa-check-circle"></i> Create Sin Mark</button>
+          <button type="button" class="btn-primary homebrew-submit-sinmark"><i class="fas fa-check-circle"></i> {{localize "CAIN.Homebrew.CreateSinMark"}}</button>
         </footer>
       </div>
     </div>
@@ -464,50 +464,50 @@
     {{!-- IMPORT/EXPORT TAB --}}
     <div class='tab homebrew-tab' data-group='primary' data-tab='import-export'>
       <div class="import-export-panel">
-        <h2><i class="fas fa-exchange-alt"></i> Import & Export Homebrew Content</h2>
+        <h2><i class="fas fa-exchange-alt"></i> {{localize "CAIN.Homebrew.ImportExportTitle"}}</h2>
 
         <div class="import-export-grid">
           {{!-- EXPORT SECTION --}}
           <div class="export-section">
             <div class="section-card">
-              <h3><i class="fas fa-file-export"></i> Export Content</h3>
-              <p class="section-description">Export individual items or all your homebrew content to share with others or backup your work.</p>
+              <h3><i class="fas fa-file-export"></i> {{localize "CAIN.Homebrew.ExportContent"}}</h3>
+              <p class="section-description">{{localize "CAIN.Homebrew.ExportContentHint"}}</p>
 
               <div class="export-options">
                 <div class="form-section">
-                  <label>Select Items to Export:</label>
+                  <label>{{localize "CAIN.Homebrew.SelectItemsExport"}}</label>
                   <div class="export-checklist">
                     <label class="checkbox-label">
                       <input type="checkbox" id="export-select-all" class="export-checkbox">
-                      <span><strong>Select All</strong></span>
+                      <span><strong>{{localize "CAIN.Homebrew.ExportSelectAll"}}</strong></span>
                     </label>
                   </div>
                   <div class="export-items-list" id="export-items-list">
-                    <p class="empty-state"><i class="fas fa-inbox"></i> No items to export. Create some homebrew content first!</p>
+                    <p class="empty-state"><i class="fas fa-inbox"></i> {{localize "CAIN.Homebrew.NoItemsToExport"}}</p>
                   </div>
                 </div>
 
                 <button type="button" class="btn-primary homebrew-export-selected">
-                  <i class="fas fa-download"></i> Export Selected Items
+                  <i class="fas fa-download"></i> {{localize "CAIN.Homebrew.ExportSelected"}}
                 </button>
                 <button type="button" class="btn-secondary homebrew-export-all-content">
-                  <i class="fas fa-file-archive"></i> Export All Content
+                  <i class="fas fa-file-archive"></i> {{localize "CAIN.Homebrew.ExportAllContent"}}
                 </button>
               </div>
             </div>
 
             {{!-- FOLDER ZIP EXPORT --}}
             <div class="section-card">
-              <h3><i class="fas fa-folder-open"></i> Export Folders to World</h3>
-              <p class="section-description">Pick the folders holding your homebrew. The items are written as individual JSON files (laid out like the system's own pack sources, <code>src/packs/homebrew/</code>) into a timestamped folder in your world: <code>worlds/&lt;world&gt;/homebrew-exports/</code>. Linked powers/abilities are included automatically. Perfect for submitting content to be added to the system's Homebrew compendium.</p>
+              <h3><i class="fas fa-folder-open"></i> {{localize "CAIN.Homebrew.ExportFoldersTitle"}}</h3>
+              <p class="section-description">{{localize "CAIN.Homebrew.ExportFoldersDesc"}}</p>
 
               <div class="export-options">
                 <div class="form-section">
-                  <label>Select Folders to Export:</label>
+                  <label>{{localize "CAIN.Homebrew.SelectFoldersExport"}}</label>
                   <div class="export-checklist">
                     <label class="checkbox-label">
                       <input type="checkbox" id="export-folder-select-all" class="export-checkbox">
-                      <span><strong>Select All Folders</strong></span>
+                      <span><strong>{{localize "CAIN.Homebrew.SelectAllFolders"}}</strong></span>
                     </label>
                   </div>
                   <div class="export-items-list" id="export-folders-list">
@@ -517,13 +517,13 @@
                         <span><i class="fas fa-folder"></i> {{this.name}} <em>({{this.count}})</em></span>
                       </label>
                     {{else}}
-                      <p class="empty-state"><i class="fas fa-inbox"></i> No folders with homebrew items found.</p>
+                      <p class="empty-state"><i class="fas fa-inbox"></i> {{localize "CAIN.Homebrew.NoFoldersFound"}}</p>
                     {{/each}}
                   </div>
                 </div>
 
                 <button type="button" class="btn-primary homebrew-export-folders-zip">
-                  <i class="fas fa-folder-plus"></i> Export Selected Folders to World
+                  <i class="fas fa-folder-plus"></i> {{localize "CAIN.Homebrew.ExportFoldersBtn"}}
                 </button>
               </div>
             </div>
@@ -532,49 +532,49 @@
           {{!-- IMPORT SECTION --}}
           <div class="import-section">
             <div class="section-card">
-              <h3><i class="fas fa-file-import"></i> Import Content</h3>
-              <p class="section-description">Import homebrew content from JSON files created by you or shared by others.</p>
+              <h3><i class="fas fa-file-import"></i> {{localize "CAIN.Homebrew.ImportContent"}}</h3>
+              <p class="section-description">{{localize "CAIN.Homebrew.ImportContentDesc"}}</p>
 
               <div class="import-instructions">
-                <h4><i class="fas fa-info-circle"></i> How to Import:</h4>
+                <h4><i class="fas fa-info-circle"></i> {{localize "CAIN.Homebrew.HowToImport"}}</h4>
                 <ol>
-                  <li>Click the "Choose File" button below</li>
-                  <li>Select a valid homebrew JSON file from your computer</li>
-                  <li>Review the items to be imported</li>
-                  <li>Click "Import" to add them to your world</li>
+                  <li>{{localize "CAIN.Homebrew.ImportStep1"}}</li>
+                  <li>{{localize "CAIN.Homebrew.ImportStep2"}}</li>
+                  <li>{{localize "CAIN.Homebrew.ImportStep3"}}</li>
+                  <li>{{localize "CAIN.Homebrew.ImportStep4"}}</li>
                 </ol>
 
                 <div class="import-warning">
                   <i class="fas fa-exclamation-triangle"></i>
-                  <strong>Note:</strong> Imported items will be added to your world. If an item with the same name exists, it will be overwritten.
+                  {{localize "CAIN.Homebrew.ImportWarning"}}
                 </div>
               </div>
 
               <div class="import-controls">
                 <input type="file" id="homebrew-import-file" accept=".json" style="display: none;">
                 <button type="button" class="btn-primary homebrew-choose-file">
-                  <i class="fas fa-folder-open"></i> Choose File
+                  <i class="fas fa-folder-open"></i> {{localize "CAIN.Homebrew.ChooseFile"}}
                 </button>
                 <div class="selected-file" id="selected-file-name">
-                  <i class="fas fa-file"></i> No file selected
+                  <i class="fas fa-file"></i> {{localize "CAIN.Homebrew.NoFileSelected"}}
                 </div>
               </div>
 
               <div class="import-preview" id="import-preview" style="display: none;">
-                <h4>Preview:</h4>
+                <h4>{{localize "CAIN.Homebrew.Preview"}}</h4>
                 <div class="import-preview-content" id="import-preview-content"></div>
                 <div class="form-section">
-                  <label for="import-target-folder">Import To Folder:</label>
+                  <label for="import-target-folder">{{localize "CAIN.Homebrew.ImportToFolder"}}</label>
                   <select id="import-target-folder" class="homebrew-input">
-                    <option value="">Use Settings Default</option>
+                    <option value="">{{localize "CAIN.Homebrew.UseSettingsDefault"}}</option>
                     {{#each availableFolders}}
                       <option value="{{this.id}}">{{this.name}}</option>
                     {{/each}}
                   </select>
-                  <p class="settings-hint">Choose where imported items should be saved. Leave as default to use your configured folder settings.</p>
+                  <p class="settings-hint">{{localize "CAIN.Homebrew.TargetFolderHint"}}</p>
                 </div>
                 <button type="button" class="btn-primary homebrew-confirm-import">
-                  <i class="fas fa-check-circle"></i> Import Content
+                  <i class="fas fa-check-circle"></i> {{localize "CAIN.Homebrew.ImportConfirm"}}
                 </button>
               </div>
             </div>
@@ -584,40 +584,40 @@
         {{!-- REVERSE IMPORT SECTION --}}
         <div class="reverse-import-section">
           <div class="section-card">
-            <h3><i class="fas fa-undo-alt"></i> Load Existing Item for Editing</h3>
-            <p class="section-description">Select an existing item from your world to load into the editor for modification or duplication.</p>
+            <h3><i class="fas fa-undo-alt"></i> {{localize "CAIN.Homebrew.LoadExistingItemTitle"}}</h3>
+            <p class="section-description">{{localize "CAIN.Homebrew.LoadExistingItemDesc"}}</p>
 
             <div class="reverse-import-controls">
               <div class="form-section">
-                <label for="reverse-import-type">Item Type:</label>
+                <label for="reverse-import-type">{{localize "CAIN.Type"}}:</label>
                 <select id="reverse-import-type" class="homebrew-input">
-                  <option value="">-- Select Type --</option>
-                  <option value="agenda">Agenda</option>
-                  <option value="blasphemy">Blasphemy</option>
-                  <option value="blasphemyPower">Blasphemy Power</option>
-                  <option value="bond">Bond</option>
-                  <option value="bondAbility">Bond Ability</option>
-                  <option value="affliction">Affliction</option>
-                  <option value="item">Item</option>
-                  <option value="sinMark">Sin Mark</option>
+                  <option value="">{{localize "CAIN.Homebrew.SelectTypeOption"}}</option>
+                  <option value="agenda">{{localize "CAIN.Homebrew.Agenda"}}</option>
+                  <option value="blasphemy">{{localize "CAIN.Homebrew.Blasphemy"}}</option>
+                  <option value="blasphemyPower">{{localize "CAIN.Homebrew.BlasphemyPower"}}</option>
+                  <option value="bond">{{localize "CAIN.Homebrew.Bond"}}</option>
+                  <option value="bondAbility">{{localize "CAIN.Homebrew.BondAbility"}}</option>
+                  <option value="affliction">{{localize "CAIN.Homebrew.Affliction"}}</option>
+                  <option value="item">{{localize "CAIN.Homebrew.Item"}}</option>
+                  <option value="sinMark">{{localize "CAIN.Homebrew.SinMark"}}</option>
                 </select>
               </div>
 
               <div class="form-section">
-                <label for="reverse-import-item">Select Item:</label>
+                <label for="reverse-import-item">{{localize "CAIN.Homebrew.SelectItemLabel"}}</label>
                 <select id="reverse-import-item" class="homebrew-input" disabled>
-                  <option value="">-- Select Type First --</option>
+                  <option value="">{{localize "CAIN.Homebrew.SelectTypeFirstOption"}}</option>
                 </select>
               </div>
 
               <button type="button" class="btn-primary homebrew-load-item" disabled>
-                <i class="fas fa-edit"></i> Load into Editor
+                <i class="fas fa-edit"></i> {{localize "CAIN.Homebrew.LoadIntoEditorBtn"}}
               </button>
             </div>
 
             <div class="reverse-import-info">
               <i class="fas fa-info-circle"></i>
-              <span>This will load the item's data into the corresponding creation tab. You can then modify it and save as a new item or update the original.</span>
+              <span>{{localize "CAIN.Homebrew.LoadIntoEditorDesc"}}</span>
             </div>
           </div>
         </div>
@@ -625,12 +625,12 @@
         {{!-- EXPORT FORMAT GUIDE --}}
         <div class="format-guide">
           <details>
-            <summary><i class="fas fa-book"></i> Export Format Guide</summary>
+            <summary><i class="fas fa-book"></i> {{localize "CAIN.Homebrew.ExportFormatGuideTitle"}}</summary>
             <div class="guide-content">
-              <p><strong>File Format:</strong> All exports are in JSON format for easy sharing and version control.</p>
-              <p><strong>File Naming:</strong> Exported files are automatically named with timestamps (e.g., <code>cain-homebrew-2024-01-15.json</code>)</p>
-              <p><strong>Compatibility:</strong> Exported files can be imported into any CAIN world using this system.</p>
-              <p><strong>Sharing:</strong> Share your JSON files with other GMs via Discord, Google Drive, or any file-sharing service.</p>
+              <p><strong>{{localize "CAIN.Homebrew.CatHelpSyntax"}}</strong> {{localize "CAIN.Homebrew.FormatGuide1"}}</p>
+              <p><strong>{{localize "CAIN.Homebrew.CatHelpSyntax"}}</strong> {{localize "CAIN.Homebrew.FormatGuide2"}}</p>
+              <p><strong>{{localize "CAIN.Homebrew.CatHelpSyntax"}}</strong> {{localize "CAIN.Homebrew.FormatGuide3"}}</p>
+              <p><strong>{{localize "CAIN.Homebrew.CatHelpSyntax"}}</strong> {{localize "CAIN.Homebrew.FormatGuide4"}}</p>
             </div>
           </details>
         </div>
@@ -641,31 +641,31 @@
     <div class='tab homebrew-tab' data-group='primary' data-tab='history'>
       <div class="history-panel">
         <div class="history-header">
-          <h2><i class="fas fa-history"></i> Creation History</h2>
+          <h2><i class="fas fa-history"></i> {{localize "CAIN.Homebrew.HistoryTitle"}}</h2>
           <div class="history-controls">
-            <button type="button" class="btn-secondary homebrew-export-all"><i class="fas fa-file-export"></i> Export All</button>
-            <button type="button" class="btn-secondary homebrew-import"><i class="fas fa-file-import"></i> Import</button>
-            <button type="button" class="btn-secondary homebrew-clear-history"><i class="fas fa-trash-alt"></i> Clear History</button>
+            <button type="button" class="btn-secondary homebrew-export-all"><i class="fas fa-file-export"></i> {{localize "CAIN.Homebrew.ExportAll"}}</button>
+            <button type="button" class="btn-secondary homebrew-import"><i class="fas fa-file-import"></i> {{localize "CAIN.Homebrew.Import"}}</button>
+            <button type="button" class="btn-secondary homebrew-clear-history"><i class="fas fa-trash-alt"></i> {{localize "CAIN.Homebrew.HistoryClear"}}</button>
           </div>
         </div>
 
         <div class="filter-bar">
-          <label>Filter by type:</label>
+          <label>{{localize "CAIN.Homebrew.FilterByType"}}</label>
           <select id="history-filter" class="homebrew-input">
-            <option value="all">All Types</option>
-            <option value="agenda">Agendas</option>
-            <option value="blasphemy">Blasphemies</option>
-            <option value="blasphemyPower">Powers</option>
-            <option value="bond">Bonds</option>
-            <option value="bondAbility">Bond Abilities</option>
-            <option value="affliction">Afflictions</option>
-            <option value="item">Items</option>
-            <option value="sinMark">Sin Marks</option>
+            <option value="all">{{localize "CAIN.Homebrew.AllTypes"}}</option>
+            <option value="agenda">{{localize "CAIN.Homebrew.Agenda"}}</option>
+            <option value="blasphemy">{{localize "CAIN.Homebrew.Blasphemy"}}</option>
+            <option value="blasphemyPower">{{localize "CAIN.Homebrew.BlasphemyPower"}}</option>
+            <option value="bond">{{localize "CAIN.Homebrew.Bond"}}</option>
+            <option value="bondAbility">{{localize "CAIN.Homebrew.BondAbility"}}</option>
+            <option value="affliction">{{localize "CAIN.Homebrew.Affliction"}}</option>
+            <option value="item">{{localize "CAIN.Homebrew.Item"}}</option>
+            <option value="sinMark">{{localize "CAIN.Homebrew.SinMark"}}</option>
           </select>
         </div>
 
         <div class="history-list" id="history-list">
-          <p class="empty-state"><i class="fas fa-inbox"></i> No items created yet. Start creating homebrew content!</p>
+          <p class="empty-state"><i class="fas fa-inbox"></i> {{localize "CAIN.Homebrew.NoHistory"}}</p>
         </div>
       </div>
     </div>
@@ -673,17 +673,17 @@
     {{!-- SETTINGS TAB --}}
     <div class='tab homebrew-tab' data-group='primary' data-tab='settings'>
       <div class="creation-panel">
-        <h2><i class="fas fa-cog"></i> Homebrew Settings</h2>
+        <h2><i class="fas fa-cog"></i> {{localize "CAIN.Homebrew.SettingsTitle"}}</h2>
 
         <div class="form-section">
-          <h3><i class="fas fa-folder"></i> Default Save Locations</h3>
-          <p class="settings-description">Choose where to save each type of homebrew item. Items will be organized in subfolders within the selected folder.</p>
+          <h3><i class="fas fa-folder"></i> {{localize "CAIN.Homebrew.DefaultSaveLocations"}}</h3>
+          <p class="settings-description">{{localize "CAIN.Homebrew.DefaultSaveLocationsDesc"}}</p>
         </div>
 
         <div class="form-section">
-          <label for="settings-agenda-folder">Agenda Folder</label>
+          <label for="settings-agenda-folder">{{localize "CAIN.Homebrew.AgendaFolder"}}</label>
           <select id="settings-agenda-folder" class="homebrew-input settings-folder-select" data-item-type="agenda">
-            <option value="">Homebrew (Default)</option>
+            <option value="">{{localize "CAIN.Homebrew.DefaultFolder"}}</option>
             {{#each availableFolders}}
               <option value="{{this.id}}" {{#if (eq this.id ../settings.agendaFolder)}}selected{{/if}}>{{this.name}}</option>
             {{/each}}
@@ -691,9 +691,9 @@
         </div>
 
         <div class="form-section">
-          <label for="settings-blasphemy-folder">Blasphemy Folder</label>
+          <label for="settings-blasphemy-folder">{{localize "CAIN.Homebrew.BlasphemyFolder"}}</label>
           <select id="settings-blasphemy-folder" class="homebrew-input settings-folder-select" data-item-type="blasphemy">
-            <option value="">Homebrew (Default)</option>
+            <option value="">{{localize "CAIN.Homebrew.DefaultFolder"}}</option>
             {{#each availableFolders}}
               <option value="{{this.id}}" {{#if (eq this.id ../settings.blasphemyFolder)}}selected{{/if}}>{{this.name}}</option>
             {{/each}}
@@ -701,9 +701,9 @@
         </div>
 
         <div class="form-section">
-          <label for="settings-power-folder">Blasphemy Powers Folder</label>
+          <label for="settings-power-folder">{{localize "CAIN.Homebrew.BlasphemyPowersFolder"}}</label>
           <select id="settings-power-folder" class="homebrew-input settings-folder-select" data-item-type="blasphemyPower">
-            <option value="">Homebrew (Default)</option>
+            <option value="">{{localize "CAIN.Homebrew.DefaultFolder"}}</option>
             {{#each availableFolders}}
               <option value="{{this.id}}" {{#if (eq this.id ../settings.powerFolder)}}selected{{/if}}>{{this.name}}</option>
             {{/each}}
@@ -711,9 +711,9 @@
         </div>
 
         <div class="form-section">
-          <label for="settings-affliction-folder">Afflictions Folder</label>
+          <label for="settings-affliction-folder">{{localize "CAIN.Homebrew.AfflictionsFolder"}}</label>
           <select id="settings-affliction-folder" class="homebrew-input settings-folder-select" data-item-type="affliction">
-            <option value="">Homebrew (Default)</option>
+            <option value="">{{localize "CAIN.Homebrew.DefaultFolder"}}</option>
             {{#each availableFolders}}
               <option value="{{this.id}}" {{#if (eq this.id ../settings.afflictionFolder)}}selected{{/if}}>{{this.name}}</option>
             {{/each}}
@@ -721,9 +721,9 @@
         </div>
 
         <div class="form-section">
-          <label for="settings-item-folder">Items Folder</label>
+          <label for="settings-item-folder">{{localize "CAIN.Homebrew.ItemsFolder"}}</label>
           <select id="settings-item-folder" class="homebrew-input settings-folder-select" data-item-type="item">
-            <option value="">Homebrew (Default)</option>
+            <option value="">{{localize "CAIN.Homebrew.DefaultFolder"}}</option>
             {{#each availableFolders}}
               <option value="{{this.id}}" {{#if (eq this.id ../settings.itemFolder)}}selected{{/if}}>{{this.name}}</option>
             {{/each}}
@@ -731,9 +731,9 @@
         </div>
 
         <div class="form-section">
-          <label for="settings-sinmark-folder">Sin Marks Folder</label>
+          <label for="settings-sinmark-folder">{{localize "CAIN.Homebrew.SinMarksFolder"}}</label>
           <select id="settings-sinmark-folder" class="homebrew-input settings-folder-select" data-item-type="sinMark">
-            <option value="">Homebrew (Default)</option>
+            <option value="">{{localize "CAIN.Homebrew.DefaultFolder"}}</option>
             {{#each availableFolders}}
               <option value="{{this.id}}" {{#if (eq this.id ../settings.sinMarkFolder)}}selected{{/if}}>{{this.name}}</option>
             {{/each}}
@@ -741,20 +741,20 @@
         </div>
 
         <div class="form-section">
-          <h3><i class="fas fa-file-import"></i> Import Settings</h3>
-          <label for="settings-import-folder">Default Import Folder</label>
+          <h3><i class="fas fa-file-import"></i> {{localize "CAIN.Homebrew.ImportSettings"}}</h3>
+          <label for="settings-import-folder">{{localize "CAIN.Homebrew.DefaultImportFolder"}}</label>
           <select id="settings-import-folder" class="homebrew-input settings-folder-select" data-item-type="import">
-            <option value="">Homebrew (Default)</option>
+            <option value="">{{localize "CAIN.Homebrew.DefaultFolder"}}</option>
             {{#each availableFolders}}
               <option value="{{this.id}}" {{#if (eq this.id ../settings.importFolder)}}selected{{/if}}>{{this.name}}</option>
             {{/each}}
           </select>
-          <p class="settings-hint">This folder will be used when importing items, unless you select a different folder during import.</p>
+          <p class="settings-hint">{{localize "CAIN.Homebrew.DefaultImportFolderHint"}}</p>
         </div>
 
         <footer class="form-footer">
-          <button type="button" class="btn-primary homebrew-save-settings"><i class="fas fa-save"></i> Save Settings</button>
-          <button type="button" class="btn-secondary homebrew-reset-settings"><i class="fas fa-undo"></i> Reset to Defaults</button>
+          <button type="button" class="btn-primary homebrew-save-settings"><i class="fas fa-save"></i> {{localize "CAIN.Save"}}</button>
+          <button type="button" class="btn-secondary homebrew-reset-settings"><i class="fas fa-undo"></i> {{localize "CAIN.Homebrew.ResetSettings"}}</button>
         </footer>
       </div>
     </div>

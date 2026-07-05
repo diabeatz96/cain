@@ -11,42 +11,42 @@
                 </div>
             </div>
             <div class="name-section">
-                <input class="name-input" name="name" type="text" value="{{actor.name}}" placeholder="Opponent Name"/>
+                <input class="name-input" name="name" type="text" value="{{actor.name}}" placeholder="{{localize 'CAIN.Opponent.NamePlaceholder'}}"/>
                 <div class="type-line">
                     <select name="system.opponentType" class="type-select">
-                        <option value="human" {{#if (eq system.opponentType "human")}}selected{{/if}}>Human</option>
-                        <option value="drifter" {{#if (eq system.opponentType "drifter")}}selected{{/if}}>Drifter</option>
-                        <option value="anomaly" {{#if (eq system.opponentType "anomaly")}}selected{{/if}}>Anomaly</option>
-                        <option value="sin-variant" {{#if (eq system.opponentType "sin-variant")}}selected{{/if}}>Sin Variant</option>
-                        <option value="pseudo-sin" {{#if (eq system.opponentType "pseudo-sin")}}selected{{/if}}>Pseudo-Sin</option>
-                        <option value="binder" {{#if (eq system.opponentType "binder")}}selected{{/if}}>Binder</option>
-                        <option value="exorcist" {{#if (eq system.opponentType "exorcist")}}selected{{/if}}>Exorcist</option>
-                        <option value="mechanical" {{#if (eq system.opponentType "mechanical")}}selected{{/if}}>Mechanical</option>
+                        <option value="human" {{#if (eq system.opponentType "human")}}selected{{/if}}>{{localize 'CAIN.Opponent.TypeHuman'}}</option>
+                        <option value="drifter" {{#if (eq system.opponentType "drifter")}}selected{{/if}}>{{localize 'CAIN.Opponent.TypeDrifter'}}</option>
+                        <option value="anomaly" {{#if (eq system.opponentType "anomaly")}}selected{{/if}}>{{localize 'CAIN.Opponent.TypeAnomaly'}}</option>
+                        <option value="sin-variant" {{#if (eq system.opponentType "sin-variant")}}selected{{/if}}>{{localize 'CAIN.Opponent.TypeSinVariant'}}</option>
+                        <option value="pseudo-sin" {{#if (eq system.opponentType "pseudo-sin")}}selected{{/if}}>{{localize 'CAIN.Opponent.TypePseudoSin'}}</option>
+                        <option value="binder" {{#if (eq system.opponentType "binder")}}selected{{/if}}>{{localize 'CAIN.Opponent.TypeBinder'}}</option>
+                        <option value="exorcist" {{#if (eq system.opponentType "exorcist")}}selected{{/if}}>{{localize 'CAIN.Opponent.TypeExorcist'}}</option>
+                        <option value="mechanical" {{#if (eq system.opponentType "mechanical")}}selected{{/if}}>{{localize 'CAIN.Opponent.TypeMechanical'}}</option>
                     </select>
                     <span class="type-divider">—</span>
-                    <input type="text" name="system.subType" value="{{system.subType}}" placeholder="Subtype" class="subtype-input"/>
+                    <input type="text" name="system.subType" value="{{system.subType}}" placeholder="{{localize 'CAIN.Opponent.SubtypePlaceholder'}}" class="subtype-input"/>
                     <span class="type-divider">|</span>
-                    <span class="range-label">Range:</span>
+                    <span class="range-label">{{localize 'CAIN.Opponent.Range'}}</span>
                     <select name="system.range" class="range-select">
-                        <option value="melee" {{#if (eq system.range "melee")}}selected{{/if}}>Melee</option>
-                        <option value="short" {{#if (eq system.range "short")}}selected{{/if}}>Short</option>
-                        <option value="long" {{#if (eq system.range "long")}}selected{{/if}}>Long</option>
-                        <option value="extreme" {{#if (eq system.range "extreme")}}selected{{/if}}>Extreme</option>
+                        <option value="melee" {{#if (eq system.range "melee")}}selected{{/if}}>{{localize 'CAIN.Opponent.RangeMelee'}}</option>
+                        <option value="short" {{#if (eq system.range "short")}}selected{{/if}}>{{localize 'CAIN.Opponent.RangeShort'}}</option>
+                        <option value="long" {{#if (eq system.range "long")}}selected{{/if}}>{{localize 'CAIN.Opponent.RangeLong'}}</option>
+                        <option value="extreme" {{#if (eq system.range "extreme")}}selected{{/if}}>{{localize 'CAIN.Opponent.RangeExtreme'}}</option>
                     </select>
                 </div>
             </div>
             <div class="action-buttons">
-                <button type="button" class="action-btn attack-btn" title="Roll Attack">
+                <button type="button" class="action-btn attack-btn" title="{{localize 'CAIN.Opponent.RollAttackTooltip'}}">
                     <i class="fas fa-crosshairs"></i>
-                    <span>ATTACK</span>
+                    <span>{{localize 'CAIN.Opponent.AttackBtn'}}</span>
                 </button>
-                <button type="button" class="action-btn reaction-btn" title="Roll Reaction">
+                <button type="button" class="action-btn reaction-btn" title="{{localize 'CAIN.Opponent.RollReactionTooltip'}}">
                     <i class="fas fa-bolt"></i>
-                    <span>REACT</span>
+                    <span>{{localize 'CAIN.Opponent.ReactBtn'}}</span>
                 </button>
-                <button type="button" class="action-btn afflict-btn" title="Apply Affliction">
+                <button type="button" class="action-btn afflict-btn" title="{{localize 'CAIN.Opponent.ApplyAfflictionTooltip'}}">
                     <i class="fas fa-biohazard"></i>
-                    <span>AFFLICT</span>
+                    <span>{{localize 'CAIN.Opponent.AfflictBtn'}}</span>
                 </button>
             </div>
         </div>
@@ -62,7 +62,7 @@
                     </span>
                     {{/if}}
                 {{/each}}
-                <input type="text" class="tag-input" placeholder="+ Add tag"/>
+                <input type="text" class="tag-input" placeholder="{{localize 'CAIN.Opponent.AddTagPlaceholder'}}"/>
             </div>
         </div>
 
@@ -70,17 +70,17 @@
         <div class="et-visual-row">
             <div class="et-mode-tabs">
                 <div class="et-mode-tab {{#if (eq system.executionTalisman.useVariant 'solo')}}active{{/if}}" data-mode="solo">
-                    Solo <input type="number" name="system.executionTalisman.solo" value="{{system.executionTalisman.solo}}" min="0" max="20" class="et-max-input"/>
+                    {{localize 'CAIN.Opponent.EtSolo'}} <input type="number" name="system.executionTalisman.solo" value="{{system.executionTalisman.solo}}" min="0" max="20" class="et-max-input"/>
                 </div>
                 <div class="et-mode-tab {{#if (eq system.executionTalisman.useVariant 'group')}}active{{/if}}" data-mode="group">
-                    Group <input type="number" name="system.executionTalisman.group" value="{{system.executionTalisman.group}}" min="0" max="20" class="et-max-input"/>
+                    {{localize 'CAIN.Opponent.EtGroup'}} <input type="number" name="system.executionTalisman.group" value="{{system.executionTalisman.group}}" min="0" max="20" class="et-max-input"/>
                 </div>
                 <div class="et-mode-tab {{#if (eq system.executionTalisman.useVariant 'horde')}}active{{/if}}" data-mode="horde">
-                    Horde <input type="number" name="system.executionTalisman.horde" value="{{system.executionTalisman.horde}}" min="0" max="20" class="et-max-input"/>
+                    {{localize 'CAIN.Opponent.EtHorde'}} <input type="number" name="system.executionTalisman.horde" value="{{system.executionTalisman.horde}}" min="0" max="20" class="et-max-input"/>
                 </div>
             </div>
             <div class="et-pips-container">
-                <span class="et-label">EXECUTION</span>
+                <span class="et-label">{{localize 'CAIN.Opponent.EtExecution'}}</span>
                 <div class="et-pips" data-current="{{system.executionTalisman.current}}" data-max="{{system.executionTalisman.max}}">
                     {{!-- Pips will be generated by JavaScript --}}
                 </div>
@@ -91,9 +91,9 @@
 
     {{!-- Tab Navigation --}}
     <nav class="sheet-tabs tabs" data-group="primary">
-        <a class="tab-item" data-tab="overview">Overview</a>
-        <a class="tab-item" data-tab="combat">Combat</a>
-        <a class="tab-item" data-tab="abilities">Abilities</a>
+        <a class="tab-item" data-tab="overview">{{localize 'CAIN.Opponent.TabOverview'}}</a>
+        <a class="tab-item" data-tab="combat">{{localize 'CAIN.Opponent.TabCombat'}}</a>
+        <a class="tab-item" data-tab="abilities">{{localize 'CAIN.Opponent.TabAbilities'}}</a>
     </nav>
 
     {{!-- Tab Content --}}
@@ -101,35 +101,35 @@
         {{!-- Overview Tab --}}
         <div class="tab overview" data-group="primary" data-tab="overview">
             <div class="content-card">
-                <h3 class="card-header">Description</h3>
-                <textarea name="system.description" rows="2" placeholder="A brief description of this opponent...">{{system.description}}</textarea>
+                <h3 class="card-header">{{localize 'CAIN.Description'}}</h3>
+                <textarea name="system.description" rows="2" placeholder="{{localize 'CAIN.Opponent.DescriptionPlaceholder'}}">{{system.description}}</textarea>
             </div>
 
             <div class="two-column">
                 <div class="content-card">
-                    <h3 class="card-header">Tendencies</h3>
-                    <textarea name="system.tendencies" rows="3" placeholder="It tends to do this thing...">{{system.tendencies}}</textarea>
+                    <h3 class="card-header">{{localize 'CAIN.Opponent.Tendencies'}}</h3>
+                    <textarea name="system.tendencies" rows="3" placeholder="{{localize 'CAIN.Opponent.TendenciesPlaceholder'}}">{{system.tendencies}}</textarea>
                 </div>
                 <div class="content-card">
-                    <h3 class="card-header">Conditional Effects</h3>
-                    <textarea name="system.conditionalEffects" rows="3" placeholder="If you do this, someone gets advantage/disadvantage...">{{system.conditionalEffects}}</textarea>
+                    <h3 class="card-header">{{localize 'CAIN.Opponent.ConditionalEffects'}}</h3>
+                    <textarea name="system.conditionalEffects" rows="3" placeholder="{{localize 'CAIN.Opponent.ConditionalEffectsPlaceholder'}}">{{system.conditionalEffects}}</textarea>
                 </div>
             </div>
 
             <div class="two-column">
                 <div class="content-card">
-                    <h3 class="card-header">Behavior</h3>
-                    <textarea name="system.behavior" rows="3" placeholder="How does this opponent act?">{{system.behavior}}</textarea>
+                    <h3 class="card-header">{{localize 'CAIN.Opponent.Behavior'}}</h3>
+                    <textarea name="system.behavior" rows="3" placeholder="{{localize 'CAIN.Opponent.BehaviorPlaceholder'}}">{{system.behavior}}</textarea>
                 </div>
                 <div class="content-card">
-                    <h3 class="card-header">Appearance</h3>
-                    <textarea name="system.appearance" rows="3" placeholder="Physical description...">{{system.appearance}}</textarea>
+                    <h3 class="card-header">{{localize 'CAIN.Opponent.Appearance'}}</h3>
+                    <textarea name="system.appearance" rows="3" placeholder="{{localize 'CAIN.Opponent.AppearancePlaceholder'}}">{{system.appearance}}</textarea>
                 </div>
             </div>
 
             <div class="content-card">
-                <h3 class="card-header">GM Notes</h3>
-                <p class="notes-hint">Lore, plot hooks, secret weaknesses, or session-specific reminders...</p>
+                <h3 class="card-header">{{localize 'CAIN.Opponent.GMNotes'}}</h3>
+                <p class="notes-hint">{{localize 'CAIN.Opponent.GMNotesHint'}}</p>
                 <div class="editor-wrap">
                     {{editor enrichedBiography target="system.biography" engine="prosemirror" button=true editable=editable}}
                 </div>
@@ -138,8 +138,8 @@
             <div class="content-card source-card">
                 <div class="source-row">
                     <i class="fas fa-book"></i>
-                    <label>Source:</label>
-                    <input type="text" name="system.source" value="{{system.source}}" placeholder="Core p.XX, Games for Freaks p.XX"/>
+                    <label>{{localize 'CAIN.Opponent.Source'}}</label>
+                    <input type="text" name="system.source" value="{{system.source}}" placeholder="{{localize 'CAIN.Opponent.SourcePlaceholder'}}"/>
                 </div>
             </div>
         </div>
@@ -148,65 +148,65 @@
         <div class="tab combat" data-group="primary" data-tab="combat">
             {{!-- Stress Formula Section --}}
             <div class="content-card stress-card">
-                <h3 class="card-header"><i class="fas fa-heart-broken"></i> Stress Output</h3>
+                <h3 class="card-header"><i class="fas fa-heart-broken"></i> {{localize 'CAIN.Opponent.StressOutput'}}</h3>
                 <div class="stress-formula-grid">
                     <div class="stress-field">
-                        <label>Dice Formula</label>
+                        <label>{{localize 'CAIN.Opponent.DiceFormula'}}</label>
                         <input type="text" name="system.stressFormula.formula" value="{{system.stressFormula.formula}}" placeholder="1d6"/>
                     </div>
                     <div class="stress-field">
-                        <label>On Roll of 1</label>
+                        <label>{{localize 'CAIN.Opponent.OnRoll1'}}</label>
                         <input type="text" name="system.stressFormula.roll1" value="{{system.stressFormula.roll1}}" placeholder="4"/>
                     </div>
                     <div class="stress-field">
-                        <label>On Roll of 2-3</label>
+                        <label>{{localize 'CAIN.Opponent.OnRoll2to3'}}</label>
                         <input type="text" name="system.stressFormula.roll2to3" value="{{system.stressFormula.roll2to3}}" placeholder="3"/>
                     </div>
                     <div class="stress-field">
-                        <label>On Roll of 4+</label>
+                        <label>{{localize 'CAIN.Opponent.OnRoll4plus'}}</label>
                         <input type="text" name="system.stressFormula.roll4plus" value="{{system.stressFormula.roll4plus}}" placeholder="2"/>
                     </div>
                     <div class="stress-field full-width">
-                        <label>Bonus Effect</label>
-                        <input type="text" name="system.stressFormula.bonusEffect" value="{{system.stressFormula.bonusEffect}}" placeholder="+1 sin, worm hook, etc."/>
+                        <label>{{localize 'CAIN.Opponent.BonusEffect'}}</label>
+                        <input type="text" name="system.stressFormula.bonusEffect" value="{{system.stressFormula.bonusEffect}}" placeholder="{{localize 'CAIN.Opponent.BonusEffectPlaceholder'}}"/>
                     </div>
                 </div>
                 <button type="button" class="stress-roll-btn">
-                    <i class="fas fa-dice"></i> Roll Stress
+                    <i class="fas fa-dice"></i> {{localize 'CAIN.Opponent.RollStress'}}
                 </button>
             </div>
 
             {{!-- Reactions Section --}}
             <div class="content-card reactions-card">
-                <h3 class="card-header">Reactions</h3>
+                <h3 class="card-header">{{localize 'CAIN.Opponent.Reactions'}}</h3>
                 <div class="reactions-grid">
                     <div class="reaction-field">
-                        <label><i class="fas fa-fist-raised"></i> Attacks With</label>
-                        <input type="text" name="system.reactions.attackWith" value="{{system.reactions.attackWith}}" placeholder="Batons, firearms, claws..."/>
+                        <label><i class="fas fa-fist-raised"></i> {{localize 'CAIN.Opponent.AttacksWith'}}</label>
+                        <input type="text" name="system.reactions.attackWith" value="{{system.reactions.attackWith}}" placeholder="{{localize 'CAIN.Opponent.AttacksWithPlaceholder'}}"/>
                     </div>
                     <div class="reaction-field stress-field">
-                        <label><i class="fas fa-heart-broken"></i> Stress Inflicted</label>
-                        <input type="text" name="system.reactions.stressAmount" value="{{system.reactions.stressAmount}}" placeholder="2 stress, 1d6 stress..."/>
+                        <label><i class="fas fa-heart-broken"></i> {{localize 'CAIN.Opponent.StressInflicted'}}</label>
+                        <input type="text" name="system.reactions.stressAmount" value="{{system.reactions.stressAmount}}" placeholder="{{localize 'CAIN.Opponent.StressInflictedPlaceholder'}}"/>
                     </div>
                     <div class="reaction-field">
-                        <label><i class="fas fa-exclamation-triangle"></i> Creates Complication</label>
-                        <input type="text" name="system.reactions.complication" value="{{system.reactions.complication}}" placeholder="Kills lights, triggers alarm..."/>
+                        <label><i class="fas fa-exclamation-triangle"></i> {{localize 'CAIN.Opponent.CreatesComplication'}}</label>
+                        <input type="text" name="system.reactions.complication" value="{{system.reactions.complication}}" placeholder="{{localize 'CAIN.Opponent.CreatesComplicationPlaceholder'}}"/>
                     </div>
                     <div class="reaction-field">
-                        <label><i class="fas fa-skull-crossbones"></i> Creates Threat</label>
-                        <input type="text" name="system.reactions.threat" value="{{system.reactions.threat}}" placeholder="Fires weapon, pins target..."/>
+                        <label><i class="fas fa-skull-crossbones"></i> {{localize 'CAIN.Opponent.CreatesThreat'}}</label>
+                        <input type="text" name="system.reactions.threat" value="{{system.reactions.threat}}" placeholder="{{localize 'CAIN.Opponent.CreatesThreatPlaceholder'}}"/>
                     </div>
                     <div class="reaction-field full-width">
-                        <label><i class="fas fa-dice"></i> Die Roll Attached</label>
-                        <input type="text" name="system.reactions.dieRoll" value="{{system.reactions.dieRoll}}" placeholder="On 1-2: extra effect, On 5+: reduced damage..."/>
+                        <label><i class="fas fa-dice"></i> {{localize 'CAIN.Opponent.DieRollAttached'}}</label>
+                        <input type="text" name="system.reactions.dieRoll" value="{{system.reactions.dieRoll}}" placeholder="{{localize 'CAIN.Opponent.DieRollAttachedPlaceholder'}}"/>
                     </div>
                 </div>
             </div>
 
             {{!-- Afflictions Section - Drag & Drop --}}
             <div class="content-card afflictions-card opponent-affliction-drop">
-                <h3 class="card-header"><i class="fas fa-biohazard"></i> Afflictions</h3>
-                <p class="drop-hint">Drag afflictions here from compendium</p>
+                <h3 class="card-header"><i class="fas fa-biohazard"></i> {{localize 'CAIN.Abilities.Afflictions'}}</h3>
+                <p class="drop-hint">{{localize 'CAIN.Opponent.DragAfflictionsHint'}}</p>
                 <div class="afflictions-list">
                     {{#each currentAfflictions}}
                         <div class="affliction-item" data-affliction-id="{{this.id}}">
@@ -220,48 +220,48 @@
 
             {{!-- Capabilities --}}
             <div class="content-card">
-                <h3 class="card-header">Capabilities</h3>
+                <h3 class="card-header">{{localize 'CAIN.Opponent.Capabilities'}}</h3>
                 <div class="list-container">
                     {{#each system.capabilities}}
                         <div class="list-item">
                             <span class="bullet">&#8226;</span>
-                            <input type="text" name="system.capabilities.{{@index}}" value="{{this}}" placeholder="Capability"/>
+                            <input type="text" name="system.capabilities.{{@index}}" value="{{this}}" placeholder="{{localize 'CAIN.Opponent.CapabilityPlaceholder'}}"/>
                             <button type="button" class="remove-btn remove-capability-btn" data-index="{{@index}}"><i class="fas fa-times"></i></button>
                         </div>
                     {{/each}}
                 </div>
-                <button type="button" class="add-btn add-capability-btn"><i class="fas fa-plus"></i> Add Capability</button>
+                <button type="button" class="add-btn add-capability-btn"><i class="fas fa-plus"></i> {{localize 'CAIN.Opponent.AddCapability'}}</button>
             </div>
         </div>
 
         {{!-- Abilities Tab --}}
         <div class="tab abilities" data-group="primary" data-tab="abilities">
             <div class="content-card">
-                <h3 class="card-header">Special Abilities</h3>
+                <h3 class="card-header">{{localize 'CAIN.Opponent.SpecialAbilities'}}</h3>
                 <div class="abilities-container">
                     {{#each system.specialAbilities}}
                         <div class="ability-item" data-ability-index="{{@index}}">
                             <div class="ability-top">
-                                <input type="text" name="system.specialAbilities.{{@index}}.name" value="{{this.name}}" placeholder="Ability Name"/>
-                                <input type="text" name="system.specialAbilities.{{@index}}.trigger" value="{{this.trigger}}" class="trigger-input" placeholder="Trigger"/>
-                                <button type="button" class="chat-btn ability-to-chat-btn" data-index="{{@index}}" title="Send to Chat"><i class="fas fa-comment"></i></button>
+                                <input type="text" name="system.specialAbilities.{{@index}}.name" value="{{this.name}}" placeholder="{{localize 'CAIN.Opponent.AbilityNamePlaceholder'}}"/>
+                                <input type="text" name="system.specialAbilities.{{@index}}.trigger" value="{{this.trigger}}" class="trigger-input" placeholder="{{localize 'CAIN.Opponent.TriggerPlaceholder'}}"/>
+                                <button type="button" class="chat-btn ability-to-chat-btn" data-index="{{@index}}" title="{{localize 'CAIN.Actor.SendToChat'}}"><i class="fas fa-comment"></i></button>
                                 <button type="button" class="remove-btn remove-ability-btn" data-index="{{@index}}"><i class="fas fa-times"></i></button>
                             </div>
-                            <textarea name="system.specialAbilities.{{@index}}.description" rows="2" placeholder="Description...">{{this.description}}</textarea>
+                            <textarea name="system.specialAbilities.{{@index}}.description" rows="2" placeholder="{{localize 'CAIN.Description'}}...">{{this.description}}</textarea>
                         </div>
                     {{/each}}
                 </div>
-                <button type="button" class="add-btn add-ability-btn"><i class="fas fa-plus"></i> Add Ability</button>
+                <button type="button" class="add-btn add-ability-btn"><i class="fas fa-plus"></i> {{localize 'CAIN.Opponent.AddAbility'}}</button>
             </div>
 
             <div class="content-card">
-                <h3 class="card-header">Pressure Scaling</h3>
+                <h3 class="card-header">{{localize 'CAIN.Opponent.PressureScaling'}}</h3>
                 <div class="pressure-row">
                     <label class="checkbox-wrap">
                         <input type="checkbox" name="system.scalesWithPressure" {{#if system.scalesWithPressure}}checked{{/if}}/>
-                        <span>Scales with Pressure</span>
+                        <span>{{localize 'CAIN.Opponent.ScalesWithPressure'}}</span>
                     </label>
-                    <input type="text" name="system.pressureModifier" value="{{system.pressureModifier}}" placeholder="e.g., +CAT at 3+ pressure"/>
+                    <input type="text" name="system.pressureModifier" value="{{system.pressureModifier}}" placeholder="{{localize 'CAIN.Opponent.PressureModifierPlaceholder'}}"/>
                 </div>
             </div>
         </div>

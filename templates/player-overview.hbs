@@ -1,10 +1,10 @@
 <div class="player-overview">
   {{!-- Sheet Tab Navigation --}}
   <nav class="sheet-tabs tabs" data-group="primary">
-    <a class="item" data-tab="overview">Overview</a>
-    <a class="item" data-tab="skills">Skills & Agendas</a>
-    <a class="item" data-tab="xp">XP & Advancements</a>
-    <a class="item" data-tab="talismans">Talismans</a>
+    <a class="item" data-tab="overview">{{localize "CAIN.Overview"}}</a>
+    <a class="item" data-tab="skills">{{localize "CAIN.PlayerOverview.SkillsAndAgendas"}}</a>
+    <a class="item" data-tab="xp">{{localize "CAIN.Features.XPAndAdvancements"}}</a>
+    <a class="item" data-tab="talismans">{{localize "CAIN.Sheet.Talismans"}}</a>
   </nav>
 
   {{!-- Sheet Body --}}
@@ -24,7 +24,7 @@
       </div>
     {{else}}
       <div class="no-players-message">
-        <p>🚀 Please add players and then add exorcist sheets to those players to view their stats. 📜</p>
+        <p>{{localize "CAIN.PlayerOverview.NoPlayersMessage"}}</p>
       </div>
     {{/if}}
   </section>

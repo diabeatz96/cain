@@ -8,7 +8,7 @@
                 </div>
                 <div class="row">
                     <div class="col w-25">
-                        <h1 class="pirata-one-regular" style="text-align: center;">SIN</h1>
+                        <h1 class="pirata-one-regular" style="text-align: center;">{{localize 'TYPES.Actor.sin'}}</h1>
                     </div>
                     <div class="col w-25 m-auto">
                         <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="150"
@@ -16,12 +16,12 @@
                     </div>
                     <div class="col w-33 m-auto">
                         <div class="row">
-                            <span><b>Name:</b></span>
+                            <span><b>{{localize 'CAIN.CharacterName'}}:</b></span>
                             <input class="input-text" name="name" type="text" value="{{actor.name}}"
-                                   placeholder="Name"/>
+                                   placeholder="{{localize 'CAIN.CharacterName'}}"/>
                         </div>
                         <div class="row">
-                            <span><b>Type:</b></span>
+                            <span><b>{{localize 'CAIN.Type'}}:</b></span>
                             <select id="sinTypeSelect" name="system.sinType">
                                 <option value="ogre" {{#if (eq system.sinType "ogre")}}selected{{/if}}>Ogre</option>
                                 <option value="toad" {{#if (eq system.sinType "toad")}}selected{{/if}}>Toad</option>
@@ -37,7 +37,7 @@
                             </select>
                         </div>
                         <div class="row">
-                            <span><b>Form:</b></span>
+                            <span><b>{{localize 'CAIN.Sin.Form'}}</b></span>
                             <select name="system.sinForm">
                                 <option value="Form I/Severed"
                                         {{#if (eq system.sinForm "Form I/Severed")}}selected{{/if}}>Form I/Severed
@@ -52,7 +52,7 @@
                         </div>
                         <div class="row">
                             <!--                TODO: i want to use the category icon here-->
-                            <span><b>Category:</b></span>
+                            <span><b>{{localize 'CAIN.Category'}}:</b></span>
                             <input type="text" name="system.category" value="{{system.category}}" data-dtype="Number"/>
                         </div>
                     </div>
@@ -68,15 +68,15 @@
                 <div class="quick-actions">
                     <div class="row">
                         <div class="col" style="writing-mode: vertical-lr; max-width: 27px;">
-                            <p class="quick-action-text">Quick Actions</p>
+                            <p class="quick-action-text">{{localize 'CAIN.Sin.QuickActions'}}</p>
                         </div>
                         <div class="actions-grid col">
-                            <button type="button" class="quick-action-button attack-player">Attack a Player</button>
-                            <button type="button" class="quick-action-button afflict-player">Afflict a Player</button>
-                            <button type="button" class="quick-action-button use-complication">Use Complication</button>
-                            <button type="button" class="quick-action-button use-threat">Use Threat</button>
-                            <button type="button" class="quick-action-button severe-attack">Severe Attack</button>
-                            <button type="button" class="quick-action-button use-domain">Use Domain</button>
+                            <button type="button" class="quick-action-button attack-player">{{localize 'CAIN.Sin.AttackPlayer'}}</button>
+                            <button type="button" class="quick-action-button afflict-player">{{localize 'CAIN.Sin.AfflictPlayer'}}</button>
+                            <button type="button" class="quick-action-button use-complication">{{localize 'CAIN.Sin.UseComplication'}}</button>
+                            <button type="button" class="quick-action-button use-threat">{{localize 'CAIN.Sin.UseThreat'}}</button>
+                            <button type="button" class="quick-action-button severe-attack">{{localize 'CAIN.Sin.SevereAttack'}}</button>
+                            <button type="button" class="quick-action-button use-domain">{{localize 'CAIN.Sin.UseDomain'}}</button>
                         </div>
                     </div>
                 </div>
@@ -87,7 +87,7 @@
         <div class="quick-stats card" style="width: 100%;">
             <div class="row dashed-line">
                 <div class="col pl-2">
-                    <h2 class="white-text-shadow">Talismans</h2>
+                    <h2 class="white-text-shadow">{{localize 'CAIN.Sin.Talismans'}}</h2>
                 </div>
                 <div class="col px-2" style="text-align: right; margin: auto;">
                     {{#if globalTalismans}}
@@ -107,7 +107,7 @@
             <!--   TODO: i dont have a good idea for this area, come back to it later -->
             <div class="talismans-grid">
                 {{#unless selectedTalismans.length}}
-                    <p class="center-p">No talismans are bound to this sin... go add some!</p>
+                    <p class="center-p">{{localize 'CAIN.Sin.NoTalismansBound'}}</p>
                 {{/unless}}
                 {{#each selectedTalismans}}
                     <div class="talisman-item">
@@ -130,10 +130,10 @@
 
     {{!-- Sheet Tab Navigation --}}
     <nav class="sheet-tabs tabs dark-tabs" data-group="primary">
-        <a class="item" data-tab="description">Description</a>
-        <a class="item" data-tab="palace-pressure">Palace / Pressure</a>
-        <a class="item" data-tab="attacks">Attacks</a>
-        <a class="item" data-tab="domains">Domains</a>
+        <a class="item" data-tab="description">{{localize 'CAIN.Description'}}</a>
+        <a class="item" data-tab="palace-pressure">{{localize 'CAIN.Sin.PalacePressure'}}</a>
+        <a class="item" data-tab="attacks">{{localize 'CAIN.Sin.Attacks'}}</a>
+        <a class="item" data-tab="domains">{{localize 'CAIN.Sin.Domains'}}</a>
     </nav>
 
     {{!-- Sheet Body --}}

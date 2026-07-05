@@ -11,10 +11,10 @@
           name='name'
           type='text'
           value='{{item.name}}'
-          placeholder='Bond Name'
+          placeholder='{{localize "CAIN.Bonds.BondNamePlaceholder"}}'
         /></h1>
       <div class='form-group'>
-        <label for='system.virtueName'>Virtue Name</label>
+        <label for='system.virtueName'>{{localize "CAIN.VirtueName"}}</label>
         <input type='text' name='system.virtueName' value='{{system.virtueName}}' data-dtype='String'/>
       </div>
     </div>
@@ -22,9 +22,9 @@
 
   {{! Sheet Tab Navigation }}
   <nav class='sheet-tabs tabs bond-tabs' data-group='primary'>
-    <a class='item' data-tab='abilities'>Abilities</a>
-    <a class='item' data-tab='strictures'>Strictures</a>
-    <a class='item' data-tab='highblasphemy'>High Blasphemy</a>
+    <a class='item' data-tab='abilities'>{{localize "CAIN.Abilities.Abilities"}}</a>
+    <a class='item' data-tab='strictures'>{{localize "CAIN.Abilities.Strictures"}}</a>
+    <a class='item' data-tab='highblasphemy'>{{localize "CAIN.Abilities.HighBlasphemyPower"}}</a>
   </nav>
 
   {{! Sheet Body }}
@@ -35,10 +35,10 @@
         {{#each bondAbilities}}
           <div class='bond-ability-entry' data-level='{{this.system.bondLevel}}'>
             <div class='bond-ability-header'>
-              <span class='bond-level'>Level {{this.system.bondLevel}}</span>
+              <span class='bond-level'>{{localize "CAIN.Lvl" level=this.system.bondLevel}}</span>
               <span class='bond-ability-name'>{{this.system.abilityName}}</span>
               {{#if this.system.isPermanent}}
-                <span class='bond-permanent-tag'>Permanent</span>
+                <span class='bond-permanent-tag'>{{localize "CAIN.Permanent"}}</span>
               {{/if}}
             </div>
             <p class='bond-ability-description'>{{this.system.abilityDescription}}</p>
@@ -46,33 +46,33 @@
               <p class='bond-psyche-cost'>
                 <i class='fas fa-brain'></i>
                 {{#if (eq this.system.psycheBurstCost 0)}}
-                  Requires all remaining Psyche Bursts (min 1)
+                  {{localize "CAIN.Abilities.PsycheBurstAll"}}
                 {{else}}
-                  Requires {{this.system.psycheBurstCost}} Psyche Burst(s)
+                  {{localize "CAIN.Abilities.PsycheBurstCost" cost=this.system.psycheBurstCost}}
                 {{/if}}
               </p>
             {{/if}}
           </div>
         {{else}}
-          <p class='no-abilities'>No abilities assigned to this bond.</p>
+          <p class='no-abilities'>{{localize "CAIN.Bonds.NoAbilitiesAssigned"}}</p>
         {{/each}}
       </div>
 
       <div class='drop-zone-hint abilities-drop'>
         <i class='fas fa-plus-circle'></i>
-        <span>Drag & drop Bond Abilities here</span>
+        <span>{{localize "CAIN.Bonds.DragAbilitiesHint"}}</span>
       </div>
 
       {{#if developerMode}}
         <div class='bond-dev-controls'>
-          <h4>Developer Controls</h4>
+          <h4>{{localize "CAIN.DeveloperControls"}}</h4>
           <div class='form-group'>
-            <label for='abilityUUID'>Add Ability (UUID):</label>
-            <input type='text' id='abilityUUID' placeholder='Paste Bond Ability UUID here'/>
+            <label for='abilityUUID'>{{localize "CAIN.Bonds.AddAbilityUuid"}}</label>
+            <input type='text' id='abilityUUID' placeholder='{{localize "CAIN.Bonds.PasteAbilityUuid"}}'/>
           </div>
           <div class='button-row'>
-            <button type='button' id='addAbility'>Add Ability</button>
-            <button type='button' id='removeAbility'>Remove Last Ability</button>
+            <button type='button' id='addAbility'>{{localize "CAIN.Abilities.AddAbility"}}</button>
+            <button type='button' id='removeAbility'>{{localize "CAIN.Bonds.RemoveLastAbility"}}</button>
           </div>
         </div>
       {{/if}}
@@ -83,28 +83,27 @@
       <div class='strictures-info'>
         <p class='strictures-note'>
           <i class='fas fa-exclamation-triangle'></i>
-          You must follow these strictures while attempting to increase your bond level.
-          Breaking a stricture costs <strong>1d3 stress</strong> (cannot be reduced, cannot cause injuries).
+          {{localize "CAIN.Bonds.StricturesExplanation"}}
         </p>
       </div>
       <ul class='strictures-list'>
         {{#each stricturesList}}
           <li class='stricture-item'>
             <span class='stricture-text'>{{this}}</span>
-            <button type='button' class='remove-stricture' data-index='{{@index}}' title='Remove stricture'>
+            <button type='button' class='remove-stricture' data-index='{{@index}}' title='{{localize "CAIN.Bonds.RemoveStricture"}}'>
               <i class='fas fa-trash'></i>
             </button>
           </li>
         {{else}}
-          <li class='no-strictures'>No strictures defined for this bond.</li>
+          <li class='no-strictures'>{{localize "CAIN.Bonds.NoStricturesDefined"}}</li>
         {{/each}}
       </ul>
 
       <div class='stricture-controls'>
         <div class='form-group stricture-input-group'>
-          <input type='text' id='newStricture' placeholder='Enter new stricture...'/>
-          <button type='button' id='addStricture' title='Add stricture'>
-            <i class='fas fa-plus'></i> Add
+          <input type='text' id='newStricture' placeholder='{{localize "CAIN.Bonds.EnterNewStricture"}}'/>
+          <button type='button' id='addStricture' title='{{localize "CAIN.Bonds.AddStricture"}}'>
+            <i class='fas fa-plus'></i> {{localize "CAIN.Add"}}
           </button>
         </div>
       </div>
@@ -115,16 +114,15 @@
       <div class='high-blasphemy-info'>
         <p class='high-blasphemy-note'>
           <i class='fas fa-star'></i>
-          High Blasphemies count as blasphemies but are "free" - they don't increase XP cap or reduce sin overflow cap.
-          Once unlocked, the High Blasphemy is automatically added to your Blasphemy Powers.
+          {{localize "CAIN.Bonds.HighBlasphemyExplanation"}}
         </p>
         <div class='form-group high-blasphemy-level-select'>
-          <label for='system.highBlasphemyLevel'>Unlocked at Bond Level:</label>
+          <label for='system.highBlasphemyLevel'>{{localize "CAIN.Bonds.UnlockedAtLevel"}}</label>
           <select name='system.highBlasphemyLevel'>
-            <option value='0' {{#if (eq system.highBlasphemyLevel 0)}}selected{{/if}}>Level 0 - Immediate</option>
-            <option value='1' {{#if (eq system.highBlasphemyLevel 1)}}selected{{/if}}>Level 1</option>
-            <option value='2' {{#if (eq system.highBlasphemyLevel 2)}}selected{{/if}}>Level 2</option>
-            <option value='3' {{#if (eq system.highBlasphemyLevel 3)}}selected{{/if}}>Level 3</option>
+            <option value='0' {{#if (eq system.highBlasphemyLevel 0)}}selected{{/if}}>{{localize "CAIN.Bonds.Level0Immediate"}}</option>
+            <option value='1' {{#if (eq system.highBlasphemyLevel 1)}}selected{{/if}}>{{localize "CAIN.Lvl" level=1}}</option>
+            <option value='2' {{#if (eq system.highBlasphemyLevel 2)}}selected{{/if}}>{{localize "CAIN.Lvl" level=2}}</option>
+            <option value='3' {{#if (eq system.highBlasphemyLevel 3)}}selected{{/if}}>{{localize "CAIN.Lvl" level=3}}</option>
           </select>
         </div>
       </div>
@@ -137,20 +135,20 @@
               <h3>{{highBlasphemyData.name}}</h3>
               <div class='high-blasphemy-tags'>
                 {{#if highBlasphemyData.system.isPassive}}
-                  <span class='hb-tag passive-tag'>Passive</span>
+                  <span class='hb-tag passive-tag'>{{localize "CAIN.Abilities.Passive"}}</span>
                 {{/if}}
                 {{#if highBlasphemyData.system.psycheBurstCost}}
-                  <span class='hb-tag psyche-tag'>Psyche Burst</span>
+                  <span class='hb-tag psyche-tag'>{{localize "CAIN.Abilities.Psyche"}}</span>
                 {{/if}}
                 {{#if highBlasphemyData.system.psycheBurstNoCost}}
-                  <span class='hb-tag no-cost-tag'>No-Cost Mode</span>
+                  <span class='hb-tag no-cost-tag'>{{localize "CAIN.Abilities.HasNoPsycheMode"}}</span>
                 {{/if}}
                 {{#if highBlasphemyData.system.psycheBurstMultCost}}
-                  <span class='hb-tag multi-tag'>Multi-Burst</span>
+                  <span class='hb-tag multi-tag'>{{localize "CAIN.Abilities.CanUseMultipleBursts"}}</span>
                 {{/if}}
               </div>
             </div>
-            <button type='button' class='remove-high-blasphemy' title='Remove High Blasphemy'>
+            <button type='button' class='remove-high-blasphemy' title='{{localize "CAIN.Bonds.RemoveHighBlasphemy"}}'>
               <i class='fas fa-times'></i>
             </button>
           </div>
@@ -164,21 +162,21 @@
           <div class='high-blasphemy-description'>{{highBlasphemyData.system.powerDescription}}</div>
         </div>
       {{else}}
-        <p class='no-high-blasphemy'>No High Blasphemy Power assigned to this bond.</p>
+        <p class='no-high-blasphemy'>{{localize "CAIN.Bonds.NoHighBlasphemyAssigned"}}</p>
       {{/if}}
 
       <div class='drop-zone-hint blasphemy-drop'>
         <i class='fas fa-plus-circle'></i>
-        <span>Drag & drop a Blasphemy Power here to set as High Blasphemy</span>
+        <span>{{localize "CAIN.Bonds.DragHighBlasphemyHint"}}</span>
       </div>
 
       {{#if developerMode}}
         <div class='high-blasphemy-dev-controls'>
           <div class='form-group'>
-            <label for='highBlasphemyUUID'>High Blasphemy Power (UUID):</label>
-            <input type='text' id='highBlasphemyUUID' placeholder='Paste Blasphemy Power UUID here' value='{{system.highBlasphemy}}'/>
+            <label for='highBlasphemyUUID'>{{localize "CAIN.Bonds.HighBlasphemyUuid"}}</label>
+            <input type='text' id='highBlasphemyUUID' placeholder='{{localize "CAIN.Bonds.PasteBlasphemyUuid"}}' value='{{system.highBlasphemy}}'/>
           </div>
-          <button type='button' id='setHighBlasphemy'>Set High Blasphemy Power</button>
+          <button type='button' id='setHighBlasphemy'>{{localize "CAIN.Bonds.SetHighBlasphemy"}}</button>
         </div>
       {{/if}}
     </div>

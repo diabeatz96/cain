@@ -1,17 +1,17 @@
 <form class="{{cssClass}} {{system.blasphemyType}}-theme" autocomplete="off">
 
 <div class="form-group">
-  <label for="abilityName" data-id="{{this.id}}" class="item-click">Ability Name</label>
+  <label for="abilityName" data-id="{{this.id}}" class="item-click">{{localize "CAIN.AbilityName"}}</label>
   <input type="text" name="system.abilityName" value="{{system.abilityName}}" data-dtype="String"/>
 </div>
 
 <div class="form-group">
-  <label for="abilityDescription" data-id="{{this.id}}" class="item-click">Ability Description</label>
+  <label for="abilityDescription" data-id="{{this.id}}" class="item-click">{{localize "CAIN.AbilityDescription"}}</label>
   <textarea name="system.abilityDescription" data-dtype="String" rows="4">{{system.abilityDescription}}</textarea>
 </div>
 
 <div class="form-group">
-  <label for="bodyPartName" data-id="{{this.id}}" class="item-click">Body Part Name</label>
+  <label for="bodyPartName" data-id="{{this.id}}" class="item-click">{{localize "CAIN.Sin.BodyPartName"}}</label>
   <input type="text" name="system.bodyPartName" value="{{system.bodyPartName}}" data-dtype="String"/>
 </div>
 </form>

@@ -6,20 +6,20 @@
       <div class="player-card">
         <img src="{{actor.img}}" alt="Profile Image" class="profile-image">
         <h3>{{actor.name}}</h3>
-        <p>Level: {{actor.system.attributes.level.value}}</p>
+        <p>{{localize "CAIN.LevelColon"}} {{actor.system.attributes.level.value}}</p>
         <ul class="skills-list">
           {{#each actor.system.skills}}
           <li>{{@key}}: {{this.value}}</li>
           {{/each}}
         </ul>
         <div class="current-agenda">
-          <h4>Current Agenda Items</h4>
+          <h4>{{localize "CAIN.PlayerOverview.CurrentAgendaItems"}}</h4>
           <ul class="agenda-list">
             {{#each agendaTasks}}
             <li class="{{#if this.system.isBold}}bold{{/if}}">{{this.system.task}}</li>
             {{/each}}
           </ul>
-          <h4>Current Agenda Abilities</h4>
+          <h4>{{localize "CAIN.PlayerOverview.CurrentAgendaAbilities"}}</h4>
           <ul class="agenda-list">
             {{#each agendaAbilities}}
             <li title="{{this.system.abilityDescription}}"><b>{{this.system.abilityName}}</b></li>
@@ -27,13 +27,13 @@
           </ul>
         </div>
         <div class="current-blasphemies">
-          <h4>Current Blasphemies</h4>
+          <h4>{{localize "CAIN.PlayerOverview.CurrentBlasphemies"}}</h4>
           <ul class="blasphemy-list">
             {{#each blasphemies}}
               <li>{{this.system.blasphemyName}}</li>
             {{/each}}
           </ul>
-          <h4>Current Blasphemy Powers</h4>
+          <h4>{{localize "CAIN.PlayerOverview.CurrentBlasphemyPowers"}}</h4>
           <ul class="blasphemy-list">
             {{#each blasphemyPowers}}
             <li title="{{this.system.powerDescription}}"> <b>{{this.system.powerName}}</b></li>
@@ -50,7 +50,7 @@
     </div>
   {{else}}
     <div class="no-players-message">
-      <p>🚀 Please add players and then add exorcist sheets to those players to view their stats. 📜</p>
+      <p>{{localize "CAIN.PlayerOverview.NoPlayersMessage"}}</p>
     </div>
   {{/if}}
 </div>

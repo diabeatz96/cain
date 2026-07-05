@@ -1350,16 +1350,16 @@ async function checkAndImportCompendiums() {
       speaker: { alias: "CAIN System" },
       content: `<div style="background: #2a2a2a; border: 2px solid #66ff66; padding: 15px; border-radius: 8px; color: #fff;">
         <h2 style="margin: 0 0 10px 0; color: #88ff88; text-shadow: 0 0 2px rgba(136,255,136,0.5);">Import Complete!</h2>
-        <p style="margin: 5px 0; color: #e0e0e0;">Successfully imported all game content:</p>
+        <p style="margin: 5px 0; color: #e0e0e0;">${game.i18n.localize("CAIN.Chat.ImportSuccessDesc")}</p>
         <ul style="margin: 10px 0; padding-left: 20px; color: #e0e0e0;">
           ${importResults.join('')}
         </ul>
-        <p style="margin: 10px 0 5px 0; font-weight: bold; color: #e0e0e0;">Total: ${totalImported} items imported</p>
-        <p style="margin: 5px 0; font-size: 0.9em; color: #bbb;">All items are now ready to use in your world!</p>
+        <p style="margin: 10px 0 5px 0; font-weight: bold; color: #e0e0e0;">${game.i18n.format("CAIN.Chat.ImportTotal", {count: totalImported})}</p>
+        <p style="margin: 5px 0; font-size: 0.9em; color: #bbb;">${game.i18n.localize("CAIN.Chat.ImportReady")}</p>
       </div>`
     });
 
-    ui.notifications.info(`CAIN | Successfully imported ${totalImported} items from compendiums`);
+    ui.notifications.info(game.i18n.format("CAIN.Notifications.ImportedCompendiums", {count: totalImported}));
     console.log(`CAIN | Automatic import completed: ${totalImported} items imported`);
 
   } catch (error) {
@@ -1368,13 +1368,13 @@ async function checkAndImportCompendiums() {
     await ChatMessage.create({
       speaker: { alias: "CAIN System" },
       content: `<div style="background: #2a2a2a; border: 2px solid #ff6666; padding: 15px; border-radius: 8px; color: #fff;">
-        <h2 style="margin: 0 0 10px 0; color: #ff8888; text-shadow: 0 0 2px rgba(255,136,136,0.5);">Import Error</h2>
-        <p style="margin: 5px 0; color: #e0e0e0;">An error occurred during automatic import.</p>
-        <p style="margin: 5px 0; font-size: 0.9em; color: #bbb;">Please try importing manually from the compendiums.</p>
+        <h2 style="margin: 0 0 10px 0; color: #ff8888; text-shadow: 0 0 2px rgba(255,136,136,0.5);">${game.i18n.localize("CAIN.Chat.ImportErrorTitle")}</h2>
+        <p style="margin: 5px 0; color: #e0e0e0;">${game.i18n.localize("CAIN.Chat.ImportErrorDesc")}</p>
+        <p style="margin: 5px 0; font-size: 0.9em; color: #bbb;">${game.i18n.localize("CAIN.Chat.ImportErrorManual")}</p>
       </div>`
     });
 
-    ui.notifications.error('CAIN | Error during automatic compendium import. Check console for details.');
+    ui.notifications.error(game.i18n.localize("CAIN.Notifications.ImportError"));
   }
 }
 
@@ -1517,7 +1517,7 @@ async function createItemMacro(data, slot) {
   if (data.type !== 'Item') return;
   if (!data.uuid.includes('Actor.') && !data.uuid.includes('Token.')) {
     return ui.notifications.warn(
-      'You can only create macro buttons for owned Items'
+      game.i18n.localize("CAIN.Notifications.CreateMacroOwnedWarn")
     );
   }
   // If it is, retrieve it based on the uuid.
@@ -1755,7 +1755,7 @@ function showAccessibilityChoiceDialog() {
         game.settings.set('cain', 'accessibilityMode', false);
         game.settings.set('cain', 'accessibilityModeChosen', true);
         applyAccessibilityMode(false);
-        ui.notifications.info('Style Mode selected.');
+        ui.notifications.info(game.i18n.localize("CAIN.Notifications.StyleModeSelected"));
         dialog.close();
       });
 
@@ -1763,7 +1763,7 @@ function showAccessibilityChoiceDialog() {
         game.settings.set('cain', 'accessibilityMode', true);
         game.settings.set('cain', 'accessibilityModeChosen', true);
         applyAccessibilityMode(true);
-        ui.notifications.info('Accessibility Mode selected.');
+        ui.notifications.info(game.i18n.localize("CAIN.Notifications.AccessibilityModeSelected"));
         dialog.close();
       });
     },
@@ -1789,7 +1789,7 @@ function rollItemMacro(itemUuid) {
     if (!item || !item.parent) {
       const itemName = item?.name ?? itemUuid;
       return ui.notifications.warn(
-        `Could not find item ${itemName}. You may need to delete and recreate this macro.`
+        game.i18n.format("CAIN.Notifications.MacroItemNotFound", {name: itemName})
       );
     }
 

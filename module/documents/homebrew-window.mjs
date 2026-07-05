@@ -813,7 +813,7 @@ export class HomebrewWindow extends Application {
             icon: "fa-tasks"
         });
 
-        ui.notifications.info(`Agenda "${this.agendaOptions.name}" created successfully!`);
+        ui.notifications.info(game.i18n.format("CAIN.Notifications.AgendaCreated", {name: this.agendaOptions.name}));
     }
 
     async _onSubmitAffliction(event) {
@@ -823,7 +823,7 @@ export class HomebrewWindow extends Application {
         const afflictionDescription = document.getElementById('affliction-description').value;
 
         if (!afflictionName || afflictionName.trim() === "") {
-            ui.notifications.warn("Please enter an affliction name.");
+            ui.notifications.warn(game.i18n.localize("CAIN.Notifications.EnterAfflictionNameWarn"));
             return;
         }
 
@@ -864,7 +864,7 @@ export class HomebrewWindow extends Application {
             icon: "fa-skull-crossbones"
         });
 
-        ui.notifications.info(`Affliction "${afflictionName}" created successfully!`);
+        ui.notifications.info(game.i18n.format("CAIN.Notifications.AfflictionCreated", {name: afflictionName}));
 
         // Clear the form
         document.getElementById('affliction-name').value = "";
@@ -880,7 +880,7 @@ export class HomebrewWindow extends Application {
         const itemWeight = parseFloat(document.getElementById('item-weight').value) || 0;
 
         if (!itemName || itemName.trim() === "") {
-            ui.notifications.warn("Please enter an item name.");
+            ui.notifications.warn(game.i18n.localize("CAIN.Notifications.EnterItemNameWarn"));
             return;
         }
 
@@ -930,7 +930,7 @@ export class HomebrewWindow extends Application {
             icon: "fa-briefcase"
         });
 
-        ui.notifications.info(`Item "${itemName}" created successfully!`);
+        ui.notifications.info(game.i18n.format("CAIN.Notifications.ItemCreated", {name: itemName}));
 
         // Clear the form
         document.getElementById('item-name').value = "";
@@ -951,7 +951,7 @@ export class HomebrewWindow extends Application {
         const powerDescription = document.getElementById('power-standalone-description').value;
 
         if (!powerName || powerName.trim() === "") {
-            ui.notifications.warn("Please enter a power name.");
+            ui.notifications.warn(game.i18n.localize("CAIN.Notifications.EnterPowerNameWarn"));
             return;
         }
 
@@ -999,7 +999,7 @@ export class HomebrewWindow extends Application {
             icon: "fa-hand-sparkles"
         });
 
-        ui.notifications.info(`Power "${powerName}" created successfully!`);
+        ui.notifications.info(game.i18n.format("CAIN.Notifications.PowerCreated", {name: powerName}));
 
         // Clear the form
         document.getElementById('power-standalone-name').value = "";
@@ -1023,9 +1023,9 @@ export class HomebrewWindow extends Application {
         const abilityList = this.element.find('[data-tab="sinMark"] .ability-list');
         const newAbilityHtml = `
             <li class='ability-item'>
-                <input type="text" class="homebrew-input homebrew-sinmark-ability-name-input" data-sinmark-ability-index="${newIndex}" placeholder="Ability name..." value="">
-                <textarea class="homebrew-input homebrew-sinmark-ability-description-input" data-sinmark-ability-index="${newIndex}" placeholder="Ability description (use {<CAT> type modifier} for CAT formatting)..."></textarea>
-                <button type="button" class="btn-icon btn-delete homebrew-remove-sinmark-ability" data-sinmark-ability-index="${newIndex}" title="Remove">
+                <input type="text" class="homebrew-input homebrew-sinmark-ability-name-input" data-sinmark-ability-index="${newIndex}" placeholder="${game.i18n.localize('CAIN.Homebrew.AbilityNamePlaceholder')}" value="">
+                <textarea class="homebrew-input homebrew-sinmark-ability-description-input" data-sinmark-ability-index="${newIndex}" placeholder="${game.i18n.localize('CAIN.Homebrew.AbilityDescPlaceholder')}"></textarea>
+                <button type="button" class="btn-icon btn-delete homebrew-remove-sinmark-ability" data-sinmark-ability-index="${newIndex}" title="${game.i18n.localize('CAIN.Remove')}">
                     <i class="fas fa-trash"></i>
                 </button>
             </li>
@@ -1081,7 +1081,7 @@ export class HomebrewWindow extends Application {
         const sinMarkDescription = document.getElementById('sinmark-description').value;
 
         if (!sinMarkName || sinMarkName.trim() === "") {
-            ui.notifications.warn("Please enter a sin mark name.");
+            ui.notifications.warn(game.i18n.localize("CAIN.Notifications.EnterSinMarkNameWarn"));
             return;
         }
 
@@ -1163,7 +1163,7 @@ export class HomebrewWindow extends Application {
             icon: "fa-exclamation-triangle"
         });
 
-        ui.notifications.info(`Sin Mark "${sinMarkName}" created successfully!`);
+        ui.notifications.info(game.i18n.format("CAIN.Notifications.SinMarkCreated", {name: sinMarkName}));
 
         // Clear the form
         document.getElementById('sinmark-name').value = "";
@@ -1200,8 +1200,8 @@ export class HomebrewWindow extends Application {
         const newStrictureHtml = `
             <li class='stricture-item'>
                 <span class="stricture-number"></span>
-                <textarea class="homebrew-input homebrew-stricture-input" data-stricture-index="${newIndex}" placeholder="Enter stricture (e.g., 'Never lie', 'Always help the innocent')..."></textarea>
-                <button type="button" class="btn-icon btn-delete homebrew-remove-stricture" data-stricture-index="${newIndex}" title="Remove Stricture">
+                <textarea class="homebrew-input homebrew-stricture-input" data-stricture-index="${newIndex}" placeholder="${game.i18n.localize('CAIN.Bonds.EnterNewStricture')}"></textarea>
+                <button type="button" class="btn-icon btn-delete homebrew-remove-stricture" data-stricture-index="${newIndex}" title="${game.i18n.localize('CAIN.Bonds.RemoveStricture')}">
                     <i class="fas fa-trash"></i>
                 </button>
             </li>
@@ -1244,7 +1244,7 @@ export class HomebrewWindow extends Application {
             const emptyHtml = `
                 <li class="stricture-empty-state">
                     <i class="fas fa-scroll"></i>
-                    <span>No strictures added yet. Click "Add Stricture" to define the rules of this bond.</span>
+                    <span>${game.i18n.localize('CAIN.Homebrew.NoStricturesHint')}</span>
                 </li>
             `;
             strictureList.append(emptyHtml);
@@ -1259,12 +1259,12 @@ export class HomebrewWindow extends Application {
         const highBlasphemyLevel = parseInt(document.getElementById('bond-high-blasphemy-level').value) || 1;
 
         if (!bondName || bondName.trim() === "") {
-            ui.notifications.warn("Please enter a bond name.");
+            ui.notifications.warn(game.i18n.localize("CAIN.Notifications.EnterBondNameWarn"));
             return;
         }
 
         if (!virtueName || virtueName.trim() === "") {
-            ui.notifications.warn("Please enter a virtue name.");
+            ui.notifications.warn(game.i18n.localize("CAIN.Notifications.EnterVirtueNameWarn"));
             return;
         }
 
@@ -1317,7 +1317,7 @@ export class HomebrewWindow extends Application {
             icon: "fa-heart"
         });
 
-        ui.notifications.info(`Bond "${bondName}" created successfully!`);
+        ui.notifications.info(game.i18n.format("CAIN.Notifications.BondCreated", {name: bondName}));
 
         // Clear the form
         document.getElementById('bond-name').value = "";
@@ -1350,7 +1350,7 @@ export class HomebrewWindow extends Application {
         const psycheBurstCost = parseInt(document.getElementById('bond-ability-psyche-cost').value) || 0;
 
         if (!abilityName || abilityName.trim() === "") {
-            ui.notifications.warn("Please enter an ability name.");
+            ui.notifications.warn(game.i18n.localize("CAIN.Notifications.EnterAbilityNameWarn"));
             return;
         }
 
@@ -1393,7 +1393,7 @@ export class HomebrewWindow extends Application {
             icon: "fa-handshake"
         });
 
-        ui.notifications.info(`Bond Ability "${abilityName}" created successfully!`);
+        ui.notifications.info(game.i18n.format("CAIN.Notifications.BondAbilityCreated", {name: abilityName}));
 
         // Clear the form
         document.getElementById('bond-ability-name').value = "";
@@ -1414,7 +1414,7 @@ export class HomebrewWindow extends Application {
         const homebrewItems = this._getHomebrewItems();
 
         if (homebrewItems.length === 0) {
-            exportList.html('<p class="empty-state"><i class="fas fa-inbox"></i> No items to export.</p>');
+            exportList.html(`<p class="empty-state"><i class="fas fa-inbox"></i> ${game.i18n.localize('CAIN.Notifications.NoHomebrewExportWarn')}</p>`);
             return;
         }
 
@@ -1482,14 +1482,14 @@ export class HomebrewWindow extends Application {
 
     _getTypeLabel(type) {
         const labels = {
-            "agenda": "Agenda",
-            "blasphemy": "Blasphemy",
-            "blasphemyPower": "Power",
-            "bond": "Bond",
-            "bondAbility": "Bond Ability",
-            "affliction": "Affliction",
-            "item": "Item",
-            "sinMark": "Sin Mark"
+            "agenda": game.i18n.localize("CAIN.Homebrew.Agenda"),
+            "blasphemy": game.i18n.localize("CAIN.Homebrew.Blasphemy"),
+            "blasphemyPower": game.i18n.localize("CAIN.Homebrew.BlasphemyPower"),
+            "bond": game.i18n.localize("CAIN.Homebrew.Bond"),
+            "bondAbility": game.i18n.localize("CAIN.Homebrew.BondAbility"),
+            "affliction": game.i18n.localize("CAIN.Homebrew.Affliction"),
+            "item": game.i18n.localize("CAIN.Homebrew.Item"),
+            "sinMark": game.i18n.localize("CAIN.Homebrew.SinMark")
         };
         return labels[type] || type;
     }
@@ -1505,7 +1505,7 @@ export class HomebrewWindow extends Application {
 
         const checkedBoxes = this.element.find('.export-item-checkbox:checked');
         if (checkedBoxes.length === 0) {
-            ui.notifications.warn("Please select at least one item to export.");
+            ui.notifications.warn(game.i18n.localize("CAIN.Notifications.ExportSelectWarn"));
             return;
         }
 
@@ -1523,7 +1523,7 @@ export class HomebrewWindow extends Application {
 
         const items = this._getHomebrewItems();
         if (items.length === 0) {
-            ui.notifications.warn("No homebrew items to export.");
+            ui.notifications.warn(game.i18n.localize("CAIN.Notifications.NoHomebrewExportWarn"));
             return;
         }
 
@@ -1548,7 +1548,7 @@ export class HomebrewWindow extends Application {
 
         saveDataToFile(json, "application/json", filename);
 
-        ui.notifications.info(`Exported ${items.length} item(s) to ${filename}`);
+        ui.notifications.info(game.i18n.format("CAIN.Notifications.ExportSuccess", {count: items.length, file: filename}));
     }
 
     // ==================== FOLDER ZIP EXPORT ====================
@@ -1625,7 +1625,7 @@ export class HomebrewWindow extends Application {
 
         const checkedBoxes = this.element.find('.export-folder-checkbox:checked');
         if (checkedBoxes.length === 0) {
-            ui.notifications.warn("Please select at least one folder to export.");
+            ui.notifications.warn(game.i18n.localize("CAIN.Notifications.ExportFolderSelectWarn"));
             return;
         }
 
@@ -1649,7 +1649,7 @@ export class HomebrewWindow extends Application {
         }
 
         if (collected.size === 0) {
-            ui.notifications.warn("No homebrew items found in the selected folders.");
+            ui.notifications.warn(game.i18n.localize("CAIN.Notifications.NoHomebrewFoldersWarn"));
             return;
         }
 
@@ -1675,13 +1675,13 @@ export class HomebrewWindow extends Application {
 
         try {
             const savedDir = await this._exportItemsToWorld(files);
-            ui.notifications.info(`Saved ${items.length} item(s) to ${savedDir} (inside your world folder).`);
+            ui.notifications.info(game.i18n.format("CAIN.Notifications.SavedItemsWorld", {count: items.length, dir: savedDir}));
             console.log(`Homebrew export saved to: ${savedDir}`);
         } catch (err) {
             console.error("Could not write export into the world folder, falling back to download:", err);
             const blob = this._createZipBlob(files);
             this._downloadBlob(blob, zipName);
-            ui.notifications.warn(`Couldn't write into the world folder; downloaded ${zipName} to your browser instead.`);
+            ui.notifications.warn(game.i18n.format("CAIN.Notifications.CouldNotWriteWorld", {file: zipName}));
         }
     }
 
@@ -1915,7 +1915,7 @@ export class HomebrewWindow extends Application {
                 this.element.find('#import-preview').show();
 
             } catch (error) {
-                ui.notifications.error("Failed to read import file: " + error.message);
+                ui.notifications.error(game.i18n.format("CAIN.Notifications.ImportFail", {error: error.message}));
                 console.error(error);
             }
         };
@@ -1927,7 +1927,7 @@ export class HomebrewWindow extends Application {
         event.preventDefault();
 
         if (!this._pendingImport) {
-            ui.notifications.warn("No file selected for import.");
+            ui.notifications.warn(game.i18n.localize("CAIN.Notifications.NoFileSelectedImport"));
             return;
         }
 
@@ -1978,7 +1978,7 @@ export class HomebrewWindow extends Application {
                 });
             }
 
-            ui.notifications.info(`Successfully imported ${importedCount} item(s).`);
+            ui.notifications.info(game.i18n.format("CAIN.Notifications.SuccessfullyImported", {count: importedCount}));
 
             // Clear the import state
             this._pendingImport = null;
@@ -1990,7 +1990,7 @@ export class HomebrewWindow extends Application {
             this.render(true);
 
         } catch (error) {
-            ui.notifications.error("Failed to import items: " + error.message);
+            ui.notifications.error(game.i18n.format("CAIN.Notifications.FailedToImport", {message: error.message}));
             console.error(error);
         }
     }
@@ -2063,7 +2063,7 @@ export class HomebrewWindow extends Application {
         if (item) {
             item.sheet.render(true);
         } else {
-            ui.notifications.warn("Item no longer exists in the world.");
+            ui.notifications.warn(game.i18n.localize("CAIN.Notifications.ItemNotExist"));
         }
     }
 
@@ -2075,15 +2075,15 @@ export class HomebrewWindow extends Application {
         this.saveHistory();
         this._populateHistory(this.element);
 
-        ui.notifications.info("Item removed from history.");
+        ui.notifications.info(game.i18n.localize("CAIN.Notifications.HistoryRemoved"));
     }
 
     async _onClearHistory(event) {
         event.preventDefault();
 
         const confirmed = await Dialog.confirm({
-            title: "Clear History",
-            content: "<p>Are you sure you want to clear the entire creation history? This cannot be undone.</p>",
+            title: game.i18n.localize("CAIN.Notifications.HistoryClearConfirmTitle"),
+            content: `<p>${game.i18n.localize("CAIN.Notifications.HistoryClearConfirmDesc")}</p>`,
             yes: () => true,
             no: () => false
         });
@@ -2092,7 +2092,7 @@ export class HomebrewWindow extends Application {
             this.history = [];
             this.saveHistory();
             this._populateHistory(this.element);
-            ui.notifications.info("History cleared.");
+            ui.notifications.info(game.i18n.localize("CAIN.Notifications.HistoryCleared"));
         }
     }
 
@@ -2194,15 +2194,15 @@ export class HomebrewWindow extends Application {
     async _onSaveSettings(event) {
         event.preventDefault();
         this.saveSettings();
-        ui.notifications.info("Homebrew settings saved successfully!");
+        ui.notifications.info(game.i18n.localize("CAIN.Notifications.SettingsSaved"));
     }
 
     async _onResetSettings(event) {
         event.preventDefault();
 
         const confirmed = await Dialog.confirm({
-            title: "Reset Settings",
-            content: "<p>Are you sure you want to reset all folder settings to defaults?</p>",
+            title: game.i18n.localize("CAIN.Notifications.ResetSettingsConfirmTitle"),
+            content: `<p>${game.i18n.localize("CAIN.Notifications.ResetSettingsConfirmDesc")}</p>`,
             yes: () => true,
             no: () => false
         });
@@ -2221,7 +2221,7 @@ export class HomebrewWindow extends Application {
             };
             this.saveSettings();
             this.render(true);
-            ui.notifications.info("Settings reset to defaults.");
+            ui.notifications.info(game.i18n.localize("CAIN.Notifications.SettingsReset"));
         }
     }
 
@@ -2276,13 +2276,13 @@ export class HomebrewWindow extends Application {
         const selectedItemId = this.element.find('#reverse-import-item').val();
 
         if (!selectedType || !selectedItemId) {
-            ui.notifications.warn("Please select an item type and item to load.");
+            ui.notifications.warn(game.i18n.localize("CAIN.Notifications.LoadItemWarn"));
             return;
         }
 
         const item = game.items.get(selectedItemId);
         if (!item) {
-            ui.notifications.error("Item not found.");
+            ui.notifications.error(game.i18n.localize("CAIN.Notifications.ItemNotFound"));
             return;
         }
 
@@ -2313,11 +2313,11 @@ export class HomebrewWindow extends Application {
                 await this._loadSinMarkForEditing(item);
                 break;
             default:
-                ui.notifications.error("Unknown item type.");
+                ui.notifications.error(game.i18n.localize("CAIN.Notifications.UnknownItemType"));
                 return;
         }
 
-        ui.notifications.info(`Loaded "${item.name}" for editing. Switch to the appropriate tab to modify it.`);
+        ui.notifications.info(game.i18n.format("CAIN.Notifications.LoadedForEditing", {name: item.name}));
     }
 
     async _loadAgendaForEditing(item) {

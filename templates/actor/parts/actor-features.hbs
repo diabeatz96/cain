@@ -227,7 +227,7 @@
   }
 </style>
 
-<h3 class='resource-header'>Cat Level</h3>
+<h3 class='resource-header'>{{localize 'CAIN.Features.CatLevel'}}</h3>
 <div class="resource">
   <div class="group_cat">
     {{#times 8}}
@@ -243,26 +243,26 @@
 
 <div class="advancements-experience-box">
   <div class="resource">
-    <label for="xp"> <h2 class="resource-header">XP & Advancements</h3></label> 
+    <label for="xp"> <h2 class="resource-header">{{localize 'CAIN.Features.XPAndAdvancements'}}</h3></label> 
     <div class="xp-button-group flexrow">
       <div class="flexcol">        
         <button id="increment-xp-value" class="xp-button">
-          Gain 1 XP
+          {{localize 'CAIN.Features.GainXP'}}
         </button>
         <button id="decrement-xp-value" class="xp-button">
-          Lose 1 XP
+          {{localize 'CAIN.Features.LoseXP'}}
         </button>
       </div>
       <div class="flexcol">        
         <button id="increment-max-xp-value" class="xp-button">
-          +1 Max XP
+          {{localize 'CAIN.Features.AddMaxXP'}}
         </button>
         <button id="decrement-max-xp-value" class="xp-button">
-          -1 Max XP
+          {{localize 'CAIN.Features.RemoveMaxXP'}}
         </button>
       </div>
       <button id="session-end-xp-value" class="xp-button">
-        End Session XP
+        {{localize 'CAIN.Features.EndSessionXP'}}
       </button>
     </div>
     <div>
@@ -276,7 +276,7 @@
   </div>
 
   <div class="resource">
-    <label for="system.advancements.value" class="resource-label">Advancements</label>
+    <label for="system.advancements.value" class="resource-label">{{localize 'CAIN.Features.Advancements'}}</label>
     <output id="advancements-output">{{system.advancements.value}}</output>
     <div class="checkbox-group" data-field="advancements" style="margin-top: 10px;">
       {{#times system.advancements.max}}
@@ -289,7 +289,7 @@
 <div class="grid grid-3col">
   <div class="resource">
     <div class="flex-group">
-      <label for="divineAgony">Divine Agony</label>
+      <label for="divineAgony">{{localize 'CAIN.Features.DivineAgony'}}</label>
       <button id="increment-max-divineAgony" class="xp-button">+1</button>
       <button id="decrement-max-divineAgony" class="xp-button">-1</button>
     </div>
@@ -302,7 +302,7 @@
 
   <div class="resource">
     <div class="flex-group">
-      <label for="injuries">Injuries</label>
+      <label for="injuries">{{localize 'CAIN.Features.Injuries'}}</label>
       <button id="increment-max-injuries" class="xp-button">+1</button>
       <button id="decrement-max-injuries" class="xp-button">-1</button>
     </div>
@@ -315,7 +315,7 @@
 
   <div class="resource">
     <div class="flex-group">
-      <label for="stress">Stress</label>
+      <label for="stress">{{localize 'CAIN.Features.Stress'}}</label>
       <button id="increment-max-stress" class="xp-button">+1</button>
       <button id="decrement-max-stress" class="xp-button">-1</button>
     </div>
@@ -328,69 +328,66 @@
 </div>
 
 <div class="roller-box">
-  <h2 class="resource-header">Dice Roller</h2>
+  <h2 class="resource-header">{{localize 'CAIN.Features.DiceRoller'}}</h2>
   <div class="flex-group-center">
     <div class="flex-group">
       <div class="resource">
-        <label for="system.skill" class="resource-label">Select Skill</label>
+        <label for="system.skill" class="resource-label">{{localize 'CAIN.Features.SelectSkill'}}</label>
         <select name="system.skill" data-dtype="String">
           {{#each @root.config.skills as |skill key|}}
             <option value="{{key}}" {{#if (eq system.skill key)}}selected{{/if}}>{{localize (concat 'CAIN.Skill.' key '.long')}}</option>
           {{/each}}
-          <option value="psyche" {{#if (eq system.skill 'psyche')}}selected{{/if}}>Psyche</option>
+          <option value="psyche" {{#if (eq system.skill 'psyche')}}selected{{/if}}>{{localize 'CAIN.Abilities.Psyche'}}</option>
         </select>
       </div>
       <div class="demon-checkbox">
         <input id="use-divine-agony" type="checkbox" name="use-divine-agony" value="0">
-        <label for="use-divine-agony">Use Divine Agony</label>
+        <label for="use-divine-agony">{{localize 'CAIN.Features.UseDivineAgony'}}</label>
       </div>
     </div>
     <div class="checkbox-group">
       <div class="resource">
-        <label for="teamwork">Teamwork</label>
+        <label for="teamwork">{{localize 'CAIN.Features.Teamwork'}}</label>
         <input id="teamwork" type="checkbox" name="teamwork" value="0">
       </div>
       <div class="resource">
-        <label for="setupPage">Setup</label>
+        <label for="setupPage">{{localize 'CAIN.Features.Setup'}}</label>
         <input id="setupPage" type="checkbox" name="setup" value="0">
       </div>
       <div class="resource">
-        <label for="hard">Hard</label>
+        <label for="hard">{{localize 'CAIN.Features.Hard'}}</label>
         <input id="hard" type="checkbox" name="hard" value="0">
       </div>
       <div class="resource">
-        <label for="extra-dice">Extra Dice</label>
+        <label for="extra-dice">{{localize 'CAIN.Features.ExtraDice'}}</label>
         <input id="extra-dice" type="number" name="extra-dice" value="0" min="0">
       </div>
     </div>
     <div class="roll-button">
-      <button type="button">Roll</button>
+      <button type="button">{{localize 'CAIN.Features.Roll'}}</button>
     </div>
   </div>
 </div>
 
-<h2>ADVANCEMENT</h2>
-<p>At the end of each session, answer each question, then mark xp. Cash an advance each time you mark 4.</p>
+<h2>{{localize 'CAIN.Features.AdvancementHeader'}}</h2>
+<p>{{localize 'CAIN.Features.AdvancementHint'}}</p>
 <ul>
-  <li>Did you survive?</li>
-  <li>Did you follow your first agenda item?</li>
-  <li>Did you follow at least one bolded agenda item?</li>
-  <li>Did you follow two or more bolded agenda items?</li>
-  <li>Did you take an injury or affliction?</li>
+  <li>{{localize 'CAIN.Features.AdvancementQ1'}}</li>
+  <li>{{localize 'CAIN.Features.AdvancementQ2'}}</li>
+  <li>{{localize 'CAIN.Features.AdvancementQ3'}}</li>
+  <li>{{localize 'CAIN.Features.AdvancementQ4'}}</li>
+  <li>{{localize 'CAIN.Features.AdvancementQ5'}}</li>
 </ul>
 
-<h2>ACTION ASSESSMENT METRIC</h2>
+<h2>{{localize 'CAIN.Features.ActionMetricHeader'}}</h2>
 <div class="grid grid-3col">
-  <p>4+<br>SUCCESS</p>
-  <p>RISKY<br>Admin rolls the risk die</p>
-  <p>HARD<br>Successes on a 6</p>
+  <p>{{localize 'CAIN.Features.SuccessMetric'}}</p>
+  <p>{{localize 'CAIN.Features.RiskyMetric'}}</p>
+  <p>{{localize 'CAIN.Features.HardMetric'}}</p>
 </div>
 
 <ul>
-  <li>Teamwork (Combine highest bonuses)</li>
-  <li>Setup yourself or another: (+1D, -risk, or -hard)</li>
-  <li>Spend 1 psyche burst to use your powers (+1D)</li>
-  <li>Use your abilities</li>
-  <li>Bargain with the Admin (Gain a hook or tradeoff)</li>
-  <li>… +3 dice maximum</li>
+  {{#each (split (localize 'CAIN.Features.DiceModifierList') ';')}}
+    <li>{{this}}</li>
+  {{/each}}
 </ul>

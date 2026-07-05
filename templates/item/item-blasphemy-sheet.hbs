@@ -2,15 +2,15 @@
   <header class="sheet-header">
     <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{system.blasphemyName}}"/>
     <div class="header-fields">
-      <label for="name">Blasphemy Name</label>
+      <label for="name">{{localize 'CAIN.Homebrew.BlasphemyName'}}</label>
       <input type="text" name="system.blasphemyName" class="charname blasphemy-text" value="{{system.blasphemyName}}" data-dtype="String"/>
     </div>
   </header>
 
   {{!-- Sheet Tab Navigation --}}
   <nav class="sheet-tabs tabs" data-group="primary">
-    <a class="item" data-tab="passive">Passive</a>
-    <a class="item" data-tab="powers">Powers</a>
+    <a class="item" data-tab="passive">{{localize 'CAIN.Abilities.Passive'}}</a>
+    <a class="item" data-tab="powers">{{localize 'CAIN.Abilities.Powers'}}</a>
   </nav>
 
   {{!-- Sheet Body --}}
@@ -24,10 +24,10 @@
           <i class="fas fa-palette"></i>
         </button>
         <div class="color-pickers">
-          <input type="color" id="primaryColor" data-id="primary-color" value="{{system.primaryColor}}" title="Primary Color">
-          <input type="color" id="accentColor" data-id="accent-color" value="{{system.accentColor}}" title="Accent Color">
-          <input type="color" id="secondaryColor" data-id="secondary-color" value="{{system.secondaryColor}}" title="Secondary Color">
-          <input type="color" id="textColor" data-id="text-color" value="{{system.textColor}}" title="Text Color">
+          <input type="color" id="primaryColor" data-id="primary-color" value="{{system.primaryColor}}" title="{{localize 'CAIN.Blasphemy.PrimaryColor'}}">
+          <input type="color" id="accentColor" data-id="accent-color" value="{{system.accentColor}}" title="{{localize 'CAIN.Blasphemy.AccentColor'}}">
+          <input type="color" id="secondaryColor" data-id="secondary-color" value="{{system.secondaryColor}}" title="{{localize 'CAIN.Blasphemy.SecondaryColor'}}">
+          <input type="color" id="textColor" data-id="text-color" value="{{system.textColor}}" title="{{localize 'CAIN.Blasphemy.TextColor'}}">
         </div>
       </div>
     </div>

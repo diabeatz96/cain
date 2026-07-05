@@ -114,27 +114,27 @@
           name='name'
           type='text'
           value='{{item.name}}'
-          placeholder='Name'
+          placeholder='{{localize "CAIN.Name"}}'
         /></h1>
     </div>
   </header>
 
   {{! Sheet Body }}
   <section class='sheet-body'>
-    <h2>Sin Information</h2>
+    <h2>{{localize "CAIN.Sin.SinInformation"}}</h2>
     {{! Editors must receive enriched text data from getData to properly handle rolls }}
     <div class="form-group">
-      <label for="abilityName">Ability Name</label>
+      <label for="abilityName">{{localize "CAIN.AbilityName"}}</label>
       <input type="text" name="system.abilityName" value="{{system.abilityName}}" data-dtype="String"/>
     </div>
 
     <div class="form-group">
-      <label for="abilityDescription">Ability Description</label>
+      <label for="abilityDescription">{{localize "CAIN.AbilityDescription"}}</label>
       <textarea name="system.abilityDescription" data-dtype="String">{{system.abilityDescription}}</textarea>
     </div>
 
     <div class="form-group">
-      <label for="bodyPartName">Body Part Name</label>
+      <label for="bodyPartName">{{localize "CAIN.Sin.BodyPartName"}}</label>
       <input type="text" name="system.bodyPartName" value="{{system.bodyPartName}}" data-dtype="String"/>
     </div>
   </section>

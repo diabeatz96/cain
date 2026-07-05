@@ -11,11 +11,11 @@
           name='name'
           type='text'
           value='{{item.name}}'
-          placeholder='Name'
+          placeholder='{{localize "CAIN.Name"}}'
         /></h1>
       <div class='grid grid-2col'>
         <div class='resource'>
-          <label class='resource-label'>Quantity</label>
+          <label class='resource-label'>{{localize "CAIN.Quantity"}}</label>
           <input
             type='text'
             name='system.quantity'
@@ -24,7 +24,7 @@
           />
         </div>
         <div class='resource'>
-          <label class='resource-label'>Type</label>
+          <label class='resource-label'>{{localize "CAIN.Type"}}</label>
           <input
             type='text'
             name='system.type'
@@ -35,7 +35,7 @@
       </div>
       <div class='grid grid-2col'>
         <div class='resource'>
-          <label class='resource-label'>Scrip</label>
+          <label class='resource-label'>{{localize "CAIN.Scrip"}}</label>
           <input
             type='text'
             name='system.scripValue'
@@ -44,7 +44,7 @@
           />
         </div>
         <div class='resource'>
-          <label class='resource-label'>Kit Points</label>
+          <label class='resource-label'>{{localize "CAIN.KitPoints"}}</label>
           <input
             type='text'
             name='system.kitPoint'
@@ -58,7 +58,7 @@
 
   {{! Sheet Tab Navigation }}
   <nav class='sheet-tabs tabs' data-group='primary'>
-    <a class='item' data-tab='description'>Description</a>
+    <a class='item' data-tab='description'>{{localize "CAIN.Description"}}</a>
   </nav>
 
   {{! Sheet Body }}
@@ -80,11 +80,11 @@
     <div class='tab attributes' data-group='primary' data-tab='attributes'>
       {{! As you add new fields, add them in here! }}
       <div class='resource'>
-        <label class='resource-label'>Roll Formula:</label>
+        <label class='resource-label'>{{localize "CAIN.RollFormula"}}</label>
         <span>{{system.formula}}</span>
         <div class='grid grid-4col'>
           <div class='grid-span-1'>
-            <label class='resource-label'>Number of Dice</label>
+            <label class='resource-label'>{{localize "CAIN.DiceNumber"}}</label>
             <input
               type='text'
               name='system.roll.diceNum'
@@ -93,7 +93,7 @@
             />
           </div>
           <div class='grid-span-1'>
-            <label class='resource-label'>Die Size</label>
+            <label class='resource-label'>{{localize "CAIN.DieSize"}}</label>
             <input
               type='text'
               name='system.roll.diceSize'
@@ -102,7 +102,7 @@
             />
           </div>
           <div class='grid-span-2'>
-            <label class='resource-label'>Roll Modifier</label>
+            <label class='resource-label'>{{localize "CAIN.RollModifier"}}</label>
             <input
               type='text'
               name='system.roll.diceBonus'

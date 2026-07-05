@@ -333,9 +333,9 @@ export class CainItemSheet extends BaseItemSheet {
       const abilities = this.item.system.abilities || [];
       abilities.push(abilityItem.id);
       await this.item.update({ 'system.abilities': abilities });
-      ui.notifications.info(`Added ability: ${abilityItem.name}`);
+      ui.notifications.info(game.i18n.format("CAIN.Notifications.AddedAbility", {name: abilityItem.name}));
     } else {
-      ui.notifications.error('Invalid ability UUID');
+      ui.notifications.error(game.i18n.localize("CAIN.Notifications.InvalidAbilityUuid"));
     }
   }
 
@@ -346,9 +346,9 @@ export class CainItemSheet extends BaseItemSheet {
       const lastAbilityId = abilities.pop();
       const lastAbilityItem = game.items.get(lastAbilityId);
       await this.item.update({ 'system.abilities': abilities });
-      ui.notifications.info(`Removed ability: ${lastAbilityItem.name}`);
+      ui.notifications.info(game.i18n.format("CAIN.Notifications.RemovedAbility", {name: lastAbilityItem.name}));
     } else {
-      ui.notifications.error('No abilities to remove');
+      ui.notifications.error(game.i18n.localize("CAIN.Notifications.NoAbilitiesToRemove"));
     }
   }
 
@@ -361,9 +361,9 @@ export class CainItemSheet extends BaseItemSheet {
       strictures.push(strictureText);
       await this.item.update({ 'system.strictures': strictures });
       strictureInput.value = '';
-      ui.notifications.info(`Added stricture: ${strictureText}`);
+      ui.notifications.info(game.i18n.format("CAIN.Notifications.AddedStricture", {text: strictureText}));
     } else {
-      ui.notifications.error('Please enter a stricture');
+      ui.notifications.error(game.i18n.localize("CAIN.Notifications.EnterStrictureWarn"));
     }
   }
 
@@ -374,7 +374,7 @@ export class CainItemSheet extends BaseItemSheet {
     if (index >= 0 && index < strictures.length) {
       const removed = strictures.splice(index, 1);
       await this.item.update({ 'system.strictures': strictures });
-      ui.notifications.info(`Removed stricture`);
+      ui.notifications.info(game.i18n.localize("CAIN.Notifications.RemovedStricture"));
     }
   }
 
@@ -390,21 +390,21 @@ export class CainItemSheet extends BaseItemSheet {
       }
       if (blasphemyPowerItem && blasphemyPowerItem.type === 'blasphemyPower') {
         await this.item.update({ 'system.highBlasphemy': blasphemyPowerItem.id });
-        ui.notifications.info(`Set high blasphemy power: ${blasphemyPowerItem.name}`);
+        ui.notifications.info(game.i18n.format("CAIN.Notifications.SetHighBlasphemy", {name: blasphemyPowerItem.name}));
       } else {
-        ui.notifications.error('Invalid blasphemy power UUID/ID - must be a Blasphemy Power item');
+        ui.notifications.error(game.i18n.localize("CAIN.Notifications.InvalidBlasphemyPowerUuid"));
       }
     } else {
       // Clear the high blasphemy
       await this.item.update({ 'system.highBlasphemy': '' });
-      ui.notifications.info('Cleared high blasphemy power');
+      ui.notifications.info(game.i18n.localize("CAIN.Notifications.ClearedHighBlasphemy"));
     }
   }
 
   async _removeHighBlasphemy(event) {
     event.preventDefault();
     await this.item.update({ 'system.highBlasphemy': '' });
-    ui.notifications.info('Removed high blasphemy power');
+    ui.notifications.info(game.i18n.localize("CAIN.Notifications.RemovedHighBlasphemy"));
   }
 
   /** @override */
@@ -460,24 +460,24 @@ export class CainItemSheet extends BaseItemSheet {
 
       // Check if already added
       if (abilities.includes(droppedItem.id)) {
-        ui.notifications.warn(`${droppedItem.name} is already added to this bond.`);
+        ui.notifications.warn(game.i18n.format("CAIN.Notifications.AbilityAlreadyAdded", {name: droppedItem.name}));
         return;
       }
 
       abilities.push(droppedItem.id);
       await this.item.update({ 'system.abilities': abilities });
-      ui.notifications.info(`Added ability: ${droppedItem.name}`);
+      ui.notifications.info(game.i18n.format("CAIN.Notifications.AddedAbility", {name: droppedItem.name}));
       return;
     }
 
     // Handle blasphemyPower drops - set as high blasphemy
     if (droppedItem.type === 'blasphemyPower') {
       await this.item.update({ 'system.highBlasphemy': droppedItem.id });
-      ui.notifications.info(`Set high blasphemy power: ${droppedItem.name}`);
+      ui.notifications.info(game.i18n.format("CAIN.Notifications.SetHighBlasphemy", {name: droppedItem.name}));
       return;
     }
 
-    ui.notifications.warn('You can only drop Bond Abilities or Blasphemy Powers onto a Bond sheet.');
+    ui.notifications.warn(game.i18n.localize("CAIN.Notifications.DropOnlyBondAbilitiesOrBlasphemy"));
   }
 
 }

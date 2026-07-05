@@ -129,7 +129,7 @@ export class CainActorSheet extends BaseActorSheet {
   async _convertPowersToEmbedded() {
     const ids = this.actor.system.currentBlasphemyPowers ?? [];
     if (!ids.length) {
-      ui.notifications.info("This character has no blasphemy powers to convert.");
+      ui.notifications.info(game.i18n.localize("CAIN.Notifications.NoBlasphemyPowers"));
       return;
     }
 
@@ -872,7 +872,7 @@ export class CainActorSheet extends BaseActorSheet {
             this._onDropBond(event, itemDrop);
             break;
           default:
-          ui.notifications.error("Invalid drop type on ability page: " + itemDrop.type);
+          ui.notifications.error(game.i18n.format("CAIN.Notifications.InvalidDropType", {type: itemDrop.type}));
           console.warn("Invalid drop type on ability page: " + itemDrop.type);
       }
 });
@@ -933,7 +933,7 @@ export class CainActorSheet extends BaseActorSheet {
       // Roll for random affliction
       const afflictions = this.actor.system.afflictions || [];
       if (afflictions.length === 0) {
-        ui.notifications.warn('No afflictions available to roll.');
+        ui.notifications.warn(game.i18n.localize("CAIN.Notifications.NoAfflictionsAvailable"));
         return;
       }
 
@@ -1071,7 +1071,7 @@ export class CainActorSheet extends BaseActorSheet {
     html.find('.afflict-btn').click(async (ev) => {
       const afflictionIds = this.actor.system.afflictions || [];
       if (afflictionIds.length === 0) {
-        ui.notifications.warn('No afflictions defined for this opponent.');
+        ui.notifications.warn(game.i18n.localize("CAIN.Notifications.NoAfflictionsDefined"));
         return;
       }
 
@@ -1146,7 +1146,7 @@ export class CainActorSheet extends BaseActorSheet {
       if (affliction) {
         affliction.sheet.render(true);
       } else {
-        ui.notifications.warn('Affliction item not found. It may have been deleted.');
+        ui.notifications.warn(game.i18n.localize("CAIN.Notifications.AfflictionNotFound"));
       }
     });
 
@@ -1211,13 +1211,13 @@ export class CainActorSheet extends BaseActorSheet {
         const itemDrop = await Item.fromDropData(data);
 
         if (itemDrop.type !== 'affliction') {
-          ui.notifications.warn('Only affliction items can be dropped here.');
+          ui.notifications.warn(game.i18n.localize("CAIN.Notifications.OnlyAfflictionDrop"));
           return;
         }
 
         const currentAfflictions = this.actor.system.afflictions || [];
         if (currentAfflictions.includes(itemDrop.id)) {
-          ui.notifications.warn('This affliction is already added.');
+          ui.notifications.warn(game.i18n.localize("CAIN.Notifications.AfflictionAlreadyAdded"));
           return;
         }
 
@@ -1433,7 +1433,7 @@ export class CainActorSheet extends BaseActorSheet {
             if (includeDieRoll) contentParts.push(`<strong>Special:</strong> ${reactions.dieRoll}`);
 
             if (contentParts.length === 0 && !rollResult) {
-              ui.notifications.warn('Nothing selected to send.');
+              ui.notifications.warn(game.i18n.localize("CAIN.Notifications.NothingSelectedSend"));
               return;
             }
 
@@ -1485,9 +1485,9 @@ export class CainActorSheet extends BaseActorSheet {
     // Check if new value exceeds max
     if (newSinOverflow >= maxSinOverflow) {
       newSinOverflow = maxSinOverflow;
-      ui.notifications.error(`😈 You are now at risk of sin overflow! Current value: ${newSinOverflow} / ${maxSinOverflow} 😈`);
+      ui.notifications.error(game.i18n.format("CAIN.Notifications.AtRiskSinOverflow", {value: newSinOverflow, max: maxSinOverflow}));
     } else {
-      ui.notifications.info(`😈 Current sin overflow value: ${newSinOverflow} / ${maxSinOverflow} 😈`);
+      ui.notifications.info(game.i18n.format("CAIN.Notifications.CurrentSinOverflow", {value: newSinOverflow, max: maxSinOverflow}));
     }
 
     // Update actor's sinOverflow value
@@ -2235,12 +2235,12 @@ export class CainActorSheet extends BaseActorSheet {
     // then open the editable per-character copy.
     const worldItem = game.items.get(id);
     if (!worldItem) {
-      ui.notifications.warn("Could not find that power. Try removing and re-adding it.");
+      ui.notifications.warn(game.i18n.localize("CAIN.Notifications.CouldNotFindPower"));
       return;
     }
     const embeddedId = await this._embedPowerForActor(id);
     if (!embeddedId) {
-      ui.notifications.error("Could not create a per-character copy of this power.");
+      ui.notifications.error(game.i18n.localize("CAIN.Notifications.CouldNotCopyPower"));
       return;
     }
     const currentPowers = this.actor.system.currentBlasphemyPowers ?? [];
@@ -2260,7 +2260,7 @@ export class CainActorSheet extends BaseActorSheet {
     const blasphemyPower = this.actor.items.get(id) ?? game.items.get(id);
     if (!blasphemyPower) {
       console.error(`CAIN | Blasphemy power not found for chat-send: ${id}`);
-      ui.notifications.warn("Could not find that power. Try removing and re-adding it.");
+      ui.notifications.warn(game.i18n.localize("CAIN.Notifications.CouldNotFindPower"));
       return;
     }
     const catLevel = this.actor.system.CATLEVEL.value;
@@ -2410,7 +2410,7 @@ export class CainActorSheet extends BaseActorSheet {
       'system.currentBoldedAgendaTasks': [],
       'system.currentAgendaAbilities': []
     }).then(() => {
-      ui.notifications.info('Agenda removed from character');
+      ui.notifications.info(game.i18n.localize("CAIN.Chat.AgendaRemoved"));
       this.render(false); // Re-render the sheet to reflect changes
     });
   }
@@ -2432,7 +2432,7 @@ export class CainActorSheet extends BaseActorSheet {
     const newBonds = bonds.filter(b => b.bondId !== bondId);
 
     this.actor.update({ 'system.bonds': newBonds }).then(() => {
-      ui.notifications.info('Bond removed from character');
+      ui.notifications.info(game.i18n.localize("CAIN.Chat.BondRemoved"));
       this.render(false);
     });
   }
@@ -2498,7 +2498,7 @@ export class CainActorSheet extends BaseActorSheet {
               'system.currentBlasphemyPowers': currentPowers
             });
             const powerItem = game.items.get(highBlasphemyWorldId);
-            ui.notifications.info(`Gained High Blasphemy Power: ${powerItem?.name || 'Unknown'}`);
+            ui.notifications.info(game.i18n.format("CAIN.Chat.GainedHighBlasphemyPower", {name: powerItem?.name || 'Unknown'}));
             this.render(false);
             return;
           }
@@ -2533,7 +2533,7 @@ export class CainActorSheet extends BaseActorSheet {
             'system.currentBlasphemyPowers': newPowers
           });
           const powerItem = game.items.get(highBlasphemyWorldId);
-          ui.notifications.info(`Lost High Blasphemy Power: ${powerItem?.name || 'Unknown'}`);
+          ui.notifications.info(game.i18n.format("CAIN.Chat.LostHighBlasphemyPower", {name: powerItem?.name || 'Unknown'}));
           this.render(false);
           return;
         }
@@ -2549,14 +2549,14 @@ export class CainActorSheet extends BaseActorSheet {
 
     // Check if bond already exists
     if (bonds.some(b => b.bondId === bondId)) {
-      ui.notifications.warn('This bond is already added to the character');
+      ui.notifications.warn(game.i18n.localize("CAIN.Notifications.BondAlreadyAdded"));
       return;
     }
 
     const newBonds = [...bonds, { bondId: bondId, currentLevel: 0 }];
 
     await this.actor.update({ 'system.bonds': newBonds });
-    ui.notifications.info('Bond added to character');
+    ui.notifications.info(game.i18n.localize("CAIN.Chat.BondAdded"));
     this.render(false);
   }
 
@@ -2566,7 +2566,7 @@ export class CainActorSheet extends BaseActorSheet {
     const abilityItem = game.items.get(abilityId);
 
     if (!abilityItem) {
-      ui.notifications.error('Ability not found');
+      ui.notifications.error(game.i18n.localize("CAIN.Notifications.AbilityNotFound"));
       return;
     }
 
@@ -2574,14 +2574,14 @@ export class CainActorSheet extends BaseActorSheet {
     let content = `
       <div class="bond-ability-chat-card">
         <h3>${abilityItem.system.abilityName || abilityItem.name}</h3>
-        <p class="ability-level-info"><strong>Bond Level Required:</strong> ${abilityItem.system.bondLevel}</p>
-        ${abilityItem.system.isPermanent ? '<p class="permanent-tag"><i class="fas fa-star"></i> Permanent Ability</p>' : ''}
+        <p class="ability-level-info"><strong>${game.i18n.localize('CAIN.Bonds.LevelRequired')}:</strong> ${abilityItem.system.bondLevel}</p>
+        ${abilityItem.system.isPermanent ? `<p class="permanent-tag"><i class="fas fa-star"></i> ${game.i18n.localize('CAIN.Bonds.PermanentAbility')}</p>` : ''}
         <div class="ability-description">${abilityItem.system.abilityDescription}</div>
         ${abilityItem.system.requiresPsycheBurst ? `
           <p class="psyche-cost"><i class="fas fa-brain"></i>
             ${abilityItem.system.psycheBurstCost === 0 ?
-              'Requires all remaining Psyche Bursts (min 1)' :
-              `Requires ${abilityItem.system.psycheBurstCost} Psyche Burst(s)`}
+              game.i18n.localize('CAIN.Character.PsycheBurstAll') :
+              game.i18n.format('CAIN.Character.PsycheBurstCost', {cost: abilityItem.system.psycheBurstCost})}
           </p>
         ` : ''}
       </div>
@@ -2591,7 +2591,7 @@ export class CainActorSheet extends BaseActorSheet {
     await ChatMessage.create({
       speaker: ChatMessage.getSpeaker({ actor: this.actor }),
       content: content,
-      flavor: `${this.actor.name} uses a Bond Ability`
+      flavor: game.i18n.format("CAIN.Bonds.UsesBondAbility", {name: this.actor.name})
     });
   }
 
@@ -2603,7 +2603,7 @@ export class CainActorSheet extends BaseActorSheet {
     const abilityItem = game.items.get(abilityId);
 
     if (!abilityItem) {
-      ui.notifications.error('Ability not found');
+      ui.notifications.error(game.i18n.localize("CAIN.Notifications.AbilityNotFound"));
       return;
     }
 

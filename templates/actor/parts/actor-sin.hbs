@@ -1,5 +1,5 @@
 <div class="sin-overflow sin-page-drop-target">
-  <h3>Sin Overflow</h3>
+  <h3>{{localize 'SHEET.SIN.SINOVERFLOW'}}</h3>
   <div class="sin-overflow-controls" style="display: flex; flex-direction: column; align-items: center;">
     <div id="sinOverflow-checkboxes" style="display: flex; justify-content: center; margin-top: 10px;">
       {{#range 0 system.sinOverflow.max}}
@@ -7,14 +7,14 @@
           <img 
             class="sinOverflow-icon sinOverflow-icon-anim sin-icon-anim-{{mod (CainOffset index ../sheetConstants.SINVisualOffset) 7}}"
             data-sin="{{CainOffset index 1}}"
-            data-tooltip="Right click to clear"
+            data-tooltip="{{localize 'SHEET.TOOLTIPS.RIGHTCLICKCLEAR'}}"
             />
         {{else}}
           <img 
             class="sinOverflow-icon"
             src="systems/cain/assets/sheet/CAIN-sin-no.png"
             data-sin="{{CainOffset index 1}}"
-            data-tooltip="Right click to clear"
+            data-tooltip="{{localize 'SHEET.TOOLTIPS.RIGHTCLICKCLEAR'}}"
             />
 
         {{/if}}
@@ -43,11 +43,11 @@
 </div>
 
 <div class="sin-marks sin-page-drop-target">
-  <h3>Sin Marks</h3>
+  <h3>{{localize 'SHEET.SIN.SINMARKS'}}</h3>
   <input 
   class="sin-mark-description-input" 
   name="system.sinMarkDescription" 
-  placeholder="Add a description of what your marks look like..." 
+  placeholder="{{localize 'SHEET.SIN.DESCRIPTIONPLACEHOLDER'}}" 
   value="{{system.sinMarkDescription}}"> 
    {{#if currentSinMarkData.length}}
     <ul>
@@ -79,18 +79,18 @@
               </li>
             {{/each}}
           </ul>
-          <button class="evolve-mark-button" data-markindex="{{@index}}"><h2 style="position: relative; background: inherit; border: none;"><span class="glitch" data-text="SUCCUMB"> EVOLVE </span></h2></button>
+          <button class="evolve-mark-button" data-markindex="{{@index}}"><h2 style="position: relative; background: inherit; border: none;"><span class="glitch" data-text="{{localize 'SHEET.SIN.SUCCUMB'}}"> {{localize 'SHEET.SIN.EVOLVE'}} </span></h2></button>
         </li>
       {{/each}}
     </ul>
   {{else}}
     <p class="no-sin-marks">
-      A sin mark is a physical manifestation of wild power overflow on your body, evidence of your partial transformation into a sin. You can find a list of sin marks, their effects, and their table, on pg. 86. A sin mark is a new, permanent part of your character. It grants new, beneficial power, and grants you new abilities.
+      {{localize 'SHEET.SIN.INTRO'}}
     </p>
   {{/if}}
   <div class="button-row">
-    <button class="roll-sin-mark">Roll Sin Marks</button>
-    <button class="clear-sin-marks">Clear Sin Marks</button>
+    <button class="roll-sin-mark">{{localize 'SHEET.SIN.ROLLSINMARKS'}}</button>
+    <button class="clear-sin-marks">{{localize 'SHEET.SIN.CLEARSINMARKS'}}</button>
   </div>
 </div>
 
