@@ -9,6 +9,13 @@ import {
 
 import { TalismanWindow } from '../documents/talisman-window.mjs';
 import { SessionEndAdvancement} from  '../documents/session-end-advancement.mjs'
+import {
+  animatedTalismansEnabled,
+  createSlashData,
+  reconcileSlashes,
+  renderSlashLayer,
+  slashPointFromEvent,
+} from '../helpers/talisman-slashes.mjs';
 
 // Use v13 namespaced ActorSheet with fallback for v11/v12
 const BaseActorSheet = foundry?.appv1?.sheets?.ActorSheet ?? ActorSheet;
@@ -277,6 +284,7 @@ export class CainActorSheet extends BaseActorSheet {
       if (!combinedMap.has(g.name)) combinedMap.set(g.name, g);
     });
     context.selectedTalismans = Array.from(combinedMap.values());
+    context.animatedTalismans = animatedTalismansEnabled();
 
     console.log(context.globalTalismans);
 
@@ -731,6 +739,7 @@ export class CainActorSheet extends BaseActorSheet {
     html.find('.talisman-image').click(this._onImageClick.bind(this));
     html.find('.talisman-image').on('contextmenu', this._onDecreaseMarks.bind(this));
     html.find('.talisman-max-mark').change(this._onMaxMarkAmountChange.bind(this));
+    this._renderTalismanSlashOverlays(html);
     html.find('.roll-rest-dice').click(this._RollRestDice.bind(this));
     html.find('#add-agenda-item-button').on('click', this._addAgendaItemButton.bind(this));
     html.find('#editable-agenda-abilities').on('click', '.remove-ability-button', this._removeAgendaAbilityButton.bind(this));
@@ -3202,24 +3211,46 @@ export class CainActorSheet extends BaseActorSheet {
   }
 
   
+  /**
+   * Draw the procedural slash overlays for the character's talisman tab
+   * after each render (see talisman-slashes.mjs). The per-talisman key lets
+   * the renderer animate slashes added/removed since the previous render,
+   * including updates that arrived from another client via updateActor.
+   */
+  _renderTalismanSlashOverlays(html) {
+    if (!animatedTalismansEnabled()) return;
+    const talismans = this.actor.system.talismans || [];
+    html.find('.talisman-slash-layer').each((_, layer) => {
+      const index = parseInt(layer.dataset.index, 10);
+      const talisman = talismans[index];
+      if (talisman) {
+        renderSlashLayer(layer, talisman, {
+          key: `actor:${this.actor.id}:${talisman.name}:${index}`,
+        });
+      }
+    });
+  }
+
   _onDecreaseMarks(event) {
     event.preventDefault();
     const index = event.currentTarget.dataset.index;
     const talismans = this.actor.system.talismans || [];
-  
+
     // Change image similar to how the image change function works but in reverse
     const imagePath = talismans[index].imagePath;
     const imageNumber = parseInt(imagePath.match(/-(\d+)\.png$/)[1], 10);
     if (imageNumber > 0 && talismans[index].currMarkAmount >= 0) {
       talismans[index].currMarkAmount--;
       talismans[index].imagePath = imagePath.replace(/-(\d+)\.png$/, `-${imageNumber - 1}.png`);
+      // Trims the most recent slash to match the new count.
+      if (animatedTalismansEnabled()) reconcileSlashes(talismans[index]);
     }
-  
+
     this.actor.update({ 'system.talismans': talismans }).then(() => {
       this.render(false); // Re-render the sheet to reflect changes
     });
   }
-  
+
   _onSliderChange(event) {
     const index = event.currentTarget.dataset.index;
     const value = event.currentTarget.value;
@@ -3227,11 +3258,12 @@ export class CainActorSheet extends BaseActorSheet {
     talismans[index].currMarkAmount = parseInt(value, 10);
     const imagePath = talismans[index].imagePath;
     talismans[index].imagePath = imagePath.replace(/-(\d+)\.png$/, `-${value}.png`);
+    if (animatedTalismansEnabled()) reconcileSlashes(talismans[index]);
     this.actor.update({ 'system.talismans': talismans }).then(() => {
       this.render(false); // Re-render the sheet to reflect changes
     });
   }
-  
+
   _onAddTalisman(event) {
     event.preventDefault();
     const talismans = this.actor.system.talismans || [];
@@ -3241,6 +3273,7 @@ export class CainActorSheet extends BaseActorSheet {
       currMarkAmount: 0,
       minMarkAmount: 0,
       maxMarkAmount: 13,
+      slashes: [],
     });
     this.actor.update({ 'system.talismans': talismans }).then(() => {
       this.render(false); // Re-render the sheet to reflect changes
@@ -3286,7 +3319,23 @@ export class CainActorSheet extends BaseActorSheet {
     const index = event.currentTarget.dataset.index;
     const talismans = this.actor.system.talismans || [];
     if (talismans[index].currMarkAmount < talismans[index].maxMarkAmount) {
+      // Carve the new slash where the user clicked. Reconcile against the
+      // OLD count first so counter-only changes from other code paths don't
+      // steal the clicked position for an auto-placed slash.
+      if (animatedTalismansEnabled()) {
+        reconcileSlashes(talismans[index]);
+        const img = event.currentTarget;
+        const point = slashPointFromEvent(event, img);
+        const aspect = img.naturalWidth && img.naturalHeight
+          ? img.naturalWidth / img.naturalHeight
+          : undefined;
+        talismans[index].slashes.push(
+          createSlashData(point?.fx ?? 0.5, point?.fy ?? 0.5, undefined, aspect)
+        );
+      }
       talismans[index].currMarkAmount++;
+      // Keep the pre-rendered image variant in lockstep for worlds with
+      // animated talismans disabled.
       const imagePath = talismans[index].imagePath;
       const imageNumber = parseInt(imagePath.match(/-(\d+)\.png$/)[1], 10);
       if (imageNumber < talismans[index].maxMarkAmount) {
@@ -3306,14 +3355,15 @@ export class CainActorSheet extends BaseActorSheet {
     // Ensure the max mark amount is between 0 and 13
     const newMaxMarkAmount = Math.max(0, Math.min(13, value));
     talismans[index].maxMarkAmount = newMaxMarkAmount;
-  
+
     // Adjust currMarkAmount if it exceeds the new maxMarkAmount
     if (talismans[index].currMarkAmount > newMaxMarkAmount) {
       talismans[index].currMarkAmount = newMaxMarkAmount;
       const imagePath = talismans[index].imagePath;
       talismans[index].imagePath = imagePath.replace(/-(\d+)\.png$/, `-${newMaxMarkAmount}.png`);
+      if (animatedTalismansEnabled()) reconcileSlashes(talismans[index]);
     }
-  
+
     this.actor.update({ 'system.talismans': talismans }).then(() => {
       this.render(false); // Re-render the sheet to reflect changes
     });
