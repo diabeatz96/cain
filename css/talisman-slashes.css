@@ -1,0 +1,96 @@
+/* Procedural animated talisman slashes (see module/helpers/talisman-slashes.mjs).
+   The strip wrapper shrink-wraps the talisman artwork so the slash layer's
+   percentage coordinates line up with the art exactly, with no letterboxing. */
+
+.talisman-strip {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-self: center;
+}
+
+/* When animated slashes are on, the art keeps its intrinsic aspect so the
+   wrapper equals the artwork box. The sheets' fixed-size .talisman-image
+   rules (400x220 contain / 200x220 fill) otherwise letterbox or stretch it. */
+.talisman-strip.slash-anim .talisman-image,
+.talisman-strip.slash-anim img {
+  width: auto;
+  max-width: 100%;
+  height: 220px;
+  object-fit: unset;
+  margin-bottom: 0;
+}
+.talisman-strip.slash-anim {
+  margin-bottom: 10px;
+}
+
+/* Pinned talismans live in a user-resizable container, so the art scales
+   with its box instead of using the sheets' fixed 220px height. */
+.pinned-talisman .talisman-strip.slash-anim {
+  width: 75%;
+  margin-bottom: 0.5em;
+}
+.pinned-talisman .talisman-strip.slash-anim img {
+  width: 100%;
+  height: auto;
+  margin-bottom: 0;
+}
+
+.talisman-slash-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: visible;
+  z-index: 2;
+}
+
+svg.cain-slash {
+  position: absolute;
+  overflow: visible;
+  will-change: transform;
+}
+
+/* The instant a cut lands it burns hot-bright, then cools to plain red. */
+svg.cain-slash.fresh {
+  animation: cain-slash-flash 0.45s cubic-bezier(0.2, 0.6, 0.3, 1);
+}
+@keyframes cain-slash-flash {
+  0% {
+    filter: brightness(2.1) saturate(1.4) drop-shadow(0 0 8px rgba(255, 60, 30, 0.9));
+  }
+  100% {
+    filter: brightness(1) saturate(1) drop-shadow(0 0 0 rgba(255, 60, 30, 0));
+  }
+}
+
+/* The knife lands: a hard perpendicular jolt that rings down the strip. */
+.talisman-strip.cut {
+  animation: cain-strip-shake 0.26s cubic-bezier(0.25, 0.5, 0.3, 1);
+}
+@keyframes cain-strip-shake {
+  0% {
+    transform: translate(0, 0);
+  }
+  12% {
+    transform: translate(-5px, 3px) rotate(-1.2deg);
+  }
+  32% {
+    transform: translate(4px, -2px) rotate(0.9deg);
+  }
+  55% {
+    transform: translate(-2px, 1px) rotate(-0.45deg);
+  }
+  78% {
+    transform: translate(1px, -1px) rotate(0.2deg);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .talisman-strip.cut,
+  svg.cain-slash.fresh {
+    animation: none;
+  }
+}
