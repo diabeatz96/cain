@@ -12,9 +12,11 @@ import { SessionEndAdvancement} from  '../documents/session-end-advancement.mjs'
 import {
   animatedTalismansEnabled,
   createSlashData,
+  ensureTalismanUid,
   reconcileSlashes,
   renderSlashLayer,
   slashPointFromEvent,
+  talismanRenderKey,
 } from '../helpers/talisman-slashes.mjs';
 import { dissolveTalismanCard, isTalismanFilled } from '../helpers/talisman-dissolve.mjs';
 
@@ -517,6 +519,10 @@ export class CainActorSheet extends BaseActorSheet {
       item.sheet.render(true);
     });
 
+    // Display-only: must run for read-only viewers too (observers still see
+    // the talismans tab), so it stays above the isEditable gate.
+    this._renderTalismanSlashOverlays(html);
+
     if (!this.isEditable) return;
   
     html.on('click', '.item-create', this._onItemCreate.bind(this));
@@ -740,7 +746,6 @@ export class CainActorSheet extends BaseActorSheet {
     html.find('.talisman-image').click(this._onImageClick.bind(this));
     html.find('.talisman-image').on('contextmenu', this._onDecreaseMarks.bind(this));
     html.find('.talisman-max-mark').change(this._onMaxMarkAmountChange.bind(this));
-    this._renderTalismanSlashOverlays(html);
     html.find('.roll-rest-dice').click(this._RollRestDice.bind(this));
     html.find('#add-agenda-item-button').on('click', this._addAgendaItemButton.bind(this));
     html.find('#editable-agenda-abilities').on('click', '.remove-ability-button', this._removeAgendaAbilityButton.bind(this));
@@ -3226,7 +3231,7 @@ export class CainActorSheet extends BaseActorSheet {
       const talisman = talismans[index];
       if (talisman) {
         renderSlashLayer(layer, talisman, {
-          key: `actor:${this.actor.id}:${talisman.name}:${index}`,
+          key: talismanRenderKey(`actor:${this.actor.id}`, talisman, index),
         });
       }
     });
@@ -3244,7 +3249,10 @@ export class CainActorSheet extends BaseActorSheet {
       talismans[index].currMarkAmount--;
       talismans[index].imagePath = imagePath.replace(/-(\d+)\.png$/, `-${imageNumber - 1}.png`);
       // Trims the most recent slash to match the new count.
-      if (animatedTalismansEnabled()) reconcileSlashes(talismans[index]);
+      if (animatedTalismansEnabled()) {
+        ensureTalismanUid(talismans[index]);
+        reconcileSlashes(talismans[index]);
+      }
     }
 
     this.actor.update({ 'system.talismans': talismans }).then(() => {
@@ -3259,7 +3267,10 @@ export class CainActorSheet extends BaseActorSheet {
     talismans[index].currMarkAmount = parseInt(value, 10);
     const imagePath = talismans[index].imagePath;
     talismans[index].imagePath = imagePath.replace(/-(\d+)\.png$/, `-${value}.png`);
-    if (animatedTalismansEnabled()) reconcileSlashes(talismans[index]);
+    if (animatedTalismansEnabled()) {
+      ensureTalismanUid(talismans[index]);
+      reconcileSlashes(talismans[index]);
+    }
     this.actor.update({ 'system.talismans': talismans }).then(() => {
       this.render(false); // Re-render the sheet to reflect changes
     });
@@ -3268,14 +3279,16 @@ export class CainActorSheet extends BaseActorSheet {
   _onAddTalisman(event) {
     event.preventDefault();
     const talismans = this.actor.system.talismans || [];
-    talismans.push({
+    const talisman = {
       name: 'test-talisman',
       imagePath: 'systems/cain/assets/Talismans/Talisman-A-0.png',
       currMarkAmount: 0,
       minMarkAmount: 0,
       maxMarkAmount: 13,
       slashes: [],
-    });
+    };
+    ensureTalismanUid(talisman);
+    talismans.push(talisman);
     this.actor.update({ 'system.talismans': talismans }).then(() => {
       this.render(false); // Re-render the sheet to reflect changes
     });
@@ -3328,6 +3341,7 @@ export class CainActorSheet extends BaseActorSheet {
       // OLD count first so counter-only changes from other code paths don't
       // steal the clicked position for an auto-placed slash.
       if (animatedTalismansEnabled()) {
+        ensureTalismanUid(talismans[index]);
         reconcileSlashes(talismans[index]);
         const img = event.currentTarget;
         const point = slashPointFromEvent(event, img);
@@ -3366,7 +3380,10 @@ export class CainActorSheet extends BaseActorSheet {
       talismans[index].currMarkAmount = newMaxMarkAmount;
       const imagePath = talismans[index].imagePath;
       talismans[index].imagePath = imagePath.replace(/-(\d+)\.png$/, `-${newMaxMarkAmount}.png`);
-      if (animatedTalismansEnabled()) reconcileSlashes(talismans[index]);
+      if (animatedTalismansEnabled()) {
+        ensureTalismanUid(talismans[index]);
+        reconcileSlashes(talismans[index]);
+      }
     }
 
     this.actor.update({ 'system.talismans': talismans }).then(() => {

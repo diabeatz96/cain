@@ -67,7 +67,18 @@ function dissolveStrip(strip, filled) {
     'z-index:10000;pointer-events:none;';
   const makeClone = () => {
     const clone = strip.cloneNode(true);
-    clone.style.cssText = 'position:absolute;inset:0;margin:0;visibility:visible;';
+    clone.style.cssText =
+      'position:absolute;left:0;top:0;width:100%;height:100%;margin:0;visibility:visible;';
+    // The original's size comes from ancestor-scoped CSS (e.g. the
+    // #talisman-management rules) that no longer matches under
+    // document.body, so pin the artwork to the stage explicitly — the
+    // stage already has the strip's exact on-screen geometry.
+    const img = clone.matches('img') ? clone : clone.querySelector('img');
+    if (img && img !== clone) {
+      img.style.width = '100%';
+      img.style.height = '100%';
+      img.style.margin = '0';
+    }
     return clone;
   };
   strip.style.visibility = 'hidden';

@@ -11,7 +11,12 @@
 
 /* When animated slashes are on, the art keeps its intrinsic aspect so the
    wrapper equals the artwork box. The sheets' fixed-size .talisman-image
-   rules (400x220 contain / 200x220 fill) otherwise letterbox or stretch it. */
+   rules (400x220 contain / 200x220 fill) otherwise letterbox or stretch it.
+   The ID-qualified selector is required: both talisman surfaces sit inside
+   #talisman-management, whose `#talisman-management .talisman-image`
+   (specificity 1,1,0) and accessibility-mode variants would otherwise beat
+   these class-only rules and misalign the slash layer. */
+#talisman-management .talisman-strip.slash-anim .talisman-image,
 .talisman-strip.slash-anim .talisman-image,
 .talisman-strip.slash-anim img {
   width: auto;

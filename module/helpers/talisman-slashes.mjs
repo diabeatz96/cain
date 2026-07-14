@@ -90,6 +90,27 @@ export function talismanBaseImage(imagePath) {
   return String(imagePath ?? '').replace(/-(\d+)\.png$/, '-0.png');
 }
 
+/**
+ * Give a talisman a stable identity for animation diffing. Called only on
+ * write paths (the caller persists the talisman afterwards); read paths fall
+ * back to name+index via talismanRenderKey. Without a stable id, deleting a
+ * talisman would shift indices and a same-named survivor would inherit the
+ * deleted one's diff state, replaying its slashes as spurious animations.
+ */
+export function ensureTalismanUid(talisman) {
+  if (!talisman.uid) {
+    talisman.uid =
+      globalThis.foundry?.utils?.randomID?.() ??
+      Math.random().toString(36).slice(2, 12);
+  }
+  return talisman.uid;
+}
+
+/** Animation-diff key for a rendered talisman surface. */
+export function talismanRenderKey(surface, talisman, index) {
+  return `${surface}:${talisman.uid ?? `${talisman.name}:${index}`}`;
+}
+
 /* -------------------------------------------- */
 /*  Settings access (safe outside Foundry)      */
 /* -------------------------------------------- */

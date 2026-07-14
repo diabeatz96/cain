@@ -2,10 +2,12 @@ import { CainActorSheet } from "../sheets/actor-sheet.mjs";
 import {
   animatedTalismansEnabled,
   createSlashData,
+  ensureTalismanUid,
   reconcileSlashes,
   renderSlashLayer,
   slashPointFromEvent,
   talismanBaseImage,
+  talismanRenderKey,
 } from "../helpers/talisman-slashes.mjs";
 import { dissolveTalismanCard, isTalismanFilled } from "../helpers/talisman-dissolve.mjs";
 
@@ -69,7 +71,7 @@ export class TalismanWindow extends Application {
       const index = parseInt(layer.dataset.index, 10);
       const talisman = talismans[index];
       if (talisman) {
-        renderSlashLayer(layer, talisman, { key: `gtw:${talisman.name}:${index}` });
+        renderSlashLayer(layer, talisman, { key: talismanRenderKey('gtw', talisman, index) });
       }
     });
   }
@@ -94,14 +96,16 @@ export class TalismanWindow extends Application {
   async _onAddTalisman(event) {
     event.preventDefault();
     const talismans = game.settings.get('cain', 'globalTalismans');
-    talismans.push({
+    const talisman = {
       name: 'New Talisman',
       imagePath: 'systems/cain/assets/Talismans/Talisman-A-0.png',
       currMarkAmount: 0,
       minMarkAmount: 0,
       maxMarkAmount: 26,
       slashes: [],
-    });
+    };
+    ensureTalismanUid(talisman);
+    talismans.push(talisman);
     await game.settings.set('cain', 'globalTalismans', talismans);
     this._emitUpdate();
   }
@@ -129,7 +133,10 @@ export class TalismanWindow extends Application {
     talismans[index].currMarkAmount = parseInt(value, 10);
     const imagePath = talismans[index].imagePath;
     talismans[index].imagePath = imagePath.replace(/-(\d+)\.png$/, `-${value}.png`);
-    if (animatedTalismansEnabled()) reconcileSlashes(talismans[index]);
+    if (animatedTalismansEnabled()) {
+      ensureTalismanUid(talismans[index]);
+      reconcileSlashes(talismans[index]);
+    }
     await game.settings.set('cain', 'globalTalismans', talismans);
     this._emitUpdate();
   }
@@ -142,6 +149,7 @@ export class TalismanWindow extends Application {
       // OLD count first so counter-only changes from other code paths don't
       // steal the clicked position for an auto-placed slash.
       if (animatedTalismansEnabled()) {
+        ensureTalismanUid(talismans[index]);
         reconcileSlashes(talismans[index]);
         const img = event.currentTarget;
         const point = slashPointFromEvent(event, img);
@@ -178,7 +186,10 @@ export class TalismanWindow extends Application {
       talismans[index].currMarkAmount--;
       talismans[index].imagePath = imagePath.replace(/-(\d+)\.png$/, `-${imageNumber - 1}.png`);
       // Trims the most recent slash to match the new count.
-      if (animatedTalismansEnabled()) reconcileSlashes(talismans[index]);
+      if (animatedTalismansEnabled()) {
+        ensureTalismanUid(talismans[index]);
+        reconcileSlashes(talismans[index]);
+      }
     }
 
     await game.settings.set('cain', 'globalTalismans', talismans);
@@ -208,7 +219,10 @@ export class TalismanWindow extends Application {
       talismans[index].currMarkAmount = newMaxMarkAmount;
       const imagePath = talismans[index].imagePath;
       talismans[index].imagePath = imagePath.replace(/-(\d+)\.png$/, `-${newMaxMarkAmount}.png`);
-      if (animatedTalismansEnabled()) reconcileSlashes(talismans[index]);
+      if (animatedTalismansEnabled()) {
+        ensureTalismanUid(talismans[index]);
+        reconcileSlashes(talismans[index]);
+      }
     }
 
     await game.settings.set('cain', 'globalTalismans', talismans);
@@ -258,7 +272,7 @@ export class TalismanWindow extends Application {
     pinnedContainer.appendChild(pinnedTalismanElement);
     if (animated) {
       renderSlashLayer(pinnedTalismanElement.querySelector('.talisman-slash-layer'), talisman, {
-        key: `pin:${talisman.name}:${index}`,
+        key: talismanRenderKey('pin', talisman, index),
       });
     }
   
@@ -693,10 +707,15 @@ export class TalismanWindow extends Application {
       const talisman = talismans[index];
       if (talisman) {
         const layer = pinnedTalisman.querySelector('.talisman-slash-layer');
+        const animated = layer && animatedTalismansEnabled();
         pinnedTalisman.querySelector('img').src =
-          layer && animatedTalismansEnabled() ? talismanBaseImage(talisman.imagePath) : talisman.imagePath;
-        if (layer && animatedTalismansEnabled()) {
-          renderSlashLayer(layer, talisman, { key: `pin:${talisman.name}:${index}` });
+          animated ? talismanBaseImage(talisman.imagePath) : talisman.imagePath;
+        if (animated) {
+          renderSlashLayer(layer, talisman, { key: talismanRenderKey('pin', talisman, index) });
+        } else if (layer) {
+          // Feature toggled off since this pin was created: the marked -N
+          // image takes over, so stale slash SVGs must not double the marks.
+          layer.textContent = '';
         }
         pinnedTalisman.querySelector('span').textContent = talisman.name;
         pinnedTalisman.querySelector('.talisman-marks').textContent = `${talisman.currMarkAmount} / ${talisman.maxMarkAmount}`;
@@ -719,13 +738,16 @@ Hooks.once('ready', () => {
     if (data.action === 'updateTalismans') {
       // A deleted talisman burns/rips on this client too. Capture it out of
       // the still-showing old DOM before the re-renders below replace it.
-      if (data.dissolve) {
+      // The payload comes over the wire from another client, so coerce it
+      // before it reaches a selector.
+      const dissolveIndex = parseInt(data.dissolve?.index, 10);
+      if (Number.isFinite(dissolveIndex)) {
         for (let app of Object.values(ui.windows)) {
           if (app instanceof TalismanWindow) {
             const card = app.element?.[0]?.querySelector(
-              `.talisman[data-index="${data.dissolve.index}"]`
+              `.talisman[data-index="${dissolveIndex}"]`
             );
-            if (card) dissolveTalismanCard(card, { filled: data.dissolve.filled });
+            if (card) dissolveTalismanCard(card, { filled: !!data.dissolve.filled });
           }
         }
       }
