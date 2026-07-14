@@ -993,6 +993,19 @@
       "CATSELECT": "Right click to set CAT 0",
       "SINMAXADJUST": "Change maximum SIN capacity",
       "RIGHTCLICKCLEAR": "Right click to clear"
+    },
+    "Settings": {
+      "AnimatedTalismans": {
+        "Name": "Animated Talisman Slashes",
+        "Hint": "Draw talisman slashes as animated brush strokes placed where you click, instead of swapping between pre-rendered images. Applies to the whole world; marks are tracked the same way either way, so this can be toggled freely."
+      },
+      "TalismanEffectQuality": {
+        "Name": "Talisman Effect Quality",
+        "Hint": "Visual effect level for talisman animations on this computer. \"Reduced\" swaps the heavier effects for simple fades; \"None\" disables the transient animations entirely.",
+        "Full": "Full",
+        "Reduced": "Reduced",
+        "None": "None"
+      }
     }
   },
   "Ability": {

@@ -20,6 +20,9 @@ import HuntTracker from "./components/hunt-tracker/hunt-tracker.mjs";
 import { CainDiceRoller } from './dice/cain-dice-roller.mjs';
 import { CainChatDicePanel } from './dice/chat-dice-panel.mjs';
 
+// Import procedural talisman slash rendering
+import { talismanBaseImage } from './helpers/talisman-slashes.mjs';
+
 /* -------------------------------------------- */
 /*  Talisman ↔ Hunt Tracker sync                */
 /* -------------------------------------------- */
@@ -205,6 +208,38 @@ Hooks.once('init', async function () {
         isHidden: false,
       },
     ],
+  });
+
+  game.settings.register('cain', 'animatedTalismans', {
+    name: 'CAIN.Settings.AnimatedTalismans.Name',
+    hint: 'CAIN.Settings.AnimatedTalismans.Hint',
+    scope: 'world',
+    config: true,
+    type: Boolean,
+    default: true,
+    // World-setting changes fire onChange on every connected client, so all
+    // open talisman UIs restyle themselves without a manual socket message.
+    onChange: () => {
+      for (const app of Object.values(ui.windows)) {
+        if (app instanceof TalismanWindow || app instanceof CainActorSheet) {
+          app.render(true);
+        }
+      }
+    },
+  });
+
+  game.settings.register('cain', 'talismanEffectQuality', {
+    name: 'CAIN.Settings.TalismanEffectQuality.Name',
+    hint: 'CAIN.Settings.TalismanEffectQuality.Hint',
+    scope: 'client',
+    config: true,
+    type: String,
+    choices: {
+      full: 'CAIN.Settings.TalismanEffectQuality.Full',
+      reduced: 'CAIN.Settings.TalismanEffectQuality.Reduced',
+      none: 'CAIN.Settings.TalismanEffectQuality.None',
+    },
+    default: 'full',
   });
 
   game.settings.register('cain', "GMTutorialFinished", {
@@ -699,6 +734,10 @@ Handlebars.registerHelper('hasItemsOfType', function(items, type, options) {
 Handlebars.registerHelper('calcPercentage', function(curr, max) {
   return (curr / max) * 100;
 });
+
+// The unmarked (-0) variant of a pre-rendered talisman image, used as the
+// backdrop for procedural slash overlays.
+Handlebars.registerHelper('talismanBaseImage', talismanBaseImage);
 
 // Comparison helpers for hunt tracker
 Handlebars.registerHelper('eq', function(a, b) {

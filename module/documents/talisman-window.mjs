@@ -1,4 +1,12 @@
 import { CainActorSheet } from "../sheets/actor-sheet.mjs";
+import {
+  animatedTalismansEnabled,
+  createSlashData,
+  reconcileSlashes,
+  renderSlashLayer,
+  slashPointFromEvent,
+  talismanBaseImage,
+} from "../helpers/talisman-slashes.mjs";
 
 export class TalismanWindow extends Application {
   static get defaultOptions() {
@@ -16,11 +24,13 @@ export class TalismanWindow extends Application {
     return {
       talismans: game.settings.get('cain', 'globalTalismans'),
       isGM: game.user.isGM,
+      animatedTalismans: animatedTalismansEnabled(),
     };
   }
 
   activateListeners(html) {
     super.activateListeners(html);
+    this._renderSlashOverlays(html);
     if (game.user.isGM) {
       html.find('#add-talisman').on('click', this._onAddTalisman.bind(this));
       html.find('.talisman-name').on('change', this._onNameChange.bind(this));
@@ -43,6 +53,24 @@ export class TalismanWindow extends Application {
       // Add delete all tiles event listener
       html.find('.delete-all-tiles').on('click', this._onDeleteAllTiles.bind(this));
     }
+  }
+
+  /**
+   * Draw the procedural slash overlays after each render. Runs for every
+   * user (players see the window read-only). The per-talisman key lets the
+   * renderer diff against the previous render and animate slashes that were
+   * added or removed since — including changes that arrived over the socket.
+   */
+  _renderSlashOverlays(html) {
+    if (!animatedTalismansEnabled()) return;
+    const talismans = game.settings.get('cain', 'globalTalismans');
+    html.find('.talisman-slash-layer').each((_, layer) => {
+      const index = parseInt(layer.dataset.index, 10);
+      const talisman = talismans[index];
+      if (talisman) {
+        renderSlashLayer(layer, talisman, { key: `gtw:${talisman.name}:${index}` });
+      }
+    });
   }
 
   async _onDragStart(event) {
@@ -71,6 +99,7 @@ export class TalismanWindow extends Application {
       currMarkAmount: 0,
       minMarkAmount: 0,
       maxMarkAmount: 26,
+      slashes: [],
     });
     await game.settings.set('cain', 'globalTalismans', talismans);
     this._emitUpdate();
@@ -93,6 +122,7 @@ export class TalismanWindow extends Application {
     talismans[index].currMarkAmount = parseInt(value, 10);
     const imagePath = talismans[index].imagePath;
     talismans[index].imagePath = imagePath.replace(/-(\d+)\.png$/, `-${value}.png`);
+    if (animatedTalismansEnabled()) reconcileSlashes(talismans[index]);
     await game.settings.set('cain', 'globalTalismans', talismans);
     this._emitUpdate();
   }
@@ -101,7 +131,24 @@ export class TalismanWindow extends Application {
     const index = parseInt(event.currentTarget.dataset.index, 10);
     const talismans = game.settings.get('cain', 'globalTalismans');
     if (talismans[index].currMarkAmount < talismans[index].maxMarkAmount) {
+      // Carve the new slash where the user clicked. Reconcile against the
+      // OLD count first so counter-only changes from other code paths don't
+      // steal the clicked position for an auto-placed slash.
+      if (animatedTalismansEnabled()) {
+        reconcileSlashes(talismans[index]);
+        const img = event.currentTarget;
+        const point = slashPointFromEvent(event, img);
+        const aspect = img.naturalWidth && img.naturalHeight
+          ? img.naturalWidth / img.naturalHeight
+          : undefined;
+        talismans[index].slashes.push(
+          createSlashData(point?.fx ?? 0.5, point?.fy ?? 0.5, undefined, aspect)
+        );
+      }
       talismans[index].currMarkAmount++;
+      // Keep the pre-rendered image variant in lockstep for surfaces that
+      // don't draw overlays (canvas tiles, sin sheets) and for worlds with
+      // animated talismans disabled.
       const imagePath = talismans[index].imagePath;
       const imageNumber = parseInt(imagePath.match(/-(\d+)\.png$/)[1], 10);
       if (imageNumber < talismans[index].maxMarkAmount) {
@@ -116,15 +163,17 @@ export class TalismanWindow extends Application {
     event.preventDefault();
     const index = parseInt(event.currentTarget.dataset.index, 10);
     const talismans = game.settings.get('cain', 'globalTalismans');
-  
+
     // Change image similar to how the image change function works but in reverse
     const imagePath = talismans[index].imagePath;
     const imageNumber = parseInt(imagePath.match(/-(\d+)\.png$/)[1], 10);
     if (imageNumber > 0 && talismans[index].currMarkAmount > 0) {
       talismans[index].currMarkAmount--;
       talismans[index].imagePath = imagePath.replace(/-(\d+)\.png$/, `-${imageNumber - 1}.png`);
+      // Trims the most recent slash to match the new count.
+      if (animatedTalismansEnabled()) reconcileSlashes(talismans[index]);
     }
-  
+
     await game.settings.set('cain', 'globalTalismans', talismans);
     this._emitUpdate();
   }
@@ -152,8 +201,9 @@ export class TalismanWindow extends Application {
       talismans[index].currMarkAmount = newMaxMarkAmount;
       const imagePath = talismans[index].imagePath;
       talismans[index].imagePath = imagePath.replace(/-(\d+)\.png$/, `-${newMaxMarkAmount}.png`);
+      if (animatedTalismansEnabled()) reconcileSlashes(talismans[index]);
     }
-    
+
     await game.settings.set('cain', 'globalTalismans', talismans);
     this._emitUpdate();
   }
@@ -180,9 +230,16 @@ export class TalismanWindow extends Application {
     }
   
     // Create a pinned talisman element
+    const animated = animatedTalismansEnabled();
+    const imageHtml = animated
+      ? `<div class="talisman-strip slash-anim">
+          <img src="${talismanBaseImage(talisman.imagePath)}" alt="${talisman.name}" title="${talisman.name}">
+          <div class="talisman-slash-layer"></div>
+        </div>`
+      : `<img src="${talisman.imagePath}" alt="${talisman.name}" title="${talisman.name}">`;
     const pinnedTalismanHtml = `
       <div class="pinned-talisman" data-index="${index}">
-        <img src="${talisman.imagePath}" alt="${talisman.name}" title="${talisman.name}">
+        ${imageHtml}
         <span>${talisman.name}</span>
         <span class="talisman-marks">${talisman.currMarkAmount} / ${talisman.maxMarkAmount}</span>
         <button class="unpin-talisman" data-index="${index}"><i class="fas fa-times"></i> Unpin</button>
@@ -192,6 +249,11 @@ export class TalismanWindow extends Application {
     div.innerHTML = pinnedTalismanHtml;
     const pinnedTalismanElement = div.firstElementChild;
     pinnedContainer.appendChild(pinnedTalismanElement);
+    if (animated) {
+      renderSlashLayer(pinnedTalismanElement.querySelector('.talisman-slash-layer'), talisman, {
+        key: `pin:${talisman.name}:${index}`,
+      });
+    }
   
     console.log('innerHTML', div.innerHTML);
     console.log('pinned container', pinnedContainer);
@@ -623,7 +685,12 @@ export class TalismanWindow extends Application {
       const index = pinnedTalisman.dataset.index;
       const talisman = talismans[index];
       if (talisman) {
-        pinnedTalisman.querySelector('img').src = talisman.imagePath;
+        const layer = pinnedTalisman.querySelector('.talisman-slash-layer');
+        pinnedTalisman.querySelector('img').src =
+          layer && animatedTalismansEnabled() ? talismanBaseImage(talisman.imagePath) : talisman.imagePath;
+        if (layer && animatedTalismansEnabled()) {
+          renderSlashLayer(layer, talisman, { key: `pin:${talisman.name}:${index}` });
+        }
         pinnedTalisman.querySelector('span').textContent = talisman.name;
         pinnedTalisman.querySelector('.talisman-marks').textContent = `${talisman.currMarkAmount} / ${talisman.maxMarkAmount}`;
       }

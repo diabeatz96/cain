@@ -6,7 +6,14 @@
       {{#unless this.isHidden}}
       <div class="talisman" draggable="true" data-index="{{@index}}">
         <input type="text" placeholder="{{localize 'CAIN.Name'}}" class="talisman-name" value="{{this.name}}" data-index="{{@index}}">
+        {{#if ../animatedTalismans}}
+        <div class="talisman-strip slash-anim">
+          <img src="{{talismanBaseImage this.imagePath}}" alt="{{this.name}}" class="talisman-image" data-index="{{@index}}">
+          <div class="talisman-slash-layer" data-index="{{@index}}"></div>
+        </div>
+        {{else}}
         <img src="{{this.imagePath}}" alt="{{this.name}}" class="talisman-image" data-index="{{@index}}">
+        {{/if}}
         <div class="talisman-controls">
           {{#if ../isGM}}
             <button class="delete-talisman" data-index="{{@index}}"><i class="fas fa-trash-alt"></i> {{localize "CAIN.Delete"}}</button>
@@ -29,7 +36,14 @@
       {{#if this.isHidden}}
       <div class="talisman" draggable="true" data-index="{{@index}}">
         <input type="text" placeholder="{{localize 'CAIN.Name'}}" class="talisman-name" value="{{this.name}}" data-index="{{@index}}">
+        {{#if ../animatedTalismans}}
+        <div class="talisman-strip slash-anim">
+          <img src="{{talismanBaseImage this.imagePath}}" alt="{{this.name}}" class="talisman-image" data-index="{{@index}}">
+          <div class="talisman-slash-layer" data-index="{{@index}}"></div>
+        </div>
+        {{else}}
         <img src="{{this.imagePath}}" alt="{{this.name}}" class="talisman-image" data-index="{{@index}}">
+        {{/if}}
         <div class="talisman-controls">
           <button class="delete-talisman" data-index="{{@index}}"><i class="fas fa-trash-alt"></i> {{localize "CAIN.Delete"}}</button>
           <button class="hide-talisman" data-index="{{@index}}">
