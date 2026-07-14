@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 1.3.27
+
+- **Animated talisman slashes** — a new world setting (*Configure Settings → Animated Talisman Slashes*, default on). Instead of swapping between the 27 pre-rendered `Talisman-A-<N>.png` images, talismans render the unmarked art with each slash drawn as a procedural SVG brush stroke modeled on the book's cuts (ragged dry-brush body + one long hairline). **Left-click carves a slash exactly where you click**; right-click still removes the newest one. Applies to the Global Talismans window, the character sheet's Talismans tab, and pinned talismans. Slash positions sync to all clients as a few numbers per slash (the stroke geometry regenerates deterministically from a stored seed, so every client draws identical marks), and freshly carved or removed slashes animate on every connected client — a knife-stroke wipe with a hot flash and a jolt of the strip, or a retreating un-cut. The counter, slider, and max fields still work: counter-only changes (including Hunt Tracker syncs and old saves) get their slashes auto-placed tally-style down the paper. The stored `imagePath` keeps tracking the pre-rendered `-<N>.png` variant, so canvas tiles, sin sheets, and worlds with the setting off behave exactly as before, and the setting can be toggled freely in either direction
+- **Talisman deletion effects** — deleting a talisman now plays a send-off on every client with the Global Talismans window open: a **filled** talisman (marks at max) burns away bottom-up behind a live flame front with sparks, embers, and smoke; an **unfilled** one is torn into interlocked paper ribbons that spin as they fall, with a burst of paper scraps. Works with both animated slashes and the pre-rendered images
+- **Talisman Effect Quality** — a new per-client setting (full / reduced / none) for lower-powered machines: *reduced* swaps the heavier effects for simple fades and *none* disables the transient animations entirely. The OS-level reduced-motion preference automatically caps effects at *reduced*. The burn effect is also tuned to avoid regenerating its turbulence noise per frame, which is what makes similar effects drop frames in Chromium
+- With animated slashes enabled, talisman art keeps its intrinsic aspect ratio on the character sheet's Talismans tab (the fixed 200×220 box previously stretched it)
+
 ## 1.3.26
 
 - **Games for Freaks, vol. 4 — CAIN content** extracted and bundled (the Maleghast wargame portion of that book is intentionally excluded). Four additions:
