@@ -7,6 +7,7 @@ import {
   slashPointFromEvent,
   talismanBaseImage,
 } from "../helpers/talisman-slashes.mjs";
+import { dissolveTalismanCard, isTalismanFilled } from "../helpers/talisman-dissolve.mjs";
 
 export class TalismanWindow extends Application {
   static get defaultOptions() {
@@ -109,9 +110,15 @@ export class TalismanWindow extends Application {
     event.preventDefault();
     const index = $(event.currentTarget).data('index');
     const talismans = game.settings.get('cain', 'globalTalismans');
+    const filled = isTalismanFilled(talismans[index]);
+    // Send off the rendered talisman before the re-render replaces it: a
+    // filled one burns away, an unfilled one is torn apart. The dissolve
+    // animates a clone on document.body, so the re-render can't cut it off.
+    const card = event.currentTarget.closest('.talisman');
+    if (card) dissolveTalismanCard(card, { filled });
     talismans.splice(index, 1);
     await game.settings.set('cain', 'globalTalismans', talismans);
-    this._emitUpdate();
+    this._emitUpdate({ dissolve: { index, filled } });
   }
 
   async _onSliderChange(event) {
@@ -577,9 +584,9 @@ export class TalismanWindow extends Application {
     }
   }
 
-  _emitUpdate() {
+  _emitUpdate(extra = {}) {
     console.log('Emitting updateTalismans');
-    game.socket.emit('system.cain', { action: 'updateTalismans' });
+    game.socket.emit('system.cain', { action: 'updateTalismans', ...extra });
     this.render(true); // Update the UI for the emitting client
     this._updatePinnedTalismans(); // Update pinned talismans
     this._updateSinSelectedTalismans(); // Update sin selected talismans
@@ -710,6 +717,18 @@ Hooks.once('ready', () => {
   game.socket.on('system.cain', (data) => {
     console.log('Received socket data', data);
     if (data.action === 'updateTalismans') {
+      // A deleted talisman burns/rips on this client too. Capture it out of
+      // the still-showing old DOM before the re-renders below replace it.
+      if (data.dissolve) {
+        for (let app of Object.values(ui.windows)) {
+          if (app instanceof TalismanWindow) {
+            const card = app.element?.[0]?.querySelector(
+              `.talisman[data-index="${data.dissolve.index}"]`
+            );
+            if (card) dissolveTalismanCard(card, { filled: data.dissolve.filled });
+          }
+        }
+      }
       for (let app of Object.values(ui.windows)) {
         if (app instanceof TalismanWindow) {
           app.render(true); // Force re-render

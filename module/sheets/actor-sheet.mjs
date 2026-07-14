@@ -16,6 +16,7 @@ import {
   renderSlashLayer,
   slashPointFromEvent,
 } from '../helpers/talisman-slashes.mjs';
+import { dissolveTalismanCard, isTalismanFilled } from '../helpers/talisman-dissolve.mjs';
 
 // Use v13 namespaced ActorSheet with fallback for v11/v12
 const BaseActorSheet = foundry?.appv1?.sheets?.ActorSheet ?? ActorSheet;
@@ -3284,6 +3285,10 @@ export class CainActorSheet extends BaseActorSheet {
     event.preventDefault();
     const index = event.currentTarget.dataset.index;
     const talismans = this.actor.system.talismans || [];
+    // Send off the rendered talisman before the re-render replaces it: a
+    // filled one burns away, an unfilled one is torn apart.
+    const card = event.currentTarget.closest('.talisman');
+    if (card) dissolveTalismanCard(card, { filled: isTalismanFilled(talismans[index]) });
     talismans.splice(index, 1);
     this.actor.update({ 'system.talismans': talismans }).then(() => {
       this.render(false); // Re-render the sheet to reflect changes

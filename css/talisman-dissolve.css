@@ -1,0 +1,238 @@
+/* Talisman deletion effects: rip (unfilled) and burn (filled).
+   See module/helpers/talisman-dissolve.mjs. */
+
+/* The rest of a card whose talisman is dissolving just fades. */
+.cain-dissolving > *:not(.talisman-strip) {
+  transition: opacity 0.35s ease;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ====== rip: violent tear into ribbons + flying paper scraps ====== */
+/* The ribbon falls (cain-ripfall) and lends perspective to its slice; the
+   slice inside carries the jagged clip AND the spin, so the torn shape
+   itself turns in the air. */
+.cain-ribbon {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  transform-origin: 50% 0%;
+  perspective: 520px;
+  will-change: transform, opacity;
+  animation: cain-ripfall var(--dur, 1s) cubic-bezier(0.36, 0.06, 0.32, 1) forwards;
+}
+.cain-rslice {
+  position: absolute;
+  inset: 0;
+  will-change: transform;
+  animation: cain-ribbonspin var(--fsp, 0.7s) linear var(--fdl, 0.15s) infinite;
+}
+/* Each falling strip spins steadily about its own long axis — flat to the
+   camera, then edge-on, then flat — like a dropped paper streamer. The
+   start delay (--fdl) keeps the strip reading as whole at the crack. */
+@keyframes cain-ribbonspin {
+  from {
+    transform: rotateY(0turn);
+  }
+  to {
+    transform: rotateY(var(--fdir, 1turn));
+  }
+}
+/* Crack apart (16%), hang together a beat, then tumble down and fade. */
+@keyframes cain-ripfall {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+    opacity: 1;
+  }
+  16% {
+    transform: translate(var(--spread, 0), -12px) rotate(calc(var(--rot) * 0.12));
+    opacity: 1;
+  }
+  66% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--dx), var(--dy)) rotate(var(--rot));
+    opacity: 0;
+  }
+}
+/* Small paper scraps that burst from the tear (match the strip's white). */
+.cain-shard {
+  position: absolute;
+  z-index: 9;
+  will-change: transform, opacity;
+  background: linear-gradient(135deg, #f6f5f1 0%, #dbd8d0 55%, #b8b4a8 100%);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+  animation: cain-shardfly var(--sd, 0.85s) cubic-bezier(0.16, 0.7, 0.3, 1) forwards;
+}
+@keyframes cain-shardfly {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) rotate(0deg) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--sx), var(--sy)) rotate(var(--sr)) scale(0.35);
+  }
+}
+.cain-tearflash {
+  position: absolute;
+  inset: -12%;
+  z-index: 10;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  background: radial-gradient(
+    circle at 50% 45%,
+    rgba(255, 240, 210, 0.9) 0%,
+    rgba(255, 255, 255, 0) 65%
+  );
+  animation: cain-tearflash 0.28s ease-out forwards;
+}
+@keyframes cain-tearflash {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  22% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.5);
+  }
+}
+
+/* ====== burn: bottom-up dissolve, driven frame-by-frame from JS ====== */
+/* The mask reads an inline --burn that the rAF loop updates every frame;
+   filter (heat warp) and transform (violent flutter) are set inline. */
+.cain-burn-paper {
+  --burn: -16%;
+  transform-origin: 50% 12%;
+  will-change: transform, filter;
+  -webkit-mask-image: linear-gradient(
+    to top,
+    transparent var(--burn),
+    #000 calc(var(--burn) + 8%)
+  );
+  mask-image: linear-gradient(
+    to top,
+    transparent var(--burn),
+    #000 calc(var(--burn) + 8%)
+  );
+}
+/* Charred scorch riding just above the burn line — lives INSIDE the masked
+   paper clone so it inherits the mask and every transform. */
+.cain-char {
+  position: absolute;
+  left: -4%;
+  width: 108%;
+  height: 26px;
+  background: linear-gradient(
+    to top,
+    rgba(15, 8, 5, 0.98) 0%,
+    rgba(52, 26, 13, 0.75) 40%,
+    rgba(90, 50, 25, 0.3) 70%,
+    transparent 100%
+  );
+  mix-blend-mode: multiply;
+  filter: blur(1px);
+  z-index: 6;
+  pointer-events: none;
+}
+/* The burning front: a thick, flickering band of fire. */
+.cain-flame {
+  position: absolute;
+  left: -6%;
+  width: 112%;
+  height: 30px;
+  transform: translateY(-50%);
+  background: radial-gradient(
+    ellipse 60% 135% at 50% 45%,
+    #fff7cc 0%,
+    #ffd24a 20%,
+    #ff8a1e 44%,
+    #ff3a0a 62%,
+    rgba(150, 20, 0, 0) 82%
+  );
+  box-shadow: 0 -5px 12px 2px rgba(20, 5, 0, 0.9);
+  filter: blur(2px) brightness(1.4);
+  mix-blend-mode: screen;
+  z-index: 3;
+  opacity: 0;
+  pointer-events: none;
+}
+/* White-hot fast sparks. */
+.cain-spark {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fffbe8 0%, #ffd27a 45%, rgba(255, 140, 30, 0) 75%);
+  box-shadow: 0 0 6px 1px rgba(255, 200, 90, 0.9);
+  mix-blend-mode: screen;
+  opacity: 0;
+  z-index: 5;
+  will-change: transform, opacity;
+  animation: cain-sparkfly var(--ad, 0.6s) ease-out var(--adl, 0s) forwards;
+}
+@keyframes cain-sparkfly {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(1);
+  }
+  12% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--ax, 0), var(--ay, -160px)) scale(0.2);
+  }
+}
+/* Slower orange embers that flutter up. */
+.cain-ember {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffe6a0 0%, #ff8a2a 50%, rgba(255, 80, 0, 0) 78%);
+  box-shadow: 0 0 5px 1px rgba(255, 140, 40, 0.7);
+  mix-blend-mode: screen;
+  opacity: 0;
+  z-index: 4;
+  will-change: transform, opacity;
+  animation: cain-emberfly var(--ad, 1s) ease-out var(--adl, 0s) forwards;
+}
+@keyframes cain-emberfly {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(1) rotate(0deg);
+  }
+  15% {
+    opacity: 0.95;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--ax, 0), var(--ay, -120px)) scale(0.3) rotate(140deg);
+  }
+}
+/* Drifting smoke. */
+.cain-smoke {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(120, 110, 100, 0.5) 0%, rgba(60, 55, 50, 0) 70%);
+  opacity: 0;
+  z-index: 2;
+  will-change: transform, opacity;
+  animation: cain-smokerise var(--ad, 1.2s) ease-out var(--adl, 0s) forwards;
+}
+@keyframes cain-smokerise {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.5);
+  }
+  25% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--ax, 0), var(--ay, -100px)) scale(2.2);
+  }
+}
