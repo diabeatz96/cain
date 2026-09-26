@@ -49,7 +49,7 @@ export class SessionEndAdvancement extends FormApplication  {
             if (key == "injuries" && value) injuries = 1;
         }
         if (firstAgenda > 1) firstAgenda = 1;
-        if (boldAgenda > 2) boldAgenda = 2;
+        if (boldAgenda > 2) boldAgenda = 1;
         const totalGain = survival + firstAgenda + boldAgenda + injuries;
         const oldXPValue = this.actor.system.xp.value;
         const newXPValue = oldXPValue + totalGain;
